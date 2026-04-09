@@ -1,8 +1,11 @@
+ 
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack, router } from 'expo-router';
-import { Building2, Users, BarChart3, Settings, Shield, Zap, FileText, Lock, Server, GitBranch, Network, Globe } from 'lucide-react-native';
+import { Building2, Users, BarChart3, Settings, Shield, Zap, FileText, Lock, Server, GitBranch, Network, Globe, ArrowLeft } from 'lucide-react-native';
+import { useTheme } from '@/providers/ThemeProvider';
+import { trpc } from '@/lib/trpc';
 
 interface DashboardMetric {
   id: string;
@@ -116,7 +119,36 @@ const mockActions: QuickAction[] = [
 ];
 
 export default function EnterpriseDashboardScreen() {
-  const [metrics, setMetrics] = useState<DashboardMetric[]>(mockMetrics);
+  const { theme } = useTheme();
+
+  // Fetch analytics dashboard data from backend using tRPC
+  const { data: analyticsData, isLoading, error, refetch } = trpc.enterprise.analytics.getDashboard.useQuery();
+
+  // Transform backend data to dashboard format
+  const getDashboardMetrics = (): DashboardMetric[] => {
+    if (!analyticsData?.metrics) return mockMetrics; // Fallback to mock data
+    
+    return analyticsData.metrics.map((metric: any, index: number) => ({
+      id: metric.id || index.toString(),
+      title: metric.title || 'Metric',
+      value: metric.value || '0',
+      change: metric.change || '0%',
+      trend: metric.trend || 'stable',
+      icon: getIconForMetric(metric.type || 'default')
+    }));
+  };
+
+  const getIconForMetric = (type: string) => {
+    switch (type) {
+      case 'revenue': return 'dollar';
+      case 'users': return 'users';
+      case 'uptime': return 'activity';
+      case 'support_tickets': return 'support';
+      default: return 'analytics';
+    }
+  };
+
+  const metrics = getDashboardMetrics();
   const [actions, setActions] = useState<QuickAction[]>(mockActions);
 
   const getMetricIcon = (iconType: string) => {
@@ -176,7 +208,7 @@ export default function EnterpriseDashboardScreen() {
         {getMetricIcon(metric.icon)}
         <Text style={styles.metricTitle}>{metric.title}</Text>
       </View>
-      
+
       <View style={styles.metricContent}>
         <Text style={styles.metricValue}>{metric.value}</Text>
         <Text style={[styles.metricChange, { color: getTrendColor(metric.trend) }]}>
@@ -187,7 +219,7 @@ export default function EnterpriseDashboardScreen() {
   );
 
   const ActionCard = ({ action }: { action: QuickAction }) => (
-    <TouchableOpacity 
+    <TouchableOpacity
       style={styles.actionCard}
       onPress={() => handleActionPress(action.id)}
     >
@@ -201,33 +233,77 @@ export default function EnterpriseDashboardScreen() {
     </TouchableOpacity>
   );
 
+  // Handle loading state
+  if (isLoading) {
+    return (
+      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color={theme.colors.primary} />
+          <Text style={[styles.loadingText, { color: theme.colors.text }]}>Loading dashboard...</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  // Handle error state
+  if (error) {
+    return (
+      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+        <View style={styles.errorContainer}>
+          <Text style={[styles.errorText, { color: theme.colors.text }]}>
+            Failed to load dashboard data
+          </Text>
+          <TouchableOpacity 
+            style={[styles.retryButton, { backgroundColor: theme.colors.primary }]} 
+            onPress={refetch}
+          >
+            <Text style={styles.retryButtonText}>Retry</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
-      <Stack.Screen 
+      <Stack.Screen
         options={{
-          title: 'Enterprise Dashboard',
-          headerStyle: { backgroundColor: '#f8f9fa' },
-          headerTitleStyle: { color: '#1a1a1a', fontWeight: '600' }
-        }} 
+          headerShown: false,
+        }}
       />
-      
-      <ScrollView style={styles.content}>
-        <View style={styles.header}>
-          <View style={styles.titleSection}>
-            <Building2 size={28} color="#007AFF" />
-            <View>
-              <Text style={styles.title}>Enterprise Dashboard</Text>
-              <Text style={styles.subtitle}>Comprehensive business overview</Text>
+
+      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+        {/* Premium Enterprise Header */}
+        <View style={[styles.premiumHeader, { paddingTop: 20, backgroundColor: theme.colors.cardBackground }]}>
+          <View style={styles.headerTop}>
+            <TouchableOpacity onPress={() => router.back()}>
+              <ArrowLeft size={24} color={theme.colors.text} />
+            </TouchableOpacity>
+            <Text style={[styles.premiumTitle, { color: theme.colors.text }]}>Enterprise Core</Text>
+            <TouchableOpacity style={styles.settingsButton}>
+              <Settings size={20} color={theme.colors.text} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.headerMetrics}>
+            <View style={styles.hMetric}>
+              <Text style={[styles.hMetricVal, { color: theme.colors.text }]}>$2.4M</Text>
+              <Text style={[styles.hMetricLab, { color: theme.colors.secondaryText }]}>Total MRR</Text>
+            </View>
+            <View style={styles.hMetricDivider} />
+            <View style={styles.hMetric}>
+              <Text style={[styles.hMetricVal, { color: '#34C759' }]}>99.9%</Text>
+              <Text style={[styles.hMetricLab, { color: theme.colors.secondaryText }]}>Core Uptime</Text>
+            </View>
+            <View style={styles.hMetricDivider} />
+            <View style={styles.hMetric}>
+              <Text style={[styles.hMetricVal, { color: theme.colors.primary }]}>Active</Text>
+              <Text style={[styles.hMetricLab, { color: theme.colors.secondaryText }]}>Security</Text>
             </View>
           </View>
-          
-          <TouchableOpacity style={styles.settingsButton}>
-            <Settings size={20} color="#666" />
-          </TouchableOpacity>
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Key Metrics</Text>
+          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Metrics</Text>
           <View style={styles.metricsGrid}>
             {metrics.map(metric => (
               <MetricCard key={metric.id} metric={metric} />
@@ -236,25 +312,25 @@ export default function EnterpriseDashboardScreen() {
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>System Status</Text>
-          <View style={styles.statusContainer}>
+          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>System Status</Text>
+          <View style={[styles.statusContainer, { backgroundColor: theme.colors.cardBackground, borderColor: theme.colors.border }]}>
             <View style={styles.statusItem}>
               <View style={[styles.statusIndicator, { backgroundColor: '#34C759' }]} />
-              <Text style={styles.statusText}>All Systems Operational</Text>
+              <Text style={[styles.statusText, { color: theme.colors.text }]}>All Systems Operational</Text>
             </View>
             <View style={styles.statusItem}>
               <View style={[styles.statusIndicator, { backgroundColor: '#FF9500' }]} />
-              <Text style={styles.statusText}>2 Scheduled Maintenance</Text>
+              <Text style={[styles.statusText, { color: theme.colors.text }]}>2 Scheduled Maintenance</Text>
             </View>
             <View style={styles.statusItem}>
-              <View style={[styles.statusIndicator, { backgroundColor: '#007AFF' }]} />
-              <Text style={styles.statusText}>API Rate Limit: 85%</Text>
+              <View style={[styles.statusIndicator, { backgroundColor: theme.colors.primary }]} />
+              <Text style={[styles.statusText, { color: theme.colors.text }]}>API Rate Limit: 85%</Text>
             </View>
           </View>
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Quick Actions</Text>
+          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
           <View style={styles.actionsGrid}>
             {actions.map(action => (
               <ActionCard key={action.id} action={action} />
@@ -263,35 +339,35 @@ export default function EnterpriseDashboardScreen() {
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Recent Activity</Text>
-          <View style={styles.activityContainer}>
+          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Recent Activity</Text>
+          <View style={[styles.activityContainer, { backgroundColor: theme.colors.cardBackground, borderColor: theme.colors.border }]}>
             <View style={styles.activityItem}>
-              <View style={styles.activityIcon}>
-                <Users size={16} color="#007AFF" />
+              <View style={[styles.activityIcon, { backgroundColor: theme.colors.background }]}>
+                <Users size={16} color={theme.colors.primary} />
               </View>
               <View style={styles.activityContent}>
-                <Text style={styles.activityTitle}>New user registration spike</Text>
-                <Text style={styles.activityTime}>2 hours ago</Text>
+                <Text style={[styles.activityTitle, { color: theme.colors.text }]}>New user registration spike</Text>
+                <Text style={[styles.activityTime, { color: theme.colors.secondaryText }]}>2 hours ago</Text>
               </View>
             </View>
-            
+
             <View style={styles.activityItem}>
-              <View style={styles.activityIcon}>
+              <View style={[styles.activityIcon, { backgroundColor: theme.colors.background }]}>
                 <Shield size={16} color="#34C759" />
               </View>
               <View style={styles.activityContent}>
-                <Text style={styles.activityTitle}>Security scan completed</Text>
-                <Text style={styles.activityTime}>4 hours ago</Text>
+                <Text style={[styles.activityTitle, { color: theme.colors.text }]}>Security scan completed</Text>
+                <Text style={[styles.activityTime, { color: theme.colors.secondaryText }]}>4 hours ago</Text>
               </View>
             </View>
-            
+
             <View style={styles.activityItem}>
-              <View style={styles.activityIcon}>
+              <View style={[styles.activityIcon, { backgroundColor: theme.colors.background }]}>
                 <BarChart3 size={16} color="#FF9500" />
               </View>
               <View style={styles.activityContent}>
-                <Text style={styles.activityTitle}>Monthly report generated</Text>
-                <Text style={styles.activityTime}>6 hours ago</Text>
+                <Text style={[styles.activityTitle, { color: theme.colors.text }]}>Monthly report generated</Text>
+                <Text style={[styles.activityTime, { color: theme.colors.secondaryText }]}>6 hours ago</Text>
               </View>
             </View>
           </View>
@@ -473,5 +549,86 @@ const styles = StyleSheet.create({
   activityTime: {
     fontSize: 12,
     color: '#666'
-  }
+  },
+  premiumHeader: {
+    paddingHorizontal: 20,
+    paddingBottom: 24,
+    borderBottomLeftRadius: 32,
+    borderBottomRightRadius: 32,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.05,
+    shadowRadius: 15,
+    elevation: 10,
+    zIndex: 10,
+    marginBottom: 20,
+  },
+  headerTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  premiumTitle: {
+    fontSize: 22,
+    fontWeight: '800',
+    letterSpacing: -0.5,
+  },
+  headerMetrics: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+  },
+  hMetric: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  hMetricVal: {
+    fontSize: 18,
+    fontWeight: '800',
+    letterSpacing: -0.5,
+  },
+  hMetricLab: {
+    fontSize: 10,
+    fontWeight: '700',
+    marginTop: 2,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  hMetricDivider: {
+    width: 1,
+    height: 24,
+    backgroundColor: 'rgba(150,150,150,0.1)',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 16,
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 32,
+  },
+  errorText: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  retryButton: {
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 8,
+  },
+  retryButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+  },
 });

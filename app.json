@@ -1,21 +1,21 @@
 {
   "expo": {
-    "name": "Unifiedze/ unifex final",
-    "slug": "unifiedze-unifex-final",
-    "version": "2.1.0",
+    "name": "kaytx",
+    "slug": "kaytx",
+    "version": "2.5.8",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/icon.jpg",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/images/splash-icon.png",
+      "image": "./assets/images/splash-icon.jpg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "app.rork.unifiedze-unifex-final",
+      "bundleIdentifier": "app.rork.kaytx",
       "infoPlist": {
         "NSFaceIDUsageDescription": "Allow $(PRODUCT_NAME) to access your Face ID biometric data."
       },
@@ -25,19 +25,21 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/icon.jpg",
         "backgroundColor": "#ffffff"
       },
-      "package": "app.rork.unifiedze_unifex_final"
+      "package": "app.rork.kaytx"
     },
     "web": {
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/favicon.jpg",
+      "bundler": "metro"
     },
     "plugins": [
       [
         "expo-router",
         {
-          "origin": "https://rork.com/"
+          "origin": "https://rork.com/",
+          "root": "./app"
         }
       ],
       [
@@ -49,7 +51,7 @@
       ]
     ],
     "experiments": {
-      "typedRoutes": true
+      "typedRoutes": false
     }
   }
 }

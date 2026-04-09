@@ -1,3 +1,4 @@
+ 
 import React, { useState } from 'react';
 import {
   View,
@@ -408,47 +409,70 @@ export default function AutomationHubScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      {/* Header */}
-      <View style={[styles.header, { backgroundColor: theme.colors.background, paddingTop: insets.top + 10 }]}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <ArrowLeft size={24} color={theme.colors.text} />
-        </TouchableOpacity>
-        <Text style={[styles.title, { color: theme.colors.text }]}>Automation Hub</Text>
-        <TouchableOpacity style={styles.headerButton}>
-          <Plus size={20} color={theme.colors.text} />
-        </TouchableOpacity>
+      {/* Premium Header */}
+      <View style={[styles.premiumHeader, { paddingTop: insets.top + 20, backgroundColor: theme.colors.cardBackground }]}>
+        <View style={styles.headerTop}>
+          <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+            <ArrowLeft size={24} color={theme.colors.text} />
+          </TouchableOpacity>
+          <Text style={[styles.premiumTitle, { color: theme.colors.text }]}>Autonomous Ops</Text>
+          <TouchableOpacity style={[styles.createBtn, { backgroundColor: theme.colors.primary }]}>
+            <Plus size={20} color="#fff" />
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.headerStats}>
+          <View style={styles.headerStat}>
+            <Text style={[styles.headerStatVal, { color: theme.colors.text }]}>12.4k</Text>
+            <Text style={[styles.headerStatLab, { color: theme.colors.secondaryText }]}>Total Executions</Text>
+          </View>
+          <View style={styles.headerStatDivider} />
+          <View style={styles.headerStat}>
+            <Text style={[styles.headerStatVal, { color: '#34C759' }]}>98.2%</Text>
+            <Text style={[styles.headerStatLab, { color: theme.colors.secondaryText }]}>Avg Success</Text>
+          </View>
+          <View style={styles.headerStatDivider} />
+          <View style={styles.headerStat}>
+            <Text style={[styles.headerStatVal, { color: theme.colors.primary }]}>$18.4k</Text>
+            <Text style={[styles.headerStatLab, { color: theme.colors.secondaryText }]}>Ops ROI</Text>
+          </View>
+        </View>
       </View>
 
       {/* Tabs */}
-      <View style={styles.tabsContainer}>
-        {(['automations', 'templates', 'analytics', 'logs'] as const).map((tab) => (
-          <TouchableOpacity
-            key={tab}
-            style={[
-              styles.tab,
-              selectedTab === tab && { backgroundColor: theme.colors.primary },
-            ]}
-            onPress={() => setSelectedTab(tab)}
-          >
-            <Text
+      <View style={styles.premiumTabsWrapper}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.premiumTabs}>
+          {(['automations', 'templates', 'analytics', 'logs'] as const).map((tab) => (
+            <TouchableOpacity
+              key={tab}
               style={[
-                styles.tabText,
-                {
-                  color: selectedTab === tab ? 'white' : theme.colors.secondaryText,
-                },
+                styles.premiumTab,
+                selectedTab === tab && { backgroundColor: theme.colors.primary },
               ]}
+              onPress={() => setSelectedTab(tab)}
             >
-              {tab.charAt(0).toUpperCase() + tab.slice(1)}
-            </Text>
-          </TouchableOpacity>
-        ))}
+              <Text
+                style={[
+                  styles.premiumTabText,
+                  {
+                    color: selectedTab === tab ? 'white' : theme.colors.secondaryText,
+                  },
+                ]}
+              >
+                {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
       </View>
 
       {/* Content */}
-      {selectedTab === 'automations' && renderAutomations()}
-      {selectedTab === 'templates' && renderTemplates()}
-      {selectedTab === 'analytics' && renderAnalytics()}
-      {selectedTab === 'logs' && renderLogs()}
+      <View style={{ flex: 1 }}>
+        {selectedTab === 'automations' && renderAutomations()}
+        {selectedTab === 'templates' && renderTemplates()}
+        {selectedTab === 'analytics' && renderAnalytics()}
+        {selectedTab === 'logs' && renderLogs()}
+      </View>
     </View>
   );
 }
@@ -745,5 +769,79 @@ const styles = StyleSheet.create({
   },
   logDetails: {
     fontSize: 13,
+  },
+  premiumHeader: {
+    paddingHorizontal: 20,
+    paddingBottom: 24,
+    borderBottomLeftRadius: 32,
+    borderBottomRightRadius: 32,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 4,
+  },
+  headerTop: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  premiumTitle: {
+    fontSize: 20,
+    fontWeight: '800',
+    flex: 1,
+    textAlign: 'center',
+  },
+  createBtn: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerStats: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: 10,
+  },
+  headerStat: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  headerStatVal: {
+    fontSize: 18,
+    fontWeight: '900',
+    marginBottom: 2,
+  },
+  headerStatLab: {
+    fontSize: 9,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+  },
+  headerStatDivider: {
+    width: 1,
+    height: 20,
+    backgroundColor: 'rgba(150,150,150,0.1)',
+  },
+  premiumTabsWrapper: {
+    marginBottom: 16,
+  },
+  premiumTabs: {
+    paddingHorizontal: 20,
+    gap: 8,
+  },
+  premiumTab: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 16,
+    backgroundColor: 'rgba(150,150,150,0.05)',
+  },
+  premiumTabText: {
+    fontSize: 12,
+    fontWeight: '800',
+    letterSpacing: 0.5,
   },
 });

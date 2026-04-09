@@ -20,7 +20,7 @@ export class GRPCBridge extends BaseBridge {
   private streams: Map<string, any> = new Map();
 
   constructor(config: GRPCBridgeConfig) {
-    super(config);
+    super({ ...config, protocol: 'grpc' });
     this.grpcConfig = config;
   }
 
@@ -153,7 +153,6 @@ export class GRPCBridge extends BaseBridge {
 
     stream.on('end', () => {
       console.log(`[GRPCBridge:${this.config.id}] Stream ended`);
-      this.handleReconnect();
     });
 
     this.streams.set('main', stream);

@@ -1,3 +1,4 @@
+ 
 import React, { useState } from 'react';
 import {
   View,
@@ -120,7 +121,7 @@ export default function ReceptionistAssistantScreen() {
               Configure your AI Receptionist
             </Text>
             <Text style={[styles.welcomeText, { color: theme.colors.secondaryText }]}>
-              You can ask me to change routing rules, update voice scripts, or schedule "Do Not Disturb" times.
+              You can ask me to change routing rules, update voice scripts, or schedule &quot;Do Not Disturb&quot; times.
             </Text>
           </View>
 

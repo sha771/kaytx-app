@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { Alert, Linking } from 'react-native';
 import { router } from 'expo-router';
@@ -36,7 +37,7 @@ interface Platform {
   id: string;
   name: string;
   service: string;
-  connectionType: 'qr-code' | 'oauth' | 'credentials' | 'google-account';
+  connectionType: 'qr-code' | 'oauth' | 'credentials' | 'google-account' | 'phone-verify';
 }
 
 export function usePlatformConnection() {
@@ -58,6 +59,11 @@ export function usePlatformConnection() {
     webhookEnabled: true,
     multiDeviceMode: true,
   });
+
+  const clearLastVerifyError = useCallback((prev: QRState): QRState => {
+    const { lastVerifyError: _lastVerifyError, ...rest } = prev;
+    return rest;
+  }, []);
 
   const connectQRMutation = trpc.platforms.connectQR.useMutation();
   const verifyQRMutation = trpc.platforms.verifyQR.useMutation();
@@ -106,7 +112,7 @@ export function usePlatformConnection() {
         const result = await connectQRMutation.mutateAsync({
           platformId: platform.id,
           platformName: platform.name,
-          connectionType: platform.connectionType,
+          connectionType: 'qr-code',
         });
 
         setSessionData({
@@ -116,10 +122,9 @@ export function usePlatformConnection() {
         });
 
         setQrState((prev) => ({
-          ...prev,
+          ...clearLastVerifyError(prev),
           expiresAtIso: result.expiresAt,
           remainingSeconds: computeRemainingSeconds(result.expiresAt),
-          lastVerifyError: undefined,
         }));
 
         return {
@@ -142,7 +147,7 @@ export function usePlatformConnection() {
     async (platform: Platform, linkingCode?: string) => {
       if (!platform || !sessionData.sessionId) return false;
 
-      setQrState((prev) => ({ ...prev, lastVerifyError: undefined }));
+      setQrState((prev) => clearLastVerifyError(prev));
       setIsConnecting(true);
       try {
         const result = await verifyQRMutation.mutateAsync({
@@ -172,7 +177,7 @@ export function usePlatformConnection() {
         setIsConnecting(false);
       }
     },
-    [sessionData.sessionId, verifyQRMutation]
+    [clearLastVerifyError, sessionData.sessionId, verifyQRMutation]
   );
 
   const handleOAuthConnect = useCallback(
@@ -325,20 +330,55 @@ export function usePlatformConnection() {
     [authData.twoFactorCode, authData.email, sessionData.sessionId, verify2FAMutation]
   );
 
-  const handleGoogleAccountConnect = useCallback(() => {
-    setIsConnecting(true);
-    console.log('Connecting via Google Account...');
+  const handleGoogleAccountConnect = useCallback(async (platform: Platform) => {
+    if (!checkAuthentication()) return null;
 
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        setIsConnecting(false);
-        resolve({
-          success: true,
-          accountName: 'Google Account',
-        });
-      }, 2000);
-    });
-  }, []);
+    setIsConnecting(true);
+    console.log('Initiating Google Account OAuth...');
+
+    try {
+      // Use the existing OAuth mutation with Google-specific configuration
+      const result = await connectOAuthMutation.mutateAsync({
+        platformId: platform.id,
+        platformName: 'google',
+        redirectUri: 'com.kaytx.app:/oauth/callback',
+      });
+
+      console.log('Google OAuth URL:', result.authUrl);
+
+      const supported = await Linking.canOpenURL(result.authUrl);
+      if (supported) {
+        await Linking.openURL(result.authUrl);
+      } else {
+        // Fallback to in-app browser or WebView
+        Alert.alert(
+          'Open Browser',
+          'Please complete Google authentication in your browser',
+          [
+            { text: 'Cancel', style: 'cancel' },
+            { 
+              text: 'Open', 
+              onPress: () => Linking.openURL(result.authUrl)
+            }
+          ]
+        );
+      }
+
+      return {
+        success: true,
+        accountName: result.accountName || 'Google Account',
+      };
+    } catch (error: any) {
+      console.error('Failed to initiate Google OAuth:', error);
+      Alert.alert(
+        'Connection Failed', 
+        error?.message || 'Failed to connect Google Account. Please try again.'
+      );
+      return null;
+    } finally {
+      setIsConnecting(false);
+    }
+  }, [checkAuthentication, connectOAuthMutation]);
 
   const resetAuthData = useCallback(() => {
     setAuthData({

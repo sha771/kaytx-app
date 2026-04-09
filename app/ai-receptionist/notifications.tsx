@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+ 
+import React, { useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -6,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Switch,
+  ActivityIndicator,
 } from 'react-native';
 import {
   Bell,
@@ -21,72 +23,37 @@ import {
   Settings,
   Trash2,
   Check,
+  Lock,
+  User,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Stack } from 'expo-router';
-
-interface Notification {
-  id: string;
-  title: string;
-  message: string;
-  type: 'call' | 'appointment' | 'message' | 'alert' | 'info';
-  timestamp: string;
-  isRead: boolean;
-  priority: 'high' | 'medium' | 'low';
-}
-
-const mockNotifications: Notification[] = [
-  {
-    id: '1',
-    title: 'Missed Call',
-    message: 'You missed a call from Jennifer Smith at 2:30 PM',
-    type: 'call',
-    timestamp: '2024-01-15T14:30:00',
-    isRead: false,
-    priority: 'high',
-  },
-  {
-    id: '2',
-    title: 'Upcoming Appointment',
-    message: 'Product Demo with Michael Johnson starts in 1 hour',
-    type: 'appointment',
-    timestamp: '2024-01-15T13:00:00',
-    isRead: false,
-    priority: 'high',
-  },
-  {
-    id: '3',
-    title: 'New Message',
-    message: 'You have 3 new messages in your inbox',
-    type: 'message',
-    timestamp: '2024-01-15T12:45:00',
-    isRead: true,
-    priority: 'medium',
-  },
-  {
-    id: '4',
-    title: 'System Alert',
-    message: 'AI receptionist successfully handled 45 calls today',
-    type: 'info',
-    timestamp: '2024-01-15T12:00:00',
-    isRead: true,
-    priority: 'low',
-  },
-  {
-    id: '5',
-    title: 'High Volume Alert',
-    message: 'Call volume is 30% higher than usual. Consider adjusting availability',
-    type: 'alert',
-    timestamp: '2024-01-15T11:30:00',
-    isRead: true,
-    priority: 'medium',
-  },
-];
+import { Stack, useRouter } from 'expo-router';
+import { trpc } from '@/lib/trpc';
 
 export default function ReceptionistNotificationsScreen() {
   const { theme } = useTheme();
-  const [notifications, setNotifications] = useState(mockNotifications);
+  const router = useRouter();
   const [showSettings, setShowSettings] = useState(false);
+  
+  // Real tRPC data
+  const { data: subscription } = trpc.user.getSubscription.useQuery();
+  const isEnterprise = subscription?.plan === 'enterprise';
+
+  const { data: notifications = [], isLoading, refetch } = trpc.receptionist.getNotifications.useQuery();
+  const utils = trpc.useUtils();
+
+  const markAsReadMutation = trpc.receptionist.markNotificationRead.useMutation({
+    onSuccess: () => utils.receptionist.getNotifications.invalidate(),
+  });
+
+  const markAllAsReadMutation = trpc.receptionist.markAllNotificationsRead.useMutation({
+    onSuccess: () => utils.receptionist.getNotifications.invalidate(),
+  });
+
+  const deleteNotificationMutation = trpc.receptionist.deleteNotification.useMutation({
+    onSuccess: () => utils.receptionist.getNotifications.invalidate(),
+  });
+
   const [notificationSettings, setNotificationSettings] = useState({
     calls: true,
     appointments: true,
@@ -97,20 +64,18 @@ export default function ReceptionistNotificationsScreen() {
     smsNotifications: false,
   });
 
-  const unreadCount = notifications.filter(n => !n.isRead).length;
+  const unreadCount = useMemo(() => notifications.filter(n => !n.isRead).length, [notifications]);
 
   const markAsRead = (id: string) => {
-    setNotifications(prev =>
-      prev.map(n => (n.id === id ? { ...n, isRead: true } : n))
-    );
+    markAsReadMutation.mutate({ id });
   };
 
   const markAllAsRead = () => {
-    setNotifications(prev => prev.map(n => ({ ...n, isRead: true })));
+    markAllAsReadMutation.mutate();
   };
 
   const deleteNotification = (id: string) => {
-    setNotifications(prev => prev.filter(n => n.id !== id));
+    deleteNotificationMutation.mutate({ id });
   };
 
   const getNotificationIcon = (type: string) => {
@@ -201,6 +166,14 @@ export default function ReceptionistNotificationsScreen() {
             </Text>
 
             <View style={[styles.settingCard, { backgroundColor: theme.colors.cardBackground }]}>
+              {!isEnterprise && (
+                <TouchableOpacity 
+                  style={styles.lockOverlay}
+                  onPress={() => router.push('/enterprise-admin')}
+                >
+                  <Lock size={20} color={theme.colors.text} />
+                </TouchableOpacity>
+              )}
               <View style={styles.settingRow}>
                 <View style={styles.settingLeft}>
                   <Phone size={20} color="#34C759" />
@@ -211,7 +184,8 @@ export default function ReceptionistNotificationsScreen() {
                   onValueChange={value =>
                     setNotificationSettings({ ...notificationSettings, calls: value })
                   }
-                  trackColor={{ false: '#D1D1D6', true: theme.colors.primary }}
+                  trackColor={{ false: theme.colors.border, true: theme.colors.primary }}
+                  thumbColor={notificationSettings.calls ? '#fff' : '#f4f3f4'}
                 />
               </View>
 
@@ -371,8 +345,13 @@ export default function ReceptionistNotificationsScreen() {
       </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        <View style={styles.notificationsList}>
-          {notifications.map(notification => {
+        {isLoading ? (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color={theme.colors.primary} />
+          </View>
+        ) : (
+          <View style={styles.notificationsList}>
+            {notifications.map(notification => {
             const Icon = getNotificationIcon(notification.type);
             const iconColor = getNotificationColor(notification.type);
             const priorityColor = getPriorityColor(notification.priority);
@@ -451,12 +430,13 @@ export default function ReceptionistNotificationsScreen() {
               <Text style={[styles.emptyTitle, { color: theme.colors.text }]}>
                 No notifications
               </Text>
-              <Text style={[styles.emptySubtitle, { color: theme.colors.secondaryText }]}>
-                You're all caught up!
+              <Text style={[styles.notificationMessage, { color: theme.colors.secondaryText }]}>
+                You&apos;re all caught up!
               </Text>
             </View>
           )}
         </View>
+        )}
       </ScrollView>
     </View>
   );
@@ -643,5 +623,18 @@ const styles = StyleSheet.create({
   settingDescription: {
     fontSize: 13,
     marginTop: 2,
+  },
+  loadingContainer: {
+    padding: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  lockOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    borderRadius: 12,
+    zIndex: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

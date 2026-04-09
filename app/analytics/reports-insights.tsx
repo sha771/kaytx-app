@@ -1,8 +1,11 @@
+ 
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
 import { BarChart3, TrendingUp, Users, DollarSign, Settings, Plus, Search, Filter, Calendar, Target } from 'lucide-react-native';
+import { useTheme } from '@/providers/ThemeProvider';
+import { trpc } from '@/lib/trpc';
 
 interface AnalyticsData {
   id: string;
@@ -88,7 +91,13 @@ const mockReports: ReportItem[] = [
 ];
 
 export default function ReportsInsightsScreen() {
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const { theme } = useTheme();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedPeriod, setSelectedPeriod] = useState('30d');
+
+  // tRPC data fetching
+  const { data: analyticsData, isLoading: analyticsLoading } = trpc.analytics.getReports.useQuery({ period: selectedPeriod });
+  const { data: reportsData, isLoading: reportsLoading } = trpc.analytics.getInsights.useQuery({ search: searchQuery });
 
   const getTrendColor = (trend: AnalyticsData['trend']) => {
     switch (trend) {
@@ -99,14 +108,17 @@ export default function ReportsInsightsScreen() {
     }
   };
 
-  const getTrendIcon = (trend: AnalyticsData['trend']) => {
+  const getTrendIcon = (trend: 'up' | 'down' | 'stable') => {
     switch (trend) {
       case 'up': return <TrendingUp size={16} color="#10B981" />;
       case 'down': return <TrendingUp size={16} color="#EF4444" style={{ transform: [{ rotate: '180deg' }] }} />;
-      case 'stable': return <BarChart3 size={16} color="#6B7280" />;
-      default: return <BarChart3 size={16} color="#6B7280" />;
+      default: return <TrendingUp size={16} color="#6B7280" style={{ transform: [{ rotate: '90deg' }] }} />;
     }
   };
+
+  const filteredReports = (reportsData || []).filter(report =>
+    report.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const getTypeColor = (type: ReportItem['type']) => {
     switch (type) {
@@ -166,7 +178,7 @@ export default function ReportsInsightsScreen() {
           <Text style={styles.sectionTitle}>Key Metrics</Text>
           
           <View style={styles.metricsGrid}>
-            {mockAnalytics.map((metric) => (
+            {(analyticsData || []).map((metric) => (
               <View key={metric.id} style={styles.metricCard}>
                 <View style={styles.metricHeader}>
                   <Text style={styles.metricName}>{metric.metric}</Text>
@@ -189,7 +201,7 @@ export default function ReportsInsightsScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Available Reports</Text>
           
-          {mockReports.map((report) => (
+          {filteredReports.map((report) => (
             <TouchableOpacity key={report.id} style={styles.reportCard}>
               <View style={styles.reportHeader}>
                 <View style={styles.reportInfo}>

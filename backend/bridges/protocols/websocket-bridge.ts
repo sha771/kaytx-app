@@ -1,7 +1,8 @@
 import { BaseBridge, BridgeConfig, BridgeMessage } from '../core/base-bridge';
 import { BridgeConnectionState } from '../types';
-// import { Platform } from 'react-native';
-const Platform = { OS: typeof document !== 'undefined' ? 'web' : 'node' };
+
+const isNode = typeof process !== 'undefined' && process.versions?.node;
+const getPlatform = () => isNode ? 'node' : 'web';
 
 interface WebSocketBridgeConfig extends BridgeConfig {
   endpoint: string;
@@ -9,6 +10,11 @@ interface WebSocketBridgeConfig extends BridgeConfig {
   headers?: Record<string, string>;
   pingInterval?: number;
   pongTimeout?: number;
+  tls?: {
+    enabled?: boolean;
+    minVersion?: string;
+    verifyPeer?: boolean;
+  };
 }
 
 export class WebSocketBridge extends BaseBridge {
@@ -19,22 +25,22 @@ export class WebSocketBridge extends BaseBridge {
   private wsConfig: WebSocketBridgeConfig;
 
   constructor(config: WebSocketBridgeConfig) {
-    super(config);
+    super({ ...config, protocol: 'websocket' });
     this.wsConfig = config;
   }
 
   async connect(): Promise<BridgeConnectionState> {
     console.log(`[WebSocketBridge:${this.config.id}] Connecting to ${this.wsConfig.endpoint}`);
-
+    
     this.setState({ status: 'connecting', startedAt: Date.now() });
 
     try {
-      const protocol = this.config.tls?.enabled ? 'wss://' : 'ws://';
-      const endpoint = this.wsConfig.endpoint.startsWith('ws')
-        ? this.wsConfig.endpoint
+      const protocol = this.wsConfig.tls?.enabled ? 'wss://' : 'ws://';
+      const endpoint = this.wsConfig.endpoint.startsWith('ws') 
+        ? this.wsConfig.endpoint 
         : `${protocol}${this.wsConfig.endpoint}`;
 
-      if (Platform.OS === 'web') {
+      if (getPlatform() === 'web') {
         if (typeof WebSocket !== 'undefined') {
           this.ws = new WebSocket(endpoint, this.wsConfig.protocols);
           this.setupWebEventHandlers();
@@ -63,7 +69,7 @@ export class WebSocketBridge extends BaseBridge {
           reject(error);
         };
 
-        if (Platform.OS === 'web' && this.ws && typeof this.ws.addEventListener === 'function') {
+        if (getPlatform() === 'web' && this.ws && typeof this.ws.addEventListener === 'function') {
           this.ws.addEventListener('open', onOpen, { once: true });
           this.ws.addEventListener('error', onError, { once: true });
         } else {
@@ -79,7 +85,7 @@ export class WebSocketBridge extends BaseBridge {
         details: {
           endpoint: endpoint,
           protocol: this.wsConfig.protocols?.[0] || 'default',
-          tls: this.config.tls?.enabled,
+          tls: this.wsConfig.tls?.enabled,
         },
       };
 
@@ -138,7 +144,6 @@ export class WebSocketBridge extends BaseBridge {
     this.ws.onclose = () => {
       console.log(`[WebSocketBridge:${this.config.id}] Connection closed`);
       this.setState({ status: 'disconnected' });
-      this.handleReconnect();
     };
   }
 
@@ -216,7 +221,6 @@ export class WebSocketBridge extends BaseBridge {
     this.ws.addEventListener('close', () => {
       console.log(`[WebSocketBridge:${this.config.id}] Connection closed`);
       this.setState({ status: 'disconnected' });
-      this.handleReconnect();
     });
   }
 

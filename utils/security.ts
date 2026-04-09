@@ -99,7 +99,8 @@ export const validation = {
     if (!phone) {
       return { valid: false, error: 'Phone number is required' };
     }
-    if (!validator.isMobilePhone(phone, 'any')) {
+    const normalized = String(phone).trim();
+    if (!/^\+[1-9]\d{9,14}$/.test(normalized)) {
       return { valid: false, error: 'Invalid phone number format' };
     }
     return { valid: true };

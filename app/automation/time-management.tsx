@@ -1,8 +1,9 @@
+ 
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Clock, Calendar, Timer, Play, Pause, RotateCcw, Plus, BarChart3 } from 'lucide-react-native';
+import { Clock, Calendar, Timer as TimerIcon, Play, Pause, RotateCcw, Plus, BarChart3 } from 'lucide-react-native';
 
 interface TimeEntry {
   id: string;

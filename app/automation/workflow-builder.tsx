@@ -1,8 +1,9 @@
+ 
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Workflow, Plus, Play, Pause, Settings, Zap, GitBranch, Clock } from 'lucide-react-native';
+import { Workflow, Plus, Play, Pause, Settings, Zap, GitBranch, Clock, ChevronRight } from 'lucide-react-native';
 
 interface WorkflowStep {
   id: string;

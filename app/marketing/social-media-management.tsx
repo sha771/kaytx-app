@@ -1,3 +1,4 @@
+ 
 import React, { useState } from 'react';
 import {
   View,
@@ -13,16 +14,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   ArrowLeft,
   Share2,
-  Users,
-  Calendar,
   Plus,
   Search,
-  TrendingUp,
   MessageSquare,
   Heart,
   Eye,
-  BarChart3,
-  Settings,
   Instagram,
   Facebook,
   Twitter,

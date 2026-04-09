@@ -1,4 +1,4 @@
-import { nanoid } from 'nanoid';
+import crypto from 'crypto';
 
 export interface PrivacySettings {
   userId: string;
@@ -113,7 +113,7 @@ export function createDataExportRequest(
 ): DataExportRequest {
   const now = Date.now();
   return {
-    id: nanoid(),
+    id: crypto.randomUUID(),
     userId,
     status: 'pending',
     requestedAt: now,
@@ -135,14 +135,14 @@ export function createDataDeletionRequest(
 ): DataDeletionRequest {
   const now = Date.now();
   return {
-    id: nanoid(),
+    id: crypto.randomUUID(),
     userId,
     status: 'pending',
     requestedAt: now,
     scheduledFor: now + DELETION_GRACE_PERIOD,
     deleteType: options.deleteType,
     dataTypes: options.dataTypes,
-    reason: options.reason,
+    ...(options.reason ? { reason: options.reason } : {}),
     cancellationDeadline: now + DELETION_GRACE_PERIOD,
   };
 }
@@ -155,14 +155,14 @@ export function recordConsent(
   userAgent?: string
 ): ConsentRecord {
   return {
-    id: nanoid(),
+    id: crypto.randomUUID(),
     userId,
     consentType,
     version: CURRENT_CONSENT_VERSION,
     granted,
     timestamp: Date.now(),
-    ipAddress,
-    userAgent,
+    ...(typeof ipAddress === 'string' ? { ipAddress } : {}),
+    ...(typeof userAgent === 'string' ? { userAgent } : {}),
   };
 }
 
@@ -176,14 +176,14 @@ export function logDataAccess(
   ipAddress?: string
 ): DataAccessLog {
   return {
-    id: nanoid(),
+    id: crypto.randomUUID(),
     userId,
     accessedBy,
     accessType,
     dataType,
     reason,
     timestamp: Date.now(),
-    ipAddress,
+    ...(typeof ipAddress === 'string' ? { ipAddress } : {}),
     success,
   };
 }
@@ -192,7 +192,7 @@ export function anonymizeUserData(data: any): any {
   const anonymized = { ...data };
   
   if (anonymized.email) {
-    anonymized.email = `user_${nanoid(8)}@anonymized.local`;
+    anonymized.email = `user_${crypto.randomBytes(4).toString('hex')}@anonymized.local`;
   }
   
   if (anonymized.phone) {
@@ -200,7 +200,7 @@ export function anonymizeUserData(data: any): any {
   }
   
   if (anonymized.name) {
-    anonymized.name = `Anonymous User ${nanoid(6)}`;
+    anonymized.name = `Anonymous User ${crypto.randomBytes(3).toString('hex')}`;
   }
   
   if (anonymized.ipAddress) {

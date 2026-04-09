@@ -1,7 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { router } from 'expo-router';
 import { useTheme } from '@/providers/ThemeProvider';
+import { trpc } from '@/lib/trpc';
 import type { AssistantPageDefinition, AssistantPageMetric } from '@/constants/aiAssistantPlaybooks';
 
 interface AIAssistantPlaybookProps {
@@ -20,6 +21,26 @@ const statusColors: Record<string, { text: string; background: string }> = {
 
 export function AIAssistantPlaybook({ title, subtitle, stats, pages, testID }: AIAssistantPlaybookProps) {
   const { theme } = useTheme();
+
+  // Fetch real-time metrics for playbook categories from tRPC
+  const { data: statsData } = trpc.aiAgents.getStats.useQuery({ 
+    category: 'all' 
+  });
+
+  const mergedStats = useMemo(() => {
+    if (!statsData) return stats;
+    
+    // Dynamically update stats based on real backend data if possible
+    return stats.map(s => {
+      if (s.label.toLowerCase().includes('accuracy') || s.label.toLowerCase().includes('success')) {
+        return { ...s, value: `${statsData.avgSuccessRate}%` };
+      }
+      if (s.label.toLowerCase().includes('active') || s.label.toLowerCase().includes('live')) {
+        return { ...s, value: statsData.activeAgents.toString() };
+      }
+      return s;
+    });
+  }, [stats, statsData]);
 
   const handleNavigate = useCallback((route: string, pageId: string) => {
     console.log('[AIAssistantPlaybook] navigate', { route, pageId });
@@ -51,7 +72,7 @@ export function AIAssistantPlaybook({ title, subtitle, stats, pages, testID }: A
       </View>
 
       <FlatList
-        data={stats}
+        data={mergedStats}
         horizontal
         keyExtractor={({ label }) => label}
         renderItem={renderMetric}

@@ -1,3 +1,4 @@
+ 
 import React, { useState } from 'react';
 import {
   View,
@@ -12,48 +13,72 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
-  BarChart3,
-  MessageSquare,
-  Users,
-  TrendingUp,
-  Clock,
-  Plus,
-  Settings,
-  Bell,
-  Search,
-  Menu,
-  X,
-  Bot,
-  Phone,
-  Zap,
-  Building,
-  UserCheck,
-  Target,
-  BarChart,
   Activity,
-  Globe,
   ArrowUpRight,
-  CheckCircle,
-  AlertTriangle,
-  Info,
-  FileText,
-  Workflow,
-  Handshake,
-  PieChart,
+  BarChart,
   BarChart2,
-  Mail,
-  MessageCircle as MessageCircleIcon,
-  TestTube,
-  Megaphone,
-  HelpCircle,
+  BarChart3,
+  Bell,
+  Bot,
   Brain,
+  Building,
   Calendar,
+  Calculator,
+  CheckCircle,
+  Clock,
+  Code,
+  Database,
+  Eye,
+  FileText,
+  Filter,
+  Globe,
+  Handshake,
+  Hash,
+  Headphones,
+  HelpCircle,
+  Image as ImageIcon,
+  Inbox,
+  Info,
+  Layers,
+  Lightbulb,
+  LineChart,
+  Mail,
+  Megaphone,
+  Menu,
+  MessageCircle as MessageCircleIcon,
+  MessageSquare,
+  Monitor,
+  Phone,
+  PieChart,
+  Plus,
+  Radio,
+  Scale,
+  Search,
+  SearchCheck,
+  Send,
+  Settings,
+  Share2,
+  Shield,
+  Sparkles,
+  Star,
+  Sunrise,
+  Target,
+  TestTube,
+  TrendingUp,
+  UserCheck,
+  UserPlus,
+  Users,
+  Video,
+  Workflow,
+  X,
+  Zap,
+  Crown,
+  AlertTriangle,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useMessaging } from '@/providers/MessagingProvider';
 import { router } from 'expo-router';
-
-
+import { QuickLinks } from '@/components/RelatedFeatures';
 
 interface QuickAction {
   id: string;
@@ -85,17 +110,75 @@ interface SidebarSubItem {
   icon: React.ComponentType<any>;
 }
 
+interface SmartFeature {
+  id: string;
+  title: string;
+  description: string;
+  icon: React.ComponentType<any>;
+  color: string;
+  enabled: boolean;
+}
+
 const sidebarOptions: SidebarOption[] = [
   {
+    id: 'command-center',
+    title: 'Command Center',
+    icon: Crown,
+    color: '#D4AF37',
+    subItems: [
+      { id: 'cc-1', title: 'Command Center', icon: Crown },
+    ],
+  },
+  {
+    id: 'social-media',
+    title: 'Social Media Management',
+    icon: Share2,
+    color: '#E91E63',
+    subItems: [
+      { id: 'sm-1', title: 'Dashboard', icon: Activity },
+      { id: 'sm-2', title: 'Content Calendar', icon: Calendar },
+      { id: 'sm-3', title: 'Post Scheduler', icon: Clock },
+      { id: 'sm-4', title: 'Social Analytics', icon: LineChart },
+      { id: 'sm-5', title: 'Engagement Hub', icon: MessageCircleIcon },
+      { id: 'sm-6', title: 'Hashtag Manager', icon: Hash },
+      { id: 'sm-7', title: 'Competitor Analysis', icon: Eye },
+      { id: 'sm-8', title: 'Content Library', icon: ImageIcon },
+      { id: 'sm-9', title: 'Social Listening', icon: Radio },
+      { id: 'sm-10', title: 'Influencer Tracking', icon: UserPlus },
+      { id: 'sm-11', title: 'Brand Monitoring', icon: Shield },
+      { id: 'sm-12', title: 'Stories & Reels', icon: Video },
+      { id: 'sm-13', title: 'Social Inbox', icon: Inbox },
+      { id: 'sm-14', title: 'Cross-Platform Publishing', icon: Send },
+      { id: 'sm-15', title: 'Performance Reports', icon: BarChart2 },
+      { id: 'sm-16', title: 'Audience Insights', icon: Users },
+      { id: 'sm-17', title: 'AI Content Generator', icon: Sparkles },
+      { id: 'sm-18', title: 'Multi-Account Manager', icon: Layers },
+    ],
+  },
+  {
     id: '2',
-    title: 'AI Agents',
+    title: 'AI Agents & Employees',
     icon: Bot,
     color: '#34C759',
     subItems: [
-      { id: '2-1', title: 'AI Agent', icon: Bot },
-      { id: '2-7', title: 'AI Negotiation Assistant', icon: Handshake },
-      { id: '2-8', title: 'Call Summary & Notes', icon: FileText },
-      { id: '2-5', title: 'AI Workflow', icon: Workflow },
+      // Line 1
+      { id: '2-el', title: 'Executive & Leadership AI', icon: Crown },
+      { id: '2-af', title: 'Accounting & Finance AI', icon: Calculator },
+      { id: '2-ce', title: 'Customer Experience AI', icon: Headphones },
+      { id: '2-sr', title: 'Sales & Revenue AI', icon: TrendingUp },
+      { id: '2-mg', title: 'Marketing & Growth AI', icon: Megaphone },
+      // Line 2
+      { id: '2-pr', title: 'Product & R&D AI', icon: Lightbulb },
+      { id: '2-om', title: 'Operations & Management AI', icon: Settings },
+      { id: '2-sm', title: 'Social Media Management AI', icon: Share2 },
+      { id: '2-di', title: 'Data & Intelligence AI', icon: Database },
+      { id: '2-ap', title: 'Analysis & Performance AI', icon: BarChart3 },
+      // Line 3
+      { id: '2-hr', title: 'Human Resources AI', icon: Users },
+      { id: '2-it', title: 'IT & Technology AI', icon: Monitor },
+      { id: '2-lc', title: 'Legal & Compliance AI', icon: Scale },
+      { id: '2-ed', title: 'Engineering & Development AI', icon: Code },
+      { id: '2-pa', title: 'AI Personal Assistant', icon: Bot },
     ],
   },
   {
@@ -215,6 +298,64 @@ export default function HomeScreen() {
   const [notifications] = useState<number>(3);
   const [systemStatus] = useState<'online' | 'maintenance' | 'issues'>('online');
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
+  const [smartFeatures, setSmartFeatures] = useState<SmartFeature[]>([
+    {
+      id: 'universal-search',
+      title: 'Universal Search',
+      description: 'Search across all messages, contacts, and files',
+      icon: SearchCheck,
+      color: '#007AFF',
+      enabled: true,
+    },
+    {
+      id: 'prioritised-messaging',
+      title: 'Prioritised Messaging',
+      description: 'AI-powered message prioritization',
+      icon: Star,
+      color: '#FF9500',
+      enabled: true,
+    },
+    {
+      id: 'daily-briefing',
+      title: 'Daily Briefing',
+      description: 'Your personalized morning summary',
+      icon: Sunrise,
+      color: '#34C759',
+      enabled: true,
+    },
+  ]);
+
+  const toggleSmartFeature = (featureId: string) => {
+    setSmartFeatures(prev => 
+      prev.map(f => f.id === featureId ? { ...f, enabled: !f.enabled } : f)
+    );
+  };
+
+  const handleSmartFeaturePress = (feature: SmartFeature) => {
+    switch (feature.id) {
+      case 'universal-search':
+        Alert.alert(
+          'Universal Search',
+          'Search across all your messages, contacts, files, and conversations from one place.',
+          [{ text: 'Open Search', onPress: () => console.log('Open universal search') }, { text: 'Cancel' }]
+        );
+        break;
+      case 'prioritised-messaging':
+        Alert.alert(
+          'Prioritised Messaging',
+          'AI automatically prioritizes your messages based on urgency, sender importance, and content analysis.',
+          [{ text: 'View Priority Inbox', onPress: () => router.push('/(tabs)/messages') }, { text: 'Cancel' }]
+        );
+        break;
+      case 'daily-briefing':
+        Alert.alert(
+          'Daily Briefing',
+          'Your personalized morning summary includes:\n\n• Today\'s meetings & tasks\n• Important messages\n• Key updates from your team\n• AI-generated insights',
+          [{ text: 'View Briefing', onPress: () => console.log('Open daily briefing') }, { text: 'Cancel' }]
+        );
+        break;
+    }
+  };
 
   const quickActions: QuickAction[] = [
     {
@@ -373,10 +514,22 @@ export default function HomeScreen() {
     setShowSidebar(false);
     // Navigate to specific pages based on subItem
     const routeMap: { [key: string]: string } = {
-      '2-1': '/ai-agent/ai-agent',
-      '2-5': '/ai-agent/ai-workflow',
-      '2-7': '/ai-agent/ai-negotiation-assistant',
-      '2-8': '/ai-agent/call-summary-note',
+      // AI Agents & Employees - 15 Departments
+      '2-el': '/ai-agent/executive-leadership-ai',
+      '2-af': '/ai-agent/accounting-finance-ai',
+      '2-ce': '/ai-agent/customer-experience-ai',
+      '2-sr': '/ai-agent/sales-revenue-ai',
+      '2-mg': '/ai-agent/marketing-growth-ai',
+      '2-pr': '/ai-agent/product-rnd-ai',
+      '2-om': '/ai-agent/operations-management-ai',
+      '2-sm': '/ai-agent/social-media-management-ai',
+      '2-di': '/ai-agent/data-intelligence-ai',
+      '2-ap': '/ai-agent/analysis-performance-ai',
+      '2-hr': '/ai-agent/human-resources-ai',
+      '2-it': '/ai-agent/it-technology-ai',
+      '2-lc': '/ai-agent/legal-compliance-ai',
+      '2-ed': '/ai-agent/engineering-development-ai',
+      '2-pa': '/ai-agent/ai-personal-assistant-ai',
       '3-1': '/ai-receptionist/dashboard',
       '3-2': '/ai-receptionist/phone-numbers',
       '3-3': '/ai-receptionist/call-logs',
@@ -416,7 +569,24 @@ export default function HomeScreen() {
       '7-2': '/marketing/email-marketing-hub',
       '7-3': '/analytics/ab-testing',
       '7-4': '/marketing/campaign',
-
+      'sm-1': '/social-media/dashboard',
+      'sm-2': '/social-media/content-calendar',
+      'sm-3': '/social-media/post-scheduler',
+      'sm-4': '/social-media/analytics',
+      'sm-5': '/social-media/engagement',
+      'sm-6': '/social-media/hashtags',
+      'sm-7': '/social-media/competitor-analysis',
+      'sm-8': '/social-media/content-library',
+      'sm-9': '/social-media/social-listening',
+      'sm-10': '/social-media/influencer-tracking',
+      'sm-11': '/social-media/brand-monitoring',
+      'sm-12': '/social-media/stories-reels',
+      'sm-13': '/social-media/social-inbox',
+      'sm-14': '/social-media/cross-platform',
+      'sm-15': '/social-media/reports',
+      'sm-16': '/social-media/audience-insights',
+      'sm-17': '/social-media/ai-content',
+      'sm-18': '/social-media/multi-account',
     };
     
     const route = routeMap[subItem.id];
@@ -561,6 +731,59 @@ export default function HomeScreen() {
             </View>
           </View>
         </View>
+        {/* Smart Features */}
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
+              Smart Features
+            </Text>
+            <TouchableOpacity>
+              <Filter size={18} color={theme.colors.secondaryText} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.smartFeaturesContainer}>
+            {smartFeatures.map((feature) => {
+              const FeatureIcon = feature.icon;
+              return (
+                <TouchableOpacity
+                  key={feature.id}
+                  style={[
+                    styles.smartFeatureCard,
+                    { 
+                      backgroundColor: theme.colors.cardBackground,
+                      borderLeftColor: feature.color,
+                      opacity: feature.enabled ? 1 : 0.6,
+                    },
+                  ]}
+                  onPress={() => handleSmartFeaturePress(feature)}
+                  onLongPress={() => toggleSmartFeature(feature.id)}
+                >
+                  <View style={[styles.smartFeatureIcon, { backgroundColor: `${feature.color}15` }]}>
+                    <FeatureIcon size={22} color={feature.color} />
+                  </View>
+                  <View style={styles.smartFeatureContent}>
+                    <Text style={[styles.smartFeatureTitle, { color: theme.colors.text }]}>
+                      {feature.title}
+                    </Text>
+                    <Text style={[styles.smartFeatureDesc, { color: theme.colors.secondaryText }]} numberOfLines={1}>
+                      {feature.description}
+                    </Text>
+                  </View>
+                  <View style={[
+                    styles.smartFeatureStatus,
+                    { backgroundColor: feature.enabled ? '#34C75920' : '#8E8E9320' }
+                  ]}>
+                    <View style={[
+                      styles.smartFeatureStatusDot,
+                      { backgroundColor: feature.enabled ? '#34C759' : '#8E8E93' }
+                    ]} />
+                  </View>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        </View>
+
         {/* Quick Actions */}
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
@@ -609,6 +832,7 @@ export default function HomeScreen() {
             </View>
           </View>
           <FlatList
+            key={width > 768 ? 'stats-grid-3' : 'stats-grid-2'}
             data={stats}
             renderItem={renderStatCard}
             keyExtractor={(item) => item.title}
@@ -637,6 +861,34 @@ export default function HomeScreen() {
             scrollEnabled={false}
           />
         </View>
+
+        {/* Related Features - AI & Automation */}
+        <QuickLinks
+          groupId="ai"
+          title="AI Features"
+          maxItems={6}
+        />
+
+        {/* Related Features - Automation */}
+        <QuickLinks
+          groupId="automation"
+          title="Automation Tools"
+          maxItems={6}
+        />
+
+        {/* Related Features - Business */}
+        <QuickLinks
+          groupId="business"
+          title="Business Management"
+          maxItems={6}
+        />
+
+        {/* Related Features - Marketing */}
+        <QuickLinks
+          groupId="marketing"
+          title="Marketing Tools"
+          maxItems={6}
+        />
       </ScrollView>
 
       {/* Sidebar Overlay */}
@@ -1062,5 +1314,52 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 14,
     fontWeight: '400',
+  },
+  smartFeaturesContainer: {
+    gap: 12,
+  },
+  smartFeatureCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    borderRadius: 14,
+    borderLeftWidth: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 3,
+  },
+  smartFeatureIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 14,
+  },
+  smartFeatureContent: {
+    flex: 1,
+  },
+  smartFeatureTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 3,
+  },
+  smartFeatureDesc: {
+    fontSize: 13,
+  },
+  smartFeatureStatus: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 8,
+  },
+  smartFeatureStatusDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
   },
 });

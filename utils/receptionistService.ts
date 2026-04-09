@@ -1,13 +1,73 @@
-import { mockReceptionistAnalytics, mockReceptionistCallLogs } from '@/utils/mockNegotiationData';
+// Type definitions for receptionist service
+import type { 
+  ReceptionistCallType, 
+  ReceptionistCallStatus, 
+  ReceptionistSentiment, 
+  ReceptionistCategory,
+  ReceptionistCallLog,
+  ReceptionistCallAnalytics 
+} from '../types/receptionist';
+
 import {
   ReceptionistAnalyticsPayload,
-  ReceptionistCallAnalytics,
-  ReceptionistCallLog,
   ReceptionistRealtimeInsight,
   NumericTrendMetric,
   StringTrendMetric,
   TrendDirection,
 } from '@/types/receptionist';
+
+// Mock data for receptionist service
+const mockReceptionistAnalytics: ReceptionistCallAnalytics = {
+  totalCalls: 1250,
+  answeredCalls: 1180,
+  missedCalls: 70,
+  avgHandleTime: '4:05',
+  positiveSentimentRate: 78,
+  categories: [
+    { name: 'general', count: 450, percentage: 36 },
+    { name: 'appointments', count: 320, percentage: 26 },
+    { name: 'emergencies', count: 180, percentage: 14 },
+    { name: 'information', count: 300, percentage: 24 },
+  ],
+  hourlyLoad: [
+    { hour: '09:00', calls: 145, load: 0.72 },
+    { hour: '10:00', calls: 189, load: 0.95 },
+    { hour: '14:00', calls: 167, load: 0.84 },
+    { hour: '15:00', calls: 178, load: 0.89 },
+  ],
+  appointmentsBooked: { current: 45, change: 3, trend: 'up' },
+  avgResponseTime: { current: '2:30', change: -15, trend: 'up' },
+  satisfaction: { current: 92, change: 2, trend: 'up' },
+};
+
+const mockReceptionistCallLogs = [
+  {
+    id: '1',
+    callId: 'call-1',
+    callerName: 'John Doe',
+    callerPhone: '+1234567890',
+    callType: 'inbound',
+    duration: '4:05',
+    timestamp: new Date('2026-01-29T10:30:00Z'),
+    status: 'answered',
+    summary: 'Scheduled appointment for next week',
+    sentiment: 'positive',
+    category: 'appointments',
+  },
+  {
+    id: '2',
+    callId: 'call-2',
+    callerName: 'Jane Smith',
+    callerPhone: '+0987654321',
+    callType: 'inbound',
+    duration: '3:09',
+    timestamp: new Date('2026-01-29T11:45:00Z'),
+    status: 'answered',
+    summary: 'General inquiry resolved',
+    sentiment: 'neutral',
+    category: 'general',
+  },
+];
 
 const delay = (ms: number = 320) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -39,7 +99,7 @@ const parseDurationToSeconds = (value: string) => {
   }
   const segments = value.split(':').map(segment => Number(segment));
   if (segments.length === 3) {
-    const [hours, minutes, seconds] = segments;
+    const [hours = 0, minutes = 0, seconds = 0] = segments;
     return hours * 3600 + minutes * 60 + seconds;
   }
   const [minutes = 0, seconds = 0] = segments;
@@ -60,13 +120,13 @@ const normalizeCallLog = (log: typeof mockReceptionistCallLogs[number]): Recepti
   callId: log.callId,
   callerName: log.callerName,
   callerPhone: log.callerPhone,
-  callType: log.callType,
+  callType: log.callType as ReceptionistCallType,
   duration: log.duration,
-  timestamp: log.timestamp,
-  status: log.status,
-  summary: log.summary,
-  sentiment: log.sentiment,
-  category: (log.category ?? 'other') as ReceptionistCallLog['category'],
+  timestamp: log.timestamp.toISOString(),
+  status: log.status as ReceptionistCallStatus,
+  summary: log.summary ?? '',
+  sentiment: log.sentiment as ReceptionistSentiment,
+  category: (log.category ?? 'other') as ReceptionistCategory,
 });
 
 const buildAnalyticsFromLogs = (logs: ReceptionistCallLog[]): ReceptionistCallAnalytics => {
@@ -86,8 +146,8 @@ const buildAnalyticsFromLogs = (logs: ReceptionistCallLog[]): ReceptionistCallAn
 
   const categories = Object.keys(categoryCounter).map(name => ({
     name,
-    count: categoryCounter[name],
-    percentage: Math.round((categoryCounter[name] / Math.max(totalCalls, 1)) * 1000) / 10,
+    count: categoryCounter[name] ?? 0,
+    percentage: Math.round(((categoryCounter[name] ?? 0) / Math.max(totalCalls, 1)) * 1000) / 10,
   }));
 
   const hourlyCounter = logs.reduce<Record<string, number>>((acc, log) => {
@@ -112,21 +172,21 @@ const buildAnalyticsFromLogs = (logs: ReceptionistCallLog[]): ReceptionistCallAn
       };
       return parseHour(a) - parseHour(b);
     })
-    .map(label => ({ hour: label, calls: hourlyCounter[label] }));
+    .map(label => ({ hour: label, calls: hourlyCounter[label] ?? 0, load: 0.5 }));
 
-  if (categories.length === 0 && mockReceptionistAnalytics.callsByCategory) {
-    mockReceptionistAnalytics.callsByCategory.forEach(category => {
+  if (categories.length === 0 && mockReceptionistAnalytics.categories) {
+    mockReceptionistAnalytics.categories.forEach((category) => {
       categories.push({
-        name: category.category,
+        name: category.name,
         count: category.count,
         percentage: category.percentage,
       });
     });
   }
 
-  if (hourlyLoad.length === 0 && mockReceptionistAnalytics.peakHours) {
-    mockReceptionistAnalytics.peakHours.forEach(hour => {
-      hourlyLoad.push({ hour: hour.hour, calls: hour.calls });
+  if (hourlyLoad.length === 0 && mockReceptionistAnalytics.hourlyLoad) {
+    mockReceptionistAnalytics.hourlyLoad.forEach((hour) => {
+      hourlyLoad.push({ hour: hour.hour, calls: hour.calls, load: hour.load });
     });
   }
 
@@ -142,9 +202,9 @@ const buildAnalyticsFromLogs = (logs: ReceptionistCallLog[]): ReceptionistCallAn
     positiveSentimentRate,
     categories,
     hourlyLoad,
-    appointmentsBooked: appointmentsTrend,
-    avgResponseTime: responseTrend,
-    satisfaction: satisfactionTrend,
+    ...(appointmentsTrend ? { appointmentsBooked: appointmentsTrend } : {}),
+    ...(responseTrend ? { avgResponseTime: responseTrend } : {}),
+    ...(satisfactionTrend ? { satisfaction: satisfactionTrend } : {}),
   };
 };
 

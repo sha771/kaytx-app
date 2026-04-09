@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+ 
+import React, { useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -27,6 +28,21 @@ import {
 import { useTheme } from '@/providers/ThemeProvider';
 import { Stack } from 'expo-router';
 import { mockReceptionistAppointments } from '@/utils/mockNegotiationData';
+import { trpc } from '@/lib/trpc';
+import type { NegotiationAppointment } from '@/types/negotiation';
+
+type Appointment = {
+  id: string;
+  title: string;
+  callerName: string;
+  date: string;
+  time: string;
+  duration: string;
+  type: 'phone' | 'video' | 'in-person';
+  status: 'scheduled' | 'completed' | 'cancelled' | 'rescheduled';
+  notes?: string;
+  reminders?: boolean;
+};
 
 export default function ReceptionistAppointmentsScreen() {
   const { theme } = useTheme();
@@ -35,10 +51,48 @@ export default function ReceptionistAppointmentsScreen() {
   const [selectedAppointment, setSelectedAppointment] = useState<any>(null);
   const [viewMode, setViewMode] = useState<'list' | 'calendar'>('list');
 
-  const appointments = mockReceptionistAppointments;
+  // Fetch real statistics from tRPC
+  const { data: statsData } = trpc.aiAgents.getStats.useQuery({ category: 'customer-experience' });
+  const { data: appointmentsData, isLoading: appointmentsLoading } = trpc.calling.getQueue.useQuery();
+  const { data: subscription } = trpc.enterprise.getSubscription.useQuery();
 
-  const upcomingAppointments = appointments.filter(apt => apt.status === 'scheduled');
-  const todayAppointments = appointments.filter(apt => apt.date === new Date().toISOString().split('T')[0]);
+  const isEnterprise = useMemo(() => {
+    return subscription?.plan === 'enterprise' || subscription?.plan === 'professional';
+  }, [subscription]);
+
+  const appointments = useMemo<Appointment[]>(() => {
+    if (appointmentsData) {
+      return appointmentsData.map((a: any) => ({
+        id: a.id,
+        title: a.action || 'Receptionist Appointment',
+        callerName: a.agentName || 'Client',
+        date: new Date(a.timestamp).toISOString().split('T')[0],
+        time: new Date(a.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        duration: a.duration || '30 min',
+        status: (a.status === 'completed' ? 'completed' : 'scheduled') as Appointment['status'],
+        type: 'phone' as const,
+        notes: a.notes,
+        reminders: Boolean(a.reminders),
+      }));
+    }
+    return mockReceptionistAppointments.map((apt: NegotiationAppointment) => ({
+      id: apt.id,
+      title: apt.title,
+      callerName: apt.customerName,
+      date: apt.date,
+      time: apt.time,
+      duration: apt.duration,
+      type: apt.type,
+      status: apt.status,
+      notes: apt.notes,
+      reminders: apt.reminders,
+    }));
+  }, [appointmentsData]);
+
+  const upcomingAppointments = appointments.filter((apt: Appointment) => apt.status === 'scheduled');
+  const todayAppointments = appointments.filter(
+    (apt: Appointment) => apt.date === new Date().toISOString().split('T')[0],
+  );
 
   const getTypeIcon = (type: string) => {
     switch (type) {
@@ -101,13 +155,13 @@ export default function ReceptionistAppointmentsScreen() {
           </View>
           <View style={[styles.statBox, { backgroundColor: theme.colors.cardBackground }]}>
             <Text style={[styles.statValue, { color: theme.colors.text }]}>
-              {appointments.filter(a => a.type === 'video').length}
+              {appointments.filter((a: Appointment) => a.type === 'video').length}
             </Text>
             <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Video</Text>
           </View>
           <View style={[styles.statBox, { backgroundColor: theme.colors.cardBackground }]}>
             <Text style={[styles.statValue, { color: theme.colors.text }]}>
-              {appointments.filter(a => a.type === 'phone').length}
+              {appointments.filter((a: Appointment) => a.type === 'phone').length}
             </Text>
             <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Phone</Text>
           </View>
@@ -121,7 +175,7 @@ export default function ReceptionistAppointmentsScreen() {
             </Text>
           </View>
 
-          {todayAppointments.map(appointment => {
+          {todayAppointments.map((appointment: Appointment) => {
             const TypeIcon = getTypeIcon(appointment.type);
             const typeColor = getTypeColor(appointment.type);
 
@@ -162,7 +216,7 @@ export default function ReceptionistAppointmentsScreen() {
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Upcoming</Text>
 
-          {upcomingAppointments.map(appointment => {
+          {upcomingAppointments.map((appointment: Appointment) => {
             const TypeIcon = getTypeIcon(appointment.type);
             const typeColor = getTypeColor(appointment.type);
 

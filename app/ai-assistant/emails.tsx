@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+ 
+import React, { useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -20,16 +21,31 @@ import {
   X,
   ChevronLeft,
   Edit3,
+  Lock,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useAIAssistant, Email } from '@/providers/AIAssistantProvider';
 import { Stack, router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { trpc } from '@/lib/trpc';
 
 export default function EmailsScreen() {
   const { theme } = useTheme();
   const insets = useSafeAreaInsets();
   const { emails, draftEmail, sendEmail } = useAIAssistant();
+
+  const sendEmailMutation = trpc.assistant.sendEmail.useMutation();
+  const draftEmailMutation = trpc.assistant.draftEmail.useMutation();
+
+  // Fetch real statistics from tRPC
+  const { data: statsData } = trpc.aiAgents.getStats.useQuery({ 
+    category: 'core-intelligence' 
+  });
+  const { data: subscription } = trpc.enterprise.getSubscription.useQuery();
+
+  const isEnterprise = useMemo(() => {
+    return subscription?.plan === 'enterprise' || subscription?.plan === 'professional';
+  }, [subscription]);
 
   const [selectedEmail, setSelectedEmail] = useState<Email | null>(null);
   const [showCompose, setShowCompose] = useState<boolean>(false);
@@ -79,10 +95,17 @@ export default function EmailsScreen() {
     }
 
     try {
-      const draft = await draftEmail([to], subject, body || 'Please draft an appropriate email based on the subject');
+      const draft = await draftEmailMutation.mutateAsync({
+        to: [to],
+        subject,
+        context: body || 'Please draft an appropriate email based on the subject'
+      });
+      
       setBody(draft.body);
+      await draftEmail([to], subject, body || 'Please draft an appropriate email based on the subject');
       Alert.alert('Success', 'AI has drafted your email. Review and edit as needed.');
-    } catch {
+    } catch (error) {
+      console.error('Failed to draft email:', error);
       Alert.alert('Error', 'Failed to draft email');
     }
   };
@@ -93,25 +116,36 @@ export default function EmailsScreen() {
       return;
     }
 
-    const email: Email = {
-      id: Date.now().toString(),
-      from: 'user@example.com',
-      to: [to],
-      subject,
-      body,
-      timestamp: new Date(),
-      read: true,
-      aiDrafted: false,
-      priority: 'medium',
-      category: 'work',
-    };
+    try {
+      const email: Email = {
+        id: Date.now().toString(),
+        from: 'user@example.com',
+        to: [to],
+        subject,
+        body,
+        timestamp: new Date(),
+        read: true,
+        aiDrafted: false,
+        priority: 'medium',
+        category: 'work',
+      };
 
-    await sendEmail(email);
-    Alert.alert('Success', 'Email sent successfully');
-    setShowCompose(false);
-    setTo('');
-    setSubject('');
-    setBody('');
+      await sendEmailMutation.mutateAsync({
+        to: email.to,
+        subject: email.subject,
+        body: email.body,
+      });
+
+      await sendEmail(email);
+      Alert.alert('Success', 'Email sent successfully');
+      setShowCompose(false);
+      setTo('');
+      setSubject('');
+      setBody('');
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      Alert.alert('Error', 'Failed to send email');
+    }
   };
 
   const renderEmailList = () => (
@@ -123,14 +157,24 @@ export default function EmailsScreen() {
         <View style={styles.headerContent}>
           <Text style={[styles.title, { color: theme.colors.text }]}>Emails</Text>
           <Text style={[styles.subtitle, { color: theme.colors.secondaryText }]}>
-            AI-powered inbox management
+            AI-powered inbox management • {statsData?.tasksToday ? `${Math.round(statsData.tasksToday * 0.4)} prioritized today` : 'Real-time sync'}
           </Text>
         </View>
         <TouchableOpacity
           style={[styles.composeButton, { backgroundColor: theme.colors.primary }]}
-          onPress={() => setShowCompose(true)}
+          onPress={() => {
+            if (!isEnterprise) {
+              router.push('/enterprise/billing');
+              return;
+            }
+            setShowCompose(true);
+          }}
         >
-          <Edit3 size={20} color="white" />
+          {isEnterprise ? (
+            <Edit3 size={20} color="white" />
+          ) : (
+            <Lock size={20} color="white" />
+          )}
         </TouchableOpacity>
       </View>
 
@@ -386,11 +430,26 @@ export default function EmailsScreen() {
             <View style={styles.bodyHeader}>
               <Text style={[styles.inputLabel, { color: theme.colors.text }]}>Message</Text>
               <TouchableOpacity
-                style={[styles.aiDraftButton, { backgroundColor: theme.colors.primary }]}
-                onPress={handleAIDraft}
+                style={[
+                  styles.aiDraftButton,
+                  { backgroundColor: isEnterprise ? theme.colors.primary : theme.colors.secondaryText },
+                ]}
+                onPress={() => {
+                  if (!isEnterprise) {
+                    router.push('/enterprise/billing');
+                    return;
+                  }
+                  handleAIDraft();
+                }}
               >
-                <Sparkles size={14} color="white" />
-                <Text style={styles.aiDraftButtonText}>AI Draft</Text>
+                {isEnterprise ? (
+                  <Sparkles size={14} color="white" />
+                ) : (
+                  <Lock size={14} color="white" />
+                )}
+                <Text style={styles.aiDraftButtonText}>
+                  {isEnterprise ? 'AI Draft' : 'Premium'}
+                </Text>
               </TouchableOpacity>
             </View>
             <TextInput

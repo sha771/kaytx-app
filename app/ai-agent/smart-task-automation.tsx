@@ -31,6 +31,7 @@ import {
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
+import { trpc } from '@/lib/trpc';
 
 interface AutomationTask {
   id: string;
@@ -56,91 +57,6 @@ interface AutomationTemplate {
   usageCount: number;
 }
 
-const mockTasks: AutomationTask[] = [
-  {
-    id: '1',
-    name: 'Welcome Email Sequence',
-    description: 'Automatically send welcome emails to new subscribers',
-    category: 'email',
-    status: 'active',
-    trigger: 'New subscriber signup',
-    lastRun: '2024-01-19 14:30',
-    nextRun: 'On trigger',
-    executionCount: 145,
-    successRate: 98.6,
-    timeSaved: '12.5 hours',
-  },
-  {
-    id: '2',
-    name: 'Social Media Posting',
-    description: 'Auto-post content across social media platforms',
-    category: 'social',
-    status: 'active',
-    trigger: 'Daily at 9:00 AM',
-    lastRun: '2024-01-19 09:00',
-    nextRun: '2024-01-20 09:00',
-    executionCount: 28,
-    successRate: 100,
-    timeSaved: '8.2 hours',
-  },
-  {
-    id: '3',
-    name: 'Lead Scoring Update',
-    description: 'Update lead scores based on engagement data',
-    category: 'data',
-    status: 'paused',
-    trigger: 'Weekly on Monday',
-    lastRun: '2024-01-15 10:00',
-    nextRun: '2024-01-22 10:00',
-    executionCount: 12,
-    successRate: 91.7,
-    timeSaved: '6.8 hours',
-  },
-  {
-    id: '4',
-    name: 'Task Assignment',
-    description: 'Automatically assign tasks based on team availability',
-    category: 'workflow',
-    status: 'failed',
-    trigger: 'New task created',
-    lastRun: '2024-01-19 11:45',
-    nextRun: 'On trigger',
-    executionCount: 67,
-    successRate: 85.1,
-    timeSaved: '15.3 hours',
-  },
-];
-
-const mockTemplates: AutomationTemplate[] = [
-  {
-    id: '1',
-    name: 'Email Drip Campaign',
-    description: 'Set up automated email sequences for nurturing leads',
-    category: 'email',
-    complexity: 'medium',
-    estimatedTime: '30 minutes',
-    usageCount: 234,
-  },
-  {
-    id: '2',
-    name: 'Social Media Scheduler',
-    description: 'Schedule and auto-post content across platforms',
-    category: 'social',
-    complexity: 'simple',
-    estimatedTime: '15 minutes',
-    usageCount: 189,
-  },
-  {
-    id: '3',
-    name: 'Data Sync Workflow',
-    description: 'Sync data between different systems automatically',
-    category: 'data',
-    complexity: 'advanced',
-    estimatedTime: '60 minutes',
-    usageCount: 78,
-  },
-];
-
 export default function SmartTaskAutomationScreen() {
   const { theme } = useTheme();
   const insets = useSafeAreaInsets();
@@ -149,6 +65,87 @@ export default function SmartTaskAutomationScreen() {
   const [filterCategory, setFilterCategory] = useState<'all' | 'email' | 'social' | 'data' | 'workflow' | 'communication'>('all');
   const [autoRetry, setAutoRetry] = useState<boolean>(true);
   const [notifications, setNotifications] = useState<boolean>(true);
+
+  const { data: analytics } = trpc.aiAgents.getAgentAnalytics.useQuery({ timeRange: '7d' });
+  const { data: activityData } = trpc.aiAgents.getAgentActivity.useQuery({ limit: 300 });
+
+  const activities = activityData?.activities ?? [];
+
+  const getRelativeTime = (isoTimestamp?: string) => {
+    if (!isoTimestamp) return '—';
+    const ts = new Date(isoTimestamp).getTime();
+    const delta = Date.now() - ts;
+    if (delta < 60 * 1000) return 'Just now';
+    if (delta < 60 * 60 * 1000) return `${Math.floor(delta / (60 * 1000))} min ago`;
+    if (delta < 24 * 60 * 60 * 1000) return `${Math.floor(delta / (60 * 60 * 1000))} hour ago`;
+    return `${Math.floor(delta / (24 * 60 * 60 * 1000))} day ago`;
+  };
+
+  const categorizeAction = (action: string): AutomationTask['category'] => {
+    const s = (action || '').toLowerCase();
+    if (s.includes('email') || s.includes('mail')) return 'email';
+    if (s.includes('social') || s.includes('linkedin') || s.includes('twitter') || s.includes('instagram')) return 'social';
+    if (s.includes('sync') || s.includes('import') || s.includes('export') || s.includes('score') || s.includes('analytics')) return 'data';
+    if (s.includes('call') || s.includes('message') || s.includes('sms') || s.includes('notify')) return 'communication';
+    return 'workflow';
+  };
+
+  const taskNames = (analytics?.topActions && analytics.topActions.length > 0)
+    ? analytics.topActions.map((a: any) => a.action).filter(Boolean)
+    : Array.from(
+        new Set(
+          activities
+            .map((ev: any) => ev.action || (ev as any).eventType)
+            .filter(Boolean)
+        )
+      ).slice(0, 50);
+
+  const tasks: AutomationTask[] = taskNames.map((name: any, idx: number) => {
+    const last = activities.find((ev: any) => (ev.action || (ev as any).eventType) === name);
+    const lastTs = last?.timestamp ? new Date(last.timestamp).getTime() : 0;
+    const isRecent = lastTs ? Date.now() - lastTs < 24 * 60 * 60 * 1000 : false;
+
+    const status: AutomationTask['status'] =
+      last?.status === 'error'
+        ? 'failed'
+        : last?.status === 'warn'
+          ? 'paused'
+          : isRecent
+            ? 'active'
+            : 'completed';
+
+    const category = categorizeAction(name);
+    const trigger = last?.details?.trigger || last?.details?.source || (last as any)?.eventType || 'Event-driven';
+
+    return {
+      id: `automation-${idx}`,
+      name,
+      description: last?.details?.description || last?.details?.summary || (last as any)?.eventType || 'Automated workflow execution',
+      category,
+      status,
+      trigger,
+      lastRun: getRelativeTime(last?.timestamp),
+      nextRun: typeof last?.details?.nextRun === 'string' ? last.details.nextRun : undefined,
+      executionCount: typeof last?.details?.executions === 'number' ? last.details.executions : 0,
+      successRate: typeof last?.details?.successRate === 'number' ? last.details.successRate : (analytics?.successRate ?? 0),
+      timeSaved: '—',
+    };
+  });
+
+  const templates: AutomationTemplate[] = taskNames.slice(0, 25).map((name: any, idx: number) => {
+    const category = categorizeAction(name);
+    const complexity: AutomationTemplate['complexity'] = (analytics?.successRate ?? 0) >= 85 ? 'simple' : (analytics?.successRate ?? 0) >= 60 ? 'medium' : 'advanced';
+
+    return {
+      id: `template-${idx}`,
+      name,
+      description: 'Template generated from real usage patterns',
+      category,
+      complexity,
+      estimatedTime: '—',
+      usageCount: 0,
+    };
+  });
 
   const getCategoryColor = (category: AutomationTask['category']) => {
     switch (category) {
@@ -190,7 +187,7 @@ export default function SmartTaskAutomationScreen() {
     }
   };
 
-  const filteredTasks = mockTasks.filter(task => {
+  const filteredTasks = tasks.filter(task => {
     const matchesSearch = task.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          task.description.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = filterCategory === 'all' || task.category === filterCategory;
@@ -320,19 +317,19 @@ export default function SmartTaskAutomationScreen() {
         <Text style={[styles.analyticsTitle, { color: theme.colors.text }]}>Automation Performance</Text>
         <View style={styles.metricsGrid}>
           <View style={styles.metricItem}>
-            <Text style={[styles.metricValue, { color: '#007AFF' }]}>42</Text>
+            <Text style={[styles.metricValue, { color: '#007AFF' }]}>{tasks.filter(t => t.status === 'active').length.toLocaleString()}</Text>
             <Text style={[styles.metricLabel, { color: theme.colors.secondaryText }]}>Active Tasks</Text>
           </View>
           <View style={styles.metricItem}>
-            <Text style={[styles.metricValue, { color: '#34C759' }]}>94.2%</Text>
+            <Text style={[styles.metricValue, { color: '#34C759' }]}>{(analytics?.successRate ?? 0).toFixed(1)}%</Text>
             <Text style={[styles.metricLabel, { color: theme.colors.secondaryText }]}>Success Rate</Text>
           </View>
           <View style={styles.metricItem}>
-            <Text style={[styles.metricValue, { color: '#FF9500' }]}>156h</Text>
+            <Text style={[styles.metricValue, { color: '#FF9500' }]}>—</Text>
             <Text style={[styles.metricLabel, { color: theme.colors.secondaryText }]}>Time Saved</Text>
           </View>
           <View style={styles.metricItem}>
-            <Text style={[styles.metricValue, { color: '#FF3B30' }]}>$12.5K</Text>
+            <Text style={[styles.metricValue, { color: '#FF3B30' }]}>{'—'}</Text>
             <Text style={[styles.metricLabel, { color: theme.colors.secondaryText }]}>Cost Savings</Text>
           </View>
         </View>
@@ -349,7 +346,7 @@ export default function SmartTaskAutomationScreen() {
               </Text>
             </View>
             <Text style={[styles.categoryCount, { color: theme.colors.secondaryText }]}>
-              {mockTasks.filter(task => task.category === category).length} tasks
+              {tasks.filter(task => task.category === category).length} tasks
             </Text>
           </View>
         ))}
@@ -503,7 +500,7 @@ export default function SmartTaskAutomationScreen() {
 
       {activeTab === 'templates' && (
         <FlatList
-          data={mockTemplates}
+          data={templates}
           renderItem={renderTemplateItem}
           keyExtractor={(item) => item.id}
           style={styles.list}
@@ -637,9 +634,9 @@ const styles = StyleSheet.create({
   statusBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
+    paddingHorizontal: 6,
+    paddingVertical: 3,
+    borderRadius: 10,
     gap: 4,
     alignSelf: 'flex-start',
   },
@@ -804,9 +801,9 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   categoryDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    width: 6,
+    height: 6,
+    borderRadius: 3,
   },
   categoryName: {
     fontSize: 14,

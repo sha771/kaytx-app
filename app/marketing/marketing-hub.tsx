@@ -1,3 +1,4 @@
+ 
 import React, { useState } from 'react';
 import {
   View,
@@ -160,7 +161,7 @@ const mockCampaigns: Campaign[] = [
 
 const marketingMetrics: MarketingMetric[] = [
   {
-    title: 'Total Revenue',
+    title: 'Autonomous Revenue',
     value: '$124.5K',
     change: '+18.2%',
     icon: DollarSign,
@@ -295,7 +296,7 @@ export default function MarketingHubScreen() {
 
   const filteredCampaigns = mockCampaigns.filter(campaign => {
     const matchesSearch = campaign.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         campaign.description.toLowerCase().includes(searchQuery.toLowerCase());
+      campaign.description.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesFilter = filterStatus === 'all' || campaign.status === filterStatus;
     return matchesSearch && matchesFilter;
   });
@@ -303,7 +304,7 @@ export default function MarketingHubScreen() {
   const renderMetric = ({ item }: { item: MarketingMetric }) => {
     const IconComponent = item.icon;
     const isPositive = item.change.startsWith('+');
-    
+
     return (
       <View style={[styles.metricCard, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.metricHeader}>
@@ -318,7 +319,7 @@ export default function MarketingHubScreen() {
         </View>
         <Text style={[styles.metricValue, { color: theme.colors.text }]}>{item.value}</Text>
         <Text style={[styles.metricTitle, { color: theme.colors.secondaryText }]}>{item.title}</Text>
-        
+
         <View style={styles.trendChart}>
           {item.trend.map((value, index) => {
             const maxValue = Math.max(...item.trend);
@@ -346,7 +347,7 @@ export default function MarketingHubScreen() {
     const openRate = item.sent > 0 ? ((item.opened / item.sent) * 100).toFixed(1) : '0';
     const clickRate = item.opened > 0 ? ((item.clicked / item.opened) * 100).toFixed(1) : '0';
     const conversionRate = item.clicked > 0 ? ((item.converted / item.clicked) * 100).toFixed(1) : '0';
-    
+
     return (
       <TouchableOpacity style={[styles.campaignCard, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.campaignHeader}>
@@ -364,7 +365,7 @@ export default function MarketingHubScreen() {
             </View>
           </View>
         </View>
-        
+
         <View style={styles.campaignBadges}>
           <View style={[styles.statusBadge, { backgroundColor: getStatusColor(item.status) + '20' }]}>
             <View style={[styles.statusDot, { backgroundColor: getStatusColor(item.status) }]} />
@@ -383,7 +384,7 @@ export default function MarketingHubScreen() {
             </Text>
           </View>
         </View>
-        
+
         <View style={styles.campaignStats}>
           <View style={styles.statRow}>
             <View style={styles.statColumn}>
@@ -404,7 +405,7 @@ export default function MarketingHubScreen() {
             </View>
           </View>
         </View>
-        
+
         <View style={styles.campaignFooter}>
           <View style={styles.roiContainer}>
             <Text style={[styles.roiLabel, { color: theme.colors.secondaryText }]}>ROI:</Text>
@@ -417,14 +418,14 @@ export default function MarketingHubScreen() {
               ${item.spent.toLocaleString()} / ${item.budget.toLocaleString()}
             </Text>
             <View style={[styles.budgetBar, { backgroundColor: theme.colors.border }]}>
-              <View 
+              <View
                 style={[
-                  styles.budgetFill, 
-                  { 
+                  styles.budgetFill,
+                  {
                     backgroundColor: item.spent > item.budget ? '#FF3B30' : theme.colors.primary,
                     width: `${Math.min((item.spent / item.budget) * 100, 100)}%`
                   }
-                ]} 
+                ]}
               />
             </View>
           </View>
@@ -520,7 +521,7 @@ export default function MarketingHubScreen() {
 
       <View style={styles.section}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>AI-Powered Tools</Text>
-        
+
         <TouchableOpacity style={[styles.aiToolCard, { backgroundColor: theme.colors.cardBackground }]}>
           <View style={[styles.aiToolIcon, { backgroundColor: '#007AFF20' }]}>
             <Sparkles size={24} color="#007AFF" />
@@ -605,7 +606,7 @@ export default function MarketingHubScreen() {
           />
         </View>
       </View>
-      
+
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filtersContainer}>
         <View style={styles.filters}>
           {(['all', 'active', 'scheduled', 'draft', 'completed'] as const).map((filter) => (
@@ -631,7 +632,7 @@ export default function MarketingHubScreen() {
           ))}
         </View>
       </ScrollView>
-      
+
       <FlatList
         data={filteredCampaigns}
         renderItem={renderCampaign}
@@ -697,7 +698,7 @@ export default function MarketingHubScreen() {
     <ScrollView style={styles.tabContent} showsVerticalScrollIndicator={false}>
       <View style={styles.section}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Marketing Automation</Text>
-        
+
         <TouchableOpacity style={[styles.automationCard, { backgroundColor: theme.colors.cardBackground }]}>
           <View style={[styles.automationIcon, { backgroundColor: '#007AFF20' }]}>
             <Zap size={24} color="#007AFF" />
@@ -771,44 +772,64 @@ export default function MarketingHubScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <View style={[styles.header, { backgroundColor: theme.colors.background, paddingTop: insets.top + 10 }]}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <ArrowLeft size={24} color={theme.colors.text} />
-        </TouchableOpacity>
-        <Text style={[styles.title, { color: theme.colors.text }]}>Marketing Hub</Text>
-        <TouchableOpacity style={styles.headerButton} onPress={() => {}}>
-          <Plus size={24} color={theme.colors.text} />
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.tabsContainer}>
-        {(['overview', 'campaigns', 'analytics', 'automation'] as const).map((tab) => (
-          <TouchableOpacity
-            key={tab}
-            style={[
-              styles.tab,
-              selectedTab === tab && { backgroundColor: theme.colors.primary },
-            ]}
-            onPress={() => setSelectedTab(tab)}
-          >
-            <Text
-              style={[
-                styles.tabText,
-                {
-                  color: selectedTab === tab ? 'white' : theme.colors.secondaryText,
-                },
-              ]}
-            >
-              {tab.charAt(0).toUpperCase() + tab.slice(1)}
-            </Text>
+      {/* Premium Marketing Header */}
+      <View style={[styles.premiumHeader, { paddingTop: insets.top + 20, backgroundColor: theme.colors.cardBackground }]}>
+        <View style={styles.headerTop}>
+          <TouchableOpacity onPress={() => router.back()}>
+            <ArrowLeft size={24} color={theme.colors.text} />
           </TouchableOpacity>
-        ))}
+          <Text style={[styles.premiumTitle, { color: theme.colors.text }]}>Autonomous Marketing</Text>
+          <TouchableOpacity style={[styles.plusBtn, { backgroundColor: theme.colors.primary }]}>
+            <Plus size={20} color="#fff" />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.headerMetrics}>
+          <View style={styles.hMetric}>
+            <Text style={[styles.hMetricVal, { color: theme.colors.text }]}>156k</Text>
+            <Text style={[styles.hMetricLab, { color: theme.colors.secondaryText }]}>Total Audience</Text>
+          </View>
+          <View style={styles.hMetricDivider} />
+          <View style={styles.hMetric}>
+            <Text style={[styles.hMetricVal, { color: '#34C759' }]}>385%</Text>
+            <Text style={[styles.hMetricLab, { color: theme.colors.secondaryText }]}>Autonomous ROI</Text>
+          </View>
+        </View>
       </View>
 
-      {selectedTab === 'overview' && renderOverview()}
-      {selectedTab === 'campaigns' && renderCampaigns()}
-      {selectedTab === 'analytics' && renderAnalytics()}
-      {selectedTab === 'automation' && renderAutomation()}
+      {/* Tabs */}
+      <View style={styles.tabsWrapper}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.tabsScroll}>
+          {(['overview', 'campaigns', 'analytics', 'automation'] as const).map((tab) => (
+            <TouchableOpacity
+              key={tab}
+              style={[
+                styles.pTab,
+                selectedTab === tab && { backgroundColor: theme.colors.primary },
+              ]}
+              onPress={() => setSelectedTab(tab)}
+            >
+              <Text
+                style={[
+                  styles.pTabText,
+                  {
+                    color: selectedTab === tab ? 'white' : theme.colors.secondaryText,
+                  },
+                ]}
+              >
+                {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
+
+      {/* Content */}
+      <View style={{ flex: 1 }}>
+        {selectedTab === 'overview' && renderOverview()}
+        {selectedTab === 'campaigns' && renderCampaigns()}
+        {selectedTab === 'analytics' && renderAnalytics()}
+        {selectedTab === 'automation' && renderAutomation()}
+      </View>
     </View>
   );
 }
@@ -1276,5 +1297,77 @@ const styles = StyleSheet.create({
   aiToolDescription: {
     fontSize: 13,
     lineHeight: 18,
+  },
+  premiumHeader: {
+    paddingHorizontal: 20,
+    paddingBottom: 24,
+    borderBottomLeftRadius: 32,
+    borderBottomRightRadius: 32,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 4,
+  },
+  headerTop: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  premiumTitle: {
+    fontSize: 20,
+    fontWeight: '800',
+    flex: 1,
+    textAlign: 'center',
+  },
+  plusBtn: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerMetrics: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 24,
+  },
+  hMetric: {
+    alignItems: 'center',
+  },
+  hMetricVal: {
+    fontSize: 18,
+    fontWeight: '900',
+  },
+  hMetricLab: {
+    fontSize: 9,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+  },
+  hMetricDivider: {
+    width: 1,
+    height: 20,
+    backgroundColor: 'rgba(150,150,150,0.1)',
+  },
+  tabsWrapper: {
+    marginBottom: 16,
+  },
+  tabsScroll: {
+    paddingHorizontal: 20,
+    gap: 8,
+  },
+  pTab: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 16,
+    backgroundColor: 'rgba(150,150,150,0.05)',
+  },
+  pTabText: {
+    fontSize: 12,
+    fontWeight: '800',
+    letterSpacing: 0.5,
   },
 });

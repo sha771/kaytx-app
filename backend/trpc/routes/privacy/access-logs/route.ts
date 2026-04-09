@@ -1,5 +1,9 @@
 import { z } from 'zod';
-import { protectedProcedure } from '../../../create-context';
+import { permissionProcedure } from '../../../create-context';
+import { db as pgDb } from '../../../../db/connection';
+import { dataAccessLogs } from '../../../../db/drizzle-schema';
+import { and, desc, eq, gte, lte } from 'drizzle-orm';
+import { Permission } from '../../../../lib/rbac';
 
 const schema = z.object({
   startDate: z.number().optional(),
@@ -7,57 +11,30 @@ const schema = z.object({
   limit: z.number().min(1).max(100).default(50),
 });
 
-export default protectedProcedure
+ export default permissionProcedure(Permission.PRIVACY_ACCESS_LOGS_READ)
   .input(schema)
-  .query(({ ctx, input }) => {
+  .query(async ({ ctx, input }) => {
     console.log('[Privacy] Fetching data access logs for user:', ctx.user.id);
-    
-    const mockLogs = [
-      {
-        id: '1',
-        userId: ctx.user.id,
-        accessedBy: ctx.user.id,
-        accessType: 'read' as const,
-        dataType: 'profile',
-        reason: 'User viewed their profile',
-        timestamp: Date.now() - 3600000,
-        success: true,
-      },
-      {
-        id: '2',
-        userId: ctx.user.id,
-        accessedBy: 'system',
-        accessType: 'read' as const,
-        dataType: 'analytics',
-        reason: 'Automated analytics processing',
-        timestamp: Date.now() - 7200000,
-        success: true,
-      },
-      {
-        id: '3',
-        userId: ctx.user.id,
-        accessedBy: ctx.user.id,
-        accessType: 'write' as const,
-        dataType: 'preferences',
-        reason: 'User updated preferences',
-        timestamp: Date.now() - 86400000,
-        success: true,
-      },
-      {
-        id: '4',
-        userId: ctx.user.id,
-        accessedBy: 'admin',
-        accessType: 'read' as const,
-        dataType: 'audit_logs',
-        reason: 'Support ticket investigation',
-        timestamp: Date.now() - 172800000,
-        success: true,
-      },
-    ];
-    
+
+    const start = typeof input.startDate === 'number' ? new Date(input.startDate) : undefined;
+    const end = typeof input.endDate === 'number' ? new Date(input.endDate) : undefined;
+
+    const where = and(
+      eq(dataAccessLogs.userId, ctx.user.id),
+      ...(start ? [gte(dataAccessLogs.timestamp, start)] : []),
+      ...(end ? [lte(dataAccessLogs.timestamp, end)] : [])
+    );
+
+    const logs = await pgDb
+      .select()
+      .from(dataAccessLogs)
+      .where(where)
+      .orderBy(desc(dataAccessLogs.timestamp))
+      .limit(input.limit);
+
     return {
       success: true,
-      logs: mockLogs.slice(0, input.limit),
-      total: mockLogs.length,
+      logs,
+      total: logs.length,
     };
   });

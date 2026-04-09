@@ -1,3 +1,4 @@
+ 
 import React, { useMemo, useState } from 'react';
 import {
   View,
@@ -5,7 +6,9 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  TextInput,
   Switch,
+  ActivityIndicator,
 } from 'react-native';
 import {
   DollarSign,
@@ -30,71 +33,45 @@ import {
   GitBranch,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Stack, router } from 'expo-router';
-
-type EnvironmentStatus = {
-  id: string;
-  label: string;
-  load: number;
-  latency: string;
-  active: boolean;
-};
-
-type ComplianceChecklistItem = {
-  id: string;
-  label: string;
-  description: string;
-  status: 'done' | 'pending';
-};
-
-type ChannelMatrixItem = {
-  id: string;
-  label: string;
-  channel: 'PSTN' | 'WhatsApp' | 'Direct Line';
-  endpoint: string;
-  region: string;
-  latency: string;
-  encrypted: boolean;
-  status: 'active' | 'standby';
-};
-
-type Playbook = {
-  id: string;
-  title: string;
-  description: string;
-};
-
-const automationPlaybooks: Playbook[] = [
-  {
-    id: 'vip-escalation',
-    title: 'VIP escalation mesh',
-    description: 'Route C-level contacts to live concierge + AI warmup',
-  },
-  {
-    id: 'whatsapp-continuity',
-    title: 'WhatsApp continuity',
-    description: 'Keep context between calls and WhatsApp follow-ups',
-  },
-  {
-    id: 'after-hours',
-    title: 'Follow-the-sun after hours',
-    description: 'Route to APAC pod with bilingual voice pack',
-  },
-  {
-    id: 'revenue-guardrail',
-    title: 'Revenue guardrail',
-    description: 'Lock discounting ranges + alert deal desk',
-  },
-];
+import { Stack, useRouter } from 'expo-router';
+import { trpc } from '@/lib/trpc';
 
 export default function AIReceptionistSetup() {
   const { theme } = useTheme();
-  const setupProgress = 88;
+  const router = useRouter();
+  
+  // Real tRPC data
+  const { data: subscription } = trpc.user.getSubscription.useQuery();
+  const isEnterprise = subscription?.plan === 'enterprise';
+
+  const { data: config, isLoading, refetch } = trpc.receptionist.getConfig.useQuery();
+  const utils = trpc.useUtils();
+
+  const updateConfigMutation = trpc.receptionist.updateConfig.useMutation({
+    onSuccess: () => utils.receptionist.getConfig.invalidate(),
+  });
+
+  const setupProgress = useMemo(() => {
+    if (!config) return 0;
+    // Calculate progress based on configured fields
+    const totalSteps = 8;
+    let cleared = 0;
+    if (config.businessProfile) cleared++;
+    if (config.pricing) cleared++;
+    if (config.escalationRules) cleared++;
+    if (config.experienceGoals) cleared++;
+    if (config.knowledgeBase) cleared++;
+    if (config.voiceType) cleared++;
+    if (config.businessHours) cleared++;
+    if (config.aiConfig) cleared++;
+    return Math.round((cleared / totalSteps) * 100);
+  }, [config]);
+
   const [aiEnabled, setAiEnabled] = useState<boolean>(true);
   const [voiceType, setVoiceType] = useState<'professional' | 'friendly'>('professional');
   const [geoRouting, setGeoRouting] = useState<boolean>(true);
   const [complianceLock, setComplianceLock] = useState<boolean>(false);
-  const [channelStates, setChannelStates] = useState<Record<ChannelMatrixItem['id'], boolean>>({
+  const [channelStates, setChannelStates] = useState<Record<string, boolean>>({
     pstnEdge: true,
     whatsappEdge: true,
     directLine: false,
@@ -110,6 +87,15 @@ export default function AIReceptionistSetup() {
   const [orderConfirmationEnabled, setOrderConfirmationEnabled] = useState<boolean>(true);
   const [confirmationTiming, setConfirmationTiming] = useState<'immediate' | 'delayed'>('immediate');
   const [confirmationRetries, setConfirmationRetries] = useState<number>(2);
+
+  const getChannelColor = (channel: string) => {
+    switch (channel) {
+      case 'PSTN': return '#007AFF';
+      case 'WhatsApp': return '#25D366';
+      case 'Direct Line': return '#FF9500';
+      default: return '#8E8E93';
+    }
+  };
 
   const setupSections = useMemo(
     () => [

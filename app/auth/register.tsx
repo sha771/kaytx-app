@@ -1,3 +1,4 @@
+ 
 import React, { useState } from 'react';
 import {
   View,
@@ -54,23 +55,29 @@ export default function RegisterScreen() {
 
     setIsLoading(true);
     try {
-      await register(
+      const result = await register(
         formData.email,
         formData.password,
         formData.firstName,
         formData.lastName
       );
 
-      Alert.alert(
-        'Registration Successful',
-        'Please check your email to verify your account.',
-        [
-          {
-            text: 'OK',
-            onPress: () => router.replace('/auth/login'),
-          },
-        ]
-      );
+      const token = result?.verificationToken;
+      const email = result?.email || formData.email;
+
+      Alert.alert('Registration Successful', 'Please verify your email to continue.', [
+        {
+          text: 'Verify Now',
+          onPress: () =>
+            router.replace({
+              pathname: '/auth/verify-email',
+              params: {
+                email,
+                ...(token ? { token } : {}),
+              },
+            }),
+        },
+      ]);
     } catch (error: any) {
       Alert.alert('Registration Failed', error.message);
     } finally {

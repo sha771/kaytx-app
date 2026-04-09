@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import {
   View,
   Text,
@@ -8,14 +8,11 @@ import {
   TextInput,
   Modal,
   Animated,
-  Alert,
   Dimensions,
-  Switch,
 } from 'react-native';
 import {
   Brain,
   Calendar,
-  Mail,
   CheckSquare,
   MessageSquare,
   Clock,
@@ -32,38 +29,23 @@ import {
   X,
   Search,
   Workflow,
-  Database,
-  Shield,
-  Activity,
-  Phone,
-  Video,
   Lightbulb,
-  FileText,
   Menu,
   Star,
   Bot,
   Sparkle,
-  Cpu,
-  Server,
-  CircleDollarSign,
-  AlertTriangle,
+  Mail,
+  Activity,
 } from 'lucide-react-native';
-import { aiEmployees, aiEmployeeCategories, aiInfrastructureStats, AIEmployee } from '@/constants/aiEmployees';
+import { LinearGradient } from 'expo-linear-gradient';
+import { aiEmployees, aiEmployeeCategories, AIEmployee } from '@/constants/aiEmployees';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useAIAssistant } from '@/providers/AIAssistantProvider';
 import { Stack, router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { RelatedFeatures, QuickLinks } from '@/components/RelatedFeatures';
 
-import { AIWorkforceSidebar } from '@/components/AIWorkforceSidebar';
-
-interface QuickAction {
-  id: string;
-  title: string;
-  description: string;
-  icon: any;
-  color: string;
-  action: () => void;
-}
+const { width } = Dimensions.get('window');
 
 export default function AIAssistantScreen() {
   const { theme } = useTheme();
@@ -72,332 +54,202 @@ export default function AIAssistantScreen() {
     tasks,
     meetings,
     insights,
-    workflows,
     aiMessages,
     sendMessage,
-    activeAgents,
-    toggleAgent,
-    stats,
   } = useAIAssistant();
 
   const [message, setMessage] = useState<string>('');
   const [selectedTab, setSelectedTab] = useState<'overview' | 'tasks' | 'schedule' | 'insights'>('overview');
   const [showChat, setShowChat] = useState<boolean>(false);
-  const [isListening, setIsListening] = useState<boolean>(false);
   const [showSidebar, setShowSidebar] = useState<boolean>(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [isListening, setIsListening] = useState<boolean>(false);
 
+  const sidebarAnim = useRef(new Animated.Value(-width * 0.85)).current;
   const pulseAnim = useRef(new Animated.Value(1)).current;
+  const fadeAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 800,
+      useNativeDriver: true,
+    }).start();
+
     const pulse = Animated.loop(
       Animated.sequence([
-        Animated.timing(pulseAnim, {
-          toValue: 1.2,
-          duration: 1000,
-          useNativeDriver: true,
-        }),
-        Animated.timing(pulseAnim, {
-          toValue: 1,
-          duration: 1000,
-          useNativeDriver: true,
-        }),
+        Animated.timing(pulseAnim, { toValue: 1.1, duration: 1000, useNativeDriver: true }),
+        Animated.timing(pulseAnim, { toValue: 1, duration: 1000, useNativeDriver: true }),
       ])
     );
     pulse.start();
     return () => pulse.stop();
-  }, [pulseAnim]);
+  }, [pulseAnim, fadeAnim]);
 
   const openSidebar = useCallback(() => {
     setShowSidebar(true);
-  }, []);
+    Animated.spring(sidebarAnim, {
+      toValue: 0,
+      useNativeDriver: true,
+      tension: 65,
+      friction: 11,
+    }).start();
+  }, [sidebarAnim]);
 
   const closeSidebar = useCallback(() => {
-    setShowSidebar(false);
-  }, []);
+    Animated.timing(sidebarAnim, {
+      toValue: -width * 0.85,
+      duration: 250,
+      useNativeDriver: true,
+    }).start(() => {
+      setShowSidebar(false);
+    });
+  }, [sidebarAnim]);
 
-
-
-  const quickActions: QuickAction[] = [
-    {
-      id: '1',
-      title: 'Manage Emails',
-      description: 'AI-powered inbox',
-      icon: Mail,
-      color: '#FF9500',
-      action: () => {
-        router.push('/ai-assistant/emails');
-      },
-    },
-    {
-      id: '2',
-      title: 'View Calendar',
-      description: 'Smart scheduling',
-      icon: Calendar,
-      color: '#007AFF',
-      action: () => {
-        router.push('/ai-assistant/calendar');
-      },
-    },
-    {
-      id: '3',
-      title: 'Add Task',
-      description: 'Create and prioritize tasks',
-      icon: CheckSquare,
-      color: '#34C759',
-      action: () => {
-        setShowChat(true);
-        sendMessage('Add a new task to my list');
-      },
-    },
-    {
-      id: '4',
-      title: 'Analyze Day',
-      description: 'Get productivity insights',
-      icon: BarChart3,
-      color: '#5856D6',
-      action: () => {
-        setShowChat(true);
-        sendMessage('Analyze my productivity today');
-      },
-    },
-    {
-      id: '5',
-      title: 'Research',
-      description: 'Deep dive into any topic',
-      icon: Search,
-      color: '#AF52DE',
-      action: () => {
-        setShowChat(true);
-        sendMessage('I need to research something');
-      },
-    },
-    {
-      id: '6',
-      title: 'Create Workflow',
-      description: 'Automate repetitive tasks',
-      icon: Workflow,
-      color: '#00C7BE',
-      action: () => {
-        setShowChat(true);
-        sendMessage('Help me create an automation workflow');
-      },
-    },
-  ];
-
-  const handleSendMessage = () => {
-    if (!message.trim()) return;
-    sendMessage(message);
-    setMessage('');
-  };
-
-  const startVoiceInput = () => {
-    setIsListening(true);
-    console.log('[AI Assistant] Voice input started');
-
-    setTimeout(() => {
-      setIsListening(false);
-      Alert.alert('Voice Input', 'Voice recognition is active. This feature will be fully functional in production.');
-    }, 2000);
-  };
-
-  const getPriorityColor = (priority: string) => {
+  const getPriorityColor = (priority: string): string => {
     switch (priority) {
-      case 'high':
-        return '#FF3B30';
-      case 'medium':
-        return '#FF9500';
-      case 'low':
-        return '#34C759';
-      default:
-        return theme.colors.secondaryText;
+      case 'critical': return '#FF3B30';
+      case 'high': return '#FF9500';
+      case 'medium': return '#007AFF';
+      case 'low': return '#34C759';
+      default: return '#8E8E93';
     }
   };
 
   const getMeetingIcon = (type: string) => {
     switch (type) {
-      case 'video':
-        return Video;
-      case 'phone':
-        return Phone;
-      default:
-        return Users;
+      case 'video': return Users;
+      case 'call': return MessageSquare;
+      case 'standup': return Clock;
+      default: return Calendar;
     }
   };
 
+  const startVoiceInput = useCallback(() => {
+    setIsListening(prev => !prev);
+  }, []);
+
+  const handleSendMessage = useCallback(() => {
+    if (message.trim()) {
+      sendMessage(message.trim());
+      setMessage('');
+    }
+  }, [message, sendMessage]);
+
+  const filteredEmployees = useMemo(() => {
+    return aiEmployees.filter(emp => {
+      const matchesSearch = emp.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          emp.title.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCategory = selectedCategory === 'all' || emp.category === selectedCategory;
+      return matchesSearch && matchesCategory;
+    });
+  }, [selectedCategory, searchQuery]);
+
+  const stats = useMemo(() => ({
+    total: aiEmployees.length,
+    active: aiEmployees.filter(e => e.infrastructure.status === 'online').length,
+    savings: '$145K',
+    uptime: '99.99%',
+  }), []);
+
+  const handleEmployeePress = useCallback((employee: AIEmployee) => {
+    closeSidebar();
+    setTimeout(() => {
+      router.push(employee.route as any);
+    }, 300);
+  }, [closeSidebar]);
+
   const renderOverview = () => (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.section}>
-        <View style={styles.heroCard}>
-          <View style={[styles.heroIcon, { backgroundColor: theme.colors.primary + '20' }]}>
-            <Animated.View style={{ transform: [{ scale: pulseAnim }] }}>
-              <Brain size={32} color={theme.colors.primary} />
-            </Animated.View>
-          </View>
-          <Text style={[styles.heroTitle, { color: theme.colors.text }]}>
-            Your AI Coworker
-          </Text>
-          <Text style={[styles.heroDescription, { color: theme.colors.secondaryText }]}>
-            Not just a chatbot, but a thinking assistant that knows your schedule, work, routine, communication history, email, and tasks. It gets work done.
-          </Text>
-          <View style={styles.heroStats}>
-            <View style={styles.heroStat}>
-              <Text style={[styles.heroStatValue, { color: theme.colors.primary }]}>3-5 hrs</Text>
-              <Text style={[styles.heroStatLabel, { color: theme.colors.secondaryText }]}>Saved Daily</Text>
+    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.overviewScroll}>
+      <View style={styles.heroSection}>
+        <LinearGradient
+          colors={[theme.colors.primary, theme.colors.primary + 'dd']}
+          style={styles.heroGradient}
+        >
+          <View style={styles.heroHeader}>
+            <View style={styles.heroIconContainer}>
+              <Animated.View style={{ transform: [{ scale: pulseAnim }] }}>
+                <Brain size={40} color="#fff" />
+              </Animated.View>
             </View>
-            <View style={styles.heroStat}>
-              <Text style={[styles.heroStatValue, { color: theme.colors.primary }]}>94%</Text>
-              <Text style={[styles.heroStatLabel, { color: theme.colors.secondaryText }]}>Efficiency</Text>
-            </View>
-            <View style={styles.heroStat}>
-              <Text style={[styles.heroStatValue, { color: theme.colors.primary }]}>24/7</Text>
-              <Text style={[styles.heroStatLabel, { color: theme.colors.secondaryText }]}>Available</Text>
+            <View style={styles.heroTextContainer}>
+              <Text style={styles.heroTitle}>Your AI Network</Text>
+              <Text style={styles.heroSubtitle}>Intelligent Enterprise Core</Text>
             </View>
           </View>
-        </View>
+          
+          <View style={styles.heroStatsGrid}>
+            <View style={styles.heroStatItem}>
+              <Text style={styles.heroStatValue}>{stats.active}/{stats.total}</Text>
+              <Text style={styles.heroStatLabel}>Live Agents</Text>
+            </View>
+            <View style={styles.heroStatDivider} />
+            <View style={styles.heroStatItem}>
+              <Text style={styles.heroStatValue}>{stats.savings}</Text>
+              <Text style={styles.heroStatLabel}>Saved/mo</Text>
+            </View>
+            <View style={styles.heroStatDivider} />
+            <View style={styles.heroStatItem}>
+              <Text style={styles.heroStatValue}>{stats.uptime}</Text>
+              <Text style={styles.heroStatLabel}>Uptime</Text>
+            </View>
+          </View>
+        </LinearGradient>
       </View>
 
-      <View style={styles.section}>
+      <View style={styles.quickActionsSection}>
         <View style={styles.sectionHeader}>
-          <Zap size={20} color={theme.colors.primary} />
-          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
-            Quick Actions
-          </Text>
+          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Operations</Text>
+          <Zap size={18} color={theme.colors.primary} />
         </View>
-        <View style={styles.quickActionsGrid}>
-          {quickActions.map(action => (
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.quickActionsScroll}>
+          {[
+            { id: 'emails', title: 'Emails', icon: Mail, color: '#FF9500', route: '/ai-assistant/emails' },
+            { id: 'calendar', title: 'Calendar', icon: Calendar, color: '#007AFF', route: '/ai-assistant/calendar' },
+            { id: 'research', title: 'Research', icon: Search, color: '#AF52DE', action: () => { setShowChat(true); sendMessage('I need to research something'); } },
+            { id: 'workflow', title: 'Workflow', icon: Workflow, color: '#00C7BE', action: () => { setShowChat(true); sendMessage('Create an automation'); } },
+          ].map(action => (
             <TouchableOpacity
               key={action.id}
               style={[styles.quickActionCard, { backgroundColor: theme.colors.cardBackground }]}
-              onPress={action.action}
+              onPress={() => action.route ? router.push(action.route as any) : action.action?.()}
             >
-              <View style={[styles.quickActionIcon, { backgroundColor: action.color + '20' }]}>
-                {React.createElement(action.icon, { size: 20, color: action.color })}
+              <View style={[styles.quickActionIcon, { backgroundColor: action.color + '15' }]}>
+                <action.icon size={22} color={action.color} />
               </View>
-              <Text style={[styles.quickActionTitle, { color: theme.colors.text }]}>
-                {action.title}
-              </Text>
-              <Text style={[styles.quickActionDescription, { color: theme.colors.secondaryText }]}>
-                {action.description}
-              </Text>
+              <Text style={[styles.quickActionTitle, { color: theme.colors.text }]}>{action.title}</Text>
             </TouchableOpacity>
           ))}
-        </View>
-      </View>
-
-      {/* Workforce Status Quick View */}
-      <View style={styles.section}>
-        <View style={styles.sectionHeader}>
-          <Cpu size={20} color={theme.colors.primary} />
-          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
-            Workforce Command
-          </Text>
-          <View style={[styles.badgeContainer, { backgroundColor: theme.colors.primary + '20' }]}>
-            <Text style={[styles.badgeText, { color: theme.colors.primary }]}>
-              {stats.activeCount} Active
-            </Text>
-          </View>
-        </View>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.agentOverviewScroll}>
-          {aiEmployees.slice(0, 6).map((agent) => {
-            const isActive = activeAgents[agent.id];
-            const AgentIcon = agent.icon;
-            return (
-              <View key={agent.id} style={[styles.agentStatusCard, { backgroundColor: theme.colors.cardBackground }]}>
-                <View style={[styles.agentCircle, { backgroundColor: agent.color + '15' }]}>
-                  <AgentIcon size={18} color={agent.color} />
-                  <View style={[styles.miniStatusDot, { backgroundColor: isActive ? '#34C759' : '#8E8E93' }]} />
-                </View>
-                <Text style={[styles.agentMiniName, { color: theme.colors.text }]} numberOfLines={1}>
-                  {agent.name.split(' ')[1] || agent.name}
-                </Text>
-                <Switch
-                  value={isActive}
-                  onValueChange={() => toggleAgent(agent.id)}
-                  trackColor={{ false: '#767577', true: theme.colors.primary }}
-                  thumbColor={isActive ? '#fff' : '#f4f3f4'}
-                  style={{ transform: [{ scaleX: 0.6 }, { scaleY: 0.6 }] }}
-                />
-              </View>
-            );
-          })}
-          <TouchableOpacity
-            style={[styles.agentStatusCard, { backgroundColor: theme.colors.primary + '10', borderStyle: 'dashed', borderWidth: 1, borderColor: theme.colors.primary }]}
-            onPress={openSidebar}
-          >
-            <View style={[styles.agentCircle, { backgroundColor: theme.colors.primary + '20' }]}>
-              <Users size={18} color={theme.colors.primary} />
-            </View>
-            <Text style={[styles.agentMiniName, { color: theme.colors.primary }]}>View All</Text>
-          </TouchableOpacity>
         </ScrollView>
       </View>
 
-      <View style={styles.statsGrid}>
-        <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
-          <View style={[styles.statIcon, { backgroundColor: '#007AFF20' }]}>
-            <CheckSquare size={20} color="#007AFF" />
-          </View>
-          <Text style={[styles.statValue, { color: theme.colors.text }]}>{tasks.length}</Text>
-          <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Active Tasks</Text>
-        </View>
-        <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
-          <View style={[styles.statIcon, { backgroundColor: '#34C75920' }]}>
-            <Calendar size={20} color="#34C759" />
-          </View>
-          <Text style={[styles.statValue, { color: theme.colors.text }]}>{meetings.length}</Text>
-          <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Meetings</Text>
-        </View>
-        <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
-          <View style={[styles.statIcon, { backgroundColor: '#00C7BE20' }]}>
-            <Workflow size={20} color="#00C7BE" />
-          </View>
-          <Text style={[styles.statValue, { color: theme.colors.text }]}>{workflows.length}</Text>
-          <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Workflows</Text>
-        </View>
-        <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
-          <View style={[styles.statIcon, { backgroundColor: '#FF950020' }]}>
-            <TrendingUp size={20} color="#FF9500" />
-          </View>
-          <Text style={[styles.statValue, { color: theme.colors.text }]}>{stats.averageHealth}%</Text>
-          <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>WF Health</Text>
-        </View>
-      </View>
-
-      <View style={styles.section}>
+      <View style={styles.activeWorkforceSection}>
         <View style={styles.sectionHeader}>
-          <Sparkles size={20} color={theme.colors.primary} />
-          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
-            AI Capabilities
-          </Text>
+          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Active AI Workforce</Text>
+          <TouchableOpacity onPress={openSidebar}>
+            <Text style={{ color: theme.colors.primary, fontSize: 14, fontWeight: '600' }}>Manage All</Text>
+          </TouchableOpacity>
         </View>
-
-        {[
-          { icon: Calendar, title: 'Smart Scheduling', desc: 'Auto-find optimal meeting times', color: '#007AFF' },
-          { icon: Mail, title: 'Email Agent', desc: 'Reads, drafts & replies in your tone', color: '#FF9500' },
-          { icon: CheckSquare, title: 'Task Brain', desc: 'Prioritizes by urgency & energy', color: '#34C759' },
-          { icon: Database, title: 'Context Memory', desc: 'Remembers conversations & preferences', color: '#5856D6' },
-          { icon: Workflow, title: 'AI Workflows', desc: 'Automate repetitive routines', color: '#00C7BE' },
-          { icon: Search, title: 'Research Assistant', desc: 'Searches web & docs instantly', color: '#AF52DE' },
-          { icon: FileText, title: 'Meeting Summarizer', desc: 'Auto-generates notes & actions', color: '#FF6482' },
-          { icon: Shield, title: 'Privacy Shield', desc: 'Encrypted data, you control it', color: '#34C759' },
-        ].map((feature, index) => (
-          <View
-            key={index}
-            style={[styles.featureCard, { backgroundColor: theme.colors.cardBackground }]}
+        
+        {aiEmployees.slice(0, 4).map(emp => (
+          <TouchableOpacity
+            key={emp.id}
+            style={[styles.miniEmployeeCard, { backgroundColor: theme.colors.cardBackground }]}
+            onPress={() => router.push(emp.route as any)}
           >
-            <View style={[styles.featureIcon, { backgroundColor: feature.color + '20' }]}>
-              {React.createElement(feature.icon, { size: 24, color: feature.color })}
+            <View style={[styles.miniEmpIcon, { backgroundColor: emp.color + '15' }]}>
+              <emp.icon size={20} color={emp.color} />
             </View>
-            <View style={styles.featureInfo}>
-              <Text style={[styles.featureTitle, { color: theme.colors.text }]}>
-                {feature.title}
-              </Text>
-              <Text style={[styles.featureDescription, { color: theme.colors.secondaryText }]}>
-                {feature.desc}
-              </Text>
+            <View style={styles.miniEmpInfo}>
+              <Text style={[styles.miniEmpName, { color: theme.colors.text }]}>{emp.name}</Text>
+              <Text style={[styles.miniEmpTitle, { color: theme.colors.secondaryText }]} numberOfLines={1}>{emp.title}</Text>
             </View>
-            <ChevronRight size={20} color={theme.colors.secondaryText} />
-          </View>
+            <View style={styles.miniEmpStatus}>
+              <View style={[styles.statusDot, { backgroundColor: emp.infrastructure.status === 'online' ? '#34C759' : '#8E8E93' }]} />
+              <ChevronRight size={16} color={theme.colors.border} />
+            </View>
+          </TouchableOpacity>
         ))}
       </View>
     </ScrollView>
@@ -471,8 +323,8 @@ export default function AIAssistantScreen() {
                         task.status === 'completed'
                           ? '#34C75920'
                           : task.status === 'in-progress'
-                            ? '#FF950020'
-                            : theme.colors.background,
+                          ? '#FF950020'
+                          : theme.colors.background,
                     },
                   ]}
                 >
@@ -484,16 +336,16 @@ export default function AIAssistantScreen() {
                           task.status === 'completed'
                             ? '#34C759'
                             : task.status === 'in-progress'
-                              ? '#FF9500'
-                              : theme.colors.secondaryText,
+                            ? '#FF9500'
+                            : theme.colors.secondaryText,
                       },
                     ]}
                   >
                     {task.status === 'completed'
                       ? 'Done'
                       : task.status === 'in-progress'
-                        ? 'In Progress'
-                        : 'Pending'}
+                      ? 'In Progress'
+                      : 'Pending'}
                   </Text>
                 </View>
               </View>
@@ -653,7 +505,7 @@ export default function AIAssistantScreen() {
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <Stack.Screen options={{ headerShown: false }} />
-
+      
       <View style={[styles.header, { paddingTop: insets.top + 20 }]}>
         <View>
           <View style={styles.titleRow}>
@@ -664,7 +516,7 @@ export default function AIAssistantScreen() {
             Your intelligent productivity companion
           </Text>
         </View>
-        <TouchableOpacity
+        <TouchableOpacity 
           style={styles.menuButton}
           onPress={openSidebar}
           accessibilityLabel="Open AI Employees menu"
@@ -704,7 +556,7 @@ export default function AIAssistantScreen() {
       </View>
 
       <View style={[styles.chatInput, { backgroundColor: theme.colors.cardBackground }]}>
-        <TouchableOpacity
+        <TouchableOpacity 
           style={styles.inputButton}
           onPress={() => setShowChat(true)}
         >
@@ -719,7 +571,7 @@ export default function AIAssistantScreen() {
           multiline
           onFocus={() => setShowChat(true)}
         />
-        <TouchableOpacity
+        <TouchableOpacity 
           style={[
             styles.inputButton,
             isListening && { backgroundColor: theme.colors.primary + '20' }
@@ -756,9 +608,9 @@ export default function AIAssistantScreen() {
               <X size={24} color={theme.colors.text} />
             </TouchableOpacity>
           </View>
-
+          
           <ScrollView style={styles.chatMessages} showsVerticalScrollIndicator={false}>
-            {aiMessages.map(msg => (
+            {aiMessages.map((msg: any) => (
               <View
                 key={msg.id}
                 style={[
@@ -817,7 +669,7 @@ export default function AIAssistantScreen() {
               </View>
             ))}
           </ScrollView>
-
+          
           <View style={[styles.chatInputContainer, { backgroundColor: theme.colors.cardBackground }]}>
             <TextInput
               style={[styles.chatTextInput, { backgroundColor: theme.colors.background, color: theme.colors.text }]}
@@ -827,7 +679,7 @@ export default function AIAssistantScreen() {
               onChangeText={setMessage}
               multiline
             />
-            <TouchableOpacity
+            <TouchableOpacity 
               style={styles.chatInputButton}
               onPress={startVoiceInput}
             >
@@ -847,7 +699,142 @@ export default function AIAssistantScreen() {
         </View>
       </Modal>
 
-      <AIWorkforceSidebar isVisible={showSidebar} onClose={closeSidebar} />
+      {/* Related Features Section */}
+      <View style={{ marginTop: 20, marginBottom: 100 }}>
+        <RelatedFeatures
+          featureId="ai-agent"
+          title="Related AI Features"
+          maxItems={6}
+          layout="horizontal"
+        />
+        <QuickLinks
+          groupId="automation"
+          title="Automation Tools"
+          maxItems={4}
+        />
+      </View>
+
+      {showSidebar && (
+        <TouchableOpacity
+          style={styles.sidebarOverlay}
+          activeOpacity={1}
+          onPress={closeSidebar}
+        >
+          <Animated.View
+            style={[
+              styles.sidebar,
+              {
+                backgroundColor: theme.colors.background,
+                transform: [{ translateX: sidebarAnim }],
+              },
+            ]}
+          >
+            <TouchableOpacity activeOpacity={1} onPress={(e) => e.stopPropagation()}>
+              <View style={[styles.sidebarHeader, { borderBottomColor: theme.colors.border }]}>
+                <View style={styles.sidebarTitleRow}>
+                  <Bot size={28} color={theme.colors.primary} />
+                  <Text style={[styles.sidebarTitle, { color: theme.colors.text }]}>AI Employees</Text>
+                </View>
+                <TouchableOpacity onPress={closeSidebar} style={styles.closeButton}>
+                  <X size={24} color={theme.colors.text} />
+                </TouchableOpacity>
+              </View>
+
+              <ScrollView 
+                horizontal 
+                showsHorizontalScrollIndicator={false}
+                style={styles.categoryScroll}
+                contentContainerStyle={styles.categoryContainer}
+              >
+                {aiEmployeeCategories.map((cat) => {
+                  const CatIcon = cat.icon;
+                  const isSelected = selectedCategory === cat.id;
+                  return (
+                    <TouchableOpacity
+                      key={cat.id}
+                      style={[
+                        styles.categoryChip,
+                        {
+                          backgroundColor: isSelected ? theme.colors.primary : theme.colors.cardBackground,
+                        },
+                      ]}
+                      onPress={() => setSelectedCategory(cat.id)}
+                    >
+                      <CatIcon size={14} color={isSelected ? '#FFF' : theme.colors.secondaryText} />
+                      <Text
+                        style={[
+                          styles.categoryChipText,
+                          { color: isSelected ? '#FFF' : theme.colors.secondaryText },
+                        ]}
+                      >
+                        {cat.label}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </ScrollView>
+
+              <ScrollView 
+                style={styles.employeeList}
+                showsVerticalScrollIndicator={false}
+              >
+                {filteredEmployees.map((employee) => {
+                  const EmployeeIcon = employee.icon;
+                  return (
+                    <TouchableOpacity
+                      key={employee.id}
+                      style={[styles.employeeCard, { backgroundColor: theme.colors.cardBackground }]}
+                      onPress={() => handleEmployeePress(employee)}
+                      activeOpacity={0.7}
+                    >
+                      <View style={[styles.employeeIconContainer, { backgroundColor: employee.color + '20' }]}>
+                        <EmployeeIcon size={24} color={employee.color} />
+                      </View>
+                      <View style={styles.employeeInfo}>
+                        <View style={styles.employeeNameRow}>
+                          <Text style={[styles.employeeName, { color: theme.colors.text }]} numberOfLines={1}>
+                            {employee.name}
+                          </Text>
+                          {employee.isPremium && (
+                            <View style={[styles.premiumBadge, { backgroundColor: '#FFD700' + '30' }]}>
+                              <Star size={10} color="#FFD700" />
+                            </View>
+                          )}
+                          {employee.isNew && (
+                            <View style={[styles.newBadge, { backgroundColor: '#34C759' + '30' }]}>
+                              <Sparkle size={10} color="#34C759" />
+                            </View>
+                          )}
+                        </View>
+                        <Text style={[styles.employeeTitle, { color: theme.colors.secondaryText }]} numberOfLines={1}>
+                          {employee.title}
+                        </Text>
+                        <View style={styles.costRow}>
+                          <Text style={[styles.aiCost, { color: theme.colors.primary }]}>
+                            {employee.aiCost}
+                          </Text>
+                          <Text style={[styles.efficiency, { color: '#34C759' }]}>
+                            {employee.efficiency}
+                          </Text>
+                        </View>
+                      </View>
+                      <ChevronRight size={18} color={theme.colors.secondaryText} />
+                    </TouchableOpacity>
+                  );
+                })}
+                <View style={styles.sidebarFooter}>
+                  <Text style={[styles.footerText, { color: theme.colors.secondaryText }]}>
+                    {aiEmployees.length} AI Employees Available
+                  </Text>
+                  <Text style={[styles.footerSubtext, { color: theme.colors.secondaryText }]}>
+                    Replace costly human roles with AI
+                  </Text>
+                </View>
+              </ScrollView>
+            </TouchableOpacity>
+          </Animated.View>
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
@@ -856,80 +843,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  section: {
-    marginBottom: 24,
-  },
-  sectionHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 16,
-    gap: 12,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: '700' as const,
-  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingBottom: 16,
-  },
-  content: {
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 20,
-  },
-  badgeContainer: {
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 8,
-    marginLeft: 10,
-  },
-  badgeText: {
-    fontSize: 10,
-    fontWeight: '700' as const,
-  },
-  agentOverviewScroll: {
-    paddingVertical: 8,
-    gap: 12,
-  },
-  agentStatusCard: {
-    width: 80,
-    padding: 12,
-    borderRadius: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 5,
-    elevation: 2,
-  },
-  agentCircle: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
-  },
-  miniStatusDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    position: 'absolute',
-    bottom: -1,
-    right: -1,
-    borderWidth: 1.5,
-    borderColor: '#FFF',
-  },
-  agentMiniName: {
-    fontSize: 10,
-    fontWeight: '600' as const,
-    textAlign: 'center',
   },
   titleRow: {
     flexDirection: 'row',
@@ -966,6 +885,24 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600' as const,
   },
+  content: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 20,
+  },
+  section: {
+    marginBottom: 24,
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 12,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: '600' as const,
+  },
   statsGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -993,7 +930,7 @@ const styles = StyleSheet.create({
     fontWeight: '700' as const,
     marginBottom: 4,
   },
-  statLabel: {
+  heroStatLabel: {
     fontSize: 12,
   },
   heroCard: {
@@ -1003,40 +940,113 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
-  heroIcon: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+  miniEmployeeCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 12,
+    borderRadius: 16,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(150,150,150,0.1)',
+  },
+  miniEmpIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 16,
+    marginRight: 12,
+  },
+  miniEmpInfo: {
+    flex: 1,
+  },
+  miniEmpName: {
+    fontSize: 15,
+    fontWeight: '700',
+  },
+  miniEmpTitle: {
+    fontSize: 12,
+    marginTop: 2,
+  },
+  miniEmpStatus: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  statusDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+  },
+  heroSection: {
+    paddingHorizontal: 20,
+    marginBottom: 25,
+  },
+  heroGradient: {
+    borderRadius: 24,
+    padding: 20,
+  },
+  heroHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  heroIconContainer: {
+    width: 64,
+    height: 64,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 15,
+  },
+  heroTextContainer: {
+    flex: 1,
   },
   heroTitle: {
-    fontSize: 28,
-    fontWeight: '700' as const,
-    marginBottom: 12,
-    textAlign: 'center',
+    fontSize: 24,
+    fontWeight: '800',
+    color: '#fff',
   },
-  heroDescription: {
-    fontSize: 15,
-    lineHeight: 22,
-    textAlign: 'center',
-    marginBottom: 24,
+  heroSubtitle: {
+    fontSize: 14,
+    color: 'rgba(255,255,255,0.8)',
+    marginTop: 2,
   },
-  heroStats: {
+  heroStatsGrid: {
     flexDirection: 'row',
-    gap: 32,
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    borderRadius: 18,
+    padding: 15,
+    alignItems: 'center',
   },
-  heroStat: {
+  heroStatItem: {
+    flex: 1,
     alignItems: 'center',
   },
   heroStatValue: {
-    fontSize: 24,
-    fontWeight: '700' as const,
-    marginBottom: 4,
+    fontSize: 18,
+    fontWeight: '800',
+    color: '#fff',
   },
-  heroStatLabel: {
-    fontSize: 12,
+  heroStatDivider: {
+    width: 1,
+    height: 30,
+    backgroundColor: 'rgba(255,255,255,0.1)',
+  },
+  quickActionsSection: {
+    marginBottom: 25,
+  },
+  quickActionsScroll: {
+    paddingLeft: 20,
+    gap: 12,
+  },
+  activeWorkforceSection: {
+    paddingHorizontal: 20,
+    marginBottom: 30,
+  },
+  overviewScroll: {
+    paddingBottom: 100,
   },
   quickActionsGrid: {
     flexDirection: 'row',
@@ -1390,5 +1400,144 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  sidebarOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    zIndex: 1000,
+  },
+  sidebar: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    width: Dimensions.get('window').width * 0.85,
+    maxWidth: 360,
+    shadowColor: '#000',
+    shadowOffset: { width: 2, height: 0 },
+    shadowOpacity: 0.25,
+    shadowRadius: 10,
+    elevation: 10,
+  },
+  sidebarHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 60,
+    paddingBottom: 16,
+    borderBottomWidth: 1,
+  },
+  sidebarTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  sidebarTitle: {
+    fontSize: 22,
+    fontWeight: '700' as const,
+  },
+  closeButton: {
+    padding: 8,
+  },
+  categoryScroll: {
+    maxHeight: 50,
+  },
+  categoryContainer: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    gap: 8,
+  },
+  categoryChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 20,
+    gap: 6,
+  },
+  categoryChipText: {
+    fontSize: 12,
+    fontWeight: '600' as const,
+  },
+  employeeList: {
+    flex: 1,
+    paddingHorizontal: 16,
+  },
+  employeeCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 12,
+    borderRadius: 12,
+    marginBottom: 8,
+  },
+  employeeIconContainer: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12,
+  },
+  employeeInfo: {
+    flex: 1,
+  },
+  employeeNameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  employeeName: {
+    fontSize: 14,
+    fontWeight: '600' as const,
+    flex: 1,
+  },
+  premiumBadge: {
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  newBadge: {
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  employeeTitle: {
+    fontSize: 11,
+    marginTop: 2,
+  },
+  costRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginTop: 4,
+  },
+  aiCost: {
+    fontSize: 11,
+    fontWeight: '600' as const,
+  },
+  efficiency: {
+    fontSize: 10,
+    fontWeight: '500' as const,
+  },
+  sidebarFooter: {
+    paddingVertical: 20,
+    alignItems: 'center',
+  },
+  footerText: {
+    fontSize: 13,
+    fontWeight: '600' as const,
+  },
+  footerSubtext: {
+    fontSize: 11,
+    marginTop: 4,
   },
 });

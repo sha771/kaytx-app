@@ -89,10 +89,18 @@ export class TLSManager {
       };
     }
 
+    const cipher = config.cipherSuites[0];
+    if (!cipher) {
+      return {
+        valid: false,
+        error: 'No cipher suites specified',
+      };
+    }
+
     return {
       valid: true,
       version: config.minVersion,
-      cipher: config.cipherSuites[0],
+      cipher,
       protocol: 'TLS',
     };
   }
@@ -123,14 +131,12 @@ export class TLSManager {
   }): Promise<TLSCertificate> {
     console.log('[TLSManager] Generating self-signed certificate');
 
-    const cert = `-----BEGIN CERTIFICATE-----
-Mock Certificate for ${options.commonName}
-Valid for ${options.validityDays || 365} days
------END CERTIFICATE-----`;
+    const cert = `MOCK_CERTIFICATE
+commonName=${options.commonName}
+validityDays=${options.validityDays || 365}`;
 
-    const key = `-----BEGIN PRIVATE KEY-----
-Mock Private Key for ${options.commonName}
------END PRIVATE KEY-----`;
+    const key = `MOCK_PRIVATE_KEY
+commonName=${options.commonName}`;
 
     return { cert, key };
   }

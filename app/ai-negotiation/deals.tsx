@@ -1,3 +1,4 @@
+ 
 import React, { useState } from 'react';
 import {
   View,
@@ -27,16 +28,25 @@ import {
 } from 'lucide-react-native';
 import { mockDeals } from '@/utils/mockNegotiationData';
 import type { Deal } from '@/types/negotiation';
+import { useTheme } from '@/providers/ThemeProvider';
+import { trpc } from '@/lib/trpc';
 
 export default function DealsScreen() {
+  const { theme } = useTheme();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDeal, setSelectedDeal] = useState<Deal | null>(null);
   const [selectedStage, setSelectedStage] = useState<'all' | Deal['stage']>('all');
   const [showAddModal, setShowAddModal] = useState(false);
 
-  const stages: Array<Deal['stage']> = ['discovery', 'qualification', 'proposal', 'negotiation', 'closing', 'won', 'lost'];
+  // tRPC data fetching
+  const { data: dealsData, isLoading: dealsLoading, refetch: refetchDeals } = trpc.negotiation.getDeals.useQuery();
+  const createDealMutation = trpc.negotiation.createDeal.useMutation();
+  const updateDealMutation = trpc.negotiation.updateDeal.useMutation();
+  const deleteDealMutation = trpc.negotiation.deleteDeal.useMutation();
 
-  const filteredDeals = mockDeals.filter((deal) => {
+  const stages: Deal['stage'][] = ['discovery', 'qualification', 'proposal', 'negotiation', 'closing', 'won', 'lost'];
+
+  const filteredDeals = (dealsData || mockDeals).filter((deal: Deal) => {
     const matchesSearch =
       deal.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       deal.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -46,7 +56,7 @@ export default function DealsScreen() {
   });
 
   const dealsByStage = stages.reduce((acc, stage) => {
-    acc[stage] = mockDeals.filter(d => d.stage === stage);
+    acc[stage] = (dealsData || mockDeals).filter((d: Deal) => d.stage === stage);
     return acc;
   }, {} as Record<Deal['stage'], Deal[]>);
 
@@ -71,10 +81,10 @@ export default function DealsScreen() {
     }
   };
 
-  const totalValue = mockDeals.reduce((sum, deal) => sum + deal.value, 0);
-  const wonDeals = mockDeals.filter(d => d.stage === 'won');
-  const wonValue = wonDeals.reduce((sum, deal) => sum + deal.value, 0);
-  const avgProbability = mockDeals.reduce((sum, deal) => sum + deal.probability, 0) / mockDeals.length;
+  const totalValue = mockDeals.reduce((sum: number, deal: Deal) => sum + deal.value, 0);
+  const wonDeals = mockDeals.filter((d: Deal) => d.stage === 'won');
+  const wonValue = wonDeals.reduce((sum: number, deal: Deal) => sum + deal.value, 0);
+  const avgProbability = mockDeals.reduce((sum: number, deal: Deal) => sum + deal.probability, 0) / mockDeals.length;
 
   return (
     <>

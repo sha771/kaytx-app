@@ -1,6 +1,7 @@
-import { protectedProcedure } from '../../../../create-context';
+import { permissionProcedure } from '../../../../create-context';
+import { Permission } from '../../../../../lib/rbac';
 
-export const getReceptionistConfigProcedure = protectedProcedure.query(async () => {
+export const getReceptionistConfigProcedure = permissionProcedure(Permission.AI_RECEPTIONIST_USE).query(async () => {
   return {
     config: {
       enabled: true,

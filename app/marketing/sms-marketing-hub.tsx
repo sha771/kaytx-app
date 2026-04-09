@@ -1,3 +1,4 @@
+ 
 import React, { useState } from 'react';
 import {
   View,
@@ -108,6 +109,7 @@ export default function SMSMarketingHubScreen() {
   const insets = useSafeAreaInsets();
   const [activeTab, setActiveTab] = useState<'campaigns' | 'contacts' | 'analytics'>('campaigns');
   const [searchQuery, setSearchQuery] = useState<string>('');
+   
   const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(null);
 
   const getStatusColor = (status: Campaign['status']) => {
@@ -221,7 +223,9 @@ export default function SMSMarketingHubScreen() {
         <View style={styles.activityList}>
           <View style={styles.activityItem}>
             <View style={[styles.activityDot, { backgroundColor: '#34C759' }]} />
-            <Text style={[styles.activityText, { color: theme.colors.text }]}>Campaign "Summer Sale" delivered to 1,198 contacts</Text>
+            <Text style={[styles.activityText, { color: theme.colors.text }]}>
+              New campaign &quot;Summer Sale&quot; reached 1,000+ recipients.
+            </Text>
             <Text style={[styles.activityTime, { color: theme.colors.secondaryText }]}>2h ago</Text>
           </View>
           <View style={styles.activityItem}>

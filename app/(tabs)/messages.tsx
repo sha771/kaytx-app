@@ -1,3 +1,4 @@
+ 
 import React, { useState, useRef, useCallback, useMemo } from 'react';
 import {
   View,
@@ -31,13 +32,24 @@ import {
   Activity,
   CheckCircle,
   RefreshCw,
+  Globe,
+  Newspaper,
+  Filter,
+  Sparkles,
+  Crown,
+  Zap,
+  ChevronRight,
 } from 'lucide-react-native';
+import UniversalSearchModal from '@/components/messaging/UniversalSearchModal';
+import PriorityMessagingModal from '@/components/messaging/PriorityMessagingModal';
+import DailyBriefingModal from '@/components/messaging/DailyBriefingModal';
 import { useMessaging } from '@/providers/MessagingProvider';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
 import { Message, Conversation } from '@/types/messaging';
 import { getServiceIcon, getServiceColor } from '@/utils/services';
 import { sanitization } from '@/utils/security';
+import { RelatedFeatures, QuickLinks } from '@/components/RelatedFeatures';
 
 const { width } = Dimensions.get('window');
 const SIDEBAR_WIDTH = width > 768 ? 320 : width * 0.85;
@@ -61,6 +73,10 @@ export default function MessagesScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showSidebar, setShowSidebar] = useState(false);
   const [showRealTimeIndicator, setShowRealTimeIndicator] = useState(true);
+  const [activeFilter, setActiveFilter] = useState<'all' | 'universal' | 'priority' | 'briefing'>('all');
+  const [showUniversalSearch, setShowUniversalSearch] = useState(false);
+  const [showPriorityMessaging, setShowPriorityMessaging] = useState(false);
+  const [showDailyBriefing, setShowDailyBriefing] = useState(false);
   const scrollViewRef = useRef<ScrollView>(null);
 
   React.useEffect(() => {
@@ -68,9 +84,27 @@ export default function MessagesScreen() {
   }, []);
 
   const filteredConversations = useMemo(() => {
-    if (!searchQuery) return conversations;
-    return searchConversations(searchQuery);
-  }, [searchQuery, conversations, searchConversations]);
+    let result = conversations;
+    
+    if (searchQuery) {
+      result = searchConversations(searchQuery);
+    }
+    
+    switch (activeFilter) {
+      case 'universal':
+        return result;
+      case 'priority':
+        return result.filter(c => c.unreadCount > 0 || c.isPinned);
+      case 'briefing':
+        const today = new Date().toDateString();
+        return result.filter(c => {
+          const msgDate = new Date().toDateString();
+          return msgDate === today;
+        }).slice(0, 10);
+      default:
+        return result;
+    }
+  }, [searchQuery, conversations, searchConversations, activeFilter]);
 
   const handleSendMessage = useCallback(() => {
     if (!message.trim() || !activeConversation) return;
@@ -282,6 +316,91 @@ export default function MessagesScreen() {
               />
             </View>
 
+            {/* Filter Options */}
+            <ScrollView 
+              horizontal 
+              showsHorizontalScrollIndicator={false}
+              style={styles.filterContainer}
+              contentContainerStyle={styles.filterContent}
+            >
+              <TouchableOpacity
+                style={[
+                  styles.filterChip,
+                  activeFilter === 'all' && styles.filterChipActive,
+                  activeFilter === 'all' && { backgroundColor: theme.colors.primary },
+                ]}
+                onPress={() => setActiveFilter('all')}
+              >
+                <Filter size={14} color={activeFilter === 'all' ? '#FFF' : theme.colors.secondaryText} />
+                <Text style={[
+                  styles.filterChipText,
+                  { color: activeFilter === 'all' ? '#FFF' : theme.colors.text },
+                ]}>
+                  All
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.advancedFilterChip, { backgroundColor: '#3B82F615', borderColor: '#3B82F6' }]}
+                onPress={() => setShowUniversalSearch(true)}
+              >
+                <View style={styles.filterChipContent}>
+                  <Globe size={16} color="#3B82F6" />
+                  <View style={styles.filterChipTextContainer}>
+                    <Text style={[styles.filterChipTitle, { color: '#3B82F6' }]}>
+                      Universal Search
+                    </Text>
+                    <Text style={[styles.filterChipSubtitle, { color: theme.colors.secondaryText }]}>
+                      Cross-platform
+                    </Text>
+                  </View>
+                </View>
+                <View style={[styles.filterChipBadge, { backgroundColor: '#3B82F6' }]}>
+                  <Sparkles size={10} color="#FFF" />
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.advancedFilterChip, { backgroundColor: '#F59E0B15', borderColor: '#F59E0B' }]}
+                onPress={() => setShowPriorityMessaging(true)}
+              >
+                <View style={styles.filterChipContent}>
+                  <Crown size={16} color="#F59E0B" />
+                  <View style={styles.filterChipTextContainer}>
+                    <Text style={[styles.filterChipTitle, { color: '#F59E0B' }]}>
+                      Priority
+                    </Text>
+                    <Text style={[styles.filterChipSubtitle, { color: theme.colors.secondaryText }]}>
+                      VIP & Urgent
+                    </Text>
+                  </View>
+                </View>
+                <View style={[styles.filterChipBadge, { backgroundColor: '#F59E0B' }]}>
+                  <Zap size={10} color="#FFF" />
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.advancedFilterChip, { backgroundColor: '#10B98115', borderColor: '#10B981' }]}
+                onPress={() => setShowDailyBriefing(true)}
+              >
+                <View style={styles.filterChipContent}>
+                  <Newspaper size={16} color="#10B981" />
+                  <View style={styles.filterChipTextContainer}>
+                    <Text style={[styles.filterChipTitle, { color: '#10B981' }]}>
+                      Daily Briefing
+                    </Text>
+                    <Text style={[styles.filterChipSubtitle, { color: theme.colors.secondaryText }]}>
+                      AI Summary
+                    </Text>
+                  </View>
+                </View>
+                <View style={[styles.filterChipBadge, { backgroundColor: '#10B981' }]}>
+                  <ChevronRight size={10} color="#FFF" />
+                </View>
+              </TouchableOpacity>
+            </ScrollView>
+
             {/* Conversations List */}
             <FlatList
               data={filteredConversations}
@@ -293,6 +412,19 @@ export default function MessagesScreen() {
               windowSize={10}
               removeClippedSubviews={true}
               initialNumToRender={15}
+            />
+
+            {/* Related Features */}
+            <RelatedFeatures
+              featureId="unified-inbox"
+              title="Related Communication Features"
+              maxItems={6}
+              layout="horizontal"
+            />
+            <QuickLinks
+              groupId="communications"
+              title="Communication Tools"
+              maxItems={4}
             />
           </View>
         )}
@@ -398,6 +530,20 @@ export default function MessagesScreen() {
           )}
         </View>
       </View>
+
+      {/* Advanced Feature Modals */}
+      <UniversalSearchModal
+        visible={showUniversalSearch}
+        onClose={() => setShowUniversalSearch(false)}
+      />
+      <PriorityMessagingModal
+        visible={showPriorityMessaging}
+        onClose={() => setShowPriorityMessaging(false)}
+      />
+      <DailyBriefingModal
+        visible={showDailyBriefing}
+        onClose={() => setShowDailyBriefing(false)}
+      />
     </SafeAreaView>
   );
 }
@@ -705,5 +851,67 @@ const styles = StyleSheet.create({
   reconnectButton: {
     backgroundColor: 'rgba(255, 152, 0, 0.1)',
     borderRadius: 6,
+  },
+  filterContainer: {
+    maxHeight: 60,
+  },
+  filterContent: {
+    paddingHorizontal: 12,
+    paddingBottom: 10,
+    gap: 8,
+  },
+  filterChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 20,
+    backgroundColor: 'rgba(0,0,0,0.05)',
+    gap: 6,
+    marginRight: 8,
+  },
+  filterChipActive: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  filterChipText: {
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  advancedFilterChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    borderRadius: 14,
+    borderWidth: 1,
+    marginRight: 10,
+    minWidth: 140,
+  },
+  filterChipContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  filterChipTextContainer: {
+    gap: 2,
+  },
+  filterChipTitle: {
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  filterChipSubtitle: {
+    fontSize: 10,
+  },
+  filterChipBadge: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

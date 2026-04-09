@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+ 
+import React, { useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -42,7 +43,17 @@ export default function AppointmentsScreen() {
   const [filterType, setFilterType] = useState<'all' | 'phone' | 'video' | 'in-person'>('all');
   const [filterStatus, setFilterStatus] = useState<'all' | 'scheduled' | 'completed' | 'cancelled'>('all');
 
-  const filteredAppointments = mockNegotiationAppointments.filter((appointment) => {
+  // Fetch real appointments from tRPC
+  const { data: appointmentsData, isLoading: appointmentsLoading } = trpc.negotiation.getAppointments.useQuery();
+  const { data: subscription } = trpc.enterprise.getSubscription.useQuery();
+
+  const isEnterprise = useMemo(() => {
+    return subscription?.plan === 'enterprise' || subscription?.plan === 'professional';
+  }, [subscription]);
+
+  const appointments = useMemo(() => appointmentsData || mockNegotiationAppointments, [appointmentsData]);
+
+  const filteredAppointments = appointments.filter((appointment: NegotiationAppointment) => {
     const matchesSearch = appointment.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           appointment.title.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesType = filterType === 'all' || appointment.type === filterType;
@@ -91,8 +102,8 @@ export default function AppointmentsScreen() {
     }
   };
 
-  const upcomingCount = mockNegotiationAppointments.filter(a => a.status === 'scheduled').length;
-  const todayCount = mockNegotiationAppointments.filter(a => {
+  const upcomingCount = appointments.filter((a: NegotiationAppointment) => a.status === 'scheduled').length;
+  const todayCount = appointments.filter((a: NegotiationAppointment) => {
     const today = new Date().toISOString().split('T')[0];
     return a.date === today && a.status === 'scheduled';
   }).length;
@@ -170,7 +181,7 @@ export default function AppointmentsScreen() {
             <View style={[styles.statCard, { backgroundColor: '#FFF0F5' }]}>
               <CheckCircle size={20} color="#FF2D92" />
               <Text style={[styles.statValue, { color: '#FF2D92' }]}>
-                {mockNegotiationAppointments.filter(a => a.status === 'completed').length}
+                {appointments.filter((a: NegotiationAppointment) => a.status === 'completed').length}
               </Text>
               <Text style={styles.statLabel}>Completed</Text>
             </View>

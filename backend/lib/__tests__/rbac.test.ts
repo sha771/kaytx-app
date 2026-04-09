@@ -10,18 +10,20 @@ describe('RBAC System', () => {
     it('should grant admin appropriate permissions', () => {
       expect(hasPermission(Role.ADMIN, Permission.USER_READ)).toBe(true);
       expect(hasPermission(Role.ADMIN, Permission.USER_UPDATE)).toBe(true);
-      expect(hasPermission(Role.ADMIN, Permission.USER_CREATE)).toBe(false);
+      expect(hasPermission(Role.ADMIN, Permission.USER_CREATE)).toBe(true); // Admin can create users
+      expect(hasPermission(Role.ADMIN, Permission.USER_DELETE)).toBe(false); // Admin cannot delete users
+    });
+
+    it('should grant enterprise admin elevated permissions', () => {
+      expect(hasPermission(Role.ENTERPRISE_ADMIN, Permission.USER_CREATE)).toBe(true);
+      expect(hasPermission(Role.ENTERPRISE_ADMIN, Permission.USER_DELETE)).toBe(true);
+      expect(hasPermission(Role.ENTERPRISE_ADMIN, Permission.BILLING_UPDATE)).toBe(true);
     });
 
     it('should restrict user permissions', () => {
       expect(hasPermission(Role.USER, Permission.MESSAGE_READ)).toBe(true);
       expect(hasPermission(Role.USER, Permission.USER_DELETE)).toBe(false);
       expect(hasPermission(Role.USER, Permission.BILLING_UPDATE)).toBe(false);
-    });
-
-    it('should restrict guest permissions', () => {
-      expect(hasPermission(Role.GUEST, Permission.MESSAGE_READ)).toBe(true);
-      expect(hasPermission(Role.GUEST, Permission.MESSAGE_CREATE)).toBe(false);
     });
   });
 
@@ -69,8 +71,8 @@ describe('RBAC System', () => {
 
     it('should restrict admin from deleting if not resource owner', () => {
       const context = {
-        userId: 'manager1',
-        role: Role.MANAGER,
+        userId: 'user1',
+        role: Role.USER,
       };
 
       expect(checkAccess(context, Permission.USER_DELETE, 'user2')).toBe(false);

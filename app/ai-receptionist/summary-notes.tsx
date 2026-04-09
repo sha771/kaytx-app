@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+ 
+import React, { useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -8,9 +9,10 @@ import {
   TextInput,
   Modal,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import {
   FileText,
   Clock,
@@ -34,127 +36,44 @@ import {
   Plus,
   Sparkles,
   Calendar,
+  Lock,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-
-type Priority = 'urgent' | 'high' | 'medium' | 'low';
-type NoteType = 'summary' | 'action' | 'follow-up' | 'transcript';
-
-type CallNote = {
-  id: string;
-  callId: string;
-  customerName: string;
-  phoneNumber: string;
-  timestamp: string;
-  duration: string;
-  type: NoteType;
-  priority: Priority;
-  subject: string;
-  content: string;
-  aiSummary: string;
-  actionItems: string[];
-  tags: string[];
-  assignedTo?: string;
-  dueDate?: string;
-  completed: boolean;
-  audioUrl?: string;
-};
-
-const priorityColors: Record<Priority, string> = {
-  urgent: '#FF3B30',
-  high: '#FF9500',
-  medium: '#FFCC00',
-  low: '#34C759',
-};
-
-const typeColors: Record<NoteType, string> = {
-  summary: '#5AC8FA',
-  action: '#FF9500',
-  'follow-up': '#AF52DE',
-  transcript: '#007AFF',
-};
-
-const mockNotes: CallNote[] = [
-  {
-    id: 'note-1',
-    callId: 'call-001',
-    customerName: 'Sarah Mitchell',
-    phoneNumber: '+1 646 555 0123',
-    timestamp: '2025-12-09T14:30:00Z',
-    duration: '08:45',
-    type: 'summary',
-    priority: 'high',
-    subject: 'Product inquiry and pricing discussion',
-    content: 'Customer inquired about Enterprise tier pricing for 500 users. Discussed implementation timeline and onboarding support.',
-    aiSummary: 'Qualified lead showing strong interest in Enterprise plan. Customer concerns addressed regarding data migration and compliance. Ready for sales handoff.',
-    actionItems: ['Send enterprise pricing proposal', 'Schedule demo with sales engineer', 'Share compliance documentation'],
-    tags: ['Sales', 'Enterprise', 'Pricing'],
-    assignedTo: 'Sales Team',
-    dueDate: '2025-12-12',
-    completed: false,
-  },
-  {
-    id: 'note-2',
-    callId: 'call-002',
-    customerName: 'James Rodriguez',
-    phoneNumber: '+44 20 7123 4567',
-    timestamp: '2025-12-09T11:15:00Z',
-    duration: '05:22',
-    type: 'action',
-    priority: 'urgent',
-    subject: 'Technical support escalation',
-    content: 'Critical issue with API integration causing production outage. Customer frustrated. Escalated to Level 2 support.',
-    aiSummary: 'Production-impacting issue requiring immediate attention. Customer sentiment: negative. API authentication failure identified as root cause.',
-    actionItems: ['Assign senior engineer', 'Provide hourly updates', 'Schedule post-mortem'],
-    tags: ['Support', 'Critical', 'API'],
-    assignedTo: 'Engineering',
-    dueDate: '2025-12-09',
-    completed: true,
-  },
-  {
-    id: 'note-3',
-    callId: 'call-003',
-    customerName: 'Emily Chen',
-    phoneNumber: '+1 415 234 5678',
-    timestamp: '2025-12-08T16:45:00Z',
-    duration: '12:30',
-    type: 'follow-up',
-    priority: 'medium',
-    subject: 'Contract renewal discussion',
-    content: 'Annual contract expires next month. Customer happy with service but requesting volume discount. Competitor mentioned.',
-    aiSummary: 'Renewal opportunity with upsell potential. Customer loyalty high but price-sensitive. Competitive pressure detected.',
-    actionItems: ['Prepare renewal proposal with discount', 'Schedule call with account manager', 'Research competitor pricing'],
-    tags: ['Renewal', 'Account Management', 'Pricing'],
-    assignedTo: 'Account Manager',
-    dueDate: '2025-12-15',
-    completed: false,
-    audioUrl: 'https://example.com/recording.mp3',
-  },
-];
+import { trpc } from '@/lib/trpc';
 
 export default function ReceptionistSummaryNotesScreen() {
   const { theme } = useTheme();
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [selectedType, setSelectedType] = useState<NoteType | 'all'>('all');
-  const [selectedPriority, setSelectedPriority] = useState<Priority | 'all'>('all');
-  const [selectedNote, setSelectedNote] = useState<CallNote | null>(null);
+  const [selectedType, setSelectedType] = useState<any | 'all'>('all');
+  const [selectedPriority, setSelectedPriority] = useState<any | 'all'>('all');
+  const [selectedNote, setSelectedNote] = useState<any | null>(null);
   const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
   const [isPlayingAudio, setIsPlayingAudio] = useState<boolean>(false);
 
-  const filteredNotes = mockNotes.filter(note => {
-    const matchesSearch = note.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         note.customerName.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesType = selectedType === 'all' || note.type === selectedType;
-    const matchesPriority = selectedPriority === 'all' || note.priority === selectedPriority;
-    return matchesSearch && matchesType && matchesPriority;
-  });
+  // Real tRPC data
+  const { data: subscription } = trpc.user.getSubscription.useQuery();
+  const isEnterprise = subscription?.plan === 'enterprise';
 
-  const stats = [
-    { id: 'total', label: 'Total notes', value: '147', icon: FileText, color: theme.colors.primary },
-    { id: 'pending', label: 'Pending actions', value: '23', icon: Clock, color: '#FF9500' },
-    { id: 'completed', label: 'Completed today', value: '18', icon: CheckCircle, color: '#34C759' },
-    { id: 'urgent', label: 'Urgent items', value: '5', icon: AlertCircle, color: '#FF3B30' },
-  ];
+  const { data: notes = [], isLoading, refetch } = trpc.receptionist.getSummaryNotes.useQuery();
+  const { data: statsData } = trpc.receptionist.getNoteStats.useQuery();
+
+  const filteredNotes = useMemo(() => {
+    return notes.filter(note => {
+      const matchesSearch = note.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                           note.customerName.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesType = selectedType === 'all' || note.type === selectedType;
+      const matchesPriority = selectedPriority === 'all' || note.priority === selectedPriority;
+      return matchesSearch && matchesType && matchesPriority;
+    });
+  }, [notes, searchQuery, selectedType, selectedPriority]);
+
+  const stats = useMemo(() => [
+    { id: 'total', label: 'Total notes', value: statsData?.total?.toString() ?? '0', icon: FileText, color: theme.colors.primary },
+    { id: 'pending', label: 'Pending actions', value: statsData?.pending?.toString() ?? '0', icon: Clock, color: '#FF9500' },
+    { id: 'completed', label: 'Completed today', value: statsData?.completed?.toString() ?? '0', icon: CheckCircle, color: '#34C759' },
+    { id: 'urgent', label: 'Urgent items', value: statsData?.urgent?.toString() ?? '0', icon: AlertCircle, color: '#FF3B30' },
+  ], [statsData, theme.colors.primary]);
 
   return (
     <>
@@ -181,18 +100,27 @@ export default function ReceptionistSummaryNotesScreen() {
           </View>
 
           <View style={styles.statsGrid}>
-            {stats.map(stat => {
-              const Icon = stat.icon;
-              return (
-                <View key={stat.id} style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
-                  <View style={[styles.statIcon, { backgroundColor: `${stat.color}1A` }]}>
-                    <Icon size={18} color={stat.color} />
+            {isLoading ? (
+              <ActivityIndicator size="small" color={theme.colors.primary} />
+            ) : (
+              stats.map(stat => {
+                const Icon = stat.icon;
+                return (
+                  <View key={stat.id} style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
+                    {!isEnterprise && stat.id !== 'total' && (
+                      <View style={styles.lockOverlayMini}>
+                        <Lock size={12} color="white" />
+                      </View>
+                    )}
+                    <View style={[styles.statIcon, { backgroundColor: `${stat.color}1A` }]}>
+                      <Icon size={18} color={stat.color} />
+                    </View>
+                    <Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text>
+                    <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>{stat.label}</Text>
                   </View>
-                  <Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text>
-                  <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>{stat.label}</Text>
-                </View>
-              );
-            })}
+                );
+              })
+            )}
           </View>
 
           <View style={[styles.filterCard, { backgroundColor: theme.colors.cardBackground }]}>
@@ -834,5 +762,14 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
+  },
+  lockOverlayMini: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    borderRadius: 10,
+    padding: 4,
+    zIndex: 10,
   },
 });

@@ -1,3 +1,4 @@
+ 
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -73,7 +74,7 @@ export default function AccessLogsScreen() {
           </View>
           <View style={styles.statItem}>
             <Text style={[styles.statValue, { color: theme.colors.success }]}>
-              {accessLogs.data?.logs.filter(l => l.success).length || 0}
+              {accessLogs.data?.logs.filter((l: any) => l.success).length || 0}
             </Text>
             <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>
               Successful
@@ -81,7 +82,7 @@ export default function AccessLogsScreen() {
           </View>
           <View style={styles.statItem}>
             <Text style={[styles.statValue, { color: theme.colors.error }]}>
-              {accessLogs.data?.logs.filter(l => !l.success).length || 0}
+              {accessLogs.data?.logs.filter((l: any) => !l.success).length || 0}
             </Text>
             <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>
               Failed
@@ -97,7 +98,7 @@ export default function AccessLogsScreen() {
           </View>
         ) : (
           <View style={styles.logsList}>
-            {accessLogs.data?.logs.map((log) => {
+            {accessLogs.data?.logs.map((log: any) => {
               const IconComponent = getAccessTypeIcon(log.accessType);
               const typeColor = getAccessTypeColor(log.accessType);
 

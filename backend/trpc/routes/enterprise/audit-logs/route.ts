@@ -1,23 +1,11 @@
-import { protectedProcedure } from '../../../create-context';
+import { permissionProcedure } from '../../../create-context';
 import { z } from 'zod';
+import { db as pgDb } from '../../../../db/connection';
+import { auditLogs } from '../../../../db/drizzle-schema';
+import { and, desc, eq, gte, lte } from 'drizzle-orm';
+import { Permission } from '../../../../lib/rbac';
 
-const mockAuditLogs = Array.from({ length: 50 }, (_, i) => ({
-  id: `audit-${i + 1}`,
-  userId: i % 3 === 0 ? '1' : i % 3 === 1 ? '2' : '3',
-  userName: i % 3 === 0 ? 'John Admin' : i % 3 === 1 ? 'Sarah Manager' : 'Mike Developer',
-  action: ['login', 'data_access', 'config_change', 'export', 'integration'][i % 5],
-  resource: ['users', 'settings', 'data', 'reports', 'integrations'][i % 5],
-  resourceId: `res-${i + 1}`,
-  status: i % 10 === 0 ? 'failure' : 'success',
-  ipAddress: `192.168.1.${100 + i}`,
-  timestamp: new Date(Date.now() - i * 3600000).toISOString(),
-  metadata: {
-    userAgent: 'Mozilla/5.0',
-    details: `Action performed on ${['users', 'settings', 'data', 'reports', 'integrations'][i % 5]}`,
-  },
-}));
-
-export const getAuditLogsProcedure = protectedProcedure
+export const getAuditLogsProcedure = permissionProcedure(Permission.AUDIT_READ)
   .input(
     z.object({
       limit: z.number().optional().default(20),
@@ -31,26 +19,44 @@ export const getAuditLogsProcedure = protectedProcedure
   .query(async ({ ctx, input }) => {
     console.log('[Enterprise] Getting audit logs for user:', ctx.user.id);
 
-    let logs = [...mockAuditLogs];
-
-    if (input.action) {
-      logs = logs.filter((log) => log.action === input.action);
+    const organizationId = ctx.user?.organizationId;
+    if (!organizationId) {
+      throw new Error('User organization not found');
     }
 
-    if (input.userId) {
-      logs = logs.filter((log) => log.userId === input.userId);
-    }
+    const clauses: any[] = [eq(auditLogs.organizationId, organizationId as any)];
+    if (input.action) clauses.push(eq(auditLogs.action, input.action));
+    if (input.userId) clauses.push(eq(auditLogs.userId, input.userId as any));
+    if (input.startDate) clauses.push(gte(auditLogs.timestamp, new Date(input.startDate) as any));
+    if (input.endDate) clauses.push(lte(auditLogs.timestamp, new Date(input.endDate) as any));
 
-    if (input.startDate) {
-      logs = logs.filter((log) => new Date(log.timestamp) >= new Date(input.startDate!));
-    }
+    const where = clauses.length === 1 ? clauses[0] : and(...clauses);
 
-    if (input.endDate) {
-      logs = logs.filter((log) => new Date(log.timestamp) <= new Date(input.endDate!));
-    }
+    const rows = await pgDb
+      .select()
+      .from(auditLogs)
+      .where(where)
+      .orderBy(desc(auditLogs.timestamp))
+      .limit(input.limit)
+      .offset(input.offset);
 
-    const total = logs.length;
-    const items = logs.slice(input.offset, input.offset + input.limit);
+    const totalRows = await pgDb
+      .select()
+      .from(auditLogs)
+      .where(where);
+
+    const total = totalRows.length;
+    const items = (rows as any[]).map((r) => ({
+      id: r.id,
+      userId: r.userId,
+      action: r.action,
+      resource: r.resource,
+      resourceId: r.resourceId,
+      status: r.status,
+      ipAddress: r.ipAddress,
+      timestamp: r.timestamp instanceof Date ? r.timestamp.toISOString() : String(r.timestamp),
+      metadata: r.metadata,
+    }));
 
     return {
       items,
@@ -59,7 +65,7 @@ export const getAuditLogsProcedure = protectedProcedure
     };
   });
 
-export const exportAuditLogsProcedure = protectedProcedure
+export const exportAuditLogsProcedure = permissionProcedure(Permission.AUDIT_EXPORT)
   .input(
     z.object({
       format: z.enum(['csv', 'json', 'pdf']),

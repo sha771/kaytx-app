@@ -1,9 +1,10 @@
 import { z } from 'zod';
-import { protectedProcedure } from '../../../create-context';
+import { permissionProcedure } from '../../../create-context';
 import { bridgeManager } from '../../../../bridges/manager/bridge-manager';
 import { ProtocolSchema } from '../../../../bridges/types';
+import { Permission } from '../../../../lib/rbac';
 
-export const createBridgeProcedure = protectedProcedure
+export const createBridgeProcedure = permissionProcedure(Permission.BRIDGE_CREATE)
   .input(
     z.object({
       protocol: ProtocolSchema,

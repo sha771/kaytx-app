@@ -1,7 +1,9 @@
 import { z } from 'zod';
 import { protectedProcedure } from '../../../create-context';
 import { verifyPassword, hashPassword, validatePasswordStrength, revokeAllUserSessions } from '../../../../lib/auth';
-import { db } from '../../../../db/in-memory-store';
+import { db as pgDb } from '../../../../db/connection';
+import { users } from '../../../../db/drizzle-schema';
+import { eq } from 'drizzle-orm';
 import { logAudit, AuditActions } from '../../../../lib/audit';
 
 const changePasswordSchema = z.object({
@@ -36,9 +38,7 @@ export const changePasswordProcedure = protectedProcedure
 
     const newPasswordHash = await hashPassword(input.newPassword);
 
-    db.updateUser(ctx.user.id, {
-      passwordHash: newPasswordHash,
-    });
+    await pgDb.update(users).set({ passwordHash: newPasswordHash } as any).where(eq(users.id, ctx.user.id as any));
 
     await revokeAllUserSessions(ctx.user.id);
 

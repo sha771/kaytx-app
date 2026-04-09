@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { protectedProcedure } from '../../../../create-context';
+import { permissionProcedure } from '../../../../create-context';
+import { Permission } from '../../../../../lib/rbac';
 
 const configSchema = z.object({
   enabled: z.boolean(),
@@ -17,7 +18,7 @@ const configSchema = z.object({
   sendSummaryEmail: z.boolean(),
 });
 
-export const saveReceptionistConfigProcedure = protectedProcedure
+export const saveReceptionistConfigProcedure = permissionProcedure(Permission.AI_RECEPTIONIST_USE)
   .input(configSchema)
   .mutation(async ({ input }: { input: z.infer<typeof configSchema> }) => {
     console.log('[saveReceptionistConfig] Saving config:', input);

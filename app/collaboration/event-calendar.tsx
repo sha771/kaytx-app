@@ -1,3 +1,4 @@
+ 
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -235,7 +236,7 @@ export default function EventCalendar() {
   const renderSchedule = () => (
     <View style={styles.tabContent}>
       <View style={styles.scheduleHeader}>
-        <Text style={styles.sectionTitle}>Today's Schedule</Text>
+        <Text style={styles.sectionTitle}>Today&apos;s Schedule</Text>
         <Text style={styles.scheduleDate}>
           {new Date().toLocaleDateString('en-US', { 
             weekday: 'long', 

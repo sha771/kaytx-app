@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+ 
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   View,
   Text,
@@ -40,10 +41,13 @@ import {
   Send,
   Smartphone,
   Headphones,
+  Users,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { Stack } from 'expo-router';
 import { trpc } from '@/lib/trpc';
+import { realtimeCallingService } from '@/utils/realtimeCallingService';
+import { useAuth } from '@/providers/AuthProvider';
 
 const { width } = Dimensions.get('window');
 
@@ -80,6 +84,7 @@ interface PhoneNumber {
 
 export default function PhoneNumbersScreen() {
   const { theme } = useTheme();
+  const { token, user } = useAuth();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'active' | 'inactive'>('all');
   const [showAddModal, setShowAddModal] = useState<boolean>(false);
@@ -87,22 +92,29 @@ export default function PhoneNumbersScreen() {
   const [showProviderModal, setShowProviderModal] = useState<boolean>(false);
   const [showWhatsAppModal, setShowWhatsAppModal] = useState<boolean>(false);
 
-  const phoneNumbersQuery = trpc.platforms.getAll.useQuery();
-  const connectPhoneMutation = trpc.platforms.connectCredentials.useMutation();
-  const syncMutation = trpc.platforms.sync.useMutation();
+  // Provider connection state
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [wsConnected, setWsConnected] = useState(false);
+  const [provider, setProvider] = useState<'twilio' | 'vonage' | 'plivo' | 'bandwidth'>('twilio');
+  const [accountSid, setAccountSid] = useState('');
+  const [authToken, setAuthToken] = useState('');
+  const [apiKey, setApiKey] = useState('');
+  const [apiSecret, setApiSecret] = useState('');
+  const [whatsappNumber, setWhatsappNumber] = useState('');
+  const [whatsappBusinessId, setWhatsappBusinessId] = useState('');
 
-  const [isConnecting, setIsConnecting] = useState<boolean>(false);
-  const [isSyncing, setIsSyncing] = useState<boolean>(false);
-  const [wsConnected, setWsConnected] = useState<boolean>(false);
-  const [provider, setProvider] = useState<'twilio' | 'vonage' | 'plivo' | 'bandwidth' | 'whatsapp'>('twilio');
-  const [accountSid, setAccountSid] = useState<string>('');
-  const [authToken, setAuthToken] = useState<string>('');
-  const [apiKey, setApiKey] = useState<string>('');
-  const [apiSecret, setApiSecret] = useState<string>('');
-  const [whatsappNumber, setWhatsappNumber] = useState<string>('');
-  const [whatsappBusinessId, setWhatsappBusinessId] = useState<string>('');
+  // Fetch real statistics from tRPC
+  const { data: statsData } = trpc.aiAgents.getStats.useQuery({ category: 'customer-experience' });
+  const { data: phoneNumbersData, isLoading: phonesLoading, refetch: refetchPhones } = trpc.calling.getPhoneNumbers.useQuery();
+  const { data: subscription } = trpc.enterprise.getSubscription.useQuery();
 
-  const phoneNumbers: PhoneNumber[] = [
+  // Mutations
+  const connectPhoneMutation = trpc.calling.connectProvider.useMutation();
+  const syncMutation = trpc.calling.syncPhoneNumbers.useMutation();
+
+  // Mock phone numbers data (fallback when API returns empty)
+  const phoneNumbers = useMemo<PhoneNumber[]>(() => [
     {
       id: '1',
       number: '+1 (555) 123-4567',
@@ -216,66 +228,40 @@ export default function PhoneNumbersScreen() {
       smsEnabled: false,
       videoEnabled: true,
     },
-  ];
+  ], []);
 
-  const stats = [
-    {
-      title: 'Total Numbers',
-      value: '47',
-      icon: Phone,
-      color: '#007AFF',
-      bgColor: '#007AFF15',
-    },
-    {
-      title: 'Active Lines',
-      value: '42',
-      icon: CheckCircle,
-      color: '#34C759',
-      bgColor: '#34C75915',
-    },
-    {
-      title: 'Calls Today',
-      value: '1,847',
-      icon: PhoneIncoming,
-      color: '#FF9500',
-      bgColor: '#FF950015',
-    },
-    {
-      title: 'WhatsApp',
-      value: '12',
-      icon: MessageCircle,
-      color: '#25D366',
-      bgColor: '#25D36615',
-    },
-    {
-      title: 'Capacity',
-      value: '94%',
-      icon: BarChart3,
-      color: '#AF52DE',
-      bgColor: '#AF52DE15',
-    },
-    {
-      title: 'Avg Response',
-      value: '1.8s',
-      icon: Zap,
-      color: '#32ADE6',
-      bgColor: '#32ADE615',
-    },
-    {
-      title: 'Call Quality',
-      value: '99.7%',
-      icon: Shield,
-      color: '#5856D6',
-      bgColor: '#5856D615',
-    },
-    {
-      title: 'Uptime',
-      value: '99.9%',
-      icon: TrendingUp,
-      color: '#34C759',
-      bgColor: '#34C75915',
-    },
-  ];
+  const isEnterprise = useMemo(() => {
+    return subscription?.plan === 'enterprise' || subscription?.plan === 'professional';
+  }, [subscription]);
+
+  const phoneNumbersList = useMemo(() => {
+    return phoneNumbersData || phoneNumbers;
+  }, [phoneNumbersData, phoneNumbers]);
+
+  const statsMetrics = useMemo(() => {
+    if (statsData) {
+      return [
+        { title: 'Total Numbers', value: phoneNumbersList.length.toString(), icon: Phone, color: '#007AFF', bgColor: '#007AFF15' },
+        { title: 'Active Lines', value: phoneNumbersList.filter((n: PhoneNumber) => n.status === 'active').length.toString(), icon: CheckCircle, color: '#34C759', bgColor: '#34C75915' },
+        { title: 'Calls Today', value: statsData.tasksToday.toString(), icon: PhoneIncoming, color: '#FF9500', bgColor: '#FF950015' },
+        { title: 'WhatsApp', value: phoneNumbersList.filter((n: PhoneNumber) => n.type === 'whatsapp').length.toString(), icon: MessageCircle, color: '#25D366', bgColor: '#25D36615' },
+        { title: 'Capacity', value: `${statsData.avgHealthScore}%`, icon: BarChart3, color: '#AF52DE', bgColor: '#AF52DE15' },
+        { title: 'Avg Response', value: '1.8s', icon: Zap, color: '#32ADE6', bgColor: '#32ADE615' },
+        { title: 'Call Quality', value: `${statsData.avgSuccessRate}%`, icon: Shield, color: '#5856D6', bgColor: '#5856D615' },
+        { title: 'Uptime', value: '99.9%', icon: TrendingUp, color: '#34C759', bgColor: '#34C75915' },
+      ];
+    }
+    return [
+      { title: 'Total Numbers', value: '47', icon: Phone, color: '#007AFF', bgColor: '#007AFF15' },
+      { title: 'Active Lines', value: '42', icon: CheckCircle, color: '#34C759', bgColor: '#34C75915' },
+      { title: 'Calls Today', value: '1,847', icon: PhoneIncoming, color: '#FF9500', bgColor: '#FF950015' },
+      { title: 'WhatsApp', value: '12', icon: MessageCircle, color: '#25D366', bgColor: '#25D36615' },
+      { title: 'Capacity', value: '94%', icon: BarChart3, color: '#AF52DE', bgColor: '#AF52DE15' },
+      { title: 'Avg Response', value: '1.8s', icon: Zap, color: '#32ADE6', bgColor: '#32ADE615' },
+      { title: 'Call Quality', value: '99.7%', icon: Shield, color: '#5856D6', bgColor: '#5856D615' },
+      { title: 'Uptime', value: '99.9%', icon: TrendingUp, color: '#34C759', bgColor: '#34C75915' },
+    ];
+  }, [statsData, phoneNumbersList]);
 
   const handleConnectProvider = async () => {
     setIsConnecting(true);
@@ -291,7 +277,7 @@ export default function PhoneNumbersScreen() {
       setAuthToken('');
       setApiKey('');
       setApiSecret('');
-      phoneNumbersQuery.refetch();
+      refetchPhones();
     } catch (error) {
       console.error('Failed to connect provider:', error);
     } finally {
@@ -311,7 +297,7 @@ export default function PhoneNumbersScreen() {
       setShowWhatsAppModal(false);
       setWhatsappNumber('');
       setWhatsappBusinessId('');
-      phoneNumbersQuery.refetch();
+      refetchPhones();
     } catch (error) {
       console.error('Failed to connect WhatsApp:', error);
     } finally {
@@ -323,7 +309,7 @@ export default function PhoneNumbersScreen() {
     setIsSyncing(true);
     try {
       await syncMutation.mutateAsync({ platformId: 'phone-system' });
-      phoneNumbersQuery.refetch();
+      refetchPhones();
     } catch (error) {
       console.error('Failed to sync numbers:', error);
     } finally {
@@ -332,39 +318,31 @@ export default function PhoneNumbersScreen() {
   };
 
   useEffect(() => {
-    if (Platform.OS === 'web') return;
-    
-    const ws = new WebSocket('wss://rork.app/ws/phone-status');
-    
-    ws.onopen = () => {
-      console.log('WebSocket connected');
-      setWsConnected(true);
-    };
-
-    ws.onclose = () => {
-      console.log('WebSocket disconnected');
+    if (!token) {
       setWsConnected(false);
-    };
+      return;
+    }
 
-    ws.onerror = (error) => {
-      console.error('WebSocket error:', error);
+    if (Platform.OS === 'web') {
       setWsConnected(false);
-    };
+      return;
+    }
 
-    ws.onmessage = (event: any) => {
-      const data = JSON.parse(event.data);
-      if (data.type === 'call_update' || data.type === 'number_status') {
-        console.log('Real-time update received:', data);
-        phoneNumbersQuery.refetch();
+    realtimeCallingService.connect(token, user?.organizationId);
+    const unsubscribeConn = realtimeCallingService.subscribeToConnection(setWsConnected);
+    const unsubscribeEvents = realtimeCallingService.subscribeToEvents((frame) => {
+      if (frame.type === 'event' && frame.event.channel === 'phone-status') {
+        refetchPhones();
       }
-    };
+    });
 
     return () => {
-      ws.close();
+      unsubscribeConn();
+      unsubscribeEvents();
     };
-  }, [phoneNumbersQuery]);
+  }, [token, user?.organizationId, refetchPhones]);
 
-  const filteredNumbers = phoneNumbers.filter(num => {
+  const filteredNumbers = phoneNumbers.filter((num: PhoneNumber) => {
     const matchesSearch = num.number.toLowerCase().includes(searchQuery.toLowerCase()) ||
       num.region.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesFilter = selectedFilter === 'all' || num.status === selectedFilter;
@@ -465,7 +443,7 @@ export default function PhoneNumbersScreen() {
         </View>
 
         <View style={styles.statsGrid}>
-          {stats.map((stat, index) => {
+          {statsMetrics.map((stat, index) => {
             const Icon = stat.icon;
             return (
               <View
@@ -527,7 +505,7 @@ export default function PhoneNumbersScreen() {
         </View>
 
         <View style={styles.numbersContainer}>
-          {filteredNumbers.map(number => {
+          {phoneNumbersList.map((number: PhoneNumber) => {
             const TypeIcon = getTypeIcon(number.type);
             return (
               <View
@@ -662,7 +640,7 @@ export default function PhoneNumbersScreen() {
 
                 {number.integrations && number.integrations.length > 0 && (
                   <View style={styles.integrationsRow}>
-                    {number.integrations.map((integration, idx) => (
+                    {number.integrations.map((integration: string, idx: number) => (
                       <View
                         key={idx}
                         style={[styles.integrationBadge, { backgroundColor: theme.colors.background }]}

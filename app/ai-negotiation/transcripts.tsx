@@ -1,3 +1,4 @@
+ 
 import React, { useState } from 'react';
 import {
   View,
@@ -28,14 +29,15 @@ import {
   Sparkles,
 } from 'lucide-react-native';
 import { mockCallTranscripts } from '@/utils/mockNegotiationData';
+import type { CallTranscript } from '@/types/negotiation';
 
 export default function TranscriptsScreen() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedTranscript, setSelectedTranscript] = useState<typeof mockCallTranscripts[0] | null>(null);
+  const [selectedTranscript, setSelectedTranscript] = useState<CallTranscript | null>(null);
   const [filterSentiment, setFilterSentiment] = useState<'all' | 'positive' | 'neutral' | 'negative'>('all');
   const [showFilters, setShowFilters] = useState(false);
 
-  const filteredTranscripts = mockCallTranscripts.filter((transcript) => {
+  const filteredTranscripts = mockCallTranscripts.filter((transcript: CallTranscript) => {
     const matchesSearch = transcript.customerName.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesSentiment = filterSentiment === 'all' || transcript.sentiment === filterSentiment;
     return matchesSearch && matchesSentiment;
@@ -126,19 +128,19 @@ export default function TranscriptsScreen() {
           <View style={styles.statsRow}>
             <View style={[styles.statCard, { backgroundColor: '#F0FFF0' }]}>
               <Text style={[styles.statValue, { color: '#34C759' }]}>
-                {mockCallTranscripts.filter(t => t.sentiment === 'positive').length}
+                {mockCallTranscripts.filter((t: CallTranscript) => t.sentiment === 'positive').length}
               </Text>
               <Text style={styles.statLabel}>Positive</Text>
             </View>
             <View style={[styles.statCard, { backgroundColor: '#FFF5F0' }]}>
               <Text style={[styles.statValue, { color: '#FF9500' }]}>
-                {mockCallTranscripts.filter(t => t.sentiment === 'neutral').length}
+                {mockCallTranscripts.filter((t: CallTranscript) => t.sentiment === 'neutral').length}
               </Text>
               <Text style={styles.statLabel}>Neutral</Text>
             </View>
             <View style={[styles.statCard, { backgroundColor: '#FFF0F0' }]}>
               <Text style={[styles.statValue, { color: '#FF3B30' }]}>
-                {mockCallTranscripts.filter(t => t.sentiment === 'negative').length}
+                {mockCallTranscripts.filter((t: CallTranscript) => t.sentiment === 'negative').length}
               </Text>
               <Text style={styles.statLabel}>Negative</Text>
             </View>

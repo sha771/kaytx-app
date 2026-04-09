@@ -1,3 +1,4 @@
+ 
 import React, { useState } from 'react';
 import {
   View,
@@ -46,11 +47,12 @@ export default function NotificationsScreen() {
     doNotDisturb: false,
   });
 
-  const notifications = selectedTab === 'all'
-    ? mockNegotiationNotifications
-    : mockNegotiationNotifications.filter(n => !n.isRead);
+  const notifications =
+    selectedTab === 'all'
+      ? mockNegotiationNotifications
+      : mockNegotiationNotifications.filter((n: NegotiationNotification) => !n.isRead);
 
-  const unreadCount = mockNegotiationNotifications.filter(n => !n.isRead).length;
+  const unreadCount = mockNegotiationNotifications.filter((n: NegotiationNotification) => !n.isRead).length;
 
   const getNotificationIcon = (type: string) => {
     switch (type) {
@@ -111,7 +113,7 @@ export default function NotificationsScreen() {
             <View style={[styles.statCard, { backgroundColor: '#FFF5F0' }]}>
               <CheckCircle size={20} color="#34C759" />
               <Text style={[styles.statValue, { color: '#34C759' }]}>
-                {mockNegotiationNotifications.filter(n => n.priority === 'high').length}
+                {mockNegotiationNotifications.filter((n: NegotiationNotification) => n.priority === 'high').length}
               </Text>
               <Text style={styles.statLabel}>Priority</Text>
             </View>

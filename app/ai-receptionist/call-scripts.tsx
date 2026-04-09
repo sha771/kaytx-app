@@ -1,3 +1,4 @@
+ 
 import React, { useMemo, useState } from 'react';
 import {
   View,
@@ -8,8 +9,9 @@ import {
   TextInput,
   Modal,
   Switch,
+  ActivityIndicator,
 } from 'react-native';
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   Plus,
@@ -28,22 +30,18 @@ import {
   Radio,
   RefreshCw,
   Users,
+  Lock,
 } from 'lucide-react-native';
-import { mockCallScripts } from '@/utils/mockNegotiationData';
-import type { CallScript } from '@/types/negotiation';
+import { trpc } from '@/lib/trpc';
 import { useTheme } from '@/providers/ThemeProvider';
-
-const channelColors: Record<ChannelType, string> = {
-  PSTN: '#007AFF',
-  WhatsApp: '#25D366',
-  'Direct Line': '#FF9500',
-  'Web Chat': '#AF52DE',
-};
 
 type ChannelType = 'PSTN' | 'WhatsApp' | 'Direct Line' | 'Web Chat';
 type ComplianceState = 'all' | 'approved' | 'review';
 
-type ScriptRecord = CallScript & {
+interface ScriptRecord {
+  id: string;
+  title: string;
+  script: string;
   channel: ChannelType;
   phoneNumber: string;
   whatsappFallback: string;
@@ -52,72 +50,58 @@ type ScriptRecord = CallScript & {
   lastSynced: string;
   compliance: 'approved' | 'review';
   aiGuardrails: string[];
-};
+  successRate: number;
+  timesUsed: number;
+}
 
-type EndpointToggle = {
-  id: ChannelType;
-  label: string;
-  connected: boolean;
-  description: string;
+const channelColors: Record<ChannelType, string> = {
+  PSTN: '#007AFF',
+  WhatsApp: '#25D366',
+  'Direct Line': '#FF9500',
+  'Web Chat': '#AF52DE',
 };
 
 export default function ReceptionistCallScriptsScreen() {
   const { theme } = useTheme();
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedChannel, setSelectedChannel] = useState<ChannelType | 'all'>('all');
   const [complianceFilter, setComplianceFilter] = useState<ComplianceState>('all');
   const [selectedScript, setSelectedScript] = useState<ScriptRecord | null>(null);
   const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
-  const [endpoints, setEndpoints] = useState<EndpointToggle[]>([
+
+  // Real tRPC data
+  const { data: subscription } = trpc.user.getSubscription.useQuery();
+  const isEnterprise = subscription?.plan === 'enterprise';
+
+  const { data: scriptRecords = [], isLoading, refetch } = trpc.receptionist.getCallScripts.useQuery();
+  
+  const [endpoints, setEndpoints] = useState([
     {
-      id: 'PSTN',
+      id: 'PSTN' as ChannelType,
       label: 'Carrier PSTN Edge',
       connected: true,
       description: '+1 and +44 pools provisioned',
     },
     {
-      id: 'WhatsApp',
+      id: 'WhatsApp' as ChannelType,
       label: 'WhatsApp Business',
       connected: true,
       description: 'Meta BSP live, green tick verified',
     },
     {
-      id: 'Direct Line',
+      id: 'Direct Line' as ChannelType,
       label: 'SIP / Teams Direct Line',
       connected: false,
       description: 'Awaiting TLS mutual auth',
     },
     {
-      id: 'Web Chat',
+      id: 'Web Chat' as ChannelType,
       label: 'Web + In-app Chat',
       connected: true,
       description: 'SDK v3 embedded',
     },
   ]);
-
-  const scriptRecords = useMemo<ScriptRecord[]>(() => {
-    const numbers = ['+1 646 555 0148', '+44 20 7123 9988', '+1 415 982 1144'];
-    const whatsapp = ['+1 917 888 4400', '+44 7700 900123'];
-    const owners = ['Enterprise Desk', 'Deal Desk', 'CX Duty'];
-    const statuses: ScriptRecord['status'][] = ['live', 'pilot', 'draft'];
-    const complianceStates: ScriptRecord['compliance'][] = ['approved', 'review'];
-    const channels: ChannelType[] = ['PSTN', 'WhatsApp', 'Direct Line', 'Web Chat'];
-
-    return mockCallScripts.map((script, index) => ({
-      ...script,
-      id: `${script.id}-rx-${index}`,
-      channel: channels[index % channels.length],
-      phoneNumber: numbers[index % numbers.length],
-      whatsappFallback: whatsapp[index % whatsapp.length],
-      status: statuses[index % statuses.length],
-      escalationOwner: owners[index % owners.length],
-      lastSynced: index % 2 === 0 ? '2 mins ago' : '15 mins ago',
-      compliance: complianceStates[index % complianceStates.length],
-      aiGuardrails: index % 2 === 0
-        ? ['Multi-language detection', 'Auto redaction', 'Escalate > 3 mins']
-        : ['Call transcription', 'PII masking'],
-    }));
-  }, []);
 
   const filteredScripts = useMemo(() => {
     return scriptRecords.filter(script => {
@@ -172,58 +156,79 @@ export default function ReceptionistCallScriptsScreen() {
       />
       <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} edges={['bottom']}>
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
-          <View style={styles.section}>
-            <Text style={[styles.sectionTitle, { color: theme.colors.text }]} testID="receptionist-call-scripts-headline">Omni-channel playbooks</Text>
-            <Text style={[styles.sectionSubtitle, { color: theme.colors.secondaryText }]}>Map scripts to live numbers, WhatsApp queues, and SIP trunks with per-channel guardrails.</Text>
-          </View>
-
-          <View style={styles.summaryRow}>
-            {orchestrationStats.map(stat => {
-              const Icon = stat.icon;
-              return (
-                <View key={stat.id} style={[styles.summaryCard, { backgroundColor: theme.colors.cardBackground }]} testID={`receptionist-call-scripts-summary-${stat.id}`}>
-                  <View style={styles.summaryIcon}>
-                    <Icon size={18} color={theme.colors.primary} />
-                  </View>
-                  <Text style={[styles.summaryValue, { color: theme.colors.text }]}>{stat.value}</Text>
-                  <Text style={[styles.summaryLabel, { color: theme.colors.secondaryText }]}>{stat.label}</Text>
-                  <Text style={[styles.summaryDelta, { color: theme.colors.primary }]}>{stat.delta}</Text>
-                </View>
-              );
-            })}
-          </View>
-
-          <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
-            <View style={styles.cardHeader}>
-              <Text style={[styles.cardTitle, { color: theme.colors.text }]}>Connected endpoints</Text>
-              <TouchableOpacity style={styles.refreshButton} onPress={() => console.log('Syncing endpoints')} testID="receptionist-call-scripts-endpoint-sync">
-                <RefreshCw size={16} color={theme.colors.primary} />
-                <Text style={[styles.refreshText, { color: theme.colors.primary }]}>Sync registry</Text>
-              </TouchableOpacity>
+          {isLoading ? (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color={theme.colors.primary} />
             </View>
-            {endpoints.map(endpoint => (
-              <View key={endpoint.id} style={styles.endpointRow}>
-                <View style={styles.endpointLeft}>
-                  <View style={[styles.endpointIcon, { backgroundColor: `${channelColors[endpoint.id]}20` }]}> 
-                    {endpoint.id === 'PSTN' && <PhoneCall size={18} color={channelColors[endpoint.id]} />}
-                    {endpoint.id === 'WhatsApp' && <MessageCircle size={18} color={channelColors[endpoint.id]} />}
-                    {endpoint.id === 'Direct Line' && <Link2 size={18} color={channelColors[endpoint.id]} />}
-                    {endpoint.id === 'Web Chat' && <Wifi size={18} color={channelColors[endpoint.id]} />}
-                  </View>
-                  <View>
-                    <Text style={[styles.endpointTitle, { color: theme.colors.text }]}>{endpoint.label}</Text>
-                    <Text style={[styles.endpointDescription, { color: theme.colors.secondaryText }]}>{endpoint.description}</Text>
-                  </View>
-                </View>
-                <Switch
-                  value={endpoint.connected}
-                  onValueChange={() => handleEndpointToggle(endpoint.id)}
-                  trackColor={{ false: '#767577', true: theme.colors.primary }}
-                  thumbColor={endpoint.connected ? '#fff' : '#f4f3f4'}
-                />
+          ) : (
+            <>
+              <View style={styles.section}>
+                <Text style={[styles.sectionTitle, { color: theme.colors.text }]} testID="receptionist-call-scripts-headline">Omni-channel playbooks</Text>
+                <Text style={[styles.sectionSubtitle, { color: theme.colors.secondaryText }]}>Map scripts to live numbers, WhatsApp queues, and SIP trunks with per-channel guardrails.</Text>
               </View>
-            ))}
-          </View>
+
+              <View style={styles.summaryRow}>
+                {orchestrationStats.map(stat => {
+                  const Icon = stat.icon;
+                  return (
+                    <View key={stat.id} style={[styles.summaryCard, { backgroundColor: theme.colors.cardBackground }]} testID={`receptionist-call-scripts-summary-${stat.id}`}>
+                      {!isEnterprise && (
+                        <View style={styles.lockOverlayMini}>
+                          <Lock size={12} color="white" />
+                        </View>
+                      )}
+                      <View style={styles.summaryIcon}>
+                        <Icon size={18} color={theme.colors.primary} />
+                      </View>
+                      <Text style={[styles.summaryValue, { color: theme.colors.text }]}>{stat.value}</Text>
+                      <Text style={[styles.summaryLabel, { color: theme.colors.secondaryText }]}>{stat.label}</Text>
+                      <Text style={[styles.summaryDelta, { color: theme.colors.primary }]}>{stat.delta}</Text>
+                    </View>
+                  );
+                })}
+              </View>
+
+              <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+                {!isEnterprise && (
+                  <TouchableOpacity 
+                    style={styles.lockOverlay}
+                    onPress={() => router.push('/enterprise-admin')}
+                  >
+                    <Lock size={24} color={theme.colors.text} />
+                  </TouchableOpacity>
+                )}
+                <View style={styles.cardHeader}>
+                  <Text style={[styles.cardTitle, { color: theme.colors.text }]}>Connected endpoints</Text>
+                  <TouchableOpacity style={styles.refreshButton} onPress={() => refetch()} testID="receptionist-call-scripts-endpoint-sync">
+                    <RefreshCw size={16} color={theme.colors.primary} />
+                    <Text style={[styles.refreshText, { color: theme.colors.primary }]}>Sync registry</Text>
+                  </TouchableOpacity>
+                </View>
+                {endpoints.map(endpoint => (
+                  <View key={endpoint.id} style={styles.endpointRow}>
+                    <View style={styles.endpointLeft}>
+                      <View style={[styles.endpointIcon, { backgroundColor: `${channelColors[endpoint.id]}20` }]}> 
+                        {endpoint.id === 'PSTN' && <PhoneCall size={18} color={channelColors[endpoint.id]} />}
+                        {endpoint.id === 'WhatsApp' && <MessageCircle size={18} color={channelColors[endpoint.id]} />}
+                        {endpoint.id === 'Direct Line' && <Link2 size={18} color={channelColors[endpoint.id]} />}
+                        {endpoint.id === 'Web Chat' && <Wifi size={18} color={channelColors[endpoint.id]} />}
+                      </View>
+                      <View>
+                        <Text style={[styles.endpointTitle, { color: theme.colors.text }]}>{endpoint.label}</Text>
+                        <Text style={[styles.endpointDescription, { color: theme.colors.secondaryText }]}>{endpoint.description}</Text>
+                      </View>
+                    </View>
+                    <Switch
+                      value={endpoint.connected}
+                      onValueChange={() => handleEndpointToggle(endpoint.id)}
+                      trackColor={{ false: theme.colors.border, true: theme.colors.primary }}
+                      thumbColor={endpoint.connected ? '#fff' : '#f4f3f4'}
+                    />
+                  </View>
+                ))}
+              </View>
+            </>
+          )}
 
           <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}
             testID="receptionist-call-scripts-filters">

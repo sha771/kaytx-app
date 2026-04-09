@@ -45,6 +45,7 @@ export interface ReceptionistCallAnalytics {
   hourlyLoad: {
     hour: string;
     calls: number;
+    load: number;
   }[];
   appointmentsBooked?: NumericTrendMetric;
   avgResponseTime?: StringTrendMetric;

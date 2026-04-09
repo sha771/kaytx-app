@@ -60,3 +60,16 @@ headers: {
 - [ ] Set up monitoring and alerts
 - [ ] Enable database backups
 - [ ] Review and update security policies
+
+## Secret Management & Rotation Guidance
+- **Do not commit env files** containing secrets. Only `.env.example` should be tracked in git.
+- **Do not log secrets or tokens** (JWTs, refresh tokens, verification tokens, API keys). Logs are often shipped to third-party systems.
+- **Rotate immediately if exposure is suspected**:
+  - JWT signing keys: rotate `JWT_SECRET` and `JWT_REFRESH_SECRET` and force re-authentication by revoking sessions.
+  - Database credentials: rotate `DATABASE_URL` user password and update deployments.
+  - OAuth client secrets / API keys (OpenAI, Twilio, WhatsApp, Slack, etc.): rotate in the provider console, then update env.
+- **Rotation order (recommended)**:
+  - Add new secret in your secret manager.
+  - Deploy code/config that can accept new secret.
+  - Cut over traffic.
+  - Revoke/expire old tokens and remove old secret.

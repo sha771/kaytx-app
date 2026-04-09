@@ -1,3 +1,4 @@
+ 
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -89,7 +90,7 @@ export default function BreachMonitorScreen() {
               Breach Details
             </Text>
             <View style={styles.breachesList}>
-              {breachCheck.data.breaches.map((breach) => {
+              {breachCheck.data.breaches.map((breach: any) => {
                 const severityColor = getSeverityColor(breach.severity);
                 return (
                   <View
@@ -131,7 +132,7 @@ export default function BreachMonitorScreen() {
                       <Text style={[styles.recommendationsTitle, { color: theme.colors.text }]}>
                         Recommended Actions:
                       </Text>
-                      {breach.recommendations.map((recommendation, index) => (
+                      {breach.recommendations.map((recommendation: any, index: number) => (
                         <View key={index} style={styles.recommendationItem}>
                           <CheckCircle size={14} color={theme.colors.primary} />
                           <Text style={[styles.recommendationText, { color: theme.colors.text }]}>

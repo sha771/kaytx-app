@@ -150,6 +150,8 @@ class OrderVerificationService {
     const order = this.pendingOrders.get(orderId);
     if (!order) return;
 
+    console.log('[OrderVerificationService] processing verification response', { orderId, callId, channel });
+
     const responses: ('confirmed' | 'cancelled' | 'no-answer')[] = ['confirmed', 'confirmed', 'confirmed', 'no-answer', 'cancelled'];
     const customerResponse = responses[Math.floor(Math.random() * responses.length)];
 

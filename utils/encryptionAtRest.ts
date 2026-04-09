@@ -77,7 +77,9 @@ export class EncryptionAtRestService {
         throw new Error('Invalid encrypted data format');
       }
 
-      const [iv, hash, encodedData] = parts;
+      const iv = parts[0]!;
+      const hash = parts[1]!;
+      const encodedData = parts[2]!;
       const data = this.base64Decode(encodedData);
 
       const expectedHash = await Crypto.digestStringAsync(
@@ -115,9 +117,14 @@ export class EncryptionAtRestService {
     try {
       const encrypted = await SecureStore.getItemAsync(key);
       if (!encrypted) return null;
-      return await this.decrypt(encrypted);
+      try {
+        return await this.decrypt(encrypted);
+      } catch (decryptError) {
+        console.error(`[Encryption] Decryption failed for key "${key}":`, decryptError);
+        return null;
+      }
     } catch (error) {
-      console.error('[Encryption] Failed to retrieve:', error);
+      console.error(`[Encryption] Failed to retrieve key "${key}":`, error);
       return null;
     }
   }

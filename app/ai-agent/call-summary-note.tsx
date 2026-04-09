@@ -32,6 +32,7 @@ import {
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
+import { trpc } from '@/lib/trpc';
 
 interface CallSummary {
   id: string;
@@ -59,98 +60,6 @@ interface Note {
   relatedCallId?: string;
 }
 
-const mockCallSummaries: CallSummary[] = [
-  {
-    id: '1',
-    title: 'Client Onboarding Call - ABC Corp',
-    participant: 'John Smith (ABC Corp)',
-    duration: '45:32',
-    date: '2024-01-19 14:00',
-    status: 'completed',
-    summary: 'Discussed project requirements, timeline, and budget. Client is interested in our premium package with additional features.',
-    keyPoints: [
-      'Budget approved for premium package',
-      'Timeline: 3 months for completion',
-      'Weekly check-ins required',
-      'Integration with existing CRM needed'
-    ],
-    actionItems: [
-      'Send detailed proposal by Friday',
-      'Schedule technical discovery call',
-      'Prepare CRM integration documentation'
-    ],
-    sentiment: 'positive',
-    hasRecording: true,
-    hasTranscript: true,
-  },
-  {
-    id: '2',
-    title: 'Product Demo - XYZ Solutions',
-    participant: 'Sarah Johnson (XYZ Solutions)',
-    duration: '32:15',
-    date: '2024-01-18 10:30',
-    status: 'processing',
-    summary: 'Product demonstration went well. Client showed interest in analytics features.',
-    keyPoints: [
-      'Analytics dashboard impressed client',
-      'Questions about data security',
-      'Pricing concerns for small team'
-    ],
-    actionItems: [
-      'Follow up with security documentation',
-      'Prepare custom pricing proposal',
-      'Schedule follow-up demo'
-    ],
-    sentiment: 'neutral',
-    hasRecording: true,
-    hasTranscript: false,
-  },
-  {
-    id: '3',
-    title: 'Support Call - TechStart Inc',
-    participant: 'Mike Chen (TechStart Inc)',
-    duration: '28:45',
-    date: '2024-01-17 16:20',
-    status: 'completed',
-    summary: 'Resolved technical issues with API integration. Client satisfied with solution.',
-    keyPoints: [
-      'API rate limiting issue identified',
-      'Solution implemented successfully',
-      'Client requested additional documentation'
-    ],
-    actionItems: [
-      'Update API documentation',
-      'Create troubleshooting guide',
-      'Schedule follow-up check'
-    ],
-    sentiment: 'positive',
-    hasRecording: false,
-    hasTranscript: true,
-  },
-];
-
-const mockNotes: Note[] = [
-  {
-    id: '1',
-    title: 'Meeting Notes - Q1 Planning',
-    content: 'Discussed quarterly goals, resource allocation, and key milestones. Team alignment on priorities.',
-    createdDate: '2024-01-19',
-    lastModified: '2024-01-19',
-    tags: ['planning', 'quarterly', 'goals'],
-    isShared: true,
-    relatedCallId: '1',
-  },
-  {
-    id: '2',
-    title: 'Product Feature Ideas',
-    content: 'Brainstorming session results: AI-powered analytics, mobile app improvements, integration marketplace.',
-    createdDate: '2024-01-18',
-    lastModified: '2024-01-18',
-    tags: ['product', 'features', 'brainstorming'],
-    isShared: false,
-  },
-];
-
 export default function CallSummaryNoteScreen() {
   const { theme } = useTheme();
   const insets = useSafeAreaInsets();
@@ -158,6 +67,51 @@ export default function CallSummaryNoteScreen() {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [autoSummary, setAutoSummary] = useState<boolean>(true);
   const [autoTranscript, setAutoTranscript] = useState<boolean>(true);
+
+  const callMetrics = undefined as any;
+  const callHistory = undefined as any;
+
+  const formatDuration = (seconds?: number) => {
+    const s = typeof seconds === 'number' ? Math.max(0, seconds) : 0;
+    const hrs = Math.floor(s / 3600);
+    const mins = Math.floor((s % 3600) / 60);
+    const secs = s % 60;
+    const mm = mins.toString().padStart(2, '0');
+    const ss = secs.toString().padStart(2, '0');
+    return hrs > 0 ? `${hrs}:${mm}:${ss}` : `${mins}:${ss}`;
+  };
+
+  const summaries: CallSummary[] = (callHistory?.calls ?? []).map((c: any) => {
+    const start = c.startTime ? new Date(c.startTime) : new Date();
+
+    const status: CallSummary['status'] =
+      c.status === 'completed'
+        ? 'completed'
+        : c.status === 'in-progress' || c.status === 'queued' || c.status === 'ringing'
+          ? 'processing'
+          : 'failed';
+
+    const participant = c.customerName
+      ? `${c.customerName}${c.phoneNumber ? ` (${c.phoneNumber})` : ''}`
+      : c.phoneNumber || 'Unknown';
+
+    return {
+      id: c.callId,
+      title: c.customerName ? `Call with ${c.customerName}` : `Call ${c.callId}`,
+      participant,
+      duration: formatDuration(c.duration),
+      date: start.toLocaleString(),
+      status,
+      summary: `Status: ${c.status}. Duration: ${formatDuration(c.duration)}.`,
+      keyPoints: [],
+      actionItems: [],
+      sentiment: 'neutral',
+      hasRecording: false,
+      hasTranscript: false,
+    };
+  });
+
+  const notes: Note[] = [];
 
   const getSentimentColor = (sentiment: CallSummary['sentiment']) => {
     switch (sentiment) {
@@ -186,12 +140,12 @@ export default function CallSummaryNoteScreen() {
     }
   };
 
-  const filteredSummaries = mockCallSummaries.filter(summary =>
+  const filteredSummaries = summaries.filter(summary =>
     summary.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     summary.participant.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const filteredNotes = mockNotes.filter(note =>
+  const filteredNotes = notes.filter(note =>
     note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     note.content.toLowerCase().includes(searchQuery.toLowerCase())
   );

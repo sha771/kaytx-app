@@ -1,14 +1,19 @@
 import { z } from 'zod';
 import { publicProcedure } from '../../../create-context';
 import { verifyPassword, createSession, handleFailedLogin, resetFailedLoginAttempts, isAccountLocked } from '../../../../lib/auth';
-import { db } from '../../../../db/in-memory-store';
+import { db as pgDb } from '../../../../db/connection';
+import { organizations, users } from '../../../../db/drizzle-schema';
+import { eq } from 'drizzle-orm';
 import { logAudit, AuditActions } from '../../../../lib/audit';
-import { checkRateLimit, RateLimitPresets } from '../../../../lib/rate-limiter';
+import { checkRateLimit, RateLimitPresets } from '../../../../lib/unified-rate-limiting';
+import { consumeRecoveryCode, normalizeRecoveryCodes, verifyTotpForUser } from '../../../../lib/mfa';
 
 const loginSchema = z.object({
   email: z.string().email(),
   password: z.string(),
   deviceId: z.string().optional(),
+  totp: z.string().optional(),
+  recoveryCode: z.string().optional(),
 });
 
 export const loginProcedure = publicProcedure
@@ -30,7 +35,7 @@ export const loginProcedure = publicProcedure
       throw new Error(`Too many login attempts. Please try again in ${resetInMinutes} minutes.`);
     }
 
-    const user = db.getUserByEmail(input.email);
+    const [user] = await pgDb.select().from(users).where(eq(users.email, input.email)).limit(1);
 
     if (!user) {
       logAudit({
@@ -41,6 +46,19 @@ export const loginProcedure = publicProcedure
         status: 'failure',
       });
       throw new Error('Invalid email or password');
+    }
+
+    if (user.status !== 'active') {
+      logAudit({
+        userId: user.id,
+        action: AuditActions.USER_LOGIN,
+        resource: 'user',
+        resourceId: user.id,
+        ipAddress,
+        metadata: { reason: 'user_not_active', status: user.status },
+        status: 'failure',
+      });
+      throw new Error('Account is not active');
     }
 
     if (isAccountLocked(user)) {
@@ -55,6 +73,43 @@ export const loginProcedure = publicProcedure
         status: 'failure',
       });
       throw new Error(`Account is locked. Please try again in ${lockTimeRemaining} minutes.`);
+    }
+
+    if (user.organizationId) {
+      try {
+        const [org] = await pgDb
+          .select({ settings: organizations.settings })
+          .from(organizations)
+          .where(eq(organizations.id, user.organizationId))
+          .limit(1);
+
+        if ((org as any)?.settings?.enforceSSO) {
+          logAudit({
+            userId: user.id,
+            action: AuditActions.USER_LOGIN,
+            resource: 'user',
+            resourceId: user.id,
+            ipAddress,
+            metadata: { reason: 'sso_enforced' },
+            status: 'failure',
+          });
+          throw new Error('SSO required');
+        }
+      } catch (e) {
+        if (e instanceof Error && e.message === 'SSO required') {
+          throw e;
+        }
+        logAudit({
+          userId: user.id,
+          action: AuditActions.USER_LOGIN,
+          resource: 'user',
+          resourceId: user.id,
+          ipAddress,
+          metadata: { reason: 'sso_policy_check_failed' },
+          status: 'failure',
+        });
+        throw new Error('Unable to verify organization SSO policy');
+      }
     }
 
     const isValidPassword = await verifyPassword(input.password, user.passwordHash);
@@ -86,14 +141,50 @@ export const loginProcedure = publicProcedure
       throw new Error('Please verify your email before logging in');
     }
 
+    if (user.twoFactorEnabled) {
+      const totpOk = input.totp ? verifyTotpForUser((user as any).twoFactorSecret, input.totp) : false;
+      let recoveryOk = false;
+      let updatedRecoveryCodes: any = null;
+
+      if (!totpOk && input.recoveryCode) {
+        const current = normalizeRecoveryCodes((user as any).twoFactorRecoveryCodes);
+        const consumed = consumeRecoveryCode(current, input.recoveryCode);
+        recoveryOk = consumed.ok;
+        updatedRecoveryCodes = consumed.updated;
+      }
+
+      if (!totpOk && !recoveryOk) {
+        logAudit({
+          userId: user.id,
+          action: AuditActions.USER_LOGIN,
+          resource: 'user',
+          resourceId: user.id,
+          ipAddress,
+          metadata: { reason: 'mfa_required_or_invalid' },
+          status: 'failure',
+        });
+        throw new Error('MFA required');
+      }
+
+      if (recoveryOk && updatedRecoveryCodes) {
+        try {
+          await pgDb.update(users).set({
+            twoFactorRecoveryCodes: updatedRecoveryCodes,
+          } as any).where(eq(users.id, user.id));
+        } catch {
+          // best-effort
+        }
+      }
+    }
+
     await resetFailedLoginAttempts(user.id);
 
     const session = await createSession(user.id, ipAddress, userAgent, input.deviceId);
 
-    db.updateUser(user.id, {
-      lastLoginAt: Date.now(),
+    await pgDb.update(users).set({
+      lastLoginAt: new Date(),
       lastLoginIp: ipAddress,
-    });
+    }).where(eq(users.id, user.id));
 
     logAudit({
       userId: user.id,

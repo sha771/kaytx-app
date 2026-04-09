@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { logger } from './production-logger';
 
 export enum AuditEventType {
   USER_LOGIN = 'user.login',
@@ -99,12 +100,12 @@ class AdvancedAuditLogger {
 
     this.notifyIfCritical(auditEvent);
 
-    console.log('[AUDIT]', JSON.stringify(auditEvent));
+    logger.info('[AUDIT] Audit event logged', { auditEvent });
   }
 
   private notifyIfCritical(event: AuditEvent): void {
     if (event.severity === AuditSeverity.CRITICAL) {
-      console.error('[CRITICAL AUDIT EVENT]', event);
+      logger.error('[AUDIT] Critical audit event', { event });
     }
   }
 
@@ -121,7 +122,7 @@ class AdvancedAuditLogger {
       userId,
       action,
       result,
-      metadata,
+      ...(metadata && { metadata }),
     });
   }
 
@@ -135,10 +136,10 @@ class AdvancedAuditLogger {
     this.log({
       type,
       severity,
-      userId,
+      ...(userId && { userId }),
       action,
       result: 'failure',
-      metadata,
+      ...(metadata && { metadata }),
     });
   }
 
@@ -147,7 +148,8 @@ class AdvancedAuditLogger {
     resource: string,
     resourceId: string,
     action: string,
-    result: 'success' | 'failure'
+    result: 'success' | 'failure',
+    metadata?: Record<string, any>
   ): void {
     this.log({
       type: AuditEventType.DATA_ACCESS,
@@ -157,6 +159,7 @@ class AdvancedAuditLogger {
       resourceId,
       action,
       result,
+      ...(metadata && { metadata }),
     });
   }
 
@@ -169,10 +172,10 @@ class AdvancedAuditLogger {
     this.log({
       type: AuditEventType.API_KEY_USE,
       severity: result === 'failure' ? AuditSeverity.WARNING : AuditSeverity.INFO,
-      userId,
+      ...(userId && { userId }),
       action,
       result,
-      metadata,
+      ...(metadata && { metadata }),
     });
   }
 
@@ -274,7 +277,7 @@ class AdvancedAuditLogger {
     cutoffDate.setDate(cutoffDate.getDate() - this.retentionDays);
 
     this.events = this.events.filter(e => e.timestamp >= cutoffDate);
-    console.log(`[AUDIT] Cleaned up events older than ${this.retentionDays} days`);
+    logger.info(`[AUDIT] Cleaned up events older than ${this.retentionDays} days`);
   }
 
   exportEvents(format: 'json' | 'csv' = 'json'): string {

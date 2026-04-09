@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+ 
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -26,7 +27,7 @@ export default function CallerInsightsScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState<'all' | 'positive' | 'neutral' | 'negative'>('all');
 
-  const filteredInsights = mockCallerInsights.filter((insight) => {
+  const filteredInsights = mockCallerInsights.filter((insight: typeof mockCallerInsights[0]) => {
     const matchesSearch =
       insight.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       insight.customerCompany.toLowerCase().includes(searchQuery.toLowerCase());
@@ -45,11 +46,11 @@ export default function CallerInsightsScreen() {
     }
   };
 
-  const totalCalls = mockCallerInsights.reduce((sum, i) => sum + i.totalCalls, 0);
+  const totalCalls = mockCallerInsights.reduce((sum: number, i: typeof mockCallerInsights[0]) => sum + i.totalCalls, 0);
   const avgWinRate =
-    mockCallerInsights.reduce((sum, i) => sum + i.winRate, 0) / mockCallerInsights.length;
+    mockCallerInsights.reduce((sum: number, i: typeof mockCallerInsights[0]) => sum + i.winRate, 0) / mockCallerInsights.length;
   const avgDealValue =
-    mockCallerInsights.reduce((sum, i) => sum + i.avgDealValue, 0) / mockCallerInsights.length;
+    mockCallerInsights.reduce((sum: number, i: typeof mockCallerInsights[0]) => sum + i.avgDealValue, 0) / mockCallerInsights.length;
 
   return (
     <>

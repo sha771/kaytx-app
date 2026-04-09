@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { trpc } from '@/lib/trpc';
 
 export interface Message {
@@ -35,17 +35,15 @@ export function useAIAgent() {
   const [error, setError] = useState<string | null>(null);
   const activeConversationRef = useRef<string | null>(null);
 
-  // TRPC mutations and queries
-  const startConversationMutation = trpc['ai-agents'].startConversation.useMutation();
-  const sendMessageMutation = trpc['ai-agents'].sendMessage.useMutation();
-  const endConversationMutation = trpc['ai-agents'].endConversation.useMutation();
-  const executeToolMutation = trpc['ai-agents'].executeTool.useMutation();
-  const listAgentsQuery = trpc['ai-agents'].listAgents.useQuery({});
-  const getAgentQuery = trpc['ai-agents'].getAgent.useQuery;
-  const getConversationHistoryQuery = trpc['ai-agents'].getConversationHistory.useQuery;
+  // TRPC mutations and queries - using aiAgents instead of 'ai-agents'
+  const startConversationMutation = trpc.aiAgents.startConversation.useMutation();
+  const sendMessageMutation = trpc.aiAgents.sendMessage.useMutation();
+  const endConversationMutation = trpc.aiAgents.endConversation.useMutation();
+  const executeToolMutation = trpc.aiAgents.executeTool.useMutation();
+  const listAgentsQuery = trpc.aiAgents.listAgents.useQuery({});
 
   // Update agents when query completes
-  useState(() => {
+  useEffect(() => {
     if (listAgentsQuery.data?.agents) {
       setAgents(listAgentsQuery.data.agents as Agent[]);
     }
@@ -281,7 +279,7 @@ export function useAgentConversation(agentId: string, autoStart = true) {
   const [messages, setMessages] = useState<Message[]>([]);
 
   // Auto-start conversation if requested
-  useState(() => {
+  useEffect(() => {
     if (autoStart && agentId) {
       startConversation(agentId).then(result => {
         if (result?.sessionId) {
@@ -292,7 +290,7 @@ export function useAgentConversation(agentId: string, autoStart = true) {
   }, [agentId, autoStart, startConversation]);
 
   // Update messages when conversation changes
-  useState(() => {
+  useEffect(() => {
     if (sessionId) {
       const conversation = getConversation(sessionId);
       if (conversation) {

@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from 'react';
+ 
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -35,13 +36,9 @@ import {
   Zap,
   Radio,
   Activity,
-  Users,
-  Upload,
-  Settings,
-  TrendingUp,
-  BarChart3,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
+import { trpc } from '@/lib/trpc';
 
 type ChannelType = 'PSTN' | 'WhatsApp' | 'Video';
 type Sentiment = 'positive' | 'neutral' | 'negative';
@@ -88,145 +85,67 @@ const sentimentFilters: SentimentFilter[] = ['all', 'positive', 'neutral', 'nega
 
 const isAllSentiment = (value: SentimentFilter): value is 'all' => value === 'all';
 
-const generateMoreTranscripts = (): ReceptionistTranscript[] => [
-  ...Array.from({ length: 15 }, (_, i) => ({
-    id: `rx-t${i + 4}`,
-    customerName: ['Michael Brown', 'Lisa Anderson', 'David Wilson', 'Emma Davis'][i % 4],
-    phoneNumber: `+1 ${Math.floor(Math.random() * 900 + 100)} 555 ${Math.floor(Math.random() * 9000 + 1000)}`,
-    channel: (['PSTN', 'WhatsApp', 'Video'] as const)[i % 3],
-    timestamp: new Date(Date.now() - i * 3600000).toISOString(),
-    duration: `${String(Math.floor(Math.random() * 20) + 3).padStart(2, '0')}:${String(Math.floor(Math.random() * 60)).padStart(2, '0')}`,
-    sentiment: (['positive', 'neutral', 'negative'] as const)[i % 3],
-    summary: `AI handled ${['product inquiry', 'support request', 'account verification', 'billing question'][i % 4]} with ${['high', 'moderate', 'excellent'][i % 3]} customer satisfaction.`,
-    actions: ['Log to CRM', 'Send follow-up', 'Schedule callback'],
-    tags: [['Support', 'Tier-1'], ['Sales', 'Enterprise'], ['Billing', 'Urgent']][i % 3],
-    qaScore: Math.floor(Math.random() * 25) + 75,
-    crmRecord: `salesforce://record/00${i}xx00000ABC`,
-    transcript: [
-      { speaker: 'Customer' as const, text: 'Hi, I need assistance with my account.', time: '00:05' },
-      { speaker: 'AI' as const, text: 'Of course! Let me pull up your account details.', time: '00:10' },
-    ],
-  })),
-];
-
-const receptionistTranscripts: ReceptionistTranscript[] = [
-  {
-    id: 'rx-t1',
-    customerName: 'Sarah Patel',
-    phoneNumber: '+1 646 555 8801',
-    channel: 'PSTN',
-    timestamp: '2025-02-12T14:32:00Z',
-    duration: '07:24',
-    sentiment: 'positive',
-    summary: 'AI verified account, confirmed fulfillment ETA, and scheduled proactive WhatsApp summary.',
-    actions: ['Notify fulfillment squad', 'Sync recap to CRM', 'Schedule QA review'],
-    tags: ['VIP', 'Order'],
-    qaScore: 97,
-    crmRecord: 'salesforce://record/006xx00000ABC',
-    transcript: [
-      { speaker: 'Customer', text: 'Hi, checking on my enterprise headset order.', time: '00:08' },
-      { speaker: 'AI', text: 'Absolutely, let me pull up the order tied to 646-555-8801.', time: '00:12' },
-      { speaker: 'AI', text: 'It is staged for shipping tonight. Would you like a WhatsApp receipt?', time: '02:04' },
-      { speaker: 'Customer', text: 'Yes, and share the tracking with our ops channel.', time: '02:20' },
-    ],
-  },
-  {
-    id: 'rx-t2',
-    customerName: 'Jamal Greene',
-    phoneNumber: '+44 20 7123 8910',
-    channel: 'WhatsApp',
-    timestamp: '2025-02-12T09:02:00Z',
-    duration: '05:02',
-    sentiment: 'neutral',
-    summary: 'Inbound WhatsApp thread escalated to live agent for pricing flexibility and contract upload.',
-    actions: ['Send quote doc', 'Signal deal desk'],
-    tags: ['Pricing', 'EMEA'],
-    qaScore: 89,
-    crmRecord: 'salesforce://record/006xx00000XYZ',
-    transcript: [
-      { speaker: 'Customer', text: 'Need revised quote reflecting 400 seats.', time: '00:15' },
-      { speaker: 'AI', text: 'Updated quote is ready. Shall I email or push via WhatsApp?', time: '00:32' },
-      { speaker: 'Customer', text: 'WhatsApp is fine. Also connect us with the AE.', time: '01:40' },
-      { speaker: 'AI', text: 'Looping in Emma (deal desk) now and sharing the pdf.', time: '02:05' },
-    ],
-  },
-  {
-    id: 'rx-t3',
-    customerName: 'Maya Liu',
-    phoneNumber: '+1 415 982 1144',
-    channel: 'Video',
-    timestamp: '2025-02-11T22:15:00Z',
-    duration: '12:40',
-    sentiment: 'negative',
-    summary: 'Escalation regarding SLA breach triggered executive bridge with full transcript and watermark.',
-    actions: ['Open executive bridge', 'Generate compliance log'],
-    tags: ['SLA', 'Escalation'],
-    qaScore: 76,
-    crmRecord: 'salesforce://record/500xx00000ABCD',
-    transcript: [
-      { speaker: 'Customer', text: 'We experienced 42 minutes of downtime.', time: '00:22' },
-      { speaker: 'AI', text: 'I am flagging this as a Sev2 and paging the incident commander.', time: '00:46' },
-      { speaker: 'Agent', text: 'This is Jason joining the bridge. I have the full log in front of me.', time: '04:12' },
-    ],
-  },
-  ...generateMoreTranscripts(),
-];
-
-type ExportFormat = 'pdf' | 'csv' | 'json';
-type TeamMember = { id: string; name: string; role: string; avatar?: string };
-
-const teamMembers: TeamMember[] = [
-  { id: '1', name: 'Sarah Johnson', role: 'CX Manager' },
-  { id: '2', name: 'Mike Chen', role: 'Support Lead' },
-  { id: '3', name: 'Emma Wilson', role: 'QA Specialist' },
-];
-
 export default function ReceptionistTranscriptsScreen() {
   const { theme } = useTheme();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [channelFilter, setChannelFilter] = useState<ChannelType | 'all'>('all');
   const [sentimentFilter, setSentimentFilter] = useState<Sentiment | 'all'>('all');
   const [selectedTranscript, setSelectedTranscript] = useState<ReceptionistTranscript | null>(null);
+  
+  // Real tRPC data
+  const { data: receptionistTranscripts = [], refetch } = trpc.receptionist.getTranscripts.useQuery();
+  const { data: config } = trpc.receptionist.getConfig.useQuery();
+
   const [enableLiveMonitor, setEnableLiveMonitor] = useState<boolean>(false);
-  const [enableAutoNotes, setEnableAutoNotes] = useState<boolean>(true);
+  const [enableAutoNotes, setEnableAutoNotes] = useState<boolean>(config?.transcribeCalls ?? true);
   const [showAnalysisPanel, setShowAnalysisPanel] = useState<boolean>(false);
-  const [showExportModal, setShowExportModal] = useState<boolean>(false);
-  const [showShareModal, setShowShareModal] = useState<boolean>(false);
-  const [selectedExportFormat, setSelectedExportFormat] = useState<ExportFormat>('pdf');
-  const [selectedTeamMembers, setSelectedTeamMembers] = useState<string[]>([]);
   const [realTimeUpdates, setRealTimeUpdates] = useState<boolean>(true);
-  const [autoRefresh, setAutoRefresh] = useState<boolean>(true);
+  const [autoRefresh] = useState<boolean>(true);
   const [sortOrder, setSortOrder] = useState<'newest' | 'oldest' | 'qaScore'>('newest');
-  const [liveCallsCount, setLiveCallsCount] = useState<number>(3);
+  const [liveCallsCount, setLiveCallsCount] = useState<number>(0);
+
+  useEffect(() => {
+    if (config) {
+      setEnableAutoNotes(config.transcribeCalls);
+    }
+  }, [config]);
 
   const filteredTranscripts = useMemo(() => {
-    return receptionistTranscripts.filter(transcript => {
+    return (receptionistTranscripts as ReceptionistTranscript[]).filter(transcript => {
       const matchesSearch = `${transcript.customerName} ${transcript.phoneNumber}`
         .toLowerCase()
         .includes(searchQuery.toLowerCase());
       const matchesChannel = channelFilter === 'all' || transcript.channel === channelFilter;
       const matchesSentiment = sentimentFilter === 'all' || transcript.sentiment === sentimentFilter;
       return matchesSearch && matchesChannel && matchesSentiment;
+    }).sort((a, b) => {
+      if (sortOrder === 'newest') return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
+      if (sortOrder === 'oldest') return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
+      if (sortOrder === 'qaScore') return b.qaScore - a.qaScore;
+      return 0;
     });
-  }, [searchQuery, channelFilter, sentimentFilter]);
+  }, [receptionistTranscripts, searchQuery, channelFilter, sentimentFilter, sortOrder]);
 
   React.useEffect(() => {
     if (realTimeUpdates && autoRefresh) {
       const interval = setInterval(() => {
         setLiveCallsCount(prev => Math.max(0, prev + Math.floor(Math.random() * 3) - 1));
-        console.log('Auto-refreshing transcript data', new Date().toISOString());
+        refetch();
       }, 15000);
       return () => clearInterval(interval);
     }
-  }, [realTimeUpdates, autoRefresh]);
+    return undefined;
+  }, [realTimeUpdates, autoRefresh, refetch]);
 
   const sentimentStats = useMemo(() => {
     const base = { positive: 0, neutral: 0, negative: 0 } as Record<Sentiment, number>;
-    receptionistTranscripts.forEach(item => {
-      base[item.sentiment] += 1;
+    (receptionistTranscripts as ReceptionistTranscript[]).forEach(item => {
+      if (base[item.sentiment] !== undefined) {
+        base[item.sentiment] += 1;
+      }
     });
     return base;
-  }, []);
+  }, [receptionistTranscripts]);
 
   return (
     <>
@@ -1082,3 +1001,4 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
 });
+

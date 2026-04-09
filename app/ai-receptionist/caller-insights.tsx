@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+ 
+import React, { useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -7,8 +8,9 @@ import {
   TouchableOpacity,
   TextInput,
   useWindowDimensions,
+  ActivityIndicator,
 } from 'react-native';
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   Search,
@@ -24,213 +26,231 @@ import {
   BarChart2,
   PieChart,
   Activity,
+  Lock,
 } from 'lucide-react-native';
-import { mockCallerInsights } from '@/utils/mockNegotiationData';
-import type { CallerInsight } from '@/types/negotiation';
+import { trpc } from '@/lib/trpc';
+import { useTheme } from '@/providers/ThemeProvider';
 
 export default function CallerInsightsScreen() {
+  const { theme } = useTheme();
+  const router = useRouter();
   const { width } = useWindowDimensions();
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState<'all' | 'positive' | 'neutral' | 'negative'>('all');
 
-  const filteredInsights = mockCallerInsights.filter((insight) => {
-    const matchesSearch =
-      insight.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      insight.customerCompany.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesFilter = filterType === 'all' || insight.sentiment === filterType;
-    return matchesSearch && matchesFilter;
-  });
+  // Real tRPC data
+  const { data: subscription } = trpc.user.getSubscription.useQuery();
+  const isEnterprise = subscription?.plan === 'enterprise';
 
-  const getSentimentColor = (sentiment: string) => {
-    switch (sentiment) {
-      case 'positive':
-        return '#34C759';
-      case 'negative':
-        return '#FF3B30';
-      default:
-        return '#FF9500';
-    }
-  };
+  const { data: callerInsights = [], isLoading } = trpc.receptionist.getCallerInsights.useQuery();
 
-  const totalCalls = mockCallerInsights.reduce((sum, i) => sum + i.totalCalls, 0);
-  const avgWinRate =
-    mockCallerInsights.reduce((sum, i) => sum + i.winRate, 0) / mockCallerInsights.length;
-  const avgDealValue =
-    mockCallerInsights.reduce((sum, i) => sum + i.avgDealValue, 0) / mockCallerInsights.length;
+  const filteredInsights = useMemo(() => {
+    return callerInsights.filter((insight) => {
+      const matchesSearch =
+        insight.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        insight.customerCompany.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesFilter = filterType === 'all' || insight.sentiment === filterType;
+      return matchesSearch && matchesFilter;
+    });
+  }, [callerInsights, searchQuery, filterType]);
+
+  const stats = useMemo(() => {
+    if (!callerInsights.length) return { totalCalls: 0, avgWinRate: 0, avgDealValue: 0 };
+    const totalCalls = callerInsights.reduce((sum, i) => sum + i.totalCalls, 0);
+    const avgWinRate = callerInsights.reduce((sum, i) => sum + i.winRate, 0) / callerInsights.length;
+    const avgDealValue = callerInsights.reduce((sum, i) => sum + i.avgDealValue, 0) / callerInsights.length;
+    return { totalCalls, avgWinRate, avgDealValue };
+  }, [callerInsights]);
 
   return (
-    <>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <Stack.Screen
         options={{
           title: 'Caller Insights',
-          headerStyle: { backgroundColor: '#FFFFFF' },
-          headerTintColor: '#1A1A1A',
+          headerStyle: { backgroundColor: theme.colors.background },
+          headerTintColor: theme.colors.text,
           headerShadowVisible: false,
         }}
       />
       <SafeAreaView style={styles.container} edges={['bottom']}>
-        <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-          <View style={styles.statsGrid}>
-            <View style={[styles.statCard, { backgroundColor: '#F0F8FF' }]}>
-              <View style={styles.statIconContainer}>
-                <Phone size={20} color="#007AFF" />
-              </View>
-              <Text style={styles.statValue}>{totalCalls}</Text>
-              <Text style={styles.statLabel}>Total Calls</Text>
-            </View>
-
-            <View style={[styles.statCard, { backgroundColor: '#F0FFF0' }]}>
-              <View style={styles.statIconContainer}>
-                <Award size={20} color="#34C759" />
-              </View>
-              <Text style={styles.statValue}>{avgWinRate.toFixed(1)}%</Text>
-              <Text style={styles.statLabel}>Avg Win Rate</Text>
-            </View>
-
-            <View style={[styles.statCard, { backgroundColor: '#FFF5F0' }]}>
-              <View style={styles.statIconContainer}>
-                <TrendingUp size={20} color="#FF9500" />
-              </View>
-              <Text style={styles.statValue}>${(avgDealValue / 1000).toFixed(0)}K</Text>
-              <Text style={styles.statLabel}>Avg Deal Value</Text>
-            </View>
+        {isLoading ? (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color={theme.colors.primary} />
           </View>
+        ) : (
+          <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+            <View style={styles.statsGrid}>
+              <View style={[styles.statCard, { backgroundColor: theme.colors.primary + '15' }]}>
+                <View style={styles.statIconContainer}>
+                  <Phone size={20} color={theme.colors.primary} />
+                </View>
+                <Text style={[styles.statValue, { color: theme.colors.text }]}>{stats.totalCalls}</Text>
+                <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Total Calls</Text>
+              </View>
 
-          <View style={styles.searchSection}>
-            <View style={styles.searchBar}>
-              <Search size={18} color="#8E8E93" />
-              <TextInput
-                style={styles.searchInput}
-                placeholder="Search by name or company..."
-                value={searchQuery}
-                onChangeText={setSearchQuery}
-                placeholderTextColor="#8E8E93"
-              />
+              <View style={[styles.statCard, { backgroundColor: '#34C75915' }]}>
+                <View style={styles.statIconContainer}>
+                  <Award size={20} color="#34C759" />
+                </View>
+                <Text style={[styles.statValue, { color: theme.colors.text }]}>{stats.avgWinRate.toFixed(1)}%</Text>
+                <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Avg Win Rate</Text>
+              </View>
+
+              <View style={[styles.statCard, { backgroundColor: '#FF950015' }]}>
+                <View style={styles.statIconContainer}>
+                  <TrendingUp size={20} color="#FF9500" />
+                </View>
+                <Text style={[styles.statValue, { color: theme.colors.text }]}>${(stats.avgDealValue / 1000).toFixed(0)}K</Text>
+                <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Avg Deal Value</Text>
+              </View>
             </View>
 
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              style={styles.filterContainer}
-            >
-              {['all', 'positive', 'neutral', 'negative'].map((filter) => (
-                <TouchableOpacity
-                  key={filter}
-                  style={[
-                    styles.filterChip,
-                    filterType === filter && styles.filterChipActive,
-                  ]}
-                  onPress={() => setFilterType(filter as typeof filterType)}
-                >
-                  <Text
-                    style={[
-                      styles.filterChipText,
-                      filterType === filter && styles.filterChipTextActive,
-                    ]}
-                  >
-                    {filter.charAt(0).toUpperCase() + filter.slice(1)}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          </View>
+            <View style={styles.searchSection}>
+              <View style={[styles.searchBar, { backgroundColor: theme.colors.cardBackground, borderColor: theme.colors.border }]}>
+                <Search size={18} color={theme.colors.secondaryText} />
+                <TextInput
+                  style={[styles.searchInput, { color: theme.colors.text }]}
+                  placeholder="Search by name or company..."
+                  value={searchQuery}
+                  onChangeText={setSearchQuery}
+                  placeholderTextColor={theme.colors.secondaryText}
+                />
+              </View>
 
-          <View style={styles.insightsList}>
-            {filteredInsights.map((insight) => (
-              <View key={insight.id} style={styles.insightCard}>
-                <View style={styles.insightHeader}>
-                  <View style={styles.insightHeaderLeft}>
-                    <Text style={styles.insightName}>{insight.customerName}</Text>
-                    <View style={styles.companyRow}>
-                      <Building size={14} color="#8E8E93" />
-                      <Text style={styles.insightCompany}>{insight.customerCompany}</Text>
-                    </View>
-                  </View>
-                  <View
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                style={styles.filterContainer}
+              >
+                {['all', 'positive', 'neutral', 'negative'].map((filter) => (
+                  <TouchableOpacity
+                    key={filter}
                     style={[
-                      styles.sentimentBadge,
-                      { backgroundColor: getSentimentColor(insight.sentiment) + '20' },
+                      styles.filterChip,
+                      { backgroundColor: theme.colors.cardBackground },
+                      filterType === filter && { backgroundColor: theme.colors.primary },
                     ]}
+                    onPress={() => setFilterType(filter as typeof filterType)}
                   >
                     <Text
                       style={[
-                        styles.sentimentText,
-                        { color: getSentimentColor(insight.sentiment) },
+                        styles.filterChipText,
+                        { color: theme.colors.secondaryText },
+                        filterType === filter && { color: '#FFFFFF' },
                       ]}
                     >
-                      {insight.sentiment}
+                      {filter.charAt(0).toUpperCase() + filter.slice(1)}
                     </Text>
-                  </View>
-                </View>
-
-                <View style={styles.metricsGrid}>
-                  <View style={styles.metricItem}>
-                    <Phone size={16} color="#007AFF" />
-                    <Text style={styles.metricValue}>{insight.totalCalls}</Text>
-                    <Text style={styles.metricLabel}>Calls</Text>
-                  </View>
-                  <View style={styles.metricItem}>
-                    <Award size={16} color="#34C759" />
-                    <Text style={styles.metricValue}>{insight.totalDeals}</Text>
-                    <Text style={styles.metricLabel}>Deals</Text>
-                  </View>
-                  <View style={styles.metricItem}>
-                    <TrendingUp size={16} color="#FF9500" />
-                    <Text style={styles.metricValue}>${(insight.avgDealValue / 1000).toFixed(0)}K</Text>
-                    <Text style={styles.metricLabel}>Avg Deal</Text>
-                  </View>
-                  <View style={styles.metricItem}>
-                    <Activity size={16} color="#5AC8FA" />
-                    <Text style={styles.metricValue}>{insight.winRate}%</Text>
-                    <Text style={styles.metricLabel}>Win Rate</Text>
-                  </View>
-                </View>
-
-                <View style={styles.demographicsSection}>
-                  <Text style={styles.sectionTitle}>Demographics</Text>
-                  <View style={styles.demographicsGrid}>
-                    <View style={styles.demographicItem}>
-                      <Building size={14} color="#8E8E93" />
-                      <Text style={styles.demographicText}>{insight.demographics.industry}</Text>
-                    </View>
-                    <View style={styles.demographicItem}>
-                      <Users size={14} color="#8E8E93" />
-                      <Text style={styles.demographicText}>{insight.demographics.companySize}</Text>
-                    </View>
-                    <View style={styles.demographicItem}>
-                      <MapPin size={14} color="#8E8E93" />
-                      <Text style={styles.demographicText}>{insight.demographics.location}</Text>
-                    </View>
-                  </View>
-                </View>
-
-                {insight.preferredTime && (
-                  <View style={styles.behaviorSection}>
-                    <Clock size={14} color="#007AFF" />
-                    <Text style={styles.behaviorText}>Preferred Time: {insight.preferredTime}</Text>
-                  </View>
-                )}
-
-                {insight.behaviorPattern && (
-                  <View style={styles.patternSection}>
-                    <Text style={styles.patternText}>{insight.behaviorPattern}</Text>
-                  </View>
-                )}
-
-                <View style={styles.cardFooter}>
-                  <Text style={styles.lastContactText}>
-                    Last contact: {new Date(insight.lastContact).toLocaleDateString()}
-                  </Text>
-                  <TouchableOpacity style={styles.viewDetailsButton}>
-                    <Text style={styles.viewDetailsText}>View Details</Text>
                   </TouchableOpacity>
+                ))}
+              </ScrollView>
+            </View>
+
+            <View style={styles.insightsList}>
+              {filteredInsights.map((insight) => (
+                <View key={insight.id} style={[styles.insightCard, { backgroundColor: theme.colors.cardBackground, borderColor: theme.colors.border }]}>
+                  {!isEnterprise && (
+                    <TouchableOpacity 
+                      style={styles.lockOverlay}
+                      onPress={() => router.push('/enterprise-admin')}
+                    >
+                      <Lock size={24} color={theme.colors.text} />
+                    </TouchableOpacity>
+                  )}
+                  <View style={styles.insightHeader}>
+                    <View style={styles.insightHeaderLeft}>
+                      <Text style={[styles.insightName, { color: theme.colors.text }]}>{insight.customerName}</Text>
+                      <View style={styles.companyRow}>
+                        <Building size={14} color={theme.colors.secondaryText} />
+                        <Text style={[styles.insightCompany, { color: theme.colors.secondaryText }]}>{insight.customerCompany}</Text>
+                      </View>
+                    </View>
+                    <View
+                      style={[
+                        styles.sentimentBadge,
+                        { backgroundColor: getSentimentColor(insight.sentiment) + '20' },
+                      ]}
+                    >
+                      <Text
+                        style={[
+                          styles.sentimentText,
+                          { color: getSentimentColor(insight.sentiment) },
+                        ]}
+                      >
+                        {insight.sentiment}
+                      </Text>
+                    </View>
+                  </View>
+
+                  <View style={[styles.metricsGrid, { backgroundColor: theme.colors.background }]}>
+                    <View style={styles.metricItem}>
+                      <Phone size={16} color={theme.colors.primary} />
+                      <Text style={[styles.metricValue, { color: theme.colors.text }]}>{insight.totalCalls}</Text>
+                      <Text style={[styles.metricLabel, { color: theme.colors.secondaryText }]}>Calls</Text>
+                    </View>
+                    <View style={styles.metricItem}>
+                      <Award size={16} color="#34C759" />
+                      <Text style={[styles.metricValue, { color: theme.colors.text }]}>{insight.totalDeals}</Text>
+                      <Text style={[styles.metricLabel, { color: theme.colors.secondaryText }]}>Deals</Text>
+                    </View>
+                    <View style={styles.metricItem}>
+                      <TrendingUp size={16} color="#FF9500" />
+                      <Text style={[styles.metricValue, { color: theme.colors.text }]}>${(insight.avgDealValue / 1000).toFixed(0)}K</Text>
+                      <Text style={[styles.metricLabel, { color: theme.colors.secondaryText }]}>Avg Deal</Text>
+                    </View>
+                    <View style={styles.metricItem}>
+                      <Activity size={16} color="#5AC8FA" />
+                      <Text style={[styles.metricValue, { color: theme.colors.text }]}>{insight.winRate}%</Text>
+                      <Text style={[styles.metricLabel, { color: theme.colors.secondaryText }]}>Win Rate</Text>
+                    </View>
+                  </View>
+
+                  <View style={styles.demographicsSection}>
+                    <Text style={[styles.sectionTitle, { color: theme.colors.secondaryText }]}>Demographics</Text>
+                    <View style={styles.demographicsGrid}>
+                      <View style={[styles.demographicItem, { backgroundColor: theme.colors.background }]}>
+                        <Building size={14} color={theme.colors.secondaryText} />
+                        <Text style={[styles.demographicText, { color: theme.colors.text }]}>{insight.demographics.industry}</Text>
+                      </View>
+                      <View style={[styles.demographicItem, { backgroundColor: theme.colors.background }]}>
+                        <Users size={14} color={theme.colors.secondaryText} />
+                        <Text style={[styles.demographicText, { color: theme.colors.text }]}>{insight.demographics.companySize}</Text>
+                      </View>
+                      <View style={[styles.demographicItem, { backgroundColor: theme.colors.background }]}>
+                        <MapPin size={14} color={theme.colors.secondaryText} />
+                        <Text style={[styles.demographicText, { color: theme.colors.text }]}>{insight.demographics.location}</Text>
+                      </View>
+                    </View>
+                  </View>
+
+                  {insight.preferredTime && (
+                    <View style={[styles.behaviorSection, { backgroundColor: theme.colors.primary + '15' }]}>
+                      <Clock size={14} color={theme.colors.primary} />
+                      <Text style={[styles.behaviorText, { color: theme.colors.primary }]}>Preferred Time: {insight.preferredTime}</Text>
+                    </View>
+                  )}
+
+                  {insight.behaviorPattern && (
+                    <View style={[styles.patternSection, { backgroundColor: '#FF950015' }]}>
+                      <Text style={[styles.patternText, { color: theme.colors.text }]}>{insight.behaviorPattern}</Text>
+                    </View>
+                  )}
+
+                  <View style={[styles.cardFooter, { borderTopColor: theme.colors.border }]}>
+                    <Text style={[styles.lastContactText, { color: theme.colors.secondaryText }]}>
+                      Last contact: {new Date(insight.lastContact).toLocaleDateString()}
+                    </Text>
+                    <TouchableOpacity style={styles.viewDetailsButton}>
+                      <Text style={[styles.viewDetailsText, { color: theme.colors.primary }]}>View Details</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
-              </View>
-            ))}
-          </View>
-        </ScrollView>
+              ))}
+            </View>
+          </ScrollView>
+        )}
       </SafeAreaView>
-    </>
+    </View>
   );
 }
 
@@ -447,6 +467,18 @@ const styles = StyleSheet.create({
   viewDetailsText: {
     fontSize: 14,
     fontWeight: '600' as const,
-    color: '#007AFF',
+  },
+  loadingContainer: {
+    padding: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  lockOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    borderRadius: 16,
+    zIndex: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

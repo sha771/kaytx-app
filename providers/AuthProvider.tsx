@@ -1,16 +1,25 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import { trpc } from '@/lib/trpc';
-import { advancedAudit, AuditEventType, AuditSeverity } from '@/backend/lib/advanced-audit';
+import { advancedAudit, AuditEventType, AuditSeverity } from '@/lib/advanced-audit-stub';
 import { encryptionAtRest } from '@/utils/encryptionAtRest';
 import { monitoring } from '@/utils/monitoring';
 
 interface User {
   id: string;
   email: string;
-  name: string;
+  firstName: string;
+  lastName: string;
+  name?: string;
   role: string;
   avatar?: string;
   organizationId?: string;
+  emailVerified?: boolean;
+  twoFactorEnabled?: boolean;
+  status?: string;
+  failedLoginAttempts?: number;
+  accountLockedUntil?: string;
+  createdAt?: string;
+  lastLoginAt?: string;
 }
 
 interface AuthContextType {
@@ -19,7 +28,13 @@ interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  register: (email: string, password: string, firstName: string, lastName: string) => Promise<void>;
+  register: (
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string
+  ) => Promise<{ userId: string; email: string; verificationToken?: string }>;
+  verifyEmail: (token: string) => Promise<void>;
   logout: () => Promise<void>;
   refreshToken: () => Promise<void>;
 }
@@ -37,6 +52,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const loginMutation = trpc.auth.login.useMutation();
   const registerMutation = trpc.auth.register.useMutation();
+  const verifyEmailMutation = trpc.auth.verifyEmail.useMutation();
   const logoutMutation = trpc.auth.logout.useMutation();
   const refreshMutation = trpc.auth.refreshToken.useMutation();
 
@@ -69,7 +85,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       monitoring.error('auth', 'Failed to load stored auth', error as Error);
       await clearStoredAuth();
     } finally {
-      setIsLoading(false);
+      // Ensure loading state is set to false even if there are errors
+      setTimeout(() => setIsLoading(false), 0);
     }
   }, []);
 
@@ -98,6 +115,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const userData: User = {
         id: result.user.id,
         email: result.user.email,
+        firstName: result.user.firstName,
+        lastName: result.user.lastName,
         name: `${result.user.firstName} ${result.user.lastName}`,
         role: result.user.role,
         organizationId: result.user.organizationId,
@@ -162,6 +181,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       monitoring.info('auth', 'Registration successful', { userId: result.userId });
       endTimer();
+
+      return {
+        userId: result.userId,
+        email: result.email,
+        verificationToken: (result as any).verificationToken,
+      };
     } catch (error) {
       advancedAudit.log({
         type: AuditEventType.USER_REGISTER,
@@ -175,6 +200,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       monitoring.error('auth', 'Registration failed', error as Error, { email });
       throw error;
     }
+  };
+
+  const verifyEmail = async (token: string) => {
+    await verifyEmailMutation.mutateAsync({ token });
   };
 
   const logout = async () => {
@@ -194,7 +223,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       advancedAudit.log({
         type: AuditEventType.USER_LOGOUT,
         severity: AuditSeverity.INFO,
-        userId,
+        ...(userId !== undefined ? { userId } : {}),
         action: 'User logged out successfully',
         result: 'success',
       });
@@ -242,6 +271,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isLoading,
     login,
     register,
+    verifyEmail,
     logout,
     refreshToken,
   };

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+ 
+import React, { useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -8,8 +9,9 @@ import {
   TextInput,
   Switch,
   Modal,
+  ActivityIndicator,
 } from 'react-native';
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   Search,
@@ -26,29 +28,40 @@ import {
   BarChart2,
   Users,
   Database,
+  Lock,
 } from 'lucide-react-native';
-import { mockIntegrations } from '@/utils/mockNegotiationData';
-import type { Integration } from '@/types/negotiation';
+import { trpc } from '@/lib/trpc';
+import { useTheme } from '@/providers/ThemeProvider';
 
 export default function IntegrationsScreen() {
+  const { theme } = useTheme();
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [selectedIntegration, setSelectedIntegration] = useState<Integration | null>(null);
+  const [selectedIntegration, setSelectedIntegration] = useState<any | null>(null);
 
-  const categories = [
+  // Real tRPC data
+  const { data: subscription } = trpc.user.getSubscription.useQuery();
+  const isEnterprise = subscription?.plan === 'enterprise';
+
+  const { data: integrations = [], isLoading, refetch } = trpc.receptionist.getIntegrations.useQuery();
+
+  const categories = useMemo(() => [
     { id: 'all', label: 'All' },
     { id: 'crm', label: 'CRM' },
     { id: 'calendar', label: 'Calendar' },
     { id: 'communication', label: 'Communication' },
     { id: 'analytics', label: 'Analytics' },
     { id: 'productivity', label: 'Productivity' },
-  ];
+  ], []);
 
-  const filteredIntegrations = mockIntegrations.filter((integration) => {
-    const matchesSearch = integration.name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || integration.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  const filteredIntegrations = useMemo(() => {
+    return integrations.filter((integration) => {
+      const matchesSearch = integration.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCategory = selectedCategory === 'all' || integration.category === selectedCategory;
+      return matchesSearch && matchesCategory;
+    });
+  }, [integrations, searchQuery, selectedCategory]);
 
   const getIconForCategory = (category: string) => {
     const icons = {
@@ -66,34 +79,34 @@ export default function IntegrationsScreen() {
       <Stack.Screen
         options={{
           title: 'Integrations',
-          headerStyle: { backgroundColor: '#FFFFFF' },
-          headerTintColor: '#1A1A1A',
+          headerStyle: { backgroundColor: theme.colors.background },
+          headerTintColor: theme.colors.text,
           headerShadowVisible: false,
         }}
       />
-      <SafeAreaView style={styles.container} edges={['bottom']}>
-        <View style={styles.header}>
+      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} edges={['bottom']}>
+        <View style={[styles.header, { backgroundColor: theme.colors.background, borderBottomColor: theme.colors.border }]}>
           <View style={styles.statsRow}>
-            <View style={styles.statBox}>
-              <Text style={styles.statValue}>
-                {mockIntegrations.filter((i) => i.isConnected).length}
+            <View style={[styles.statBox, { backgroundColor: theme.colors.cardBackground }]}>
+              <Text style={[styles.statValue, { color: theme.colors.primary }]}>
+                {integrations.filter((i) => i.isConnected).length}
               </Text>
-              <Text style={styles.statLabel}>Connected</Text>
+              <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Connected</Text>
             </View>
-            <View style={styles.statBox}>
-              <Text style={styles.statValue}>{mockIntegrations.length}</Text>
-              <Text style={styles.statLabel}>Available</Text>
+            <View style={[styles.statBox, { backgroundColor: theme.colors.cardBackground }]}>
+              <Text style={[styles.statValue, { color: theme.colors.primary }]}>{integrations.length}</Text>
+              <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Available</Text>
             </View>
           </View>
 
-          <View style={styles.searchBar}>
-            <Search size={18} color="#8E8E93" />
+          <View style={[styles.searchBar, { backgroundColor: theme.colors.cardBackground }]}>
+            <Search size={18} color={theme.colors.secondaryText} />
             <TextInput
-              style={styles.searchInput}
+              style={[styles.searchInput, { color: theme.colors.text }]}
               placeholder="Search integrations..."
               value={searchQuery}
               onChangeText={setSearchQuery}
-              placeholderTextColor="#8E8E93"
+              placeholderTextColor={theme.colors.secondaryText}
             />
           </View>
 
@@ -107,14 +120,16 @@ export default function IntegrationsScreen() {
                 key={category.id}
                 style={[
                   styles.categoryChip,
-                  selectedCategory === category.id && styles.categoryChipActive,
+                  { backgroundColor: theme.colors.cardBackground },
+                  selectedCategory === category.id && { backgroundColor: theme.colors.primary },
                 ]}
                 onPress={() => setSelectedCategory(category.id)}
               >
                 <Text
                   style={[
                     styles.categoryChipText,
-                    selectedCategory === category.id && styles.categoryChipTextActive,
+                    { color: theme.colors.secondaryText },
+                    selectedCategory === category.id && { color: '#FFFFFF' },
                   ]}
                 >
                   {category.label}
@@ -125,61 +140,72 @@ export default function IntegrationsScreen() {
         </View>
 
         <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-          <View style={styles.integrationsList}>
-            {filteredIntegrations.map((integration) => {
-              const IconComponent = getIconForCategory(integration.category);
-              return (
-                <TouchableOpacity
-                  key={integration.id}
-                  style={styles.integrationCard}
-                  onPress={() => setSelectedIntegration(integration)}
-                >
-                  <View style={styles.integrationHeader}>
-                    <View style={styles.integrationLeft}>
-                      <View
-                        style={[
-                          styles.integrationIcon,
-                          { backgroundColor: integration.isConnected ? '#34C75920' : '#F2F2F7' },
-                        ]}
-                      >
-                        <IconComponent
-                          size={24}
-                          color={integration.isConnected ? '#34C759' : '#8E8E93'}
-                        />
+          {isLoading ? (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color={theme.colors.primary} />
+            </View>
+          ) : (
+            <View style={styles.integrationsList}>
+              {filteredIntegrations.map((integration) => {
+                const IconComponent = getIconForCategory(integration.category);
+                return (
+                  <TouchableOpacity
+                    key={integration.id}
+                    style={[styles.integrationCard, { backgroundColor: theme.colors.cardBackground, borderColor: theme.colors.border }]}
+                    onPress={() => setSelectedIntegration(integration)}
+                  >
+                    {!isEnterprise && (
+                      <View style={styles.lockOverlayMini}>
+                        <Lock size={14} color="white" />
                       </View>
-                      <View style={styles.integrationInfo}>
-                        <Text style={styles.integrationName}>{integration.name}</Text>
-                        <Text style={styles.integrationDescription} numberOfLines={2}>
-                          {integration.description}
+                    )}
+                    <View style={styles.integrationHeader}>
+                      <View style={styles.integrationLeft}>
+                        <View
+                          style={[
+                            styles.integrationIcon,
+                            { backgroundColor: integration.isConnected ? '#34C75920' : theme.colors.background },
+                          ]}
+                        >
+                          <IconComponent
+                            size={24}
+                            color={integration.isConnected ? '#34C759' : theme.colors.secondaryText}
+                          />
+                        </View>
+                        <View style={styles.integrationInfo}>
+                          <Text style={[styles.integrationName, { color: theme.colors.text }]}>{integration.name}</Text>
+                          <Text style={[styles.integrationDescription, { color: theme.colors.secondaryText }]} numberOfLines={2}>
+                            {integration.description}
+                          </Text>
+                        </View>
+                      </View>
+                      {integration.isConnected ? (
+                        <View style={styles.connectedBadge}>
+                          <CheckCircle size={16} color="#34C759" />
+                          <Text style={styles.connectedText}>Connected</Text>
+                        </View>
+                      ) : (
+                        <Circle size={20} color={theme.colors.secondaryText} />
+                      )}
+                    </View>
+
+                    {integration.isConnected && integration.lastSync && (
+                      <View style={[styles.syncInfo, { borderTopColor: theme.colors.border }]}>
+                        <RefreshCw size={12} color={theme.colors.secondaryText} />
+                        <Text style={[styles.syncText, { color: theme.colors.secondaryText }]}>
+                          Last synced: {new Date(integration.lastSync).toLocaleString()}
                         </Text>
                       </View>
-                    </View>
-                    {integration.isConnected ? (
-                      <View style={styles.connectedBadge}>
-                        <CheckCircle size={16} color="#34C759" />
-                        <Text style={styles.connectedText}>Connected</Text>
-                      </View>
-                    ) : (
-                      <Circle size={20} color="#8E8E93" />
                     )}
-                  </View>
 
-                  {integration.isConnected && integration.lastSync && (
-                    <View style={styles.syncInfo}>
-                      <RefreshCw size={12} color="#8E8E93" />
-                      <Text style={styles.syncText}>
-                        Last synced: {new Date(integration.lastSync).toLocaleString()}
-                      </Text>
+                    <View style={[styles.categoryTag, { backgroundColor: theme.colors.background }]}>
+                      <Text style={[styles.categoryTagText, { color: theme.colors.secondaryText }]}>{integration.category.toUpperCase()}</Text>
                     </View>
-                  )}
-
-                  <View style={styles.categoryTag}>
-                    <Text style={styles.categoryTagText}>{integration.category.toUpperCase()}</Text>
-                  </View>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          )}
         </ScrollView>
 
         <Modal
@@ -189,11 +215,11 @@ export default function IntegrationsScreen() {
           onRequestClose={() => setSelectedIntegration(null)}
         >
           {selectedIntegration && (
-            <SafeAreaView style={styles.modalContainer}>
-              <View style={styles.modalHeader}>
-                <Text style={styles.modalTitle}>Integration Settings</Text>
+            <SafeAreaView style={[styles.modalContainer, { backgroundColor: theme.colors.background }]}>
+              <View style={[styles.modalHeader, { backgroundColor: theme.colors.background, borderBottomColor: theme.colors.border }]}>
+                <Text style={[styles.modalTitle, { color: theme.colors.text }]}>Integration Settings</Text>
                 <TouchableOpacity onPress={() => setSelectedIntegration(null)}>
-                  <X size={24} color="#1A1A1A" />
+                  <X size={24} color={theme.colors.text} />
                 </TouchableOpacity>
               </View>
 
@@ -202,25 +228,42 @@ export default function IntegrationsScreen() {
                   <View
                     style={[
                       styles.integrationIconLarge,
-                      { backgroundColor: selectedIntegration.isConnected ? '#34C75920' : '#F2F2F7' },
+                      { backgroundColor: selectedIntegration.isConnected ? '#34C75920' : theme.colors.cardBackground },
                     ]}
                   >
                     {React.createElement(getIconForCategory(selectedIntegration.category), {
                       size: 48,
-                      color: selectedIntegration.isConnected ? '#34C759' : '#8E8E93',
+                      color: selectedIntegration.isConnected ? '#34C759' : theme.colors.secondaryText,
                     })}
                   </View>
-                  <Text style={styles.integrationNameLarge}>{selectedIntegration.name}</Text>
-                  <Text style={styles.integrationDescriptionLarge}>
+                  <Text style={[styles.integrationNameLarge, { color: theme.colors.text }]}>{selectedIntegration.name}</Text>
+                  <Text style={[styles.integrationDescriptionLarge, { color: theme.colors.secondaryText }]}>
                     {selectedIntegration.description}
                   </Text>
                 </View>
 
-                {selectedIntegration.isConnected ? (
+                {!isEnterprise ? (
+                  <View style={[styles.lockCard, { backgroundColor: theme.colors.cardBackground }]}>
+                    <Lock size={48} color={theme.colors.primary} style={{ marginBottom: 16 }} />
+                    <Text style={[styles.lockTitle, { color: theme.colors.text }]}>Enterprise Feature</Text>
+                    <Text style={[styles.lockDescription, { color: theme.colors.secondaryText }]}>
+                      Deep CRM and custom integrations are available on the Enterprise plan.
+                    </Text>
+                    <TouchableOpacity 
+                      style={[styles.upgradeButton, { backgroundColor: theme.colors.primary }]}
+                      onPress={() => {
+                        setSelectedIntegration(null);
+                        router.push('/enterprise-admin');
+                      }}
+                    >
+                      <Text style={styles.upgradeButtonText}>Upgrade to Enterprise</Text>
+                    </TouchableOpacity>
+                  </View>
+                ) : selectedIntegration.isConnected ? (
                   <>
-                    <View style={styles.statusSection}>
+                    <View style={[styles.statusSection, { backgroundColor: theme.colors.cardBackground }]}>
                       <View style={styles.statusRow}>
-                        <Text style={styles.statusLabel}>Status</Text>
+                        <Text style={[styles.statusLabel, { color: theme.colors.secondaryText }]}>Status</Text>
                         <View style={styles.statusBadge}>
                           <View style={styles.statusDot} />
                           <Text style={styles.statusText}>Active</Text>
@@ -228,80 +271,80 @@ export default function IntegrationsScreen() {
                       </View>
                       {selectedIntegration.lastSync && (
                         <View style={styles.statusRow}>
-                          <Text style={styles.statusLabel}>Last Sync</Text>
-                          <Text style={styles.statusValue}>
+                          <Text style={[styles.statusLabel, { color: theme.colors.secondaryText }]}>Last Sync</Text>
+                          <Text style={[styles.statusValue, { color: theme.colors.text }]}>
                             {new Date(selectedIntegration.lastSync).toLocaleString()}
                           </Text>
                         </View>
                       )}
                     </View>
 
-                    <View style={styles.settingsSection}>
-                      <Text style={styles.sectionTitle}>Settings</Text>
+                    <View style={[styles.settingsSection, { backgroundColor: theme.colors.cardBackground }]}>
+                      <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Settings</Text>
                       
-                      <View style={styles.settingItem}>
+                      <View style={[styles.settingItem, { borderBottomColor: theme.colors.border }]}>
                         <View style={styles.settingLeft}>
-                          <Text style={styles.settingLabel}>Auto Sync</Text>
-                          <Text style={styles.settingDescription}>
+                          <Text style={[styles.settingLabel, { color: theme.colors.text }]}>Auto Sync</Text>
+                          <Text style={[styles.settingDescription, { color: theme.colors.secondaryText }]}>
                             Automatically sync data every hour
                           </Text>
                         </View>
-                        <Switch value={true} trackColor={{ true: '#007AFF' }} />
+                        <Switch value={true} trackColor={{ false: theme.colors.border, true: theme.colors.primary }} />
                       </View>
 
-                      <View style={styles.settingItem}>
+                      <View style={[styles.settingItem, { borderBottomColor: theme.colors.border }]}>
                         <View style={styles.settingLeft}>
-                          <Text style={styles.settingLabel}>Notifications</Text>
-                          <Text style={styles.settingDescription}>
+                          <Text style={[styles.settingLabel, { color: theme.colors.text }]}>Notifications</Text>
+                          <Text style={[styles.settingDescription, { color: theme.colors.secondaryText }]}>
                             Receive notifications for sync status
                           </Text>
                         </View>
-                        <Switch value={true} trackColor={{ true: '#007AFF' }} />
+                        <Switch value={true} trackColor={{ false: theme.colors.border, true: theme.colors.primary }} />
                       </View>
 
-                      <View style={styles.settingItem}>
+                      <View style={[styles.settingItem, { borderBottomColor: theme.colors.border }]}>
                         <View style={styles.settingLeft}>
-                          <Text style={styles.settingLabel}>Two-way Sync</Text>
-                          <Text style={styles.settingDescription}>
+                          <Text style={[styles.settingLabel, { color: theme.colors.text }]}>Two-way Sync</Text>
+                          <Text style={[styles.settingDescription, { color: theme.colors.secondaryText }]}>
                             Sync data in both directions
                           </Text>
                         </View>
-                        <Switch value={false} trackColor={{ true: '#007AFF' }} />
+                        <Switch value={false} trackColor={{ false: theme.colors.border, true: theme.colors.primary }} />
                       </View>
                     </View>
 
-                    <TouchableOpacity style={styles.syncButton}>
-                      <RefreshCw size={20} color="#007AFF" />
-                      <Text style={styles.syncButtonText}>Sync Now</Text>
+                    <TouchableOpacity style={[styles.syncButton, { backgroundColor: theme.colors.cardBackground, borderColor: theme.colors.primary }]}>
+                      <RefreshCw size={20} color={theme.colors.primary} />
+                      <Text style={[styles.syncButtonText, { color: theme.colors.primary }]}>Sync Now</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.disconnectButton}>
-                      <Text style={styles.disconnectButtonText}>Disconnect Integration</Text>
+                    <TouchableOpacity style={[styles.disconnectButton, { backgroundColor: theme.colors.cardBackground, borderColor: theme.colors.error }]}>
+                      <Text style={[styles.disconnectButtonText, { color: theme.colors.error }]}>Disconnect Integration</Text>
                     </TouchableOpacity>
                   </>
                 ) : (
                   <>
-                    <View style={styles.featuresSection}>
-                      <Text style={styles.sectionTitle}>Features</Text>
-                      <View style={styles.featureItem}>
+                    <View style={[styles.featuresSection, { backgroundColor: theme.colors.cardBackground }]}>
+                      <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Features</Text>
+                      <View style={[styles.featureItem, { borderBottomColor: theme.colors.border }]}>
                         <CheckCircle size={16} color="#34C759" />
-                        <Text style={styles.featureText}>Two-way data synchronization</Text>
+                        <Text style={[styles.featureText, { color: theme.colors.text }]}>Two-way data synchronization</Text>
                       </View>
-                      <View style={styles.featureItem}>
+                      <View style={[styles.featureItem, { borderBottomColor: theme.colors.border }]}>
                         <CheckCircle size={16} color="#34C759" />
-                        <Text style={styles.featureText}>Real-time updates</Text>
+                        <Text style={[styles.featureText, { color: theme.colors.text }]}>Real-time updates</Text>
                       </View>
-                      <View style={styles.featureItem}>
+                      <View style={[styles.featureItem, { borderBottomColor: theme.colors.border }]}>
                         <CheckCircle size={16} color="#34C759" />
-                        <Text style={styles.featureText}>Automated workflows</Text>
+                        <Text style={[styles.featureText, { color: theme.colors.text }]}>Automated workflows</Text>
                       </View>
-                      <View style={styles.featureItem}>
+                      <View style={[styles.featureItem, { borderBottomColor: theme.colors.border }]}>
                         <CheckCircle size={16} color="#34C759" />
-                        <Text style={styles.featureText}>Custom field mapping</Text>
+                        <Text style={[styles.featureText, { color: theme.colors.text }]}>Custom field mapping</Text>
                       </View>
                     </View>
 
-                    <TouchableOpacity style={styles.connectButton}>
+                    <TouchableOpacity style={[styles.connectButton, { backgroundColor: theme.colors.primary }]}>
                       <Text style={styles.connectButtonText}>
                         Connect {selectedIntegration.name}
                       </Text>
@@ -654,6 +697,47 @@ const styles = StyleSheet.create({
   connectButtonText: {
     color: '#FFFFFF',
     fontSize: 16,
+    fontWeight: '600' as const,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 40,
+  },
+  lockOverlayMini: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    borderRadius: 10,
+    padding: 4,
+    zIndex: 10,
+  },
+  lockCard: {
+    padding: 24,
+    borderRadius: 16,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  lockTitle: {
+    fontSize: 20,
+    fontWeight: '700' as const,
+    marginBottom: 8,
+  },
+  lockDescription: {
+    fontSize: 14,
+    textAlign: 'center',
+    marginBottom: 20,
+    lineHeight: 20,
+  },
+  upgradeButton: {
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 12,
+  },
+  upgradeButtonText: {
+    color: 'white',
     fontWeight: '600' as const,
   },
 });

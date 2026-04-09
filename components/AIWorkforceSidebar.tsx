@@ -15,7 +15,6 @@ import {
     Users,
     Cpu,
     CircleDollarSign,
-    Activity,
     Star as StarIcon,
     Sparkles as SparklesIcon,
     AlertTriangle,
@@ -23,8 +22,9 @@ import {
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useAIAssistant } from '@/providers/AIAssistantProvider';
-import { aiEmployees, aiInfrastructureStats, aiEmployeeCategories, AIEmployee } from '@/constants/aiEmployees';
+import { aiEmployees, aiEmployeeCategories, AIEmployee } from '@/constants/aiEmployees';
 import { router } from 'expo-router';
+import { trpc } from '@/lib/trpc';
 
 interface AIWorkforceSidebarProps {
     isVisible: boolean;
@@ -35,10 +35,16 @@ const { width } = Dimensions.get('window');
 
 export const AIWorkforceSidebar: React.FC<AIWorkforceSidebarProps> = ({ isVisible, onClose }) => {
     const { theme } = useTheme();
-    const { activeAgents, toggleAgent, stats } = useAIAssistant();
+    const { activeAgents, toggleAgent } = useAIAssistant();
     const [selectedCategory, setSelectedCategory] = useState('all');
-    const [searchQuery, setSearchQuery] = useState('');
+    const [searchQuery] = useState('');
+    const [toggleError, setToggleError] = useState<string | null>(null);
     const sidebarAnim = useRef(new Animated.Value(-width)).current;
+
+    // Fetch real-time aggregate stats from tRPC
+    const { data: statsData } = trpc.aiAgents.getStats.useQuery({ category: 'all' });
+
+    const toggleAgentMutation = trpc.aiAgents.toggleAgent.useMutation();
 
     useEffect(() => {
         Animated.timing(sidebarAnim, {
@@ -46,7 +52,7 @@ export const AIWorkforceSidebar: React.FC<AIWorkforceSidebarProps> = ({ isVisibl
             duration: 300,
             useNativeDriver: true,
         }).start();
-    }, [isVisible]);
+    }, [isVisible, sidebarAnim]);
 
     if (!isVisible) return null;
 
@@ -60,6 +66,24 @@ export const AIWorkforceSidebar: React.FC<AIWorkforceSidebarProps> = ({ isVisibl
     const handleEmployeePress = (employee: AIEmployee) => {
         onClose();
         router.push(employee.route as any);
+    };
+
+    const handleToggle = async (employee: AIEmployee, next: boolean) => {
+        setToggleError(null);
+
+        toggleAgent(employee.id);
+
+        try {
+            await toggleAgentMutation.mutateAsync({
+                agentId: employee.id,
+                enabled: next,
+                agentType: employee.type === 'employee' ? 'main' : 'sub',
+            });
+        } catch (e) {
+            toggleAgent(employee.id);
+            const message = e instanceof Error ? e.message : 'Failed to toggle agent';
+            setToggleError(message);
+        }
     };
 
     return (
@@ -88,7 +112,7 @@ export const AIWorkforceSidebar: React.FC<AIWorkforceSidebarProps> = ({ isVisibl
                                 <View>
                                     <Text style={[styles.title, { color: theme.colors.text }]}>AI Workforce</Text>
                                     <Text style={[styles.subtitle, { color: theme.colors.secondaryText }]}>
-                                        {stats.activeCount} Active • {stats.averageHealth}% Health
+                                        {statsData?.activeAgents ?? 0} Active • {statsData?.avgHealthScore ?? 0}% Health
                                     </Text>
                                 </View>
                             </View>
@@ -97,23 +121,37 @@ export const AIWorkforceSidebar: React.FC<AIWorkforceSidebarProps> = ({ isVisibl
                             </TouchableOpacity>
                         </View>
 
+                        {!!toggleError && (
+                            <View style={[styles.errorBanner, { backgroundColor: theme.colors.cardBackground, borderColor: 'rgba(255,59,48,0.25)' }]}>
+                                <Text style={[styles.errorBannerText, { color: theme.colors.text }]} numberOfLines={2}>
+                                    {toggleError}
+                                </Text>
+                            </View>
+                        )}
+
                         {/* Infrastructure Stats Bar */}
                         <View style={[styles.statsBar, { backgroundColor: theme.colors.cardBackground }]}>
                             <View style={styles.statItem}>
                                 <Users size={14} color={theme.colors.primary} />
-                                <Text style={[styles.statValue, { color: theme.colors.text }]}>{stats.totalEmployees}</Text>
+                                <Text style={[styles.statValue, { color: theme.colors.text }]}>
+                                    {statsData?.totalAgents ?? 0}
+                                </Text>
                                 <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Employees</Text>
                             </View>
                             <View style={[styles.statDivider, { backgroundColor: theme.colors.border }]} />
                             <View style={styles.statItem}>
                                 <Cpu size={14} color="#00C7BE" />
-                                <Text style={[styles.statValue, { color: theme.colors.text }]}>{stats.totalAgents}</Text>
+                                <Text style={[styles.statValue, { color: theme.colors.text }]}>
+                                    {statsData?.activeAgents ?? 0}
+                                </Text>
                                 <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Agents</Text>
                             </View>
                             <View style={[styles.statDivider, { backgroundColor: theme.colors.border }]} />
                             <View style={styles.statItem}>
                                 <CircleDollarSign size={14} color="#34C759" />
-                                <Text style={[styles.statValue, { color: '#34C759' }]}>{stats.totalMonthlySavings}</Text>
+                                <Text style={[styles.statValue, { color: '#34C759' }]}>
+                                    ${((statsData?.totalTasks ?? 0) * 0.15).toLocaleString()}
+                                </Text>
                                 <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Saved/mo</Text>
                             </View>
                         </View>
@@ -249,7 +287,7 @@ export const AIWorkforceSidebar: React.FC<AIWorkforceSidebarProps> = ({ isVisibl
 
                                         <Switch
                                             value={isActive || false}
-                                            onValueChange={() => toggleAgent(employee.id)}
+                                            onValueChange={(next) => handleToggle(employee, next)}
                                             trackColor={{ false: '#767577', true: theme.colors.primary }}
                                             thumbColor={isActive ? '#fff' : '#f4f3f4'}
                                             style={{ transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }], marginLeft: 8 }}
@@ -263,11 +301,11 @@ export const AIWorkforceSidebar: React.FC<AIWorkforceSidebarProps> = ({ isVisibl
                                 <View style={styles.footerRow}>
                                     <ActivityIcon size={16} color={theme.colors.primary} />
                                     <Text style={[styles.footerText, { color: theme.colors.text }]}>
-                                        {stats.totalTasksAutomatedDaily.toLocaleString()} tasks automated daily
+                                        {(statsData?.tasksToday ?? 0).toLocaleString()} tasks automated today
                                     </Text>
                                 </View>
                                 <Text style={[styles.footerSubtext, { color: theme.colors.secondaryText }]}>
-                                    {stats.activeCount} / {aiEmployees.length} Agents Active
+                                    {statsData?.activeAgents ?? 0} / {aiEmployees.length} Agents Active
                                 </Text>
                             </View>
                         </ScrollView>
@@ -338,6 +376,17 @@ const styles = StyleSheet.create({
     },
     closeButton: {
         padding: 8,
+    },
+    errorBanner: {
+        marginHorizontal: 12,
+        marginTop: 8,
+        padding: 10,
+        borderRadius: 12,
+        borderWidth: 1,
+    },
+    errorBannerText: {
+        fontSize: 12,
+        fontWeight: '700',
     },
     statsBar: {
         flexDirection: 'row',

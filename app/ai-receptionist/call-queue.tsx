@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+ 
+import React, { useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -7,50 +8,24 @@ import {
   TouchableOpacity,
   TextInput,
   Switch,
+  ActivityIndicator,
 } from 'react-native';
-import { Stack } from 'expo-router';
-import { Phone, Clock, Users, BarChart3, Play, Pause, SkipForward, AlertCircle } from 'lucide-react-native';
-
-interface QueuedCall {
-  id: string;
-  callerName: string;
-  callerNumber: string;
-  waitTime: number;
-  priority: 'high' | 'normal' | 'low';
-  reason: string;
-  status: 'waiting' | 'on-hold' | 'transferred';
-}
+import { Stack, useRouter } from 'expo-router';
+import { Phone, Clock, Users, BarChart3, Play, Pause, SkipForward, AlertCircle, Lock } from 'lucide-react-native';
+import { trpc } from '@/lib/trpc';
+import { useTheme } from '@/providers/ThemeProvider';
 
 export default function CallQueueScreen() {
-  const [queuedCalls] = useState<QueuedCall[]>([
-    {
-      id: '1',
-      callerName: 'John Smith',
-      callerNumber: '+1 (555) 123-4567',
-      waitTime: 145,
-      priority: 'high',
-      reason: 'Technical Support',
-      status: 'waiting',
-    },
-    {
-      id: '2',
-      callerName: 'Sarah Johnson',
-      callerNumber: '+1 (555) 234-5678',
-      waitTime: 89,
-      priority: 'normal',
-      reason: 'Sales Inquiry',
-      status: 'on-hold',
-    },
-    {
-      id: '3',
-      callerName: 'Michael Brown',
-      callerNumber: '+1 (555) 345-6789',
-      waitTime: 45,
-      priority: 'normal',
-      reason: 'General Inquiry',
-      status: 'waiting',
-    },
-  ]);
+  const { theme } = useTheme();
+  const router = useRouter();
+  
+  // Real tRPC data
+  const { data: subscription } = trpc.user.getSubscription.useQuery();
+  const isEnterprise = subscription?.plan === 'enterprise';
+
+  const { data: queuedCalls = [], isLoading, refetch } = trpc.receptionist.getQueue.useQuery(undefined, {
+    refetchInterval: 5000, // Polling for live queue
+  });
 
   const [maxQueueSize, setMaxQueueSize] = useState('50');
   const [maxWaitTime, setMaxWaitTime] = useState('300');
@@ -76,184 +51,228 @@ export default function CallQueueScreen() {
     }
   };
 
-  const stats = {
-    inQueue: queuedCalls.length,
-    avgWaitTime: Math.round(
-      queuedCalls.reduce((sum, call) => sum + call.waitTime, 0) / queuedCalls.length
-    ),
-    longestWait: Math.max(...queuedCalls.map((c) => c.waitTime)),
-    abandoned: 3,
-  };
+  const stats = useMemo(() => {
+    if (!queuedCalls.length) {
+      return {
+        inQueue: 0,
+        avgWaitTime: 0,
+        longestWait: 0,
+        abandoned: 0,
+      };
+    }
+    return {
+      inQueue: queuedCalls.length,
+      avgWaitTime: Math.round(
+        queuedCalls.reduce((sum, call) => sum + call.waitTime, 0) / queuedCalls.length
+      ),
+      longestWait: Math.max(...queuedCalls.map((c) => c.waitTime)),
+      abandoned: 3, // Fallback as this might not be in queue endpoint
+    };
+  }, [queuedCalls]);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <Stack.Screen
         options={{
           title: 'Call Queue Management',
-          headerStyle: { backgroundColor: '#0F172A' },
-          headerTintColor: '#fff',
+          headerStyle: { backgroundColor: theme.colors.background },
+          headerTintColor: theme.colors.text,
         }}
       />
 
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.statsGrid}>
-          <View style={[styles.statCard, { backgroundColor: '#3B82F6' }]}>
-            <Users size={24} color="#fff" />
-            <Text style={styles.statValue}>{stats.inQueue}</Text>
-            <Text style={styles.statLabel}>In Queue</Text>
-          </View>
-
-          <View style={[styles.statCard, { backgroundColor: '#8B5CF6' }]}>
-            <Clock size={24} color="#fff" />
-            <Text style={styles.statValue}>{formatTime(stats.avgWaitTime)}</Text>
-            <Text style={styles.statLabel}>Avg Wait</Text>
-          </View>
-
-          <View style={[styles.statCard, { backgroundColor: '#F59E0B' }]}>
-            <BarChart3 size={24} color="#fff" />
-            <Text style={styles.statValue}>{formatTime(stats.longestWait)}</Text>
-            <Text style={styles.statLabel}>Longest Wait</Text>
-          </View>
-
-          <View style={[styles.statCard, { backgroundColor: '#EF4444' }]}>
-            <AlertCircle size={24} color="#fff" />
-            <Text style={styles.statValue}>{stats.abandoned}</Text>
-            <Text style={styles.statLabel}>Abandoned</Text>
-          </View>
+      {isLoading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color={theme.colors.primary} />
         </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Queue Settings</Text>
-
-          <View style={styles.settingRow}>
-            <View style={styles.settingInfo}>
-              <Text style={styles.settingLabel}>Maximum Queue Size</Text>
-              <Text style={styles.settingDescription}>
-                Maximum number of callers in queue
-              </Text>
-            </View>
-            <TextInput
-              style={styles.input}
-              value={maxQueueSize}
-              onChangeText={setMaxQueueSize}
-              keyboardType="number-pad"
-              placeholderTextColor="#64748B"
-            />
-          </View>
-
-          <View style={styles.settingRow}>
-            <View style={styles.settingInfo}>
-              <Text style={styles.settingLabel}>Max Wait Time (seconds)</Text>
-              <Text style={styles.settingDescription}>
-                Auto-callback after this time
-              </Text>
-            </View>
-            <TextInput
-              style={styles.input}
-              value={maxWaitTime}
-              onChangeText={setMaxWaitTime}
-              keyboardType="number-pad"
-              placeholderTextColor="#64748B"
-            />
-          </View>
-
-          <View style={styles.settingRow}>
-            <View style={styles.settingInfo}>
-              <Text style={styles.settingLabel}>Enable Callback Option</Text>
-              <Text style={styles.settingDescription}>
-                Offer callback instead of waiting
-              </Text>
-            </View>
-            <Switch
-              value={enableCallback}
-              onValueChange={setEnableCallback}
-              trackColor={{ false: '#1E293B', true: '#3B82F6' }}
-              thumbColor={enableCallback ? '#fff' : '#64748B'}
-            />
-          </View>
-
-          <View style={styles.settingRow}>
-            <View style={styles.settingInfo}>
-              <Text style={styles.settingLabel}>Auto-Routing</Text>
-              <Text style={styles.settingDescription}>
-                Automatically route to available agents
-              </Text>
-            </View>
-            <Switch
-              value={autoRouting}
-              onValueChange={setAutoRouting}
-              trackColor={{ false: '#1E293B', true: '#3B82F6' }}
-              thumbColor={autoRouting ? '#fff' : '#64748B'}
-            />
-          </View>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Active Queue</Text>
-
-          {queuedCalls.map((call) => (
-            <View key={call.id} style={styles.callCard}>
-              <View style={styles.callHeader}>
-                <View style={styles.callInfo}>
-                  <Text style={styles.callerName}>{call.callerName}</Text>
-                  <Text style={styles.callerNumber}>{call.callerNumber}</Text>
+      ) : (
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.statsGrid}>
+            <View style={[styles.statCard, { backgroundColor: theme.colors.primary }]}>
+              {!isEnterprise && (
+                <View style={styles.lockOverlayMini}>
+                  <Lock size={14} color="white" />
                 </View>
-                <View
-                  style={[
-                    styles.priorityBadge,
-                    { backgroundColor: getPriorityColor(call.priority) + '20' },
-                  ]}
+              )}
+              <Users size={24} color="#fff" />
+              <Text style={styles.statValue}>{stats.inQueue}</Text>
+              <Text style={styles.statLabel}>In Queue</Text>
+            </View>
+
+            <View style={[styles.statCard, { backgroundColor: '#8B5CF6' }]}>
+              <Clock size={24} color="#fff" />
+              <Text style={styles.statValue}>{formatTime(stats.avgWaitTime)}</Text>
+              <Text style={styles.statLabel}>Avg Wait</Text>
+            </View>
+
+            <View style={[styles.statCard, { backgroundColor: '#F59E0B' }]}>
+              <BarChart3 size={24} color="#fff" />
+              <Text style={styles.statValue}>{formatTime(stats.longestWait)}</Text>
+              <Text style={styles.statLabel}>Longest Wait</Text>
+            </View>
+
+            <View style={[styles.statCard, { backgroundColor: '#EF4444' }]}>
+              <AlertCircle size={24} color="#fff" />
+              <Text style={styles.statValue}>{stats.abandoned}</Text>
+              <Text style={styles.statLabel}>Abandoned</Text>
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Queue Settings</Text>
+
+            <View style={[styles.settingRow, { backgroundColor: theme.colors.cardBackground }]}>
+              {!isEnterprise && (
+                <TouchableOpacity 
+                  style={styles.lockOverlay}
+                  onPress={() => router.push('/enterprise-admin')}
                 >
-                  <Text
-                    style={[
-                      styles.priorityText,
-                      { color: getPriorityColor(call.priority) },
-                    ]}
-                  >
-                    {call.priority.toUpperCase()}
-                  </Text>
-                </View>
-              </View>
-
-              <View style={styles.callDetails}>
-                <View style={styles.detailRow}>
-                  <Clock size={16} color="#64748B" />
-                  <Text style={styles.detailText}>
-                    Waiting: {formatTime(call.waitTime)}
-                  </Text>
-                </View>
-                <View style={styles.detailRow}>
-                  <Phone size={16} color="#64748B" />
-                  <Text style={styles.detailText}>{call.reason}</Text>
-                </View>
-              </View>
-
-              <View style={styles.callActions}>
-                <TouchableOpacity style={styles.actionButton}>
-                  <Play size={18} color="#10B981" />
-                  <Text style={[styles.actionText, { color: '#10B981' }]}>
-                    Answer
-                  </Text>
+                  <Lock size={20} color={theme.colors.text} />
                 </TouchableOpacity>
-
-                <TouchableOpacity style={styles.actionButton}>
-                  <Pause size={18} color="#F59E0B" />
-                  <Text style={[styles.actionText, { color: '#F59E0B' }]}>
-                    Hold
-                  </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.actionButton}>
-                  <SkipForward size={18} color="#3B82F6" />
-                  <Text style={[styles.actionText, { color: '#3B82F6' }]}>
-                    Transfer
-                  </Text>
-                </TouchableOpacity>
+              )}
+              <View style={styles.settingInfo}>
+                <Text style={[styles.settingLabel, { color: theme.colors.text }]}>Maximum Queue Size</Text>
+                <Text style={[styles.settingDescription, { color: theme.colors.secondaryText }]}>
+                  Maximum number of callers in queue
+                </Text>
               </View>
+              <TextInput
+                style={[styles.input, { color: theme.colors.text, borderColor: theme.colors.border, backgroundColor: theme.colors.background }]}
+                value={maxQueueSize}
+                onChangeText={setMaxQueueSize}
+                keyboardType="number-pad"
+                placeholderTextColor={theme.colors.secondaryText}
+              />
             </View>
-          ))}
-        </View>
-      </ScrollView>
+
+            <View style={[styles.settingRow, { backgroundColor: theme.colors.cardBackground }]}>
+              {!isEnterprise && (
+                <TouchableOpacity 
+                  style={styles.lockOverlay}
+                  onPress={() => router.push('/enterprise-admin')}
+                >
+                  <Lock size={20} color={theme.colors.text} />
+                </TouchableOpacity>
+              )}
+              <View style={styles.settingInfo}>
+                <Text style={[styles.settingLabel, { color: theme.colors.text }]}>Max Wait Time (seconds)</Text>
+                <Text style={[styles.settingDescription, { color: theme.colors.secondaryText }]}>
+                  Auto-callback after this time
+                </Text>
+              </View>
+              <TextInput
+                style={[styles.input, { color: theme.colors.text, borderColor: theme.colors.border, backgroundColor: theme.colors.background }]}
+                value={maxWaitTime}
+                onChangeText={setMaxWaitTime}
+                keyboardType="number-pad"
+                placeholderTextColor={theme.colors.secondaryText}
+              />
+            </View>
+
+            <View style={[styles.settingRow, { backgroundColor: theme.colors.cardBackground }]}>
+              <View style={styles.settingInfo}>
+                <Text style={[styles.settingLabel, { color: theme.colors.text }]}>Enable Callback Option</Text>
+                <Text style={[styles.settingDescription, { color: theme.colors.secondaryText }]}>
+                  Offer callback instead of waiting
+                </Text>
+              </View>
+              <Switch
+                value={enableCallback}
+                onValueChange={setEnableCallback}
+                trackColor={{ false: theme.colors.border, true: theme.colors.primary }}
+                thumbColor={enableCallback ? '#fff' : '#f4f3f4'}
+              />
+            </View>
+
+            <View style={[styles.settingRow, { backgroundColor: theme.colors.cardBackground }]}>
+              <View style={styles.settingInfo}>
+                <Text style={[styles.settingLabel, { color: theme.colors.text }]}>Auto-Routing</Text>
+                <Text style={[styles.settingDescription, { color: theme.colors.secondaryText }]}>
+                  Automatically route to available agents
+                </Text>
+              </View>
+              <Switch
+                value={autoRouting}
+                onValueChange={setAutoRouting}
+                trackColor={{ false: theme.colors.border, true: theme.colors.primary }}
+                thumbColor={autoRouting ? '#fff' : '#f4f3f4'}
+              />
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Active Queue</Text>
+
+            {queuedCalls.length === 0 ? (
+              <View style={styles.emptyContainer}>
+                <Phone size={48} color={theme.colors.secondaryText} />
+                <Text style={[styles.emptyText, { color: theme.colors.secondaryText }]}>No calls currently in queue</Text>
+              </View>
+            ) : (
+              queuedCalls.map((call) => (
+                <View key={call.id} style={[styles.callCard, { backgroundColor: theme.colors.cardBackground }]}>
+                  <View style={styles.callHeader}>
+                    <View style={styles.callInfo}>
+                      <Text style={[styles.callerName, { color: theme.colors.text }]}>{call.callerName}</Text>
+                      <Text style={[styles.callerNumber, { color: theme.colors.secondaryText }]}>{call.callerNumber}</Text>
+                    </View>
+                    <View
+                      style={[
+                        styles.priorityBadge,
+                        { backgroundColor: getPriorityColor(call.priority) + '20' },
+                      ]}
+                    >
+                      <Text
+                        style={[
+                          styles.priorityText,
+                          { color: getPriorityColor(call.priority) },
+                        ]}
+                      >
+                        {call.priority.toUpperCase()}
+                      </Text>
+                    </View>
+                  </View>
+
+                  <View style={styles.callDetails}>
+                    <View style={styles.detailRow}>
+                      <Clock size={16} color={theme.colors.secondaryText} />
+                      <Text style={[styles.detailText, { color: theme.colors.secondaryText }]}>
+                        Waiting: {formatTime(call.waitTime)}
+                      </Text>
+                    </View>
+                    <View style={styles.detailRow}>
+                      <Phone size={16} color={theme.colors.secondaryText} />
+                      <Text style={[styles.detailText, { color: theme.colors.secondaryText }]}>{call.reason}</Text>
+                    </View>
+                  </View>
+
+                  <View style={[styles.callActions, { borderTopColor: theme.colors.border }]}>
+                    <TouchableOpacity style={[styles.actionButton, { backgroundColor: theme.colors.background }]}>
+                      <Play size={18} color={theme.colors.success} />
+                      <Text style={[styles.actionText, { color: theme.colors.success }]}>
+                        Answer
+                      </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={[styles.actionButton, { backgroundColor: theme.colors.background }]}>
+                      <Pause size={18} color="#F59E0B" />
+                      <Text style={[styles.actionText, { color: '#F59E0B' }]}>
+                        Hold
+                      </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={[styles.actionButton, { backgroundColor: theme.colors.background }]}>
+                      <SkipForward size={18} color={theme.colors.primary} />
+                      <Text style={[styles.actionText, { color: theme.colors.primary }]}>
+                        Transfer
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              ))
+            )}
+          </View>
+        </ScrollView>
+      )}
     </View>
   );
 }
@@ -398,5 +417,37 @@ const styles = StyleSheet.create({
   actionText: {
     fontSize: 14,
     fontWeight: '600',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 40,
+    gap: 16,
+  },
+  emptyText: {
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  lockOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    borderRadius: 12,
+    zIndex: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  lockOverlayMini: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    borderRadius: 10,
+    padding: 4,
+    zIndex: 10,
   },
 });

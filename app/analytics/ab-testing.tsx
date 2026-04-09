@@ -1,3 +1,4 @@
+ 
 import React, { useState } from 'react';
 import {
   View,
@@ -28,6 +29,7 @@ import {
   Activity,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
+import { trpc } from '@/lib/trpc';
 import { router } from 'expo-router';
 
 interface ABTest {
@@ -181,7 +183,7 @@ export default function ABTestingScreen() {
     }
   };
 
-  const filteredTests = mockTests.filter(test => {
+  const filteredTests = (abTests || []).filter(test => {
     const matchesSearch = test.name.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesFilter = filterStatus === 'all' || test.status === filterStatus;
     return matchesSearch && matchesFilter;

@@ -1,8 +1,10 @@
+import { z } from 'zod';
 import { protectedProcedure } from '../../../create-context';
 import { revokeSession } from '../../../../lib/auth';
 import { logAudit, AuditActions } from '../../../../lib/audit';
 
 export const logoutProcedure = protectedProcedure
+  .input(z.void().optional())
   .mutation(async ({ ctx }) => {
     const ipAddress = ctx.req.headers.get('x-forwarded-for') || ctx.req.headers.get('x-real-ip') || 'unknown';
 

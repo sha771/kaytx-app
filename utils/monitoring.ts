@@ -46,10 +46,11 @@ class MonitoringService {
   }
 
   private setupGlobalErrorHandler(): void {
-    if (typeof ErrorUtils !== 'undefined') {
-      const originalHandler = ErrorUtils.getGlobalHandler();
+    const errorUtils = (globalThis as any).ErrorUtils;
+    if (typeof errorUtils !== 'undefined') {
+      const originalHandler = errorUtils.getGlobalHandler();
       
-      ErrorUtils.setGlobalHandler((error, isFatal) => {
+      errorUtils.setGlobalHandler((error: any, isFatal: any) => {
         this.captureError(error, {
           isFatal,
           category: 'global_error',
@@ -74,7 +75,7 @@ class MonitoringService {
       level,
       category,
       message,
-      metadata,
+      ...(metadata ? { metadata } : {}),
     };
 
     this.events.push(event);
@@ -143,8 +144,8 @@ class MonitoringService {
       category: metadata?.category || 'uncaught_error',
       message: error.message,
       error,
-      stackTrace: error.stack,
-      metadata,
+      ...(error.stack ? { stackTrace: error.stack } : {}),
+      ...(metadata ? { metadata } : {}),
     };
 
     this.events.push(event);
@@ -162,7 +163,7 @@ class MonitoringService {
       value,
       unit,
       timestamp: new Date(),
-      metadata,
+      ...(metadata ? { metadata } : {}),
     };
 
     this.metrics.push(metric);

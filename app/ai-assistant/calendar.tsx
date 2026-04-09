@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+ 
+import React, { useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -23,16 +24,31 @@ import {
   Edit3,
   Trash2,
   Check,
+  Lock,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useAIAssistant, Meeting } from '@/providers/AIAssistantProvider';
 import { Stack, router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { trpc } from '@/lib/trpc';
 
 export default function CalendarScreen() {
   const { theme } = useTheme();
   const insets = useSafeAreaInsets();
   const { meetings, scheduleMeeting, cancelMeeting } = useAIAssistant();
+
+  const scheduleMeetingMutation = trpc.assistant.scheduleMeeting.useMutation();
+  const cancelMeetingMutation = trpc.assistant.cancelMeeting.useMutation();
+
+  // Fetch real statistics from tRPC
+  const { data: statsData } = trpc.aiAgents.getStats.useQuery({ 
+    category: 'core-intelligence' 
+  });
+  const { data: subscription } = trpc.enterprise.getSubscription.useQuery();
+
+  const isEnterprise = useMemo(() => {
+    return subscription?.plan === 'enterprise' || subscription?.plan === 'professional';
+  }, [subscription]);
 
   const [selectedMeeting, setSelectedMeeting] = useState<Meeting | null>(null);
   const [showSchedule, setShowSchedule] = useState<boolean>(false);
@@ -85,6 +101,16 @@ export default function CalendarScreen() {
     }
 
     try {
+      await scheduleMeetingMutation.mutateAsync({
+        title,
+        description,
+        startTime,
+        endTime,
+        attendees: attendees.split(',').map(a => a.trim()).filter(Boolean),
+        type: meetingType,
+        location,
+      });
+
       await scheduleMeeting({
         title,
         description,
@@ -100,7 +126,8 @@ export default function CalendarScreen() {
       Alert.alert('Success', 'Meeting scheduled successfully');
       setShowSchedule(false);
       resetForm();
-    } catch {
+    } catch (error) {
+      console.error('Failed to schedule meeting:', error);
       Alert.alert('Error', 'Failed to schedule meeting');
     }
   };
@@ -115,9 +142,15 @@ export default function CalendarScreen() {
           text: 'Yes',
           style: 'destructive',
           onPress: async () => {
-            await cancelMeeting(id);
-            setSelectedMeeting(null);
-            Alert.alert('Success', 'Meeting cancelled');
+            try {
+              await cancelMeetingMutation.mutateAsync({ id });
+              await cancelMeeting(id);
+              setSelectedMeeting(null);
+              Alert.alert('Success', 'Meeting cancelled');
+            } catch (error) {
+              console.error('Failed to cancel meeting:', error);
+              Alert.alert('Error', 'Failed to cancel meeting');
+            }
           },
         },
       ]
@@ -143,14 +176,24 @@ export default function CalendarScreen() {
         <View style={styles.headerContent}>
           <Text style={[styles.title, { color: theme.colors.text }]}>Calendar</Text>
           <Text style={[styles.subtitle, { color: theme.colors.secondaryText }]}>
-            AI-powered scheduling
+            AI-powered scheduling • {statsData?.tasksToday ? `${statsData.tasksToday} optimizations today` : 'Real-time sync'}
           </Text>
         </View>
         <TouchableOpacity
           style={[styles.scheduleButton, { backgroundColor: theme.colors.primary }]}
-          onPress={() => setShowSchedule(true)}
+          onPress={() => {
+            if (!isEnterprise) {
+              router.push('/enterprise/billing');
+              return;
+            }
+            setShowSchedule(true);
+          }}
         >
-          <Plus size={20} color="white" />
+          {isEnterprise ? (
+            <Plus size={20} color="white" />
+          ) : (
+            <Lock size={20} color="white" />
+          )}
         </TouchableOpacity>
       </View>
 

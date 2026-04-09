@@ -1,9 +1,29 @@
+ 
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import createContextHook from '@nkzw/create-context-hook';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useRorkAgent, createRorkTool } from '@rork-ai/toolkit-sdk';
 import { z } from 'zod';
-import { trpc } from '@/lib/trpc';
+import {
+  mockTasks as defaultMockTasks,
+  mockMeetings as defaultMockMeetings,
+  mockEmails as defaultMockEmails,
+  mockMemories as defaultMockMemories,
+  mockWorkflows as defaultMockWorkflows,
+} from '@/utils/mockAIData';
+import { aiEmployees } from '@/constants/aiEmployees';
+
+let useRorkAgent: any;
+let createRorkTool: any;
+
+try {
+  const toolkit = require('@rork-ai/toolkit-sdk');
+  useRorkAgent = toolkit.useRorkAgent;
+  createRorkTool = toolkit.createRorkTool;
+} catch (e) {
+  console.warn('[AIAssistant] Toolkit SDK not available, using fallback');
+  useRorkAgent = () => ({ messages: [], sendMessage: () => {}, addToolResult: () => {} });
+  createRorkTool = (config: any) => config;
+}
 
 export interface Task {
   id: string;
@@ -219,30 +239,33 @@ export interface AIAssistantContextValue {
   memories: ContextMemory[];
   workflows: Workflow[];
   insights: ProductivityInsight[];
-
+  
   addTask: (task: Omit<Task, 'id' | 'createdAt' | 'aiGenerated'>) => Promise<void>;
   updateTask: (id: string, updates: Partial<Task>) => Promise<void>;
   deleteTask: (id: string) => Promise<void>;
   completeTask: (id: string) => Promise<void>;
-
+  
   scheduleMeeting: (meeting: Omit<Meeting, 'id' | 'aiScheduled'>) => Promise<void>;
   updateMeeting: (id: string, updates: Partial<Meeting>) => Promise<void>;
   cancelMeeting: (id: string) => Promise<void>;
-
+  
   draftEmail: (to: string[], subject: string, context: string) => Promise<Email>;
   sendEmail: (email: Email) => Promise<void>;
-
+  
   addMemory: (memory: Omit<ContextMemory, 'id' | 'timestamp'>) => Promise<void>;
   searchMemories: (query: string) => Promise<ContextMemory[]>;
-
+  
   createWorkflow: (workflow: Omit<Workflow, 'id' | 'runCount'>) => Promise<void>;
   toggleWorkflow: (id: string) => Promise<void>;
-
+  
   getInsights: () => Promise<ProductivityInsight[]>;
+  
+  aiMessages: any[];
+  sendMessage: (message: string | { text: string; files?: any[] }) => void;
+  addToolResult: (toolCallId: string, result: any) => void;
 
   activeAgents: Record<string, boolean>;
-  toggleAgent: (id: string) => Promise<void>;
-
+  toggleAgent: (agentId: string) => void;
   stats: {
     totalEmployees: number;
     totalAgents: number;
@@ -251,11 +274,7 @@ export interface AIAssistantContextValue {
     totalMonthlySavings: string;
     totalTasksAutomatedDaily: number;
   };
-
-  aiMessages: any[];
-  sendMessage: (message: string | { text: string; files?: any[] }) => void;
-  addToolResult: (toolCallId: string, result: any) => void;
-
+  
   isLoading: boolean;
   error: string | null;
 }
@@ -269,8 +288,6 @@ const STORAGE_KEYS = {
   ACTIVE_AGENTS: 'ai_assistant_active_agents',
 } as const;
 
-import { aiEmployees } from '@/constants/aiEmployees';
-
 export const [AIAssistantProvider, useAIAssistant] = createContextHook(() => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [meetings, setMeetings] = useState<Meeting[]>([]);
@@ -278,39 +295,51 @@ export const [AIAssistantProvider, useAIAssistant] = createContextHook(() => {
   const [memories, setMemories] = useState<ContextMemory[]>([]);
   const [workflows, setWorkflows] = useState<Workflow[]>([]);
   const [insights, setInsights] = useState<ProductivityInsight[]>([]);
-  const [activeAgents, setActiveAgents] = useState<Record<string, boolean>>({});
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [customMessages, setCustomMessages] = useState<any[]>([]);
 
-  const chatMutation = trpc.aiAssistant.chat.useMutation();
+  const [activeAgents, setActiveAgents] = useState<Record<string, boolean>>({});
 
-  const toggleAgent = useCallback(async (id: string) => {
+  const toggleAgent = useCallback((agentId: string) => {
     setActiveAgents(prev => {
-      const next = { ...prev, [id]: !prev[id] };
+      const next = { ...prev, [agentId]: !prev[agentId] };
       AsyncStorage.setItem(STORAGE_KEYS.ACTIVE_AGENTS, JSON.stringify(next));
       return next;
     });
   }, []);
 
   const stats = useMemo(() => {
-    const activeIds = Object.entries(activeAgents)
-      .filter(([_, isActive]) => isActive)
-      .map(([id]) => id);
+    const employees = aiEmployees.filter(e => e.type === 'employee');
+    const agents = aiEmployees.filter(e => e.type === 'agent');
 
-    const activeEmployeesList = aiEmployees.filter(e => activeIds.includes(e.id));
+    const activeCount = aiEmployees.reduce((acc, e) => acc + (activeAgents[e.id] ? 1 : 0), 0);
+
+    const activeHealthValues = aiEmployees
+      .filter(e => activeAgents[e.id])
+      .map(e => e.infrastructure.health)
+      .filter(v => typeof v === 'number');
+    const averageHealth = activeHealthValues.length
+      ? Math.round(activeHealthValues.reduce((a, b) => a + b, 0) / activeHealthValues.length)
+      : 0;
+
+    const totalMonthlySavingsNum = aiEmployees.reduce((acc, e) => {
+      const raw = e.roiMetrics?.savingsPerMonth || '';
+      const n = Number(String(raw).replace(/[^0-9.-]/g, ''));
+      return acc + (Number.isFinite(n) ? n : 0);
+    }, 0);
+
+    const totalTasksAutomatedDaily = aiEmployees.reduce((acc, e) => {
+      const n = e.roiMetrics?.tasksAutomatedDaily;
+      return acc + (typeof n === 'number' ? n : 0);
+    }, 0);
 
     return {
-      totalEmployees: aiEmployees.filter(e => e.type === 'employee').length,
-      totalAgents: aiEmployees.filter(e => e.type === 'agent').length,
-      activeCount: activeIds.length,
-      averageHealth: activeIds.length > 0
-        ? Math.round(activeEmployeesList.reduce((sum, e) => sum + e.infrastructure.health, 0) / activeIds.length)
-        : 0,
-      totalMonthlySavings: activeIds.length > 0
-        ? `$${(activeIds.length * 5200).toLocaleString()}`
-        : '$0',
-      totalTasksAutomatedDaily: activeEmployeesList.reduce((sum, e) => sum + e.roiMetrics.tasksAutomatedDaily, 0),
+      totalEmployees: employees.length,
+      totalAgents: agents.length,
+      activeCount,
+      averageHealth,
+      totalMonthlySavings: `$${totalMonthlySavingsNum.toLocaleString()}`,
+      totalTasksAutomatedDaily,
     };
   }, [activeAgents]);
 
@@ -321,13 +350,13 @@ export const [AIAssistantProvider, useAIAssistant] = createContextHook(() => {
         id: Date.now().toString(),
         timestamp: new Date(),
       };
-
+      
       setMemories(prev => {
         const updated = [...prev, newMemory];
         AsyncStorage.setItem(STORAGE_KEYS.MEMORIES, JSON.stringify(updated));
         return updated;
       });
-
+      
       console.log('[AIAssistant] Memory added:', newMemory);
     } catch (err) {
       console.error('[AIAssistant] Error adding memory:', err);
@@ -343,13 +372,13 @@ export const [AIAssistantProvider, useAIAssistant] = createContextHook(() => {
         createdAt: new Date(),
         aiGenerated: true,
       };
-
+      
       setTasks(prev => {
         const updated = [...prev, newTask];
         AsyncStorage.setItem(STORAGE_KEYS.TASKS, JSON.stringify(updated));
         return updated;
       });
-
+      
       await addMemory({
         type: 'conversation',
         content: `Created task: ${task.title}`,
@@ -357,7 +386,7 @@ export const [AIAssistantProvider, useAIAssistant] = createContextHook(() => {
         importance: 0.7,
         tags: ['task', 'creation'],
       });
-
+      
       console.log('[AIAssistant] Task added:', newTask);
     } catch (err) {
       console.error('[AIAssistant] Error adding task:', err);
@@ -404,13 +433,13 @@ export const [AIAssistantProvider, useAIAssistant] = createContextHook(() => {
         id: Date.now().toString(),
         aiScheduled: true,
       };
-
+      
       setMeetings(prev => {
         const updated = [...prev, newMeeting];
         AsyncStorage.setItem(STORAGE_KEYS.MEETINGS, JSON.stringify(updated));
         return updated;
       });
-
+      
       await addMemory({
         type: 'conversation',
         content: `Scheduled meeting: ${meeting.title}`,
@@ -418,7 +447,7 @@ export const [AIAssistantProvider, useAIAssistant] = createContextHook(() => {
         importance: 0.8,
         tags: ['meeting', 'scheduling'],
       });
-
+      
       console.log('[AIAssistant] Meeting scheduled:', newMeeting);
     } catch (err) {
       console.error('[AIAssistant] Error scheduling meeting:', err);
@@ -458,13 +487,13 @@ export const [AIAssistantProvider, useAIAssistant] = createContextHook(() => {
         priority: 'medium',
         category: 'work',
       };
-
+      
       setEmails(prev => {
         const updated = [...prev, newEmail];
         AsyncStorage.setItem(STORAGE_KEYS.EMAILS, JSON.stringify(updated));
         return updated;
       });
-
+      
       console.log('[AIAssistant] Email drafted:', newEmail);
       return newEmail;
     } catch (err) {
@@ -479,7 +508,7 @@ export const [AIAssistantProvider, useAIAssistant] = createContextHook(() => {
 
   const searchMemories = useCallback(async (query: string): Promise<ContextMemory[]> => {
     const lowerQuery = query.toLowerCase();
-    return memories.filter(m =>
+    return memories.filter(m => 
       m.content.toLowerCase().includes(lowerQuery) ||
       m.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
     );
@@ -492,13 +521,13 @@ export const [AIAssistantProvider, useAIAssistant] = createContextHook(() => {
         id: Date.now().toString(),
         runCount: 0,
       };
-
+      
       setWorkflows(prev => {
         const updated = [...prev, newWorkflow];
         AsyncStorage.setItem(STORAGE_KEYS.WORKFLOWS, JSON.stringify(updated));
         return updated;
       });
-
+      
       console.log('[AIAssistant] Workflow created:', newWorkflow);
     } catch (err) {
       console.error('[AIAssistant] Error creating workflow:', err);
@@ -527,8 +556,8 @@ export const [AIAssistantProvider, useAIAssistant] = createContextHook(() => {
         if (!t.dueDate || !t.completedAt) return false;
         return new Date(t.completedAt) <= new Date(t.dueDate);
       });
-
-      const completionRate = completedTasks.length > 0
+      
+      const completionRate = completedTasks.length > 0 
         ? Math.round((onTimeTasks.length / completedTasks.length) * 100)
         : 87;
 
@@ -553,11 +582,11 @@ export const [AIAssistantProvider, useAIAssistant] = createContextHook(() => {
           type: 'task-completion',
           title: 'Task Completion Rate',
           value: `${completionRate}%`,
-          description: completionRate >= 80
+          description: completionRate >= 80 
             ? `Great job! You\'re completing most tasks on time. Your completion rate has improved by 12% over the past month.`
             : 'Consider breaking down large tasks into smaller, manageable pieces to improve your completion rate.',
           trend: completionRate >= 80 ? 'up' : 'down',
-          recommendation: completionRate >= 80
+          recommendation: completionRate >= 80 
             ? 'Continue using time-blocking techniques. Consider breaking down larger tasks into smaller, manageable pieces.'
             : 'Use the Pomodoro technique for better focus. Try working in 25-minute focused sessions.',
         },
@@ -606,192 +635,158 @@ export const [AIAssistantProvider, useAIAssistant] = createContextHook(() => {
     return insights;
   }, [insights]);
 
-  const tools = useMemo(() => ({
-    addTask: createRorkTool({
-      description: 'Add a new task to the task list',
-      zodSchema: z.object({
-        title: z.string().describe('Task title'),
-        description: z.string().optional().describe('Detailed description'),
-        priority: z.enum(['high', 'medium', 'low']).describe('Task priority'),
-        dueDate: z.string().optional().describe('Due date in ISO format'),
-        estimatedTime: z.string().optional().describe('Estimated time to complete'),
-        energyLevel: z.enum(['high', 'medium', 'low']).optional().describe('Required energy level'),
-        tags: z.array(z.string()).optional().describe('Task tags'),
+  const tools = useMemo(() => {
+    if (!createRorkTool) return {};
+    return {
+      addTask: createRorkTool({
+        description: 'Add a new task to the task list',
+        zodSchema: z.object({
+          title: z.string().describe('Task title'),
+          description: z.string().optional().describe('Detailed description'),
+          priority: z.enum(['high', 'medium', 'low']).describe('Task priority'),
+          dueDate: z.string().optional().describe('Due date in ISO format'),
+          estimatedTime: z.string().optional().describe('Estimated time to complete'),
+          energyLevel: z.enum(['high', 'medium', 'low']).optional().describe('Required energy level'),
+          tags: z.array(z.string()).optional().describe('Task tags'),
+        }),
+        execute: async (input: any) => {
+          await addTask({
+            title: input.title,
+            description: input.description,
+            priority: input.priority,
+            status: 'pending',
+            dueDate: input.dueDate,
+            estimatedTime: input.estimatedTime,
+            energyLevel: input.energyLevel,
+            tags: input.tags,
+          });
+          return `Task "${input.title}" has been added successfully with ${input.priority} priority.`;
+        },
       }),
-      execute: async (input) => {
-        await addTask({
-          title: input.title,
-          description: input.description,
-          priority: input.priority,
-          status: 'pending',
-          dueDate: input.dueDate,
-          estimatedTime: input.estimatedTime,
-          energyLevel: input.energyLevel,
-          tags: input.tags,
-        });
-        return `Task "${input.title}" has been added successfully with ${input.priority} priority.`;
-      },
-    }),
-
-    scheduleMeeting: createRorkTool({
-      description: 'Schedule a new meeting',
-      zodSchema: z.object({
-        title: z.string().describe('Meeting title'),
-        description: z.string().optional().describe('Meeting description'),
-        startTime: z.string().describe('Start time in ISO format'),
-        endTime: z.string().describe('End time in ISO format'),
-        attendees: z.array(z.string()).describe('List of attendee emails'),
-        type: z.enum(['video', 'phone', 'in-person']).describe('Meeting type'),
-        location: z.string().optional().describe('Meeting location or link'),
+      
+      scheduleMeeting: createRorkTool({
+        description: 'Schedule a new meeting',
+        zodSchema: z.object({
+          title: z.string().describe('Meeting title'),
+          description: z.string().optional().describe('Meeting description'),
+          startTime: z.string().describe('Start time in ISO format'),
+          endTime: z.string().describe('End time in ISO format'),
+          attendees: z.array(z.string()).describe('List of attendee emails'),
+          type: z.enum(['video', 'phone', 'in-person']).describe('Meeting type'),
+          location: z.string().optional().describe('Meeting location or link'),
+        }),
+        execute: async (input: any) => {
+          await scheduleMeeting({
+            title: input.title,
+            description: input.description,
+            startTime: input.startTime,
+            endTime: input.endTime,
+            attendees: input.attendees,
+            type: input.type,
+            location: input.location,
+            preparationNeeded: false,
+            status: 'scheduled',
+          });
+          return `Meeting "${input.title}" has been scheduled for ${new Date(input.startTime).toLocaleString()} with ${input.attendees.length} attendee(s).`;
+        },
       }),
-      execute: async (input) => {
-        await scheduleMeeting({
-          title: input.title,
-          description: input.description,
-          startTime: input.startTime,
-          endTime: input.endTime,
-          attendees: input.attendees,
-          type: input.type,
-          location: input.location,
-          preparationNeeded: false,
-          status: 'scheduled',
-        });
-        return `Meeting "${input.title}" has been scheduled for ${new Date(input.startTime).toLocaleString()} with ${input.attendees.length} attendee(s).`;
-      },
-    }),
-
-    draftEmail: createRorkTool({
-      description: 'Draft an email using AI',
-      zodSchema: z.object({
-        to: z.array(z.string()).describe('Recipient email addresses'),
-        subject: z.string().describe('Email subject'),
-        context: z.string().describe('Context or key points for the email'),
+      
+      draftEmail: createRorkTool({
+        description: 'Draft an email using AI',
+        zodSchema: z.object({
+          to: z.array(z.string()).describe('Recipient email addresses'),
+          subject: z.string().describe('Email subject'),
+          context: z.string().describe('Context or key points for the email'),
+        }),
+        execute: async (input: any) => {
+          await draftEmail(input.to, input.subject, input.context);
+          return `Email draft created with subject "${input.subject}" for ${input.to.join(', ')}.`;
+        },
       }),
-      execute: async (input) => {
-        await draftEmail(input.to, input.subject, input.context);
-        return `Email draft created with subject "${input.subject}" for ${input.to.join(', ')}.`;
-      },
-    }),
-
-    searchInformation: createRorkTool({
-      description: 'Search through memories, tasks, meetings, and emails',
-      zodSchema: z.object({
-        query: z.string().describe('Search query'),
-        type: z.enum(['all', 'tasks', 'meetings', 'emails', 'memories']).optional().describe('Type to search'),
+      
+      searchInformation: createRorkTool({
+        description: 'Search through memories, tasks, meetings, and emails',
+        zodSchema: z.object({
+          query: z.string().describe('Search query'),
+          type: z.enum(['all', 'tasks', 'meetings', 'emails', 'memories']).optional().describe('Type to search'),
+        }),
+        execute: async (input: any) => {
+          const results = await searchMemories(input.query);
+          return `Found ${results.length} result(s) for "${input.query}": ${results.map(r => r.content).slice(0, 3).join(', ')}${results.length > 3 ? '...' : ''}`;
+        },
       }),
-      execute: async (input) => {
-        const results = await searchMemories(input.query);
-        return `Found ${results.length} result(s) for "${input.query}": ${results.map(r => r.content).slice(0, 3).join(', ')}${results.length > 3 ? '...' : ''}`;
-      },
-    }),
-
-    createWorkflow: createRorkTool({
-      description: 'Create an automation workflow',
-      zodSchema: z.object({
-        name: z.string().describe('Workflow name'),
-        description: z.string().describe('Workflow description'),
-        triggerType: z.enum(['time', 'event', 'condition']).describe('Trigger type'),
-        triggerConfig: z.record(z.string(), z.any()).describe('Trigger configuration'),
-        actions: z.array(z.object({
-          type: z.string(),
-          config: z.record(z.string(), z.any()),
-        })).describe('Actions to perform'),
+      
+      createWorkflow: createRorkTool({
+        description: 'Create an automation workflow',
+        zodSchema: z.object({
+          name: z.string().describe('Workflow name'),
+          description: z.string().describe('Workflow description'),
+          triggerType: z.enum(['time', 'event', 'condition']).describe('Trigger type'),
+          triggerConfig: z.record(z.string(), z.any()).describe('Trigger configuration'),
+          actions: z.array(z.object({
+            type: z.string(),
+            config: z.record(z.string(), z.any()),
+          })).describe('Actions to perform'),
+        }),
+        execute: async (input: any) => {
+          await createWorkflow({
+            name: input.name,
+            description: input.description,
+            trigger: {
+              type: input.triggerType,
+              config: input.triggerConfig,
+            },
+            actions: input.actions,
+            enabled: true,
+          });
+          return `Workflow "${input.name}" has been created successfully with ${input.actions.length} action(s).`;
+        },
       }),
-      execute: async (input) => {
-        await createWorkflow({
-          name: input.name,
-          description: input.description,
-          trigger: {
-            type: input.triggerType,
-            config: input.triggerConfig,
-          },
-          actions: input.actions,
-          enabled: true,
-        });
-        return `Workflow "${input.name}" has been created successfully with ${input.actions.length} action(s).`;
-      },
-    }),
-
-    analyzeProductivity: createRorkTool({
-      description: 'Analyze productivity patterns and provide insights',
-      zodSchema: z.object({
-        timeframe: z.enum(['today', 'week', 'month']).describe('Analysis timeframe'),
+      
+      analyzeProductivity: createRorkTool({
+        description: 'Analyze productivity patterns and provide insights',
+        zodSchema: z.object({
+          timeframe: z.enum(['today', 'week', 'month']).describe('Analysis timeframe'),
+        }),
+        execute: async (input: any) => {
+          const insightsData = await getInsights();
+          return `Generated ${insightsData.length} productivity insights for ${input.timeframe}: ${insightsData.map(i => i.title).join(', ')}.`;
+        },
       }),
-      execute: async (input) => {
-        const insightsData = await getInsights();
-        return `Generated ${insightsData.length} productivity insights for ${input.timeframe}: ${insightsData.map(i => i.title).join(', ')}.`;
-      },
-    }),
-
-    setReminder: createRorkTool({
-      description: 'Set a smart reminder',
-      zodSchema: z.object({
-        title: z.string().describe('Reminder title'),
-        time: z.string().describe('Reminder time in ISO format'),
-        context: z.string().optional().describe('Additional context'),
+      
+      setReminder: createRorkTool({
+        description: 'Set a smart reminder',
+        zodSchema: z.object({
+          title: z.string().describe('Reminder title'),
+          time: z.string().describe('Reminder time in ISO format'),
+          context: z.string().optional().describe('Additional context'),
+        }),
+        execute: async (input: any) => {
+          await addTask({
+            title: `Reminder: ${input.title}`,
+            description: input.context,
+            priority: 'medium',
+            status: 'pending',
+            dueDate: input.time,
+          });
+          return `Reminder "${input.title}" has been set for ${new Date(input.time).toLocaleString()}.`;
+        },
       }),
-      execute: async (input) => {
-        await addTask({
-          title: `Reminder: ${input.title}`,
-          description: input.context,
-          priority: 'medium',
-          status: 'pending',
-          dueDate: input.time,
-        });
-        return `Reminder "${input.title}" has been set for ${new Date(input.time).toLocaleString()}.`;
-      },
-    }),
-  }), [addTask, scheduleMeeting, draftEmail, searchMemories, createWorkflow, getInsights]);
+    };
+  }, [addTask, scheduleMeeting, draftEmail, searchMemories, createWorkflow, getInsights]);
 
-  const { messages: rorkMessages, sendMessage: sendRorkMessage, addToolResult } = useRorkAgent({ tools });
-
-  const aiMessages = useMemo(() => {
-    return [...rorkMessages, ...customMessages].sort((a, b) =>
-      new Date(a.createdAt || 0).getTime() - new Date(b.createdAt || 0).getTime()
-    );
-  }, [rorkMessages, customMessages]);
-
-  const sendMessage = useCallback(async (message: string | { text: string; files?: any[] }) => {
-    const text = typeof message === 'string' ? message : message.text;
-
-    // Attempt Rork send first (as it handles tools)
-    sendRorkMessage(message);
-
-    // Also trigger our real AI bridge if we want a guaranteed response from our keys
-    // We only do this if it's a simple text message for now to avoid double processing
-    // or if the user explicitly wants to use the enterprise engine
-    if (text.startsWith('/ai ')) {
-      const userMsg = { id: Date.now().toString(), role: 'user', content: text.replace('/ai ', ''), createdAt: new Date() };
-      setCustomMessages(prev => [...prev, userMsg]);
-
-      try {
-        const result = await chatMutation.mutateAsync({
-          messages: aiMessages.map(m => ({ role: m.role, content: m.content || m.text || '' })).concat({ role: 'user', content: userMsg.content }),
-        });
-
-        if (result.success) {
-          setCustomMessages(prev => [...prev, {
-            id: (Date.now() + 1).toString(),
-            role: 'assistant',
-            content: result.message,
-            createdAt: new Date()
-          }]);
-        }
-      } catch (err) {
-        console.error('[AIAssistant] Custom AI chat failed:', err);
-      }
-    }
-  }, [sendRorkMessage, chatMutation, aiMessages, customMessages]);
+  const agentResult = useRorkAgent ? useRorkAgent({ tools }) : { messages: [], sendMessage: () => {}, addToolResult: () => {} };
+  const { messages: aiMessages, sendMessage, addToolResult } = agentResult;
 
   useEffect(() => {
     let isMounted = true;
     const abortController = new AbortController();
-
+    
     const loadData = async () => {
       try {
         if (!isMounted) return;
         setIsLoading(true);
-
+        
         const [tasksData, meetingsData, emailsData, memoriesData, workflowsData, activeAgentsData] = await Promise.all([
           AsyncStorage.getItem(STORAGE_KEYS.TASKS),
           AsyncStorage.getItem(STORAGE_KEYS.MEETINGS),
@@ -803,24 +798,12 @@ export const [AIAssistantProvider, useAIAssistant] = createContextHook(() => {
 
         if (!isMounted || abortController.signal.aborted) return;
 
-        if (activeAgentsData) {
-          setActiveAgents(JSON.parse(activeAgentsData));
-        } else {
-          const initialState: Record<string, boolean> = {};
-          aiEmployees.forEach(emp => {
-            initialState[emp.id] = emp.infrastructure.status === 'online' || emp.infrastructure.status === 'processing';
-          });
-          setActiveAgents(initialState);
-          await AsyncStorage.setItem(STORAGE_KEYS.ACTIVE_AGENTS, JSON.stringify(initialState));
-        }
-
         if (tasksData) {
           setTasks(JSON.parse(tasksData));
         } else {
-          const { mockTasks } = await import('@/utils/mockAIData');
           if (!isMounted) return;
-          setTasks(mockTasks);
-          await AsyncStorage.setItem(STORAGE_KEYS.TASKS, JSON.stringify(mockTasks));
+          setTasks(defaultMockTasks);
+          await AsyncStorage.setItem(STORAGE_KEYS.TASKS, JSON.stringify(defaultMockTasks));
         }
 
         if (!isMounted || abortController.signal.aborted) return;
@@ -828,10 +811,9 @@ export const [AIAssistantProvider, useAIAssistant] = createContextHook(() => {
         if (meetingsData) {
           setMeetings(JSON.parse(meetingsData));
         } else {
-          const { mockMeetings } = await import('@/utils/mockAIData');
           if (!isMounted) return;
-          setMeetings(mockMeetings);
-          await AsyncStorage.setItem(STORAGE_KEYS.MEETINGS, JSON.stringify(mockMeetings));
+          setMeetings(defaultMockMeetings);
+          await AsyncStorage.setItem(STORAGE_KEYS.MEETINGS, JSON.stringify(defaultMockMeetings));
         }
 
         if (!isMounted || abortController.signal.aborted) return;
@@ -839,10 +821,9 @@ export const [AIAssistantProvider, useAIAssistant] = createContextHook(() => {
         if (emailsData) {
           setEmails(JSON.parse(emailsData));
         } else {
-          const { mockEmails } = await import('@/utils/mockAIData');
           if (!isMounted) return;
-          setEmails(mockEmails);
-          await AsyncStorage.setItem(STORAGE_KEYS.EMAILS, JSON.stringify(mockEmails));
+          setEmails(defaultMockEmails);
+          await AsyncStorage.setItem(STORAGE_KEYS.EMAILS, JSON.stringify(defaultMockEmails));
         }
 
         if (!isMounted || abortController.signal.aborted) return;
@@ -850,10 +831,9 @@ export const [AIAssistantProvider, useAIAssistant] = createContextHook(() => {
         if (memoriesData) {
           setMemories(JSON.parse(memoriesData));
         } else {
-          const { mockMemories } = await import('@/utils/mockAIData');
           if (!isMounted) return;
-          setMemories(mockMemories);
-          await AsyncStorage.setItem(STORAGE_KEYS.MEMORIES, JSON.stringify(mockMemories));
+          setMemories(defaultMockMemories);
+          await AsyncStorage.setItem(STORAGE_KEYS.MEMORIES, JSON.stringify(defaultMockMemories));
         }
 
         if (!isMounted || abortController.signal.aborted) return;
@@ -861,10 +841,23 @@ export const [AIAssistantProvider, useAIAssistant] = createContextHook(() => {
         if (workflowsData) {
           setWorkflows(JSON.parse(workflowsData));
         } else {
-          const { mockWorkflows } = await import('@/utils/mockAIData');
           if (!isMounted) return;
-          setWorkflows(mockWorkflows);
-          await AsyncStorage.setItem(STORAGE_KEYS.WORKFLOWS, JSON.stringify(mockWorkflows));
+          setWorkflows(defaultMockWorkflows);
+          await AsyncStorage.setItem(STORAGE_KEYS.WORKFLOWS, JSON.stringify(defaultMockWorkflows));
+        }
+
+        if (!isMounted || abortController.signal.aborted) return;
+
+        if (activeAgentsData) {
+          setActiveAgents(JSON.parse(activeAgentsData));
+        } else {
+          if (!isMounted) return;
+          const initialActive: Record<string, boolean> = {};
+          for (const e of aiEmployees) {
+            initialActive[e.id] = true;
+          }
+          setActiveAgents(initialActive);
+          await AsyncStorage.setItem(STORAGE_KEYS.ACTIVE_AGENTS, JSON.stringify(initialActive));
         }
       } catch (err) {
         if (!isMounted || abortController.signal.aborted) return;
@@ -878,7 +871,7 @@ export const [AIAssistantProvider, useAIAssistant] = createContextHook(() => {
     };
 
     loadData();
-
+    
     return () => {
       isMounted = false;
       abortController.abort();
@@ -892,35 +885,35 @@ export const [AIAssistantProvider, useAIAssistant] = createContextHook(() => {
     memories,
     workflows,
     insights,
-
+    
     addTask,
     updateTask,
     deleteTask,
     completeTask,
-
+    
     scheduleMeeting,
     updateMeeting,
     cancelMeeting,
-
+    
     draftEmail,
     sendEmail,
-
+    
     addMemory,
     searchMemories,
-
+    
     createWorkflow,
     toggleWorkflow,
-
+    
     getInsights,
-
-    activeAgents,
-    toggleAgent,
-    stats,
-
+    
     aiMessages,
     sendMessage,
     addToolResult,
 
+    activeAgents,
+    toggleAgent,
+    stats,
+    
     isLoading,
     error,
   };

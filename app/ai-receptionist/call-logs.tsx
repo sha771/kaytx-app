@@ -1,3 +1,4 @@
+ 
 import React, { useMemo, useState, useCallback } from 'react';
 import {
   View,
@@ -30,14 +31,12 @@ import {
   RefreshCw,
   ArrowUpRight,
   ArrowDownRight,
+  Lock,
 } from 'lucide-react-native';
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import { useQuery } from '@tanstack/react-query';
 import { useTheme } from '@/providers/ThemeProvider';
-import {
-  fetchReceptionistCallLogs,
-  deriveReceptionistAnalytics,
-} from '@/utils/receptionistService';
+import { trpc } from '@/lib/trpc';
 import type {
   ReceptionistCallLog,
   ReceptionistCategory,
@@ -75,6 +74,7 @@ const categoryFilters: { id: ReceptionistCategory; label: string }[] = [
 
 export default function CallLogsScreen() {
   const { theme } = useTheme();
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'incoming' | 'outgoing' | 'missed'>('all');
   const [showDetailsModal, setShowDetailsModal] = useState(false);
@@ -87,18 +87,27 @@ export default function CallLogsScreen() {
     timeRange: '24h' | '7d' | '30d' | 'all';
   }>({ status: 'all', sentiment: 'all', category: 'all', timeRange: '7d' });
 
-  const { data: callLogs = [], isLoading, refetch, isRefetching } = useQuery<ReceptionistCallLog[]>({
-    queryKey: ['receptionist-call-logs'],
-    queryFn: fetchReceptionistCallLogs,
+  // Real tRPC data
+  const { data: subscription } = trpc.user.getSubscription.useQuery();
+  const isEnterprise = subscription?.plan === 'enterprise';
+
+  const { data: callLogs = [], isLoading, refetch, isRefetching } = trpc.receptionist.getCallLogs.useQuery(undefined, {
     staleTime: 60 * 1000,
   });
 
+  const { data: analytics } = trpc.receptionist.getAnalytics.useQuery();
+
   const analyticsPayload = useMemo(() => {
-    if (!callLogs.length) {
-      return undefined;
-    }
-    return deriveReceptionistAnalytics(callLogs);
-  }, [callLogs]);
+    if (!analytics) return undefined;
+    
+    // Fallback highlights if not provided by backend
+    const highlights = [
+      { label: 'Peak Hour', value: '2 PM - 4 PM', sentiment: 'neutral' as const },
+      { label: 'Missed Calls', value: analytics.missedCalls.toString(), sentiment: analytics.missedCalls > 5 ? 'down' as const : 'up' as const },
+    ];
+
+    return { analytics, highlights };
+  }, [analytics]);
 
   const filteredCalls = useMemo(() => {
     if (!callLogs.length) {
@@ -261,6 +270,14 @@ export default function CallLogsScreen() {
             return (
               <View key={card.id} style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}
                 testID={`receptionist-stat-${card.id}`}>
+                {!isEnterprise && (
+                  <TouchableOpacity 
+                    style={styles.lockOverlay}
+                    onPress={() => router.push('/enterprise-admin')}
+                  >
+                    <Lock size={20} color={theme.colors.text} />
+                  </TouchableOpacity>
+                )}
                 <View style={[styles.statCardIcon, { backgroundColor: `${card.color}20` }]}> 
                   <Icon size={18} color={card.color} />
                 </View>
@@ -905,6 +922,14 @@ const styles = StyleSheet.create({
   resetButtonText: {
     color: 'white',
     fontWeight: '600',
+  },
+  lockOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    borderRadius: 16,
+    zIndex: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   loadingOverlay: {
     position: 'absolute',

@@ -1,193 +1,181 @@
+ 
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch } from 'react-native';
-import { Stack } from 'expo-router';
-import { GitBranch, Plus, Edit2, Trash2, Clock, Users, Phone, AlertCircle } from 'lucide-react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, ActivityIndicator } from 'react-native';
+import { Stack, useRouter } from 'expo-router';
+import { GitBranch, Plus, Edit2, Trash2, Clock, Users, Phone, AlertCircle, Lock } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-interface RoutingRule {
-  id: string;
-  name: string;
-  priority: number;
-  condition: string;
-  action: string;
-  destination: string;
-  isActive: boolean;
-}
+import { trpc } from '@/lib/trpc';
+import { useTheme } from '@/providers/ThemeProvider';
 
 export default function CallRoutingScreen() {
+  const { theme } = useTheme();
+  const router = useRouter();
   const insets = useSafeAreaInsets();
-  const [rules, setRules] = useState<RoutingRule[]>([
-    {
-      id: '1',
-      name: 'VIP Customers',
-      priority: 1,
-      condition: 'Contact Tag = VIP',
-      action: 'Transfer to Sales Manager',
-      destination: '+1 (555) 123-4567',
-      isActive: true,
-    },
-    {
-      id: '2',
-      name: 'Technical Support',
-      priority: 2,
-      condition: 'Keyword: "technical", "support", "bug"',
-      action: 'Transfer to Tech Team',
-      destination: '+1 (555) 765-4321',
-      isActive: true,
-    },
-    {
-      id: '3',
-      name: 'After Hours',
-      priority: 3,
-      condition: 'Time: Outside 9AM-5PM',
-      action: 'AI Handles + Send Email',
-      destination: 'support@company.com',
-      isActive: true,
-    },
-    {
-      id: '4',
-      name: 'New Customers',
-      priority: 4,
-      condition: 'First Time Caller',
-      action: 'Welcome Script + Record',
-      destination: 'AI Receptionist',
-      isActive: true,
-    },
-  ]);
 
+  // Real tRPC data
+  const { data: subscription } = trpc.user.getSubscription.useQuery();
+  const isEnterprise = subscription?.plan === 'enterprise';
 
+  const { data: rules = [], isLoading, refetch } = trpc.receptionist.getRoutingRules.useQuery();
+  const utils = trpc.useUtils();
 
-  const toggleRule = (id: string) => {
-    setRules(rules.map(rule => 
-      rule.id === id ? { ...rule, isActive: !rule.isActive } : rule
-    ));
+  const toggleRuleMutation = trpc.receptionist.updateRoutingRule.useMutation({
+    onSuccess: () => utils.receptionist.getRoutingRules.invalidate(),
+  });
+
+  const deleteRuleMutation = trpc.receptionist.deleteRoutingRule.useMutation({
+    onSuccess: () => utils.receptionist.getRoutingRules.invalidate(),
+  });
+
+  const toggleRule = (id: string, isActive: boolean) => {
+    toggleRuleMutation.mutate({ id, isActive: !isActive });
   };
 
   const deleteRule = (id: string) => {
-    setRules(rules.filter(rule => rule.id !== id));
+    deleteRuleMutation.mutate({ id });
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <Stack.Screen 
         options={{
           title: 'Call Routing Rules',
-          headerStyle: { backgroundColor: '#0A0F1E' },
-          headerTintColor: '#FFFFFF',
+          headerStyle: { backgroundColor: theme.colors.background },
+          headerTintColor: theme.colors.text,
         }}
       />
       
-      <ScrollView 
-        style={styles.scrollView}
-        contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}
-      >
-        <View style={styles.header}>
-          <View style={styles.headerInfo}>
-            <Text style={styles.headerTitle}>Routing Configuration</Text>
-            <Text style={styles.headerSubtitle}>
-              {rules.filter(r => r.isActive).length} of {rules.length} rules active
-            </Text>
-          </View>
-          <TouchableOpacity 
-            style={styles.addButton}
-          >
-            <Plus size={20} color="#FFFFFF" />
-          </TouchableOpacity>
+      {isLoading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color={theme.colors.primary} />
         </View>
-
-        <View style={styles.infoCard}>
-          <AlertCircle size={20} color="#60A5FA" />
-          <View style={styles.infoContent}>
-            <Text style={styles.infoText}>
-              Rules are evaluated in priority order. First matching rule will be applied.
-            </Text>
-          </View>
-        </View>
-
-        <View style={styles.statsRow}>
-          <View style={styles.statCard}>
-            <Phone size={18} color="#10B981" />
-            <Text style={styles.statValue}>1,234</Text>
-            <Text style={styles.statLabel}>Calls Routed</Text>
-          </View>
-          <View style={styles.statCard}>
-            <Users size={18} color="#60A5FA" />
-            <Text style={styles.statValue}>89%</Text>
-            <Text style={styles.statLabel}>Success Rate</Text>
-          </View>
-          <View style={styles.statCard}>
-            <Clock size={18} color="#F59E0B" />
-            <Text style={styles.statValue}>12s</Text>
-            <Text style={styles.statLabel}>Avg. Time</Text>
-          </View>
-        </View>
-
-        <View style={styles.rulesSection}>
-          <Text style={styles.sectionTitle}>Routing Rules</Text>
-          
-          {rules.map((rule) => (
-            <View key={rule.id} style={styles.ruleCard}>
-              <View style={styles.ruleHeader}>
-                <View style={styles.priorityBadge}>
-                  <Text style={styles.priorityText}>#{rule.priority}</Text>
-                </View>
-                <Text style={styles.ruleName}>{rule.name}</Text>
-                <Switch
-                  value={rule.isActive}
-                  onValueChange={() => toggleRule(rule.id)}
-                  trackColor={{ false: '#374151', true: '#60A5FA' }}
-                  thumbColor="#FFFFFF"
-                />
-              </View>
-
-              <View style={styles.ruleDetails}>
-                <View style={styles.ruleRow}>
-                  <Text style={styles.ruleLabel}>Condition:</Text>
-                  <Text style={styles.ruleValue}>{rule.condition}</Text>
-                </View>
-                <View style={styles.ruleRow}>
-                  <Text style={styles.ruleLabel}>Action:</Text>
-                  <Text style={styles.ruleValue}>{rule.action}</Text>
-                </View>
-                <View style={styles.ruleRow}>
-                  <Text style={styles.ruleLabel}>Destination:</Text>
-                  <Text style={styles.ruleValue}>{rule.destination}</Text>
-                </View>
-              </View>
-
-              <View style={styles.ruleActions}>
-                <TouchableOpacity style={styles.actionButton}>
-                  <Edit2 size={16} color="#60A5FA" />
-                  <Text style={styles.actionButtonText}>Edit</Text>
-                </TouchableOpacity>
-                <TouchableOpacity 
-                  style={styles.actionButton}
-                  onPress={() => deleteRule(rule.id)}
-                >
-                  <Trash2 size={16} color="#EF4444" />
-                  <Text style={[styles.actionButtonText, { color: '#EF4444' }]}>Delete</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          ))}
-        </View>
-
-        <View style={styles.defaultSection}>
-          <Text style={styles.sectionTitle}>Default Behavior</Text>
-          <View style={styles.defaultCard}>
-            <GitBranch size={20} color="#9CA3AF" />
-            <View style={styles.defaultContent}>
-              <Text style={styles.defaultTitle}>When no rules match</Text>
-              <Text style={styles.defaultDescription}>
-                AI Receptionist handles the call with general greeting script
+      ) : (
+        <ScrollView 
+          style={styles.scrollView}
+          contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}
+        >
+          <View style={styles.header}>
+            <View style={styles.headerInfo}>
+              <Text style={[styles.headerTitle, { color: theme.colors.text }]}>Routing Configuration</Text>
+              <Text style={[styles.headerSubtitle, { color: theme.colors.secondaryText }]}>
+                {rules.filter(r => r.isActive).length} of {rules.length} rules active
               </Text>
             </View>
-            <TouchableOpacity style={styles.changeButton}>
-              <Text style={styles.changeButtonText}>Change</Text>
+            <TouchableOpacity 
+              style={[styles.addButton, { backgroundColor: theme.colors.primary }]}
+              onPress={() => !isEnterprise ? router.push('/enterprise-admin') : null}
+            >
+              {!isEnterprise && (
+                <View style={styles.lockOverlayMini}>
+                  <Lock size={12} color="white" />
+                </View>
+              )}
+              <Plus size={20} color="#FFFFFF" />
             </TouchableOpacity>
           </View>
-        </View>
-      </ScrollView>
+
+          <View style={[styles.infoCard, { backgroundColor: theme.colors.primary + '20' }]}>
+            <AlertCircle size={20} color={theme.colors.primary} />
+            <View style={styles.infoContent}>
+              <Text style={[styles.infoText, { color: theme.colors.primary }]}>
+                Rules are evaluated in priority order. First matching rule will be applied.
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.statsRow}>
+            <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
+              <Phone size={18} color={theme.colors.success} />
+              <Text style={[styles.statValue, { color: theme.colors.text }]}>1,234</Text>
+              <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Calls Routed</Text>
+            </View>
+            <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
+              <Users size={18} color={theme.colors.primary} />
+              <Text style={[styles.statValue, { color: theme.colors.text }]}>89%</Text>
+              <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Success Rate</Text>
+            </View>
+            <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
+              <Clock size={18} color="#F59E0B" />
+              <Text style={[styles.statValue, { color: theme.colors.text }]}>12s</Text>
+              <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Avg. Time</Text>
+            </View>
+          </View>
+
+          <View style={styles.rulesSection}>
+            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Routing Rules</Text>
+            
+            {rules.map((rule) => (
+              <View key={rule.id} style={[styles.ruleCard, { backgroundColor: theme.colors.cardBackground, borderLeftColor: theme.colors.primary }]}>
+                {!isEnterprise && (
+                  <TouchableOpacity 
+                    style={styles.lockOverlay}
+                    onPress={() => router.push('/enterprise-admin')}
+                  >
+                    <Lock size={20} color={theme.colors.text} />
+                  </TouchableOpacity>
+                )}
+                <View style={styles.ruleHeader}>
+                  <View style={[styles.priorityBadge, { backgroundColor: theme.colors.background }]}>
+                    <Text style={[styles.priorityText, { color: theme.colors.primary }]}>#{rule.priority}</Text>
+                  </View>
+                  <Text style={[styles.ruleName, { color: theme.colors.text }]}>{rule.name}</Text>
+                  <Switch
+                    value={rule.isActive}
+                    onValueChange={() => toggleRule(rule.id, rule.isActive)}
+                    trackColor={{ false: theme.colors.border, true: theme.colors.primary }}
+                    thumbColor="#FFFFFF"
+                  />
+                </View>
+
+                <View style={styles.ruleDetails}>
+                  <View style={styles.ruleRow}>
+                    <Text style={[styles.ruleLabel, { color: theme.colors.secondaryText }]}>Condition:</Text>
+                    <Text style={[styles.ruleValue, { color: theme.colors.text }]}>{rule.condition}</Text>
+                  </View>
+                  <View style={styles.ruleRow}>
+                    <Text style={[styles.ruleLabel, { color: theme.colors.secondaryText }]}>Action:</Text>
+                    <Text style={[styles.ruleValue, { color: theme.colors.text }]}>{rule.action}</Text>
+                  </View>
+                  <View style={styles.ruleRow}>
+                    <Text style={[styles.ruleLabel, { color: theme.colors.secondaryText }]}>Destination:</Text>
+                    <Text style={[styles.ruleValue, { color: theme.colors.text }]}>{rule.destination}</Text>
+                  </View>
+                </View>
+
+                <View style={[styles.ruleActions, { borderTopColor: theme.colors.border }]}>
+                  <TouchableOpacity style={styles.actionButton}>
+                    <Edit2 size={16} color={theme.colors.primary} />
+                    <Text style={[styles.actionButtonText, { color: theme.colors.primary }]}>Edit</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity 
+                    style={styles.actionButton}
+                    onPress={() => deleteRule(rule.id)}
+                  >
+                    <Trash2 size={16} color={theme.colors.error} />
+                    <Text style={[styles.actionButtonText, { color: theme.colors.error }]}>Delete</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ))}
+          </View>
+
+          <View style={styles.defaultSection}>
+            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Default Behavior</Text>
+            <View style={[styles.defaultCard, { backgroundColor: theme.colors.cardBackground }]}>
+              <GitBranch size={20} color={theme.colors.secondaryText} />
+              <View style={styles.defaultContent}>
+                <Text style={[styles.defaultTitle, { color: theme.colors.text }]}>When no rules match</Text>
+                <Text style={[styles.defaultDescription, { color: theme.colors.secondaryText }]}>
+                  AI Receptionist handles the call with general greeting script
+                </Text>
+              </View>
+              <TouchableOpacity style={[styles.changeButton, { backgroundColor: theme.colors.background }]}>
+                <Text style={[styles.changeButtonText, { color: theme.colors.primary }]}>Change</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
+      )}
     </View>
   );
 }
@@ -379,6 +367,27 @@ const styles = StyleSheet.create({
   changeButtonText: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#60A5FA',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  lockOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    borderRadius: 12,
+    zIndex: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  lockOverlayMini: {
+    position: 'absolute',
+    top: -4,
+    right: -4,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    borderRadius: 10,
+    padding: 2,
+    zIndex: 10,
   },
 });

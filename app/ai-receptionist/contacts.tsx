@@ -1,3 +1,4 @@
+ 
 import React, { useMemo, useState } from 'react';
 import {
   View,
@@ -8,6 +9,7 @@ import {
   TextInput,
   FlatList,
   Switch,
+  ActivityIndicator,
 } from 'react-native';
 import {
   Users,
@@ -28,120 +30,41 @@ import {
   PhoneCall,
   Building,
   PlugZap,
+  Lock,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Stack } from 'expo-router';
-
-interface Contact {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  company?: string;
-  location?: string;
-  tags: string[];
-  segment: 'vip' | 'regular' | 'new' | 'inactive';
-  lastContact: string;
-  totalCalls: number;
-  satisfaction: number;
-  notes?: string;
-  activePlaybook?: string;
-}
-
-interface Connector {
-  id: string;
-  name: string;
-  provider: string;
-  status: 'connected' | 'syncing' | 'error';
-}
+import { Stack, useRouter } from 'expo-router';
+import { trpc } from '@/lib/trpc';
 
 export default function ContactsScreen() {
   const { theme } = useTheme();
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedSegment, setSelectedSegment] = useState<'all' | 'vip' | 'regular' | 'new' | 'inactive'>('all');
   const [autoSync, setAutoSync] = useState<boolean>(true);
 
-  const contacts: Contact[] = useMemo(
-    () => [
-    {
-      id: '1',
-      name: 'John Smith',
-      email: 'john.smith@example.com',
-      phone: '+1 (555) 123-4567',
-      company: 'Tech Corp',
-      location: 'California, US',
-      tags: ['Sales', 'Enterprise'],
-      segment: 'vip',
-      lastContact: '2 hours ago',
-      totalCalls: 47,
-      satisfaction: 4.9,
-      activePlaybook: 'Upsell Accelerator',
-    },
-    {
-      id: '2',
-      name: 'Sarah Johnson',
-      email: 'sarah.j@company.com',
-      phone: '+1 (555) 234-5678',
-      company: 'Design Studio',
-      location: 'New York, US',
-      tags: ['Support', 'Priority'],
-      segment: 'vip',
-      lastContact: '1 day ago',
-      totalCalls: 32,
-      satisfaction: 4.8,
-      activePlaybook: 'Retention Guardian',
-    },
-    {
-      id: '3',
-      name: 'Mike Davis',
-      email: 'mike.d@email.com',
-      phone: '+1 (555) 345-6789',
-      company: 'Marketing Inc',
-      location: 'Texas, US',
-      tags: ['Marketing'],
-      segment: 'regular',
-      lastContact: '3 days ago',
-      totalCalls: 15,
-      satisfaction: 4.5,
-    },
-    {
-      id: '4',
-      name: 'Emily Brown',
-      email: 'emily@startup.io',
-      phone: '+1 (555) 456-7890',
-      location: 'California, US',
-      tags: ['New Lead'],
-      segment: 'new',
-      lastContact: '5 hours ago',
-      totalCalls: 2,
-      satisfaction: 5.0,
-      activePlaybook: 'Qualification Sprint',
-    },
-  ],
-    [],
-  );
+  // Real tRPC data
+  const { data: subscription } = trpc.user.getSubscription.useQuery();
+  const isEnterprise = subscription?.plan === 'enterprise';
 
-  const connectors: Connector[] = [
-    { id: 'sf', name: 'Salesforce', provider: 'CRM', status: 'connected' },
-    { id: 'hub', name: 'HubSpot', provider: 'CRM', status: 'syncing' },
-    { id: 'zendesk', name: 'Zendesk', provider: 'Support', status: 'connected' },
-    { id: 'msdyn', name: 'Dynamics 365', provider: 'CRM', status: 'error' },
-  ];
+  const { data: contacts = [], isLoading } = trpc.receptionist.getContacts.useQuery();
+  const { data: connectors = [] } = trpc.receptionist.getConnectors.useQuery();
+  const { data: statsData } = trpc.receptionist.getContactStats.useQuery();
 
-  const segments = [
+  const segments = useMemo(() => [
     { id: 'all', label: 'All', count: contacts.length, color: '#8E8E93' },
-    { id: 'vip', label: 'VIP', count: 2, color: '#FF2D92' },
-    { id: 'regular', label: 'Regular', count: 1, color: '#007AFF' },
-    { id: 'new', label: 'New', count: 1, color: '#34C759' },
-    { id: 'inactive', label: 'Inactive', count: 0, color: '#8E8E93' },
-  ];
+    { id: 'vip', label: 'VIP', count: contacts.filter(c => c.segment === 'vip').length, color: '#FF2D92' },
+    { id: 'regular', label: 'Regular', count: contacts.filter(c => c.segment === 'regular').length, color: '#007AFF' },
+    { id: 'new', label: 'New', count: contacts.filter(c => c.segment === 'new').length, color: '#34C759' },
+    { id: 'inactive', label: 'Inactive', count: contacts.filter(c => c.segment === 'inactive').length, color: '#8E8E93' },
+  ], [contacts]);
 
-  const stats = [
-    { title: 'Total Contacts', value: '847', delta: '+23 this week', icon: Users, color: '#007AFF' },
-    { title: 'VIP Coverage', value: '42', delta: '98% SLA', icon: Star, color: '#FF2D92' },
-    { title: 'Engaged Leads', value: '218', delta: '+14% QoQ', icon: TrendingUp, color: '#34C759' },
-    { title: 'Avg Sentiment', value: '4.7', delta: 'Stable', icon: MessageSquare, color: '#FF9500' },
-  ];
+  const stats = useMemo(() => [
+    { title: 'Total Contacts', value: statsData?.total?.toString() ?? '0', delta: '+23 this week', icon: Users, color: '#007AFF' },
+    { title: 'VIP Coverage', value: statsData?.vip?.toString() ?? '0', delta: '98% SLA', icon: Star, color: '#FF2D92' },
+    { title: 'Engaged Leads', value: statsData?.engaged?.toString() ?? '0', delta: '+14% QoQ', icon: TrendingUp, color: '#34C759' },
+    { title: 'Avg Sentiment', value: statsData?.sentiment?.toString() ?? '0', delta: 'Stable', icon: MessageSquare, color: '#FF9500' },
+  ], [statsData]);
 
   const filteredContacts = useMemo(() => {
     return contacts.filter(contact => {
@@ -191,27 +114,39 @@ export default function ContactsScreen() {
           style={styles.statsScroll}
           contentContainerStyle={styles.statsContainer}
         >
-          {stats.map(stat => {
-            const Icon = stat.icon;
-            return (
-              <View
-                key={stat.title}
-                style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}
-                testID={`receptionist-contacts-stat-${stat.title}`}
-              >
-                <View style={[styles.statIcon, { backgroundColor: `${stat.color}20` }]}>
-                  <Icon size={20} color={stat.color} />
+          {isLoading ? (
+            <ActivityIndicator size="small" color={theme.colors.primary} />
+          ) : (
+            stats.map(stat => {
+              const Icon = stat.icon;
+              return (
+                <View
+                  key={stat.title}
+                  style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}
+                  testID={`receptionist-contacts-stat-${stat.title}`}
+                >
+                  <View style={[styles.statIcon, { backgroundColor: `${stat.color}20` }]}>
+                    <Icon size={20} color={stat.color} />
+                  </View>
+                  <Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text>
+                  <Text style={[styles.statTitle, { color: theme.colors.secondaryText }]}>{stat.title}</Text>
+                  <Text style={[styles.statDelta, { color: stat.color }]}>{stat.delta}</Text>
                 </View>
-                <Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text>
-                <Text style={[styles.statTitle, { color: theme.colors.secondaryText }]}>{stat.title}</Text>
-                <Text style={[styles.statDelta, { color: stat.color }]}>{stat.delta}</Text>
-              </View>
-            );
-          })}
+              );
+            })
+          )}
         </ScrollView>
 
         <View style={[styles.syncCard, { backgroundColor: theme.colors.cardBackground }]}
           testID="receptionist-contacts-sync-card">
+          {!isEnterprise && (
+            <TouchableOpacity 
+              style={styles.lockOverlay}
+              onPress={() => router.push('/enterprise-admin')}
+            >
+              <Lock size={24} color={theme.colors.text} />
+            </TouchableOpacity>
+          )}
           <View style={styles.syncHeader}>
             <View style={styles.syncTitleRow}>
               <PlugZap size={18} color={theme.colors.primary} />
@@ -223,7 +158,7 @@ export default function ContactsScreen() {
                 console.log('Auto sync toggled', value);
                 setAutoSync(value);
               }}
-              trackColor={{ false: '#767577', true: theme.colors.primary }}
+              trackColor={{ false: theme.colors.border, true: theme.colors.primary }}
               thumbColor={autoSync ? '#fff' : '#f4f3f4'}
             />
           </View>
@@ -847,5 +782,13 @@ const styles = StyleSheet.create({
   contactButtonText: {
     fontSize: 13,
     fontWeight: '700',
+  },
+  lockOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    borderRadius: 18,
+    zIndex: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

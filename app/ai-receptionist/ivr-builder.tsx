@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+ 
+import React, { useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -7,8 +8,9 @@ import {
   TouchableOpacity,
   TextInput,
   Modal,
+  ActivityIndicator,
 } from 'react-native';
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import {
   Plus,
   Phone,
@@ -19,74 +21,60 @@ import {
   Edit,
   Save,
   X,
+  Lock,
 } from 'lucide-react-native';
-
-interface IVRNode {
-  id: string;
-  type: 'menu' | 'action' | 'transfer' | 'voicemail' | 'message';
-  title: string;
-  prompt: string;
-  options?: IVROption[];
-  action?: string;
-}
-
-interface IVROption {
-  key: string;
-  label: string;
-  nextNodeId?: string;
-}
+import { trpc } from '@/lib/trpc';
+import { useTheme } from '@/providers/ThemeProvider';
 
 export default function IVRBuilderScreen() {
-  const [nodes, setNodes] = useState<IVRNode[]>([
-    {
-      id: '1',
-      type: 'menu',
-      title: 'Main Menu',
-      prompt: 'Thank you for calling. Press 1 for Sales, 2 for Support, 3 for Billing',
-      options: [
-        { key: '1', label: 'Sales', nextNodeId: '2' },
-        { key: '2', label: 'Support', nextNodeId: '3' },
-        { key: '3', label: 'Billing', nextNodeId: '4' },
-      ],
-    },
-    {
-      id: '2',
-      type: 'transfer',
-      title: 'Transfer to Sales',
-      prompt: 'Transferring you to our sales team',
-      action: '+1 (555) 100-0001',
-    },
-    {
-      id: '3',
-      type: 'transfer',
-      title: 'Transfer to Support',
-      prompt: 'Connecting you with our support team',
-      action: '+1 (555) 100-0002',
-    },
-  ]);
+  const { theme } = useTheme();
+  const router = useRouter();
+  
+  // Real tRPC data
+  const { data: subscription } = trpc.user.getSubscription.useQuery();
+  const isEnterprise = subscription?.plan === 'enterprise';
+
+  const { data: nodes = [], isLoading, refetch } = trpc.receptionist.getIVRNodes.useQuery();
+  const utils = trpc.useUtils();
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [editingNode, setEditingNode] = useState<IVRNode | null>(null);
+  const [editingNode, setEditingNode] = useState<any | null>(null);
   const [newNodeTitle, setNewNodeTitle] = useState('');
   const [newNodePrompt, setNewNodePrompt] = useState('');
-  const [newNodeType, setNewNodeType] = useState<IVRNode['type']>('menu');
+  const [newNodeType, setNewNodeType] = useState<string>('menu');
 
-  const addNode = () => {
-    const newNode: IVRNode = {
-      id: Date.now().toString(),
-      type: newNodeType,
-      title: newNodeTitle || 'New Node',
-      prompt: newNodePrompt || 'Enter prompt...',
-      options: newNodeType === 'menu' ? [] : undefined,
-    };
-    setNodes([...nodes, newNode]);
-    setModalVisible(false);
+  const addNodeMutation = trpc.receptionist.addIVRNode.useMutation({
+    onSuccess: () => {
+      utils.receptionist.getIVRNodes.invalidate();
+      setModalVisible(false);
+      resetForm();
+    },
+  });
+
+  const deleteNodeMutation = trpc.receptionist.deleteIVRNode.useMutation({
+    onSuccess: () => utils.receptionist.getIVRNodes.invalidate(),
+  });
+
+  const resetForm = () => {
     setNewNodeTitle('');
     setNewNodePrompt('');
+    setEditingNode(null);
+  };
+
+  const addNode = () => {
+    if (!isEnterprise) {
+      router.push('/enterprise-admin');
+      return;
+    }
+    addNodeMutation.mutate({
+      title: newNodeTitle,
+      prompt: newNodePrompt,
+      type: newNodeType as any,
+    });
   };
 
   const deleteNode = (id: string) => {
-    setNodes(nodes.filter((node) => node.id !== id));
+    deleteNodeMutation.mutate({ id });
   };
 
   const getNodeIcon = (type: string) => {
@@ -104,120 +92,146 @@ export default function IVRBuilderScreen() {
     }
   };
 
-  const nodeTypes: IVRNode['type'][] = ['menu', 'transfer', 'voicemail', 'action', 'message'];
+  const nodeTypes: string[] = ['menu', 'transfer', 'voicemail', 'action', 'message'];
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <Stack.Screen
         options={{
           title: 'IVR Builder',
-          headerStyle: { backgroundColor: '#0F172A' },
-          headerTintColor: '#fff',
+          headerStyle: { backgroundColor: theme.colors.background },
+          headerTintColor: theme.colors.text,
           headerRight: () => (
             <TouchableOpacity
               onPress={() => setModalVisible(true)}
               style={styles.headerButton}
             >
-              <Plus size={24} color="#fff" />
+              <Plus size={24} color={theme.colors.primary} />
             </TouchableOpacity>
           ),
         }}
       />
 
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.header}>
-          <Text style={styles.title}>IVR Flow Builder</Text>
-          <Text style={styles.subtitle}>
-            Create custom call flows for your business
-          </Text>
+      {isLoading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color={theme.colors.primary} />
         </View>
+      ) : (
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.header}>
+            <Text style={[styles.title, { color: theme.colors.text }]}>IVR Flow Builder</Text>
+            <Text style={[styles.subtitle, { color: theme.colors.secondaryText }]}>
+              Create custom call flows for your business
+            </Text>
+          </View>
 
-        <View style={styles.flowContainer}>
-          <TouchableOpacity style={styles.testButton}>
-            <Play size={20} color="#fff" />
-            <Text style={styles.testButtonText}>Test IVR Flow</Text>
-          </TouchableOpacity>
+          <View style={styles.flowContainer}>
+            <TouchableOpacity style={[styles.testButton, { backgroundColor: theme.colors.success }]} >
+              <Play size={20} color="#fff" />
+              <Text style={styles.testButtonText}>Test IVR Flow</Text>
+            </TouchableOpacity>
 
-          {nodes.map((node, index) => (
-            <View key={node.id}>
-              {index > 0 && <View style={styles.connector} />}
-              
-              <View style={styles.nodeCard}>
-                <View style={styles.nodeHeader}>
-                  <View style={styles.nodeHeaderLeft}>
-                    {getNodeIcon(node.type)}
-                    <View style={styles.nodeInfo}>
-                      <Text style={styles.nodeTitle}>{node.title}</Text>
-                      <Text style={styles.nodeType}>{node.type.toUpperCase()}</Text>
-                    </View>
-                  </View>
-                  <View style={styles.nodeActions}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        setEditingNode(node);
-                        setNewNodeTitle(node.title);
-                        setNewNodePrompt(node.prompt);
-                        setNewNodeType(node.type);
-                        setModalVisible(true);
-                      }}
-                      style={styles.iconButton}
-                    >
-                      <Edit size={18} color="#3B82F6" />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => deleteNode(node.id)}
-                      style={styles.iconButton}
-                    >
-                      <Trash2 size={18} color="#EF4444" />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-
-                <View style={styles.promptContainer}>
-                  <Text style={styles.promptLabel}>Prompt:</Text>
-                  <Text style={styles.promptText}>{node.prompt}</Text>
-                </View>
-
-                {node.options && node.options.length > 0 && (
-                  <View style={styles.optionsContainer}>
-                    <Text style={styles.optionsLabel}>Options:</Text>
-                    {node.options.map((option) => (
-                      <View key={option.key} style={styles.optionRow}>
-                        <View style={styles.optionKey}>
-                          <Text style={styles.optionKeyText}>{option.key}</Text>
-                        </View>
-                        <Text style={styles.optionLabel}>{option.label}</Text>
-                      </View>
-                    ))}
-                  </View>
-                )}
-
-                {node.action && (
-                  <View style={styles.actionContainer}>
-                    <Text style={styles.actionLabel}>Action:</Text>
-                    <Text style={styles.actionText}>{node.action}</Text>
-                  </View>
-                )}
+            {!isEnterprise && (
+              <View style={[styles.lockCard, { backgroundColor: theme.colors.cardBackground }]} >
+                <Lock size={48} color={theme.colors.primary} style={{ marginBottom: 16 }} />
+                <Text style={[styles.lockTitle, { color: theme.colors.text }]}>Enterprise Feature</Text>
+                <Text style={[styles.lockDescription, { color: theme.colors.secondaryText }]}>
+                  Custom IVR menus and advanced call routing are available on the Enterprise plan.
+                </Text>
+                <TouchableOpacity 
+                  style={[styles.upgradeButton, { backgroundColor: theme.colors.primary }]}
+                  onPress={() => router.push('/enterprise-admin')}
+                >
+                  <Text style={styles.upgradeButtonText}>Upgrade to Enterprise</Text>
+                </TouchableOpacity>
               </View>
-            </View>
-          ))}
+            )}
 
-          <TouchableOpacity
-            style={styles.addNodeButton}
-            onPress={() => setModalVisible(true)}
-          >
-            <Plus size={24} color="#3B82F6" />
-            <Text style={styles.addNodeText}>Add Node</Text>
-          </TouchableOpacity>
-        </View>
+            {nodes.map((node: any, index: number) => (
+              <View key={node.id}>
+                {index > 0 && <View style={[styles.connector, { backgroundColor: theme.colors.border }]} />}
+                
+                <View style={[styles.nodeCard, { backgroundColor: theme.colors.cardBackground }]} >
+                  <View style={styles.nodeHeader}>
+                    <View style={styles.nodeHeaderLeft}>
+                      {getNodeIcon(node.type)}
+                      <View style={styles.nodeInfo}>
+                        <Text style={[styles.nodeTitle, { color: theme.colors.text }]}>{node.title}</Text>
+                        <Text style={[styles.nodeType, { color: theme.colors.secondaryText }]}>{node.type.toUpperCase()}</Text>
+                      </View>
+                    </View>
+                    {isEnterprise && (
+                      <View style={styles.nodeActions}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            setEditingNode(node);
+                            setNewNodeTitle(node.title);
+                            setNewNodePrompt(node.prompt);
+                            setNewNodeType(node.type);
+                            setModalVisible(true);
+                          }}
+                          style={styles.iconButton}
+                        >
+                          <Edit size={18} color={theme.colors.primary} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => deleteNode(node.id)}
+                          style={styles.iconButton}
+                        >
+                          <Trash2 size={18} color={theme.colors.error} />
+                        </TouchableOpacity>
+                      </View>
+                    )}
+                  </View>
 
-        <View style={styles.saveContainer}>
-          <TouchableOpacity style={styles.saveButton}>
-            <Save size={20} color="#fff" />
-            <Text style={styles.saveButtonText}>Save IVR Flow</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+                  <View style={[styles.promptContainer, { backgroundColor: theme.colors.background }]} >
+                    <Text style={[styles.promptLabel, { color: theme.colors.secondaryText }]}>Prompt:</Text>
+                    <Text style={[styles.promptText, { color: theme.colors.text }]}>{node.prompt}</Text>
+                  </View>
+
+                  {node.options && node.options.length > 0 && (
+                    <View style={styles.optionsContainer}>
+                      <Text style={[styles.optionsLabel, { color: theme.colors.secondaryText }]}>Options:</Text>
+                      {node.options.map((option: any) => (
+                        <View key={option.key} style={styles.optionRow}>
+                          <View style={[styles.optionKey, { backgroundColor: theme.colors.primary }]} >
+                            <Text style={styles.optionKeyText}>{option.key}</Text>
+                          </View>
+                          <Text style={[styles.optionLabelText, { color: theme.colors.text }]}>{option.label}</Text>
+                        </View>
+                      ))}
+                    </View>
+                  )}
+
+                  {node.action && (
+                    <View style={[styles.actionContainer, { backgroundColor: theme.colors.background }]} >
+                      <Text style={[styles.actionLabel, { color: theme.colors.secondaryText }]}>Action:</Text>
+                      <Text style={[styles.actionText, { color: theme.colors.success }]}>{node.action}</Text>
+                    </View>
+                  )}
+                </View>
+              </View>
+            ))}
+
+            {isEnterprise && (
+              <TouchableOpacity
+                style={[styles.addNodeButton, { backgroundColor: theme.colors.cardBackground, borderColor: theme.colors.border }]}
+                onPress={() => setModalVisible(true)}
+              >
+                <Plus size={24} color={theme.colors.primary} />
+                <Text style={[styles.addNodeText, { color: theme.colors.primary }]}>Add Node</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+
+          <View style={styles.saveContainer}>
+            <TouchableOpacity style={[styles.saveButton, { backgroundColor: theme.colors.primary }]} >
+              <Save size={20} color="#fff" />
+              <Text style={styles.saveButtonText}>Save IVR Flow</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      )}
 
       <Modal
         visible={modalVisible}
@@ -226,52 +240,54 @@ export default function IVRBuilderScreen() {
         onRequestClose={() => setModalVisible(false)}
       >
         <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <View style={styles.modalHeader}>
-              <Text style={styles.modalTitle}>
+          <View style={[styles.modalContent, { backgroundColor: theme.colors.cardBackground }]} >
+            <View style={[styles.modalHeader, { borderBottomColor: theme.colors.border }]} >
+              <Text style={[styles.modalTitle, { color: theme.colors.text }]} >
                 {editingNode ? 'Edit Node' : 'Add New Node'}
               </Text>
-              <TouchableOpacity onPress={() => setModalVisible(false)}>
-                <X size={24} color="#fff" />
+              <TouchableOpacity onPress={() => setModalVisible(false)} >
+                <X size={24} color={theme.colors.text} />
               </TouchableOpacity>
             </View>
 
             <ScrollView showsVerticalScrollIndicator={false}>
-              <Text style={styles.inputLabel}>Node Title</Text>
+              <Text style={[styles.inputLabel, { color: theme.colors.secondaryText }]}>Node Title</Text>
               <TextInput
-                style={styles.input}
+                style={[styles.input, { color: theme.colors.text, backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}
                 placeholder="Enter node title"
-                placeholderTextColor="#64748B"
+                placeholderTextColor={theme.colors.secondaryText}
                 value={newNodeTitle}
                 onChangeText={setNewNodeTitle}
               />
 
-              <Text style={styles.inputLabel}>Prompt Message</Text>
+              <Text style={[styles.inputLabel, { color: theme.colors.secondaryText }]}>Prompt Message</Text>
               <TextInput
-                style={[styles.input, styles.textArea]}
+                style={[styles.input, styles.textArea, { color: theme.colors.text, backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}
                 placeholder="Enter prompt message"
-                placeholderTextColor="#64748B"
+                placeholderTextColor={theme.colors.secondaryText}
                 value={newNodePrompt}
                 onChangeText={setNewNodePrompt}
                 multiline
                 numberOfLines={3}
               />
 
-              <Text style={styles.inputLabel}>Node Type</Text>
+              <Text style={[styles.inputLabel, { color: theme.colors.secondaryText }]}>Node Type</Text>
               <View style={styles.typeSelector}>
                 {nodeTypes.map((type) => (
                   <TouchableOpacity
                     key={type}
                     style={[
                       styles.typeButton,
-                      newNodeType === type && styles.typeButtonActive,
+                      { backgroundColor: theme.colors.background, borderColor: theme.colors.border },
+                      newNodeType === type && { backgroundColor: theme.colors.primary, borderColor: theme.colors.primary },
                     ]}
                     onPress={() => setNewNodeType(type)}
                   >
                     <Text
                       style={[
                         styles.typeButtonText,
-                        newNodeType === type && styles.typeButtonTextActive,
+                        { color: theme.colors.secondaryText },
+                        newNodeType === type && { color: '#fff' },
                       ]}
                     >
                       {type}
@@ -280,7 +296,7 @@ export default function IVRBuilderScreen() {
                 ))}
               </View>
 
-              <TouchableOpacity style={styles.modalSaveButton} onPress={addNode}>
+              <TouchableOpacity style={[styles.modalSaveButton, { backgroundColor: theme.colors.primary }]} onPress={addNode} >
                 <Text style={styles.modalSaveButtonText}>
                   {editingNode ? 'Update Node' : 'Add Node'}
                 </Text>
@@ -296,7 +312,6 @@ export default function IVRBuilderScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0F172A',
   },
   headerButton: {
     marginRight: 16,
@@ -307,12 +322,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#fff',
-    marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: '#64748B',
   },
   flowContainer: {
     padding: 16,
@@ -321,7 +333,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#10B981',
     padding: 16,
     borderRadius: 12,
     marginBottom: 20,
@@ -330,12 +341,10 @@ const styles = StyleSheet.create({
   testButtonText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#fff',
   },
   connector: {
     width: 2,
     height: 20,
-    backgroundColor: '#334155',
     marginLeft: 24,
   },
   nodeCard: {
@@ -362,12 +371,9 @@ const styles = StyleSheet.create({
   nodeTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#fff',
-    marginBottom: 4,
   },
   nodeType: {
     fontSize: 12,
-    color: '#64748B',
     fontWeight: '600',
   },
   nodeActions: {
@@ -386,13 +392,9 @@ const styles = StyleSheet.create({
   promptLabel: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#64748B',
-    marginBottom: 6,
   },
   promptText: {
     fontSize: 14,
-    color: '#94A3B8',
-    lineHeight: 20,
   },
   optionsContainer: {
     marginBottom: 12,
@@ -400,8 +402,6 @@ const styles = StyleSheet.create({
   optionsLabel: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#64748B',
-    marginBottom: 8,
   },
   optionRow: {
     flexDirection: 'row',
@@ -413,7 +413,6 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 8,
-    backgroundColor: '#3B82F6',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -422,9 +421,8 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#fff',
   },
-  optionLabel: {
+  optionLabelText: {
     fontSize: 14,
-    color: '#94A3B8',
   },
   actionContainer: {
     backgroundColor: '#0F172A',

@@ -10,7 +10,7 @@ import {
   Shield,
   Facebook,
   Users,
-  Phone,
+  Music,
 } from 'lucide-react-native';
 import { ServiceType } from '@/types/messaging';
 
@@ -40,6 +40,12 @@ export const getServiceIcon = (service: ServiceType) => {
       return Facebook;
     case 'teams':
       return Users;
+    case 'tiktok':
+      return Music;
+    case 'snapchat':
+      return Camera;
+    case 'line':
+      return MessageCircle;
     default:
       return MessageCircle;
   }
@@ -71,6 +77,12 @@ export const getServiceColor = (service: ServiceType): string => {
       return '#0084FF';
     case 'teams':
       return '#6264A7';
+    case 'tiktok':
+      return '#000000';
+    case 'snapchat':
+      return '#FFFC00';
+    case 'line':
+      return '#00C300';
     default:
       return '#007AFF';
   }

@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from 'react';
+ 
+import React, { useMemo, useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,6 +8,7 @@ import {
   TouchableOpacity,
   TextInput,
   Switch,
+  ActivityIndicator,
 } from 'react-native';
 import {
   Brain,
@@ -25,82 +27,56 @@ import {
   Award,
   Target,
   Activity,
+  Lock,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Stack } from 'expo-router';
-
-interface ConversationFlow {
-  id: string;
-  name: string;
-  trigger: string;
-  response: string;
-  nextAction?: string;
-  confidence: number;
-}
-
-interface DatasetVersion {
-  id: string;
-  label: string;
-  records: number;
-  trainedOn: string;
-  status: 'active' | 'training' | 'archived';
-}
+import { Stack, useRouter } from 'expo-router';
+import { trpc } from '@/lib/trpc';
 
 export default function AITrainingScreen() {
   const { theme } = useTheme();
+  const router = useRouter();
   const [selectedTab, setSelectedTab] = useState<'flows' | 'knowledge' | 'rules'>('flows');
+  
+  // Real tRPC data
+  const { data: subscription } = trpc.user.getSubscription.useQuery();
+  const isEnterprise = subscription?.plan === 'enterprise';
+
+  const { data: flowsData = [], isLoading: isLoadingFlows } = trpc.receptionist.getTrainingFlows.useQuery();
+  const flows = (flowsData || []) as any[];
+  const { data: statsData, isLoading: isLoadingStats } = trpc.receptionist.getTrainingStats.useQuery();
+  const { data: config, isLoading: isLoadingConfig } = trpc.receptionist.getConfig.useQuery();
+  
+  const utils = trpc.useUtils();
+  const updateConfigMutation = trpc.receptionist.saveConfig.useMutation({
+    onSuccess: () => utils.receptionist.getConfig.invalidate(),
+  });
+
   const [autoLearn, setAutoLearn] = useState<boolean>(true);
   const [safeMode, setSafeMode] = useState<boolean>(true);
 
-  const conversationFlows: ConversationFlow[] = [
-    {
-      id: '1',
-      name: 'Pricing Inquiry',
-      trigger: 'how much|cost|price|pricing',
-      response: 'Our pricing starts at $99/month for the basic plan...',
-      nextAction: 'Schedule demo',
-      confidence: 95,
-    },
-    {
-      id: '2',
-      name: 'Support Request',
-      trigger: 'help|support|issue|problem',
-      response: 'I understand you need assistance. Let me connect you with our support team...',
-      nextAction: 'Transfer to support',
-      confidence: 92,
-    },
-    {
-      id: '3',
-      name: 'Appointment Booking',
-      trigger: 'schedule|book|appointment|meeting',
-      response: 'I can help you schedule an appointment. What date works best for you?',
-      nextAction: 'Open calendar',
-      confidence: 98,
-    },
-  ];
+  useEffect(() => {
+    if (config?.config) {
+      // Assuming aiConfig might be inside config object based on get-config/route.ts
+      // or we just use the top level flags if they exist
+      setAutoLearn(true); // Default or from config if available
+      setSafeMode(true);
+    }
+  }, [config]);
 
-  const stats = [
-    { title: 'Trained Flows', value: '47', icon: MessageSquare, color: '#007AFF' },
-    { title: 'Avg Confidence', value: '94%', icon: TrendingUp, color: '#34C759' },
-    { title: 'Auto-Learned', value: '23', icon: Zap, color: '#FF9500' },
-    { title: 'Knowledge Items', value: '156', icon: Book, color: '#AF52DE' },
-  ];
+  const stats = useMemo(() => [
+    { title: 'Trained Flows', value: statsData?.trainedFlows?.toString() ?? '0', icon: MessageSquare, color: '#007AFF' },
+    { title: 'Avg Confidence', value: `${statsData?.avgConfidence ?? 0}%`, icon: TrendingUp, color: '#34C759' },
+    { title: 'Auto-Learned', value: statsData?.autoLearned?.toString() ?? '0', icon: Zap, color: '#FF9500' },
+    { title: 'Knowledge Items', value: statsData?.knowledgeItems?.toString() ?? '0', icon: Book, color: '#AF52DE' },
+  ], [statsData]);
 
-  const datasetVersions: DatasetVersion[] = [
-    { id: 'v5', label: 'Prod V5', records: 1489, trainedOn: '3 hrs ago', status: 'active' },
-    { id: 'v4', label: 'Safe Rollback V4', records: 1312, trainedOn: '1 day ago', status: 'archived' },
-    { id: 'lab', label: 'Lab Draft', records: 420, trainedOn: 'Training…', status: 'training' },
-  ];
-
-  const evaluationScores = useMemo(
-    () => [
-      { metric: 'Intent match', value: '97%', delta: '+2%', status: 'good' },
-      { metric: 'Policy adherence', value: '99%', delta: 'Stable', status: 'good' },
-      { metric: 'Fallbacks', value: '3.1%', delta: '-0.4%', status: 'good' },
-      { metric: 'Escalations', value: '1.4%', delta: '+0.5%', status: 'watch' },
-    ],
-    [],
-  );
+  const evaluationScores = useMemo(() => [
+    { metric: 'Intent match', value: `${statsData?.evaluations?.intentMatch ?? 0}%`, delta: '+2%', status: 'good' },
+    { metric: 'Policy adherence', value: `${statsData?.evaluations?.policyAdherence ?? 0}%`, delta: 'Stable', status: 'good' },
+    { metric: 'Fallbacks', value: `${statsData?.evaluations?.fallbacks ?? 0}%`, delta: '-0.4%', status: 'good' },
+    { metric: 'Escalations', value: `${statsData?.evaluations?.escalations ?? 0}%`, delta: '+0.5%', status: 'watch' },
+  ], [statsData]);
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]} testID="receptionist-training-screen">
@@ -122,26 +98,38 @@ export default function AITrainingScreen() {
         </View>
 
         <View style={styles.statsGrid}>
-          {stats.map(stat => {
-            const Icon = stat.icon;
-            return (
-              <View
-                key={stat.title}
-                style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}
-                testID={`receptionist-training-stat-${stat.title}`}
-              >
-                <View style={[styles.statIcon, { backgroundColor: `${stat.color}20` }]}>
-                  <Icon size={18} color={stat.color} />
+          {isLoadingStats ? (
+            <ActivityIndicator size="small" color={theme.colors.primary} />
+          ) : (
+            stats.map(stat => {
+              const Icon = stat.icon;
+              return (
+                <View
+                  key={stat.title}
+                  style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}
+                  testID={`receptionist-training-stat-${stat.title}`}
+                >
+                  <View style={[styles.statIcon, { backgroundColor: `${stat.color}20` }]}>
+                    <Icon size={18} color={stat.color} />
+                  </View>
+                  <Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text>
+                  <Text style={[styles.statTitle, { color: theme.colors.secondaryText }]}>{stat.title}</Text>
                 </View>
-                <Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text>
-                <Text style={[styles.statTitle, { color: theme.colors.secondaryText }]}>{stat.title}</Text>
-              </View>
-            );
-          })}
+              );
+            })
+          )}
         </View>
 
         <View style={[styles.autoLearnCard, { backgroundColor: theme.colors.cardBackground }]}
           testID="receptionist-training-autolearn">
+          {!isEnterprise && (
+            <TouchableOpacity 
+              style={styles.lockOverlay}
+              onPress={() => router.push('/enterprise-admin')}
+            >
+              <Lock size={20} color="white" />
+            </TouchableOpacity>
+          )}
           <View style={styles.autoLearnLeft}>
             <Zap size={24} color={theme.colors.primary} />
             <View style={styles.autoLearnInfo}>
@@ -152,8 +140,12 @@ export default function AITrainingScreen() {
           <Switch
             value={autoLearn}
             onValueChange={value => {
-              console.log('Auto learning toggled', value);
+              if (!isEnterprise) {
+                router.push('/enterprise-admin');
+                return;
+              }
               setAutoLearn(value);
+              updateConfigMutation.mutate({ aiConfig: { autoLearn: value } });
             }}
             trackColor={{ false: '#767577', true: theme.colors.primary }}
             thumbColor={autoLearn ? '#fff' : '#f4f3f4'}

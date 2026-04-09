@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
-import { Stack } from 'expo-router';
-import { Voicemail, Play, Pause, Download, Trash2, Search, Filter, Star, Clock, Phone } from 'lucide-react-native';
+ 
+import React, { useState, useMemo } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
+import { Stack, useRouter } from 'expo-router';
+import { Voicemail, Play, Pause, Download, Trash2, Search, Filter, Star, Clock, Phone, Lock } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { trpc } from '@/lib/trpc';
+import { useTheme } from '@/providers/ThemeProvider';
 
 interface VoicemailMessage {
   id: string;
@@ -17,142 +20,151 @@ interface VoicemailMessage {
 
 export default function VoicemailScreen() {
   const insets = useSafeAreaInsets();
+  const { theme } = useTheme();
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [playingId, setPlayingId] = useState<string | null>(null);
-  const [messages, setMessages] = useState<VoicemailMessage[]>([
-    {
-      id: '1',
-      callerName: 'John Smith',
-      callerNumber: '+1 (555) 123-4567',
-      duration: '01:23',
-      timestamp: '2 hours ago',
-      isNew: true,
-      isFlagged: true,
-      transcription: 'Hi, this is John Smith calling about the proposal we discussed yesterday. I have a few questions about the pricing structure. Could you please call me back at your earliest convenience? Thanks.',
-    },
-    {
-      id: '2',
-      callerName: 'Sarah Johnson',
-      callerNumber: '+1 (555) 987-6543',
-      duration: '00:45',
-      timestamp: '5 hours ago',
-      isNew: true,
-      isFlagged: false,
-      transcription: 'Hello, I am calling to schedule a follow-up appointment for next week. Please give me a call when you get a chance.',
-    },
-    {
-      id: '3',
-      callerName: 'Mike Wilson',
-      callerNumber: '+1 (555) 456-7890',
-      duration: '02:15',
-      timestamp: 'Yesterday',
-      isNew: false,
-      isFlagged: false,
-      transcription: 'Hey, this is Mike. Just wanted to touch base about the project timeline. We might need to push the deadline back a couple of days. Let me know if that works for you.',
-    },
-  ]);
+
+  // Real tRPC data
+  const { data: subscription } = trpc.user.getSubscription.useQuery();
+  const isEnterprise = subscription?.plan === 'enterprise';
+
+  const { data: voicemails = [], isLoading, refetch } = trpc.receptionist.getVoicemails.useQuery();
+  const utils = trpc.useUtils();
+
+  const markReadMutation = trpc.receptionist.markVoicemailRead.useMutation({
+    onSuccess: () => utils.receptionist.getVoicemails.invalidate(),
+  });
+
+  const toggleFlagMutation = trpc.receptionist.toggleVoicemailFlag.useMutation({
+    onSuccess: () => utils.receptionist.getVoicemails.invalidate(),
+  });
+
+  const deleteMutation = trpc.receptionist.deleteVoicemail.useMutation({
+    onSuccess: () => utils.receptionist.getVoicemails.invalidate(),
+  });
+
+  const filteredMessages = useMemo(() => {
+    return (voicemails as VoicemailMessage[]).filter(msg => 
+      msg.callerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      msg.callerNumber.includes(searchQuery) ||
+      msg.transcription.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [voicemails, searchQuery]);
 
   const togglePlay = (id: string) => {
     setPlayingId(playingId === id ? null : id);
   };
 
   const toggleFlag = (id: string) => {
-    setMessages(messages.map(msg =>
-      msg.id === id ? { ...msg, isFlagged: !msg.isFlagged } : msg
-    ));
+    toggleFlagMutation.mutate({ id });
   };
 
   const deleteMessage = (id: string) => {
-    setMessages(messages.filter(msg => msg.id !== id));
+    deleteMutation.mutate({ id });
   };
 
   const markAsRead = (id: string) => {
-    setMessages(messages.map(msg =>
-      msg.id === id ? { ...msg, isNew: false } : msg
-    ));
+    markReadMutation.mutate({ id });
   };
 
-  const newCount = messages.filter(m => m.isNew).length;
+  if (isLoading) {
+    return (
+      <View style={[styles.container, { backgroundColor: theme.colors.background, justifyContent: 'center' }]}>
+        <ActivityIndicator size="large" color={theme.colors.primary} />
+      </View>
+    );
+  }
+
+  const newCount = (voicemails as VoicemailMessage[]).filter(m => m.isNew).length;
+  const flaggedCount = (voicemails as VoicemailMessage[]).filter(m => m.isFlagged).length;
 
   return (
-    <View style={styles.container}>
-      <Stack.Screen 
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Stack.Screen
         options={{
           title: 'Voicemail',
           headerStyle: { backgroundColor: '#0A0F1E' },
           headerTintColor: '#FFFFFF',
         }}
       />
-      
-      <View style={styles.header}>
+
+      <View style={[styles.header, { borderBottomColor: theme.colors.border }]}>
         <View style={styles.statsRow}>
-          <View style={styles.statItem}>
-            <Text style={styles.statValue}>{newCount}</Text>
-            <Text style={styles.statLabel}>New</Text>
+          <View style={[styles.statItem, { backgroundColor: theme.colors.cardBackground }]}>
+            <Text style={[styles.statValue, { color: theme.colors.primary }]}>{newCount}</Text>
+            <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>New</Text>
           </View>
-          <View style={styles.statItem}>
-            <Text style={styles.statValue}>{messages.length}</Text>
-            <Text style={styles.statLabel}>Total</Text>
+          <View style={[styles.statItem, { backgroundColor: theme.colors.cardBackground }]}>
+            <Text style={[styles.statValue, { color: theme.colors.primary }]}>{(voicemails as VoicemailMessage[]).length}</Text>
+            <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Total</Text>
           </View>
-          <View style={styles.statItem}>
-            <Text style={styles.statValue}>{messages.filter(m => m.isFlagged).length}</Text>
-            <Text style={styles.statLabel}>Flagged</Text>
+          <View style={[styles.statItem, { backgroundColor: theme.colors.cardBackground }]}>
+            <Text style={[styles.statValue, { color: theme.colors.primary }]}>{flaggedCount}</Text>
+            <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Flagged</Text>
           </View>
         </View>
 
-        <View style={styles.searchContainer}>
-          <Search size={18} color="#9CA3AF" />
+        <View style={[styles.searchContainer, { backgroundColor: theme.colors.cardBackground }]}>
+          <Search size={18} color={theme.colors.secondaryText} />
           <TextInput
-            style={styles.searchInput}
+            style={[styles.searchInput, { color: theme.colors.text }]}
             placeholder="Search voicemails..."
-            placeholderTextColor="#6B7280"
+            placeholderTextColor={theme.colors.secondaryText}
             value={searchQuery}
             onChangeText={setSearchQuery}
           />
           <TouchableOpacity style={styles.filterButton}>
-            <Filter size={18} color="#60A5FA" />
+            <Filter size={18} color={theme.colors.primary} />
           </TouchableOpacity>
         </View>
       </View>
 
-      <ScrollView 
+      <ScrollView
         style={styles.scrollView}
         contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}
       >
-        {messages.map((message) => (
-          <View 
+        {filteredMessages.map((message) => (
+          <View
             key={message.id}
             style={[
               styles.messageCard,
-              message.isNew && styles.messageCardNew
+              { backgroundColor: theme.colors.cardBackground },
+              message.isNew && styles.messageCardNew,
             ]}
           >
             <View style={styles.messageHeader}>
               <View style={styles.callerInfo}>
-                <View style={styles.avatarContainer}>
-                  <Text style={styles.avatarText}>
-                    {message.callerName.split(' ').map(n => n[0]).join('')}
+                <View style={[styles.avatarContainer, { backgroundColor: theme.colors.border }]}>
+                  <Text style={[styles.avatarText, { color: theme.colors.text }]}
+                  >
+                    {message.callerName
+                      .split(' ')
+                      .filter(Boolean)
+                      .map((n) => n[0])
+                      .join('')}
                   </Text>
                 </View>
                 <View style={styles.callerDetails}>
                   <View style={styles.callerNameRow}>
-                    <Text style={styles.callerName}>{message.callerName}</Text>
+                    <Text style={[styles.callerName, { color: theme.colors.text }]}>{message.callerName}</Text>
                     {message.isNew && (
-                      <View style={styles.newBadge}>
+                      <View style={[styles.newBadge, { backgroundColor: theme.colors.primary }]}>
                         <Text style={styles.newBadgeText}>NEW</Text>
                       </View>
                     )}
                   </View>
-                  <Text style={styles.callerNumber}>{message.callerNumber}</Text>
+                  <Text style={[styles.callerNumber, { color: theme.colors.secondaryText }]}>{message.callerNumber}</Text>
                 </View>
               </View>
+
               <TouchableOpacity
                 style={styles.flagButton}
                 onPress={() => toggleFlag(message.id)}
               >
-                <Star 
-                  size={20} 
-                  color={message.isFlagged ? '#F59E0B' : '#6B7280'} 
+                <Star
+                  size={20}
+                  color={message.isFlagged ? '#F59E0B' : theme.colors.secondaryText}
                   fill={message.isFlagged ? '#F59E0B' : 'none'}
                 />
               </TouchableOpacity>
@@ -160,49 +172,51 @@ export default function VoicemailScreen() {
 
             <View style={styles.messageInfo}>
               <View style={styles.infoItem}>
-                <Clock size={14} color="#9CA3AF" />
-                <Text style={styles.infoText}>{message.timestamp}</Text>
+                <Clock size={14} color={theme.colors.secondaryText} />
+                <Text style={[styles.infoText, { color: theme.colors.secondaryText }]}>{message.timestamp}</Text>
               </View>
               <View style={styles.infoItem}>
-                <Voicemail size={14} color="#9CA3AF" />
-                <Text style={styles.infoText}>{message.duration}</Text>
+                <Voicemail size={14} color={theme.colors.secondaryText} />
+                <Text style={[styles.infoText, { color: theme.colors.secondaryText }]}>{message.duration}</Text>
               </View>
+              {!isEnterprise && <Lock size={12} color={theme.colors.secondaryText} />}
             </View>
 
-            <View style={styles.transcriptionContainer}>
-              <Text style={styles.transcriptionLabel}>Transcription:</Text>
-              <Text style={styles.transcriptionText}>{message.transcription}</Text>
+            <View style={[styles.transcriptionContainer, { backgroundColor: theme.colors.border }]}>
+              <Text style={[styles.transcriptionLabel, { color: theme.colors.secondaryText }]}>Transcription:</Text>
+              <Text style={[styles.transcriptionText, { color: theme.colors.text }]}>{message.transcription}</Text>
             </View>
 
             <View style={styles.messageActions}>
               <TouchableOpacity
-                style={styles.actionButton}
+                style={[styles.actionButton, { backgroundColor: theme.colors.border }]}
                 onPress={() => togglePlay(message.id)}
               >
                 {playingId === message.id ? (
-                  <Pause size={16} color="#60A5FA" />
+                  <Pause size={16} color={theme.colors.primary} />
                 ) : (
-                  <Play size={16} color="#60A5FA" />
+                  <Play size={16} color={theme.colors.primary} />
                 )}
-                <Text style={styles.actionButtonText}>
+                <Text style={[styles.actionButtonText, { color: theme.colors.primary }]}>
                   {playingId === message.id ? 'Pause' : 'Play'}
                 </Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.actionButton}>
+              <TouchableOpacity style={[styles.actionButton, { backgroundColor: theme.colors.border }]}
+              >
                 <Phone size={16} color="#10B981" />
                 <Text style={[styles.actionButtonText, { color: '#10B981' }]}>
                   Call Back
                 </Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.actionButton}>
-                <Download size={16} color="#9CA3AF" />
-                <Text style={styles.actionButtonText}>Save</Text>
+              <TouchableOpacity style={[styles.actionButton, { backgroundColor: theme.colors.border }]}>
+                <Download size={16} color={theme.colors.secondaryText} />
+                <Text style={[styles.actionButtonText, { color: theme.colors.text }]}>Save</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={styles.actionButton}
+                style={[styles.actionButton, { backgroundColor: theme.colors.border }]}
                 onPress={() => deleteMessage(message.id)}
               >
                 <Trash2 size={16} color="#EF4444" />
@@ -214,10 +228,10 @@ export default function VoicemailScreen() {
 
             {message.isNew && (
               <TouchableOpacity
-                style={styles.markReadButton}
+                style={[styles.markReadButton, { backgroundColor: `${theme.colors.primary}20` }]}
                 onPress={() => markAsRead(message.id)}
               >
-                <Text style={styles.markReadText}>Mark as Read</Text>
+                <Text style={[styles.markReadText, { color: theme.colors.primary }]}>Mark as Read</Text>
               </TouchableOpacity>
             )}
           </View>

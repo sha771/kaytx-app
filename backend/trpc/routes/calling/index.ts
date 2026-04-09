@@ -1,6 +1,7 @@
 import { z } from "zod";
-import { protectedProcedure } from '../../../create-context';
+import { permissionProcedure } from '../../create-context';
 import { twilioCallingService } from '../../../services/twilio-calling-service';
+import { Permission } from '../../../lib/rbac';
 
 const initiateCallSchema = z.object({
   phoneNumber: z.string(),
@@ -8,27 +9,30 @@ const initiateCallSchema = z.object({
   agentId: z.string().optional(),
   recordingEnabled: z.boolean().optional().default(true),
   transcriptionEnabled: z.boolean().optional().default(true),
-  metadata: z.record(z.any()).optional(),
+  metadata: z.record(z.string(), z.any()).optional(),
 });
 
-export const initiateCallProcedure = protectedProcedure
+export const initiateCallProcedure = permissionProcedure(Permission.CALL_INITIATE)
   .input(initiateCallSchema)
   .mutation(async ({ input, ctx }: { input: z.infer<typeof initiateCallSchema>; ctx: any }) => {
     try {
-      const userId = ctx.session?.userId;
-      if (!userId) {
+      const userId = ctx.user?.id;
+      const organizationId = ctx.user?.organizationId;
+      if (!userId || !organizationId) {
         throw new Error('User not authenticated');
       }
+
+      const callOptions: any = {
+        recordingEnabled: input.recordingEnabled,
+        transcriptionEnabled: input.transcriptionEnabled,
+        metadata: { userId, organizationId, ...(input.metadata || {}) },
+      };
+      if (input.agentId) callOptions.agentId = input.agentId;
 
       const call = await twilioCallingService.initiateCall(
         input.phoneNumber,
         input.customerName,
-        {
-          agentId: input.agentId,
-          recordingEnabled: input.recordingEnabled,
-          transcriptionEnabled: input.transcriptionEnabled,
-          metadata: { userId, ...input.metadata },
-        }
+        callOptions
       );
 
       if (!call) {
@@ -52,9 +56,9 @@ const endCallSchema = z.object({
   callId: z.string(),
 });
 
-export const endCallProcedure = protectedProcedure
+export const endCallProcedure = permissionProcedure(Permission.CALL_END)
   .input(endCallSchema)
-  .mutation(async ({ input, ctx }: { input: z.infer<typeof endCallSchema>; ctx: any }) => {
+  .mutation(async ({ input }: { input: z.infer<typeof endCallSchema> }) => {
     try {
       const success = await twilioCallingService.endCall(input.callId);
 
@@ -80,9 +84,9 @@ const getCallStatusSchema = z.object({
   callId: z.string(),
 });
 
-export const getCallStatusProcedure = protectedProcedure
+export const getCallStatusProcedure = permissionProcedure(Permission.CALL_READ)
   .input(getCallStatusSchema)
-  .query(({ input }) => {
+  .query(({ input }: { input: z.infer<typeof getCallStatusSchema> }) => {
     try {
       const call = twilioCallingService.getCallSession(input.callId);
 
@@ -110,9 +114,9 @@ const getCallMetricsSchema = z.object({
   timeframe: z.enum(['today', 'week', 'month']).optional(),
 });
 
-export const getCallMetricsProcedure = protectedProcedure
+export const getCallMetricsProcedure = permissionProcedure(Permission.CALL_METRICS_READ)
   .input(getCallMetricsSchema)
-  .query(() => {
+  .query(({ input }) => {
     try {
       const metrics = twilioCallingService.getMetrics();
 
@@ -135,9 +139,9 @@ const getCallHistorySchema = z.object({
   limit: z.number().optional().default(50),
 });
 
-export const getCallHistoryProcedure = protectedProcedure
+export const getCallHistoryProcedure = permissionProcedure(Permission.CALL_HISTORY_READ)
   .input(getCallHistorySchema)
-  .query(({ input }) => {
+  .query(({ input }: { input: z.infer<typeof getCallHistorySchema> }) => {
     try {
       const history = twilioCallingService.getCallHistory(input.limit);
 

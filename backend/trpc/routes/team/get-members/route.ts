@@ -1,7 +1,8 @@
 import { z } from "zod";
-import { publicProcedure } from "../../../create-context";
+import { permissionProcedure } from "../../../create-context";
+import { Permission } from "../../../../lib/rbac";
 
-export default publicProcedure
+export default permissionProcedure(Permission.TEAM_MEMBERS_READ)
   .input(z.object({ 
     department: z.string().optional(),
     status: z.enum(['active', 'inactive', 'all']).optional()

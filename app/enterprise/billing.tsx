@@ -1,3 +1,4 @@
+ 
 import React, { useState } from 'react';
 import {
   View,
@@ -21,6 +22,8 @@ import {
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
+
+import { trpc } from '@/lib/trpc';
 
 interface Subscription {
   id: string;
@@ -140,6 +143,31 @@ export default function BillingScreen() {
   const insets = useSafeAreaInsets();
   const [selectedTab, setSelectedTab] = useState<'subscription' | 'invoices' | 'payment'>('subscription');
 
+  // Fetch real billing data from tRPC
+  const { data: subscriptionData } = trpc.enterprise.getSubscription.useQuery();
+  const { data: invoicesData } = trpc.enterprise.getInvoices.useQuery();
+  const { data: usageData } = trpc.enterprise.getUsageMetrics.useQuery();
+
+  const activeSubscription = useMemo(() => {
+    if (subscriptionData) {
+      return {
+        ...subscriptionData,
+        amount: subscriptionData.amount / 100, // Convert from cents if needed
+      };
+    }
+    return subscription;
+  }, [subscriptionData]);
+
+  const activeInvoices = useMemo(() => {
+    if (invoicesData && invoicesData.length > 0) {
+      return invoicesData.map((inv: any) => ({
+        ...inv,
+        amount: inv.amount / 100,
+      }));
+    }
+    return invoices;
+  }, [invoicesData]);
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'paid':
@@ -180,24 +208,24 @@ export default function BillingScreen() {
         <View style={styles.subscriptionHeader}>
           <View>
             <Text style={[styles.subscriptionPlan, { color: theme.colors.text }]}>
-              {subscription.plan}
+              {activeSubscription.plan}
             </Text>
             <View style={styles.statusContainer}>
-              {React.createElement(getStatusIcon(subscription.status), {
+              {React.createElement(getStatusIcon(activeSubscription.status), {
                 size: 16,
-                color: getStatusColor(subscription.status),
+                color: getStatusColor(activeSubscription.status),
               })}
-              <Text style={[styles.subscriptionStatus, { color: getStatusColor(subscription.status) }]}>
-                {subscription.status.charAt(0).toUpperCase() + subscription.status.slice(1)}
+              <Text style={[styles.subscriptionStatus, { color: getStatusColor(activeSubscription.status) }]}>
+                {activeSubscription.status.charAt(0).toUpperCase() + activeSubscription.status.slice(1)}
               </Text>
             </View>
           </View>
           <View style={styles.subscriptionPricing}>
             <Text style={[styles.subscriptionAmount, { color: theme.colors.text }]}>
-              ${subscription.amount}
+              ${activeSubscription.amount}
             </Text>
             <Text style={[styles.subscriptionCycle, { color: theme.colors.secondaryText }]}>
-              /{subscription.billingCycle}
+              /{activeSubscription.billingCycle}
             </Text>
           </View>
         </View>
@@ -206,14 +234,14 @@ export default function BillingScreen() {
           <View style={styles.infoRow}>
             <Calendar size={18} color={theme.colors.secondaryText} />
             <Text style={[styles.infoText, { color: theme.colors.secondaryText }]}>
-              Next billing: {subscription.nextBillingDate}
+              Next billing: {activeSubscription.nextBillingDate}
             </Text>
           </View>
         </View>
 
         <View style={styles.featuresSection}>
           <Text style={[styles.featuresTitle, { color: theme.colors.text }]}>Included Features</Text>
-          {subscription.features.map((feature, index) => (
+          {activeSubscription.features.map((feature, index) => (
             <View key={index} style={styles.featureRow}>
               <CheckCircle size={16} color={theme.colors.primary} />
               <Text style={[styles.featureText, { color: theme.colors.text }]}>{feature}</Text>
@@ -238,15 +266,21 @@ export default function BillingScreen() {
         <Text style={[styles.usageTitle, { color: theme.colors.text }]}>Current Usage</Text>
         <View style={styles.usageStats}>
           <View style={styles.usageStat}>
-            <Text style={[styles.usageValue, { color: theme.colors.text }]}>2,847</Text>
+            <Text style={[styles.usageValue, { color: theme.colors.text }]}>
+              {usageData?.activeUsers || '2,847'}
+            </Text>
             <Text style={[styles.usageLabel, { color: theme.colors.secondaryText }]}>Active Users</Text>
           </View>
           <View style={styles.usageStat}>
-            <Text style={[styles.usageValue, { color: theme.colors.text }]}>847K</Text>
+            <Text style={[styles.usageValue, { color: theme.colors.text }]}>
+              {usageData?.apiCalls ? `${(usageData.apiCalls / 1000).toFixed(0)}K` : '847K'}
+            </Text>
             <Text style={[styles.usageLabel, { color: theme.colors.secondaryText }]}>API Calls</Text>
           </View>
           <View style={styles.usageStat}>
-            <Text style={[styles.usageValue, { color: theme.colors.text }]}>1.2TB</Text>
+            <Text style={[styles.usageValue, { color: theme.colors.text }]}>
+              {usageData?.storageUsed ? `${usageData.storageUsed}TB` : '1.2TB'}
+            </Text>
             <Text style={[styles.usageLabel, { color: theme.colors.secondaryText }]}>Storage Used</Text>
           </View>
         </View>
@@ -331,7 +365,7 @@ export default function BillingScreen() {
   const renderInvoices = () => (
     <View style={styles.tabContent}>
       <FlatList
-        data={invoices}
+        data={activeInvoices}
         renderItem={renderInvoiceItem}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.invoicesList}

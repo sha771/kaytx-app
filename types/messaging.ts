@@ -29,7 +29,7 @@ export interface Conversation {
   messages: Message[];
 }
 
-export type ServiceType = 
+export type ServiceType =
   | 'whatsapp'
   | 'telegram'
   | 'instagram'
@@ -47,6 +47,9 @@ export type ServiceType =
   | 'viber'
   | 'wechat'
   | 'skype'
+  | 'tiktok'
+  | 'snapchat'
+  | 'line'
   | 'other';
 
 export interface Service {

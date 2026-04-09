@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { protectedProcedure } from '../../../create-context';
+import { permissionProcedure } from '../../../create-context';
 import { aiService } from '../../../../lib/ai-service';
+import { Permission } from '../../../../lib/rbac';
 
 const chatSchema = z.object({
     messages: z.array(z.object({
@@ -9,16 +10,17 @@ const chatSchema = z.object({
     })),
     model: z.string().optional(),
     temperature: z.number().optional(),
-}));
+});
 
-export const chatProcedure = protectedProcedure
+export const chatProcedure = permissionProcedure(Permission.AI_ASSISTANT_USE)
     .input(chatSchema)
     .mutation(async ({ input }) => {
         try {
-            const response = await aiService.chat(input.messages, {
-                model: input.model,
-                temperature: input.temperature,
-            });
+            const options: any = {};
+            if (input.model) options.model = input.model;
+            if (typeof input.temperature === 'number') options.temperature = input.temperature;
+
+            const response = await aiService.chat(input.messages, options);
 
             return {
                 success: true,

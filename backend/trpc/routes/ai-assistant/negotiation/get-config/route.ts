@@ -1,6 +1,7 @@
-import { protectedProcedure } from '../../../../create-context';
+import { permissionProcedure } from '../../../../create-context';
+import { Permission } from '../../../../../lib/rbac';
 
-export const getNegotiationConfigProcedure = protectedProcedure.query(async () => {
+export const getNegotiationConfigProcedure = permissionProcedure(Permission.AI_NEGOTIATION_USE).query(async () => {
   return {
     config: {
       enabled: true,

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+ 
+import React, { useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -25,6 +26,13 @@ export default function AddServiceScreen() {
   const { connectedServices, connectService } = useMessaging();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedService, setSelectedService] = useState<Service | null>(null);
+
+  // Fetch subscription for premium gating
+  const { data: subscription } = trpc.enterprise.getSubscription.useQuery();
+
+  const isEnterprise = useMemo(() => {
+    return subscription?.plan === 'enterprise' || subscription?.plan === 'professional';
+  }, [subscription]);
 
   // Connection Form State
   const [apiKey, setApiKey] = useState('');
@@ -245,6 +253,7 @@ export default function AddServiceScreen() {
                 {filteredServices.map((service) => {
                   const isConnected = connectedServices.includes(service.id);
                   const Icon = service.icon;
+                  const isPremium = (service as Service & { isPremium?: boolean }).isPremium;
 
                   return (
                     <TouchableOpacity
@@ -254,16 +263,26 @@ export default function AddServiceScreen() {
                         { backgroundColor: theme.colors.cardBackground },
                         isConnected && styles.connectedCard,
                       ]}
-                      onPress={() => !isConnected && setSelectedService(service)}
+                      onPress={() => {
+                        if (isConnected) return;
+                        if (isPremium && !isEnterprise) {
+                          router.push('/enterprise/billing');
+                          return;
+                        }
+                        setSelectedService(service);
+                      }}
                       disabled={isConnected}
                     >
                       <View style={[styles.serviceIcon, { backgroundColor: service.color }]}>
                         <Icon size={24} color="white" />
                       </View>
 
-                      <Text style={[styles.serviceName, { color: theme.colors.text }]}>
-                        {service.name}
-                      </Text>
+                      <View style={styles.serviceTitleRow}>
+                        <Text style={[styles.serviceName, { color: theme.colors.text }]}>
+                          {service.name}
+                        </Text>
+                        {isPremium && !isEnterprise && <Lock size={12} color={theme.colors.secondaryText} style={{ marginLeft: 4 }} />}
+                      </View>
 
                       <Text style={[styles.serviceDescription, { color: theme.colors.secondaryText }]}>
                         {service.description}
@@ -357,10 +376,14 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     alignSelf: 'center',
   },
+  serviceTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
   serviceName: {
     fontSize: 15,
     fontWeight: '600',
-    marginBottom: 4,
   },
   serviceDescription: {
     fontSize: 11,

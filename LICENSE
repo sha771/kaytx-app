@@ -1,6 +1,7 @@
 MIT License
 
-Copyright (c) 2026 sha771
+Copyright (c) 2026 Kaytx ("kaytx")
+All rights reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +20,93 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+================================================================================
+                           ADDITIONAL TERMS AND CONDITIONS
+================================================================================
+
+1. TRADEMARK USAGE
+   This license does not grant permission to use the trade names, trademarks,
+   service marks, or product names of Kaytx ("kaytx"),
+   except as required for reasonable and customary use in describing the origin
+   of the Software and reproducing the content of this notice file.
+
+   Prohibited marks include but are not limited to:
+   - Kaytx®
+   - kaytx®
+   - Antigravity®
+   - Kaytx AI®
+   - kaytx Cloud®
+   - Kaytx Intelligence™
+   - Kaytx Agents™
+   - Antigravity Sync™
+   - Antigravity Secure™
+
+2. ATTRIBUTION REQUIREMENTS
+   Any distribution of this Software or derivative works must:
+   a) Retain this copyright notice and permission notice
+   b) Clearly indicate any modifications made to the original Software
+   c) Not misrepresent the origin of the Software
+   d) Not use the authors' names to endorse derivative works without permission
+
+3. MODIFICATIONS AND DERIVATIVE WORKS
+   Modified versions of this Software must:
+   a) Include a prominent notice stating changes were made
+   b) Be dated and versioned distinctly from the original
+   c) Maintain compatibility with this license
+   d) Not remove or alter any patent, trademark, or proprietary notices
+
+4. PATENT NOTICE
+   This Software may be protected by one or more patents:
+   - US-PAT-001: Multi-Agent Coordination System with Circuit Breaker
+   - US-PAT-002: Dynamic Model Routing for AI Inference
+   - US-PAT-003: Tamper-Proof Audit Trail with Cryptographic Verification
+   - US-PAT-004: Real-Time Platform Synchronization Engine
+   - US-PAT-005: AI-Assisted Workflow Automation with Human-in-the-Loop
+
+   Use of patent-protected features requires separate licensing. Contact
+   patents@kaytx.com for patent licensing inquiries.
+
+5. EXPORT CONTROL COMPLIANCE
+   This Software is subject to export control regulations. Users are
+   responsible for compliance with all applicable export control laws,
+   including but not limited to U.S. Export Administration Regulations (EAR).
+
+6. OPEN SOURCE ATTRIBUTIONS
+   This Software incorporates third-party open source components.
+   See NOTICE file for complete attribution details and license terms.
+
+================================================================================
+                           CONTACT INFORMATION
+================================================================================
+
+For licensing inquiries:
+  Email: legal@kaytx.com
+
+For patent licensing:
+  Email: patents@kaytx.com
+
+For trademark inquiries:
+  Email: trademarks@kaytx.com
+
+For infringement reports:
+  Email: dmca@kaytx.com
+  Emergency: +1-555-TAKEDOWN (24/7)
+
+Headquarters:
+  Kaytx
+  IP Department
+  San Francisco, CA 94105
+  United States
+
+================================================================================
+                           VERSION INFORMATION
+================================================================================
+
+License Version: 2.1
+Effective Date: February 21, 2026
+Last Updated: February 21, 2026
+
+This license supersedes all previous versions. For license history, contact
+legal@kaytx.com.
+

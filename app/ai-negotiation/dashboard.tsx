@@ -1,3 +1,4 @@
+ 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import {
   View,
@@ -7,8 +8,8 @@ import {
   TouchableOpacity,
   Dimensions,
   Platform,
-  RefreshControl,
   Switch,
+  Alert,
 } from 'react-native';
 import {
   Phone,
@@ -22,9 +23,7 @@ import {
   BarChart3,
   AlertCircle,
   PhoneCall,
-  Calendar,
   Award,
-  Percent,
   ArrowUpRight,
   ArrowDownRight,
   Zap,
@@ -37,14 +36,18 @@ import {
   PlugZap,
   Shield,
   PhoneOff,
+  ArrowLeft,
+  Plus,
+  Lock,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { Stack, router } from 'expo-router';
-import { mockNegotiationCalls, mockDeals } from '@/utils/mockNegotiationData';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AIAssistantCapabilityMatrix } from '@/components/AIAssistantCapabilityMatrix';
 import { aiNegotiationCapabilities } from '@/constants/aiAssistants';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { AIAssistantPlaybook } from '@/components/AIAssistantPlaybook';
+import { trpc } from '@/lib/trpc';
 import { aiNegotiationPlaybook } from '@/constants/aiAssistantPlaybooks';
 import { useRealtimeCalls } from '@/utils/realtimeCallingService';
 
@@ -52,13 +55,34 @@ const { width } = Dimensions.get('window');
 
 export default function AINegotiationDashboard() {
   const { theme } = useTheme();
+  const insets = useSafeAreaInsets();
   const { activeCalls, endCall, callToDefault, defaultPhoneNumber } = useRealtimeCalls();
+  const totalActiveCalls = activeCalls.length;
+
   const [showCallButton] = useState(true);
   const [selectedPeriod, setSelectedPeriod] = useState<'today' | 'week' | 'month'>('today');
   const [liveCallsCount, setLiveCallsCount] = useState(3);
-  const [refreshing, setRefreshing] = useState(false);
   const [aiAutopilotEnabled, setAiAutopilotEnabled] = useState<boolean>(true);
   const [missionFocus, setMissionFocus] = useState<'revenue' | 'pipeline'>('revenue');
+
+  // tRPC data fetching
+  const { data: statsData } = trpc.aiAgents.getStats.useQuery({ category: 'negotiation' });
+  const { data: subscription } = trpc.enterprise.getSubscription.useQuery();
+
+  const isEnterprise = useMemo(() => {
+    return subscription?.plan === 'enterprise' || subscription?.plan === 'professional';
+  }, [subscription]);
+
+  const { data: activityData } = trpc.aiAgents.getActivity.useQuery({ category: 'negotiation', limit: 10 });
+  // Note: Analytics queries disabled - re-enable when needed
+  // const { data: _negotiationAnalytics } = trpc.negotiation.getAnalytics.useQuery({ period: selectedPeriod });
+  const { data: deals } = trpc.negotiation.getDeals.useQuery();
+  // const { data: _competitorAnalysis } = trpc.negotiation.getCompetitorAnalysis.useQuery();
+  // const { data: _objectionHandling } = trpc.negotiation.getObjectionHandling.useQuery();
+
+  const activeDeal = deals || [];
+  const activities = activityData?.activities || [];
+
   const [negotiationSettings, setNegotiationSettings] = useState({
     autoAnswer: false,
     delaySeconds: 8,
@@ -70,44 +94,54 @@ export default function AINegotiationDashboard() {
     closingTactics: true,
   });
 
-  const handlePeriodChange = useCallback((period: 'today' | 'week' | 'month') => {
-    console.log('[AINegotiationDashboard] period changed', period);
+  const updateNegotiationSettings = trpc.negotiation.updateSettings.useMutation();
+
+  const handleToggleSetting = async (key: keyof typeof negotiationSettings) => {
+    const newValue = !negotiationSettings[key];
+    
+    // Optimistic update
+    setNegotiationSettings(prev => ({ ...prev, [key]: newValue }));
+
+    try {
+      await updateNegotiationSettings.mutateAsync({
+        [key]: newValue
+      });
+    } catch (error) {
+      console.error(`Failed to update negotiation setting ${key}:`, error);
+      // Revert on error
+      setNegotiationSettings(prev => ({ ...prev, [key]: !newValue }));
+      Alert.alert('Error', `Failed to update ${key}. Please try again.`);
+    }
+  };
+
+  const handlePeriodChange = (period: 'today' | 'week' | 'month') => {
     setSelectedPeriod(period);
-  }, []);
+  };
 
   const handleQuickActionPress = useCallback((route: string) => {
-    console.log('[AINegotiationDashboard] quick action pressed', route);
     router.push(route as never);
   }, []);
 
   const toggleAutopilot = useCallback(() => {
-    setAiAutopilotEnabled(prev => {
-      const next = !prev;
-      console.log('[AINegotiationDashboard] autopilot toggled', next);
-      return next;
-    });
+    setAiAutopilotEnabled(prev => !prev);
   }, []);
 
-  const onRefresh = useCallback(() => {
+  /*
+  const _onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => setRefreshing(false), 1500);
   }, []);
+  */
 
   const handleCallPress = useCallback(() => {
-    console.log(`[AINegotiation] Initiating call to ${defaultPhoneNumber}`);
     callToDefault('Prospect', 'voice');
-  }, [callToDefault, defaultPhoneNumber]);
+  }, [callToDefault]);
 
   const handleEndCall = useCallback(() => {
     if (activeCalls.length > 0) {
       endCall(activeCalls[0].id);
     }
   }, [activeCalls, endCall]);
-
-  useEffect(() => {
-    console.log('[AINegotiation] Real-time calling system active');
-    console.log(`[AINegotiation] Default number: ${defaultPhoneNumber}`);
-  }, [defaultPhoneNumber]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -141,7 +175,7 @@ export default function AINegotiationDashboard() {
       {
         id: 'direct',
         name: 'Direct SIP Core',
-        status: liveCallsCount > 2 ? 'Scaling' : 'Stable',
+        status: (statsData?.activeConnections ?? 0) > 2 ? 'Scaling' : 'Stable',
         uptime: '100%',
         regions: '7 sites',
         latency: '74ms',
@@ -149,7 +183,7 @@ export default function AINegotiationDashboard() {
         color: '#007AFF',
       },
     ],
-    [liveCallsCount],
+    [statsData?.activeConnections],
   );
 
   const enterpriseAlerts = useMemo(
@@ -199,28 +233,27 @@ export default function AINegotiationDashboard() {
     () => (
       missionFocus === 'revenue'
         ? [
-            { label: 'Forecast', value: '$5.3M', delta: '+31%', color: '#34C759' },
-            { label: 'Enterprise at risk', value: '3 deals', delta: '-2', color: '#FF9500' },
-            { label: 'Upsell pipeline', value: '$1.1M', delta: '+12%', color: '#AF52DE' },
-          ]
+          { label: 'Forecast', value: statsData?.totalTasks ? `$${((statsData.totalTasks * 1.5) / 10).toFixed(1)}M` : '$5.3M', delta: '+31%', color: '#34C759' },
+          { label: 'Enterprise at risk', value: '3 deals', delta: '-2', color: '#FF9500' },
+          { label: 'Upsell pipeline', value: statsData?.tasksToday ? `$${(statsData.tasksToday * 0.8).toFixed(1)}M` : '$1.1M', delta: '+12%', color: '#AF52DE' },
+        ]
         : [
-            { label: 'Active negotiations', value: `${liveCallsCount + 48}`, delta: '+9%', color: '#007AFF' },
-            { label: 'Avg cycle', value: '21 days', delta: '-4 days', color: '#34C759' },
-            { label: 'Blocked stakeholders', value: '2', delta: '+1', color: '#FF3B30' },
-          ]
+          { label: 'Active negotiations', value: `${(statsData?.activeConnections ?? 0) + (statsData?.tasksToday ?? 48)}`, delta: '+9%', color: '#007AFF' },
+          { label: 'Avg cycle', value: '21 days', delta: '-4 days', color: '#34C759' },
+          { label: 'Blocked stakeholders', value: '2', delta: '+1', color: '#FF3B30' },
+        ]
     ),
-    [missionFocus, liveCallsCount],
+    [missionFocus, statsData],
   );
 
   const getStatsForPeriod = () => {
-    const totalActiveCalls = activeCalls.length + liveCallsCount;
     const baseStats = {
       today: {
-        deals: { value: '12', change: '+8%', trending: 'up' as const },
-        winRate: { value: '75%', change: '+3%', trending: 'up' as const },
-        revenue: { value: '$186K', change: '+15%', trending: 'up' as const },
+        deals: { value: statsData?.tasksToday ? Math.round(statsData.tasksToday * 0.05).toString() : '12', change: '+8%', trending: 'up' as const },
+        winRate: { value: statsData?.avgSuccessRate ? `${statsData.avgSuccessRate}%` : '75%', change: '+3%', trending: 'up' as const },
+        revenue: { value: statsData?.totalTasks ? `$${Math.round(statsData.totalTasks * 0.04)}K` : '$186K', change: '+15%', trending: 'up' as const },
         avgDeal: { value: '$15.5K', change: '+7%', trending: 'up' as const },
-        activeCalls: { value: totalActiveCalls.toString(), change: 'Live', trending: 'up' as const },
+        activeCalls: { value: (totalActiveCalls + (statsData?.activeConnections || 0)).toString(), change: 'Live', trending: 'up' as const },
         avgDuration: { value: '18:45', change: '+2m', trending: 'up' as const },
         convRate: { value: '68%', change: '+4%', trending: 'up' as const },
         followUps: { value: '23', change: '+5', trending: 'up' as const },
@@ -250,69 +283,39 @@ export default function AINegotiationDashboard() {
     const period = baseStats[selectedPeriod];
     return [
       {
-        title: 'Total Deals',
+        title: 'Autonomous Wins',
         ...period.deals,
         icon: Target,
         color: '#007AFF',
         bgColor: '#007AFF15',
       },
       {
-        title: 'Win Rate',
+        title: 'Deal Velocity',
         ...period.winRate,
         icon: Award,
         color: '#34C759',
         bgColor: '#34C75915',
       },
       {
-        title: 'Revenue',
+        title: 'Revenue Flow',
         ...period.revenue,
         icon: DollarSign,
         color: '#FF9500',
         bgColor: '#FF950015',
       },
       {
-        title: 'Avg Deal Value',
+        title: 'Closing Delta',
         ...period.avgDeal,
         icon: TrendingUp,
         color: '#AF52DE',
         bgColor: '#AF52DE15',
-      },
-      {
-        title: selectedPeriod === 'today' ? 'Live Calls' : 'Total Calls',
-        ...period.activeCalls,
-        icon: PhoneCall,
-        color: '#FF2D92',
-        bgColor: '#FF2D9215',
-        isLive: selectedPeriod === 'today',
-      },
-      {
-        title: 'Avg Duration',
-        ...period.avgDuration,
-        icon: Clock,
-        color: '#5856D6',
-        bgColor: '#5856D615',
-      },
-      {
-        title: 'Conversion Rate',
-        ...period.convRate,
-        icon: Percent,
-        color: '#32ADE6',
-        bgColor: '#32ADE615',
-      },
-      {
-        title: 'Follow-ups',
-        ...period.followUps,
-        icon: Calendar,
-        color: '#FFCC02',
-        bgColor: '#FFCC0215',
       },
     ];
   };
 
   const stats = getStatsForPeriod();
 
-  const recentNegotiations = mockNegotiationCalls.slice(0, 3);
-  const activeDeal = mockDeals.filter(d => d.stage === 'negotiation');
+  const recentNegotiations = activities.slice(0, 3);
 
   const quickActions = [
     { id: '1', title: 'Start Call', icon: Phone, route: '/ai-negotiation/calls', color: '#007AFF' },
@@ -332,7 +335,7 @@ export default function AINegotiationDashboard() {
     },
     {
       type: 'warning',
-      message: "3 high-value deals need follow-up today - Don't miss out!",
+      message: "3 high-value deals need follow-up today - Don&apos;t miss out!",
       icon: AlertCircle,
       color: '#FF9500',
     },
@@ -389,11 +392,52 @@ export default function AINegotiationDashboard() {
       <ScrollView
         style={styles.content}
         showsVerticalScrollIndicator={false}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       >
-        <View style={styles.header}>
-          <Text style={[styles.title, { color: theme.colors.text }]}>Dashboard</Text>
-          <Text style={[styles.subtitle, { color: theme.colors.secondaryText }]}>Real-time negotiation performance insights</Text>
+        {/* Premium Negotiation Header */}
+        <View style={[styles.premiumHeader, { paddingTop: insets.top + 20, backgroundColor: theme.colors.cardBackground }]}>
+          <View style={styles.headerTop}>
+            <TouchableOpacity onPress={() => router.back()}>
+              <ArrowLeft size={24} color={theme.colors.text} />
+            </TouchableOpacity>
+            <Text style={[styles.premiumTitle, { color: theme.colors.text }]}>Deal Core</Text>
+            <TouchableOpacity
+              style={[
+                styles.plusBtn,
+                { backgroundColor: isEnterprise ? theme.colors.primary : theme.colors.secondaryText },
+              ]}
+              onPress={() => {
+                if (!isEnterprise) {
+                  router.push('/enterprise/billing');
+                  return;
+                }
+                router.push('/ai-negotiation/phone-numbers');
+              }}
+            >
+              {isEnterprise ? <Plus size={20} color="#fff" /> : <Lock size={20} color="#fff" />}
+            </TouchableOpacity>
+          </View>
+          <View style={styles.headerMetrics}>
+            <View style={styles.hMetric}>
+              <Text style={[styles.hMetricVal, { color: theme.colors.text }]}>
+                {statsData?.activeConnections ?? 48}
+              </Text>
+              <Text style={[styles.hMetricLab, { color: theme.colors.secondaryText }]}>Live Channels</Text>
+            </View>
+            <View style={styles.hMetricDivider} />
+            <View style={styles.hMetric}>
+              <Text style={[styles.hMetricVal, { color: '#34C759' }]}>
+                ${statsData?.totalTasks ? ((statsData.totalTasks * 1500) / 1000000).toFixed(1) + 'M' : '5.3M'}
+              </Text>
+              <Text style={[styles.hMetricLab, { color: theme.colors.secondaryText }]}>Negotiated Value</Text>
+            </View>
+            <View style={styles.hMetricDivider} />
+            <View style={styles.hMetric}>
+              <Text style={[styles.hMetricVal, { color: theme.colors.text }]}>
+                {statsData?.avgSuccessRate ?? 94}%
+              </Text>
+              <Text style={[styles.hMetricLab, { color: theme.colors.secondaryText }]}>Autonomy</Text>
+            </View>
+          </View>
         </View>
 
         <View style={styles.periodSelector}>
@@ -416,29 +460,31 @@ export default function AINegotiationDashboard() {
           ))}
         </View>
 
-        {selectedPeriod === 'today' && (
-          <View style={[styles.liveCallsBanner, { backgroundColor: theme.colors.cardBackground }]}
-            testID="negotiation-live-banner"
-          >
-            <View style={styles.liveIndicator}>
-              <View style={[styles.livePulse, { backgroundColor: '#FF3B30' }]} />
-              <Text style={[styles.liveText, { color: theme.colors.text }]}>Live</Text>
-            </View>
-            <Text style={[styles.liveCallsText, { color: theme.colors.text }]}>{activeCalls.length + liveCallsCount} Active Negotiations</Text>
-            <TouchableOpacity
-              style={[styles.liveButton, { backgroundColor: theme.colors.primary }]}
-              onPress={() => router.push('/ai-negotiation/calls')}
+        {
+          selectedPeriod === 'today' && (
+            <View style={[styles.liveCallsBanner, { backgroundColor: theme.colors.cardBackground }]}
+              testID="negotiation-live-banner"
             >
-              <Text style={styles.liveButtonText}>View All</Text>
-            </TouchableOpacity>
-          </View>
-        )}
+              <View style={styles.liveIndicator}>
+                <View style={[styles.livePulse, { backgroundColor: '#FF3B30' }]} />
+                <Text style={[styles.liveText, { color: theme.colors.text }]}>Live</Text>
+              </View>
+              <Text style={[styles.liveCallsText, { color: theme.colors.text }]}>{activeCalls.length + liveCallsCount} Active Negotiations</Text>
+              <TouchableOpacity
+                style={[styles.liveButton, { backgroundColor: theme.colors.primary }]}
+                onPress={() => router.push('/ai-negotiation/calls')}
+              >
+                <Text style={styles.liveButtonText}>View All</Text>
+              </TouchableOpacity>
+            </View>
+          )
+        }
 
         <View style={styles.statsGrid}>
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             const TrendIcon = stat.trending === 'up' ? ArrowUpRight : ArrowDownRight;
-            const isLive = 'isLive' in stat ? stat.isLive : false;
+            const isLive = Boolean((stat as { isLive?: boolean }).isLive);
             return (
               <TouchableOpacity
                 key={index}
@@ -517,7 +563,7 @@ export default function AINegotiationDashboard() {
               return (
                 <View key={provider.id} style={[styles.telephonyCard, { backgroundColor: theme.colors.cardBackground }]}
                 >
-                  <View style={[styles.telephonyIcon, { backgroundColor: `${provider.color}15` }]}> 
+                  <View style={[styles.telephonyIcon, { backgroundColor: `${provider.color}15` }]}>
                     <Icon size={20} color={provider.color} />
                   </View>
                   <Text style={[styles.telephonyName, { color: theme.colors.text }]}>{provider.name}</Text>
@@ -535,14 +581,24 @@ export default function AINegotiationDashboard() {
           <View style={[styles.intelligenceCard, { backgroundColor: theme.colors.cardBackground }]}>
             <View style={styles.intelligenceOption}>
               <View style={styles.intelligenceLeft}>
-                <Text style={[styles.intelligenceTitle, { color: theme.colors.text }]}>Auto-Answer Calls</Text>
+                <View style={styles.premiumLabelRow}>
+                  <Text style={[styles.intelligenceTitle, { color: theme.colors.text }]}>Auto-Answer Calls</Text>
+                  {!isEnterprise && <Lock size={12} color={theme.colors.secondaryText} />}
+                </View>
                 <Text style={[styles.intelligenceSubtitle, { color: theme.colors.secondaryText }]}>AI negotiates immediately</Text>
               </View>
               <Switch
-                value={negotiationSettings.autoAnswer}
-                onValueChange={(v) => setNegotiationSettings(prev => ({ ...prev, autoAnswer: v }))}
+                value={isEnterprise ? negotiationSettings.autoAnswer : false}
+                onValueChange={(v) => {
+                  if (!isEnterprise) {
+                    router.push('/enterprise/billing');
+                    return;
+                  }
+                  setNegotiationSettings(prev => ({ ...prev, autoAnswer: v }));
+                }}
                 trackColor={{ false: '#767577', true: theme.colors.primary }}
-                thumbColor={negotiationSettings.autoAnswer ? '#fff' : '#f4f3f4'}
+                thumbColor={(isEnterprise && negotiationSettings.autoAnswer) ? '#fff' : '#f4f3f4'}
+                disabled={!isEnterprise}
               />
             </View>
 
@@ -562,7 +618,7 @@ export default function AINegotiationDashboard() {
               </View>
               <Switch
                 value={negotiationSettings.dealScoring}
-                onValueChange={(v) => setNegotiationSettings(prev => ({ ...prev, dealScoring: v }))}
+                onValueChange={() => handleToggleSetting('dealScoring')}
                 trackColor={{ false: '#767577', true: theme.colors.primary }}
                 thumbColor={negotiationSettings.dealScoring ? '#fff' : '#f4f3f4'}
               />
@@ -575,7 +631,7 @@ export default function AINegotiationDashboard() {
               </View>
               <Switch
                 value={negotiationSettings.conversationIntel}
-                onValueChange={(v) => setNegotiationSettings(prev => ({ ...prev, conversationIntel: v }))}
+                onValueChange={() => handleToggleSetting('conversationIntel')}
                 trackColor={{ false: '#767577', true: theme.colors.primary }}
                 thumbColor={negotiationSettings.conversationIntel ? '#fff' : '#f4f3f4'}
               />
@@ -588,7 +644,7 @@ export default function AINegotiationDashboard() {
               </View>
               <Switch
                 value={negotiationSettings.competitorAnalysis}
-                onValueChange={(v) => setNegotiationSettings(prev => ({ ...prev, competitorAnalysis: v }))}
+                onValueChange={() => handleToggleSetting('competitorAnalysis')}
                 trackColor={{ false: '#767577', true: theme.colors.primary }}
                 thumbColor={negotiationSettings.competitorAnalysis ? '#fff' : '#f4f3f4'}
               />
@@ -601,7 +657,7 @@ export default function AINegotiationDashboard() {
               </View>
               <Switch
                 value={negotiationSettings.priceOptimization}
-                onValueChange={(v) => setNegotiationSettings(prev => ({ ...prev, priceOptimization: v }))}
+                onValueChange={() => handleToggleSetting('priceOptimization')}
                 trackColor={{ false: '#767577', true: theme.colors.primary }}
                 thumbColor={negotiationSettings.priceOptimization ? '#fff' : '#f4f3f4'}
               />
@@ -614,7 +670,7 @@ export default function AINegotiationDashboard() {
               </View>
               <Switch
                 value={negotiationSettings.objectionHandling}
-                onValueChange={(v) => setNegotiationSettings(prev => ({ ...prev, objectionHandling: v }))}
+                onValueChange={() => handleToggleSetting('objectionHandling')}
                 trackColor={{ false: '#767577', true: theme.colors.primary }}
                 thumbColor={negotiationSettings.objectionHandling ? '#fff' : '#f4f3f4'}
               />
@@ -627,7 +683,7 @@ export default function AINegotiationDashboard() {
               </View>
               <Switch
                 value={negotiationSettings.closingTactics}
-                onValueChange={(v) => setNegotiationSettings(prev => ({ ...prev, closingTactics: v }))}
+                onValueChange={() => handleToggleSetting('closingTactics')}
                 trackColor={{ false: '#767577', true: theme.colors.primary }}
                 thumbColor={negotiationSettings.closingTactics ? '#fff' : '#f4f3f4'}
               />
@@ -666,7 +722,7 @@ export default function AINegotiationDashboard() {
                   onPress={() => handleQuickActionPress(action.route)}
                   testID={`negotiation-quick-action-${action.id}`}
                 >
-                  <View style={[styles.actionIcon, { backgroundColor: `${action.color}20` }]}> 
+                  <View style={[styles.actionIcon, { backgroundColor: `${action.color}20` }]}>
                     <Icon size={24} color={action.color} />
                   </View>
                   <Text style={[styles.actionTitle, { color: theme.colors.text }]}>{action.title}</Text>
@@ -767,7 +823,7 @@ export default function AINegotiationDashboard() {
               <Text style={[styles.seeAllText, { color: theme.colors.primary }]}>See All</Text>
             </TouchableOpacity>
           </View>
-          {recentNegotiations.map(item => (
+          {recentNegotiations.map((item: any) => (
             <TouchableOpacity
               key={item.id}
               style={[styles.negotiationCard, { backgroundColor: theme.colors.cardBackground }]}
@@ -815,7 +871,7 @@ export default function AINegotiationDashboard() {
               <Text style={[styles.seeAllText, { color: theme.colors.primary }]}>See All</Text>
             </TouchableOpacity>
           </View>
-          {activeDeal.map(deal => (
+          {activeDeal.map((deal: any) => (
             <TouchableOpacity
               key={deal.id}
               style={[styles.dealCard, { backgroundColor: theme.colors.cardBackground }]}
@@ -853,35 +909,39 @@ export default function AINegotiationDashboard() {
         </View>
 
         {/* Real-time Call Status */}
-        {activeCalls.length > 0 && (
-          <View style={[styles.callStatusBar, { backgroundColor: '#34C759' }]}>
-            <View style={styles.callStatusContent}>
-              <PhoneCall size={16} color="white" />
-              <Text style={styles.callStatusText}>
-                Call Active: {activeCalls[0].customerName} ({Math.floor(activeCalls[0].duration / 60)}:{String(activeCalls[0].duration % 60).padStart(2, '0')})
-              </Text>
+        {
+          activeCalls.length > 0 && (
+            <View style={[styles.callStatusBar, { backgroundColor: '#34C759' }]}>
+              <View style={styles.callStatusContent}>
+                <PhoneCall size={16} color="white" />
+                <Text style={styles.callStatusText}>
+                  Call Active: {activeCalls[0].customerName} ({Math.floor(activeCalls[0].duration / 60)}:{String(activeCalls[0].duration % 60).padStart(2, '0')})
+                </Text>
+              </View>
+              <TouchableOpacity
+                style={styles.endCallButton}
+                onPress={handleEndCall}
+              >
+                <PhoneOff size={16} color="white" />
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              style={styles.endCallButton}
-              onPress={handleEndCall}
-            >
-              <PhoneOff size={16} color="white" />
-            </TouchableOpacity>
-          </View>
-        )}
+          )
+        }
       </ScrollView>
 
       {/* Floating Call Button */}
-      {showCallButton && activeCalls.length === 0 && (
-        <TouchableOpacity
-          style={[styles.floatingCallButton, { backgroundColor: theme.colors.primary }]}
-          onPress={handleCallPress}
-          activeOpacity={0.9}
-        >
-          <PhoneCall size={28} color="white" strokeWidth={2.5} />
-          <Text style={styles.floatingCallText}>Call {defaultPhoneNumber}</Text>
-        </TouchableOpacity>
-      )}
+      {
+        showCallButton && activeCalls.length === 0 && (
+          <TouchableOpacity
+            style={[styles.floatingCallButton, { backgroundColor: theme.colors.primary }]}
+            onPress={handleCallPress}
+            activeOpacity={0.9}
+          >
+            <PhoneCall size={28} color="white" strokeWidth={2.5} />
+            <Text style={styles.floatingCallText}>Call {defaultPhoneNumber}</Text>
+          </TouchableOpacity>
+        )
+      }
     </View>
   );
 }
@@ -1492,6 +1552,11 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 3,
   },
+  premiumLabelRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
   intelligenceOption: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -1511,4 +1576,61 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 16,
   },
+  premiumHeader: {
+    paddingHorizontal: 20,
+    paddingBottom: 24,
+    borderBottomLeftRadius: 32,
+    borderBottomRightRadius: 32,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 4,
+  },
+  headerTop: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  premiumTitle: {
+    fontSize: 20,
+    fontWeight: '900',
+    flex: 1,
+    textAlign: 'center',
+    letterSpacing: 1,
+  },
+  plusBtn: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerMetrics: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  hMetric: {
+    alignItems: 'center',
+  },
+  hMetricVal: {
+    fontSize: 18,
+    fontWeight: '900',
+  },
+  hMetricLab: {
+    fontSize: 9,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    opacity: 0.6,
+  },
+  hMetricDivider: {
+    width: 1,
+    height: 20,
+    backgroundColor: 'rgba(150,150,150,0.1)',
+  },
 });
+

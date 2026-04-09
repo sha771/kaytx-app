@@ -1,3 +1,4 @@
+ 
 import React, { useState } from 'react';
 import {
   View,
@@ -8,7 +9,6 @@ import {
   FlatList,
   TextInput,
   Modal,
-  Switch,
 } from 'react-native';
 import {
   Calendar,
@@ -17,9 +17,7 @@ import {
   Send,
   Users,
   MessageSquare,
-  ChevronRight,
   Search,
-  Filter,
   Edit,
   Trash2,
   Bell,
@@ -27,16 +25,15 @@ import {
   MapPin,
   Video,
   Phone,
-  Mail,
   CheckCircle,
-  AlertCircle,
   X,
-  Settings,
   BarChart3,
   TrendingUp,
   Activity,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
+import { trpc } from '@/lib/trpc';
+import { RelatedFeatures, QuickLinks } from '@/components/RelatedFeatures';
 
 interface ScheduledMessage {
   id: string;
@@ -89,8 +86,13 @@ export default function SchedulingScreen() {
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'scheduled' | 'sent' | 'failed'>('all');
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showAnalytics, setShowAnalytics] = useState(false);
-  
-  const [scheduledMessages, setScheduledMessages] = useState<ScheduledMessage[]>([
+
+  // tRPC data fetching
+  const { data: scheduledMessagesData } = trpc.marketing.getScheduledMessages.useQuery();
+  const { data: meetingsData } = trpc.business.getMeetings.useQuery();
+  const { data: remindersData } = trpc.aiAssistant.getReminders.useQuery();
+
+  const scheduledMessages: ScheduledMessage[] = scheduledMessagesData ?? [
     {
       id: '1',
       title: 'Weekly Newsletter',
@@ -140,9 +142,9 @@ export default function SchedulingScreen() {
       recurring: false,
       priority: 'high',
     },
-  ]);
+  ];
 
-  const [meetings] = useState<Meeting[]>([
+  const meetings: Meeting[] = meetingsData ?? [
     {
       id: '1',
       title: 'Team Standup',
@@ -164,9 +166,9 @@ export default function SchedulingScreen() {
       type: 'in-person',
       status: 'upcoming',
     },
-  ]);
+  ];
 
-  const [reminders] = useState<Reminder[]>([
+  const reminders: Reminder[] = remindersData ?? [
     {
       id: '1',
       title: 'Review quarterly reports',
@@ -185,7 +187,7 @@ export default function SchedulingScreen() {
       completed: false,
       category: 'Admin',
     },
-  ]);
+  ];
 
   const quickSchedules: QuickSchedule[] = [
     {
@@ -710,6 +712,19 @@ export default function SchedulingScreen() {
           </View>
         )}
       </ScrollView>
+
+      {/* Related Features */}
+      <RelatedFeatures
+        featureId="scheduling-calendar"
+        title="Related Scheduling Features"
+        maxItems={6}
+        layout="horizontal"
+      />
+      <QuickLinks
+        groupId="automation"
+        title="Automation Tools"
+        maxItems={4}
+      />
 
       {/* Create Modal */}
       <Modal

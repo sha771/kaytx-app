@@ -1,3 +1,4 @@
+ 
 import React from 'react';
 import {
   View,
@@ -7,24 +8,91 @@ import {
   TouchableOpacity,
   Modal,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { X, Camera, Mail, Phone, MapPin, Calendar, Shield } from 'lucide-react-native';
+import { X, Camera, Mail, Phone, MapPin, Calendar } from 'lucide-react-native';
 import { router } from 'expo-router';
 import { useTheme } from '@/providers/ThemeProvider';
+import { useApi } from './hooks/useApi';
+import apiClient from '@/lib/api-client';
 
 export default function ProfileScreen() {
   const { theme } = useTheme();
 
+  // Fetch user profile from backend
+  const { data: userData, loading, error, refetch } = useApi(() => apiClient.getCurrentUser());
+
+  // Handle loading state
+  if (loading) {
+    return (
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={true}
+        onRequestClose={() => router.back()}
+      >
+        <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+          <View style={[styles.header, { borderBottomColor: theme.colors.border }]}>
+            <Text style={[styles.title, { color: theme.colors.text }]}>Profile</Text>
+            <TouchableOpacity style={styles.closeButton} onPress={() => router.back()}>
+              <X size={24} color={theme.colors.text} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color={theme.colors.primary} />
+            <Text style={[styles.loadingText, { color: theme.colors.text }]}>Loading profile...</Text>
+          </View>
+        </SafeAreaView>
+      </Modal>
+    );
+  }
+
+  // Handle error state
+  if (error || !userData) {
+    return (
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={true}
+        onRequestClose={() => router.back()}
+      >
+        <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+          <View style={[styles.header, { borderBottomColor: theme.colors.border }]}>
+            <Text style={[styles.title, { color: theme.colors.text }]}>Profile</Text>
+            <TouchableOpacity style={styles.closeButton} onPress={() => router.back()}>
+              <X size={24} color={theme.colors.text} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.errorContainer}>
+            <Text style={[styles.errorText, { color: theme.colors.text }]}>
+              {error || 'Failed to load profile'}
+            </Text>
+            <TouchableOpacity 
+              style={[styles.retryButton, { backgroundColor: theme.colors.primary }]} 
+              onPress={refetch}
+            >
+              <Text style={styles.retryButtonText}>Retry</Text>
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      </Modal>
+    );
+  }
+
+  // Transform backend data to display format
   const profileData = {
-    name: 'John Doe',
-    username: '@johndoe',
-    avatar: 'https://i.pravatar.cc/300?img=3',
-    email: 'john.doe@example.com',
-    phone: '+1 (555) 123-4567',
-    location: 'San Francisco, CA',
-    joinDate: 'January 2024',
-    bio: 'Digital nomad, coffee enthusiast, and tech lover. Building the future one message at a time.',
+    name: `${userData.firstName || ''} ${userData.lastName || ''}`.trim() || 'Unknown User',
+    username: userData.email ? `@${userData.email.split('@')[0]}` : '@user',
+    avatar: userData.avatar || 'https://i.pravatar.cc/300?img=3',
+    email: userData.email || 'No email',
+    phone: userData.phone || 'No phone',
+    location: userData.location || 'No location',
+    joinDate: userData.createdAt ? new Date(userData.createdAt).toLocaleDateString('en-US', { 
+      month: 'long', 
+      year: 'numeric' 
+    }) : 'Unknown',
+    bio: userData.bio || 'No bio available',
   };
 
   return (
@@ -192,6 +260,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   editButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 16,
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 32,
+  },
+  errorText: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  retryButton: {
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 8,
+  },
+  retryButtonText: {
     color: 'white',
     fontSize: 16,
     fontWeight: '600',

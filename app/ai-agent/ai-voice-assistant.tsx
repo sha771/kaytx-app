@@ -1,8 +1,10 @@
+ 
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
 import { Bot, Mic, Phone, MessageSquare, Settings, Plus, Search, Filter, Clock, Users } from 'lucide-react-native';
+import { trpc } from '@/lib/trpc';
 
 interface AIVoiceAssistant {
   id: string;
@@ -14,38 +16,50 @@ interface AIVoiceAssistant {
   lastActive: string;
 }
 
-const mockAssistants: AIVoiceAssistant[] = [
-  {
-    id: '1',
-    name: 'Customer Support Assistant',
-    status: 'active',
-    language: 'English',
-    callsHandled: 156,
-    accuracy: 94.5,
-    lastActive: '2 min ago'
-  },
-  {
-    id: '2',
-    name: 'Sales Assistant',
-    status: 'active',
-    language: 'Spanish',
-    callsHandled: 89,
-    accuracy: 91.2,
-    lastActive: '5 min ago'
-  },
-  {
-    id: '3',
-    name: 'Technical Support Bot',
-    status: 'training',
-    language: 'English',
-    callsHandled: 234,
-    accuracy: 96.8,
-    lastActive: '1 hour ago'
-  }
-];
-
 export default function AIVoiceAssistantScreen() {
   const [searchQuery, setSearchQuery] = useState<string>('');
+
+  const { data: agentsData } = trpc.aiAgents.getAllAgents.useQuery();
+  const { data: activityData } = trpc.aiAgents.getAgentActivity.useQuery({ limit: 300 });
+
+  const activities = activityData?.activities ?? [];
+
+  const getRelativeTime = (isoTimestamp?: string) => {
+    if (!isoTimestamp) return '—';
+    const ts = new Date(isoTimestamp).getTime();
+    const delta = Date.now() - ts;
+    if (delta < 60 * 1000) return 'Just now';
+    if (delta < 60 * 60 * 1000) return `${Math.floor(delta / (60 * 1000))} min ago`;
+    if (delta < 24 * 60 * 60 * 1000) return `${Math.floor(delta / (60 * 60 * 1000))} hour ago`;
+    return `${Math.floor(delta / (24 * 60 * 60 * 1000))} day ago`;
+  };
+
+  const assistants: AIVoiceAssistant[] = (agentsData?.agents ?? []).map((a: any) => {
+    const last = activities.find((ev: any) => ev.agentId === a.id);
+    const status: AIVoiceAssistant['status'] = a.status === 'active' ? 'active' : a.status === 'draft' ? 'training' : 'inactive';
+
+    return {
+      id: a.id,
+      name: a.name,
+      status,
+      language: a.config?.language || 'English',
+      callsHandled: typeof a.totalCalls === 'number' ? a.totalCalls : 0,
+      accuracy: typeof a.successRate === 'number' ? a.successRate : 0,
+      lastActive: getRelativeTime(last?.timestamp),
+    };
+  });
+
+  const filteredAssistants = assistants.filter(a =>
+    a.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    a.language.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const totalAssistants = assistants.length;
+  const totalCalls = assistants.reduce((sum, a) => sum + (a.callsHandled || 0), 0);
+  const avgAccuracy = totalAssistants
+    ? assistants.reduce((sum, a) => sum + (a.accuracy || 0), 0) / totalAssistants
+    : 0;
+  const activeNow = assistants.filter(a => a.status === 'active').length;
 
   const getStatusColor = (status: AIVoiceAssistant['status']) => {
     switch (status) {
@@ -103,25 +117,25 @@ export default function AIVoiceAssistantScreen() {
         <View style={styles.statsContainer}>
           <View style={styles.statCard}>
             <Bot size={24} color="#3B82F6" />
-            <Text style={styles.statNumber}>3</Text>
+            <Text style={styles.statNumber}>{totalAssistants.toLocaleString()}</Text>
             <Text style={styles.statLabel}>AI Assistants</Text>
           </View>
           
           <View style={styles.statCard}>
             <Phone size={24} color="#10B981" />
-            <Text style={styles.statNumber}>479</Text>
+            <Text style={styles.statNumber}>{totalCalls.toLocaleString()}</Text>
             <Text style={styles.statLabel}>Calls Handled</Text>
           </View>
           
           <View style={styles.statCard}>
-            <Mic size={24} color="#F59E0B" />
-            <Text style={styles.statNumber}>94.2%</Text>
+            <Mic size={22} color="#F59E0B" />
+            <Text style={styles.statNumber}>{avgAccuracy.toFixed(1)}%</Text>
             <Text style={styles.statLabel}>Avg Accuracy</Text>
           </View>
           
           <View style={styles.statCard}>
             <Clock size={24} color="#8B5CF6" />
-            <Text style={styles.statNumber}>2</Text>
+            <Text style={styles.statNumber}>{activeNow.toLocaleString()}</Text>
             <Text style={styles.statLabel}>Active Now</Text>
           </View>
         </View>
@@ -129,7 +143,7 @@ export default function AIVoiceAssistantScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Voice Assistants</Text>
           
-          {mockAssistants.map((assistant) => (
+          {filteredAssistants.map((assistant) => (
             <TouchableOpacity key={assistant.id} style={styles.assistantCard}>
               <View style={styles.assistantHeader}>
                 <View style={styles.assistantInfo}>
@@ -366,9 +380,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   statusDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    width: 6,
+    height: 6,
+    borderRadius: 3,
     marginRight: 6,
   },
   statusText: {

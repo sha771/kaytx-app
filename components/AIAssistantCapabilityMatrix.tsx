@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { ArrowUpRight, ArrowDownRight, Minus, Sparkles } from 'lucide-react-native';
 import { router } from 'expo-router';
 import { useTheme } from '@/providers/ThemeProvider';
+import { trpc } from '@/lib/trpc';
+import { useAIAssistant } from '@/providers/AIAssistantProvider';
 import type { AIAssistantCapability, CapabilityStatus } from '@/constants/aiAssistants';
 
 interface AIAssistantCapabilityMatrixProps {
@@ -41,8 +43,15 @@ const readinessText: Record<CapabilityStatus, string> = {
 
 export function AIAssistantCapabilityMatrix({ title, capabilities, testID }: AIAssistantCapabilityMatrixProps) {
   const { theme } = useTheme();
+   
+  const { activeAgents: _activeAgents } = useAIAssistant();
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
   const [viewMode, setViewMode] = useState<ViewMode>('readiness');
+
+  // Fetch real-time metrics for capabilities from tRPC
+  const { data: statsData } = trpc.aiAgents.getStats.useQuery({ 
+    category: 'all' 
+  });
 
   const filteredCapabilities = useMemo(() => {
     const next = statusFilter === 'all' ? capabilities : capabilities.filter(cap => cap.status === statusFilter);
@@ -170,14 +179,19 @@ export function AIAssistantCapabilityMatrix({ title, capabilities, testID }: AIA
               <View
                 style={[
                   styles.progressFill,
-                  { width: `${capability.readinessScore}%`, backgroundColor: theme.colors.primary },
+                  { 
+                    width: `${statsData?.avgSuccessRate ?? capability.readinessScore}%`, 
+                    backgroundColor: theme.colors.primary 
+                  },
                 ]}
                 testID={`readiness-progress-${capability.id}`}
               />
             </View>
             <View style={styles.progressStats}>
               <Text style={[styles.progressLabel, { color: theme.colors.secondaryText }]}>Readiness</Text>
-              <Text style={[styles.progressValue, { color: theme.colors.text }]}>{capability.readinessScore}%</Text>
+              <Text style={[styles.progressValue, { color: theme.colors.text }]}>
+                {statsData?.avgSuccessRate ?? capability.readinessScore}%
+              </Text>
             </View>
 
             {viewMode === 'readiness' ? (

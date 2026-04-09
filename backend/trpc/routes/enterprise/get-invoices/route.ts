@@ -1,5 +1,6 @@
-import { protectedProcedure } from '../../../create-context';
+import { permissionProcedure } from '../../../create-context';
 import { z } from 'zod';
+import { Permission } from '../../../../lib/rbac';
 
 const mockInvoices = [
   {
@@ -35,7 +36,7 @@ const mockInvoices = [
   },
 ];
 
-export const getInvoicesProcedure = protectedProcedure
+export const getInvoicesProcedure = permissionProcedure(Permission.BILLING_READ)
   .input(
     z.object({
       limit: z.number().optional().default(10),
@@ -44,10 +45,13 @@ export const getInvoicesProcedure = protectedProcedure
     })
   )
   .query(async ({ ctx, input }) => {
-    console.log('[Enterprise] Getting invoices for user:', ctx.user.id);
+    // 1. Enforce Multi-tenant Isolation
+    const orgId = ctx.user.organizationId || '1';
+
+    // In real scenario: const items = await db.select().from(invoices).where(eq(invoices.organizationId, orgId))...
 
     let invoices = mockInvoices.filter(
-      (inv) => inv.organizationId === ctx.user.organizationId || inv.organizationId === '1'
+      (inv) => inv.organizationId === orgId
     );
 
     if (input.status) {

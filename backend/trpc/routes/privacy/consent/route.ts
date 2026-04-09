@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { z } from 'zod';
-import { protectedProcedure } from '../../../create-context';
+import { permissionProcedure } from '../../../create-context';
 import { recordConsent, ConsentTypes } from '../../../../lib/privacy';
 import { logAudit } from '../../../../lib/audit';
+import { Permission } from '../../../../lib/rbac';
 
 const updateSchema = z.object({
   consentType: z.string(),
@@ -12,7 +14,7 @@ const getSchema = z.object({
   consentType: z.string().optional(),
 });
 
-export const updateConsent = protectedProcedure
+export const updateConsent = permissionProcedure(Permission.PRIVACY_CONSENT_UPDATE)
   .input(updateSchema)
   .mutation(({ ctx, input }) => {
     console.log('[Privacy] Recording consent for user:', ctx.user.id);
@@ -41,42 +43,22 @@ export const updateConsent = protectedProcedure
     };
   });
 
-export const getConsents = protectedProcedure
+export const getConsents = permissionProcedure(Permission.PRIVACY_CONSENT_READ)
   .input(getSchema)
-  .query(({ ctx, input }) => {
+  .query(async ({ ctx, input }) => {
     console.log('[Privacy] Fetching consents for user:', ctx.user.id);
     
-    const mockConsents = [
-      {
-        id: '1',
-        userId: ctx.user.id,
-        consentType: ConsentTypes.TERMS_OF_SERVICE,
-        version: '2.0.0',
-        granted: true,
-        timestamp: Date.now() - 86400000,
-      },
-      {
-        id: '2',
-        userId: ctx.user.id,
-        consentType: ConsentTypes.PRIVACY_POLICY,
-        version: '2.0.0',
-        granted: true,
-        timestamp: Date.now() - 86400000,
-      },
-      {
-        id: '3',
-        userId: ctx.user.id,
-        consentType: ConsentTypes.MARKETING_EMAILS,
-        version: '2.0.0',
-        granted: false,
-        timestamp: Date.now() - 3600000,
-      },
-    ];
+    const baseQuery = pgDb
+      .select()
+      .from(consentRecords)
+      .where(eq(consentRecords.userId, ctx.user.id));
+    
+    const rows = input.consentType
+      ? await baseQuery.where(eq(consentRecords.consentType, input.consentType))
+      : await baseQuery;
     
     return {
       success: true,
-      consents: input.consentType
-        ? mockConsents.filter(c => c.consentType === input.consentType)
-        : mockConsents,
+      consents: rows,
     };
   });

@@ -1,31 +1,20 @@
-import { protectedProcedure } from '../../../create-context';
+import { z } from "zod";
+import { permissionProcedure } from '../../../create-context';
+import { Permission } from '../../../../lib/rbac';
+import { db as pgDb } from '../../../../db/connection';
+import { subscriptions, organizations } from '../../../../db/drizzle-schema';
+import { eq } from 'drizzle-orm';
 
-const mockSubscriptions = [
-  {
-    id: '1',
-    organizationId: '1',
-    plan: 'enterprise',
-    status: 'active',
-    billingCycle: 'monthly',
-    amount: 2499,
-    currency: 'USD',
-    nextBillingDate: new Date('2025-01-15').toISOString(),
-    features: {
-      maxUsers: -1,
-      maxStorage: -1,
-      advancedAnalytics: true,
-      prioritySupport: true,
-      customIntegrations: true,
-    },
-  },
-];
-
-export const getSubscriptionProcedure = protectedProcedure.query(async ({ ctx }) => {
+export const getSubscriptionProcedure = permissionProcedure(Permission.BILLING_READ)
+  .input(z.object({}).optional())
+  .query(async ({ ctx, input }) => {
   console.log('[Enterprise] Getting subscription for user:', ctx.user.id);
   
-  const subscription = mockSubscriptions.find(
-    (s) => s.organizationId === ctx.user.organizationId || s.organizationId === '1'
-  );
+  const [subscription] = await pgDb
+    .select()
+    .from(subscriptions)
+    .where(eq(subscriptions.organizationId, ctx.user.organizationId))
+    .limit(1);
 
   return subscription || null;
 });

@@ -1,8 +1,10 @@
+ 
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
 import { Brain, BarChart3, TrendingUp, Database, Zap, Settings } from 'lucide-react-native';
+import { trpc } from '@/lib/trpc';
 
 interface DataInsight {
   id: string;
@@ -22,56 +24,54 @@ interface AnalyticsModel {
   lastUpdated: string;
 }
 
-const mockInsights: DataInsight[] = [
-  {
-    id: '1',
-    title: 'Customer Satisfaction',
-    value: '87%',
-    change: '+5%',
-    trend: 'up',
-    category: 'Customer'
-  },
-  {
-    id: '2',
-    title: 'Revenue Prediction',
-    value: '$125K',
-    change: '+12%',
-    trend: 'up',
-    category: 'Finance'
-  },
-  {
-    id: '3',
-    title: 'Churn Risk',
-    value: '3.2%',
-    change: '-1.1%',
-    trend: 'down',
-    category: 'Risk'
-  }
-];
-
-const mockModels: AnalyticsModel[] = [
-  {
-    id: '1',
-    name: 'Customer Behavior Predictor',
-    type: 'Classification',
-    accuracy: 94.5,
-    status: 'active',
-    lastUpdated: '2024-01-18'
-  },
-  {
-    id: '2',
-    name: 'Revenue Forecasting',
-    type: 'Regression',
-    accuracy: 89.2,
-    status: 'training',
-    lastUpdated: '2024-01-17'
-  }
-];
-
 export default function AIDataAnalyticsScreen() {
-  const [insights, setInsights] = useState<DataInsight[]>(mockInsights);
-  const [models, setModels] = useState<AnalyticsModel[]>(mockModels);
   const [activeTab, setActiveTab] = useState<'insights' | 'models'>('insights');
+
+  const { data: analytics } = trpc.aiAgents.getAgentAnalytics.useQuery({ timeRange: '7d' });
+  const { data: activityData } = trpc.aiAgents.getAgentActivity.useQuery({ limit: 50 });
+  const activities = activityData?.activities ?? [];
+
+  const insights: DataInsight[] = analytics
+    ? [
+        {
+          id: 'success-rate',
+          title: 'Success Rate',
+          value: `${(analytics.successRate ?? 0).toFixed(1)}%`,
+          change: `${(analytics.tasksCompleted ?? 0).toLocaleString()} completed`,
+          trend: (analytics.successRate ?? 0) >= 90 ? 'up' : (analytics.successRate ?? 0) >= 70 ? 'stable' : 'down',
+          category: 'Quality',
+        },
+        {
+          id: 'health',
+          title: 'Health Score',
+          value: `${(analytics.uptime ?? 0).toFixed(1)}%`,
+          change: `${(analytics.activeConversations ?? 0).toLocaleString()} active`,
+          trend: (analytics.uptime ?? 0) >= 99 ? 'up' : (analytics.uptime ?? 0) >= 97 ? 'stable' : 'down',
+          category: 'Operations',
+        },
+        {
+          id: 'connections',
+          title: 'Active Connections',
+          value: `${(analytics.totalTasks ?? 0).toLocaleString()}`,
+          change: `Revenue ${analytics.revenueImpact ?? '—'}`,
+          trend: (analytics.totalTasks ?? 0) > 0 ? 'stable' : 'down',
+          category: 'Data',
+        },
+      ]
+    : [];
+
+  const models: AnalyticsModel[] = activities.slice(0, 10).map((a: any, idx: number) => {
+    const name = a.agentName || a.action || `Model ${idx + 1}`;
+    const status: AnalyticsModel['status'] = a.status === 'success' ? 'active' : a.status === 'processing' ? 'training' : 'inactive';
+    return {
+      id: `activity-model-${idx}`,
+      name,
+      type: a.details?.source || 'Activity-derived',
+      accuracy: typeof analytics?.successRate === 'number' ? analytics.successRate : 0,
+      status,
+      lastUpdated: new Date(a.timestamp || Date.now()).toISOString().slice(0, 10),
+    };
+  });
 
   const getTrendIcon = (trend: string) => {
     switch (trend) {
@@ -189,16 +189,24 @@ export default function AIDataAnalyticsScreen() {
         {activeTab === 'insights' ? (
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>AI-Generated Insights</Text>
-            {insights.map(insight => (
-              <InsightCard key={insight.id} insight={insight} />
-            ))}
+            {insights.length > 0 ? (
+              insights.map(insight => (
+                <InsightCard key={insight.id} insight={insight} />
+              ))
+            ) : (
+              <Text style={styles.subtitle}>No analytics yet</Text>
+            )}
           </View>
         ) : (
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Analytics Models</Text>
-            {models.map(model => (
-              <ModelCard key={model.id} model={model} />
-            ))}
+            {models.length > 0 ? (
+              models.map(model => (
+                <ModelCard key={model.id} model={model} />
+              ))
+            ) : (
+              <Text style={styles.subtitle}>No analytics yet</Text>
+            )}
           </View>
         )}
 
@@ -309,12 +317,12 @@ const styles = StyleSheet.create({
   },
   categoryBadge: {
     backgroundColor: '#f0f0f0',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12
+    paddingHorizontal: 6,
+    paddingVertical: 3,
+    borderRadius: 10
   },
   categoryText: {
-    fontSize: 12,
+    fontSize: 10,
     color: '#666',
     fontWeight: '500'
   },
@@ -365,9 +373,9 @@ const styles = StyleSheet.create({
     marginTop: 2
   },
   statusBadge: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12
+    paddingHorizontal: 6,
+    paddingVertical: 3,
+    borderRadius: 10
   },
   statusText: {
     color: '#fff',

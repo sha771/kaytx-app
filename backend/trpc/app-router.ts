@@ -1,7 +1,6 @@
 import { createTRPCRouter } from "./create-context";
-import { chatProcedure } from "./routes/ai-assistant/chat/route";
 import hiRoute from "./routes/example/hi/route";
-import getMetricsRoute from "./routes/analytics/get-metrics/route";
+import { getDashboardAnalyticsProcedure as getMetricsRoute } from "./routes/enterprise/analytics/route";
 import getCampaignsRoute from "./routes/marketing/get-campaigns/route";
 import getCrmDataRoute from "./routes/business/get-crm-data/route";
 import getTeamMembersRoute from "./routes/team/get-members/route";
@@ -15,19 +14,16 @@ import { verify2FAProcedure } from "./routes/platforms/verify-2fa/route";
 import { disconnectPlatformProcedure } from "./routes/platforms/disconnect/route";
 import { syncPlatformProcedure } from "./routes/platforms/sync/route";
 import { getAllPlatformsProcedure } from "./routes/platforms/get-all/route";
-import { listBridgesProcedure as oldListBridges, bridgeStatusProcedure as oldBridgeStatus, connectBridgeProcedure as oldConnectBridge, disconnectBridgeProcedure as oldDisconnectBridge, sendTestBridgeProcedure } from "./routes/platforms/bridges/router";
-import { listBridgesProcedure } from "./routes/bridges/list/route";
-import { connectBridgeProcedure } from "./routes/bridges/connect/route";
-import { disconnectBridgeProcedure } from "./routes/bridges/disconnect/route";
-import { bridgeStatusProcedure } from "./routes/bridges/status/route";
-import { bridgeHealthProcedure } from "./routes/bridges/health/route";
-import { createBridgeProcedure } from "./routes/bridges/create/route";
 import { listAllPlatformsProcedure } from "./routes/platforms/list-all/route";
 import { searchPlatformsProcedure } from "./routes/platforms/search/route";
 import { getNegotiationConfigProcedure } from "./routes/ai-assistant/negotiation/get-config/route";
 import { saveNegotiationConfigProcedure } from "./routes/ai-assistant/negotiation/save-config/route";
 import { getReceptionistConfigProcedure } from "./routes/ai-assistant/receptionist/get-config/route";
 import { saveReceptionistConfigProcedure } from "./routes/ai-assistant/receptionist/save-config/route";
+import { getTranscriptsProcedure } from "./routes/ai-assistant/receptionist/get-transcripts";
+import { getTrainingFlowsProcedure, getTrainingStatsProcedure } from "./routes/ai-assistant/receptionist/training-data";
+import { getVoiceSettingsProcedure, updateVoiceSettingsProcedure } from "./routes/ai-assistant/receptionist/voice-settings";
+import { getVoicemailsProcedure, markVoicemailReadProcedure, toggleVoicemailFlagProcedure, deleteVoicemailProcedure } from "./routes/ai-assistant/receptionist/voicemail";
 import { getSubscriptionProcedure } from "./routes/enterprise/get-subscription/route";
 import { getInvoicesProcedure } from "./routes/enterprise/get-invoices/route";
 import { getUsageMetricsProcedure } from "./routes/enterprise/get-usage-metrics/route";
@@ -35,7 +31,7 @@ import { getComplianceReportsProcedure, generateComplianceReportProcedure } from
 import { getAuditLogsProcedure, exportAuditLogsProcedure } from "./routes/enterprise/audit-logs/route";
 import { getOrganizationProcedure, updateOrganizationProcedure } from "./routes/enterprise/organization/route";
 import { getApiKeysProcedure, createApiKeyProcedure, revokeApiKeyProcedure } from "./routes/enterprise/api-keys/route";
-import { getWebhooksProcedure, createWebhookProcedure, updateWebhookProcedure, deleteWebhookProcedure, testWebhookProcedure } from "./routes/enterprise/webhooks/route";
+import { getWebhooksProcedure, createWebhookProcedure, updateWebhookProcedure, deleteWebhookProcedure, testWebhookProcedure } from "./routes/enterprise/webhooks";
 import getPrivacySettingsRoute from "./routes/privacy/get-settings/route";
 import updatePrivacySettingsRoute from "./routes/privacy/update-settings/route";
 import exportDataRoute from "./routes/privacy/export-data/route";
@@ -50,6 +46,15 @@ import refreshTokenRoute from "./routes/auth/refresh-token/route";
 import logoutRoute from "./routes/auth/logout/route";
 import meRoute from "./routes/auth/me/route";
 import changePasswordRoute from "./routes/auth/change-password/route";
+import { getAgentsProcedure } from "./routes/ai-agents/get-agents/route";
+import { toggleAgentProcedure, toggleAllAgentsProcedure } from "./routes/ai-agents/toggle-agent/route";
+import { getStatsProcedure, getActivityProcedure, getAgentAnalyticsProcedure, getAgentActivityProcedure } from "./routes/ai-agents/get-stats/route";
+import { getConnectionsProcedure, connectAgentToPlatformProcedure, disconnectAgentFromPlatformProcedure, syncConnectionProcedure, getAvailablePlatformsProcedure } from "./routes/ai-agents/connections/route";
+import { getCoreCapabilitiesProcedure, toggleCoreCapabilityProcedure, getAnalysisPerformanceAgentsProcedure } from "./routes/ai-agents/core-intelligence/route";
+import { aiAgentsRouter } from "./routes/ai-agents/router";
+import { messagingRouter } from "./routes/messaging/router";
+import { enhancedCounselingRouter } from "./routes/counseling/router";
+import { aiOSRouter } from "./routes/ai-os/router";
 
 export const appRouter = createTRPCRouter({
   auth: createTRPCRouter({
@@ -93,24 +98,8 @@ export const appRouter = createTRPCRouter({
     verify2FA: verify2FAProcedure,
     disconnect: disconnectPlatformProcedure,
     sync: syncPlatformProcedure,
-    bridges: createTRPCRouter({
-      list: oldListBridges,
-      status: oldBridgeStatus,
-      connect: oldConnectBridge,
-      disconnect: oldDisconnectBridge,
-      sendTest: sendTestBridgeProcedure,
-    }),
-  }),
-  bridges: createTRPCRouter({
-    list: listBridgesProcedure,
-    create: createBridgeProcedure,
-    connect: connectBridgeProcedure,
-    disconnect: disconnectBridgeProcedure,
-    status: bridgeStatusProcedure,
-    health: bridgeHealthProcedure,
   }),
   aiAssistant: createTRPCRouter({
-    chat: chatProcedure,
     negotiation: createTRPCRouter({
       getConfig: getNegotiationConfigProcedure,
       saveConfig: saveNegotiationConfigProcedure,
@@ -118,6 +107,15 @@ export const appRouter = createTRPCRouter({
     receptionist: createTRPCRouter({
       getConfig: getReceptionistConfigProcedure,
       saveConfig: saveReceptionistConfigProcedure,
+      getTranscripts: getTranscriptsProcedure,
+      getTrainingFlows: getTrainingFlowsProcedure,
+      getTrainingStats: getTrainingStatsProcedure,
+      getVoiceSettings: getVoiceSettingsProcedure,
+      updateVoiceSettings: updateVoiceSettingsProcedure,
+      getVoicemails: getVoicemailsProcedure,
+      markVoicemailRead: markVoicemailReadProcedure,
+      toggleVoicemailFlag: toggleVoicemailFlagProcedure,
+      deleteVoicemail: deleteVoicemailProcedure,
     }),
   }),
   enterprise: createTRPCRouter({
@@ -157,6 +155,10 @@ export const appRouter = createTRPCRouter({
     accessLogs: accessLogsRoute,
     breachCheck: breachCheckRoute,
   }),
+  aiAgents: aiAgentsRouter,
+  messaging: messagingRouter,
+  counseling: enhancedCounselingRouter,
+  aiOS: aiOSRouter,
 });
 
 export type AppRouter = typeof appRouter;

@@ -1,50 +1,54 @@
-import React, { useState, useRef, useEffect } from 'react';
+ 
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
+  TextInput,
   TouchableOpacity,
   FlatList,
-  Image,
-  TextInput,
   ScrollView,
-  Modal,
+  Image,
   KeyboardAvoidingView,
   Platform,
+  StyleSheet,
+  Modal,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Stack } from 'expo-router';
 import {
-  Hash,
-  Plus,
-  Search,
-  Settings,
   Phone,
-  Video,
-  Mic,
-  Send,
-  Users,
-  BellOff,
-  Pin,
   MoreVertical,
-  Smile,
-  Paperclip,
-  X,
+  Send,
   Check,
   CheckCheck,
-  Edit3,
-  Trash2,
   Reply,
+  X,
+  LogOut,
   Forward,
-  Copy,
-  Star,
-  Archive,
+  Trash2,
+  Pin,
+  BellOff,
+  Plus,
+  Settings,
+  Search,
+  Hash,
+  Video,
+  Paperclip,
+  Smile,
   Volume2,
   VolumeX,
+  Archive,
   UserPlus,
-  LogOut,
+  Copy,
+  Star,
+  Edit3,
+  Mic,
+  Users,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Stack } from 'expo-router';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { trpc } from '@/lib/trpc';
+import CreateChannelModal from '@/components/messaging/CreateChannelModal';
+import { RelatedFeatures, QuickLinks } from '@/components/RelatedFeatures';
 
 interface Channel {
   id: string;
@@ -74,6 +78,7 @@ interface Message {
   replyTo?: string;
   reactions?: { emoji: string; count: number; users: string[] }[];
   status?: 'sending' | 'sent' | 'delivered' | 'read';
+  isOwn?: boolean;
 }
 
 const mockChannels: Channel[] = [
@@ -214,6 +219,55 @@ export default function ChatterScreen() {
   const [replyingTo, setReplyingTo] = useState<Message | null>(null);
   const flatListRef = useRef<FlatList>(null);
   const [channels, setChannels] = useState<Channel[]>(mockChannels);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+
+  // tRPC data fetching
+  const { data: channelsData, isLoading: channelsLoading, refetch: refetchChannels } = trpc.messaging.getChannels.useQuery();
+  const { data: messagesData, isLoading: messagesLoading, refetch: refetchMessages } = trpc.messaging.getMessages.useQuery({ channelId: selectedChannel.id });
+  const sendMessageMutation = trpc.messaging.sendMessage.useMutation();
+  const createChannelMutation = trpc.messaging.createChannel.useMutation();
+
+  useEffect(() => {
+    if (!channelsData?.channels) return;
+
+    const mapped: Channel[] = channelsData.channels.map((c: any) => ({
+      id: c.id,
+      name: c.name,
+      description: c.description,
+      type: c.type === 'channel' ? 'text' : c.type === 'dm' ? 'private' : 'private',
+      members: (c.metadata?.memberCount ?? 0) as number,
+      isPrivate: c.visibility !== 'org',
+    }));
+
+    if (mapped.length === 0) return;
+    setChannels(mapped);
+
+    setSelectedChannel(prev => {
+      const stillExists = mapped.some(ch => ch.id === prev.id);
+      return stillExists ? prev : mapped[0]!;
+    });
+  }, [channelsData]);
+
+  useEffect(() => {
+    if (!messagesData?.messages) return;
+
+    const mapped: Message[] = messagesData.messages.map((m: any) => {
+      const isOwn = m.isOwn === true;
+      return {
+        id: m.id,
+        user: isOwn ? 'You' : 'Member',
+        userId: isOwn ? 'currentUser' : (m.userId ?? 'member'),
+        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face',
+        message: m.isE2EE ? '[Encrypted message]' : (m.message ?? ''),
+        timestamp: m.timestamp ? new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '',
+        type: 'text',
+        status: m.status,
+        isOwn: m.isOwn,
+      };
+    });
+
+    setMessages(mapped);
+  }, [messagesData]);
 
   useEffect(() => {
     if (flatListRef.current && messages.length > 0) {
@@ -236,11 +290,12 @@ export default function ChatterScreen() {
     }
   };
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (!messageText.trim()) return;
 
-    const newMessage: Message = {
-      id: Date.now().toString(),
+    const optimisticId = `optimistic-${Date.now()}`;
+    const optimistic: Message = {
+      id: optimisticId,
       user: 'You',
       userId: 'currentUser',
       avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face',
@@ -249,17 +304,21 @@ export default function ChatterScreen() {
       type: 'text',
       status: 'sending',
       replyTo: replyingTo?.id,
+      isOwn: true,
     };
 
-    setMessages(prev => [...prev, newMessage]);
+    setMessages(prev => [...prev, optimistic]);
+    const content = messageText;
     setMessageText('');
     setReplyingTo(null);
 
-    setTimeout(() => {
-      setMessages(prev =>
-        prev.map(msg => (msg.id === newMessage.id ? { ...msg, status: 'delivered' } : msg))
-      );
-    }, 1000);
+    try {
+      await sendMessageMutation.mutateAsync({ channelId: selectedChannel.id, content });
+      await refetchMessages();
+      setMessages(prev => prev.filter(m => m.id !== optimisticId));
+    } catch {
+      setMessages(prev => prev.map(m => (m.id === optimisticId ? { ...m, status: 'sent' } : m)));
+    }
   };
 
   const togglePin = (channelId: string) => {
@@ -368,92 +427,63 @@ export default function ChatterScreen() {
   };
 
   const renderMessage = ({ item }: { item: Message }) => {
-    const isOwnMessage = item.userId === 'currentUser';
-    const replyMessage = item.replyTo ? messages.find(m => m.id === item.replyTo) : null;
-
+    const isOwn = item.isOwn;
     return (
-      <TouchableOpacity
-        style={[styles.messageItem, isOwnMessage && styles.ownMessageItem]}
-        onLongPress={() => setSelectedMessage(item)}
-        activeOpacity={0.7}
-      >
-        {!isOwnMessage && (
+      <View style={[styles.messageItem, isOwn ? styles.ownMessage : styles.otherMessage]}>
+        {!isOwn && (
           <Image source={{ uri: item.avatar }} style={styles.messageAvatar} />
         )}
-        <View style={[styles.messageContent, isOwnMessage && styles.ownMessageContent]}>
-          {!isOwnMessage && (
-            <Text style={[styles.messageUser, { color: theme.colors.primary }]}>
-              {item.user}
+        <View style={styles.messageContent}>
+          <View style={styles.messageHeader}>
+            {!isOwn && (
+              <Text style={[styles.messageUser, { color: theme.colors.text }]}>
+                {item.user}
+              </Text>
+            )}
+            <Text style={[styles.messageTimestamp, { color: theme.colors.secondaryText }]}>
+              {item.timestamp}
             </Text>
-          )}
-          {replyMessage && (
-            <View style={[styles.replyContainer, { backgroundColor: theme.colors.background }]}>
-              <View style={[styles.replyBar, { backgroundColor: theme.colors.primary }]} />
-              <View style={styles.replyContent}>
-                <Text style={[styles.replyUser, { color: theme.colors.primary }]}>
-                  {replyMessage.user}
-                </Text>
-                <Text style={[styles.replyText, { color: theme.colors.secondaryText }]} numberOfLines={1}>
-                  {replyMessage.message}
-                </Text>
-              </View>
-            </View>
-          )}
-          <View
+          </View>
+          <TouchableOpacity
+            onLongPress={() => setSelectedMessage(item)}
             style={[
               styles.messageBubble,
               {
-                backgroundColor: isOwnMessage ? theme.colors.primary : theme.colors.cardBackground,
+                backgroundColor: isOwn 
+                  ? theme.colors.primary 
+                  : theme.colors.cardBackground,
               },
             ]}
           >
             <Text
               style={[
                 styles.messageText,
-                { color: isOwnMessage ? 'white' : theme.colors.text },
+                { color: isOwn ? 'white' : theme.colors.text },
               ]}
             >
               {item.message}
             </Text>
-            <View style={styles.messageFooter}>
-              <Text
-                style={[
-                  styles.messageTimestamp,
-                  { color: isOwnMessage ? 'rgba(255,255,255,0.7)' : theme.colors.secondaryText },
-                ]}
-              >
-                {item.timestamp}
-              </Text>
-              {isOwnMessage && (
-                <View style={styles.messageStatus}>
-                  {item.status === 'read' && <CheckCheck size={14} color="rgba(255,255,255,0.7)" />}
-                  {item.status === 'delivered' && <CheckCheck size={14} color="rgba(255,255,255,0.7)" />}
-                  {item.status === 'sent' && <Check size={14} color="rgba(255,255,255,0.7)" />}
-                </View>
-              )}
-            </View>
-          </View>
+          </TouchableOpacity>
           {item.reactions && item.reactions.length > 0 && (
             <View style={styles.reactionsContainer}>
               {item.reactions.map((reaction, index) => (
-                <TouchableOpacity
+                <View
                   key={index}
-                  style={[styles.reactionBubble, { backgroundColor: theme.colors.background }]}
-                  onPress={() => addReaction(item.id, reaction.emoji)}
+                  style={[
+                    styles.reactionBadge,
+                    { backgroundColor: theme.colors.cardBackground, borderColor: theme.colors.border },
+                  ]}
                 >
                   <Text style={styles.reactionEmoji}>{reaction.emoji}</Text>
-                  <Text style={[styles.reactionCount, { color: theme.colors.text }]}>
+                  <Text style={[styles.reactionCount, { color: theme.colors.secondaryText }]}>
                     {reaction.count}
                   </Text>
-                </TouchableOpacity>
+                </View>
               ))}
             </View>
           )}
         </View>
-        {isOwnMessage && (
-          <Image source={{ uri: item.avatar }} style={styles.messageAvatar} />
-        )}
-      </TouchableOpacity>
+      </View>
     );
   };
 
@@ -469,7 +499,7 @@ export default function ChatterScreen() {
             </Text>
           </View>
           <View style={styles.headerActions}>
-            <TouchableOpacity style={styles.headerButton}>
+            <TouchableOpacity style={styles.headerButton} onPress={() => setShowCreateModal(true)}>
               <Plus size={20} color={theme.colors.text} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.headerButton}>
@@ -513,6 +543,19 @@ export default function ChatterScreen() {
               <View key={item.id}>{renderChannelItem({ item })}</View>
             ))}
           </View>
+
+          {/* Related Features */}
+          <RelatedFeatures
+            featureId="team-communication"
+            title="Related Collaboration Features"
+            maxItems={6}
+            layout="horizontal"
+          />
+          <QuickLinks
+            groupId="communications"
+            title="Communication Tools"
+            maxItems={4}
+          />
         </ScrollView>
       </View>
     );
@@ -779,6 +822,32 @@ export default function ChatterScreen() {
           </View>
         </TouchableOpacity>
       </Modal>
+
+      <CreateChannelModal
+        visible={showCreateModal}
+        onClose={() => setShowCreateModal(false)}
+        onSuccess={(channelId) => {
+          setShowCreateModal(false);
+          refetchChannels();
+          // Navigate to the new channel
+          setTimeout(() => {
+            if (channelsData?.channels) {
+              const newChannel = channelsData.channels.find((c: any) => c.id === channelId);
+              if (newChannel) {
+                setSelectedChannel({
+                  id: newChannel.id,
+                  name: newChannel.name,
+                  description: newChannel.description,
+                  type: newChannel.type === 'channel' ? 'text' : newChannel.type === 'dm' ? 'private' : 'private',
+                  members: (newChannel.metadata?.memberCount ?? 0) as number,
+                  isPrivate: newChannel.visibility !== 'org',
+                });
+                setShowChannels(false);
+              }
+            }
+          }, 500);
+        }}
+      />
     </KeyboardAvoidingView>
   );
 }
@@ -906,6 +975,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 16,
   },
+  ownMessage: {
+    flexDirection: 'row-reverse',
+  },
+  otherMessage: {
+    flexDirection: 'row',
+  },
   messageAvatar: {
     width: 36,
     height: 36,
@@ -931,6 +1006,42 @@ const styles = StyleSheet.create({
   messageText: {
     fontSize: 15,
     lineHeight: 20,
+  },
+  messageBubble: {
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderRadius: 18,
+    maxWidth: '80%',
+  },
+  messageFooter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    marginTop: 4,
+  },
+  messageStatus: {
+    marginLeft: 4,
+  },
+  reactionsContainer: {
+    flexDirection: 'row',
+    gap: 6,
+    marginTop: 6,
+  },
+  reactionBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+    borderWidth: 1,
+  },
+  reactionEmoji: {
+    fontSize: 14,
+  },
+  reactionCount: {
+    fontSize: 11,
+    fontWeight: '600',
   },
   messageInput: {
     flexDirection: 'row',
@@ -1022,43 +1133,6 @@ const styles = StyleSheet.create({
   },
   replyText: {
     fontSize: 12,
-  },
-  messageBubble: {
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-    borderRadius: 18,
-    maxWidth: '80%',
-  },
-  messageFooter: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    marginTop: 4,
-  },
-  messageStatus: {
-    marginLeft: 4,
-  },
-  reactionsContainer: {
-    flexDirection: 'row',
-    gap: 6,
-    marginTop: 6,
-  },
-  reactionBubble: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: 'rgba(0,0,0,0.1)',
-  },
-  reactionEmoji: {
-    fontSize: 14,
-  },
-  reactionCount: {
-    fontSize: 11,
-    fontWeight: '600',
   },
   searchContainer: {
     marginBottom: 16,

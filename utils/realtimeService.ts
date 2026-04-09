@@ -32,13 +32,6 @@ export interface CallTranscript {
 
 class RealtimeCallServiceImpl implements RealtimeCallService {
   phoneNumber = '+1 (555) 100-2000';
-  private phoneNumbers = [
-    '+1 (555) 100-2000',
-    '+1 (800) 555-9999',
-    '+44 20 7946 0958',
-    '+61 2 8005 4321',
-    '+91 22 4567 8900',
-  ];
   private activeCalls: Map<string, CallSession> = new Map();
 
   async initiateCall(targetNumber: string, type: 'receptionist' | 'negotiation'): Promise<CallSession> {
@@ -82,7 +75,7 @@ class RealtimeCallServiceImpl implements RealtimeCallService {
     ];
 
     const greetings = type === 'receptionist' ? receptionistGreetings : negotiationGreetings;
-    const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+    const greeting = greetings[Math.floor(Math.random() * greetings.length)] ?? greetings[0] ?? '';
 
     this.addTranscript(sessionId, {
       id: `transcript_${Date.now()}`,
@@ -112,7 +105,7 @@ class RealtimeCallServiceImpl implements RealtimeCallService {
               'Wonderful! This offer includes several exclusive features...',
             ];
         
-        const response = responses[Math.floor(Math.random() * responses.length)];
+        const response = responses[Math.floor(Math.random() * responses.length)] ?? responses[0] ?? '';
         
         this.addTranscript(sessionId, {
           id: `transcript_${Date.now() + 2}`,

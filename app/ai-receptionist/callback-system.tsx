@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+ 
+import React, { useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -7,64 +8,29 @@ import {
   TouchableOpacity,
   TextInput,
   Switch,
+  ActivityIndicator,
 } from 'react-native';
-import { Stack } from 'expo-router';
-import { PhoneCall, Calendar, CheckCircle, XCircle, Search } from 'lucide-react-native';
-
-interface CallbackRequest {
-  id: string;
-  customerName: string;
-  phoneNumber: string;
-  requestedTime: string;
-  reason: string;
-  priority: 'urgent' | 'high' | 'normal';
-  status: 'pending' | 'scheduled' | 'completed' | 'missed';
-  notes: string;
-  createdAt: string;
-}
+import { Stack, useRouter } from 'expo-router';
+import { PhoneCall, Calendar, CheckCircle, XCircle, Search, Lock } from 'lucide-react-native';
+import { trpc } from '@/lib/trpc';
+import { useTheme } from '@/providers/ThemeProvider';
 
 export default function CallbackSystemScreen() {
+  const { theme } = useTheme();
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState<string>('all');
+
+  // Real tRPC data
+  const { data: subscription } = trpc.user.getSubscription.useQuery();
+  const isEnterprise = subscription?.plan === 'enterprise';
+
+  const { data: callbacks = [], isLoading, refetch } = trpc.receptionist.getCallbacks.useQuery();
+  const utils = trpc.useUtils();
+
   const [autoSchedule, setAutoSchedule] = useState(true);
   const [sendConfirmation, setSendConfirmation] = useState(true);
   const [reminderEnabled, setReminderEnabled] = useState(true);
-  const [selectedFilter, setSelectedFilter] = useState<string>('all');
-
-  const [callbacks] = useState<CallbackRequest[]>([
-    {
-      id: '1',
-      customerName: 'Emily Chen',
-      phoneNumber: '+1 (555) 789-0123',
-      requestedTime: 'Today at 2:00 PM',
-      reason: 'Product Demo',
-      priority: 'urgent',
-      status: 'pending',
-      notes: 'Interested in enterprise plan',
-      createdAt: '2024-01-04 09:30 AM',
-    },
-    {
-      id: '2',
-      customerName: 'David Martinez',
-      phoneNumber: '+1 (555) 890-1234',
-      requestedTime: 'Tomorrow at 10:00 AM',
-      reason: 'Technical Support',
-      priority: 'high',
-      status: 'scheduled',
-      notes: 'Issue with integration',
-      createdAt: '2024-01-04 08:15 AM',
-    },
-    {
-      id: '3',
-      customerName: 'Lisa Anderson',
-      phoneNumber: '+1 (555) 901-2345',
-      requestedTime: 'Today at 11:00 AM',
-      reason: 'Follow-up',
-      priority: 'normal',
-      status: 'completed',
-      notes: 'Quote sent successfully',
-      createdAt: '2024-01-03 04:20 PM',
-    },
-  ]);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -106,209 +72,225 @@ export default function CallbackSystemScreen() {
     return matchesFilter && matchesSearch;
   });
 
-  const stats = {
+  const stats = useMemo(() => ({
     pending: callbacks.filter((c) => c.status === 'pending').length,
     scheduled: callbacks.filter((c) => c.status === 'scheduled').length,
     completed: callbacks.filter((c) => c.status === 'completed').length,
     missed: callbacks.filter((c) => c.status === 'missed').length,
-  };
+  }), [callbacks]);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <Stack.Screen
         options={{
           title: 'Callback System',
-          headerStyle: { backgroundColor: '#0F172A' },
-          headerTintColor: '#fff',
+          headerStyle: { backgroundColor: theme.colors.background },
+          headerTintColor: theme.colors.text,
         }}
       />
 
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.statsContainer}>
-          <View style={[styles.statCard, { backgroundColor: '#F59E0B' }]}>
-            <Text style={styles.statValue}>{stats.pending}</Text>
-            <Text style={styles.statLabel}>Pending</Text>
-          </View>
-
-          <View style={[styles.statCard, { backgroundColor: '#3B82F6' }]}>
-            <Text style={styles.statValue}>{stats.scheduled}</Text>
-            <Text style={styles.statLabel}>Scheduled</Text>
-          </View>
-
-          <View style={[styles.statCard, { backgroundColor: '#10B981' }]}>
-            <Text style={styles.statValue}>{stats.completed}</Text>
-            <Text style={styles.statLabel}>Completed</Text>
-          </View>
-
-          <View style={[styles.statCard, { backgroundColor: '#EF4444' }]}>
-            <Text style={styles.statValue}>{stats.missed}</Text>
-            <Text style={styles.statLabel}>Missed</Text>
-          </View>
+      {isLoading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color={theme.colors.primary} />
         </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Settings</Text>
-
-          <View style={styles.settingCard}>
-            <View style={styles.settingRow}>
-              <Text style={styles.settingLabel}>Auto-Schedule Callbacks</Text>
-              <Switch
-                value={autoSchedule}
-                onValueChange={setAutoSchedule}
-                trackColor={{ false: '#1E293B', true: '#3B82F6' }}
-                thumbColor={autoSchedule ? '#fff' : '#64748B'}
-              />
+      ) : (
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.statsContainer}>
+            <View style={[styles.statCard, { backgroundColor: '#F59E0B' }]}>
+              <Text style={styles.statValue}>{stats.pending}</Text>
+              <Text style={styles.statLabel}>Pending</Text>
             </View>
-            <Text style={styles.settingDescription}>
-              Automatically schedule callbacks based on agent availability
-            </Text>
-          </View>
 
-          <View style={styles.settingCard}>
-            <View style={styles.settingRow}>
-              <Text style={styles.settingLabel}>Send Confirmation</Text>
-              <Switch
-                value={sendConfirmation}
-                onValueChange={setSendConfirmation}
-                trackColor={{ false: '#1E293B', true: '#3B82F6' }}
-                thumbColor={sendConfirmation ? '#fff' : '#64748B'}
-              />
+            <View style={[styles.statCard, { backgroundColor: '#3B82F6' }]}>
+              <Text style={styles.statValue}>{stats.scheduled}</Text>
+              <Text style={styles.statLabel}>Scheduled</Text>
             </View>
-            <Text style={styles.settingDescription}>
-              Send SMS/email confirmation to customers
-            </Text>
-          </View>
 
-          <View style={styles.settingCard}>
-            <View style={styles.settingRow}>
-              <Text style={styles.settingLabel}>Reminder Notifications</Text>
-              <Switch
-                value={reminderEnabled}
-                onValueChange={setReminderEnabled}
-                trackColor={{ false: '#1E293B', true: '#3B82F6' }}
-                thumbColor={reminderEnabled ? '#fff' : '#64748B'}
-              />
+            <View style={[styles.statCard, { backgroundColor: '#10B981' }]}>
+              <Text style={styles.statValue}>{stats.completed}</Text>
+              <Text style={styles.statLabel}>Completed</Text>
             </View>
-            <Text style={styles.settingDescription}>
-              Send reminders 15 minutes before callback
-            </Text>
-          </View>
-        </View>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Callback Requests</Text>
-
-          <View style={styles.searchContainer}>
-            <Search size={20} color="#64748B" />
-            <TextInput
-              style={styles.searchInput}
-              placeholder="Search by name or number..."
-              placeholderTextColor="#64748B"
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-            />
+            <View style={[styles.statCard, { backgroundColor: '#EF4444' }]}>
+              <Text style={styles.statValue}>{stats.missed}</Text>
+              <Text style={styles.statLabel}>Missed</Text>
+            </View>
           </View>
 
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={styles.filterContainer}
-          >
-            {filters.map((filter) => (
-              <TouchableOpacity
-                key={filter}
-                style={[
-                  styles.filterButton,
-                  selectedFilter === filter && styles.filterButtonActive,
-                ]}
-                onPress={() => setSelectedFilter(filter)}
-              >
-                <Text
-                  style={[
-                    styles.filterText,
-                    selectedFilter === filter && styles.filterTextActive,
-                  ]}
+          <View style={styles.section}>
+            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Settings</Text>
+
+            <View style={[styles.settingCard, { backgroundColor: theme.colors.cardBackground }]}>
+              {!isEnterprise && (
+                <TouchableOpacity 
+                  style={styles.lockOverlay}
+                  onPress={() => router.push('/enterprise-admin')}
                 >
-                  {filter.charAt(0).toUpperCase() + filter.slice(1)}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-
-          {filteredCallbacks.map((callback) => (
-            <View key={callback.id} style={styles.callbackCard}>
-              <View style={styles.callbackHeader}>
-                <View style={styles.customerInfo}>
-                  <Text style={styles.customerName}>{callback.customerName}</Text>
-                  <Text style={styles.phoneNumber}>{callback.phoneNumber}</Text>
-                </View>
-                <View style={styles.badges}>
-                  <View
-                    style={[
-                      styles.statusBadge,
-                      { backgroundColor: getStatusColor(callback.status) + '20' },
-                    ]}
-                  >
-                    <Text
-                      style={[
-                        styles.badgeText,
-                        { color: getStatusColor(callback.status) },
-                      ]}
-                    >
-                      {callback.status}
-                    </Text>
-                  </View>
-                  <View
-                    style={[
-                      styles.priorityBadge,
-                      { backgroundColor: getPriorityColor(callback.priority) + '20' },
-                    ]}
-                  >
-                    <Text
-                      style={[
-                        styles.badgeText,
-                        { color: getPriorityColor(callback.priority) },
-                      ]}
-                    >
-                      {callback.priority}
-                    </Text>
-                  </View>
-                </View>
+                  <Lock size={20} color={theme.colors.text} />
+                </TouchableOpacity>
+              )}
+              <View style={styles.settingRow}>
+                <Text style={[styles.settingLabel, { color: theme.colors.text }]}>Auto-Schedule Callbacks</Text>
+                <Switch
+                  value={autoSchedule}
+                  onValueChange={setAutoSchedule}
+                  trackColor={{ false: theme.colors.border, true: theme.colors.primary }}
+                  thumbColor={autoSchedule ? '#fff' : '#f4f3f4'}
+                />
               </View>
+              <Text style={[styles.settingDescription, { color: theme.colors.secondaryText }]}>
+                Automatically schedule callbacks based on agent availability
+              </Text>
+            </View>
 
-              <View style={styles.callbackDetails}>
-                <View style={styles.detailRow}>
-                  <Calendar size={16} color="#64748B" />
-                  <Text style={styles.detailText}>{callback.requestedTime}</Text>
+            <View style={[styles.settingCard, { backgroundColor: theme.colors.cardBackground }]}>
+              <View style={styles.settingRow}>
+                <Text style={[styles.settingLabel, { color: theme.colors.text }]}>Send Confirmation</Text>
+                <Switch
+                  value={sendConfirmation}
+                  onValueChange={setSendConfirmation}
+                  trackColor={{ false: theme.colors.border, true: theme.colors.primary }}
+                  thumbColor={sendConfirmation ? '#fff' : '#f4f3f4'}
+                />
+              </View>
+              <Text style={[styles.settingDescription, { color: theme.colors.secondaryText }]}>
+                Send SMS/email confirmation to customers
+              </Text>
+            </View>
+
+            <View style={[styles.settingCard, { backgroundColor: theme.colors.cardBackground }]}>
+              <View style={styles.settingRow}>
+                <Text style={[styles.settingLabel, { color: theme.colors.text }]}>Reminder Notifications</Text>
+                <Switch
+                  value={reminderEnabled}
+                  onValueChange={setReminderEnabled}
+                  trackColor={{ false: theme.colors.border, true: theme.colors.primary }}
+                  thumbColor={reminderEnabled ? '#fff' : '#f4f3f4'}
+                />
+              </View>
+              <Text style={[styles.settingDescription, { color: theme.colors.secondaryText }]}>
+                Send reminders 15 minutes before callback
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Callback Requests</Text>
+
+            <View style={[styles.searchContainer, { backgroundColor: theme.colors.cardBackground }]}>
+              <Search size={20} color={theme.colors.secondaryText} />
+              <TextInput
+                style={[styles.searchInput, { color: theme.colors.text }]}
+                placeholder="Search by name or number..."
+                placeholderTextColor={theme.colors.secondaryText}
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+              />
+            </View>
+
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={styles.filterContainer}
+            >
+              {filters.map((filter) => (
+                <TouchableOpacity
+                  key={filter}
+                  style={[
+                    styles.filterButton,
+                    { backgroundColor: theme.colors.cardBackground },
+                    selectedFilter === filter && { backgroundColor: theme.colors.primary },
+                  ]}
+                  onPress={() => setSelectedFilter(filter)}
+                >
+                  <Text
+                    style={[
+                      styles.filterText,
+                      { color: theme.colors.secondaryText },
+                      selectedFilter === filter && { color: '#fff' },
+                    ]}
+                  >
+                    {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+
+            {filteredCallbacks.map((callback) => (
+              <View key={callback.id} style={[styles.callbackCard, { backgroundColor: theme.colors.cardBackground }]}>
+                <View style={styles.callbackHeader}>
+                  <View style={styles.customerInfo}>
+                    <Text style={[styles.customerName, { color: theme.colors.text }]}>{callback.customerName}</Text>
+                    <Text style={[styles.phoneNumber, { color: theme.colors.secondaryText }]}>{callback.phoneNumber}</Text>
+                  </View>
+                  <View style={styles.badges}>
+                    <View
+                      style={[
+                        styles.statusBadge,
+                        { backgroundColor: getStatusColor(callback.status) + '20' },
+                      ]}
+                    >
+                      <Text
+                        style={[
+                          styles.badgeText,
+                          { color: getStatusColor(callback.status) },
+                        ]}
+                      >
+                        {callback.status}
+                      </Text>
+                    </View>
+                    <View
+                      style={[
+                        styles.priorityBadge,
+                        { backgroundColor: getPriorityColor(callback.priority) + '20' },
+                      ]}
+                    >
+                      <Text
+                        style={[
+                          styles.badgeText,
+                          { color: getPriorityColor(callback.priority) },
+                        ]}
+                      >
+                        {callback.priority}
+                      </Text>
+                    </View>
+                  </View>
                 </View>
-                <View style={styles.detailRow}>
-                  <PhoneCall size={16} color="#64748B" />
-                  <Text style={styles.detailText}>{callback.reason}</Text>
+
+                <View style={styles.callbackDetails}>
+                  <View style={styles.detailRow}>
+                    <Calendar size={16} color={theme.colors.secondaryText} />
+                    <Text style={[styles.detailText, { color: theme.colors.secondaryText }]}>{callback.requestedTime}</Text>
+                  </View>
+                  <View style={styles.detailRow}>
+                    <PhoneCall size={16} color={theme.colors.secondaryText} />
+                    <Text style={[styles.detailText, { color: theme.colors.secondaryText }]}>{callback.reason}</Text>
+                  </View>
+                  {callback.notes && (
+                    <View style={[styles.notesContainer, { backgroundColor: theme.colors.background }]}>
+                      <Text style={[styles.notesLabel, { color: theme.colors.secondaryText }]}>Notes:</Text>
+                      <Text style={[styles.notesText, { color: theme.colors.text }]}>{callback.notes}</Text>
+                    </View>
+                  )}
                 </View>
-                {callback.notes && (
-                  <View style={styles.notesContainer}>
-                    <Text style={styles.notesLabel}>Notes:</Text>
-                    <Text style={styles.notesText}>{callback.notes}</Text>
+
+                {callback.status === 'pending' && (
+                  <View style={[styles.actions, { borderTopColor: theme.colors.border }]}>
+                    <TouchableOpacity style={[styles.scheduleButton, { backgroundColor: theme.colors.success }]}>
+                      <CheckCircle size={18} color="#fff" />
+                      <Text style={styles.scheduleButtonText}>Schedule</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.cancelButton, { borderColor: theme.colors.error }]}>
+                      <XCircle size={18} color={theme.colors.error} />
+                      <Text style={[styles.cancelButtonText, { color: theme.colors.error }]}>Cancel</Text>
+                    </TouchableOpacity>
                   </View>
                 )}
               </View>
-
-              {callback.status === 'pending' && (
-                <View style={styles.actions}>
-                  <TouchableOpacity style={styles.scheduleButton}>
-                    <CheckCircle size={18} color="#fff" />
-                    <Text style={styles.scheduleButtonText}>Schedule</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.cancelButton}>
-                    <XCircle size={18} color="#EF4444" />
-                    <Text style={styles.cancelButtonText}>Cancel</Text>
-                  </TouchableOpacity>
-                </View>
-              )}
-            </View>
-          ))}
-        </View>
-      </ScrollView>
+            ))}
+          </View>
+        </ScrollView>
+      )}
     </View>
   );
 }
@@ -516,6 +498,18 @@ const styles = StyleSheet.create({
   cancelButtonText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#EF4444',
+  },
+  loadingContainer: {
+    padding: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  lockOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    borderRadius: 12,
+    zIndex: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

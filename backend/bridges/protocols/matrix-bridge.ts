@@ -17,7 +17,7 @@ export class MatrixBridge extends BaseBridge {
   private rooms: Map<string, any> = new Map();
 
   constructor(config: MatrixBridgeConfig) {
-    super(config);
+    super({ ...config, protocol: 'matrix' });
     this.matrixConfig = config;
   }
 
@@ -161,10 +161,11 @@ export class MatrixBridge extends BaseBridge {
       if (event.type === 'm.room.message') {
         const message: BridgeMessage = {
           id: event.event_id,
-          timestamp: event.origin_server_ts,
           from: event.sender,
           to: event.room_id,
+          type: event.content.msgtype || 'm.text',
           content: event.content.body,
+          timestamp: event.origin_server_ts,
           metadata: {
             msgtype: event.content.msgtype,
             format: event.content.format,

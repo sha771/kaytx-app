@@ -1,7 +1,10 @@
 import { z } from 'zod';
 import { publicProcedure } from '../../../create-context';
-import { db } from '../../../../db/in-memory-store';
+import { db as pgDb } from '../../../../db/connection';
+import { users } from '../../../../db/drizzle-schema';
+import { eq } from 'drizzle-orm';
 import { logAudit, AuditActions } from '../../../../lib/audit';
+import { hashEmailVerificationToken } from '../../../../lib/auth';
 
 const verifyEmailSchema = z.object({
   token: z.string(),
@@ -12,8 +15,13 @@ export const verifyEmailProcedure = publicProcedure
   .mutation(async ({ input, ctx }) => {
     const ipAddress = ctx.req.headers.get('x-forwarded-for') || ctx.req.headers.get('x-real-ip') || 'unknown';
 
-    const users = db.getAllUsers();
-    const user = users.find(u => u.emailVerificationToken === input.token);
+    const tokenHash = hashEmailVerificationToken(input.token);
+
+    const [user] = await pgDb
+      .select()
+      .from(users)
+      .where(eq(users.emailVerificationToken, tokenHash))
+      .limit(1);
 
     if (!user) {
       logAudit({
@@ -26,7 +34,7 @@ export const verifyEmailProcedure = publicProcedure
       throw new Error('Invalid or expired verification token');
     }
 
-    if (user.emailVerificationExpires && user.emailVerificationExpires < Date.now()) {
+    if (user.emailVerificationExpires && user.emailVerificationExpires.getTime() < Date.now()) {
       logAudit({
         userId: user.id,
         action: AuditActions.USER_EMAIL_VERIFY,
@@ -39,11 +47,11 @@ export const verifyEmailProcedure = publicProcedure
       throw new Error('Verification token has expired. Please request a new one.');
     }
 
-    db.updateUser(user.id, {
+    await pgDb.update(users).set({
       emailVerified: true,
-      emailVerificationToken: undefined,
-      emailVerificationExpires: undefined,
-    });
+      emailVerificationToken: null,
+      emailVerificationExpires: null,
+    } as any).where(eq(users.id, user.id));
 
     logAudit({
       userId: user.id,

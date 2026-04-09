@@ -1,3 +1,4 @@
+ 
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -130,7 +131,7 @@ export default function SchedulingCalendarScreen() {
           <View style={styles.statCard}>
             <Calendar size={24} color="#3B82F6" />
             <Text style={styles.statNumber}>4</Text>
-            <Text style={styles.statLabel}>Today's Events</Text>
+            <Text style={styles.statLabel}>Today&apos;s Events</Text>
           </View>
           
           <View style={styles.statCard}>

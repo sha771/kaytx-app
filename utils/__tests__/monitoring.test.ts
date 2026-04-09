@@ -22,7 +22,7 @@ describe('Monitoring Service', () => {
       
       const errors = monitoring.getEvents({ level: MonitoringLevel.ERROR });
       expect(errors.length).toBe(1);
-      expect(errors[0].level).toBe(MonitoringLevel.ERROR);
+      expect(errors[0]!.level).toBe(MonitoringLevel.ERROR);
     });
 
     it('should filter events by category', () => {
@@ -31,7 +31,7 @@ describe('Monitoring Service', () => {
       
       const authEvents = monitoring.getEvents({ category: 'auth' });
       expect(authEvents.length).toBe(1);
-      expect(authEvents[0].category).toBe('auth');
+      expect(authEvents[0]!.category).toBe('auth');
     });
   });
 
@@ -42,8 +42,8 @@ describe('Monitoring Service', () => {
 
       const events = monitoring.getEvents();
       expect(events.length).toBe(1);
-      expect(events[0].message).toBe('Test error');
-      expect(events[0].stackTrace).toBeDefined();
+      expect(events[0]!.message).toBe('Test error');
+      expect(events[0]!.stackTrace).toBeDefined();
     });
   });
 

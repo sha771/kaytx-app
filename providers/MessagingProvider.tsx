@@ -27,9 +27,9 @@ export const [MessagingProvider, useMessaging] = createContextHook(() => {
       'Quick update on the task',
     ];
 
-    const platform = platforms[Math.floor(Math.random() * platforms.length)];
-    const sender = senders[Math.floor(Math.random() * senders.length)];
-    const messageText = messages[Math.floor(Math.random() * messages.length)];
+    const platform = platforms[Math.floor(Math.random() * platforms.length)] ?? platforms[0] ?? 'WhatsApp';
+    const sender = senders[Math.floor(Math.random() * senders.length)] ?? senders[0] ?? 'Unknown';
+    const messageText = messages[Math.floor(Math.random() * messages.length)] ?? messages[0] ?? '';
 
     console.log(`[Messaging] Received real-time message from ${sender} via ${platform}`);
     setSyncStatus('syncing');
@@ -107,9 +107,9 @@ export const [MessagingProvider, useMessaging] = createContextHook(() => {
         setTimeout(() => {
           if (!isMounted) return;
           setIsRealTimeConnected(true);
-          console.log('[Messaging] ✓ WebSocket connected successfully');
-          console.log('[Messaging] ✓ E2E encryption enabled');
-          console.log('[Messaging] ✓ Listening for incoming messages from all platforms...');
+          console.log('[Messaging] WebSocket connected successfully');
+          console.log('[Messaging] E2E encryption enabled');
+          console.log('[Messaging] Listening for incoming messages from all platforms...');
         }, 1500);
       };
 
@@ -139,13 +139,13 @@ export const [MessagingProvider, useMessaging] = createContextHook(() => {
         const parsed = JSON.parse(stored);
         setConversations(parsed);
         if (parsed.length > 0) {
-          setActiveConversation(parsed[0]);
+          setActiveConversation(parsed[0] ?? null);
         }
       } else {
         const { generateMockConversations } = await import('@/utils/mockData');
         const mock = generateMockConversations();
         setConversations(mock);
-        setActiveConversation(mock[0]);
+        setActiveConversation(mock[0] ?? null);
         await AsyncStorage.setItem('conversations', JSON.stringify(mock));
       }
     } catch (error) {
@@ -153,7 +153,7 @@ export const [MessagingProvider, useMessaging] = createContextHook(() => {
       const { generateMockConversations } = await import('@/utils/mockData');
       const mock = generateMockConversations();
       setConversations(mock);
-      setActiveConversation(mock[0]);
+      setActiveConversation(mock[0] ?? null);
     }
   };
 

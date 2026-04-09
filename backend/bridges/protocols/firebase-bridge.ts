@@ -18,14 +18,14 @@ export class FirebaseBridge extends BaseBridge {
   private database: Map<string, any> = new Map();
 
   constructor(config: FirebaseBridgeConfig) {
-    super(config);
+    super({ ...config, protocol: 'firebase' });
     this.firebaseConfig = config;
   }
 
   async connect(): Promise<BridgeConnectionState> {
-    console.log(`[FirebaseBridge:${this.config.id}] Connecting to Firebase project ${this.firebaseConfig.projectId}`);
+    console.log(`[FirebaseBridge:${this.getId()}] Connecting to Firebase project ${this.firebaseConfig.projectId}`);
     
-    this.setState({ status: 'connecting', startedAt: Date.now() });
+    this.setState({ status: 'connecting', startedAt: Date.now() } as BridgeConnectionState);
 
     try {
       await this.initializeFirebase();
@@ -56,7 +56,7 @@ export class FirebaseBridge extends BaseBridge {
   }
 
   async disconnect(): Promise<BridgeConnectionState> {
-    console.log(`[FirebaseBridge:${this.config.id}] Disconnecting`);
+    console.log(`[FirebaseBridge:${this.getId()}] Disconnecting`);
 
     this.clearDataListeners();
     this.database.clear();
@@ -69,14 +69,14 @@ export class FirebaseBridge extends BaseBridge {
   }
 
   async sendMessage(message: BridgeMessage): Promise<boolean> {
-    if (this.state.status !== 'connected') {
-      console.warn(`[FirebaseBridge:${this.config.id}] Not connected`);
+    if (this.getState().status !== 'connected') {
+      console.warn(`[FirebaseBridge:${this.getId()}] Not connected`);
       return false;
     }
 
     try {
       const path = `/messages/${message.to}/${message.id}`;
-      console.log(`[FirebaseBridge:${this.config.id}] Writing message to ${path}`);
+      console.log(`[FirebaseBridge:${this.getId()}] Writing message to ${path}`);
       
       this.database.set(path, {
         ...message,
@@ -87,7 +87,7 @@ export class FirebaseBridge extends BaseBridge {
 
       return true;
     } catch (error) {
-      console.error(`[FirebaseBridge:${this.config.id}] Send error:`, error);
+      console.error(`[FirebaseBridge:${this.getId()}] Send error:`, error);
       this.emitEvent({ type: 'error', data: error, timestamp: Date.now() });
       return false;
     }
@@ -105,17 +105,17 @@ export class FirebaseBridge extends BaseBridge {
   }
 
   private async initializeFirebase(): Promise<void> {
-    console.log(`[FirebaseBridge:${this.config.id}] Initializing Firebase SDK`);
+    console.log(`[FirebaseBridge:${this.getId()}] Initializing Firebase SDK`);
     
     if (this.firebaseConfig.serviceAccountKey) {
-      console.log(`[FirebaseBridge:${this.config.id}] Using service account authentication`);
+      console.log(`[FirebaseBridge:${this.getId()}] Using service account authentication`);
     } else if (this.firebaseConfig.apiKey) {
-      console.log(`[FirebaseBridge:${this.config.id}] Using API key authentication`);
+      console.log(`[FirebaseBridge:${this.getId()}] Using API key authentication`);
     }
   }
 
   private async setupRealtimeListeners(): Promise<void> {
-    console.log(`[FirebaseBridge:${this.config.id}] Setting up realtime listeners`);
+    console.log(`[FirebaseBridge:${this.getId()}] Setting up realtime listeners`);
     
     this.onValue('/messages', (snapshot: any) => {
       if (snapshot) {
@@ -131,7 +131,7 @@ export class FirebaseBridge extends BaseBridge {
       this.dataListeners.set(path, []);
     }
     this.dataListeners.get(path)!.push(callback);
-    console.log(`[FirebaseBridge:${this.config.id}] Listener added for ${path}`);
+    console.log(`[FirebaseBridge:${this.getId()}] Listener added for ${path}`);
   }
 
   private notifyListeners(path: string, data: any): void {
@@ -143,23 +143,23 @@ export class FirebaseBridge extends BaseBridge {
   }
 
   private clearDataListeners(): void {
-    console.log(`[FirebaseBridge:${this.config.id}] Removing all listeners`);
+    console.log(`[FirebaseBridge:${this.getId()}] Removing all listeners`);
     this.dataListeners.clear();
   }
 
   async set(path: string, value: any): Promise<void> {
-    console.log(`[FirebaseBridge:${this.config.id}] Setting ${path}`);
+    console.log(`[FirebaseBridge:${this.getId()}] Setting ${path}`);
     this.database.set(path, value);
     this.notifyListeners(path, value);
   }
 
   async get(path: string): Promise<any> {
-    console.log(`[FirebaseBridge:${this.config.id}] Getting ${path}`);
+    console.log(`[FirebaseBridge:${this.getId()}] Getting ${path}`);
     return this.database.get(path);
   }
 
   async update(path: string, updates: Record<string, any>): Promise<void> {
-    console.log(`[FirebaseBridge:${this.config.id}] Updating ${path}`);
+    console.log(`[FirebaseBridge:${this.getId()}] Updating ${path}`);
     const current = this.database.get(path) || {};
     const updated = { ...current, ...updates };
     this.database.set(path, updated);
@@ -167,7 +167,7 @@ export class FirebaseBridge extends BaseBridge {
   }
 
   async delete(path: string): Promise<void> {
-    console.log(`[FirebaseBridge:${this.config.id}] Deleting ${path}`);
+    console.log(`[FirebaseBridge:${this.getId()}] Deleting ${path}`);
     this.database.delete(path);
     this.notifyListeners(path, null);
   }

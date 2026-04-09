@@ -1,3 +1,4 @@
+ 
 import React, { useState } from 'react';
 import {
   View,
@@ -107,7 +108,7 @@ export default function LoginScreen() {
             onPress={() => router.push('/auth/register')}
           >
             <Text style={[styles.registerLinkText, { color: theme.colors.secondaryText }]}>
-              Don't have an account?{' '}
+              Don&apos;t have an account?{' '}
               <Text style={{ color: theme.colors.primary, fontWeight: '600' }}>Sign Up</Text>
             </Text>
           </TouchableOpacity>

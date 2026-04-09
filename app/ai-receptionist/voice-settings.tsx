@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch } from 'react-native';
-import { Stack } from 'expo-router';
-import { Settings, Volume2, Mic, PlayCircle, Save, RotateCcw } from 'lucide-react-native';
+ 
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, ActivityIndicator } from 'react-native';
+import { Stack, useRouter } from 'expo-router';
+import { Settings, Volume2, Mic, PlayCircle, Save, RotateCcw, Lock } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { trpc } from '@/lib/trpc';
+import { useTheme } from '@/providers/ThemeProvider';
 
 interface VoiceProfile {
   id: string;
@@ -17,19 +20,61 @@ interface VoiceProfile {
 
 export default function VoiceSettingsScreen() {
   const insets = useSafeAreaInsets();
-  const [selectedProfile, setSelectedProfile] = useState<string>('profile1');
-  const [profiles] = useState<VoiceProfile[]>([
-    { id: 'profile1', name: 'Professional Female', language: 'English', accent: 'US', gender: 'Female', pitch: 1.0, speed: 1.0, isActive: true },
-    { id: 'profile2', name: 'Friendly Male', language: 'English', accent: 'UK', gender: 'Male', pitch: 0.9, speed: 1.1, isActive: false },
-    { id: 'profile3', name: 'Executive Voice', language: 'English', accent: 'US', gender: 'Male', pitch: 0.8, speed: 0.95, isActive: false },
-  ]);
+  const { theme } = useTheme();
+  const router = useRouter();
 
+  // Real tRPC data
+  const { data: subscription } = trpc.user.getSubscription.useQuery();
+  const isEnterprise = subscription?.plan === 'enterprise';
+
+  const { data: voiceData, isLoading, refetch } = trpc.receptionist.getVoiceSettings.useQuery();
+  const utils = trpc.useUtils();
+  const updateVoiceMutation = trpc.receptionist.updateVoiceSettings.useMutation({
+    onSuccess: () => utils.receptionist.getVoiceSettings.invalidate(),
+  });
+
+  const [selectedProfile, setSelectedProfile] = useState<string>('');
   const [pitch, setPitch] = useState(1.0);
   const [speed, setSpeed] = useState(1.0);
   const [volume, setVolume] = useState(0.8);
   const [useBackgroundMusic, setUseBackgroundMusic] = useState(false);
   const [useFillerWords, setUseFillerWords] = useState(true);
   const [emotionalTone, setEmotionalTone] = useState('friendly');
+
+  useEffect(() => {
+    if (voiceData) {
+      const active = voiceData.profiles.find((p: any) => p.isActive);
+      setSelectedProfile(active?.id || voiceData.profiles[0]?.id || '');
+      setPitch(voiceData.customization.pitch);
+      setSpeed(voiceData.customization.speed);
+      setVolume(voiceData.customization.volume);
+      setUseBackgroundMusic(voiceData.customization.useBackgroundMusic);
+      setUseFillerWords(voiceData.customization.useFillerWords);
+      setEmotionalTone(voiceData.customization.emotionalTone);
+    }
+  }, [voiceData]);
+
+  const handleSave = () => {
+    updateVoiceMutation.mutate({
+      pitch,
+      speed,
+      volume,
+      useBackgroundMusic,
+      useFillerWords,
+      emotionalTone,
+      activeProfileId: selectedProfile,
+    });
+  };
+
+  if (isLoading) {
+    return (
+      <View style={[styles.container, { backgroundColor: theme.colors.background, justifyContent: 'center' }]}>
+        <ActivityIndicator size="large" color={theme.colors.primary} />
+      </View>
+    );
+  }
+
+  const profiles = (voiceData?.profiles || []) as VoiceProfile[];
 
   return (
     <View style={styles.container}>
@@ -214,7 +259,7 @@ export default function VoiceSettingsScreen() {
             <Text style={styles.secondaryButtonText}>Reset to Default</Text>
           </TouchableOpacity>
           
-          <TouchableOpacity style={styles.primaryButton}>
+          <TouchableOpacity style={[styles.primaryButton, { backgroundColor: theme.colors.primary }]} onPress={handleSave}>
             <Save size={18} color="#FFFFFF" />
             <Text style={styles.primaryButtonText}>Save Changes</Text>
           </TouchableOpacity>

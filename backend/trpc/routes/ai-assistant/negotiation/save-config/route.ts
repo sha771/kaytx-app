@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { protectedProcedure } from '../../../../create-context';
+import { permissionProcedure } from '../../../../create-context';
+import { Permission } from '../../../../../lib/rbac';
 
 const configSchema = z.object({
   enabled: z.boolean(),
@@ -13,7 +14,7 @@ const configSchema = z.object({
   escalationThreshold: z.number(),
 });
 
-export const saveNegotiationConfigProcedure = protectedProcedure
+export const saveNegotiationConfigProcedure = permissionProcedure(Permission.AI_NEGOTIATION_USE)
   .input(configSchema)
   .mutation(async ({ input }: { input: z.infer<typeof configSchema> }) => {
     console.log('[saveNegotiationConfig] Saving config:', input);

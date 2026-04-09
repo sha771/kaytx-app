@@ -13,33 +13,7 @@ import {
   Info,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { ServiceType } from '@/types/messaging';
-
-export interface Platform {
-  id: string;
-  name: string;
-  service: ServiceType;
-  isConnected: boolean;
-  isEnabled: boolean;
-  accountName: string;
-  avatar: string;
-  messageCount: number;
-  lastSync: string;
-  category: 'messaging' | 'social' | 'business' | 'unified' | 'email' | 'voice';
-  description: string;
-  features: string[];
-  popularity: number;
-  isVerified: boolean;
-  connectionType: 'qr-code' | 'oauth' | 'credentials' | 'google-account';
-  connectionMethod: 'on-device' | 'cloud';
-  status: 'active' | 'syncing' | 'error' | 'paused';
-  monthlyMessages: number;
-  responseTime: string;
-  websiteUrl: string;
-  apiDocUrl: string;
-  appStoreUrl?: string;
-  playStoreUrl?: string;
-}
+import { Platform } from '@/constants/platforms';
 
 interface PlatformCardProps {
   platform: Platform;

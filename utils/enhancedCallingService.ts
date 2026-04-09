@@ -44,7 +44,7 @@ class EnhancedCallingService {
     '+61 3 9012 3456',
     '+49 30 5557 8901',
   ];
-  private defaultPhoneNumber = this.phoneNumbers[0];
+  private defaultPhoneNumber = this.phoneNumbers[0] ?? '';
   
   constructor() {
     console.log('[EnhancedCallingService] initialized with Twilio integration');
@@ -78,7 +78,7 @@ class EnhancedCallingService {
       channel,
       recordingEnabled: true,
       transcriptionEnabled: true,
-      agentId,
+      ...(agentId !== undefined ? { agentId } : {}),
     };
 
     console.log('[EnhancedCallingService] initiating call', { callId, phoneNumber, customerName, channel });
@@ -204,11 +204,6 @@ class EnhancedCallingService {
   private notifyCallListeners() {
     const calls = this.getActiveCalls();
     this.callListeners.forEach(callback => callback(calls));
-  }
-
-  private notifyMetricsListeners() {
-    const metrics = this.getCallMetrics();
-    this.metricsListeners.forEach(callback => callback(metrics));
   }
 }
 

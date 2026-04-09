@@ -1,8 +1,9 @@
 import { z } from 'zod';
-import { protectedProcedure } from '../../../create-context';
+import { permissionProcedure } from '../../../create-context';
 import { bridgeManager } from '../../../../bridges/manager/bridge-manager';
+import { Permission } from '../../../../lib/rbac';
 
-export const bridgeStatusProcedure = protectedProcedure
+export const bridgeStatusProcedure = permissionProcedure(Permission.BRIDGE_STATUS_READ)
   .input(
     z.object({
       bridgeId: z.string(),

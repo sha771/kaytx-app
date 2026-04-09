@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+ 
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   View,
   Text,
@@ -20,9 +21,12 @@ import {
   ArrowRight,
   CheckCircle,
   AlertCircle,
+  Lock,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
+import { trpc } from '@/lib/trpc';
+import { RelatedFeatures, QuickLinks } from '@/components/RelatedFeatures';
 
 interface Automation {
   id: string;
@@ -47,100 +51,61 @@ interface AutomationTemplate {
 
 export default function AutomationsScreen() {
   const { theme } = useTheme();
-  const [automations, setAutomations] = useState<Automation[]>([
-    {
-      id: '1',
-      name: 'Welcome Message',
-      description: 'Send welcome message to new contacts',
-      isActive: true,
-      trigger: 'New contact added',
-      action: 'Send message',
-      executionCount: 47,
-      lastExecuted: '2 hours ago',
-      status: 'active',
-    },
-    {
-      id: '2',
-      name: 'Auto Reply',
-      description: 'Reply to messages outside business hours',
-      isActive: true,
-      trigger: 'Message received after 6 PM',
-      action: 'Send auto-reply',
-      executionCount: 23,
-      lastExecuted: '1 day ago',
-      status: 'active',
-    },
-    {
-      id: '3',
-      name: 'Follow-up Reminder',
-      description: 'Remind to follow up on unanswered messages',
-      isActive: false,
-      trigger: 'No reply for 24 hours',
-      action: 'Send notification',
-      executionCount: 12,
-      lastExecuted: '3 days ago',
-      status: 'paused',
-    },
-    {
-      id: '4',
-      name: 'Keyword Filter',
-      description: 'Filter messages containing specific keywords',
-      isActive: true,
-      trigger: 'Message contains keywords',
-      action: 'Move to folder',
-      executionCount: 156,
-      lastExecuted: '30 min ago',
-      status: 'error',
-    },
-  ]);
+  
+  // Backend data fetching with tRPC
+  const { data: workflowAutomations, isLoading: automationsLoading, refetch: refetchAutomations } = trpc.workflowAutomation.getAutomations.useQuery();
+  const { data: workflowTemplates, isLoading: templatesLoading } = trpc.workflowAutomation.getTemplates.useQuery();
+  // Fetch real statistics from tRPC
+  const { data: statsData } = trpc.aiAgents.getStats.useQuery({ 
+    category: 'core-intelligence' 
+  });
+  const { data: subscription } = trpc.enterprise.getSubscription.useQuery();
+  
+  const isEnterprise = useMemo(() => {
+    return subscription?.plan === 'enterprise' || subscription?.plan === 'professional';
+  }, [subscription]);
 
-  const templates: AutomationTemplate[] = [
-    {
-      id: '1',
-      name: 'Auto Reply',
-      description: 'Automatically reply to incoming messages',
-      category: 'Messaging',
-      icon: MessageSquare,
-      color: '#007AFF',
-    },
-    {
-      id: '2',
-      name: 'Message Filter',
-      description: 'Filter and organize messages automatically',
-      category: 'Organization',
-      icon: Filter,
-      color: '#34C759',
-    },
-    {
-      id: '3',
-      name: 'Scheduled Messages',
-      description: 'Send messages at specific times',
-      category: 'Scheduling',
-      icon: Clock,
-      color: '#FF9500',
-    },
-    {
-      id: '4',
-      name: 'Smart Notifications',
-      description: 'Intelligent notification management',
-      category: 'Notifications',
-      icon: Zap,
-      color: '#FF3B30',
-    },
-  ];
+  const toggleAutomationMutation = trpc.workflowAutomation.toggleAutomation.useMutation();
+  
+  const [automations, setAutomations] = useState<Automation[]>(workflowAutomations || []);
+  const [templates, setTemplates] = useState<AutomationTemplate[]>(workflowTemplates || []);
 
-  const toggleAutomation = (automationId: string) => {
-    setAutomations(prev =>
-      prev.map(automation =>
-        automation.id === automationId
-          ? { 
-              ...automation, 
-              isActive: !automation.isActive,
-              status: !automation.isActive ? 'active' : 'paused'
-            }
-          : automation
-      )
-    );
+  useEffect(() => {
+    if (workflowAutomations) {
+      setAutomations(workflowAutomations);
+    }
+  }, [workflowAutomations]);
+
+  useEffect(() => {
+    if (workflowTemplates) {
+      setTemplates(workflowTemplates);
+    }
+  }, [workflowTemplates]);
+
+  const handleToggleAutomation = async (automationId: string) => {
+    const automation = automations.find(a => a.id === automationId);
+    if (!automation) return;
+
+    try {
+      await toggleAutomationMutation.mutateAsync({
+        id: automationId,
+        active: !automation.isActive
+      });
+      
+      setAutomations(prev =>
+        prev.map(a =>
+          a.id === automationId
+            ? { 
+                ...a, 
+                isActive: !a.isActive,
+                status: !a.isActive ? 'active' : 'paused'
+              }
+            : a
+        )
+      );
+    } catch (error) {
+      console.error('Failed to toggle automation:', error);
+    }
   };
 
   const getStatusIcon = (status: Automation['status']) => {
@@ -172,7 +137,7 @@ export default function AutomationsScreen() {
         </View>
         <Switch
           value={item.isActive}
-          onValueChange={() => toggleAutomation(item.id)}
+          onValueChange={() => handleToggleAutomation(item.id)}
           trackColor={{ false: '#767577', true: theme.colors.primary }}
           thumbColor={item.isActive ? '#fff' : '#f4f3f4'}
         />
@@ -260,9 +225,16 @@ export default function AutomationsScreen() {
           </Text>
         </View>
         <TouchableOpacity
-          style={[styles.addButton, { backgroundColor: theme.colors.primary }]}
+          style={[styles.addButton, { backgroundColor: isEnterprise ? theme.colors.primary : theme.colors.secondaryText }]}
+          onPress={() => {
+            if (!isEnterprise) {
+              router.push('/enterprise/billing');
+              return;
+            }
+            // Navigate to create automation
+          }}
         >
-          <Plus size={20} color="white" />
+          {isEnterprise ? <Plus size={20} color="white" /> : <Lock size={20} color="white" />}
         </TouchableOpacity>
       </View>
 
@@ -329,6 +301,19 @@ export default function AutomationsScreen() {
             contentContainerStyle={styles.templatesList}
           />
         </View>
+
+        {/* Related Features */}
+        <RelatedFeatures
+          featureId="automation-hub"
+          title="Related Automation Features"
+          maxItems={6}
+          layout="horizontal"
+        />
+        <QuickLinks
+          groupId="ai"
+          title="AI Features"
+          maxItems={4}
+        />
       </ScrollView>
     </View>
   );

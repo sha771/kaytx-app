@@ -1,3 +1,4 @@
+ 
 import React, { useState } from 'react';
 import {
   View,
@@ -27,6 +28,8 @@ import {
 } from 'lucide-react-native';
 import { router } from 'expo-router';
 import { useTheme } from '@/providers/ThemeProvider';
+import { useApi } from './hooks/useApi';
+import apiClient from '@/lib/api-client';
 
 type SettingItem = {
   icon: LucideIcon;
@@ -43,6 +46,17 @@ export default function SettingsScreen() {
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [autoDownload, setAutoDownload] = useState(false);
 
+  // Fetch user profile from backend
+  const { data: userData } = useApi(() => apiClient.getCurrentUser());
+
+  // Get user display name from backend data
+  const getUserDisplayName = () => {
+    if (userData?.firstName && userData?.lastName) {
+      return `${userData.firstName} ${userData.lastName}`;
+    }
+    return userData?.email?.split('@')[0] || 'User';
+  };
+
   const settingsSections: { title: string; items: SettingItem[] }[] = [
     {
       title: 'Account',
@@ -50,7 +64,7 @@ export default function SettingsScreen() {
         {
           icon: User,
           label: 'Profile',
-          value: 'John Doe',
+          value: getUserDisplayName(),
           onPress: () => router.push('/profile'),
         },
         {

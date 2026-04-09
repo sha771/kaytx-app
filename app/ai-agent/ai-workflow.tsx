@@ -1,8 +1,10 @@
+ 
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
 import { Workflow, Play, Pause, Settings, Plus, Search, Filter, Clock, CheckCircle, AlertCircle } from 'lucide-react-native';
+import { trpc } from '@/lib/trpc';
 
 interface AIWorkflow {
   id: string;
@@ -15,51 +17,91 @@ interface AIWorkflow {
   executions: number;
 }
 
-const mockWorkflows: AIWorkflow[] = [
-  {
-    id: '1',
-    name: 'Customer Onboarding',
-    status: 'running',
-    trigger: 'New user signup',
-    actions: 5,
-    lastRun: '2 min ago',
-    successRate: 98.5,
-    executions: 234
-  },
-  {
-    id: '2',
-    name: 'Lead Qualification',
-    status: 'running',
-    trigger: 'Form submission',
-    actions: 8,
-    lastRun: '15 min ago',
-    successRate: 94.2,
-    executions: 156
-  },
-  {
-    id: '3',
-    name: 'Support Ticket Routing',
-    status: 'paused',
-    trigger: 'New ticket created',
-    actions: 3,
-    lastRun: '1 hour ago',
-    successRate: 96.8,
-    executions: 89
-  },
-  {
-    id: '4',
-    name: 'Invoice Processing',
-    status: 'error',
-    trigger: 'Invoice received',
-    actions: 6,
-    lastRun: '2 hours ago',
-    successRate: 87.3,
-    executions: 67
-  }
-];
-
 export default function AIWorkflowScreen() {
   const [searchQuery, setSearchQuery] = useState<string>('');
+
+  const { data: analytics } = trpc.aiAgents.getAgentAnalytics.useQuery({ timeRange: '7d' });
+  const { data: activityData } = trpc.aiAgents.getAgentActivity.useQuery({ limit: 200 });
+
+  const activities = activityData?.activities ?? [];
+
+  const getRelativeTime = (isoTimestamp?: string) => {
+    if (!isoTimestamp) return '—';
+    const ts = new Date(isoTimestamp).getTime();
+    const delta = Date.now() - ts;
+    if (delta < 60 * 1000) return 'Just now';
+    if (delta < 60 * 60 * 1000) return `${Math.floor(delta / (60 * 1000))} min ago`;
+    if (delta < 24 * 60 * 60 * 1000) return `${Math.floor(delta / (60 * 60 * 1000))} hour ago`;
+    return `${Math.floor(delta / (24 * 60 * 60 * 1000))} day ago`;
+  };
+
+  const workflows: AIWorkflow[] = [];
+
+  // Keep the rest of the UI functional even when per-agent workflow analytics aren't available yet.
+  // Use activity stream as the source of truth for listing workflows.
+  const workflowActions = (analytics?.topActions && analytics.topActions.length > 0)
+    ? analytics.topActions.map((a: any) => a.action).filter(Boolean).slice(0, 25)
+    : Array.from(
+        new Set(
+          activities
+            .map((ev: any) => ev.action || ev.eventType)
+            .filter(Boolean)
+        )
+      ).slice(0, 25);
+
+  for (const [idx, actionName] of workflowActions.entries()) {
+    const last = activities.find((ev: any) => (ev.action || ev.eventType) === actionName);
+
+    const status: AIWorkflow['status'] =
+      last?.status === 'error'
+        ? 'error'
+        : last?.status === 'processing'
+          ? 'running'
+          : last
+            ? 'paused'
+            : 'stopped';
+
+    const triggerFromDetails =
+      typeof last?.details?.trigger === 'string'
+        ? last.details.trigger
+        : typeof last?.details?.source === 'string'
+          ? last.details.source
+          : typeof last?.eventType === 'string'
+            ? last.eventType
+            : undefined;
+
+    const trigger = triggerFromDetails ?? 'Event-driven';
+
+    const actionsCount =
+      typeof last?.details?.steps === 'number'
+        ? last.details.steps
+        : typeof last?.details?.actions === 'number'
+          ? last.details.actions
+          : 3;
+
+    workflows.push({
+      id: `workflow-${idx}`,
+      name: actionName,
+      status,
+      trigger,
+      actions: actionsCount,
+      lastRun: getRelativeTime(last?.timestamp),
+      successRate: typeof last?.details?.successRate === 'number' ? last.details.successRate : (analytics?.successRate ?? 0),
+      executions: typeof last?.details?.executions === 'number' ? last.details.executions : 0,
+    });
+  }
+
+  const filteredWorkflows = workflows.filter(w =>
+    w.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    w.trigger.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const totalWorkflows = workflows.length;
+  const runningCount = workflows.filter(w => w.status === 'running').length;
+  const totalExecutions = workflows.reduce((sum, w) => sum + (w.executions || 0), 0);
+  const weightedSuccess = totalExecutions
+    ? workflows.reduce((sum, w) => sum + (w.successRate * (w.executions || 0)), 0) / totalExecutions
+    : 0;
 
   const getStatusColor = (status: AIWorkflow['status']) => {
     switch (status) {
@@ -129,25 +171,25 @@ export default function AIWorkflowScreen() {
         <View style={styles.statsContainer}>
           <View style={styles.statCard}>
             <Workflow size={24} color="#3B82F6" />
-            <Text style={styles.statNumber}>4</Text>
+            <Text style={styles.statNumber}>{totalWorkflows.toLocaleString()}</Text>
             <Text style={styles.statLabel}>Total Workflows</Text>
           </View>
           
           <View style={styles.statCard}>
-            <Play size={24} color="#10B981" />
-            <Text style={styles.statNumber}>2</Text>
+            <Play size={22} color="#10B981" />
+            <Text style={styles.statNumber}>{runningCount.toLocaleString()}</Text>
             <Text style={styles.statLabel}>Running</Text>
           </View>
           
           <View style={styles.statCard}>
-            <CheckCircle size={24} color="#F59E0B" />
-            <Text style={styles.statNumber}>546</Text>
+            <CheckCircle size={22} color="#F59E0B" />
+            <Text style={styles.statNumber}>{totalExecutions.toLocaleString()}</Text>
             <Text style={styles.statLabel}>Total Executions</Text>
           </View>
           
           <View style={styles.statCard}>
             <Clock size={24} color="#8B5CF6" />
-            <Text style={styles.statNumber}>94.2%</Text>
+            <Text style={styles.statNumber}>{weightedSuccess.toFixed(1)}%</Text>
             <Text style={styles.statLabel}>Success Rate</Text>
           </View>
         </View>
@@ -155,7 +197,7 @@ export default function AIWorkflowScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Active Workflows</Text>
           
-          {mockWorkflows.map((workflow) => (
+          {filteredWorkflows.map((workflow) => (
             <TouchableOpacity key={workflow.id} style={styles.workflowCard}>
               <View style={styles.workflowHeader}>
                 <View style={styles.workflowInfo}>

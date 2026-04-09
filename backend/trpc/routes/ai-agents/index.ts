@@ -1,26 +1,32 @@
 import { z } from "zod";
-import { protectedProcedure } from '../../../create-context';
+import { permissionProcedure } from '../../create-context';
 import { aiAgentService, AgentType } from '../../../services/ai-agent-service';
+import { Permission } from '../../../lib/rbac';
 
 const startConversationSchema = z.object({
   agentId: z.string(),
   initialMessage: z.string().optional(),
-  metadata: z.record(z.any()).optional(),
+  metadata: z.record(z.string(), z.any()).optional(),
 });
 
-export const startConversationProcedure = protectedProcedure
+export const startConversationProcedure = permissionProcedure(Permission.AI_AGENT_USE)
   .input(startConversationSchema)
-  .mutation(async ({ input, ctx }: { input: z.infer<typeof startConversationSchema>; ctx: any }) => {
+  .mutation(async ({ input, ctx }) => {
     try {
-      const userId = ctx.session?.userId;
+      const userId = ctx.user?.id;
       if (!userId) {
         throw new Error('User not authenticated');
+      }
+
+      const organizationId = ctx.user?.organizationId;
+      if (!organizationId) {
+        throw new Error('User organization not found');
       }
 
       const conversation = await aiAgentService.startConversation(
         input.agentId,
         input.initialMessage,
-        { userId, ...input.metadata }
+        { userId, organizationId, ...input.metadata }
       );
 
       if (!conversation) {
@@ -44,16 +50,21 @@ const sendMessageSchema = z.object({
   message: z.string(),
 });
 
-export const sendMessageProcedure = protectedProcedure
+export const sendMessageProcedure = permissionProcedure(Permission.AI_AGENT_USE)
   .input(sendMessageSchema)
-  .mutation(async ({ input, ctx }: { input: z.infer<typeof sendMessageSchema>; ctx: any }) => {
+  .mutation(async ({ input, ctx }) => {
     try {
-      const userId = ctx.session?.userId;
+      const userId = ctx.user?.id;
       if (!userId) {
         throw new Error('User not authenticated');
       }
 
-      const response = await aiAgentService.sendMessage(input.sessionId, input.message);
+      const organizationId = ctx.user?.organizationId;
+      if (!organizationId) {
+        throw new Error('User organization not found');
+      }
+
+      const response = await aiAgentService.sendMessage(input.sessionId, input.message, { organizationId, userId });
 
       if (!response) {
         throw new Error('Failed to send message');
@@ -76,14 +87,14 @@ export const sendMessageProcedure = protectedProcedure
 const executeToolSchema = z.object({
   agentId: z.string(),
   toolName: z.string(),
-  parameters: z.record(z.any()),
+  parameters: z.record(z.string(), z.any()),
 });
 
-export const executeToolProcedure = protectedProcedure
+export const executeToolProcedure = permissionProcedure(Permission.AI_AGENT_MANAGE)
   .input(executeToolSchema)
-  .mutation(async ({ input, ctx }: { input: z.infer<typeof executeToolSchema>; ctx: any }) => {
+  .mutation(async ({ input, ctx }) => {
     try {
-      const userId = ctx.session?.userId;
+      const userId = ctx.user?.id;
       if (!userId) {
         throw new Error('User not authenticated');
       }
@@ -109,7 +120,7 @@ const getAgentSchema = z.object({
   agentId: z.string(),
 });
 
-export const getAgentProcedure = protectedProcedure
+export const getAgentProcedure = permissionProcedure(Permission.AI_AGENT_READ)
   .input(getAgentSchema)
   .query(({ input }) => {
     try {
@@ -136,7 +147,7 @@ const listAgentsSchema = z.object({
   type: z.enum(['voice-assistant', 'receptionist', 'negotiator', 'workflow-automator', 'data-analyst']).optional() as any,
 });
 
-export const listAgentsProcedure = protectedProcedure
+export const listAgentsProcedure = permissionProcedure(Permission.AI_AGENT_READ)
   .input(listAgentsSchema)
   .query(({ input }) => {
     try {
@@ -168,16 +179,21 @@ const endConversationSchema = z.object({
   sessionId: z.string(),
 });
 
-export const endConversationProcedure = protectedProcedure
+export const endConversationProcedure = permissionProcedure(Permission.AI_AGENT_USE)
   .input(endConversationSchema)
-  .mutation(async ({ input, ctx }: { input: z.infer<typeof endConversationSchema>; ctx: any }) => {
+  .mutation(async ({ input, ctx }) => {
     try {
-      const userId = ctx.session?.userId;
+      const userId = ctx.user?.id;
       if (!userId) {
         throw new Error('User not authenticated');
       }
 
-      const success = aiAgentService.endConversation(input.sessionId);
+      const organizationId = ctx.user?.organizationId;
+      if (!organizationId) {
+        throw new Error('User organization not found');
+      }
+
+      const success = await aiAgentService.endConversation(input.sessionId, { organizationId, userId });
 
       if (!success) {
         throw new Error('Failed to end conversation');
@@ -198,20 +214,41 @@ const getConversationHistorySchema = z.object({
   sessionId: z.string(),
 });
 
-export const getConversationHistoryProcedure = protectedProcedure
+export const getConversationHistoryProcedure = permissionProcedure(Permission.AI_AGENT_READ)
   .input(getConversationHistorySchema)
-  .query(({ input }) => {
+  .query(async ({ input, ctx }) => {
     try {
-      const messages = aiAgentService.getConversationHistory(input.sessionId);
+      const userId = ctx.user?.id;
+      if (!userId) {
+        throw new Error('User not authenticated');
+      }
+
+      const organizationId = ctx.user?.organizationId;
+      if (!organizationId) {
+        throw new Error('User organization not found');
+      }
+
+      const inMem = aiAgentService.getConversation(input.sessionId, organizationId);
+      if (inMem) {
+        return {
+          messages: inMem.messages,
+          count: inMem.messages.length,
+        };
+      }
+
+      const history = await aiAgentService.getConversationHistoryDb(input.sessionId, {
+        organizationId,
+      });
 
       return {
-        messages: messages.map(msg => ({
+        messages: history.messages.map(msg => ({
           id: msg.id,
           role: msg.role,
           content: msg.content,
           timestamp: msg.timestamp,
         })),
-        count: messages.length,
+        count: history.messages.length,
+        total: history.total,
       };
     } catch (error: any) {
       console.error('Failed to get conversation history:', error);

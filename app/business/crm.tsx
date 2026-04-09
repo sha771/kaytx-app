@@ -1,3 +1,4 @@
+ 
 import React, { useState } from 'react';
 import {
   View,
@@ -151,30 +152,30 @@ const mockDeals: Deal[] = [
 
 const crmMetrics: CRMMetric[] = [
   {
-    title: 'Total Contacts',
+    title: 'Autonomous Leads',
     value: '1,247',
-    change: '+12%',
+    change: '+15%',
     icon: Users,
     color: '#007AFF',
   },
   {
-    title: 'Active Deals',
-    value: '23',
-    change: '+5%',
+    title: 'Self-Closing Deals',
+    value: '8',
+    change: '+2',
     icon: Target,
     color: '#34C759',
   },
   {
-    title: 'Pipeline Value',
-    value: '$125K',
-    change: '+18%',
+    title: 'Pipeline ROI',
+    value: '$840K',
+    change: '+22%',
     icon: DollarSign,
     color: '#FF9500',
   },
   {
-    title: 'Conversion Rate',
-    value: '24%',
-    change: '+3%',
+    title: 'Lead Velocity',
+    value: '4.2d',
+    change: '-12%',
     icon: TrendingUp,
     color: '#AF52DE',
   },
@@ -217,8 +218,8 @@ export default function CRMScreen() {
 
   const filteredContacts = mockContacts.filter(contact => {
     const matchesSearch = contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         contact.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         contact.email.toLowerCase().includes(searchQuery.toLowerCase());
+      contact.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      contact.email.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesFilter = filterStatus === 'all' || contact.status === filterStatus;
     return matchesSearch && matchesFilter;
   });
@@ -226,7 +227,7 @@ export default function CRMScreen() {
   const renderMetric = ({ item }: { item: CRMMetric }) => {
     const IconComponent = item.icon;
     const isPositive = item.change.startsWith('+');
-    
+
     return (
       <View style={[styles.metricCard, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.metricHeader}>
@@ -282,7 +283,7 @@ export default function CRMScreen() {
           </TouchableOpacity>
         </View>
       </View>
-      
+
       <View style={styles.contactFooter}>
         <View style={styles.tags}>
           {item.tags.map((tag, index) => (
@@ -309,7 +310,7 @@ export default function CRMScreen() {
           ${item.value.toLocaleString()}
         </Text>
       </View>
-      
+
       <View style={styles.dealDetails}>
         <View style={styles.dealStage}>
           <View style={[styles.stageIndicator, { backgroundColor: getStageColor(item.stage) }]} />
@@ -332,14 +333,14 @@ export default function CRMScreen() {
   const renderForecastItem = ({ item }: { item: ForecastItem }) => {
     const projected = item.achieved + (item.pipeline * (item.probability / 100));
     const progress = (item.achieved / item.target) * 100;
-    
+
     return (
       <View style={[styles.forecastCard, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.forecastHeader}>
           <Text style={[styles.forecastMonth, { color: theme.colors.text }]}>{item.month}</Text>
           <Text style={[styles.forecastTarget, { color: theme.colors.secondaryText }]}>Target: ${item.target.toLocaleString()}</Text>
         </View>
-        
+
         <View style={styles.forecastProgress}>
           <View style={[styles.progressBar, { backgroundColor: theme.colors.border }]}>
             <View style={[styles.progressFill, { width: `${Math.min(progress, 100)}%`, backgroundColor: theme.colors.primary }]} />
@@ -380,7 +381,7 @@ export default function CRMScreen() {
           />
         </View>
       </View>
-      
+
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filtersContainer}>
         <View style={styles.filters}>
           {(['all', 'lead', 'prospect', 'customer'] as const).map((filter) => (
@@ -406,7 +407,7 @@ export default function CRMScreen() {
           ))}
         </View>
       </ScrollView>
-      
+
       <FlatList
         data={filteredContacts}
         renderItem={renderContact}
@@ -465,47 +466,64 @@ export default function CRMScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      {/* Header */}
-      <View style={[styles.header, { backgroundColor: theme.colors.background, paddingTop: insets.top + 10 }]}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <ArrowLeft size={24} color={theme.colors.text} />
-        </TouchableOpacity>
-        <Text style={[styles.title, { color: theme.colors.text }]}>CRM</Text>
-        <TouchableOpacity style={styles.headerButton}>
-          <Plus size={20} color={theme.colors.text} />
-        </TouchableOpacity>
+      {/* Unified CRM Header */}
+      <View style={[styles.premiumHeader, { paddingTop: insets.top + 20, backgroundColor: theme.colors.cardBackground }]}>
+        <View style={styles.headerTop}>
+          <TouchableOpacity onPress={() => router.back()}>
+            <ArrowLeft size={24} color={theme.colors.text} />
+          </TouchableOpacity>
+          <Text style={[styles.premiumTitle, { color: theme.colors.text }]}>Autonomous CRM</Text>
+          <TouchableOpacity style={[styles.plusBtn, { backgroundColor: theme.colors.primary }]}>
+            <Plus size={20} color="#fff" />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.headerMetrics}>
+          <View style={styles.hMetric}>
+            <Text style={[styles.hMetricVal, { color: theme.colors.text }]}>2,482</Text>
+            <Text style={[styles.hMetricLab, { color: theme.colors.secondaryText }]}>Synced Contacts</Text>
+          </View>
+          <View style={styles.hMetricDivider} />
+          <View style={styles.hMetric}>
+            <Text style={[styles.hMetricVal, { color: '#34C759' }]}>$450k</Text>
+            <Text style={[styles.hMetricLab, { color: theme.colors.secondaryText }]}>Autonomous Pipeline</Text>
+          </View>
+        </View>
       </View>
 
       {/* Tabs */}
-      <View style={styles.tabsContainer}>
-        {(['contacts', 'deals', 'forecasting', 'analytics'] as const).map((tab) => (
-          <TouchableOpacity
-            key={tab}
-            style={[
-              styles.tab,
-              selectedTab === tab && { backgroundColor: theme.colors.primary },
-            ]}
-            onPress={() => setSelectedTab(tab)}
-          >
-            <Text
+      <View style={styles.tabsWrapper}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.tabsScroll}>
+          {(['contacts', 'deals', 'forecasting', 'analytics'] as const).map((tab) => (
+            <TouchableOpacity
+              key={tab}
               style={[
-                styles.tabText,
-                {
-                  color: selectedTab === tab ? 'white' : theme.colors.secondaryText,
-                },
+                styles.pTab,
+                selectedTab === tab && { backgroundColor: theme.colors.primary },
               ]}
+              onPress={() => setSelectedTab(tab)}
             >
-              {tab.charAt(0).toUpperCase() + tab.slice(1)}
-            </Text>
-          </TouchableOpacity>
-        ))}
+              <Text
+                style={[
+                  styles.pTabText,
+                  {
+                    color: selectedTab === tab ? 'white' : theme.colors.secondaryText,
+                  },
+                ]}
+              >
+                {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
       </View>
 
       {/* Content */}
-      {selectedTab === 'contacts' && renderContacts()}
-      {selectedTab === 'deals' && renderDeals()}
-      {selectedTab === 'forecasting' && renderForecasting()}
-      {selectedTab === 'analytics' && renderAnalytics()}
+      <View style={{ flex: 1 }}>
+        {selectedTab === 'contacts' && renderContacts()}
+        {selectedTab === 'deals' && renderDeals()}
+        {selectedTab === 'forecasting' && renderForecasting()}
+        {selectedTab === 'analytics' && renderAnalytics()}
+      </View>
     </View>
   );
 }
@@ -830,4 +848,77 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
   },
+  premiumHeader: {
+    paddingHorizontal: 20,
+    paddingBottom: 24,
+    borderBottomLeftRadius: 32,
+    borderBottomRightRadius: 32,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 4,
+  },
+  headerTop: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  premiumTitle: {
+    fontSize: 20,
+    fontWeight: '800',
+    flex: 1,
+    textAlign: 'center',
+  },
+  plusBtn: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerMetrics: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 24,
+  },
+  hMetric: {
+    alignItems: 'center',
+  },
+  hMetricVal: {
+    fontSize: 18,
+    fontWeight: '900',
+  },
+  hMetricLab: {
+    fontSize: 9,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+  },
+  hMetricDivider: {
+    width: 1,
+    height: 20,
+    backgroundColor: 'rgba(150,150,150,0.1)',
+  },
+  tabsWrapper: {
+    marginBottom: 16,
+  },
+  tabsScroll: {
+    paddingHorizontal: 20,
+    gap: 8,
+  },
+  pTab: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 16,
+    backgroundColor: 'rgba(150,150,150,0.05)',
+  },
+  pTabText: {
+    fontSize: 12,
+    fontWeight: '800',
+    letterSpacing: 0.5,
+  },
 });
+

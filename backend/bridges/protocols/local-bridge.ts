@@ -13,7 +13,7 @@ export class LocalBridge extends BaseBridge {
   private syncTimer: ReturnType<typeof setInterval> | null = null;
 
   constructor(config: LocalBridgeConfig) {
-    super(config);
+    super({ ...config, protocol: 'local' });
     this.localConfig = config;
   }
 
@@ -135,11 +135,11 @@ export class LocalBridge extends BaseBridge {
         messages = messages.filter(m => m.to === filter.to);
       }
       if (filter.after !== undefined) {
-        messages = messages.filter(m => m.timestamp > filter.after!);
+        messages = messages.filter(m => (m.timestamp ?? 0) > filter.after!);
       }
     }
 
-    return messages.sort((a, b) => a.timestamp - b.timestamp);
+    return messages.sort((a, b) => (a.timestamp ?? 0) - (b.timestamp ?? 0));
   }
 
   clearMessages(): void {

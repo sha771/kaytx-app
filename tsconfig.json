@@ -1,17 +1,92 @@
 {
-  "extends": "expo/tsconfig.base",
   "compilerOptions": {
+    "target": "es2020",
+    "lib": [
+      "es2020",
+      "dom",
+      "dom.iterable"
+    ],
+    "jsx": "react-jsx",
+    "useDefineForClassFields": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": false,
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": false,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": false,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "strictBindCallApply": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "exactOptionalPropertyTypes": false,
+    "noUncheckedIndexedAccess": false,
+    "noImplicitOverride": false,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "@/backend/*": [
+        "./backend/*"
+      ],
+      "@/components/*": [
+        "./components/*"
+      ],
+      "@/providers/*": [
+        "./providers/*"
+      ],
+      "@/utils/*": [
+        "./utils/*"
+      ],
+      "@/lib/*": [
+        "./lib/*"
+      ],
+      "@/constants/*": [
+        "./constants/*"
+      ],
+      "@/types/*": [
+        "./types/*"
+      ],
+      "@/tests/*": [
+        "./tests/*"
+      ],
+      "@/hooks/*": [
+        "./hooks/*"
+      ],
+      "lucide-react-native": [
+        "./__mocks__/lucide-react-native.tsx"
       ]
     }
   },
   "include": [
     "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-  ]
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "coverage",
+    ".expo",
+    "tests",
+    "backend",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx"
+  ],
+  "extends": "expo/tsconfig.base"
 }

@@ -37,7 +37,9 @@ export const refreshTokenProcedure = publicProcedure
     return {
       success: true,
       token: session.token,
+      refreshToken: session.refreshToken,
       expiresAt: session.expiresAt,
+      refreshExpiresAt: session.refreshExpiresAt,
     };
   });
 

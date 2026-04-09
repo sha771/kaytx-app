@@ -1,6 +1,8 @@
+import { z } from 'zod';
 import { protectedProcedure } from '../../../create-context';
 
 export const meProcedure = protectedProcedure
+  .input(z.void().optional())
   .query(async ({ ctx }) => {
     return {
       id: ctx.user.id,
@@ -13,6 +15,8 @@ export const meProcedure = protectedProcedure
       role: ctx.user.role,
       organizationId: ctx.user.organizationId,
       status: ctx.user.status,
+      failedLoginAttempts: ctx.user.failedLoginAttempts,
+      accountLockedUntil: ctx.user.accountLockedUntil,
       createdAt: ctx.user.createdAt,
       lastLoginAt: ctx.user.lastLoginAt,
     };

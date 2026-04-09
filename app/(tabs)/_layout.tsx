@@ -1,6 +1,7 @@
 import { Tabs } from 'expo-router';
+ 
 import React from 'react';
-import { Home, MessageSquare, Layers, Zap, Calendar, MessageCircle, Brain } from 'lucide-react-native';
+import { Home, MessageSquare, Layers, Zap, Calendar, MessageCircle, Brain, Crown } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 
 export default function TabLayout() {
@@ -23,6 +24,13 @@ export default function TabLayout() {
         },
       }}
     >
+      <Tabs.Screen
+        name="command-center"
+        options={{
+          title: 'Command',
+          tabBarIcon: ({ color, size }) => <Crown size={size} color={color} />,
+        }}
+      />
       <Tabs.Screen
         name="home"
         options={{

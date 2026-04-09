@@ -1,58 +1,61 @@
 import { z } from "zod";
-import { publicProcedure } from "../../../create-context";
+import { permissionProcedure } from "../../../create-context";
+import { Permission } from "../../../../lib/rbac";
+import { leadManagementService } from "../../../../services/lead-management-service";
+import { logAudit, AuditActions } from "../../../../lib/audit";
 
-export default publicProcedure
+export default permissionProcedure(Permission.BUSINESS_CRM_READ)
   .input(z.object({ 
-    type: z.enum(['customers', 'leads', 'deals', 'all']).optional()
+    type: z.enum(['customers', 'leads', 'deals', 'all']).optional(),
+    dateRange: z.object({
+      start: z.string().datetime().optional(),
+      end: z.string().datetime().optional(),
+    }).optional(),
   }))
-  .query(({ input }) => {
+  .query(async ({ input, ctx }) => {
     console.log('[CRM] Fetching data', input);
     
-    return {
-      customers: {
-        total: 2450,
-        active: 2180,
-        new: 234,
-        churn: 78,
-        ltv: 1247
-      },
-      leads: {
-        total: 1850,
-        qualified: 980,
-        contacted: 1200,
-        converted: 450,
-        conversionRate: 24.3
-      },
-      deals: {
-        total: 156,
-        won: 89,
-        lost: 34,
-        pending: 33,
-        totalValue: 1245678,
-        avgDealSize: 7985
-      },
-      pipeline: [
-        { stage: 'Prospecting', count: 45, value: 125000 },
-        { stage: 'Qualification', count: 32, value: 98000 },
-        { stage: 'Proposal', count: 28, value: 156000 },
-        { stage: 'Negotiation', count: 18, value: 234000 },
-        { stage: 'Closed Won', count: 89, value: 1245678 }
-      ],
-      recentActivity: [
-        {
-          id: '1',
-          type: 'deal_won',
-          customer: 'Acme Corp',
-          value: 45000,
-          timestamp: new Date().toISOString()
+    const organizationId = ctx.user.organizationId;
+    
+    try {
+      // Get comprehensive CRM data from lead management service
+      const crmData = await leadManagementService.getCRMData({
+        organizationId,
+        type: input.type || 'all',
+        dateRange: input.dateRange,
+      });
+
+      logAudit({
+        userId: ctx.user.id,
+        organizationId,
+        action: AuditActions.DATA_ACCESS,
+        resource: 'crm_data',
+        status: 'success',
+        metadata: { 
+          type: input.type,
+          dateRange: input.dateRange,
         },
-        {
-          id: '2',
-          type: 'lead_qualified',
-          customer: 'TechStart Inc',
-          value: 0,
-          timestamp: new Date(Date.now() - 3600000).toISOString()
-        }
-      ]
-    };
+      });
+
+      return crmData;
+    } catch (error) {
+      console.error('[CRM] Failed to fetch CRM data:', error);
+
+      const message = error instanceof Error ? error.message : String(error);
+      
+      logAudit({
+        userId: ctx.user.id,
+        organizationId,
+        action: AuditActions.DATA_ACCESS,
+        resource: 'crm_data',
+        status: 'failure',
+        severity: 'error',
+        metadata: { 
+          type: input.type,
+          error: message,
+        },
+      });
+
+      throw new Error('Failed to retrieve CRM data');
+    }
   });

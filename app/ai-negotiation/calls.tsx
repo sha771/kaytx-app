@@ -1,3 +1,4 @@
+ 
 import React, { useState, useMemo, useCallback } from 'react';
 import {
   View,
@@ -31,6 +32,7 @@ import { Stack } from 'expo-router';
 import { mockNegotiationCalls } from '@/utils/mockNegotiationData';
 import type { NegotiationCall } from '@/types/negotiation';
 import { useRealtimeCalls } from '@/utils/realtimeCallingService';
+import { trpc } from '@/lib/trpc';
 
 const { width } = Dimensions.get('window');
 
@@ -55,7 +57,11 @@ type BridgeStatus = {
 
 export default function CallsScreen() {
   const { theme } = useTheme();
-  const { activeCalls, metrics, initiateCall, endCall, defaultPhoneNumber } = useRealtimeCalls();
+  // tRPC data fetching
+  const { data: statsData } = trpc.aiAgents.getStats.useQuery({ category: 'negotiation' });
+  const { data: activityData } = trpc.aiAgents.getActivity.useQuery({ category: 'negotiation', limit: 10 });
+  const { data: metricsData } = trpc.calling.getCallMetrics.useQuery();
+  const { activeCalls, metrics: realtimeMetrics, initiateCall, endCall, defaultPhoneNumber } = useRealtimeCalls();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedStatus, setSelectedStatus] = useState<'all' | 'active' | 'completed' | 'scheduled'>('all');
   const [showCallModal, setShowCallModal] = useState<boolean>(false);
@@ -75,12 +81,32 @@ export default function CallsScreen() {
 
   const stats = useMemo(
     () => [
-      { title: 'Active Calls', value: (metrics.activeCalls + callsWithChannels.filter(call => call.status === 'active').length).toString(), icon: PhoneCall, color: '#34C759' },
-      { title: 'Today', value: metrics.totalCalls.toString(), icon: PhoneIncoming, color: '#007AFF' },
-      { title: 'Avg Duration', value: `${Math.floor(metrics.avgDuration / 60)}:${(metrics.avgDuration % 60).toString().padStart(2, '0')}`, icon: Clock, color: '#FF9500' },
-      { title: 'Success Rate', value: `${metrics.successRate}%`, icon: CheckCircle, color: '#AF52DE' },
+      { 
+        title: 'Active Calls', 
+        value: (realtimeMetrics.activeCalls + (statsData?.activeConnections || 0)).toString(), 
+        icon: PhoneCall, 
+        color: '#34C759' 
+      },
+      { 
+        title: 'Today', 
+        value: (metricsData?.totalCalls || realtimeMetrics.totalCalls).toString(), 
+        icon: PhoneIncoming, 
+        color: '#007AFF' 
+      },
+      { 
+        title: 'Avg Duration', 
+        value: metricsData?.avgDuration || `${Math.floor(realtimeMetrics.avgDuration / 60)}:${(realtimeMetrics.avgDuration % 60).toString().padStart(2, '0')}`, 
+        icon: Clock, 
+        color: '#FF9500' 
+      },
+      { 
+        title: 'Success Rate', 
+        value: `${statsData?.avgSuccessRate || realtimeMetrics.successRate}%`, 
+        icon: CheckCircle, 
+        color: '#AF52DE' 
+      },
     ],
-    [callsWithChannels, metrics],
+    [realtimeMetrics, statsData, metricsData],
   );
 
   const liveQueue = useMemo<CallQueueItem[]>(

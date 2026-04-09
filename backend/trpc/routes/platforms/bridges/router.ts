@@ -1,9 +1,11 @@
 import { z } from "zod";
-import { protectedProcedure } from "../../../create-context";
+import { permissionProcedure } from "../../../create-context";
 import { bridgeRegistry } from "./registry";
-import type { BridgeCapability } from "./types";
+import { Permission } from "../../../../lib/rbac";
 
-export const listBridgesProcedure = protectedProcedure.query(async () => {
+export const listBridgesProcedure = permissionProcedure(Permission.BRIDGE_READ)
+  .input(z.object({}).optional())
+  .query(async ({ input }) => {
   const drivers = bridgeRegistry.list();
   return drivers.map((d) => ({
     id: d.id,
@@ -13,9 +15,9 @@ export const listBridgesProcedure = protectedProcedure.query(async () => {
   }));
 });
 
-export const bridgeStatusProcedure = protectedProcedure
+export const bridgeStatusProcedure = permissionProcedure(Permission.BRIDGE_STATUS_READ)
   .input(z.object({ id: z.string() }))
-  .query(async ({ input }: { input: { id: string } }) => {
+  .query(async ({ input }) => {
     const driver = bridgeRegistry.get(input.id);
     if (!driver) {
       throw new Error("Bridge not found");
@@ -23,11 +25,11 @@ export const bridgeStatusProcedure = protectedProcedure
     return bridgeRegistry.getState(input.id);
   });
 
-export const connectBridgeProcedure = protectedProcedure
+export const connectBridgeProcedure = permissionProcedure(Permission.BRIDGE_CONNECT)
   .input(
     z.object({ id: z.string(), config: z.record(z.string(), z.unknown()).default({}) }),
   )
-  .mutation(async ({ input }: { input: { id: string; config: Record<string, unknown> } }) => {
+  .mutation(async ({ input }) => {
     const driver = bridgeRegistry.get(input.id);
     if (!driver) throw new Error("Bridge not found");
     const state = await driver.connect(input.config);
@@ -35,9 +37,9 @@ export const connectBridgeProcedure = protectedProcedure
     return state;
   });
 
-export const disconnectBridgeProcedure = protectedProcedure
+export const disconnectBridgeProcedure = permissionProcedure(Permission.BRIDGE_DISCONNECT)
   .input(z.object({ id: z.string() }))
-  .mutation(async ({ input }: { input: { id: string } }) => {
+  .mutation(async ({ input }) => {
     const driver = bridgeRegistry.get(input.id);
     if (!driver) throw new Error("Bridge not found");
     const state = await driver.disconnect();
@@ -45,10 +47,10 @@ export const disconnectBridgeProcedure = protectedProcedure
     return state;
   });
 
-export const sendTestBridgeProcedure = protectedProcedure
+export const sendTestBridgeProcedure = permissionProcedure(Permission.BRIDGE_CONNECT)
   .input(z.object({ id: z.string(), payload: z.record(z.string(), z.unknown()).optional() }))
-  .mutation(async ({ input }: { input: { id: string; payload?: Record<string, unknown> } }) => {
+  .mutation(async ({ input, ctx }) => {
     const driver = bridgeRegistry.get(input.id);
     if (!driver || !driver.sendTest) throw new Error("Bridge not found or unsupported");
-    return driver.sendTest(input.payload);
+    return driver.sendTest(input.payload ?? {});
   });

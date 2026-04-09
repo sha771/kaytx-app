@@ -1,8 +1,9 @@
 import { z } from 'zod';
-import { protectedProcedure } from '../../../create-context';
+import { permissionProcedure } from '../../../create-context';
+import { Permission } from '../../../../lib/rbac';
 import { platformRegistry } from '../../../../bridges/registry/platform-registry';
 
-export const searchPlatformsProcedure = protectedProcedure
+export const searchPlatformsProcedure = permissionProcedure(Permission.PLATFORM_READ)
   .input(
     z.object({
       query: z.string(),

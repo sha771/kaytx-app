@@ -1,3 +1,4 @@
+ 
 import React, { useState } from 'react';
 import {
   View,
@@ -65,52 +66,36 @@ interface InsightItem {
 
 const analyticsMetrics: AnalyticsMetric[] = [
   {
-    title: 'Total Visitors',
+    title: 'Autonomous Insight',
     value: '24,567',
     change: '+12.5%',
     trend: 'up',
-    icon: Users,
+    icon: Zap,
     color: '#007AFF',
   },
   {
-    title: 'Page Views',
-    value: '89,234',
-    change: '+8.3%',
+    title: 'Predictive Revenue',
+    value: '$840K',
+    change: '+18.2%',
     trend: 'up',
-    icon: Eye,
+    icon: DollarSign,
     color: '#34C759',
   },
   {
-    title: 'Conversion Rate',
-    value: '3.2%',
-    change: '-0.5%',
-    trend: 'down',
-    icon: Target,
+    title: 'Anomalies Detected',
+    value: '0',
+    change: 'Clean',
+    trend: 'neutral',
+    icon: AlertTriangle,
     color: '#FF9500',
   },
   {
-    title: 'Revenue',
-    value: '$45,678',
-    change: '+15.2%',
+    title: 'Data Flow Velocity',
+    value: '1.2 GB/s',
+    change: '+15%',
     trend: 'up',
-    icon: DollarSign,
+    icon: Activity,
     color: '#AF52DE',
-  },
-  {
-    title: 'Bounce Rate',
-    value: '42.1%',
-    change: '-3.2%',
-    trend: 'up',
-    icon: TrendingUp,
-    color: '#FF3B30',
-  },
-  {
-    title: 'Avg Session',
-    value: '2m 34s',
-    change: '+18s',
-    trend: 'up',
-    icon: Clock,
-    color: '#5AC8FA',
   },
 ];
 
@@ -208,7 +193,7 @@ export default function AnalyticsScreen() {
     const IconComponent = item.icon;
     const TrendIcon = item.trend === 'up' ? ArrowUp : item.trend === 'down' ? ArrowDown : Activity;
     const trendColor = item.trend === 'up' ? '#34C759' : item.trend === 'down' ? '#FF3B30' : theme.colors.secondaryText;
-    
+
     return (
       <View style={[styles.metricCard, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.metricHeader}>
@@ -230,7 +215,7 @@ export default function AnalyticsScreen() {
 
   const renderReport = ({ item }: { item: ReportItem }) => {
     const StatusIcon = getStatusIcon(item.status);
-    
+
     return (
       <TouchableOpacity style={[styles.reportCard, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.reportHeader}>
@@ -252,7 +237,7 @@ export default function AnalyticsScreen() {
             </View>
           </View>
         </View>
-        
+
         {item.status === 'ready' && (
           <View style={styles.reportActions}>
             <TouchableOpacity style={[styles.actionButton, { backgroundColor: theme.colors.primary }]}>
@@ -277,11 +262,11 @@ export default function AnalyticsScreen() {
           </View>
         </View>
       </View>
-      
+
       <Text style={[styles.insightDescription, { color: theme.colors.secondaryText }]}>
         {item.description}
       </Text>
-      
+
       <View style={styles.insightRecommendation}>
         <Text style={[styles.recommendationLabel, { color: theme.colors.text }]}>Recommendation:</Text>
         <Text style={[styles.recommendationText, { color: theme.colors.secondaryText }]}>
@@ -317,7 +302,7 @@ export default function AnalyticsScreen() {
           </TouchableOpacity>
         ))}
       </View>
-      
+
       {/* Metrics Grid */}
       <FlatList
         data={analyticsMetrics}
@@ -327,7 +312,7 @@ export default function AnalyticsScreen() {
         scrollEnabled={false}
         contentContainerStyle={styles.metricsContainer}
       />
-      
+
       {/* Chart Placeholder */}
       <View style={[styles.chartCard, { backgroundColor: theme.colors.cardBackground }]}>
         <Text style={[styles.chartTitle, { color: theme.colors.text }]}>Traffic Overview</Text>
@@ -380,7 +365,7 @@ export default function AnalyticsScreen() {
           Active users on your site right now
         </Text>
       </View>
-      
+
       <View style={[styles.realtimeCard, { backgroundColor: theme.colors.cardBackground }]}>
         <Text style={[styles.realtimeTitle, { color: theme.colors.text }]}>Top Pages</Text>
         <View style={styles.pagesList}>
@@ -403,15 +388,33 @@ export default function AnalyticsScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      {/* Header */}
-      <View style={[styles.header, { backgroundColor: theme.colors.background, paddingTop: insets.top + 10 }]}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <ArrowLeft size={24} color={theme.colors.text} />
-        </TouchableOpacity>
-        <Text style={[styles.title, { color: theme.colors.text }]}>Analytics & Performance</Text>
-        <TouchableOpacity style={styles.headerButton}>
-          <Filter size={20} color={theme.colors.text} />
-        </TouchableOpacity>
+      {/* Premium Analysis Header */}
+      <View style={[styles.premiumHeader, { paddingTop: insets.top + 20, backgroundColor: theme.colors.cardBackground }]}>
+        <View style={styles.headerTop}>
+          <TouchableOpacity onPress={() => router.back()}>
+            <ArrowLeft size={24} color={theme.colors.text} />
+          </TouchableOpacity>
+          <Text style={[styles.premiumTitle, { color: theme.colors.text }]}>Insight Core</Text>
+          <TouchableOpacity style={[styles.plusBtn, { backgroundColor: theme.colors.primary }]}>
+            <Download size={20} color="#fff" />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.headerMetrics}>
+          <View style={styles.hMetric}>
+            <Text style={[styles.hMetricVal, { color: theme.colors.text }]}>1.2B</Text>
+            <Text style={[styles.hMetricLab, { color: theme.colors.secondaryText }]}>Points Analyzed</Text>
+          </View>
+          <View style={styles.hMetricDivider} />
+          <View style={styles.hMetric}>
+            <Text style={[styles.hMetricVal, { color: '#34C759' }]}>99.9%</Text>
+            <Text style={[styles.hMetricLab, { color: theme.colors.secondaryText }]}>Signal Faith</Text>
+          </View>
+          <View style={styles.hMetricDivider} />
+          <View style={styles.hMetric}>
+            <Text style={[styles.hMetricVal, { color: theme.colors.primary }]}>Live</Text>
+            <Text style={[styles.hMetricLab, { color: theme.colors.secondaryText }]}>Feed Status</Text>
+          </View>
+        </View>
       </View>
 
       {/* Tabs */}
@@ -440,10 +443,12 @@ export default function AnalyticsScreen() {
       </View>
 
       {/* Content */}
-      {selectedTab === 'overview' && renderOverview()}
-      {selectedTab === 'reports' && renderReports()}
-      {selectedTab === 'insights' && renderInsights()}
-      {selectedTab === 'realtime' && renderRealtime()}
+      <View style={{ flex: 1 }}>
+        {selectedTab === 'overview' && renderOverview()}
+        {selectedTab === 'reports' && renderReports()}
+        {selectedTab === 'insights' && renderInsights()}
+        {selectedTab === 'realtime' && renderRealtime()}
+      </View>
     </View>
   );
 }
@@ -722,5 +727,59 @@ const styles = StyleSheet.create({
   pageViews: {
     fontSize: 14,
     fontWeight: '600',
+  },
+  premiumHeader: {
+    paddingHorizontal: 20,
+    paddingBottom: 24,
+    borderBottomLeftRadius: 32,
+    borderBottomRightRadius: 32,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 4,
+  },
+  headerTop: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  premiumTitle: {
+    fontSize: 20,
+    fontWeight: '800',
+    flex: 1,
+    textAlign: 'center',
+  },
+  plusBtn: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerMetrics: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 24,
+  },
+  hMetric: {
+    alignItems: 'center',
+  },
+  hMetricVal: {
+    fontSize: 18,
+    fontWeight: '900',
+  },
+  hMetricLab: {
+    fontSize: 9,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+  },
+  hMetricDivider: {
+    width: 1,
+    height: 20,
+    backgroundColor: 'rgba(150,150,150,0.1)',
   },
 });

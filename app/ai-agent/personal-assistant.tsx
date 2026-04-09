@@ -1,39 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
 import { User, Calendar, CheckCircle, Clock, Plus, Search, Filter, Bell } from 'lucide-react-native';
-
-const assistantTasks = [
-  { id: 1, title: 'Schedule meeting with John', priority: 'high', status: 'pending', dueDate: '2024-01-15', category: 'scheduling' },
-  { id: 2, title: 'Send follow-up email to Sarah', priority: 'medium', status: 'in-progress', dueDate: '2024-01-14', category: 'communication' },
-  { id: 3, title: 'Prepare quarterly report', priority: 'high', status: 'completed', dueDate: '2024-01-13', category: 'documentation' },
-  { id: 4, title: 'Book restaurant reservation', priority: 'low', status: 'pending', dueDate: '2024-01-16', category: 'personal' },
-];
-
-const upcomingEvents = [
-  { id: 1, title: 'Team Meeting', time: '10:00 AM', date: 'Today', type: 'meeting' },
-  { id: 2, title: 'Client Call', time: '2:30 PM', date: 'Today', type: 'call' },
-  { id: 3, title: 'Project Review', time: '9:00 AM', date: 'Tomorrow', type: 'meeting' },
-];
-
-const quickActions = [
-  { id: 1, title: 'Schedule Meeting', icon: Calendar, color: '#3B82F6' },
-  { id: 2, title: 'Set Reminder', icon: Bell, color: '#F59E0B' },
-  { id: 3, title: 'Add Task', icon: Plus, color: '#10B981' },
-  { id: 4, title: 'Search Contacts', icon: Search, color: '#8B5CF6' },
-];
+import { trpc } from '@/lib/trpc';
+import { useAIAssistant } from '@/providers/AIAssistantProvider';
+import { useTheme } from '@/providers/ThemeProvider';
 
 export default function PersonalAssistantScreen() {
+  const { theme } = useTheme();
+  const { activeAgents } = useAIAssistant();
   const [newTask, setNewTask] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'pending' | 'in-progress' | 'completed'>('all');
 
-  const filteredTasks = assistantTasks.filter(task => {
-    const matchesSearch = task.title.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesFilter = selectedFilter === 'all' || task.status === selectedFilter;
-    return matchesSearch && matchesFilter;
+  // Fetch real data from tRPC
+  const { data: statsData } = trpc.aiAgents.getStats.useQuery({ 
+    category: 'core-intelligence' 
   });
+  const { data: activityData } = trpc.aiAgents.getActivity.useQuery({ 
+    category: 'core-intelligence',
+    limit: 10 
+  });
+  const { meetings } = useAIAssistant();
+
+  const quickActions: { id: string; title: string; icon: any; color: string }[] = [
+    { id: 'qa-calendar', title: 'Schedule', icon: Calendar, color: theme.colors.primary },
+    { id: 'qa-remind', title: 'Reminder', icon: Bell, color: '#FF9500' },
+    { id: 'qa-search', title: 'Search', icon: Search, color: '#34C759' },
+    { id: 'qa-filter', title: 'Filter', icon: Filter, color: '#AF52DE' },
+  ];
+
+  const upcomingEvents = useMemo(() => {
+    return meetings
+      .filter(m => new Date(m.startTime) > new Date() && m.status === 'scheduled')
+      .slice(0, 3)
+      .map(m => ({
+        id: m.id,
+        title: m.title,
+        time: new Date(m.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        date: new Date(m.startTime).toLocaleDateString() === new Date().toLocaleDateString() ? 'Today' : 'Upcoming',
+        type: m.type
+      }));
+  }, [meetings]);
+
+  const filteredTasks = useMemo(() => {
+    const baseTasks = activityData?.activities.map((a: { id: string; action: string; status: string; timestamp: string }) => ({
+      id: a.id,
+      title: a.action,
+      priority: 'medium',
+      status: a.status === 'success' ? 'completed' : 'pending',
+      dueDate: new Date(a.timestamp).toISOString().split('T')[0],
+      category: 'ai-assisted'
+    })) || [];
+
+    return baseTasks.filter((task: { title: string; status: string }) => {
+      const matchesSearch = task.title.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesFilter = selectedFilter === 'all' || task.status === selectedFilter;
+      return matchesSearch && matchesFilter;
+    });
+  }, [activityData, searchQuery, selectedFilter]);
 
   const addTask = () => {
     if (newTask.trim()) {
@@ -155,7 +181,7 @@ export default function PersonalAssistantScreen() {
           </View>
 
           {/* Tasks List */}
-          {filteredTasks.map((task) => (
+          {filteredTasks.map((task: { id: string; title: string; category: string; priority: string; status: string; dueDate: string }) => (
             <View key={task.id} style={styles.taskCard}>
               <View style={styles.taskHeader}>
                 <View style={styles.taskInfo}>
@@ -204,7 +230,7 @@ export default function PersonalAssistantScreen() {
             <View style={styles.suggestionContent}>
               <Text style={styles.suggestionTitle}>Reminder Setup</Text>
               <Text style={styles.suggestionText}>
-                Don't forget about your client presentation tomorrow. Shall I set up preparation reminders?
+                Don&apos;t forget about your client presentation tomorrow. Shall I set up preparation reminders?
               </Text>
             </View>
             <TouchableOpacity style={styles.suggestionAction}>

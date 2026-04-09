@@ -1,3 +1,5 @@
+import { logger } from './production-logger';
+
 interface IPBlockEntry {
   ip: string;
   reason: string;
@@ -13,16 +15,16 @@ export function blockIP(ip: string, reason: string, durationMs?: number): void {
     ip,
     reason,
     blockedAt: Date.now(),
-    expiresAt: durationMs ? Date.now() + durationMs : undefined,
+    ...(durationMs ? { expiresAt: Date.now() + durationMs } : {}),
   };
   
   blockedIPs.set(ip, entry);
-  console.log(`[IP Filter] Blocked IP ${ip}: ${reason}`);
+  logger.info(`[IP Filter] Blocked IP ${ip}`, { reason });
 }
 
 export function unblockIP(ip: string): void {
   blockedIPs.delete(ip);
-  console.log(`[IP Filter] Unblocked IP ${ip}`);
+  logger.info(`[IP Filter] Unblocked IP ${ip}`);
 }
 
 export function isIPBlocked(ip: string): { blocked: boolean; reason?: string } {
@@ -47,12 +49,12 @@ export function isIPBlocked(ip: string): { blocked: boolean; reason?: string } {
 export function whitelistIP(ip: string): void {
   whitelistedIPs.add(ip);
   blockedIPs.delete(ip);
-  console.log(`[IP Filter] Whitelisted IP ${ip}`);
+  logger.info(`[IP Filter] Whitelisted IP ${ip}`);
 }
 
 export function removeFromWhitelist(ip: string): void {
   whitelistedIPs.delete(ip);
-  console.log(`[IP Filter] Removed IP ${ip} from whitelist`);
+  logger.info(`[IP Filter] Removed IP ${ip} from whitelist`);
 }
 
 export function isIPWhitelisted(ip: string): boolean {
@@ -72,10 +74,16 @@ export function isIPInRange(ip: string, range: string): boolean {
     return ip === range;
   }
   
-  const [rangeIP, prefixLength] = range.split('/');
+  const parts = range.split('/');
+  const rangeIP = parts[0];
+  const prefixLength = parts[1];
+  if (typeof rangeIP !== 'string' || typeof prefixLength !== 'string') return false;
   const ipParts = ip.split('.').map(Number);
   const rangeParts = rangeIP.split('.').map(Number);
   const prefix = parseInt(prefixLength, 10);
+  if (!Number.isFinite(prefix)) {
+    return false;
+  }
   
   const ipBinary = ipParts.reduce((acc, part) => acc * 256 + part, 0);
   const rangeBinary = rangeParts.reduce((acc, part) => acc * 256 + part, 0);

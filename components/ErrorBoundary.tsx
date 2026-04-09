@@ -18,7 +18,6 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
     super(props);
     this.state = {
       hasError: false,
-      errorMessage: undefined,
     };
   }
 
@@ -27,20 +26,20 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
     return { hasError: true, errorMessage: error.message };
   }
 
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+  override componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     console.error('[ErrorBoundary] component stack', errorInfo.componentStack);
   }
 
   private handleReset = () => {
     console.log('[ErrorBoundary] reset triggered');
-    this.setState({ hasError: false, errorMessage: undefined }, () => {
+    this.setState({ hasError: false }, () => {
       if (this.props.onReset) {
         this.props.onReset();
       }
     });
   };
 
-  render() {
+  override render() {
     if (this.state.hasError) {
       return (
         <View style={styles.fallback} testID={this.props.testID ?? 'error-boundary-fallback'}>

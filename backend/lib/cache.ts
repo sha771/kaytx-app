@@ -1,14 +1,31 @@
 import Redis from 'ioredis';
+import { logger } from './production-logger';
 
-const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
-const isMockMode = !process.env.REDIS_URL || process.env.USE_MOCK_REDIS === 'true';
+const nodeEnv = process.env.NODE_ENV || 'development';
+const isProduction = nodeEnv === 'production';
+
+const redisUrl = process.env.REDIS_URL;
+if (isProduction && !redisUrl) {
+  throw new Error('REDIS_URL is required in production');
+}
+
+const isMockMode = !isProduction && process.env.USE_MOCK_REDIS === 'true';
+
+// SECURITY: Never allow mock mode in production
+if (isMockMode && process.env.NODE_ENV === 'production') {
+  throw new Error('Mock Redis mode is not allowed in production');
+}
 
 let redisInstance: Redis | null = null;
 
 export function getRedis() {
   if (isMockMode) {
-    console.log('[Redis] Running in mock mode');
+    logger.warn('[Redis] Running in mock mode (USE_MOCK_REDIS=true)');
     return null;
+  }
+
+  if (!redisUrl) {
+    throw new Error('REDIS_URL is required. Set USE_MOCK_REDIS=true for development without Redis.');
   }
 
   if (!redisInstance) {
@@ -21,11 +38,11 @@ export function getRedis() {
     });
 
     redisInstance.on('connect', () => {
-      console.log('[Redis] Connected successfully');
+      logger.info('[Redis] Connected successfully');
     });
 
     redisInstance.on('error', (err) => {
-      console.error('[Redis] Connection error:', err);
+      logger.error('[Redis] Connection error', err instanceof Error ? err : undefined, { error: err });
     });
   }
 
@@ -43,6 +60,9 @@ export class CacheService {
 
   async get<T>(key: string): Promise<T | null> {
     if (!this.redis) {
+      if (isProduction) {
+        throw new Error('CRITICAL: Redis instance unavailable in production');
+      }
       return null;
     }
 
@@ -50,13 +70,17 @@ export class CacheService {
       const data = await this.redis.get(key);
       return data ? JSON.parse(data) : null;
     } catch (error) {
-      console.error('[Cache] Get error:', error);
+      logger.error('[Cache] Get error', error instanceof Error ? error : undefined, { error });
+      if (isProduction) throw error;
       return null;
     }
   }
 
   async set(key: string, value: any, expirationSeconds?: number): Promise<void> {
     if (!this.redis) {
+      if (isProduction) {
+        throw new Error('CRITICAL: Redis instance unavailable in production');
+      }
       return;
     }
 
@@ -68,19 +92,22 @@ export class CacheService {
         await this.redis.set(key, serialized);
       }
     } catch (error) {
-      console.error('[Cache] Set error:', error);
+      logger.error('[Cache] Set error', error instanceof Error ? error : undefined, { error });
+      if (isProduction) throw error;
     }
   }
 
-  async del(key: string): Promise<void> {
+  async del(key: string): Promise<boolean> {
     if (!this.redis) {
-      return;
+      return false;
     }
 
     try {
-      await this.redis.del(key);
+      const result = await this.redis.del(key);
+      return result > 0;
     } catch (error) {
-      console.error('[Cache] Delete error:', error);
+      logger.error('[Cache] Delete error', error instanceof Error ? error : undefined, { error });
+      return false;
     }
   }
 
@@ -92,7 +119,7 @@ export class CacheService {
     try {
       return await this.redis.keys(pattern);
     } catch (error) {
-      console.error('[Cache] Keys error:', error);
+      logger.error('[Cache] Keys error', error instanceof Error ? error : undefined, { error });
       return [];
     }
   }
@@ -108,7 +135,7 @@ export class CacheService {
         await this.redis.del(...keys);
       }
     } catch (error) {
-      console.error('[Cache] Flush pattern error:', error);
+      logger.error('[Cache] Flush pattern error', error instanceof Error ? error : undefined, { error });
     }
   }
 }

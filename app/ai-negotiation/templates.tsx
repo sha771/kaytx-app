@@ -1,3 +1,4 @@
+ 
 import React, { useState } from 'react';
 import {
   View,
@@ -33,7 +34,7 @@ export default function TemplatesScreen() {
   const [filterType, setFilterType] = useState<'all' | NegotiationTemplate['type']>('all');
   const [showAddModal, setShowAddModal] = useState(false);
 
-  const filteredTemplates = mockNegotiationTemplates.filter((template) => {
+  const filteredTemplates = mockNegotiationTemplates.filter((template: NegotiationTemplate) => {
     const matchesSearch = template.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           template.content.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesType = filterType === 'all' || template.type === filterType;
@@ -71,8 +72,13 @@ export default function TemplatesScreen() {
   };
 
   const totalTemplates = mockNegotiationTemplates.length;
-  const avgSuccessRate = mockNegotiationTemplates.reduce((sum, t) => sum + t.successRate, 0) / totalTemplates;
-  const totalUsage = mockNegotiationTemplates.reduce((sum, t) => sum + t.timesUsed, 0);
+  const avgSuccessRate =
+    mockNegotiationTemplates.reduce((sum: number, t: NegotiationTemplate) => sum + t.successRate, 0) /
+    totalTemplates;
+  const totalUsage = mockNegotiationTemplates.reduce(
+    (sum: number, t: NegotiationTemplate) => sum + t.timesUsed,
+    0,
+  );
 
   return (
     <>
@@ -182,7 +188,7 @@ export default function TemplatesScreen() {
                 <View style={styles.variablesSection}>
                   <Text style={styles.variablesLabel}>Variables:</Text>
                   <View style={styles.variablesList}>
-                    {template.variables.slice(0, 3).map((variable, index) => (
+                    {template.variables.slice(0, 3).map((variable: string, index: number) => (
                       <View key={index} style={styles.variableChip}>
                         <Text style={styles.variableText}>{`{{${variable}}}`}</Text>
                       </View>
@@ -262,22 +268,21 @@ export default function TemplatesScreen() {
 
                 <View style={styles.modalSection}>
                   <Text style={styles.modalSectionTitle}>Available Variables</Text>
-                  <View style={styles.variablesCard}>
-                    <Text style={styles.variablesHelp}>
-                      Use these placeholders in your template. They will be automatically replaced with actual values.
-                    </Text>
-                    <View style={styles.modalVariablesList}>
-                      {selectedTemplate.variables.map((variable, index) => (
-                        <View key={index} style={styles.modalVariableItem}>
-                          <View style={styles.modalVariableChip}>
-                            <Text style={styles.modalVariableText}>{`{{${variable}}}`}</Text>
-                          </View>
-                          <TouchableOpacity style={styles.copyVariableButton}>
-                            <Copy size={14} color="#007AFF" />
-                          </TouchableOpacity>
+                  <Text style={styles.modalVariablesTitle}>Available Variables</Text>
+                  <Text style={styles.modalVariablesDescription}>
+                    Use these placeholders in your template. They will be automatically replaced with actual values.
+                  </Text>
+                  <View style={styles.modalVariablesList}>
+                    {selectedTemplate.variables.map((variable: string, index: number) => (
+                      <View key={index} style={styles.modalVariableItem}>
+                        <View style={styles.modalVariableChip}>
+                          <Text style={styles.modalVariableText}>{`{{${variable}}}`}</Text>
                         </View>
-                      ))}
-                    </View>
+                        <TouchableOpacity style={styles.copyVariableButton}>
+                          <Copy size={14} color="#007AFF" />
+                        </TouchableOpacity>
+                      </View>
+                    ))}
                   </View>
                 </View>
 

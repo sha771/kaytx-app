@@ -1,7 +1,10 @@
-import { publicProcedure } from "../../../create-context";
+import { z } from "zod";
+import { permissionProcedure } from "../../../create-context";
+import { Permission } from "../../../../lib/rbac";
 
-export default publicProcedure
-  .query(() => {
+export default permissionProcedure(Permission.SECURITY_SETTINGS_READ)
+  .input(z.object({}).optional())
+  .query(({ input }) => {
     console.log('[Security] Fetching security settings');
     
     return {

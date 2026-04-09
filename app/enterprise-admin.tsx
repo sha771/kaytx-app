@@ -1,3 +1,4 @@
+ 
 import React, { useState } from 'react';
 import {
   View,
@@ -6,35 +7,26 @@ import {
   ScrollView,
   TouchableOpacity,
   FlatList,
-  TextInput,
   Image,
   Switch,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
-  Building2,
   Users,
-  BarChart3,
-  TrendingUp,
   DollarSign,
   Shield,
   Settings,
   Bell,
   Database,
-  Activity,
-  Clock,
-  Target,
-  Zap,
-  AlertTriangle,
-  CheckCircle,
   ArrowLeft,
-  Plus,
-  Filter,
-  Download,
-  Search,
+  Activity,
+  Zap,
+  CheckCircle,
+  AlertTriangle,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
+import { trpc } from '@/lib/trpc';
 
 interface EnterpriseMetric {
   title: string;
@@ -184,9 +176,12 @@ export default function EnterpriseAdminScreen() {
   const { theme } = useTheme();
   const insets = useSafeAreaInsets();
   const [selectedTab, setSelectedTab] = useState<'overview' | 'users' | 'system' | 'security'>('overview');
-  const [searchQuery, setSearchQuery] = useState<string>('');
   const [maintenanceMode, setMaintenanceMode] = useState<boolean>(false);
   const [realTimeMonitoring, setRealTimeMonitoring] = useState<boolean>(true);
+
+  // tRPC queries
+  trpc.enterprise.auditLogs.useQuery({ limit: 10 });
+  trpc.enterprise.organization.get.useQuery();
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -222,7 +217,7 @@ export default function EnterpriseAdminScreen() {
   const renderMetric = ({ item }: { item: EnterpriseMetric }) => {
     const IconComponent = item.icon;
     const isPositive = item.change.startsWith('+');
-    
+
     return (
       <View style={[styles.metricCard, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.metricHeader}>
@@ -242,7 +237,7 @@ export default function EnterpriseAdminScreen() {
   const renderSystemStatus = ({ item }: { item: SystemStatus }) => {
     const statusColor = getStatusColor(item.status);
     const StatusIcon = getStatusIcon(item.status);
-    
+
     return (
       <View style={[styles.statusCard, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.statusHeader}>
@@ -256,7 +251,7 @@ export default function EnterpriseAdminScreen() {
             </View>
           </View>
         </View>
-        
+
         <View style={styles.statusMetrics}>
           <View style={styles.statusMetric}>
             <Text style={[styles.statusMetricLabel, { color: theme.colors.secondaryText }]}>Uptime</Text>
@@ -277,7 +272,7 @@ export default function EnterpriseAdminScreen() {
 
   const renderUserActivity = ({ item }: { item: UserActivity }) => {
     const typeColor = getActivityTypeColor(item.type);
-    
+
     return (
       <View style={[styles.activityCard, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.activityHeader}>
@@ -322,7 +317,7 @@ export default function EnterpriseAdminScreen() {
             thumbColor={maintenanceMode ? '#f4f3f4' : '#f4f3f4'}
           />
         </View>
-        
+
         <View style={styles.controlItem}>
           <View style={styles.controlInfo}>
             <Text style={[styles.controlTitle, { color: theme.colors.text }]}>Real-time Monitoring</Text>
@@ -411,19 +406,32 @@ export default function EnterpriseAdminScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      {/* Header */}
-      <View style={[styles.header, { backgroundColor: theme.colors.background, paddingTop: insets.top + 10 }]}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <ArrowLeft size={24} color={theme.colors.text} />
-        </TouchableOpacity>
-        <Text style={[styles.title, { color: theme.colors.text }]}>Enterprise Admin</Text>
-        <View style={styles.headerActions}>
-          <TouchableOpacity style={styles.headerButton}>
-            <Bell size={20} color={theme.colors.text} />
+      {/* Premium Enterprise Admin Header */}
+      <View style={[styles.premiumHeader, { paddingTop: insets.top + 20, backgroundColor: theme.colors.cardBackground }]}>
+        <View style={styles.headerTop}>
+          <TouchableOpacity onPress={() => router.back()}>
+            <ArrowLeft size={24} color={theme.colors.text} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.headerButton}>
-            <Settings size={20} color={theme.colors.text} />
+          <Text style={[styles.premiumTitle, { color: theme.colors.text }]}>Admin Command</Text>
+          <TouchableOpacity style={[styles.plusBtn, { backgroundColor: theme.colors.primary }]}>
+            <Bell size={20} color="#fff" />
           </TouchableOpacity>
+        </View>
+        <View style={styles.headerMetrics}>
+          <View style={styles.hMetric}>
+            <Text style={[styles.hMetricVal, { color: theme.colors.text }]}>2,847</Text>
+            <Text style={[styles.hMetricLab, { color: theme.colors.secondaryText }]}>Total Nodes</Text>
+          </View>
+          <View style={styles.hMetricDivider} />
+          <View style={styles.hMetric}>
+            <Text style={[styles.hMetricVal, { color: '#34C759' }]}>99.9%</Text>
+            <Text style={[styles.hMetricLab, { color: theme.colors.secondaryText }]}>Uptime Sync</Text>
+          </View>
+          <View style={styles.hMetricDivider} />
+          <View style={styles.hMetric}>
+            <Text style={[styles.hMetricVal, { color: theme.colors.primary }]}>98/100</Text>
+            <Text style={[styles.hMetricLab, { color: theme.colors.secondaryText }]}>Security</Text>
+          </View>
         </View>
       </View>
 
@@ -623,12 +631,71 @@ const styles = StyleSheet.create({
   activityTimestamp: {
     fontSize: 12,
   },
+  premiumHeader: {
+    paddingHorizontal: 20,
+    paddingBottom: 24,
+    borderBottomLeftRadius: 32,
+    borderBottomRightRadius: 32,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.05,
+    shadowRadius: 15,
+    elevation: 10,
+    zIndex: 10,
+    marginBottom: 20,
+  },
+  headerTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  premiumTitle: {
+    fontSize: 22,
+    fontWeight: '800',
+    letterSpacing: -0.5,
+  },
+  headerMetrics: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+  },
+  hMetric: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  hMetricVal: {
+    fontSize: 18,
+    fontWeight: '800',
+    letterSpacing: -0.5,
+  },
+  hMetricLab: {
+    fontSize: 10,
+    fontWeight: '700',
+    marginTop: 2,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  hMetricDivider: {
+    width: 1,
+    height: 24,
+    backgroundColor: 'rgba(150,150,150,0.1)',
+  },
+  plusBtn: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   statusList: {
     gap: 12,
   },
   statusCard: {
     padding: 16,
     borderRadius: 12,
+    marginBottom: 12,
   },
   statusHeader: {
     marginBottom: 12,

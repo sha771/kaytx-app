@@ -1,79 +1,57 @@
-import { Conversation, Message } from '@/types/messaging';
+import type { Conversation, Message, ServiceType } from '@/types/messaging';
 
-const mockMessages: Message[] = [
-  {
-    id: '1',
-    text: 'Hey! How are you doing?',
-    timestamp: '10:30 AM',
-    isOwn: false,
-    isRead: true,
-  },
-  {
-    id: '2',
-    text: "I'm doing great! Just working on some new features. How about you?",
-    timestamp: '10:32 AM',
-    isOwn: true,
-    isRead: true,
-  },
-  {
-    id: '3',
-    text: 'Same here! Working on the unified messaging platform.',
-    timestamp: '10:33 AM',
-    isOwn: false,
-    isRead: true,
-  },
-  {
-    id: '4',
-    text: "That sounds interesting! I'd love to hear more about it.",
-    timestamp: '10:35 AM',
-    isOwn: true,
-    isRead: true,
-  },
-  {
-    id: '5',
-    text: "Sure! It's like Beeper - brings all your messages into one place.",
-    timestamp: '10:36 AM',
-    isOwn: false,
-    isRead: true,
-  },
-];
+const makeMessage = (id: string, text: string, isOwn: boolean, isRead: boolean, timestamp: string): Message => ({
+  id,
+  text,
+  timestamp,
+  isOwn,
+  isRead,
+});
+
+const makeConversation = (
+  id: string,
+  name: string,
+  service: ServiceType,
+  messages: Message[],
+  opts?: Partial<Omit<Conversation, 'id' | 'name' | 'service' | 'messages' | 'lastMessage' | 'timestamp' | 'unreadCount'>>
+): Conversation => {
+  const last = messages[messages.length - 1];
+  return {
+    id,
+    name,
+    avatar: `https://i.pravatar.cc/150?u=${encodeURIComponent(name)}`,
+    lastMessage: last?.text ?? '',
+    timestamp: last?.timestamp ?? 'now',
+    unreadCount: messages.filter((m) => !m.isOwn && !m.isRead).length,
+    isOnline: opts?.isOnline ?? true,
+    isPinned: opts?.isPinned ?? false,
+    isMuted: opts?.isMuted ?? false,
+    service,
+    messages,
+  };
+};
 
 export const generateMockConversations = (): Conversation[] => {
-  const names = [
-    'Alice Johnson', 'Bob Smith', 'Charlie Brown', 'Diana Prince',
-    'Ethan Hunt', 'Fiona Apple', 'George Lucas', 'Hannah Montana',
-    'Ian McKellen', 'Julia Roberts', 'Kevin Hart', 'Lisa Simpson',
+  const now = new Date();
+  const t1 = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+  const conv1Messages: Message[] = [
+    makeMessage('m1', 'Hey! Can you share the latest update?', false, false, t1),
+    makeMessage('m2', 'Sure — I will send it in a minute.', true, true, t1),
   ];
 
-  const services: Conversation['service'][] = [
-    'whatsapp', 'telegram', 'instagram', 'discord', 'slack',
-    'twitter', 'linkedin', 'messenger', 'signal', 'imessage',
+  const conv2Messages: Message[] = [
+    makeMessage('m3', 'Reminder: meeting at 3pm.', false, true, t1),
+    makeMessage('m4', 'Got it, thanks!', true, true, t1),
   ];
 
-  const lastMessages = [
-    'Hey! How are you?',
-    'Can we meet tomorrow?',
-    'Thanks for your help!',
-    'See you later!',
-    'Great work on the project',
-    'Let me know when you\'re free',
-    'Just sent you the files',
-    'Happy birthday! 🎉',
-    'Are you coming to the meeting?',
-    'Check out this link',
+  const conv3Messages: Message[] = [
+    makeMessage('m5', 'Can we schedule a call tomorrow?', false, false, t1),
   ];
 
-  return names.map((name, index) => ({
-    id: `conv-${index}`,
-    name,
-    avatar: `https://i.pravatar.cc/150?img=${index + 1}`,
-    lastMessage: lastMessages[index % lastMessages.length],
-    timestamp: index === 0 ? 'now' : index < 3 ? `${index}m` : index < 6 ? `${index}h` : `${index - 5}d`,
-    unreadCount: index < 3 ? Math.floor(Math.random() * 5) : 0,
-    isOnline: index < 4,
-    isPinned: index < 2,
-    isMuted: false,
-    service: services[index % services.length],
-    messages: [...mockMessages],
-  }));
+  return [
+    makeConversation('c1', 'Sarah', 'whatsapp', conv1Messages, { isOnline: true }),
+    makeConversation('c2', 'Mike', 'telegram', conv2Messages, { isOnline: false }),
+    makeConversation('c3', 'Emma', 'instagram', conv3Messages, { isOnline: true }),
+  ];
 };
