@@ -1,0 +1,202 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: istio-system
+  labels:
+    istio-injection: disabled
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kaytx
+  labels:
+    istio-injection: enabled
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: istio-base
+  namespace: istio-system
+spec:
+  chart: base
+  repo: https://istio-release.storage.googleapis.com/charts
+  targetNamespace: istio-system
+  version: "1.19.0"
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: istiod
+  namespace: istio-system
+spec:
+  chart: istiod
+  repo: https://istio-release.storage.googleapis.com/charts
+  targetNamespace: istio-system
+  version: "1.19.0"
+  valuesContent: |
+    pilot:
+      autoscaleEnabled: true
+      autoscaleMin: 1
+      autoscaleMax: 5
+      resources:
+        requests:
+          cpu: 500m
+          memory: 2048Mi
+        limits:
+          cpu: 1000m
+          memory: 4096Mi
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: istio-ingress
+  namespace: istio-system
+spec:
+  chart: gateway
+  repo: https://istio-release.storage.googleapis.com/charts
+  targetNamespace: istio-system
+  version: "1.19.0"
+  valuesContent: |
+    service:
+      type: LoadBalancer
+      ports:
+      - name: http2
+        port: 80
+        targetPort: 80
+      - name: https
+        port: 443
+        targetPort: 8443
+    autoscaling:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 3
+      targetCPUUtilizationPercentage: 80
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: kaytx-gateway
+  namespace: kaytx
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - kaytx.example.com
+    - api.kaytx.example.com
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: kaytx-tls
+    hosts:
+    - kaytx.example.com
+    - api.kaytx.example.com
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: kaytx-vs
+  namespace: kaytx
+spec:
+  hosts:
+  - kaytx.example.com
+  - api.kaytx.example.com
+  gateways:
+  - kaytx-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /api
+    route:
+    - destination:
+        host: kaytx-backend
+        port:
+          number: 3001
+    timeout: 30s
+    retries:
+      attempts: 3
+      perTryTimeout: 10s
+  - route:
+    - destination:
+        host: kaytx-frontend
+        port:
+          number: 3000
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: kaytx-backend-dr
+  namespace: kaytx
+spec:
+  host: kaytx-backend
+  trafficPolicy:
+    loadBalancer:
+      simple: LEAST_CONN
+    connectionPool:
+      tcp:
+        maxConnections: 100
+      http:
+        http1MaxPendingRequests: 50
+        maxRequestsPerConnection: 10
+    circuitBreaker:
+      consecutiveErrors: 3
+      interval: 30s
+      baseEjectionTime: 30s
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: kaytx-authz
+  namespace: kaytx
+spec:
+  selector:
+    matchLabels:
+      app: kaytx-backend
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account"]
+  - to:
+    - operation:
+        methods: ["GET", "POST", "PUT", "DELETE"]
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: kaytx-peer-auth
+  namespace: kaytx
+spec:
+  mtls:
+    mode: STRICT
+---
+apiVersion: telemetry.istio.io/v1alpha1
+kind: Telemetry
+metadata:
+  name: kaytx-metrics
+  namespace: kaytx
+spec:
+  metrics:
+  - providers:
+    - name: prometheus
+  overrides:
+  - match:
+      metric: ALL_METRICS
+    tagOverrides:
+      destination_service:
+        value: "destination.service.name"
+      source_workload:
+        value: "source.workload.name"

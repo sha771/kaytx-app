@@ -1,0 +1,12 @@
+[Unit]
+Description=Kaytx Log Cleanup Timer
+Requires=kaytx-log-cleanup.service
+After=network.target
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+RandomizedDelaySec=300  # Random delay up to 5 minutes to prevent load spikes
+
+[Install]
+WantedBy=timers.target

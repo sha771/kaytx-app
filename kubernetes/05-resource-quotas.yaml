@@ -1,0 +1,145 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kaytx
+  labels:
+    name: kaytx
+    environment: production
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: kaytx-quota
+  namespace: kaytx
+spec:
+  hard:
+    requests.cpu: "10"
+    requests.memory: 20Gi
+    limits.cpu: "20"
+    limits.memory: 40Gi
+    persistentvolumeclaims: "10"
+    requests.storage: 500Gi
+    count/pods: "50"
+    count/services: "20"
+    count/secrets: "20"
+    count/configmaps: "20"
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: kaytx-limits
+  namespace: kaytx
+spec:
+  limits:
+  - default:
+      cpu: "500m"
+      memory: "512Mi"
+    defaultRequest:
+      cpu: "100m"
+      memory: "128Mi"
+    type: Container
+  - max:
+      cpu: "2"
+      memory: "4Gi"
+    min:
+      cpu: "50m"
+      memory: "64Mi"
+    type: Container
+  - max:
+      storage: 10Gi
+    min:
+      storage: 1Gi
+    type: PersistentVolumeClaim
+---
+apiVersion: policy/v1
+kind: PodSecurityPolicy
+metadata:
+  name: kaytx-psp
+  namespace: kaytx
+spec:
+  privileged: false
+  allowPrivilegeEscalation: false
+  requiredDropCapabilities:
+    - ALL
+  volumes:
+    - 'configMap'
+    - 'emptyDir'
+    - 'projected'
+    - 'secret'
+    - 'downwardAPI'
+    - 'persistentVolumeClaim'
+  runAsUser:
+    rule: 'MustRunAsNonRoot'
+  seLinux:
+    rule: 'RunAsAny'
+  fsGroup:
+    rule: 'RunAsAny'
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: kaytx-deny-all
+  namespace: kaytx
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: kaytx-allow-same-namespace
+  namespace: kaytx
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: kaytx
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: kaytx
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: kaytx-allow-dns
+  namespace: kaytx
+spec:
+  podSelector: {}
+  policyTypes:
+  - Egress
+  egress:
+  - to: []
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: kaytx-allow-ingress
+  namespace: kaytx
+spec:
+  podSelector:
+    matchLabels:
+      app: kaytx-backend
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    ports:
+    - protocol: TCP
+      port: 3001

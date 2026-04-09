@@ -1,0 +1,593 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: backup-secrets
+  namespace: kaytx
+type: Opaque
+stringData:
+  AWS_ACCESS_KEY_ID: "your-aws-access-key"
+  AWS_SECRET_ACCESS_KEY: "your-aws-secret-key"
+  AWS_DEFAULT_REGION: "us-east-1"
+  S3_BUCKET: "kaytx-backups"
+  POSTGRES_PASSWORD: "secure_password"
+  REDIS_PASSWORD: "redis_secure_password_change_me"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backup-scripts
+  namespace: kaytx
+data:
+  postgres-backup.sh: |
+    #!/bin/bash
+    set -euo pipefail
+    
+    TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+    BACKUP_FILE="postgres_backup_${TIMESTAMP}.sql"
+    COMPRESSED_FILE="postgres_backup_${TIMESTAMP}.sql.gz"
+    
+    echo "Starting PostgreSQL backup at $(date)"
+    
+    # Create backup
+    pg_dump -h postgres -U kaytx_user -d kaytx > "/tmp/${BACKUP_FILE}"
+    
+    # Compress backup
+    gzip "/tmp/${BACKUP_FILE}"
+    
+    # Upload to S3
+    aws s3 cp "/tmp/${COMPRESSED_FILE}" "s3://${S3_BUCKET}/postgres/${COMPRESSED_FILE}"
+    
+    # Clean up local files
+    rm -f "/tmp/${COMPRESSED_FILE}"
+    
+    # Keep only last 30 days of backups
+    aws s3 ls "s3://${S3_BUCKET}/postgres/" | while read -r line; do
+      createDate=$(echo "$line" | awk '{print $1" "$2}')
+      createDate=$(date -d "$createDate" +%s)
+      olderThan=$(date -d "30 days ago" +%s)
+      if [[ $createDate -lt $olderThan ]]; then
+        fileName=$(echo "$line" | awk '{print $4}')
+        if [[ $fileName != "" ]]; then
+          aws s3 rm "s3://${S3_BUCKET}/postgres/$fileName"
+        fi
+      fi
+    done
+    
+    echo "PostgreSQL backup completed at $(date)"
+  
+  redis-backup.sh: |
+    #!/bin/bash
+    set -euo pipefail
+    
+    TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+    BACKUP_FILE="redis_backup_${TIMESTAMP}.rdb"
+    
+    echo "Starting Redis backup at $(date)"
+    
+    # Trigger Redis BGSAVE
+    redis-cli -h redis -a "$REDIS_PASSWORD" BGSAVE
+    
+    # Wait for backup to complete
+    while true; do
+      LASTSAVE=$(redis-cli -h redis -a "$REDIS_PASSWORD" LASTSAVE)
+      CURRENT=$(redis-cli -h redis -a "$REDIS_PASSWORD" LASTSAVE)
+      if [ "$LASTSAVE" -eq "$CURRENT" ]; then
+        sleep 1
+      else
+        break
+      fi
+    done
+    
+    # Copy RDB file from Redis container
+    kubectl cp kaytx/$(kubectl get pods -n kaytx -l app=redis -o jsonpath='{.items[0].metadata.name}'):/data/dump.rdb "/tmp/${BACKUP_FILE}"
+    
+    # Compress backup
+    gzip "/tmp/${BACKUP_FILE}"
+    
+    # Upload to S3
+    aws s3 cp "/tmp/${BACKUP_FILE}.gz" "s3://${S3_BUCKET}/redis/${BACKUP_FILE}.gz"
+    
+    # Clean up local files
+    rm -f "/tmp/${BACKUP_FILE}.gz"
+    
+    # Keep only last 30 days of backups
+    aws s3 ls "s3://${S3_BUCKET}/redis/" | while read -r line; do
+      createDate=$(echo "$line" | awk '{print $1" "$2}')
+      createDate=$(date -d "$createDate" +%s)
+      olderThan=$(date -d "30 days ago" +%s)
+      if [[ $createDate -lt $olderThan ]]; then
+        fileName=$(echo "$line" | awk '{print $4}')
+        if [[ $fileName != "" ]]; then
+          aws s3 rm "s3://${S3_BUCKET}/redis/$fileName"
+        fi
+      fi
+    done
+    
+    echo "Redis backup completed at $(date)"
+  
+  restore-postgres.sh: |
+    #!/bin/bash
+    set -euo pipefail
+    
+    if [ $# -ne 1 ]; then
+      echo "Usage: $0 <backup_file>"
+      exit 1
+    fi
+    
+    BACKUP_FILE=$1
+    RESTORE_FILE="/tmp/restore_$(date +%Y%m%d_%H%M%S).sql"
+    
+    echo "Starting PostgreSQL restore from ${BACKUP_FILE} at $(date)"
+    
+    # Download backup from S3
+    aws s3 cp "s3://${S3_BUCKET}/postgres/${BACKUP_FILE}" "/tmp/${BACKUP_FILE}"
+    
+    # Decompress if needed
+    if [[ $BACKUP_FILE == *.gz ]]; then
+      gunzip -c "/tmp/${BACKUP_FILE}" > "${RESTORE_FILE}"
+    else
+      cp "/tmp/${BACKUP_FILE}" "${RESTORE_FILE}"
+    fi
+    
+    # Restore database
+    psql -h postgres -U kaytx_user -d kaytx < "${RESTORE_FILE}"
+    
+    # Clean up
+    rm -f "/tmp/${BACKUP_FILE}" "${RESTORE_FILE}"
+    
+    echo "PostgreSQL restore completed at $(date)"
+  
+  restore-redis.sh: |
+    #!/bin/bash
+    set -euo pipefail
+    
+    if [ $# -ne 1 ]; then
+      echo "Usage: $0 <backup_file>"
+      exit 1
+    fi
+    
+    BACKUP_FILE=$1
+    
+    echo "Starting Redis restore from ${BACKUP_FILE} at $(date)"
+    
+    # Download backup from S3
+    aws s3 cp "s3://${S3_BUCKET}/redis/${BACKUP_FILE}" "/tmp/${BACKUP_FILE}"
+    
+    # Decompress if needed
+    if [[ $BACKUP_FILE == *.gz ]]; then
+      gunzip "/tmp/${BACKUP_FILE}"
+      BACKUP_FILE="${BACKUP_FILE%.gz}"
+    fi
+    
+    # Stop Redis
+    kubectl scale deployment redis --replicas=0 -n kaytx
+    
+    # Wait for pod to terminate
+    kubectl wait --for=delete pod -l app=redis -n kaytx --timeout=300s
+    
+    # Copy backup file to Redis PVC
+    REDIS_POD=$(kubectl get pods -n kaytx -l app=redis -o jsonpath='{.items[0].metadata.name}')
+    kubectl cp "/tmp/${BACKUP_FILE}" "kaytx/${REDIS_POD}:/data/dump.rdb"
+    
+    # Start Redis
+    kubectl scale deployment redis --replicas=1 -n kaytx
+    
+    # Wait for Redis to be ready
+    kubectl wait --for=condition=ready pod -l app=redis -n kaytx --timeout=300s
+    
+    # Clean up
+    rm -f "/tmp/${BACKUP_FILE}"
+    
+    echo "Redis restore completed at $(date)"
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: postgres-backup
+  namespace: kaytx
+spec:
+  schedule: "0 2 * * *"  # Daily at 2 AM
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: kaytx-sa
+          restartPolicy: OnFailure
+          containers:
+          - name: postgres-backup
+            image: postgres:15-alpine
+            env:
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: backup-secrets
+                  key: POSTGRES_PASSWORD
+            - name: S3_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: backup-secrets
+                  key: S3_BUCKET
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: backup-secrets
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backup-secrets
+                  key: AWS_SECRET_ACCESS_KEY
+            - name: AWS_DEFAULT_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: backup-secrets
+                  key: AWS_DEFAULT_REGION
+            command:
+            - /bin/sh
+            - -c
+            - |
+              apk add --no-cache aws-cli
+              chmod +x /scripts/postgres-backup.sh
+              /scripts/postgres-backup.sh
+            volumeMounts:
+            - name: backup-scripts
+              mountPath: /scripts
+              readOnly: true
+            - name: tmp
+              mountPath: /tmp
+            resources:
+              requests:
+                memory: "256Mi"
+                cpu: "200m"
+              limits:
+                memory: "512Mi"
+                cpu: "500m"
+          volumes:
+          - name: backup-scripts
+            configMap:
+              name: backup-scripts
+              defaultMode: 0755
+          - name: tmp
+            emptyDir: {}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: redis-backup
+  namespace: kaytx
+spec:
+  schedule: "0 3 * * *"  # Daily at 3 AM
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: kaytx-sa
+          restartPolicy: OnFailure
+          containers:
+          - name: redis-backup
+            image: redis:7-alpine
+            env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: backup-secrets
+                  key: REDIS_PASSWORD
+            - name: S3_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: backup-secrets
+                  key: S3_BUCKET
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: backup-secrets
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backup-secrets
+                  key: AWS_SECRET_ACCESS_KEY
+            - name: AWS_DEFAULT_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: backup-secrets
+                  key: AWS_DEFAULT_REGION
+            command:
+            - /bin/sh
+            - -c
+            - |
+              apk add --no-cache aws-cli kubectl
+              chmod +x /scripts/redis-backup.sh
+              /scripts/redis-backup.sh
+            volumeMounts:
+            - name: backup-scripts
+              mountPath: /scripts
+              readOnly: true
+            - name: tmp
+              mountPath: /tmp
+            resources:
+              requests:
+                memory: "128Mi"
+                cpu: "100m"
+              limits:
+                memory: "256Mi"
+                cpu: "200m"
+          volumes:
+          - name: backup-scripts
+            configMap:
+              name: backup-scripts
+              defaultMode: 0755
+          - name: tmp
+            emptyDir: {}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: backup-verification
+  namespace: kaytx
+spec:
+  template:
+    spec:
+      serviceAccountName: kaytx-sa
+      restartPolicy: OnFailure
+      containers:
+      - name: backup-verification
+        image: amazon/aws-cli:latest
+        env:
+        - name: S3_BUCKET
+          valueFrom:
+            secretKeyRef:
+              name: backup-secrets
+              key: S3_BUCKET
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: backup-secrets
+              key: AWS_ACCESS_KEY_ID
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: backup-secrets
+              key: AWS_SECRET_ACCESS_KEY
+        - name: AWS_DEFAULT_REGION
+          valueFrom:
+            secretKeyRef:
+              name: backup-secrets
+              key: AWS_DEFAULT_REGION
+        command:
+        - /bin/sh
+        - -c
+        - |
+          echo "Verifying backup integrity..."
+          
+          # Check latest PostgreSQL backup
+          LATEST_PG_BACKUP=$(aws s3 ls "s3://${S3_BUCKET}/postgres/" --recursive | sort | tail -n 1 | awk '{print $4}')
+          if [ -n "$LATEST_PG_BACKUP" ]; then
+            echo "Latest PostgreSQL backup: $LATEST_PG_BACKUP"
+            aws s3 ls "s3://${S3_BUCKET}/$LATEST_PG_BACKUP"
+          else
+            echo "No PostgreSQL backups found!"
+            exit 1
+          fi
+          
+          # Check latest Redis backup
+          LATEST_REDIS_BACKUP=$(aws s3 ls "s3://${S3_BUCKET}/redis/" --recursive | sort | tail -n 1 | awk '{print $4}')
+          if [ -n "$LATEST_REDIS_BACKUP" ]; then
+            echo "Latest Redis backup: $LATEST_REDIS_BACKUP"
+            aws s3 ls "s3://${S3_BUCKET}/$LATEST_REDIS_BACKUP"
+          else
+            echo "No Redis backups found!"
+            exit 1
+          fi
+          
+          echo "Backup verification completed successfully"
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: backup-storage
+  namespace: kaytx
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: standard
+  resources:
+    requests:
+      storage: 100Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backup-restore-service
+  namespace: kaytx
+  labels:
+    app: backup-restore-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backup-restore-service
+  template:
+    metadata:
+      labels:
+        app: backup-restore-service
+    spec:
+      serviceAccountName: kaytx-sa
+      containers:
+      - name: backup-restore
+        image: postgres:15-alpine
+        env:
+        - name: PGPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: backup-secrets
+              key: POSTGRES_PASSWORD
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: backup-secrets
+              key: REDIS_PASSWORD
+        - name: S3_BUCKET
+          valueFrom:
+            secretKeyRef:
+              name: backup-secrets
+              key: S3_BUCKET
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: backup-secrets
+              key: AWS_ACCESS_KEY_ID
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: backup-secrets
+              key: AWS_SECRET_ACCESS_KEY
+        - name: AWS_DEFAULT_REGION
+          valueFrom:
+            secretKeyRef:
+              name: backup-secrets
+              key: AWS_DEFAULT_REGION
+        ports:
+        - containerPort: 8080
+          name: http
+        command:
+        - /bin/sh
+        - -c
+        - |
+          apk add --no-cache aws-cli kubectl redis-tools
+          chmod +x /scripts/*.sh
+          
+          # Simple HTTP server for backup/restore API
+          cat > /server.py << 'EOF'
+          import http.server
+          import socketserver
+          import subprocess
+          import json
+          import os
+          from urllib.parse import urlparse, parse_qs
+          
+          class BackupHandler(http.server.BaseHTTPRequestHandler):
+              def do_GET(self):
+                  if self.path == '/health':
+                      self.send_response(200)
+                      self.send_header('Content-type', 'application/json')
+                      self.end_headers()
+                      self.wfile.write(json.dumps({'status': 'healthy'}).encode())
+                  elif self.path.startswith('/list/postgres'):
+                      result = subprocess.run(['aws', 's3', 'ls', f's3://{os.environ["S3_BUCKET"]}/postgres/'], capture_output=True, text=True)
+                      self.send_response(200)
+                      self.send_header('Content-type', 'application/json')
+                      self.end_headers()
+                      self.wfile.write(json.dumps({'backups': result.stdout.splitlines()}).encode())
+                  elif self.path.startswith('/list/redis'):
+                      result = subprocess.run(['aws', 's3', 'ls', f's3://{os.environ["S3_BUCKET"]}/redis/'], capture_output=True, text=True)
+                      self.send_response(200)
+                      self.send_header('Content-type', 'application/json')
+                      self.end_headers()
+                      self.wfile.write(json.dumps({'backups': result.stdout.splitlines()}).encode())
+                  else:
+                      self.send_response(404)
+                      self.end_headers()
+              
+              def do_POST(self):
+                  if self.path.startswith('/restore/postgres'):
+                      content_length = int(self.headers['Content-Length'])
+                      post_data = self.rfile.read(content_length)
+                      data = json.loads(post_data.decode('utf-8'))
+                      backup_file = data.get('backup_file')
+                      
+                      if backup_file:
+                          result = subprocess.run(['/scripts/restore-postgres.sh', backup_file], capture_output=True, text=True)
+                          self.send_response(200 if result.returncode == 0 else 500)
+                          self.send_header('Content-type', 'application/json')
+                          self.end_headers()
+                          self.wfile.write(json.dumps({'result': result.stdout, 'error': result.stderr}).encode())
+                      else:
+                          self.send_response(400)
+                          self.end_headers()
+                  elif self.path.startswith('/restore/redis'):
+                      content_length = int(self.headers['Content-Length'])
+                      post_data = self.rfile.read(content_length)
+                      data = json.loads(post_data.decode('utf-8'))
+                      backup_file = data.get('backup_file')
+                      
+                      if backup_file:
+                          result = subprocess.run(['/scripts/restore-redis.sh', backup_file], capture_output=True, text=True)
+                          self.send_response(200 if result.returncode == 0 else 500)
+                          self.send_header('Content-type', 'application/json')
+                          self.end_headers()
+                          self.wfile.write(json.dumps({'result': result.stdout, 'error': result.stderr}).encode())
+                      else:
+                          self.send_response(400)
+                          self.end_headers()
+                  else:
+                      self.send_response(404)
+                      self.end_headers()
+          
+          with socketserver.TCPServer(("", 8080), BackupHandler) as httpd:
+              print("Backup restore service started on port 8080")
+              httpd.serve_forever()
+          EOF
+          
+          python3 /server.py
+        volumeMounts:
+        - name: backup-scripts
+          mountPath: /scripts
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        - name: backup-storage
+          mountPath: /backups
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: backup-scripts
+        configMap:
+          name: backup-scripts
+          defaultMode: 0755
+      - name: tmp
+        emptyDir: {}
+      - name: backup-storage
+        persistentVolumeClaim:
+          claimName: backup-storage
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backup-restore-service
+  namespace: kaytx
+  labels:
+    app: backup-restore-service
+spec:
+  selector:
+    app: backup-restore-service
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  type: ClusterIP

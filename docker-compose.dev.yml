@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  frontend:
+    image: node:18-alpine
+    working_dir: /app
+    ports:
+      - "19006:19006"
+    volumes:
+      - .:/app
+    command: sh -c "npm install --legacy-peer-deps && npx expo start --web --port 19006 --host 0.0.0.0"
+    environment:
+      - NODE_ENV=development
+      - EXPO_PUBLIC_API_URL=http://localhost:3001

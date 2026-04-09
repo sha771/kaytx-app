@@ -1,0 +1,22 @@
+[Unit]
+Description=Kaytx Log Cleanup Service
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=oneshot
+User=kaytx
+Group=kaytx
+WorkingDirectory=/opt/kaytx
+Environment=NODE_ENV=production
+Environment=LOG_LEVEL=info
+ExecStart=/usr/bin/node scripts/cleanup-logs.js
+ExecStartPre=/bin/mkdir -p /var/log/kaytx
+StandardOutput=append:/var/log/kaytx/cleanup.log
+StandardError=append:/var/log/kaytx/cleanup.error.log
+Restart=on-failure
+RestartSec=300
+TimeoutSec=1800
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,14 @@
+BEGIN;
+
+ALTER TABLE subscriptions
+  ADD COLUMN IF NOT EXISTS cancellation_reason TEXT,
+  ADD COLUMN IF NOT EXISTS cancellation_feedback TEXT,
+  ADD COLUMN IF NOT EXISTS pause_reason TEXT,
+  ADD COLUMN IF NOT EXISTS resume_date TIMESTAMPTZ,
+  ADD COLUMN IF NOT EXISTS resumed_at TIMESTAMPTZ;
+
+ALTER TABLE invoices
+  ADD COLUMN IF NOT EXISTS payment_method_id VARCHAR(255),
+  ADD COLUMN IF NOT EXISTS transaction_id VARCHAR(255);
+
+COMMIT;

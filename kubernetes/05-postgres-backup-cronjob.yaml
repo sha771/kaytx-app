@@ -1,0 +1,169 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-backup-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: standard
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-backup-script
+  namespace: default
+data:
+  backup-postgres.sh: |
+    #!/bin/bash
+    set -euo pipefail
+
+    VERIFY_RESTORE=false
+    if [ "${1:-}" = "--verify" ]; then
+      VERIFY_RESTORE=true
+    fi
+
+    BACKUP_DIR="${BACKUP_DIR:-/backups/postgres}"
+    DB_NAME="${DB_NAME:-app_db}"
+    DB_USER="${DB_USER:-app_user}"
+    DB_HOST="${DB_HOST:-localhost}"
+    DB_PORT="${DB_PORT:-5432}"
+    DB_PASSWORD="${DB_PASSWORD:-}"
+    RETENTION_DAYS=30
+    AWS_S3_BUCKET="${AWS_S3_BUCKET:-app-backups}"
+
+    mkdir -p "$BACKUP_DIR"
+
+    TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+    BACKUP_FILE="$BACKUP_DIR/db_backup_${TIMESTAMP}.sql.gz"
+    BACKUP_LOG="$BACKUP_DIR/backup_${TIMESTAMP}.log"
+
+    echo "Starting PostgreSQL backup at $(date)" > "$BACKUP_LOG"
+
+    if [ -n "${DB_PASSWORD:-}" ]; then
+        export PGPASSWORD="${DB_PASSWORD}"
+    fi
+
+    PGPASSWORD="$DB_PASSWORD" pg_dump -h "$DB_HOST" -U "$DB_USER" -d "$DB_NAME" -p "$DB_PORT" 2>>"$BACKUP_LOG" | \
+      gzip > "$BACKUP_FILE"
+
+    if [ $? -eq 0 ]; then
+        echo "✅ Backup completed successfully" >> "$BACKUP_LOG"
+        echo "📊 Backup size: $(du -h "$BACKUP_FILE" | cut -f1)" >> "$BACKUP_LOG"
+
+        echo "🔍 Verifying backup integrity..." >> "$BACKUP_LOG"
+        if gunzip -t "$BACKUP_FILE" 2>>"$BACKUP_LOG"; then
+            echo "✅ Backup integrity verified" >> "$BACKUP_LOG"
+        else
+            echo "❌ Backup integrity check failed!" >> "$BACKUP_LOG"
+            exit 1
+        fi
+
+        if command -v aws &> /dev/null; then
+            echo "📤 Uploading to S3 bucket: $AWS_S3_BUCKET" >> "$BACKUP_LOG"
+            aws s3 cp "$BACKUP_FILE" "s3://$AWS_S3_BUCKET/postgres/$(date +%Y/%m/%d)/" --storage-class GLACIER
+            echo "✅ S3 upload completed" >> "$BACKUP_LOG"
+        fi
+
+        echo "🧹 Cleaning up backups older than $RETENTION_DAYS days" >> "$BACKUP_LOG"
+        find "$BACKUP_DIR" -name "db_backup_*.sql.gz" -mtime +$RETENTION_DAYS -delete
+
+        if [ "$VERIFY_RESTORE" = true ]; then
+            echo "🔁 Running restore verification..." >> "$BACKUP_LOG"
+            VERIFY_DB_NAME="${VERIFY_DB_NAME:-${DB_NAME}_verify_${TIMESTAMP}}"
+
+            echo "📝 Creating verify database: $VERIFY_DB_NAME" >> "$BACKUP_LOG"
+            PGPASSWORD="$DB_PASSWORD" psql -h "$DB_HOST" -U "$DB_USER" -p "$DB_PORT" -d postgres -v ON_ERROR_STOP=1 \
+              -c "DROP DATABASE IF EXISTS \"$VERIFY_DB_NAME\";" 2>>"$BACKUP_LOG" || true
+            PGPASSWORD="$DB_PASSWORD" psql -h "$DB_HOST" -U "$DB_USER" -p "$DB_PORT" -d postgres -v ON_ERROR_STOP=1 \
+              -c "CREATE DATABASE \"$VERIFY_DB_NAME\" ENCODING 'UTF8';" 2>>"$BACKUP_LOG"
+
+            echo "📥 Restoring into verify database..." >> "$BACKUP_LOG"
+            gunzip -c "$BACKUP_FILE" | PGPASSWORD="$DB_PASSWORD" psql -h "$DB_HOST" -U "$DB_USER" -p "$DB_PORT" -d "$VERIFY_DB_NAME" -v ON_ERROR_STOP=1 2>>"$BACKUP_LOG"
+
+            echo "🔍 Verifying restored database (SELECT 1)..." >> "$BACKUP_LOG"
+            PGPASSWORD="$DB_PASSWORD" psql -h "$DB_HOST" -U "$DB_USER" -p "$DB_PORT" -d "$VERIFY_DB_NAME" -v ON_ERROR_STOP=1 \
+              -c "SELECT 1;" 2>>"$BACKUP_LOG" >/dev/null
+
+            echo "🧹 Dropping verify database: $VERIFY_DB_NAME" >> "$BACKUP_LOG"
+            PGPASSWORD="$DB_PASSWORD" psql -h "$DB_HOST" -U "$DB_USER" -p "$DB_PORT" -d postgres -v ON_ERROR_STOP=1 \
+              -c "DROP DATABASE IF EXISTS \"$VERIFY_DB_NAME\";" 2>>"$BACKUP_LOG" || true
+
+            echo "✅ Restore verification completed" >> "$BACKUP_LOG"
+        fi
+    else
+        echo "❌ Backup failed!" >> "$BACKUP_LOG"
+        exit 1
+    fi
+
+    cat "$BACKUP_LOG"
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: postgres-backup
+  namespace: default
+spec:
+  schedule: "0 */6 * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: postgres-backup
+              image: postgres:15-alpine
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  apk add --no-cache bash gzip aws-cli >/dev/null && \
+                  chmod +x /scripts/backup-postgres.sh && \
+                  /scripts/backup-postgres.sh
+              env:
+                - name: DB_HOST
+                  value: postgres
+                - name: DB_PORT
+                  value: "5432"
+                - name: DB_NAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: app-secrets
+                      key: DB_NAME
+                - name: DB_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: app-secrets
+                      key: DB_USER
+                - name: DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: app-secrets
+                      key: DB_PASSWORD
+                - name: AWS_S3_BUCKET
+                  valueFrom:
+                    secretKeyRef:
+                      name: app-secrets
+                      key: AWS_S3_BUCKET
+                      optional: true
+                - name: BACKUP_DIR
+                  value: /backups/postgres
+              volumeMounts:
+                - name: backup-storage
+                  mountPath: /backups
+                - name: backup-script
+                  mountPath: /scripts
+          volumes:
+            - name: backup-storage
+              persistentVolumeClaim:
+                claimName: postgres-backup-pvc
+            - name: backup-script
+              configMap:
+                name: postgres-backup-script
+                defaultMode: 0755
