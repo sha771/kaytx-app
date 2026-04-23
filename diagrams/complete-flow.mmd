@@ -1,0 +1,385 @@
+# KAYTX AI Hierarchy - Complete Flow Diagram v7.0
+## 199 AI Agents | 21 Departments | 15 C-Suite | 5 Levels
+
+```mermaid
+flowchart TB
+    %% ============================================
+    %% KAYTX AI WORKFORCE - COMPLETE FLOW v7.0
+    %% 199 Agents | 21 Departments | 15 C-Suite
+    %% ============================================
+    subgraph PRIVACY_IN["🔒 PRIVACY INPUT GATE"]
+        direction LR
+        P_CLASS["🔍 Data Classifier"]
+        P_PURP["✅ Purpose Validator"]
+        P_ACCESS["🛡️ Access Controller"]
+    end
+
+    subgraph INPUT["📥 INPUT SOURCES"]
+        direction LR
+        CUST["👤 Customer<br/>Request"]
+        MGR["💼 Manager<br/>Directive"]
+        SYS["⚠️ System<br/>Alert"]
+        API["🔗 External<br/>API/Webhook"]
+    end
+
+    %% ============================================
+    %% LAYER 1: EXECUTIVE & LEADERSHIP (15 C-Suite)
+    %% ============================================
+    subgraph L1["👔 LAYER 1: Executive & Leadership (15 C-Suite)"]
+        direction TB
+        
+        CEO["👑 CEO<br/>Chief Executive Officer"]
+        
+        subgraph C_SUITE["C-Suite Executives - 15 Total"]
+            direction LR
+            CFO["💰 CFO<br/>Finance"]
+            COO["⚙️ COO<br/>Operations"]
+            CTO["💻 CTO<br/>Technology"]
+            CMO["📢 CMO<br/>Marketing"]
+            CHRO["👥 CHRO<br/>Human Resources"]
+            CCO["🎧 CCO<br/>Customer Experience"]
+            CIO["📊 CIO<br/>Trading & Investments"]
+            CREO["🏛️ CREO<br/>Real Estate"]
+            CRO["🎲 CRO<br/>Risk & Insurance"]
+            CMO_HC["🏥 CMO-HC<br/>Healthcare"]
+            CPO["🏭 CPO<br/>Production"]
+            CLO_Log["🚛 CLO-Log<br/>Logistics"]
+            CAO["🏢 CAO<br/>Government"]
+            CISO["🔒 CISO<br/>Security"]
+            CLO["⚖️ CLO<br/>Legal"]
+        end
+        
+        COUNCIL["🤝 Executive Council<br/>Strategic Decisions"]
+    end
+
+    %% ============================================
+    %% LAYER BRIDGE
+    %% ============================================
+    BRIDGE["🌉 LAYER BRIDGE<br/>Digital Strategy Interface"]
+
+    %% ============================================
+    %% LAYER 2: COMMAND CENTER
+    %% ============================================
+    subgraph L2["🎮 LAYER 2: Command Center"]
+        direction TB
+        
+        CDOO["🎯 CDOO<br/>Chief Digital & Ops Officer"]
+        
+        subgraph COMMAND["Command Team"]
+            direction LR
+            DDO["🔧 DDO<br/>Digital Director Officer"]
+            WOL["👷 WOL<br/>Workforce Ops Lead"]
+            AOD["🤖 AOD<br/>Automation Ops Director"]
+        end
+        
+        DEPT_HEADS["🏢 Department AI Heads"]
+    end
+
+    %% ============================================
+    %% PRIVACY AGENT GATE
+    %% ============================================
+    subgraph PRIVACY_AGENT["🔐 PRIVACY AGENT GATE"]
+        direction LR
+        P_MASK["🎭 Data Masker"]
+        P_FILTER["🔎 Context Filter"]
+        P_ENFORCE["⚖️ Permission Enforcer"]
+    end
+
+    %% ============================================
+    %% AI AGENTS LAYER
+    %% ============================================
+    subgraph AI["🤖 AI AGENTS LAYER"]
+        direction LR
+        
+        CX["💬 CX Agents<br/>• Support Bot<br/>• FAQ Agent<br/>• Escalation Router"]
+        SALES["💵 Sales Agents<br/>• Lead Qualifier<br/>• Demo Scheduler<br/>• CRM Updater"]
+        MKT["📈 Marketing Agents<br/>• Social Bot<br/>• Email Bot<br/>• Ad Manager"]
+        OPS["🔩 Ops Agents<br/>• Process Bot<br/>• Report Bot<br/>• Monitor Bot"]
+    end
+
+    %% ============================================
+    %% PRIVACY OUTPUT GATE
+    %% ============================================
+    subgraph PRIVACY_OUT["🔏 PRIVACY OUTPUT GATE"]
+        direction LR
+        P_SANITIZE["🧹 Output Sanitizer"]
+        P_COMP["📋 Compliance Checker"]
+        P_AUDIT["� Audit Logger"]
+    end
+
+    %% ============================================
+    %% OUTPUT
+    %% ============================================
+    subgraph OUTPUT["� OUTPUT"]
+        direction LR
+        OUT_CUST["✅ Customer<br/>Satisfied"]
+        OUT_MGR["📊 Manager<br/>Report"]
+        OUT_SYS["🔧 System<br/>Updated"]
+        OUT_API["🌐 External<br/>Response"]
+    end
+
+    %% ============================================
+    %% TOP-DOWN FLOW (Up to Bottom)
+    %% ============================================
+    CEO --> C_SUITE
+    C_SUITE --> COUNCIL
+    COUNCIL --> BRIDGE
+    BRIDGE --> CDOO
+    CDOO --> COMMAND
+    COMMAND --> DEPT_HEADS
+    DEPT_HEADS --> PRIVACY_AGENT
+    PRIVACY_AGENT --> AI
+
+    %% ============================================
+    %% INPUT FLOW
+    %% ============================================
+    CUST --> PRIVACY_IN
+    MGR --> PRIVACY_IN
+    SYS --> PRIVACY_IN
+    API --> PRIVACY_IN
+    PRIVACY_IN --> L1
+    PRIVACY_IN --> L2
+    SYS --> L2
+    API --> L2
+
+    %% ============================================
+    %% AI TO OUTPUT VIA PRIVACY
+    %% ============================================
+    CX --> PRIVACY_OUT
+    SALES --> PRIVACY_OUT
+    MKT --> PRIVACY_OUT
+    OPS --> PRIVACY_OUT
+    PRIVACY_OUT --> OUT_CUST
+    PRIVACY_OUT --> OUT_MGR
+    PRIVACY_OUT --> OUT_SYS
+    PRIVACY_OUT --> OUT_API
+
+    %% ============================================
+    %% BOTTOM-UP FLOW (Bottom to Up)
+    %% ============================================
+    AI -.->|"Performance Reports"| DEPT_HEADS
+    DEPT_HEADS -.->|"Status Updates"| COMMAND
+    COMMAND -.->|"Operational Metrics"| CDOO
+    CDOO -.->|"Digital Performance"| BRIDGE
+    BRIDGE -.->|"Executive Summary"| COUNCIL
+    COUNCIL -.->|"KPI Dashboard"| CEO
+
+    %% ============================================
+    %% CROSS-LAYER COMMUNICATION
+    %% ============================================
+    CX -.->|"Consult"| SALES
+    SALES -.->|"Consult"| MKT
+    MKT -.->|"Consult"| CX
+    OPS -.->|"Support"| CX
+
+    %% ============================================
+    %% STYLING
+    %% ============================================
+    style INPUT fill:#E3F2FD
+    style L1 fill:#FFF3E0
+    style BRIDGE fill:#F3E5F5
+    style L2 fill:#E8F5E9
+    style AI fill:#E0F7FA
+    style OUTPUT fill:#FCE4EC
+    style PRIVACY_IN fill:#FFEBEE
+    style PRIVACY_AGENT fill:#FFF8E1
+    style PRIVACY_OUT fill:#E8EAF6
+    
+    style CEO fill:#FFD700,stroke:#000,stroke-width:3px
+    style CDOO fill:#00E5C4,stroke:#000,stroke-width:2px
+    style CX fill:#4FC3F7
+    style SALES fill:#81C784
+    style MKT fill:#FFB74D
+    style OPS fill:#90A4AE
+    style P_CLASS fill:#FF5252,stroke:#000
+    style P_MASK fill:#FFCA28,stroke:#000
+    style P_SANITIZE fill:#5C6BC0,stroke:#000
+```
+
+---
+
+## **COMPLETE HIERARCHY OVERVIEW**
+
+### **📊 Stats**
+- **Total AI Agents**: 208 (199 + 9 Privacy Layer)
+- **C-Suite Executives**: 15
+- **Departments**: 21
+- **Hierarchy Levels**: 8 (with Privacy Gates)
+- **Agent Types**: 4 (Reactive, Proactive, Learning, Swarm)
+- **Privacy Layer Agents**: 9
+  - Data Classifier, Purpose Validator, Access Controller
+  - Data Masker, Context Filter, Permission Enforcer
+  - Output Sanitizer, Compliance Checker, Audit Logger
+
+### **🏢 21 Departments**
+1. 💰 Finance (CFO)
+2. ⚙️ Operations (COO)
+3. 💻 Technology (CTO)
+4. 📢 Marketing (CMO)
+5. 👥 Human Resources (CHRO)
+6. 🎧 Customer Experience (CCO)
+7. 📊 Trading & Investments (CIO)
+8. 🏛️ Real Estate & Property (CREO)
+9. 🎲 Insurance & Risk (CRO)
+10. 🏥 Healthcare & Medical (CMO-HC)
+11. 🏭 Manufacturing & Production (CPO)
+12. 🚛 Transportation & Logistics (CLO-Log)
+13. 🏢 Government & Public (CAO)
+14. 🔒 Security (CISO)
+15. ⚖️ Legal & Compliance (CLO)
+16. 📈 Data Intelligence (under CTO)
+17. 🔬 Research & Innovation (under CTO)
+18. 🛒 Sales & Revenue (reports to CEO)
+19. 🎓 Learning & Development (under CHRO)
+20. 🏗️ Product (under CTO)
+21. 📝 Administrative (under CAO)
+
+---
+
+## **FLOW 1: UP TO BOTTOM (Top-Down Execution)**
+
+```
+CEO (Vision)
+    ↓
+C-Suite (Strategy) → CFO/COO/CTO/CMO/CHRO/CCO/CIO/CREO/CRO/CMO-HC/CPO/CLO-Log/CAO/CISO/CLO
+    ↓
+Executive Council (Decisions)
+    ↓
+Layer Bridge (Translation)
+    ↓
+CDOO (Digital Strategy)
+    ↓
+Command Team (Execution Plan) → DDO + WOL + AOD
+    ↓
+Department AI Heads (Dispatch) → 21 Department Heads
+    ↓
+PRIVACY AGENT GATE (Data Masking + Context Filter + Permission Enforcer)
+    ↓
+AI Agents (Action) → 199 Agents across all departments
+    ↓
+PRIVACY OUTPUT GATE (Sanitizer + Compliance + Audit Logger)
+    ↓
+OUTPUT (Results)
+```
+
+**Example:**
+- CEO: "Improve customer satisfaction"
+- CCO → CDOO: "Deploy AI support enhancement"
+- DDO: "Configure CX agents with new sentiment analysis"
+- WOL: "Allocate 5 support bots + enable Learning mode"
+- AOD: "Automate escalation workflows"
+- CX Agents: Handle tickets with predictive insights
+- Output: 98% CSAT, proactive issue prevention
+
+---
+
+## **FLOW 2: BOTTOM TO UP (Bottom-Up Reporting)**
+
+```
+AI Agents (Metrics)
+    ↓
+Department Heads (Aggregation)
+    ↓
+Command Team (Analysis) → DDO + WOL + AOD
+    ↓
+CDOO (Review)
+    ↓
+Layer Bridge (Synthesis)
+    ↓
+Executive Council (Assessment)
+    ↓
+C-Suite (Review)
+    ↓
+CEO (Dashboard)
+```
+
+**Example:**
+- CX Agents: "Resolved 500 tickets, 95% satisfaction"
+- CX Head: "Support performance up 20%"
+- WOL: "Agent utilization optimal"
+- CDOO: "Digital CX exceeding targets"
+- CEO: "CSAT improved 15% this quarter"
+
+---
+
+## **FLOW 3: INPUT TO OUTPUT (Complete Journey)**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                         INPUT RECEIVED                              │
+│  Customer: "I need help with my bill"                              │
+└─────────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                    INPUT CLASSIFIER                                 │
+│  Type: Customer Request | Priority: Medium | Route: CX            │
+└─────────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                    LAYER 1 (If Strategic)                           │
+│  CX Head: "Billing issues trending up" → CDOO: "Review payment UX" │
+│  CDOO → DDO: "Deploy billing specialist agent"                      │
+└─────────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                    LAYER 2 (Command Center)                       │
+│  DDO: "Activate Billing Support Bot"                                │
+│  WOL: "Assign agent #CX-007 to ticket"                              │
+│  AOD: "Monitor response time < 2min"                              │
+└─────────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                    AI AGENT ACTION                                  │
+│  CX Agent (Support Bot):                                            │
+│  1. Greet customer                                                  │
+│  2. Pull billing data                                               │
+│  3. Explain charges                                                 │
+│  4. Process refund if needed                                        │
+│  5. Confirm resolution                                              │
+└─────────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                         OUTPUT DELIVERED                            │
+│  Customer: "✅ Refund processed, thank you!"                       │
+│  Agent: Log ticket → Report to CX Head → Update metrics            │
+└─────────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                    FEEDBACK LOOP (Bottom-Up)                        │
+│  CX Agent → CX Head: "Ticket resolved in 3min"                     │
+│  CX Head → CDOO: "Billing resolution rate: 94%"                     │
+│  CDOO → CEO: "Customer satisfaction improving"                      │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## **SUMMARY TABLE: Three Flows**
+
+| Flow Direction | Purpose | Speed | Data Type |
+|----------------|---------|-------|-----------|
+| **Up → Bottom** | Execute strategy | Minutes-Hours | Directives, Tasks |
+| **Bottom → Up** | Report performance | Hours-Days | Metrics, KPIs, Alerts |
+| **Input → Output** | Complete transaction | Seconds-Minutes | Request → Resolution |
+
+---
+
+## **A2A Communication (Agent-to-Agent)**
+
+```
+CX Agent: "Customer asking about pricing"
+    ↓ Consult
+Sales Agent: "Here's pricing info + current discount"
+    ↓ Inform
+CX Agent: "Shares pricing with customer"
+    ↓ Escalate (if needed)
+Human Agent (WOL managed): Complex negotiation
+    ↓ Resolve
+Customer: Satisfied
+```

@@ -1,0 +1,62 @@
+# Kubernetes CronJob for Log Cleanup
+# Scheduled to run daily at 2 AM UTC
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: log-cleanup
+  namespace: kaytx
+  labels:
+    app: log-cleanup
+    component: maintenance
+spec:
+  schedule: "0 2 * * *"  # Daily at 2 AM UTC
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: log-cleanup
+            component: maintenance
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: log-cleanup
+            image: kaytx/platform:latest
+            command: ["node", "scripts/cleanup-logs.js"]
+            env:
+              - name: NODE_ENV
+                value: "production"
+              - name: DATABASE_URL
+                valueFrom:
+                  secretKeyRef:
+                    name: database-secret
+                    key: url
+              - name: LOG_LEVEL
+                value: "info"
+            resources:
+              requests:
+                memory: "256Mi"
+                cpu: "100m"
+              limits:
+                memory: "512Mi"
+                cpu: "500m"
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                - ALL
+            volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+          volumes:
+          - name: tmp
+            emptyDir: {}
+          securityContext:
+            fsGroup: 1000

@@ -1,0 +1,173 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kaytx-secrets
+  namespace: kaytx
+type: Opaque
+stringData:
+  DATABASE_URL: "postgresql://kaytx_user:secure_password@postgres:5432/kaytx"
+  REDIS_URL: "redis://:redis_secure_password@redis:6379"
+  JWT_SECRET: "your-super-secure-jwt-secret-change-me"
+  ONE_TIME_TOKEN_SECRET: "your-secure-ott-secret-change-me"
+  JWT_REFRESH_SECRET: "your-secure-refresh-secret-change-me"
+  ENCRYPTION_KEY: "your-32-character-encryption-key-here"
+  OPENAI_API_KEY: "your-openai-api-key"
+  ANTHROPIC_API_KEY: "your-anthropic-api-key"
+  STRIPE_SECRET_KEY: "your-stripe-secret-key"
+  STRIPE_WEBHOOK_SECRET: "your-stripe-webhook-secret"
+  TWILIO_ACCOUNT_SID: "your-twilio-account-sid"
+  TWILIO_AUTH_TOKEN: "your-twilio-auth-token"
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kaytx-sa
+  namespace: kaytx
+  annotations:
+    iam.gke.io/gcp-service-account: kaytx@your-project.iam.gserviceaccount.com
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: kaytx-role
+  namespace: kaytx
+rules:
+- apiGroups: [""]
+  resources: ["configmaps", "secrets"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments", "replicasets"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: kaytx-rolebinding
+  namespace: kaytx
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: kaytx-role
+subjects:
+- kind: ServiceAccount
+  name: kaytx-sa
+  namespace: kaytx
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: kaytx-backend-pdb
+  namespace: kaytx
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: kaytx-backend
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kaytx-security-config
+  namespace: kaytx
+data:
+  security.conf: |
+    # Security headers
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; frame-ancestors 'self';" always;
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    
+    # Rate limiting
+    limit_req_zone $binary_remote_addr zone=api:10m rate=10r/s;
+    limit_req_zone $binary_remote_addr zone=auth:10m rate=5r/m;
+    
+    # Block common attacks
+    location ~* \.(aspx|php|jsp|cgi)$ {
+        deny all;
+    }
+    
+    # Hide server tokens
+    server_tokens off;
+    
+    # File upload restrictions
+    client_max_body_size 10M;
+    client_body_buffer_size 128k;
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kaytx-security-scanner
+  namespace: kaytx
+  labels:
+    app: security-scanner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: security-scanner
+  template:
+    metadata:
+      labels:
+        app: security-scanner
+    spec:
+      serviceAccountName: kaytx-sa
+      containers:
+      - name: trivy-scanner
+        image: aquasec/trivy:latest
+        command: ["/bin/sh"]
+        args:
+        - -c
+        - |
+          while true; do
+            echo "Scanning images for vulnerabilities..."
+            trivy image --severity HIGH,CRITICAL kaytx/backend:latest
+            trivy image --severity HIGH,CRITICAL kaytx/frontend:latest
+            echo "Scan completed. Waiting 24 hours..."
+            sleep 86400
+          done
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: kaytx-security-audit
+  namespace: kaytx
+spec:
+  schedule: "0 2 * * 0"  # Weekly on Sunday at 2 AM
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: kaytx-sa
+          containers:
+          - name: security-audit
+            image: bitnami/kubectl:latest
+            command:
+            - /bin/sh
+            - -c
+            - |
+              echo "Running security audit..."
+              kubectl get pods -n kaytx -o json | jq '.items[] | select(.spec.securityContext.runAsUser == 0)'
+              kubectl get pods -n kaytx -o json | jq '.items[] | select(.spec.containers[].securityContext.privileged == true)'
+              echo "Audit completed"
+          restartPolicy: OnFailure
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: registry-secret
+  namespace: kaytx
+type: kubernetes.io/dockerconfigjson
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJ5b3VyLXJlZ2lzdHJ5LmNvbSI6eyJ1c2VybmFtZSI6InlvdXItdXNlcm5hbWUiLCJwYXNzd29yZCI6InlvdXItcGFzc3dvcmQiLCJhdXRoIjoiZFhObGNqcHdZWE56In19fQ==

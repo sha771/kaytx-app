@@ -1,0 +1,11 @@
+
+Oops! Something went wrong! :(
+
+ESLint: 9.39.4
+
+TypeError: Unexpected array.
+    at flatTraverse (c:\Users\shaida\Desktop\kaytx-full-app\node_modules\@eslint\config-array\dist\cjs\index.cjs:567:12)
+    at flatTraverse.next (<anonymous>)
+    at normalize (c:\Users\shaida\Desktop\kaytx-full-app\node_modules\@eslint\config-array\dist\cjs\index.cjs:587:19)
+    at async FlatConfigArray.normalize (c:\Users\shaida\Desktop\kaytx-full-app\node_modules\@eslint\config-array\dist\cjs\index.cjs:1089:30)
+    at async ConfigLoader.calculateConfigArray (c:\Users\shaida\Desktop\kaytx-full-app\node_modules\eslint\lib\config\config-loader.js:663:3)

@@ -1,0 +1,113 @@
+{
+  "name": "enterprise-app-production-setup",
+  "version": "2.1.0",
+  "description": "Enterprise-grade production dependencies and scripts",
+  "scripts": {
+    "install:prod": "npm install --production && npm audit fix",
+    "install:dev": "npm install && npm install -D @types/node prom-client k6",
+    
+    "db:migrate": "drizzle-kit migrate",
+    "db:generate": "drizzle-kit generate:mysql",
+    "db:seed": "node scripts/seed-database.js",
+    "db:backup": "bash scripts/backup-postgres.sh",
+    "db:restore": "bash scripts/disaster-recovery.sh",
+    
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc && node dist/index.js",
+    "start": "node dist/index.js",
+    
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:integration": "jest --testMatch='**/*.integration.test.ts'",
+    "test:e2e": "playwright test",
+    "test:load": "k6 run load-tests.js",
+    
+    "lint": "eslint src --fix",
+    "type-check": "tsc --noEmit",
+    "format": "prettier --write 'src/**/*.ts'",
+    
+    "security:audit": "npm audit --production",
+    "security:scan": "snyk test",
+    "security:dependencies": "depcheck",
+    
+    "monitoring:metrics": "curl http://localhost:3000/metrics",
+    "monitoring:health": "curl http://localhost:3000/health",
+    "monitoring:readiness": "curl http://localhost:3000/health/ready",
+    
+    "docker:build": "docker build -t enterprise-app:latest .",
+    "docker:push": "docker push <registry>/enterprise-app:latest",
+    "docker:run": "docker-compose up -d",
+    
+    "k8s:deploy:staging": "kubectl apply -f kubernetes/ --namespace=staging",
+    "k8s:deploy:prod": "kubectl apply -f kubernetes/ --namespace=production",
+    "k8s:logs": "kubectl logs -f deployment/app --namespace=production",
+    "k8s:describe": "kubectl describe pod $(kubectl get pod -o name | head -1) --namespace=production",
+    
+    "ci:test": "npm run lint && npm run type-check && npm run test",
+    "ci:security": "npm audit && npm run security:scan",
+    "ci:build": "docker build -t enterprise-app:$(git rev-parse --short HEAD) .",
+    "ci:deploy": "kubectl apply -f kubernetes/ --namespace=production",
+    
+    "docs:api": "swagger-ui --url openapi.yaml --port 8000",
+    "docs:build": "typedoc --out ./docs ./src",
+    
+    "backup:schedule": "crond -s /scripts/backup-postgres.sh -m '0 2 * * *'",
+    "restore:test": "npm run db:backup && npm run db:restore",
+    
+    "perf:analyze": "node --prof dist/index.js && node --prof-process isolate-*.log > results.txt"
+  },
+  "dependencies": {
+    "hono": "^4.0.0",
+    "@hono/trpc-server": "^1.0.0",
+    "trpc": "^10.0.0",
+    "@trpc/client": "^10.0.0",
+    "@trpc/server": "^10.0.0",
+    "typescript": "^5.0.0",
+    "drizzle-orm": "^0.28.0",
+    "postgres": "^3.0.0",
+    "redis": "^4.0.0",
+    "amqplib": "^0.10.0",
+    "prom-client": "^15.0.0",
+    "dotenv": "^16.0.0",
+    "helmet": "^7.0.0",
+    "cors": "^2.8.0",
+    "express-rate-limit": "^7.0.0",
+    "joi": "^17.0.0",
+    "zod": "^3.0.0",
+    "axios": "^1.0.0",
+    "openai": "^4.0.0",
+    "anthropic": "^0.9.0",
+    "@eleven-labs/js": "^1.0.0",
+    "stripe": "^13.0.0",
+    "aws-sdk": "^2.0.0",
+    "winston": "^3.0.0",
+    "morgan": "^1.10.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/jest": "^29.0.0",
+    "jest": "^29.0.0",
+    "ts-jest": "^29.0.0",
+    "@playwright/test": "^1.40.0",
+    "k6": "^0.47.0",
+    "drizzle-kit": "^0.20.0",
+    "tsx": "^4.0.0",
+    "eslint": "^8.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "prettier": "^3.0.0",
+    "snyk": "^1.1271.0",
+    "depcheck": "^1.4.0",
+    "swagger-ui-express": "^4.6.0",
+    "typedoc": "^0.25.0",
+    "nodemon": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "keywords": ["enterprise", "production", "kubernetes", "monitoring"],
+  "author": "Your Team",
+  "license": "MIT"
+}

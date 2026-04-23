@@ -1,0 +1,262 @@
+┌─────────────────────────────────────────────────────────────────────────────────────────────┐
+│                     KAYTX AI WORKFORCE - INPUT SOURCES v7.0                                 │
+│                    199 Agents | 21 Departments | 15 C-Suite Executives                        │
+├─────────────────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                             │
+│                                     INPUT SOURCES                                           │
+│                              (Where Everything Starts)                                      │
+│                                                                                               │
+│   ┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐               │
+│   │   Customer   │    │   Internal   │    │   System     │    │   External   │               │
+│   │   Request    │    │   Manager    │    │   Alert      │    │   API/Webhook│               │
+│   │              │    │   Directive  │    │              │    │              │               │
+│   │"I need help │    │"Launch Q3    │    │"Server load │    │"New lead     │               │
+│   │ with my bill"│    │ campaign"    │    │ at 90%"      │    │ from partner"│               │
+│   └──────┬───────┘    └──────┬───────┘    └──────┬───────┘    └──────┬───────┘               │
+│          │                   │                   │                   │                     │
+│          └───────────────────┴───────────────────┴───────────────────┘                     │
+│                                      │                                                       │
+│                                      ▼                                                       │
+│                           ┌──────────────────┐                                            │
+│                           │  INPUT CLASSIFIER │                                            │
+│                           │  (Categorizes &    │                                            │
+│                           │   Routes Requests) │                                            │
+│                           └────────┬─────────┘                                            │
+│                                    │                                                         │
+│                    ┌───────────────┼───────────────┐                                        │
+│                    │               │               │                                        │
+│                    ▼               ▼               ▼                                        │
+│              [CUSTOMER]      [STRATEGIC]      [OPERATIONAL]                                 │
+│               REQUESTS        DIRECTIVES       ALERTS                                       │
+│                    │               │               │                                        │
+└────────────────────┼───────────────┼───────────────┼────────────────────────────────────────┘
+                     │               │               │
+                     ▼               ▼               ▼
+┌─────────────────────────────────────────────────────────────────────────────────────────────┐
+│                    LAYER 1: EXECUTIVE & LEADERSHIP LAYER                                     │
+│                         (Strategic Decision Making)                                          │
+├─────────────────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                               │
+│                              ┌─────────────────┐                                            │
+│                              │       CEO       │                                            │
+│                              │  Chief Executive │                                            │
+│                              │     Officer     │                                            │
+│                              │                 │                                            │
+│                              │ • Vision & Goals│                                            │
+│                              │ • Final Decisions│                                           │
+│                              │ • Board Interface│                                           │
+│                              └────────┬────────┘                                            │
+│                                       │                                                      │
+│       ┌───────────────────────────────┼───────────────────────────────┐                   │
+│       │               │               │               │               │                   │
+│       ▼               ▼               ▼               ▼               ▼                   │
+│  ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐                  │
+│  │   CFO   │    │   COO   │    │   CTO   │    │   CMO   │    │  CHRO   │                  │
+│  │ Chief   │    │ Chief   │    │ Chief   │    │ Chief   │    │ Chief   │                  │
+│  │Financial│    │Operating│    │Technology│   │Marketing│    │  Human  │                  │
+│  │ Officer │    │ Officer │    │ Officer │    │ Officer │    │Resources│                  │
+│  │         │    │         │    │         │    │         │    │ Officer │                  │
+│  │• Budget │    │• Business│   │• Tech   │    │• Brand  │    │• Talent │                  │
+│  │• ROI    │    │  Ops     │   │  Stack  │    │• Growth │    │• Culture│                  │
+│  │• Costs  │    │• Process │    │• R&D    │    │• Campaign│   │• Training│                  │
+│  └────┬────┘    └────┬────┘    └────┬────┘    └────┬────┘    └────┬────┘                  │
+│       │               │               │               │               │                   │
+│       │               │               │               │               │                   │
+│       └───────────────┴───────────────┴───────────────┴───────────────┘                   │
+│                           │                                                        │
+│                           ▼                                                        │
+│       ┌───────────────────────────────┼───────────────────────────────┐                   │
+│       │               │               │               │               │                   │
+│       ▼               ▼               ▼               ▼               ▼                   │
+│  ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐                  │
+│  │   CCO   │    │   CIO   │    │  CREO   │    │   CRO   │    │  CMO-HC │                  │
+│  │ Chief   │    │ Chief   │    │ Chief   │    │ Chief   │    │ Chief   │                  │
+│  │ Customer│    │Invest-  │    │  Real   │    │  Risk   │    │ Medical │                  │
+│  │ Officer │    │ ment    │    │ Estate  │    │ Officer │    │ Officer │                  │
+│  │         │    │ Officer │    │ Officer │    │         │    │         │                  │
+│  │• Cust.  │    │• Trading│    │• Prop.  │    │• Risk   │    │• Health │                  │
+│  │  Exp.   │    │• Invest │    │  Mgmt   │    │  Mgmt   │    │  Care   │                  │
+│  └────┬────┘    └────┬────┘    └────┬────┘    └────┬────┘    └────┬────┘                  │
+│       │               │               │               │               │                   │
+│       │               │               │               │               │                   │
+│       └───────────────┴───────────────┴───────────────┴───────────────┘                   │
+│                           │                                                        │
+│                           ▼                                                        │
+│       ┌───────────────────────────────┼───────────────────────────────┐                   │
+│       │               │               │               │               │                   │
+│       ▼               ▼               ▼               ▼               ▼                   │
+│  ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐                  │
+│  │   CPO   │    │CLO-Log  │    │   CAO   │    │  CISO   │    │   CLO   │                  │
+│  │ Chief   │    │ Chief   │    │ Chief   │    │ Chief   │    │ Chief   │                  │
+│  │Production│   │ Logistics│   │Admin.   │    │ Info    │    │ Legal   │                  │
+│  │ Officer │    │ Officer │    │ Officer │    │ Security│    │ Officer │                  │
+│  │         │    │         │    │         │    │ Officer │    │         │                  │
+│  │• Manuf. │    │• Transp.│    │• Public │    │• Cyber  │    │• Legal  │                  │
+│  │         │    │         │    │ Admin   │    │ Security│    │         │                  │
+│  └────┬────┘    └────┬────┘    └────┬────┘    └────┬────┘    └────┬────┘                  │
+│       │               │               │               │               │                   │
+│       │               │               │               │               │                   │
+│       └───────────────┴───────────────┴───────────────┴───────────────┘                   │
+│                           │                                                        │
+│                           ▼                                                        │
+│                    ┌─────────────────┐                                             │
+│                    │ EXECUTIVE COUNCIL│                                             │
+│                    │    MEETING      │                                             │
+│                    │                 │                                             │
+│                    │ "Approve AI      │                                             │
+│                    │  transformation │                                             │
+│                    │  initiative"    │                                             │
+│                    │                 │                                             │
+│                    │ "Allocate $2M   │                                             │
+│                    │  for digital    │                                             │
+│                    │  operations"    │                                             │
+│                    └────────┬────────┘                                             │
+│                             │                                                      │
+└─────────────────────────────┼──────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────────────────────────────────┐
+│                         LAYER BRIDGE (Digital Interface)                                     │
+│              (Translates Business Strategy to AI Operations)                                 │
+├─────────────────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                               │
+│                    ┌─────────────────────────┐                                               │
+│                    │    DIGITAL STRATEGY     │                                               │
+│                    │       INTERFACE         │                                               │
+│                    │                         │                                               │
+│                    │ • CEO vision → CDOO plan  │                                               │
+│                    │ • CTO tech stack → DDO    │                                               │
+│                    │ • COO ops goals → AOD     │                                               │
+│                    │ • CFO budget → WOL cap    │                                               │
+│                    │ • CMO campaigns → AI mkt  │                                               │
+│                    │ • CHRO talent → WOL hire  │                                               │
+│                    └────────────┬────────────┘                                               │
+│                                 │                                                            │
+│                    ┌────────────┴────────────┐                                               │
+│                    │   STRATEGIC DIRECTIVES   │                                               │
+│                    │   (To Command Center)    │                                               │
+│                    └────────────┬────────────┘                                               │
+│                                 │                                                            │
+└─────────────────────────────────┼───────────────────────────────────────────────────────────┘
+                                  │
+                                  ▼
+┌─────────────────────────────────────────────────────────────────────────────────────────────┐
+│                    LAYER 2: COMMAND CENTER LAYER                                             │
+│                      (AI Workforce Operations)                                               │
+├─────────────────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                               │
+│                    ┌─────────────────────────┐                                               │
+│                    │         CDOO            │                                               │
+│                    │  Chief Digital &          │                                               │
+│                    │   Operations Officer    │                                               │
+│                    │                         │                                               │
+│                    │ • Receives strategy from│                                               │
+│                    │   CEO/CTO               │                                               │
+│                    │ • Creates AI roadmap    │                                               │
+│                    │ • Aligns digital ops    │                                               │
+│                    │   with business goals   │                                               │
+│                    └────────────┬────────────┘                                               │
+│                                 │                                                            │
+│           ┌─────────────────────┼─────────────────────┐                                    │
+│           │                     │                     │                                    │
+│           ▼                     ▼                     ▼                                    │
+│    ┌─────────────┐       ┌─────────────┐       ┌─────────────┐                              │
+│    │     DDO     │◄────►│     WOL     │◄────►│     AOD     │                              │
+│    │   Digital   │       │  Workforce  │       │ Automation  │                              │
+│    │   Director  │       │   Ops Lead  │       │  Operations │                              │
+│    │   Officer   │       │             │       │  Director   │                              │
+│    │             │       │             │       │             │                              │
+│    │• Execute    │       │• Agent      │       │• Automate   │                              │
+│    │  digital    │◄──────┤  capacity   │──────►│  workflows  │                              │
+│    │  strategy   │       │  planning   │       │             │                              │
+│    │• Tech stack │       │• Human-AI   │       │• Monitor    │                              │
+│    │  management │       │  coordination│      │  efficiency │                              │
+│    │• AI systems │       │• Performance│       │• Deploy     │                              │
+│    │  deployment │       │  analytics  │       │  bots      │                              │
+│    └──────┬──────┘       └──────┬──────┘       └──────┬──────┘                              │
+│           │                     │                     │                                    │
+│           │            ┌────────┴────────┐            │                                    │
+│           │            │                 │            │                                    │
+│           │            ▼                 ▼            │                                    │
+│           │    ┌───────────────┐ ┌───────────────┐    │                                    │
+│           │    │  AI WORKFORCE │ │ HUMAN         │    │                                    │
+│           │    │   MANAGER     │ │ WORKFORCE     │    │                                    │
+│           │    │               │ │  MANAGER      │    │                                    │
+│           │    │• Agent sched  │ │• Team assign  │    │                                    │
+│           │    │• Task routing │ │• Training     │    │                                    │
+│           │    │• Performance  │ │• Supervision  │    │                                    │
+│           │    └───────┬───────┘ └───────┬───────┘    │                                    │
+│           │            │                 │            │                                    │
+│           └────────────┼─────────────────┼────────────┘                                    │
+│                        │                 │                                                  │
+│                        └────────┬────────┘                                                  │
+│                                 │                                                           │
+│                    ┌────────────┴────────────┐                                              │
+│                    │    DEPARTMENT AI HEADS   │                                              │
+│                    │   (Department Controllers) │                                             │
+│                    └────────────┬────────────┘                                              │
+│                                 │                                                           │
+│        ┌────────────────────────┼────────────────────────┐                                 │
+│        │                        │                        │                                 │
+│        ▼                        ▼                        ▼                                 │
+│  ┌─────────────┐          ┌─────────────┐          ┌─────────────┐                          │
+│  │   CX AI     │          │  SALES AI   │          │  MARKETING  │                          │
+│  │    HEAD     │          │    HEAD     │          │   AI HEAD   │                          │
+│  │             │          │             │          │             │                          │
+│  │• Customer   │          │• Lead gen   │          │• Campaign   │                          │
+│  │  experience │◄────────►│• Conversion│◄────────►│  execution │                          │
+│  │• Support    │   Data   │• Pipeline   │   Data   │• Content    │                          │
+│  │  automation │  Exchange│  mgmt       │  Exchange│  creation  │                          │
+│  │• Feedback   │          │• CRM ops     │          │• Analytics  │                          │
+│  │  analysis   │          │             │          │             │                          │
+│  └──────┬──────┘          └──────┬──────┘          └──────┬──────┘                          │
+│         │                        │                        │                                  │
+│         │           ┌────────────┴────────────┐           │                                  │
+│         │           │                         │           │                                  │
+│         └──────────►│   CROSS-DEPARTMENT DATA │◄──────────┘                                  │
+│                     │       EXCHANGE          │                                              │
+│                     │  (Shared intelligence)   │                                              │
+│                     └───────────────────────────┘                                              │
+│                                 │                                                            │
+│                                 ▼                                                            │
+│  ┌─────────────────────────────────────────────────────────────────────────────────────┐   │
+│  │                              AI AGENTS LAYER                                          │   │
+│  │                        (The Actual Workers)                                           │   │
+│  ├─────────────────────────────────────────────────────────────────────────────────────┤   │
+│  │                                                                                       │   │
+│  │  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐          │   │
+│  │  │  CX Agents  │    │ Sales Agents│    │  Mkt Agents │    │  Ops Agents │          │   │
+│  │  │             │    │             │    │             │    │             │          │   │
+│  │  │• Support Bot│    │• Lead Qual  │    │• Social Bot │   │• Process Bot│          │   │
+│  │  │• FAQ Agent  │    │• Demo Sched │    │• Email Bot  │    │• Report Bot │          │   │
+│  │  │• Escalation│    │• Follow-up  │    │• Ad Manager │    │• Monitor Bot│          │   │
+│  │  │  Router    │    │  Agent      │    │• SEO Bot    │    │• Alert Bot  │          │   │
+│  │  │• Feedback  │    │• CRM Update │    │• Analytics  │    │• Backup Bot │          │   │
+│  │  │  Collector │    │  Agent      │    │  Agent      │    │             │          │   │
+│  │  └─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘          │   │
+│  │                                                                                       │   │
+│  │  Each Agent Can:                                                                      │   │
+│  │  • Receive tasks from Department Head                                                  │   │
+│  │  • Consult other agents (A2A)                                                          │   │
+│  │  • Escalate to human when needed                                                       │   │
+│  │  • Report performance back up the chain                                                │   │
+│  │                                                                                       │   │
+│  └─────────────────────────────────────────────────────────────────────────────────────┘   │
+│                                                                                               │
+│  Example Flow:                                                                                │
+│                                                                                               │
+│  Customer: "I need help"                                                                      │
+│       │                                                                                       │
+│       ▼                                                                                       │
+│  CX Agent: "Hello! I can help" ──► Can't solve ──► Escalate to ──► Support Bot (L2)        │
+│       │                                                            │                        │
+│       │                                                            ▼                        │
+│       │                                                    Still can't solve                 │
+│       │                                                            │                        │
+│       ▼                                                            ▼                        │
+│  Solved! ◄────────────────────────────── Human Support Agent (from WOL management)             │
+│       │                                                                                       │
+│       ▼                                                                                       │
+│  Feedback collected ──► CX AI Head ──► CDOO reviews ──► CEO sees "Customer satisfaction UP" │
+│                                                                                               │
+└─────────────────────────────────────────────────────────────────────────────────────────────┘

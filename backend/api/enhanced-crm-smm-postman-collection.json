@@ -1,0 +1,432 @@
+{
+  "info": {
+    "name": "Kaytx - Enhanced CRM & SMM API",
+    "description": "API endpoints for Revenue Intelligence, Social Commerce, Influencer Management, Community Management, AI Content Studio, and Social Listening 2.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "CRM - Revenue Intelligence",
+      "item": [
+        {
+          "name": "Get Revenue Intelligence",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/enhanced/crm/revenue-intelligence",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "enhanced", "crm", "revenue-intelligence"]
+            },
+            "description": "Get comprehensive revenue analytics including MRR, cohorts, attribution, and pipeline health"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Advanced Lead Score",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/enhanced/crm/contacts/{{contactId}}/advanced-score",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "enhanced", "crm", "contacts", "{{contactId}}", "advanced-score"]
+            },
+            "description": "Get AI-powered lead score with intent signals, budget indicators, and decision timeline"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Org Chart",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/enhanced/crm/accounts/{{accountId}}/org-chart",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "enhanced", "crm", "accounts", "{{accountId}}", "org-chart"]
+            },
+            "description": "Get organizational chart, buying committee, and account intelligence"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "CRM - Smart Sequences",
+      "item": [
+        {
+          "name": "Create Smart Sequence",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Hot Lead Nurture\",\n  \"trigger\": \"lead_score_change\",\n  \"conditions\": [\n    {\n      \"type\": \"score_threshold\",\n      \"operator\": \"greater_than\",\n      \"field\": \"leadScore\",\n      \"value\": 70\n    }\n  ],\n  \"actions\": [\n    {\n      \"type\": \"email\",\n      \"content\": \"Send personalized welcome\",\n      \"delay\": 0,\n      \"channel\": \"email\"\n    },\n    {\n      \"type\": \"task\",\n      \"content\": \"Schedule sales call\",\n      \"delay\": 24\n    },\n    {\n      \"type\": \"ai_consultation\",\n      \"content\": \"Review lead strategy\",\n      \"delay\": 48,\n      \"aiAgentId\": \"ai-sales-rep\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/enhanced/crm/smart-sequences",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "enhanced", "crm", "smart-sequences"]
+            },
+            "description": "Create AI-optimized nurture sequence with automated actions"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "CRM - Data Enrichment",
+      "item": [
+        {
+          "name": "Enrich Contact",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sources\": [\"linkedin\", \"clearbit\", \"crunchbase\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/enhanced/crm/contacts/{{contactId}}/enrich",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "enhanced", "crm", "contacts", "{{contactId}}", "enrich"]
+            },
+            "description": "Enrich contact data from external sources (Clearbit, ZoomInfo, LinkedIn)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "SMM - Social Commerce",
+      "item": [
+        {
+          "name": "Create Shoppable Content",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accountId\": \"{{accountId}}\",\n  \"checkoutFlow\": \"native\",\n  \"isPromoted\": true,\n  \"promotionBudget\": 500,\n  \"products\": [\n    {\n      \"id\": \"prod_123\",\n      \"sku\": \"KTX-ENT-001\",\n      \"name\": \"Kaytx Enterprise Plan\",\n      \"price\": 499,\n      \"currency\": \"USD\",\n      \"images\": [\n        \"https://cdn.kaytx.io/products/enterprise-1.jpg\",\n        \"https://cdn.kaytx.io/products/enterprise-2.jpg\"\n      ],\n      \"url\": \"https://kaytx.io/products/enterprise\",\n      \"inventory\": 999,\n      \"variants\": [\n        {\n          \"id\": \"var_1\",\n          \"sku\": \"KTX-ENT-001-MONTHLY\",\n          \"title\": \"Monthly Billing\",\n          \"price\": 499,\n          \"inventory\": 999,\n          \"options\": {\"billing\": \"monthly\"}\n        },\n        {\n          \"id\": \"var_2\",\n          \"sku\": \"KTX-ENT-001-ANNUAL\",\n          \"title\": \"Annual Billing (Save 20%)\",\n          \"price\": 4790,\n          \"inventory\": 999,\n          \"options\": {\"billing\": \"annual\"}\n        }\n      ]\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/enhanced/smm/shoppable-content",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "enhanced", "smm", "shoppable-content"]
+            },
+            "description": "Create shoppable post with product tags and checkout options"
+          },
+          "response": []
+        },
+        {
+          "name": "Track Commerce Event",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contentId\": \"{{contentId}}\",\n  \"event\": \"purchase\",\n  \"productId\": \"prod_123\",\n  \"value\": 499\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/enhanced/smm/commerce-events",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "enhanced", "smm", "commerce-events"]
+            },
+            "description": "Track commerce events: view, click, add_to_cart, checkout, purchase"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "SMM - Influencer Management",
+      "item": [
+        {
+          "name": "Discover Influencers",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"platform\": \"instagram\",\n  \"niche\": [\"SaaS\", \"B2B\", \"technology\"],\n  \"minFollowers\": 10000,\n  \"maxFollowers\": 100000,\n  \"minEngagementRate\": 3.0,\n  \"location\": \"United States\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/enhanced/smm/influencers/discover",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "enhanced", "smm", "influencers", "discover"]
+            },
+            "description": "Discover influencers by platform, niche, follower count, and engagement"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Collaboration",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"campaignId\": \"camp_123\",\n  \"contractValue\": 5000,\n  \"exclusivity\": false,\n  \"contentRights\": \"usage\",\n  \"deliverables\": [\n    {\n      \"type\": \"post\",\n      \"platform\": \"instagram\",\n      \"requirements\": \"1 feed post featuring product demo with authentic review\",\n      \"dueDate\": \"2024-02-15\",\n      \"payment\": 2500\n    },\n    {\n      \"type\": \"story\",\n      \"platform\": \"instagram\",\n      \"requirements\": \"3 stories with swipe-up link showing behind-the-scenes\",\n      \"dueDate\": \"2024-02-20\",\n      \"payment\": 1500\n    },\n    {\n      \"type\": \"reel\",\n      \"platform\": \"instagram\",\n      \"requirements\": \"1 Reel (60s) showcasing key features with trending audio\",\n      \"dueDate\": \"2024-02-25\",\n      \"payment\": 1000\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/enhanced/smm/influencers/{{influencerId}}/collaborations",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "enhanced", "smm", "influencers", "{{influencerId}}", "collaborations"]
+            },
+            "description": "Create collaboration with influencer including deliverables and payment schedule"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Influencer Performance",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/enhanced/smm/influencers/{{influencerId}}/performance",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "enhanced", "smm", "influencers", "{{influencerId}}", "performance"]
+            },
+            "description": "Get influencer performance analytics including CPE, CPC, ROAS, earned media value"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "SMM - Community Management",
+      "item": [
+        {
+          "name": "Get Community Health",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/enhanced/smm/accounts/{{accountId}}/community-health",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "enhanced", "smm", "accounts", "{{accountId}}", "community-health"]
+            },
+            "description": "Get comprehensive community health: sentiment, engagement, growth, crisis indicators, AI recommendations"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "SMM - AI Content Studio",
+      "item": [
+        {
+          "name": "Generate AI Content",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"objective\": \"awareness\",\n  \"contentType\": \"post\",\n  \"platform\": \"instagram\",\n  \"topic\": \"AI-powered business automation\",\n  \"keywords\": [\"AI\", \"automation\", \"efficiency\", \"growth\"],\n  \"targetAudience\": \"business owners and decision makers\",\n  \"tone\": \"professional\",\n  \"brandVoice\": \"innovative yet approachable\",\n  \"includeCta\": true,\n  \"ctaType\": \"link_in_bio\",\n  \"competitorAnalysis\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/enhanced/smm/ai-content",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "enhanced", "smm", "ai-content"]
+            },
+            "description": "Generate AI-powered content with multiple variations, performance predictions, and A/B testing setup"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "SMM - Social Listening 2.0",
+      "item": [
+        {
+          "name": "Perform Social Listening",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"Kaytx OR #Kaytx\",\n  \"platforms\": [\"twitter\", \"instagram\", \"linkedin\"],\n  \"monitorCompetitors\": true,\n  \"detectLeads\": true,\n  \"crisisDetection\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/enhanced/smm/social-listening",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "enhanced", "smm", "social-listening"]
+            },
+            "description": "Perform comprehensive social listening: brand mentions, competitor mentions, trends, sentiment, crisis alerts, lead generation"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "item": [
+        {
+          "name": "API Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/enhanced/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "enhanced", "health"]
+            },
+            "description": "Check API health status"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "contactId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "accountId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "influencerId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "contentId",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}

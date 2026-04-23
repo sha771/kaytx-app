@@ -1,0 +1,1058 @@
+openapi: 3.0.3
+info:
+  title: kaytx Comprehensive API
+  description: Complete API documentation for the kaytx platform including all endpoints, schemas, and detailed examples.
+  version: 2.1.3
+  contact:
+    name: kaytx API Team
+    email: kaytxoffical@gmail.com
+    url: https://kaytx.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://api.kaytx.com/v1
+    description: Production environment
+  - url: https://staging-api.kaytx.com/v1
+    description: Staging environment
+  - url: http://localhost:3001/v1
+    description: Local development
+
+tags:
+  - name: Authentication
+    description: Authentication and authorization endpoints
+  - name: Users
+    description: User management and profile operations
+  - name: Organizations
+    description: Organization management and settings
+  - name: AI Agents
+    description: AI agent interactions and management
+  - name: Payments
+    description: Payment processing and billing
+  - name: Marketing
+    description: Marketing campaigns and automation
+  - name: Analytics
+    description: Analytics, reporting, and insights
+  - name: Platform
+    description: Third-party platform integrations
+  - name: Files
+    description: File upload and management
+  - name: Compliance
+    description: Compliance, privacy, and security
+  - name: Counseling
+    description: Agent-to-agent and employee-to-agent counseling sessions
+
+paths:
+  # Authentication endpoints
+  /auth/register:
+    post:
+      tags:
+        - Authentication
+      summary: Register new user
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '201':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: User login
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/services/agent-counseling/employee-to-agent:
+    post:
+      tags:
+        - Counseling
+      summary: Employee initiates counseling with an agent
+      operationId: employeeToAgentCounseling
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [agentId, topic, question]
+              properties:
+                agentId:
+                  type: string
+                topic:
+                  type: string
+                question:
+                  type: string
+                options:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    priority:
+                      type: string
+                    expectedDeliverable:
+                      type: string
+                    deadline:
+                      type: string
+                      format: date-time
+                    tags:
+                      type: array
+                      items:
+                        type: string
+                    confidentiality:
+                      type: string
+      responses:
+        '200':
+          description: Counseling session created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/services/agent-counseling/agent-to-employee:
+    post:
+      tags:
+        - Counseling
+      summary: Agent initiates counseling with the authenticated employee
+      operationId: agentToEmployeeCounseling
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [agentId, topic, question]
+              properties:
+                agentId:
+                  type: string
+                topic:
+                  type: string
+                question:
+                  type: string
+                options:
+                  type: object
+      responses:
+        '200':
+          description: Counseling session created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/services/agent-counseling/sessions/{sessionId}/respond-as-employee:
+    post:
+      tags:
+        - Counseling
+      summary: Employee responds to a counseling session
+      operationId: respondToCounselingAsEmployee
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [response]
+              properties:
+                response:
+                  type: object
+                  required: [status, answer, confidence, reasoning, requiresFollowUp]
+                  properties:
+                    status:
+                      type: string
+                    answer:
+                      type: string
+                    recommendations:
+                      type: array
+                      items:
+                        type: string
+                    confidence:
+                      type: number
+                    reasoning:
+                      type: string
+                    caveats:
+                      type: array
+                      items:
+                        type: string
+                    requiresFollowUp:
+                      type: boolean
+                    suggestedNextSteps:
+                      type: array
+                      items:
+                        type: string
+      responses:
+        '200':
+          description: Counseling session updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/services/agent-counseling/sessions/{sessionId}/auto-respond:
+    post:
+      tags:
+        - Counseling
+      summary: Auto-generate a counseling response using an AI provider (OpenAI or Gemini)
+      operationId: autoRespondToCounseling
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                respondingAgentId:
+                  type: string
+                provider:
+                  type: string
+                  enum: [openai, google]
+                model:
+                  type: string
+                temperature:
+                  type: number
+                maxTokens:
+                  type: number
+                status:
+                  type: string
+                  enum: [in_progress, completed]
+      responses:
+        '200':
+          description: Counseling session updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /auth/refresh:
+    post:
+      tags:
+        - Authentication
+      summary: Refresh access token
+      operationId: refreshToken
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshTokenRequest'
+      responses:
+        '200':
+          description: Token refreshed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # User management endpoints
+  /users/profile:
+    get:
+      tags:
+        - Users
+      summary: Get user profile
+      operationId: getUserProfile
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: User profile retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    put:
+      tags:
+        - Users
+      summary: Update user profile
+      operationId: updateUserProfile
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProfileRequest'
+      responses:
+        '200':
+          description: Profile updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # AI Agent endpoints
+  /ai/agents:
+    get:
+      tags:
+        - AI Agents
+      summary: List AI agents
+      operationId: listAIAgents
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: AI agents retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  agents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AIAgent'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    post:
+      tags:
+        - AI Agents
+      summary: Create AI agent
+      operationId: createAIAgent
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAIAgentRequest'
+      responses:
+        '201':
+          description: AI agent created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AIAgent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /ai/agents/{agentId}/chat:
+    post:
+      tags:
+        - AI Agents
+      summary: Chat with AI agent
+      operationId: chatWithAgent
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: agentId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatRequest'
+      responses:
+        '200':
+          description: Chat response received
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # Payment endpoints
+  /payments/intents:
+    post:
+      tags:
+        - Payments
+      summary: Create payment intent
+      operationId: createPaymentIntent
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePaymentIntentRequest'
+      responses:
+        '201':
+          description: Payment intent created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentIntent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /payments/methods:
+    get:
+      tags:
+        - Payments
+      summary: List payment methods
+      operationId: listPaymentMethods
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Payment methods retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  paymentMethods:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PaymentMethod'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    post:
+      tags:
+        - Payments
+      summary: Add payment method
+      operationId: addPaymentMethod
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddPaymentMethodRequest'
+      responses:
+        '201':
+          description: Payment method added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentMethod'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # Marketing endpoints
+  /marketing/campaigns:
+    get:
+      tags:
+        - Marketing
+      summary: List campaigns
+      operationId: listCampaigns
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Campaigns retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  campaigns:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Campaign'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    post:
+      tags:
+        - Marketing
+      summary: Create campaign
+      operationId: createCampaign
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCampaignRequest'
+      responses:
+        '201':
+          description: Campaign created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Campaign'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # Analytics endpoints
+  /analytics/dashboard:
+    get:
+      tags:
+        - Analytics
+      summary: Get dashboard analytics
+      operationId: getDashboardAnalytics
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Dashboard analytics retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardAnalytics'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    # Authentication schemas
+    RegisterRequest:
+      type: object
+      required:
+        - email
+        - password
+        - firstName
+        - lastName
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+        firstName:
+          type: string
+        lastName:
+          type: string
+        organizationName:
+          type: string
+
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+        rememberMe:
+          type: boolean
+          default: false
+
+    RefreshTokenRequest:
+      type: object
+      required:
+        - refreshToken
+      properties:
+        refreshToken:
+          type: string
+
+    AuthResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserProfile'
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        expiresIn:
+          type: integer
+
+    TokenResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        expiresIn:
+          type: integer
+
+    # User schemas
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+        firstName:
+          type: string
+        lastName:
+          type: string
+        avatar:
+          type: string
+          format: uri
+        role:
+          type: string
+          enum: [admin, user, viewer]
+        organization:
+          $ref: '#/components/schemas/Organization'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    UpdateProfileRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        avatar:
+          type: string
+          format: uri
+
+    Organization:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        plan:
+          type: string
+          enum: [free, pro, enterprise]
+        createdAt:
+          type: string
+          format: date-time
+
+    # AI Agent schemas
+    AIAgent:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum: [chat, assistant, analyst, coordinator]
+        description:
+          type: string
+        capabilities:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          enum: [active, inactive, busy]
+
+    CreateAIAgentRequest:
+      type: object
+      required:
+        - name
+        - type
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+          enum: [chat, assistant, analyst, coordinator]
+        description:
+          type: string
+        capabilities:
+          type: array
+          items:
+            type: string
+        configuration:
+          type: object
+
+    ChatRequest:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+        context:
+          type: object
+        sessionId:
+          type: string
+
+    ChatResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        sessionId:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+
+    # Payment schemas
+    CreatePaymentIntentRequest:
+      type: object
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: integer
+        currency:
+          type: string
+          default: USD
+        description:
+          type: string
+        metadata:
+          type: object
+
+    PaymentIntent:
+      type: object
+      properties:
+        id:
+          type: string
+        amount:
+          type: integer
+        currency:
+          type: string
+        status:
+          type: string
+          enum: [requires_payment_method, requires_confirmation, requires_action, processing, succeeded, canceled]
+        clientSecret:
+          type: string
+
+    PaymentMethod:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: [card, bank_account]
+        last4:
+          type: string
+        brand:
+          type: string
+        expiryMonth:
+          type: integer
+        expiryYear:
+          type: integer
+        isDefault:
+          type: boolean
+
+    AddPaymentMethodRequest:
+      type: object
+      required:
+        - paymentMethodId
+      properties:
+        paymentMethodId:
+          type: string
+        isDefault:
+          type: boolean
+          default: false
+
+    # Marketing schemas
+    Campaign:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum: [email, social, search, display]
+        status:
+          type: string
+          enum: [draft, active, paused, completed]
+        budget:
+          type: number
+        spent:
+          type: number
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        metrics:
+          $ref: '#/components/schemas/CampaignMetrics'
+
+    CreateCampaignRequest:
+      type: object
+      required:
+        - name
+        - type
+        - budget
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+          enum: [email, social, search, display]
+        budget:
+          type: number
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        targetAudience:
+          type: object
+
+    CampaignMetrics:
+      type: object
+      properties:
+        impressions:
+          type: integer
+        clicks:
+          type: integer
+        conversions:
+          type: integer
+        ctr:
+          type: number
+        cpc:
+          type: number
+        cpa:
+          type: number
+
+    # Analytics schemas
+    DashboardAnalytics:
+      type: object
+      properties:
+        overview:
+          $ref: '#/components/schemas/OverviewMetrics'
+        charts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChartData'
+        reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/Report'
+
+    OverviewMetrics:
+      type: object
+      properties:
+        totalUsers:
+          type: integer
+        activeUsers:
+          type: integer
+        totalRevenue:
+          type: number
+        conversionRate:
+          type: number
+
+    ChartData:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [line, bar, pie, area]
+        title:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+
+    Report:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        generatedAt:
+          type: string
+          format: date-time
+
+    # Common schemas
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    Conflict:
+      description: Resource conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    TooManyRequests:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+      headers:
+        X-RateLimit-Limit:
+          description: Rate limit limit
+          schema:
+            type: integer
+        X-RateLimit-Remaining:
+          description: Rate limit remaining
+          schema:
+            type: integer
+        X-RateLimit-Reset:
+          description: Rate limit reset time
+          schema:
+            type: integer
+
+security:
+  - bearerAuth: []
