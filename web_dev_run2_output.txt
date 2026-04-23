@@ -1,0 +1,9 @@
+
+> kaytx@2.5.8 start-web-dev
+> cross-env NODE_OPTIONS=\"--max-old-space-size=8192\" npx expo start --web
+
+env: load .env
+env: export DATABASE_URL EXPO_PUBLIC_RORK_API_BASE_URL JWT_SECRET PORT REDIS_URL TEST_DATABASE_URL TEST_TIMEOUT TWILIO_ACCOUNT_SID TWILIO_AUTH_TOKEN
+Starting project at C:\Users\shaida\Desktop\kaytx-full-app
+› Port 8081 is being used by another process
+› Skipping dev server
