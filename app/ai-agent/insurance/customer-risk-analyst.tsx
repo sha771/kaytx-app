@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { UserCheck, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { UserCheck, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'3,783',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.4s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'100.0%',icon:Target,color:'#004D40'}];
+  const stats = [{label:'Tasks',value:'3,783',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.4s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'100.0%',icon:Target,color:'#004D40'}];
   const capabilities = ['Risk Profiling','Data Analytics','Underwriting Support','Portfolio Analysis','Predictive Modeling','Customer Insights'];
   const responsibilities = ['Customer risk profiling & segmentation','Data analytics for risk assessment','Underwriting decision support','Portfolio risk analysis & monitoring','Predictive model development','Customer behavior & risk insights'];
-  const activities = [{time:'3 min ago',text:'Profiled 500 customer risk scores',icon:CheckCircle2},{time:'6 min ago',text:'Updated predictive risk models',icon:Clock},{time:'9 min ago',text:'Generated portfolio risk report',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Profiled 500 customer risk scores',icon: CircleCheckBig},{time:'6 min ago',text:'Updated predictive risk models',icon:Clock},{time:'9 min ago',text:'Generated portfolio risk report',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

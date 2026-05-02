@@ -1,7 +1,7 @@
-
+﻿
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { BarChart3, TrendingUp, TrendingDown, Activity, Globe, Zap } from 'lucide-react-native';
+import { ChartBar, TrendingUp, TrendingDown, Activity, Globe, Zap } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
@@ -32,7 +32,7 @@ export default function CommoditiesScreen() {
     <ScrollView style={styles.tabContent} showsVerticalScrollIndicator={false}>
       <View style={styles.metricsGrid}>
         <LinearGradient colors={['#FF6D00', '#e65100']} style={styles.metricCard}>
-          <BarChart3 size={20} color="#fff" />
+          <ChartBarBig size={20} color="#fff" />
           <Text style={styles.metricValue}>7</Text>
           <Text style={styles.metricLabel}>Markets Traded</Text>
         </LinearGradient>
@@ -106,7 +106,7 @@ export default function CommoditiesScreen() {
   );
 
   const customTabs = [
-    { id: 'commodities', label: 'Markets', icon: BarChart3, component: commoditiesTab },
+    { id: 'commodities', label: 'Markets', icon: ChartBar, component: commoditiesTab },
     { id: 'analytics', label: 'Analytics', icon: Activity, component: <View /> },
   ];
 

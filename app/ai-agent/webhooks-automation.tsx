@@ -15,17 +15,17 @@ import {
   Webhook as WebhookIcon,
   Plus,
   Trash2,
-  Edit3,
+  PenLine,
   Check,
   X,
   Zap,
   Play,
   Pause,
   RefreshCw,
-  AlertCircle,
+  CircleAlert,
   Clock4,
   Send,
-  Filter,
+  ListFilter,
   Settings,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -212,7 +212,7 @@ export default function WebhookAutomationScreen() {
   const toggleWebhookStatus = (webhookId: string) => {
     setWebhooks(webhooks.map(w =>
       w.id === webhookId
-        ? { ...w, status: w.status === 'active' ? 'paused' : 'active' as any }
+        ? { ...w, status: (w.status === 'active' ? 'paused' : 'active') as Webhook['status'] }
         : w
     ));
   };
@@ -220,7 +220,7 @@ export default function WebhookAutomationScreen() {
   const toggleRuleStatus = (ruleId: string) => {
     setAutomationRules(automationRules.map(r =>
       r.id === ruleId
-        ? { ...r, status: r.status === 'active' ? 'paused' : 'active' as any }
+        ? { ...r, status: (r.status === 'active' ? 'paused' : 'active') as AutomationRule['status'] }
         : r
     ));
   };
@@ -310,7 +310,7 @@ export default function WebhookAutomationScreen() {
         </View>
         {webhook.failedTriggers > 0 && (
           <View style={styles.stat}>
-            <AlertCircle size={14} color="#EF4444" />
+            <CircleAlert size={14} color="#EF4444" />
             <Text style={[styles.statText, { color: '#EF4444' }]}>
               {webhook.failedTriggers} failed
             </Text>
@@ -333,7 +333,7 @@ export default function WebhookAutomationScreen() {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.actionButton}>
-          <Edit3 size={18} color={colors.tint} />
+          <PenLine size={18} color={colors.tint} />
           <Text style={[styles.actionText, { color: colors.tint }]}>Edit</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -374,7 +374,7 @@ export default function WebhookAutomationScreen() {
       <View style={styles.triggerSection}>
         <Text style={[styles.triggerLabel, { color: colors.icon }]}>When:</Text>
         <View style={[styles.triggerBadge, { backgroundColor: colors.tint + '20' }]}>
-          <Filter size={14} color={colors.tint} />
+          <ListFilter size={14} color={colors.tint} />
           <Text style={[styles.triggerText, { color: colors.tint }]}>
             {rule.trigger.type}
           </Text>
@@ -425,7 +425,7 @@ export default function WebhookAutomationScreen() {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.actionButton}>
-          <Edit3 size={18} color={colors.tint} />
+          <PenLine size={18} color={colors.tint} />
           <Text style={[styles.actionText, { color: colors.tint }]}>Edit</Text>
         </TouchableOpacity>
         <TouchableOpacity

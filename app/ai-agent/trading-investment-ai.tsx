@@ -2,7 +2,7 @@
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import {
-  TrendingUp, TrendingDown, BarChart3, Shield, Globe,
+  TrendingUp, TrendingDown, ChartBar, Shield, Globe,
   Zap, Brain, ArrowRight, Activity, DollarSign, Coins, Clock,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
@@ -97,7 +97,7 @@ export default function TradingInvestmentAIScreen() {
           <TouchableOpacity
             key={sa.id}
             style={[styles.subAgentRow, { borderBottomColor: theme.colors.border }]}
-            onPress={() => router.push(sa.route as any)}
+            onPress={() => router.push(sa.route)}
           >
             <View style={[styles.subAgentDot, { backgroundColor: sa.color }]} />
             <Text style={[styles.subAgentName, { color: theme.colors.text }]}>{sa.name}</Text>
@@ -158,7 +158,7 @@ export default function TradingInvestmentAIScreen() {
 
   const customTabs = [
     { id: 'overview', label: 'Overview', icon: Activity, component: overviewTab },
-    { id: 'analytics', label: 'Analytics', icon: BarChart3, component: analyticsTab },
+    { id: 'analytics', label: 'Analytics', icon: ChartBar, component: analyticsTab },
   ];
 
   return <AgentShell agent={agent} customTabs={customTabs} />;

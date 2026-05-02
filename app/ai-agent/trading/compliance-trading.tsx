@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { ShieldCheck, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { ShieldCheck, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'3,700',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.1s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.8%',icon:Target,color:'#0277BD'}];
+  const stats = [{label:'Tasks',value:'3,700',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.1s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.8%',icon:Target,color:'#0277BD'}];
   const capabilities = ['Regulatory Compliance','Trade Surveillance','AML/KYC','Reporting','Policy Enforcement','Audit Support'];
   const responsibilities = ['Trading regulatory compliance monitoring','Trade surveillance & anomaly detection','AML/KYC verification processes','Regulatory reporting & documentation','Policy enforcement & violation tracking','Audit preparation & support'];
-  const activities = [{time:'3 min ago',text:'Cleared 500 trade surveillance alerts',icon:CheckCircle2},{time:'6 min ago',text:'Updated AML screening rules',icon:Clock},{time:'9 min ago',text:'Filed monthly regulatory report',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Cleared 500 trade surveillance alerts',icon: CircleCheckBig},{time:'6 min ago',text:'Updated AML screening rules',icon:Clock},{time:'9 min ago',text:'Filed monthly regulatory report',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

@@ -13,7 +13,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
 import {
   Search,
-  Filter,
+  ListFilter,
   Instagram,
   Twitter,
   Facebook,
@@ -22,12 +22,12 @@ import {
   Heart,
   AtSign,
   Send,
-  MoreHorizontal,
+  GripHorizontal,
   Clock,
   Star,
   StarOff,
   Archive,
-  CheckCircle,
+  CircleCheck,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 
@@ -203,7 +203,7 @@ export default function SocialInbox() {
           />
         </View>
         <TouchableOpacity style={[styles.filterButton, { backgroundColor: theme.colors.cardBackground }]}>
-          <Filter size={18} color={theme.colors.text} />
+          <ListFilter size={18} color={theme.colors.text} />
         </TouchableOpacity>
       </View>
 
@@ -302,7 +302,7 @@ export default function SocialInbox() {
                     )}
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.actionButton}>
-                    <MoreHorizontal size={16} color={theme.colors.secondaryText} />
+                    <GripHorizontal size={16} color={theme.colors.secondaryText} />
                   </TouchableOpacity>
                 </View>
               </View>
@@ -333,7 +333,7 @@ export default function SocialInbox() {
                     <Archive size={12} color={theme.colors.secondaryText} />
                   </TouchableOpacity>
                   <TouchableOpacity style={[styles.quickAction, { backgroundColor: 'rgba(0,0,0,0.05)' }]}>
-                    <CheckCircle size={12} color={theme.colors.secondaryText} />
+                    <CircleCheck size={12} color={theme.colors.secondaryText} />
                   </TouchableOpacity>
                 </View>
               </View>

@@ -13,9 +13,9 @@ import {
   TrendingUp,
   DollarSign,
   Star,
-  AlertCircle,
-  CheckCircle,
-  XCircle,
+  CircleAlert,
+  CircleCheck,
+  CircleX,
 } from 'lucide-react-native';
 
 interface Competitor {
@@ -204,16 +204,16 @@ export default function CompetitorAnalysisScreen() {
                 <Text style={[styles.featureName, { flex: 2 }]}>{feature.name}</Text>
                 <View style={styles.featureStatus}>
                   {feature.us ? (
-                    <CheckCircle size={20} color="#10B981" />
+                    <CircleCheck size={20} color="#10B981" />
                   ) : (
-                    <XCircle size={20} color="#EF4444" />
+                    <CircleX size={20} color="#EF4444" />
                   )}
                 </View>
                 <View style={styles.featureStatus}>
                   {feature.them ? (
-                    <CheckCircle size={20} color="#10B981" />
+                    <CircleCheck size={20} color="#10B981" />
                   ) : (
-                    <XCircle size={20} color="#EF4444" />
+                    <CircleX size={20} color="#EF4444" />
                   )}
                 </View>
               </View>
@@ -226,7 +226,7 @@ export default function CompetitorAnalysisScreen() {
           <View style={styles.listContainer}>
             {selectedCompData.strengths.map((strength, index) => (
               <View key={index} style={styles.listItem}>
-                <CheckCircle size={16} color="#10B981" />
+                <CircleCheck size={16} color="#10B981" />
                 <Text style={styles.listText}>{strength}</Text>
               </View>
             ))}
@@ -238,7 +238,7 @@ export default function CompetitorAnalysisScreen() {
           <View style={styles.listContainer}>
             {selectedCompData.weaknesses.map((weakness, index) => (
               <View key={index} style={styles.listItem}>
-                <AlertCircle size={16} color="#F59E0B" />
+                <CircleAlert size={16} color="#F59E0B" />
                 <Text style={styles.listText}>{weakness}</Text>
               </View>
             ))}

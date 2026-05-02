@@ -18,14 +18,14 @@ import {
   Settings,
   Plus,
   Search,
-  Filter,
-  BarChart3,
+  ListFilter,
+  ChartBar,
   Clock,
-  CheckCircle,
-  AlertTriangle,
+  CircleCheck,
+  TriangleAlert,
   ArrowRight,
   ArrowLeft,
-  Edit,
+  Pencil,
   Trash2,
   Copy,
   Activity,
@@ -134,7 +134,7 @@ const automationTemplates: AutomationTemplate[] = [
     name: 'Task Management',
     description: 'Automated task creation and assignment',
     category: 'Operations',
-    icon: CheckCircle,
+    icon: CircleCheck,
     color: '#AF52DE',
   },
 ];
@@ -159,8 +159,8 @@ export default function AutomationHubScreen() {
     switch (status) {
       case 'active': return Play;
       case 'paused': return Pause;
-      case 'draft': return Edit;
-      default: return AlertTriangle;
+      case 'draft': return Pencil;
+      default: return TriangleAlert;
     }
   };
 
@@ -219,7 +219,7 @@ export default function AutomationHubScreen() {
           </View>
           <View style={styles.automationActions}>
             <TouchableOpacity style={styles.actionButton}>
-              <Edit size={16} color={theme.colors.text} />
+              <Pencil size={16} color={theme.colors.text} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.actionButton}>
               <Copy size={16} color={theme.colors.text} />
@@ -318,24 +318,24 @@ export default function AutomationHubScreen() {
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filtersContainer}>
         <View style={styles.filters}>
-          {(['all', 'active', 'paused', 'draft'] as const).map((filter) => (
+          {(['all', 'active', 'paused', 'draft'] as const).map((Filter) => (
             <TouchableOpacity
-              key={filter}
+              key={Filter}
               style={[
                 styles.filterChip,
-                filterStatus === filter && { backgroundColor: theme.colors.primary },
+                filterStatus === Filter && { backgroundColor: theme.colors.primary },
               ]}
-              onPress={() => setFilterStatus(filter)}
+              onPress={() => setFilterStatus(Filter)}
             >
               <Text
                 style={[
                   styles.filterText,
                   {
-                    color: filterStatus === filter ? 'white' : theme.colors.secondaryText,
+                    color: filterStatus === Filter ? 'white' : theme.colors.secondaryText,
                   },
                 ]}
               >
-                {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                {Filter.charAt(0).toUpperCase() + Filter.slice(1)}
               </Text>
             </TouchableOpacity>
           ))}

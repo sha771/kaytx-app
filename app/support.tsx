@@ -1,9 +1,9 @@
- 
+﻿ 
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
-import { ArrowLeft, HelpCircle, MessageCircle, Mail, Phone, Book, Video, Search, ChevronRight } from 'lucide-react-native';
+import { ArrowLeft, LifeBuoy, MessageCircle, Mail, Phone, Book, Video, Search, ChevronRight } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 
 export default function SupportScreen() {
@@ -169,7 +169,7 @@ export default function SupportScreen() {
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
           <View style={styles.cardHeader}>
-            <HelpCircle size={24} color={theme.colors.primary} />
+            <LifeBuoy size={24} color={theme.colors.primary} />
             <Text style={[styles.cardTitle, { color: theme.colors.text }]}>How can we help?</Text>
           </View>
           <Text style={[styles.cardDescription, { color: theme.colors.secondaryText }]}>

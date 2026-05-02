@@ -13,14 +13,14 @@ import {
 import {
   Brain,
   Calendar,
-  CheckSquare,
+  SquareCheck,
   MessageSquare,
   Clock,
   TrendingUp,
   Users,
   Zap,
   Target,
-  BarChart3,
+  ChartBar,
   Send,
   Mic,
   Sparkles,
@@ -156,7 +156,7 @@ export default function AIAssistantScreen() {
   const handleEmployeePress = useCallback((employee: AIEmployee) => {
     closeSidebar();
     setTimeout(() => {
-      router.push(employee.route as any);
+      router.push(employee.route);
     }, 300);
   }, [closeSidebar]);
 
@@ -213,7 +213,7 @@ export default function AIAssistantScreen() {
             <TouchableOpacity
               key={action.id}
               style={[styles.quickActionCard, { backgroundColor: theme.colors.cardBackground }]}
-              onPress={() => action.route ? router.push(action.route as any) : action.action?.()}
+              onPress={() => action.route ? router.push(action.route) : action.action?.()}
             >
               <View style={[styles.quickActionIcon, { backgroundColor: action.color + '15' }]}>
                 <action.icon size={22} color={action.color} />
@@ -236,7 +236,7 @@ export default function AIAssistantScreen() {
           <TouchableOpacity
             key={emp.id}
             style={[styles.miniEmployeeCard, { backgroundColor: theme.colors.cardBackground }]}
-            onPress={() => router.push(emp.route as any)}
+            onPress={() => router.push(emp.route)}
           >
             <View style={[styles.miniEmpIcon, { backgroundColor: emp.color + '15' }]}>
               <emp.icon size={20} color={emp.color} />
@@ -266,7 +266,7 @@ export default function AIAssistantScreen() {
         </View>
         {tasks.length === 0 ? (
           <View style={[styles.emptyState, { backgroundColor: theme.colors.cardBackground }]}>
-            <CheckSquare size={48} color={theme.colors.secondaryText} />
+            <SquareCheck size={48} color={theme.colors.secondaryText} />
             <Text style={[styles.emptyStateText, { color: theme.colors.text }]}>
               No tasks yet
             </Text>
@@ -444,7 +444,7 @@ export default function AIAssistantScreen() {
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
-          <BarChart3 size={20} color={theme.colors.primary} />
+          <ChartBarBig size={20} color={theme.colors.primary} />
           <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
             Productivity Insights
           </Text>
@@ -699,20 +699,7 @@ export default function AIAssistantScreen() {
         </View>
       </Modal>
 
-      {/* Related Features Section */}
-      <View style={{ marginTop: 20, marginBottom: 100 }}>
-        <RelatedFeatures
-          featureId="ai-agent"
-          title="Related AI Features"
-          maxItems={6}
-          layout="horizontal"
-        />
-        <QuickLinks
-          groupId="automation"
-          title="Automation Tools"
-          maxItems={4}
-        />
-      </View>
+      {/* Related Features Section - removed as per request */}
 
       {showSidebar && (
         <TouchableOpacity

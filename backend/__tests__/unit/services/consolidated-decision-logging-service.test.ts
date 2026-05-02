@@ -219,7 +219,7 @@ describe('ConsolidatedDecisionLoggingService', () => {
       );
     });
 
-    it('should filter decisions by multiple criteria', async () => {
+    it('should Filter decisions by multiple criteria', async () => {
       const filters = {
         organizationId: 'org-123',
         decisionType: 'routing',

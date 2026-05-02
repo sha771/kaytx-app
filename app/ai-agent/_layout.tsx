@@ -36,6 +36,8 @@ export default function AIAgentLayout() {
       <Stack.Screen name="core-intelligence-layer" />
       <Stack.Screen name="ai-workforce-architecture" />
       <Stack.Screen name="a2a-network" />
+      <Stack.Screen name="mind-map" />
+      <Stack.Screen name="phone" />
 
       {/* Category screens */}
       <Stack.Screen name="customer-experience-ai" />
@@ -88,15 +90,6 @@ export default function AIAgentLayout() {
       <Stack.Screen name="accounting/financial-controller" />
       <Stack.Screen name="accounting/credit-manager" />
 
-      {/* Accounting & Finance AI */}
-      <Stack.Screen name="accounting/tax-analyst" />
-      <Stack.Screen name="accounting/financial-planner" />
-      <Stack.Screen name="accounting/auditor" />
-      <Stack.Screen name="accounting/expense-manager" />
-      <Stack.Screen name="accounting/invoice-processor" />
-      <Stack.Screen name="accounting/payroll-manager" />
-      <Stack.Screen name="accounting/bookkeeper" />
-
       {/* Human Resources AI */}
       <Stack.Screen name="hr/onboarding-agent" />
       <Stack.Screen name="hr/performance-reviewer" />
@@ -133,10 +126,6 @@ export default function AIAgentLayout() {
       <Stack.Screen name="assistant/research-agent" />
       <Stack.Screen name="assistant/notification-manager" />
       <Stack.Screen name="assistant/personal-secretary" />
-      <Stack.Screen name="assistant/task-prioritizer" />
-      <Stack.Screen name="assistant/meeting-summarizer" />
-      <Stack.Screen name="assistant/research-agent" />
-      <Stack.Screen name="assistant/notification-manager" />
 
       {/* Standalone AI Agents */}
       <Stack.Screen name="standalone/ai-receptionist" />

@@ -10,7 +10,7 @@ describe('Database Property-Based Tests', () => {
   });
 
   describe('Query Builder Properties', () => {
-    it('should build consistent queries for various filter combinations', () => {
+    it('should build consistent queries for various Filter combinations', () => {
       fc.assert(
         fc.property(
           fc.record({
@@ -72,7 +72,7 @@ describe('Database Property-Based Tests', () => {
       );
     });
 
-    it('should handle complex filter combinations correctly', () => {
+    it('should handle complex Filter combinations correctly', () => {
       fc.assert(
         fc.property(
           fc.array(fc.record({
@@ -88,19 +88,19 @@ describe('Database Property-Based Tests', () => {
           (filters) => {
             // Build complex query
             const conditions = filters.map(filter => {
-              switch (filter.operator) {
+              switch (Filter.operator) {
                 case 'eq':
-                  return eq(organizations[filter.field], filter.value);
+                  return eq(organizations[Filter.field], Filter.value);
                 case 'like':
-                  return like(organizations[filter.field], `%${filter.value}%`);
+                  return like(organizations[Filter.field], `%${Filter.value}%`);
                 case 'gte':
-                  return gte(organizations[filter.field], filter.value);
+                  return gte(organizations[Filter.field], Filter.value);
                 case 'lte':
-                  return lte(organizations[filter.field], filter.value);
+                  return lte(organizations[Filter.field], Filter.value);
                 case 'in':
-                  return organizations[filter.field].in(filter.value as any);
+                  return organizations[Filter.field].in(Filter.value as any);
                 default:
-                  return eq(organizations[filter.field], filter.value);
+                  return eq(organizations[Filter.field], Filter.value);
               }
             });
 

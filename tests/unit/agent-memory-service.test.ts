@@ -166,7 +166,7 @@ describe('AgentMemoryService', () => {
       // For now, I'll remove this expectation to match the current implementation.
     });
 
-    it('should filter by memory type', async () => {
+    it('should Filter by memory type', async () => {
       const typeData = [{
         id: 'memory-123',
         type: 'conversation'
@@ -191,7 +191,7 @@ describe('AgentMemoryService', () => {
       expect(result.memories[0].type).toBe('conversation');
     });
 
-    it('should filter by tags', async () => {
+    it('should Filter by tags', async () => {
       const tagData = [{
         id: 'memory-123',
         tags: ['important', 'test']

@@ -1,19 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { PieChart, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { ChartPie, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'3,556',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.6s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.8%',icon:Target,color:'#0277BD'}];
+  const stats = [{label:'Tasks',value:'3,556',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.6s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.8%',icon:Target,color:'#0277BD'}];
   const capabilities = ['Portfolio Analytics','Risk Metrics','Attribution','Optimization','Benchmarking','Performance Reporting'];
   const responsibilities = ['Portfolio analytics & performance measurement','Risk metrics calculation & monitoring','Performance attribution analysis','Portfolio optimization recommendations','Benchmark comparison & analysis','Client performance reporting'];
-  const activities = [{time:'3 min ago',text:'Generated monthly attribution report',icon:CheckCircle2},{time:'6 min ago',text:'Calculated Sharpe ratios for 15 funds',icon:Clock},{time:'9 min ago',text:'Optimized portfolio weights',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Generated monthly attribution report',icon: CircleCheckBig},{time:'6 min ago',text:'Calculated Sharpe ratios for 15 funds',icon:Clock},{time:'9 min ago',text:'Optimized portfolio weights',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#0277BD20' }]}><PieChart size={48} color="#0277BD" /></View>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#0277BD20' }]}><ChartPie size={48} color="#0277BD" /></View>
         <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Portfolio Analyst</Text>
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Portfolio Analysis</Text>
         <View style={styles.badgesRow}>

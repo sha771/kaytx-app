@@ -1,7 +1,7 @@
 
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Activity, TrendingUp, TrendingDown, MessageCircle, BarChart3, Globe } from 'lucide-react-native';
+import { Activity, TrendingUp, TrendingDown, MessageCircle, ChartBar, Globe } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
@@ -94,7 +94,7 @@ export default function MarketSentimentScreen() {
 
   const customTabs = [
     { id: 'sentiment', label: 'Sentiment', icon: Activity, component: sentimentTab },
-    { id: 'analytics', label: 'Analytics', icon: BarChart3, component: <View /> },
+    { id: 'analytics', label: 'Analytics', icon: ChartBar, component: <View /> },
   ];
 
   return <AgentShell agent={agent} customTabs={customTabs} />;

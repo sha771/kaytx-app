@@ -14,20 +14,20 @@ import {
   Phone,
   Plus,
   Search,
-  CheckCircle,
-  Edit,
+  CircleCheck,
+  Pencil,
   X,
   PhoneCall,
   PhoneIncoming,
   TrendingUp,
-  BarChart2,
+  ChartBar,
   Users,
   Settings as SettingsIcon,
   ShieldCheck,
   Globe,
   Link2,
   Wifi,
-  AlertTriangle,
+  TriangleAlert,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { Stack } from 'expo-router';
@@ -74,7 +74,7 @@ export default function PhoneNumbersScreen() {
       {
         title: 'Active',
         value: mockPhoneNumbers.filter(n => n.isActive).length.toString(),
-        icon: CheckCircle,
+        icon: CircleCheck,
         color: '#34C759',
       },
       {
@@ -259,14 +259,14 @@ export default function PhoneNumbersScreen() {
         <View style={styles.filterContainer}>
           {(['all', 'active', 'inactive'] as const).map(filter => (
             <TouchableOpacity
-              key={filter}
-              style={[styles.filterButton, selectedFilter === filter && { backgroundColor: theme.colors.primary }, selectedFilter !== filter && { backgroundColor: theme.colors.cardBackground }]}
-              onPress={() => setSelectedFilter(filter)}
+              key={Filter}
+              style={[styles.filterButton, selectedFilter === Filter && { backgroundColor: theme.colors.primary }, selectedFilter !== Filter && { backgroundColor: theme.colors.cardBackground }]}
+              onPress={() => setSelectedFilter(Filter)}
             >
               <Text
-                style={[styles.filterText, { color: selectedFilter === filter ? 'white' : theme.colors.secondaryText }]}
+                style={[styles.filterText, { color: selectedFilter === Filter ? 'white' : theme.colors.secondaryText }]}
               >
-                {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                {Filter.charAt(0).toUpperCase() + Filter.slice(1)}
               </Text>
             </TouchableOpacity>
           ))}
@@ -401,7 +401,7 @@ export default function PhoneNumbersScreen() {
               <Text style={[styles.channelStatLabel, { color: theme.colors.secondaryText }]}>Failover tiers</Text>
             </View>
             <View style={styles.channelStatAlert}>
-              <AlertTriangle size={16} color="#FF3B30" />
+              <TriangleAlert size={16} color="#FF3B30" />
               <Text style={[styles.channelAlertText, { color: '#FF3B30' }]}>1 template expiring</Text>
             </View>
           </View>
@@ -430,7 +430,7 @@ export default function PhoneNumbersScreen() {
                   </View>
                 </View>
                 <TouchableOpacity style={styles.actionButton}>
-                  <Edit size={18} color={theme.colors.secondaryText} />
+                  <Pencil size={18} color={theme.colors.secondaryText} />
                 </TouchableOpacity>
               </View>
 
@@ -444,7 +444,7 @@ export default function PhoneNumbersScreen() {
                   <Text style={[styles.statItemLabel, { color: theme.colors.secondaryText }]}>Calls</Text>
                 </View>
                 <View style={styles.statItem}>
-                  <BarChart2 size={16} color="#34C759" />
+                  <ChartBar size={16} color="#34C759" />
                   <Text style={[styles.statItemValue, { color: theme.colors.text }]}>{number.successRate}%</Text>
                   <Text style={[styles.statItemLabel, { color: theme.colors.secondaryText }]}>Success</Text>
                 </View>

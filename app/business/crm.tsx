@@ -15,8 +15,8 @@ import {
   Users,
   Search,
   Plus,
-  Filter,
-  MoreVertical,
+  ListFilter,
+  EllipsisVertical,
   Phone,
   Mail,
   Calendar,
@@ -26,15 +26,15 @@ import {
   User,
   Star,
   ArrowLeft,
-  Edit,
+  Pencil,
   Trash2,
   MessageSquare,
   Clock,
-  CheckCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleAlert,
   Target,
-  BarChart3,
-  PieChart,
+  ChartBar,
+  ChartPie,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
@@ -279,7 +279,7 @@ export default function CRMScreen() {
             <Mail size={16} color={theme.colors.text} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton}>
-            <MoreVertical size={16} color={theme.colors.text} />
+            <EllipsisVertical size={16} color={theme.colors.text} />
           </TouchableOpacity>
         </View>
       </View>
@@ -384,24 +384,24 @@ export default function CRMScreen() {
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filtersContainer}>
         <View style={styles.filters}>
-          {(['all', 'lead', 'prospect', 'customer'] as const).map((filter) => (
+          {(['all', 'lead', 'prospect', 'customer'] as const).map((Filter) => (
             <TouchableOpacity
-              key={filter}
+              key={Filter}
               style={[
                 styles.filterChip,
-                filterStatus === filter && { backgroundColor: theme.colors.primary },
+                filterStatus === Filter && { backgroundColor: theme.colors.primary },
               ]}
-              onPress={() => setFilterStatus(filter)}
+              onPress={() => setFilterStatus(Filter)}
             >
               <Text
                 style={[
                   styles.filterText,
                   {
-                    color: filterStatus === filter ? 'white' : theme.colors.secondaryText,
+                    color: filterStatus === Filter ? 'white' : theme.colors.secondaryText,
                   },
                 ]}
               >
-                {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                {Filter.charAt(0).toUpperCase() + Filter.slice(1)}
               </Text>
             </TouchableOpacity>
           ))}
@@ -435,7 +435,7 @@ export default function CRMScreen() {
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Q1 Performance</Text>
-          <PieChart size={20} color={theme.colors.secondaryText} />
+          <ChartPie size={20} color={theme.colors.secondaryText} />
         </View>
         <FlatList
           data={mockForecast}

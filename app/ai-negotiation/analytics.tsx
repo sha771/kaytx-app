@@ -18,7 +18,7 @@ import {
   Phone,
   ArrowUp,
   ArrowDown,
-  Filter,
+  ListFilter,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { Stack } from 'expo-router';
@@ -119,7 +119,7 @@ export default function AnalyticsScreen() {
           headerTintColor: theme.colors.text,
           headerRight: () => (
             <TouchableOpacity style={styles.filterButton}>
-              <Filter size={20} color={theme.colors.primary} />
+              <ListFilter size={20} color={theme.colors.primary} />
             </TouchableOpacity>
           ),
         }}

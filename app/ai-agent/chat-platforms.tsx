@@ -17,14 +17,13 @@ import {
   MessageSquare,
   Smartphone,
   Plus,
-  CheckCircle,
-  XCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleX,
+  CircleAlert,
   Settings,
   ChevronRight,
   Hash,
   Users,
-  Bot,
   Link,
   Copy,
   RefreshCw,
@@ -82,7 +81,7 @@ const PLATFORM_CONFIGS = {
     icon: Slack,
     color: '#4A154B',
     description: 'Connect to your Slack workspace to enable AI agents in channels and DMs',
-    fields: ['Bot Token', 'Signing Secret', 'App Token'],
+    fields: ['User Token', 'Signing Secret', 'App Token'],
   },
   teams: {
     name: 'Microsoft Teams',
@@ -211,7 +210,7 @@ export default function ChatPlatformsScreen() {
             <Text style={[styles.actionText, { color: colors.text }]}>Configure</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.actionBtn, { backgroundColor: colors.danger + '20' }]}>
-            <XCircle size={16} color={colors.danger} />
+            <CircleX size={16} color={colors.danger} />
             <Text style={[styles.actionText, { color: colors.danger }]}>Disconnect</Text>
           </TouchableOpacity>
         </View>
@@ -345,14 +344,14 @@ export default function ChatPlatformsScreen() {
             <Animated.View entering={FadeInUp.duration(600)} style={styles.statsRow}>
               <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
                 <LinearGradient colors={['#22c55e', '#16a34a']} style={styles.statIcon}>
-                  <CheckCircle size={18} color="#fff" />
+                  <CircleCheck size={18} color="#fff" />
                 </LinearGradient>
                 <Text style={[styles.statCardValue, { color: colors.text }]}>2</Text>
                 <Text style={[styles.statCardLabel, { color: colors.textSecondary }]}>Connected</Text>
               </View>
               <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
                 <LinearGradient colors={['#f59e0b', '#d97706']} style={styles.statIcon}>
-                  <AlertCircle size={18} color="#fff" />
+                  <CircleAlert size={18} color="#fff" />
                 </LinearGradient>
                 <Text style={[styles.statCardValue, { color: colors.text }]}>1</Text>
                 <Text style={[styles.statCardLabel, { color: colors.textSecondary }]}>Pending</Text>

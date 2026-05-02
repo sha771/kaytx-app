@@ -179,7 +179,7 @@ class AdvancedAuditLogger {
     });
   }
 
-  getEvents(filter?: {
+  getEvents(Filter?: {
     userId?: string;
     type?: AuditEventType;
     severity?: AuditSeverity;
@@ -189,24 +189,24 @@ class AdvancedAuditLogger {
   }): AuditEvent[] {
     let filtered = this.events;
 
-    if (filter) {
-      if (filter.userId) {
-        filtered = filtered.filter(e => e.userId === filter.userId);
+    if (Filter) {
+      if (Filter.userId) {
+        filtered = filtered.filter(e => e.userId === Filter.userId);
       }
-      if (filter.type) {
-        filtered = filtered.filter(e => e.type === filter.type);
+      if (Filter.type) {
+        filtered = filtered.filter(e => e.type === Filter.type);
       }
-      if (filter.severity) {
-        filtered = filtered.filter(e => e.severity === filter.severity);
+      if (Filter.severity) {
+        filtered = filtered.filter(e => e.severity === Filter.severity);
       }
-      if (filter.startDate) {
-        filtered = filtered.filter(e => e.timestamp >= filter.startDate!);
+      if (Filter.startDate) {
+        filtered = filtered.filter(e => e.timestamp >= Filter.startDate!);
       }
-      if (filter.endDate) {
-        filtered = filtered.filter(e => e.timestamp <= filter.endDate!);
+      if (Filter.endDate) {
+        filtered = filtered.filter(e => e.timestamp <= Filter.endDate!);
       }
-      if (filter.result) {
-        filtered = filtered.filter(e => e.result === filter.result);
+      if (Filter.result) {
+        filtered = filtered.filter(e => e.result === Filter.result);
       }
     }
 

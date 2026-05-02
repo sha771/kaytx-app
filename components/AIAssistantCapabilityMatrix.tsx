@@ -64,7 +64,7 @@ export function AIAssistantCapabilityMatrix({ title, capabilities, testID }: AIA
   }, [capabilities, statusFilter]);
 
   const handleFilterPress = useCallback((filterValue: StatusFilter) => {
-    console.log('[AIAssistantCapabilityMatrix] status filter pressed', filterValue);
+    console.log('[AIAssistantCapabilityMatrix] status Filter pressed', filterValue);
     setStatusFilter(filterValue);
   }, []);
 
@@ -133,7 +133,7 @@ export function AIAssistantCapabilityMatrix({ title, capabilities, testID }: AIA
               statusFilter === option.value && { backgroundColor: theme.colors.primary },
             ]}
             onPress={() => handleFilterPress(option.value)}
-            testID={`status-filter-${option.value}`}
+            testID={`status-Filter-${option.value}`}
           >
             <Text
               style={[

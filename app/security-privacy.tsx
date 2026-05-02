@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
-import { ArrowLeft, Shield, Lock, Eye, EyeOff, Key, AlertTriangle, CheckCircle } from 'lucide-react-native';
+import { ArrowLeft, Shield, Lock, Eye, EyeOff, Key, TriangleAlert, CircleCheck } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 
 export default function SecurityPrivacyScreen() {
@@ -57,7 +57,7 @@ export default function SecurityPrivacyScreen() {
       description: 'Automatically logout after 30 minutes of inactivity',
       enabled: autoLogout,
       onToggle: setAutoLogout,
-      icon: AlertTriangle,
+      icon: TriangleAlert,
       status: 'inactive',
     },
   ];
@@ -138,7 +138,7 @@ export default function SecurityPrivacyScreen() {
 
         <View style={styles.statsGrid}>
           <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
-            <CheckCircle size={20} color={theme.colors.success} />
+            <CircleCheck size={20} color={theme.colors.success} />
             <Text style={[styles.statValue, { color: theme.colors.text }]}>
               {securityFeatures.filter(f => f.enabled).length}
             </Text>
@@ -147,7 +147,7 @@ export default function SecurityPrivacyScreen() {
             </Text>
           </View>
           <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
-            <AlertTriangle size={20} color={theme.colors.warning} />
+            <TriangleAlert size={20} color={theme.colors.warning} />
             <Text style={[styles.statValue, { color: theme.colors.text }]}>
               {recentActivity.filter(a => a.status === 'failed').length}
             </Text>
@@ -288,7 +288,7 @@ export default function SecurityPrivacyScreen() {
             <TouchableOpacity 
               style={[styles.actionButton, { backgroundColor: theme.colors.error }]}
             >
-              <AlertTriangle size={20} color="#FFFFFF" />
+              <TriangleAlert size={20} color="#FFFFFF" />
               <Text style={styles.actionButtonText}>Delete Account</Text>
             </TouchableOpacity>
           </View>

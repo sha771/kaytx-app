@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Database, Activity, CheckCircle2, Clock, Target, BarChart3, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, BrainCircuit, LineChart, Sparkles } from 'lucide-react-native';
+import { Database, Activity, CircleCheckBig, Clock, Target, ChartBar, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, BrainCircuit, ChartLine, Sparkles } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function VPDataSciencePage() {
   const { theme } = useTheme();
 
   const stats = [
-    { label: 'Models Built', value: '1,847', icon: CheckCircle2, color: '#34C759' },
+    { label: 'Models Built', value: '1,847', icon: CircleCheckBig, color: '#34C759' },
     { label: 'Uptime', value: '99.97%', icon: Activity, color: '#007AFF' },
     { label: 'Response', value: '0.8s', icon: Clock, color: '#FF9500' },
     { label: 'Accuracy', value: '98.7%', icon: Target, color: '#AF52DE' },
@@ -33,13 +33,13 @@ export default function VPDataSciencePage() {
   const activities = [
     { time: '2 min ago', text: 'Deployed new churn prediction model v3.2', icon: BrainCircuit },
     { time: '15 min ago', text: 'Updated feature store with 12 new features', icon: Sparkles },
-    { time: '50 min ago', text: 'Completed A/B test analysis for pricing', icon: LineChart },
+    { time: '50 min ago', text: 'Completed A/B test analysis for pricing', icon: ChartLine },
     { time: '2 hours ago', text: 'Reviewed model drift alerts', icon: Shield },
     { time: '5 hours ago', text: 'Published Q3 data science roadmap', icon: Zap },
   ];
 
   const quickActions = [
-    { label: 'View Reports', icon: BarChart3 },
+    { label: 'View Reports', icon: ChartBar },
     { label: 'Team Chat', icon: MessageSquare },
     { label: 'Schedule', icon: Calendar },
     { label: 'Settings', icon: Shield },

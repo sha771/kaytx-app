@@ -12,10 +12,9 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   ArrowLeft,
-  Bot,
   TrendingUp,
-  CheckCircle,
-  AlertTriangle,
+  CircleCheck,
+  TriangleAlert,
   Clock,
   DollarSign,
   Brain,
@@ -27,7 +26,7 @@ import {
   Crown,
   Star,
   Award,
-  BarChart3,
+  ChartBar,
   Layers,
   Headphones,
   Megaphone,
@@ -35,6 +34,7 @@ import {
   ChevronRight,
   Share2,
   Download,
+  User,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
@@ -182,7 +182,7 @@ const agentSummaries: AgentSummaryData[] = [
     id: 'data-intelligence',
     name: 'Data & Intelligence AI',
     category: 'Analytics',
-    icon: BarChart3,
+    icon: ChartBar,
     color: '#FF2D55',
     totalAgents: 8,
     activeAgents: 7,
@@ -227,9 +227,9 @@ const agentSummaries: AgentSummaryData[] = [
 ];
 
 const overallMetrics: OverallMetric[] = [
-  { id: '1', label: 'Total AI Workforce', value: '52', change: 4, changeLabel: 'new agents', icon: Bot, color: '#007AFF', trend: 'up' },
+  { id: '1', label: 'Total AI Workforce', value: '52', change: 4, changeLabel: 'new agents', icon: User, color: '#007AFF', trend: 'up' },
   { id: '2', label: 'Active Agents', value: '46', change: 3, changeLabel: 'more active', icon: Activity, color: '#34C759', trend: 'up' },
-  { id: '3', label: 'Tasks Today', value: '6,083', change: 12, changeLabel: 'vs yesterday', icon: CheckCircle, color: '#FF9500', trend: 'up' },
+  { id: '3', label: 'Tasks Today', value: '6,083', change: 12, changeLabel: 'vs yesterday', icon: CircleCheck, color: '#FF9500', trend: 'up' },
   { id: '4', label: 'Weekly Tasks', value: '60,830', change: 18, changeLabel: 'vs last week', icon: Layers, color: '#5856D6', trend: 'up' },
   { id: '5', label: 'Avg Success Rate', value: '93.2%', change: 1.9, changeLabel: 'improvement', icon: Target, color: '#FF2D55', trend: 'up' },
   { id: '6', label: 'Total Savings', value: '$167K', change: 22, changeLabel: 'this month', icon: DollarSign, color: '#AF52DE', trend: 'up' },
@@ -284,8 +284,8 @@ export default function AgentSummaryScreen() {
 
   const getEventIcon = (type: string) => {
     switch (type) {
-      case 'success': return CheckCircle;
-      case 'warning': return AlertTriangle;
+      case 'success': return CircleCheck;
+      case 'warning': return TriangleAlert;
       case 'milestone': return Award;
       default: return Sparkles;
     }
@@ -358,7 +358,7 @@ export default function AgentSummaryScreen() {
         </View>
         {totalStats.needsAttention > 0 && (
           <View style={[styles.attentionBanner, { backgroundColor: '#FF950015' }]}>
-            <AlertTriangle size={14} color="#FF9500" />
+            <TriangleAlert size={14} color="#FF9500" />
             <Text style={[styles.attentionText, { color: '#FF9500' }]}>
               {totalStats.needsAttention} agent{totalStats.needsAttention > 1 ? 's' : ''} need attention
             </Text>
@@ -486,7 +486,7 @@ export default function AgentSummaryScreen() {
 
             {agent.needsAttention.length > 0 && (
               <View style={[styles.attentionBox, { backgroundColor: '#FF950010' }]}>
-                <AlertTriangle size={14} color="#FF9500" />
+                <TriangleAlert size={14} color="#FF9500" />
                 <View style={styles.attentionContent}>
                   <Text style={[styles.attentionTitle, { color: '#FF9500' }]}>Needs Attention</Text>
                   {agent.needsAttention.map((item, index) => (

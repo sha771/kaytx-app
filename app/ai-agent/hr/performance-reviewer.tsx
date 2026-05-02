@@ -1,19 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Bot, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap, User } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks/Day',value:'156',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.9s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.9%',icon:Target,color:'#880E4F'}];
+  const stats = [{label:'Tasks/Day',value:'156',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.9s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.9%',icon:Target,color:'#880E4F'}];
   const capabilities = ['Performance Reviews','KPI Tracking','Development Insights'];
   const responsibilities = ['Talent acquisition & recruitment management','Compensation & benefits administration','Employee relations & conflict resolution','Learning & development program management','HR operations & compliance','Culture & engagement initiatives'];
-  const activities = [{time:'3 min ago',text:'Processed 25 new hire onboarding',icon:CheckCircle2},{time:'6 min ago',text:'Updated compensation benchmark data',icon:Clock},{time:'9 min ago',text:'Launched employee wellness program',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Processed 25 new hire onboarding',icon: CircleCheckBig},{time:'6 min ago',text:'Updated compensation benchmark data',icon:Clock},{time:'9 min ago',text:'Launched employee wellness program',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#880E4F20' }]}><Bot size={48} color="#880E4F" /></View>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#880E4F20' }]}><User size={48} color="#880E4F" /></View>
         <Text style={[styles.heroTitle, { color: theme.colors.text }]}>AI Performance Reviewer</Text>
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Human Resources</Text>
         <View style={styles.badgesRow}>

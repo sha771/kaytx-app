@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -13,22 +13,22 @@ import { useRouter } from 'expo-router';
 import {
   ChevronLeft,
   Activity,
-  AlertTriangle,
+  TriangleAlert,
   Bell,
   TrendingUp,
   TrendingDown,
   Target,
   Clock,
   Zap,
-  BarChart3,
+  ChartBar,
   Settings,
   Plus,
   Trash2,
   Check,
-  Bot,
   Mail,
   MessageSquare,
   Smartphone,
+  User,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInUp } from 'react-native-reanimated';
@@ -96,7 +96,7 @@ export default function PerformanceMonitoringScreen() {
     { label: 'Avg Success Rate', value: '97.2%', trend: '+2.1%', positive: true, icon: Target },
     { label: 'Avg Response Time', value: '245ms', trend: '-12%', positive: true, icon: Clock },
     { label: 'Tasks/Hour', value: '1,840', trend: '+15%', positive: true, icon: Zap },
-    { label: 'Active Agents', value: '68', trend: '+3', positive: true, icon: Bot },
+    { label: 'Active Agents', value: '68', trend: '+3', positive: true, icon: User },
   ];
 
   const systemHealth = {
@@ -176,7 +176,7 @@ export default function PerformanceMonitoringScreen() {
           {recentAlerts.map((alert, idx) => (
             <View key={alert.id} style={[styles.alertItem, idx !== recentAlerts.length - 1 && { borderBottomWidth: 1, borderBottomColor: colors.border }]}>
               <View style={[styles.alertIcon, { backgroundColor: getSeverityColor(alert.severity) + '15' }]}>
-                {alert.severity === 'info' ? <Bell size={16} color={colors.text + '60'} /> : <AlertTriangle size={16} color={getSeverityColor(alert.severity)} />}
+                {alert.severity === 'info' ? <Bell size={16} color={colors.text + '60'} /> : <TriangleAlert size={16} color={getSeverityColor(alert.severity)} />}
               </View>
               <View style={styles.alertContent}>
                 <Text style={[styles.alertMessage, { color: colors.text }]}>{alert.message}</Text>

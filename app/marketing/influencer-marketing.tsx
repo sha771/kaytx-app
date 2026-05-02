@@ -15,8 +15,8 @@ import {
   MessageCircle,
   Heart,
   Search,
-  Filter,
-  CheckCircle,
+  ListFilter,
+  CircleCheck,
   Star,
 } from 'lucide-react-native';
 
@@ -192,7 +192,7 @@ export default function InfluencerMarketingScreen() {
               onChangeText={setSearchQuery}
             />
             <TouchableOpacity>
-              <Filter size={20} color="#64748B" />
+              <ListFilter size={20} color="#64748B" />
             </TouchableOpacity>
           </View>
 
@@ -233,7 +233,7 @@ export default function InfluencerMarketingScreen() {
                   </View>
                   {influencer.verified && (
                     <View style={styles.verifiedBadge}>
-                      <CheckCircle size={16} color="#3B82F6" />
+                      <CircleCheck size={16} color="#3B82F6" />
                     </View>
                   )}
                 </View>

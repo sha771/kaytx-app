@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { FileText, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { FileText, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'1,856',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'2.1s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.1%',icon:Target,color:'#E65100'}];
+  const stats = [{label:'Tasks',value:'1,856',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'2.1s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.1%',icon:Target,color:'#E65100'}];
   const capabilities = ['Proposal Writing','RFP Response','Content Management','Template Design','Compliance','Win/Loss Analysis'];
   const responsibilities = ['Proposal writing & development','RFP response management','Proposal content library management','Template design & standardization','Proposal compliance review','Win/loss analysis & improvement'];
-  const activities = [{time:'3 min ago',text:'Completed 8 proposals this week',icon:CheckCircle2},{time:'6 min ago',text:'Won $3M RFP response',icon:Clock},{time:'9 min ago',text:'Updated proposal templates',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Completed 8 proposals this week',icon: CircleCheckBig},{time:'6 min ago',text:'Won $3M RFP response',icon:Clock},{time:'9 min ago',text:'Updated proposal templates',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

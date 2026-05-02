@@ -14,22 +14,22 @@ import {
   Zap,
   TrendingUp,
   TrendingDown,
-  CheckCircle,
-  XCircle,
+  CircleCheck,
+  CircleX,
   Clock,
   DollarSign,
   Settings,
   Plus,
-  MoreVertical,
+  EllipsisVertical,
   Star,
   Activity,
   Server,
   Shield,
   ChevronRight,
-  BarChart3,
+  ChartBar,
   Download,
   RotateCcw,
-  AlertTriangle,
+  TriangleAlert,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInUp } from 'react-native-reanimated';
@@ -227,7 +227,7 @@ export default function ModelManagementScreen() {
             </Text>
           </View>
           <View style={styles.quickStat}>
-            <BarChart3 size={14} color={colors.icon} />
+            <ChartBarBig size={14} color={colors.icon} />
             <Text style={[styles.quickStatValue, { color: colors.text }]}>
               {model.usage.toLocaleString()}
             </Text>
@@ -247,7 +247,7 @@ export default function ModelManagementScreen() {
               <View style={styles.capabilitiesList}>
                 {model.capabilities.map((cap, i) => (
                   <View key={i} style={[styles.capabilityChip, { backgroundColor: colors.tint + '15' }]}>
-                    <CheckCircle size={10} color={colors.tint} />
+                    <CircleCheck size={10} color={colors.tint} />
                     <Text style={[styles.capabilityText, { color: colors.tint }]}>
                       {cap}
                     </Text>
@@ -261,9 +261,9 @@ export default function ModelManagementScreen() {
                 style={[styles.modelActionBtn, model.status === 'active' ? { backgroundColor: '#F59E0B' + '15' } : { backgroundColor: '#10B981' + '15' }]}
               >
                 {model.status === 'active' ? (
-                  <XCircle size={16} color="#F59E0B" />
+                  <CircleX size={16} color="#F59E0B" />
                 ) : (
-                  <CheckCircle size={16} color="#10B981" />
+                  <CircleCheck size={16} color="#10B981" />
                 )}
                 <Text style={[styles.modelActionText, { color: model.status === 'active' ? '#F59E0B' : '#10B981' }]}>
                   {model.status === 'active' ? 'Deactivate' : 'Activate'}

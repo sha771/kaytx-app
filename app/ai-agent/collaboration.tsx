@@ -74,7 +74,7 @@ const EmployeeAICollaborationScreen = () => {
             
             <View style={styles.collabRow}>
               <View style={styles.collabEntity}>
-                <Icons.Bot size={16} color={colors.textSecondary} />
+                <Icons.User size={16} color={colors.textSecondary} />
                 <Text style={[styles.entityName, { color: colors.textSecondary }]}>{wf.agent}</Text>
               </View>
               <Icons.ArrowRightLeft size={14} color={colors.border} />

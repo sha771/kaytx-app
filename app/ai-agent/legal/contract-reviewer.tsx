@@ -1,19 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Bot, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap, User } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks/Day',value:'240',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.7s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.6%',icon:Target,color:'#3E2723'}];
+  const stats = [{label:'Tasks/Day',value:'240',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.7s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.6%',icon:Target,color:'#3E2723'}];
   const capabilities = ['Contract Review','Risk Identification','Legal Compliance'];
   const responsibilities = ['Legal research & precedent analysis','Contract drafting & review','Compliance monitoring & reporting','Regulatory affairs & filings','Policy development & updates','Risk assessment & mitigation'];
-  const activities = [{time:'3 min ago',text:'Reviewed 8 contract agreements',icon:CheckCircle2},{time:'6 min ago',text:'Updated compliance policy documents',icon:Clock},{time:'9 min ago',text:'Filed 3 regulatory submissions',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Reviewed 8 contract agreements',icon: CircleCheckBig},{time:'6 min ago',text:'Updated compliance policy documents',icon:Clock},{time:'9 min ago',text:'Filed 3 regulatory submissions',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#3E272320' }]}><Bot size={48} color="#3E2723" /></View>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#3E272320' }]}><User size={48} color="#3E2723" /></View>
         <Text style={[styles.heroTitle, { color: theme.colors.text }]}>AI Contract Reviewer</Text>
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Legal & Governance</Text>
         <View style={styles.badgesRow}>

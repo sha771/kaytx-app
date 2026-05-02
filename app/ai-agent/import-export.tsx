@@ -11,28 +11,28 @@ import {
   ChevronLeft,
   Upload,
   Download,
-  FileJson,
+  FileCode,
   FileCode,
   FileSpreadsheet,
-  CheckCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleAlert,
   Clock,
-  MoreVertical,
+  EllipsisVertical,
   Folder,
   File,
   Trash2,
   RefreshCw,
   Globe,
   Database,
-  Bot,
   ChevronRight,
   Copy,
   ExternalLink,
   FileText,
   GitBranch,
-  BarChart3,
+  ChartBar,
   Settings,
   Users,
+  User,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInUp } from 'react-native-reanimated';
@@ -151,15 +151,14 @@ const STATUS_COLORS = {
 };
 
 const TYPE_ICONS = {
-  agent: Bot,
-  workflow: GitBranch,
+  agent: GitBranch,
   knowledge: Database,
   settings: Settings,
-  analytics: BarChart3,
+  analytics: ChartBar,
 };
 
 const FORMAT_ICONS = {
-  json: FileJson,
+  json: FileCode,
   yaml: FileCode,
   csv: FileSpreadsheet,
   pdf: FileText,
@@ -177,9 +176,9 @@ export default function ImportExportScreen() {
     switch (status) {
       case 'completed':
       case 'ready':
-        return <CheckCircle size={16} color="#10B981" />;
+        return <CircleCheck size={16} color="#10B981" />;
       case 'failed':
-        return <AlertCircle size={16} color="#EF4444" />;
+        return <CircleAlert size={16} color="#EF4444" />;
       case 'processing':
       case 'generating':
         return <Clock size={16} color="#F59E0B" />;
@@ -252,7 +251,7 @@ export default function ImportExportScreen() {
 
         {job.errors.length > 0 && (
           <View style={[styles.errorContainer, { backgroundColor: '#EF4444' + '10' }]}>
-            <AlertCircle size={14} color="#EF4444" />
+            <CircleAlert size={14} color="#EF4444" />
             <Text style={[styles.errorText, { color: '#EF4444' }]}>
               {job.errors[0]}
             </Text>
@@ -470,7 +469,7 @@ export default function ImportExportScreen() {
               </Text>
               <View style={styles.exportOptions}>
                 <TouchableOpacity style={[styles.exportOption, { backgroundColor: colors.tint + '15' }]}>
-                  <Bot size={20} color={colors.tint} />
+                  <User size={20} color={colors.tint} />
                   <Text style={[styles.exportOptionText, { color: colors.tint }]}>
                     All Agents
                   </Text>
@@ -511,7 +510,7 @@ export default function ImportExportScreen() {
               <View style={styles.templateList}>
                 <TouchableOpacity style={styles.templateRow}>
                   <View style={[styles.templateIcon, { backgroundColor: '#3B82F6' + '15' }]}>
-                    <Bot size={18} color="#3B82F6" />
+                    <User size={18} color="#3B82F6" />
                   </View>
                   <View style={styles.templateInfo}>
                     <Text style={[styles.templateName, { color: colors.text }]}>

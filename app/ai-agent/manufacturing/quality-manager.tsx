@@ -1,19 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { CheckCircle2, Activity, Star, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { CircleCheckBig, Activity, Star, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'567',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.9s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.1%',icon:Target,color:'#BF360C'}];
+  const stats = [{label:'Tasks',value:'567',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.9s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.1%',icon:Target,color:'#BF360C'}];
   const capabilities = ['QMS','Audit Management','CAPA','Supplier Quality','Continuous Improvement','Regulatory Compliance'];
   const responsibilities = ['Quality management system oversight','Internal & external audit management','Corrective & preventive action programs','Supplier quality management','Continuous improvement initiatives','Regulatory compliance management'];
-  const activities = [{time:'3 min ago',text:'Led ISO 9001 surveillance audit',icon:CheckCircle2},{time:'6 min ago',text:'Closed 5 CAPA investigations',icon:Clock},{time:'9 min ago',text:'Improved supplier quality score',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Led ISO 9001 surveillance audit',icon: CircleCheckBig},{time:'6 min ago',text:'Closed 5 CAPA investigations',icon:Clock},{time:'9 min ago',text:'Improved supplier quality score',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#BF360C20' }]}><CheckCircle2 size={48} color="#BF360C" /></View>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#BF360C20' }]}><CircleCheckBig size={48} color="#BF360C" /></View>
         <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Quality Manager</Text>
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Quality Management</Text>
         <View style={styles.badgesRow}>

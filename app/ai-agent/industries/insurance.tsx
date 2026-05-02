@@ -6,7 +6,7 @@ import { aiEmployees } from '@/constants/aiEmployees';
 import { trpc } from '@/lib/trpc';
 import {
     Shield,
-    ArrowLeft, FileText, Phone, Heart, DollarSign, TrendingUp, Clock, Star, Zap, Globe, BarChart3, Users, AlertTriangle, RefreshCw, Lock } from 'lucide-react-native';
+    ArrowLeft, FileText, Phone, Heart, DollarSign, TrendingUp, Clock, Star, Zap, Globe, ChartBar, Users, TriangleAlert, RefreshCw, Lock } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const { width } = Dimensions.get('window');
@@ -15,7 +15,7 @@ const USE_CASES = [
     { id: 'claims', title: 'Claims Intake & Processing', description: 'Automated claims intake, document collection, and status updates', icon: FileText, color: '#4ECDC4', stats: { automated: '87%', avgTime: '3m', satisfaction: '4.6/5' }, isPremium: true },
     { id: 'policy', title: 'Policy Questions', description: 'Coverage details, endorsements, and policy changes', icon: Shield, color: '#6C5CE7', stats: { automated: '92%', avgTime: '1m', satisfaction: '4.8/5' } },
     { id: 'renewal', title: 'Renewal & Retention', description: 'Proactive renewal reminders and retention offers', icon: RefreshCw, color: '#00B894', stats: { automated: '89%', avgTime: '2m', satisfaction: '4.7/5' }, isPremium: true },
-    { id: 'fraud', title: 'Fraud Detection', description: 'Flag suspicious claims and route for investigation', icon: AlertTriangle, color: '#FF6B6B', stats: { automated: '94%', avgTime: '30s', satisfaction: '4.5/5' }, isPremium: true },
+    { id: 'fraud', title: 'Fraud Detection', description: 'Flag suspicious claims and route for investigation', icon: TriangleAlert, color: '#FF6B6B', stats: { automated: '94%', avgTime: '30s', satisfaction: '4.5/5' }, isPremium: true },
 ];
 
 const RECOMMENDED_AGENTS = ['ai-customer-support', 'ai-retention-specialist', 'ai-data-analyst', 'ai-crm-assistant', 'ai-competitive-intel'];
@@ -63,7 +63,7 @@ export default function InsuranceIndustryScreen() {
                         router.push('/enterprise/billing');
                         return;
                     }
-                    router.push(agent.route as any);
+                    router.push(agent.route);
                 }}
             >
                 <View style={[styles.agentIcon, { backgroundColor: agent.color + '20' }]}><IconComponent size={28} color={agent.color} /></View>
@@ -109,7 +109,7 @@ export default function InsuranceIndustryScreen() {
                 <View style={styles.section}>
                     <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Benefits</Text>
                     <View style={styles.benefitsGrid}>
-                        {[{ icon: Zap, color: '#FF6B6B', title: 'Faster Claims', desc: 'Reduce claims processing by 65%' }, { icon: Globe, color: '#4ECDC4', title: '24/7 Support', desc: 'Round-the-clock policyholder support' }, { icon: Shield, color: '#6C5CE7', title: 'Fraud Prevention', desc: '99.2% fraud detection accuracy' }, { icon: BarChart3, color: '#00B894', title: 'Retention Analytics', desc: 'Predict and prevent policy churn' }].map((b, i) => { const I = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><I size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
+                        {[{ icon: Zap, color: '#FF6B6B', title: 'Faster Claims', desc: 'Reduce claims processing by 65%' }, { icon: Globe, color: '#4ECDC4', title: '24/7 Support', desc: 'Round-the-clock policyholder support' }, { icon: Shield, color: '#6C5CE7', title: 'Fraud Prevention', desc: '99.2% fraud detection accuracy' }, { icon: ChartBar, color: '#00B894', title: 'Retention Analytics', desc: 'Predict and prevent policy churn' }].map((b, i) => { const I = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><I size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
                     </View>
                 </View>
 
@@ -165,7 +165,7 @@ export default function InsuranceIndustryScreen() {
                                         router.push('/enterprise/billing');
                                         return;
                                     }
-                                    router.push(a.route as any);
+                                    router.push(a.route);
                                 }}
                             >
                                 <View style={[styles.agentIcon, { backgroundColor: a.color + '20' }]}><I size={28} color={a.color} /></View>
@@ -187,7 +187,7 @@ export default function InsuranceIndustryScreen() {
 
                 <View style={[styles.cta, { backgroundColor: theme.colors.cardBackground }]}>
                     <Text style={[styles.ctaTitle, { color: theme.colors.text }]}>Transform your insurance operations</Text>
-                    <TouchableOpacity style={[styles.ctaBtn, { backgroundColor: theme.colors.primary }]} onPress={() => router.push('/ai-agent/ai-agent' as any)}><Text style={styles.ctaBtnText}>Get Started</Text></TouchableOpacity>
+                    <TouchableOpacity style={[styles.ctaBtn, { backgroundColor: theme.colors.primary }]} onPress={() => router.push('/ai-agent/ai-agent')}><Text style={styles.ctaBtnText}>Get Started</Text></TouchableOpacity>
                 </View>
                 <View style={{ height: 40 }} />
             </ScrollView>

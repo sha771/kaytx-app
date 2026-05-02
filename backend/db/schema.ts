@@ -312,7 +312,7 @@ export const webhooks = pgTable('webhooks', {
   method: varchar('method', { length: 10 }).default('POST'),
   headers: json('headers'),
   retryPolicy: json('retry_policy'),
-  filter: json('filter'),
+  filter: json('Filter'),
   status: webhookStatusEnum('status').default('active'),
   lastTriggeredAt: timestamp('last_triggered_at'),
   failureCount: integer('failure_count').default(0),

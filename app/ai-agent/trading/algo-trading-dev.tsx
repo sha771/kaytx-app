@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Zap, Activity, Star, CheckCircle2, Clock, Target, ArrowRight } from 'lucide-react-native';
+import { Zap, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'2,508',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.3s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.1%',icon:Target,color:'#0277BD'}];
+  const stats = [{label:'Tasks',value:'2,508',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.3s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.1%',icon:Target,color:'#0277BD'}];
   const capabilities = ['Algo Development','HFT Systems','Backtesting','API Integration','Strategy Optimization','Market Microstructure'];
   const responsibilities = ['Design & develop trading algorithms','High-frequency trading system implementation','Strategy backtesting & optimization','Trading API integration & maintenance','Market microstructure analysis','Performance monitoring & tuning'];
-  const activities = [{time:'3 min ago',text:'Deployed new mean-reversion algo',icon:CheckCircle2},{time:'6 min ago',text:'Optimized HFT latency by 12%',icon:Clock},{time:'9 min ago',text:'Completed backtest on 5yr data',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Deployed new mean-reversion algo',icon: CircleCheckBig},{time:'6 min ago',text:'Optimized HFT latency by 12%',icon:Clock},{time:'9 min ago',text:'Completed backtest on 5yr data',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

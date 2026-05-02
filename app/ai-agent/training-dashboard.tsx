@@ -16,9 +16,9 @@ import {
   Brain,
   Upload,
   Play,
-  CheckCircle,
+  CircleCheck,
   Database,
-  MoreVertical,
+  EllipsisVertical,
   Download,
   Trash2,
   Target,
@@ -30,7 +30,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { LineChart } from 'react-native-chart-kit';
+import { ChartLine } from 'react-native-chart-kit';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -96,7 +96,7 @@ const MOCK_TRAINING_JOBS: TrainingJob[] = [
   {
     id: '2',
     agentId: 'agent-2',
-    agentName: 'Customer Support Bot',
+    agentName: 'Customer Support User',
     status: 'completed',
     datasetId: 'dataset-2',
     datasetName: 'Support Tickets Dataset',
@@ -231,7 +231,7 @@ export default function TrainingDashboardScreen() {
         </View>
         <View style={[styles.statCard, { backgroundColor: colors.card }]}>
           <View style={[styles.statIcon, { backgroundColor: '#8B5CF6' + '20' }]}>
-            <CheckCircle size={24} color="#8B5CF6" />
+            <CircleCheck size={24} color="#8B5CF6" />
           </View>
           <Text style={[styles.statValue, { color: colors.text }]}>{stats.completedJobs}</Text>
           <Text style={[styles.statLabel, { color: colors.icon }]}>Completed</Text>
@@ -250,7 +250,7 @@ export default function TrainingDashboardScreen() {
       {/* Performance Chart */}
       <View style={[styles.chartCard, { backgroundColor: colors.card }]}>
         <Text style={[styles.chartTitle, { color: colors.text }]}>Training Performance</Text>
-        <LineChart
+        <ChartLine
           data={{
             labels: ['Epoch 1', 'Epoch 3', 'Epoch 5', 'Epoch 7', 'Epoch 9'],
             datasets: [
@@ -376,7 +376,7 @@ export default function TrainingDashboardScreen() {
               <Text style={[styles.jobDataset, { color: colors.icon }]}>{job.datasetName}</Text>
             </View>
             <TouchableOpacity>
-              <MoreVertical size={20} color={colors.icon} />
+              <EllipsisVertical size={20} color={colors.icon} />
             </TouchableOpacity>
           </View>
           <View style={styles.jobDetails}>

@@ -18,10 +18,10 @@ import {
   Bot,
   Activity,
   DollarSign,
-  CheckCircle,
+  CircleCheck,
   Sparkles,
   Plug,
-  Sliders,
+  SlidersHorizontal,
   Cpu,
   ChevronRight,
   Mic,
@@ -31,7 +31,7 @@ import {
   ShieldCheck,
   TrendingUp,
   Star,
-  BarChart3,
+  ChartBar,
   Network,
   ArrowLeft,
   Settings2,
@@ -39,7 +39,7 @@ import {
   Megaphone,
   Brain,
   GitBranch,
-  AlertTriangle,
+  TriangleAlert,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -617,7 +617,7 @@ const AIAgentCategoryScreen = () => {
                 </Text>
               </View>
               <View style={[styles.statCard, { backgroundColor: colors.card }]}>
-                <CheckCircle size={24} color="#5856D6" />
+                <CircleCheck size={24} color="#5856D6" />
                 <Text style={[styles.statValue, { color: colors.text }]}>
                   {(currentCategory.metrics.tasksCompleted / 1000000).toFixed(1)}M
                 </Text>
@@ -678,7 +678,7 @@ const AIAgentCategoryScreen = () => {
                 onChangeText={setSearchQuery}
               />
               <TouchableOpacity style={styles.sortButton}>
-                <Sliders size={20} color={colors.text} />
+                <SlidersHorizontal size={20} color={colors.text} />
               </TouchableOpacity>
             </View>
 
@@ -937,7 +937,7 @@ const AIAgentCategoryScreen = () => {
                 <Text style={[styles.analyticsValue, { color: currentCategory.color }]}>
                   {currentCategory.metrics.activeAgents}/{currentCategory.metrics.totalAgents}
                 </Text>
-                <CheckCircle size={20} color="#34C759" />
+                <CircleCheck size={20} color="#34C759" />
               </View>
             </View>
 
@@ -947,7 +947,7 @@ const AIAgentCategoryScreen = () => {
                 30-Day Performance Trend
               </Text>
               <View style={styles.chartPlaceholder}>
-                <BarChart3 size={48} color={colors.textSecondary} />
+                <ChartBarBig size={48} color={colors.textSecondary} />
                 <Text style={[styles.chartPlaceholderText, { color: colors.textSecondary }]}>
                   Performance chart will be rendered here with real data from the analytics service.
                 </Text>
@@ -1002,7 +1002,7 @@ const AIAgentCategoryScreen = () => {
               { type: 'Broadcast', desc: 'Team-wide announcements', icon: Megaphone },
               { type: 'Consultation', desc: 'Expert advice requests', icon: Brain },
               { type: 'Delegation', desc: 'Task handoff between agents', icon: GitBranch },
-              { type: 'Escalation', desc: 'Critical issue routing', icon: AlertTriangle },
+              { type: 'Escalation', desc: 'Critical issue routing', icon: TriangleAlert },
             ].map((item, index) => (
               <TouchableOpacity key={index} style={[styles.consultationType, { backgroundColor: colors.card }]}>
                 <View style={[styles.consultationIcon, { backgroundColor: `${currentCategory.color}15` }]}>

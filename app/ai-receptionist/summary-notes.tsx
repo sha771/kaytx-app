@@ -16,9 +16,9 @@ import { Stack, useRouter } from 'expo-router';
 import {
   FileText,
   Clock,
-  CheckCircle,
-  AlertCircle,
-  Edit,
+  CircleCheck,
+  CircleAlert,
+  Pencil,
   Download,
   Share2,
   Tag,
@@ -31,7 +31,7 @@ import {
   Play,
   Pause,
   SkipForward,
-  Filter,
+  ListFilter,
   Search,
   Plus,
   Sparkles,
@@ -71,8 +71,8 @@ export default function ReceptionistSummaryNotesScreen() {
   const stats = useMemo(() => [
     { id: 'total', label: 'Total notes', value: statsData?.total?.toString() ?? '0', icon: FileText, color: theme.colors.primary },
     { id: 'pending', label: 'Pending actions', value: statsData?.pending?.toString() ?? '0', icon: Clock, color: '#FF9500' },
-    { id: 'completed', label: 'Completed today', value: statsData?.completed?.toString() ?? '0', icon: CheckCircle, color: '#34C759' },
-    { id: 'urgent', label: 'Urgent items', value: statsData?.urgent?.toString() ?? '0', icon: AlertCircle, color: '#FF3B30' },
+    { id: 'completed', label: 'Completed today', value: statsData?.completed?.toString() ?? '0', icon: CircleCheck, color: '#34C759' },
+    { id: 'urgent', label: 'Urgent items', value: statsData?.urgent?.toString() ?? '0', icon: CircleAlert, color: '#FF3B30' },
   ], [statsData, theme.colors.primary]);
 
   return (
@@ -204,7 +204,7 @@ export default function ReceptionistSummaryNotesScreen() {
 
                 {note.actionItems.length > 0 && (
                   <View style={styles.actionItemsPreview}>
-                    <AlertCircle size={14} color={theme.colors.warning} />
+                    <CircleAlert size={14} color={theme.colors.warning} />
                     <Text style={[styles.actionItemsText, { color: theme.colors.text }]}>
                       {note.actionItems.length} action {note.actionItems.length === 1 ? 'item' : 'items'}
                     </Text>
@@ -217,7 +217,7 @@ export default function ReceptionistSummaryNotesScreen() {
                   </Text>
                   {note.completed && (
                     <View style={styles.completedBadge}>
-                      <CheckCircle size={14} color={theme.colors.success} />
+                      <CircleCheck size={14} color={theme.colors.success} />
                       <Text style={[styles.completedText, { color: theme.colors.success }]}>Completed</Text>
                     </View>
                   )}
@@ -314,12 +314,12 @@ export default function ReceptionistSummaryNotesScreen() {
 
                 <View style={styles.section}>
                   <View style={styles.sectionHeader}>
-                    <CheckCircle size={18} color={theme.colors.warning} />
+                    <CircleCheck size={18} color={theme.colors.warning} />
                     <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Action Items</Text>
                   </View>
                   {selectedNote.actionItems.map((item, index) => (
                     <View key={index} style={[styles.actionItem, { backgroundColor: theme.colors.cardBackground }]}>
-                      <CheckCircle size={16} color={theme.colors.success} />
+                      <CircleCheck size={16} color={theme.colors.success} />
                       <Text style={[styles.actionItemText, { color: theme.colors.text }]}>{item}</Text>
                     </View>
                   ))}
@@ -352,7 +352,7 @@ export default function ReceptionistSummaryNotesScreen() {
                       console.log('Edit note', selectedNote.id);
                     }}
                   >
-                    <Edit size={18} color={theme.colors.primary} />
+                    <Pencil size={18} color={theme.colors.primary} />
                     <Text style={[styles.modalButtonText, { color: theme.colors.primary }]}>Edit</Text>
                   </TouchableOpacity>
                 </View>
@@ -403,7 +403,7 @@ export default function ReceptionistSummaryNotesScreen() {
                   Alert.alert('Success', 'Note created successfully');
                 }}
               >
-                <CheckCircle size={18} color="#fff" />
+                <CircleCheck size={18} color="#fff" />
                 <Text style={styles.primaryButtonText}>Create Note</Text>
               </TouchableOpacity>
             </ScrollView>

@@ -21,8 +21,8 @@ import {
   Trash2,
   Activity,
   TrendingUp,
-  AlertCircle,
-  CheckCircle,
+  CircleAlert,
+  CircleCheck,
   Code,
   Terminal,
   Webhook,
@@ -137,7 +137,7 @@ const apiMetrics: APIMetric[] = [
     label: 'Success Rate',
     value: '99.9%',
     change: '+0.1%',
-    icon: CheckCircle,
+    icon: CircleCheck,
     color: '#34C759',
   },
   {
@@ -151,7 +151,7 @@ const apiMetrics: APIMetric[] = [
     label: 'Error Rate',
     value: '0.1%',
     change: '-0.05%',
-    icon: AlertCircle,
+    icon: CircleAlert,
     color: '#FF3B30',
   },
 ];

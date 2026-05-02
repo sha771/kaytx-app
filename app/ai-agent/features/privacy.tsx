@@ -8,11 +8,11 @@ import {
   Eye,
   Lock,
   FileText,
-  AlertTriangle,
-  CheckCircle2,
+  TriangleAlert,
+  CircleCheckBig,
   Settings,
   Database,
-  Filter,
+  ListFilter,
   Activity,
   Download
 } from 'lucide-react-native';
@@ -29,10 +29,10 @@ export default function PrivacyPage() {
   const privacyScore = 96;
 
   const privacyMetrics = [
-    { title: 'Data Classification', value: '100%', icon: Filter, color: '#34C759', description: 'All data properly classified' },
+    { title: 'Data Classification', value: '100%', icon: ListFilter, color: '#34C759', description: 'All data properly classified' },
     { title: 'Access Controls', value: 'Active', icon: Lock, color: '#007AFF', description: 'Role-based access enforced' },
     { title: 'Audit Trail', value: '2,847', icon: FileText, color: '#FF9500', description: 'Logged interactions this week' },
-    { title: 'Compliance', value: 'GDPR ✓', icon: CheckCircle2, color: '#581C84', description: 'Regulatory compliance status' },
+    { title: 'Compliance', value: 'GDPR ✓', icon: CircleCheckBig, color: '#581C84', description: 'Regulatory compliance status' },
   ];
 
   const privacyGates = [
@@ -64,8 +64,8 @@ export default function PrivacyPage() {
 
   const recentPrivacyEvents = [
     { time: '1 min ago', event: 'Masked 12 sensitive fields in billing query', type: 'mask', icon: Eye },
-    { time: '5 min ago', event: 'Validated GDPR compliance for customer data', type: 'compliance', icon: CheckCircle2 },
-    { time: '15 min ago', event: 'Blocked unauthorized PII access attempt', type: 'block', icon: AlertTriangle },
+    { time: '5 min ago', event: 'Validated GDPR compliance for customer data', type: 'compliance', icon: CircleCheckBig },
+    { time: '15 min ago', event: 'Blocked unauthorized PII access attempt', type: 'block', icon: TriangleAlert },
     { time: '30 min ago', event: 'Logged audit entry for data export', type: 'audit', icon: FileText },
     { time: '1 hour ago', event: 'Sanitized output for external delivery', type: 'sanitize', icon: Shield },
   ];
@@ -163,7 +163,7 @@ export default function PrivacyPage() {
         </View>
         <View style={styles.controlRow}>
           <View style={styles.controlInfo}>
-            <CheckCircle2 size={20} color={theme.colors.primary} />
+            <CircleCheckBig size={20} color={theme.colors.primary} />
             <View style={styles.controlText}>
               <Text style={[styles.controlLabel, { color: theme.colors.text }]}>Compliance Checks</Text>
               <Text style={[styles.controlDesc, { color: theme.colors.textSecondary }]}>Auto-validate regulatory compliance</Text>
@@ -177,7 +177,7 @@ export default function PrivacyPage() {
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Compliance Status</Text>
         {complianceStatus.map((item, i) => (
           <View key={i} style={styles.complianceRow}>
-            <CheckCircle2 size={18} color={item.color} />
+            <CircleCheckBig size={18} color={item.color} />
             <Text style={[styles.complianceReg, { color: theme.colors.text }]}>{item.regulation}</Text>
             <Text style={[styles.complianceStatus, { color: item.color }]}>{item.status}</Text>
           </View>

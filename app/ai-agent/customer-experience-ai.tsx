@@ -16,7 +16,7 @@ import {
   Headphones,
   Phone,
   Ticket,
-  AlertCircle,
+  CircleAlert,
   Heart,
   Gift,
   ClipboardList,
@@ -29,14 +29,14 @@ import {
   Sparkles,
   Crown,
   Star,
-  CheckCircle,
+  CircleCheck,
   TrendingUp,
   TrendingDown,
   Users,
   Clock,
   Activity,
   Settings,
-  BarChart3,
+  ChartBar,
   Zap,
   Radio,
   Eye,
@@ -161,7 +161,7 @@ const initialSubAgents: SubAgent[] = [
     id: 'ce-4',
     name: 'AI Complaint Handling Agent',
     description: 'Manages complaints with empathy, efficiency, and resolution tracking',
-    icon: AlertCircle,
+    icon: CircleAlert,
     enabled: true,
     status: 'training',
     tasksCompleted: 1560,
@@ -423,7 +423,7 @@ export default function CustomerExperienceAIScreen() {
     switch (tier) {
       case 'enterprise': return Crown;
       case 'premium': return Star;
-      default: return CheckCircle;
+      default: return CircleCheck;
     }
   };
 
@@ -554,7 +554,7 @@ export default function CustomerExperienceAIScreen() {
                 </View>
               </View>
               <View style={[styles.liveMetricItem, { backgroundColor: '#34C75908' }]}>
-                <CheckCircle size={16} color="#34C759" />
+                <CircleCheck size={16} color="#34C759" />
                 <View style={styles.liveMetricContent}>
                   <Text style={[styles.liveMetricValue, { color: theme.colors.text }]}>{agent.resolvedToday}</Text>
                   <Text style={[styles.liveMetricLabel, { color: theme.colors.secondaryText }]}>Resolved Today</Text>
@@ -617,7 +617,7 @@ export default function CustomerExperienceAIScreen() {
                 <Text style={[styles.actionButtonText, { color: ACCENT_COLOR }]}>Configure</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#34C75915' }]}>
-                <BarChart3 size={16} color="#34C759" />
+                <ChartBarBig size={16} color="#34C759" />
                 <Text style={[styles.actionButtonText, { color: '#34C759' }]}>Analytics</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#FF950015' }]}>

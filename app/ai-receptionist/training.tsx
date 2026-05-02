@@ -1,4 +1,4 @@
- 
+﻿ 
 import React, { useMemo, useState, useEffect } from 'react';
 import {
   View,
@@ -21,7 +21,7 @@ import {
   Zap,
   Book,
   FileText,
-  AlertCircle,
+  CircleAlert,
   Shield,
   Sparkles,
   Award,
@@ -426,7 +426,7 @@ export default function AITrainingScreen() {
 
             <View style={[styles.infoCard, { backgroundColor: '#FF950020' }]}
               testID="receptionist-training-info">
-              <AlertCircle size={20} color="#FF9500" />
+              <CircleAlert size={20} color="#FF9500" />
               <Text style={[styles.infoText, { color: '#FF9500' }]}>Changes will be applied to new conversations immediately</Text>
             </View>
           </View>

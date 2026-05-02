@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Code, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Code, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'5,205',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'2.0s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.6%',icon:Target,color:'#B71C1C'}];
+  const stats = [{label:'Tasks',value:'5,205',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'2.0s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.6%',icon:Target,color:'#B71C1C'}];
   const capabilities = ['ICD-10 Coding','CPT Coding','DRG Assignment','Coding Audits','Compliance','Documentation Review'];
   const responsibilities = ['ICD-10 & CPT code assignment','DRG classification & validation','Coding accuracy audits','Coding compliance monitoring','Clinical documentation review','Coding education & updates'];
-  const activities = [{time:'3 min ago',text:'Coded 180 encounters today',icon:CheckCircle2},{time:'6 min ago',text:'Achieved 98% coding accuracy',icon:Clock},{time:'9 min ago',text:'Updated ICD-10 code references',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Coded 180 encounters today',icon: CircleCheckBig},{time:'6 min ago',text:'Achieved 98% coding accuracy',icon:Clock},{time:'9 min ago',text:'Updated ICD-10 code references',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

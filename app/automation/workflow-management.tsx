@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Zap, Play, Pause, Settings, Plus, BarChart3, Clock, CheckCircle, AlertCircle } from 'lucide-react-native';
+import { Zap, Play, Pause, Settings, Plus, ChartBar, Clock, CircleCheck, CircleAlert } from 'lucide-react-native';
 
 const workflows = [
   { 
@@ -79,8 +79,8 @@ export default function WorkflowManagementScreen() {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'success': return CheckCircle;
-      case 'failed': return AlertCircle;
+      case 'success': return CircleCheck;
+      case 'failed': return CircleAlert;
       default: return Clock;
     }
   };
@@ -132,7 +132,7 @@ export default function WorkflowManagementScreen() {
               <Text style={styles.actionText}>Browse Templates</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.actionButton}>
-              <BarChart3 size={24} color="#7C3AED" />
+              <ChartBarBig size={24} color="#7C3AED" />
               <Text style={styles.actionText}>View Analytics</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.actionButton}>

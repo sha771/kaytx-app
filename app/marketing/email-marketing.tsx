@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, ActivityIndicator, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Mail, Send, Users, BarChart3, Calendar, Plus, Search, Filter, Target, TrendingUp, AlertCircle, RefreshCw, Pause } from 'lucide-react-native';
+import { Mail, Send, Users, ChartBar, Calendar, Plus, Search, ListFilter, Target, TrendingUp, CircleAlert, RefreshCw, Pause } from 'lucide-react-native';
 import { useCampaigns, useMarketingAnalytics } from '../../hooks/useMarketing';
 
 interface EmailCampaign {
@@ -144,7 +144,7 @@ export default function EmailMarketingScreen() {
           placeholderTextColor="#9CA3AF"
         />
         <TouchableOpacity style={styles.filterButton}>
-          <Filter size={20} color="#6B7280" />
+          <ListFilter size={20} color="#6B7280" />
         </TouchableOpacity>
       </View>
 
@@ -156,7 +156,7 @@ export default function EmailMarketingScreen() {
           </View>
         ) : campaignsError ? (
           <View style={styles.errorContainer}>
-            <AlertCircle size={24} color="#EF4444" />
+            <CircleAlert size={24} color="#EF4444" />
             <Text style={styles.errorText}>Failed to load campaigns</Text>
             <TouchableOpacity 
               style={styles.retryButton} 
@@ -241,7 +241,7 @@ export default function EmailMarketingScreen() {
                 </View>
                 <View style={styles.campaignActions}>
                   <TouchableOpacity style={styles.actionButton}>
-                    <BarChart3 size={16} color="#6B7280" />
+                    <ChartBarBig size={16} color="#6B7280" />
                     <Text style={styles.actionText}>Analytics</Text>
                   </TouchableOpacity>
                   {campaign.status === 'draft' && (

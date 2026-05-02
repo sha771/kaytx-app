@@ -16,15 +16,15 @@ import {
   Send,
   Users,
   MessageSquare,
-  BarChart3,
+  ChartBar,
   Calendar,
   Plus,
-  Filter,
+  ListFilter,
   Search,
   TrendingUp,
   Clock,
-  CheckCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleAlert,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
@@ -124,11 +124,11 @@ export default function SMSMarketingHubScreen() {
 
   const getStatusIcon = (status: Campaign['status']) => {
     switch (status) {
-      case 'sent': return CheckCircle;
+      case 'sent': return CircleCheck;
       case 'scheduled': return Clock;
       case 'active': return TrendingUp;
-      case 'draft': return AlertCircle;
-      default: return AlertCircle;
+      case 'draft': return CircleAlert;
+      default: return CircleAlert;
     }
   };
 

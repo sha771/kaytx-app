@@ -1,19 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Bot, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap, User } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks/Day',value:'81',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.2s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.7%',icon:Target,color:'#283593'}];
+  const stats = [{label:'Tasks/Day',value:'81',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.2s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.7%',icon:Target,color:'#283593'}];
   const capabilities = ['Infrastructure Management','System Monitoring','Performance Optimization'];
   const responsibilities = ['Infrastructure monitoring & maintenance','Cloud architecture & deployment','Network security & performance','Help desk support & issue resolution','System administration & patching','Disaster recovery & business continuity'];
-  const activities = [{time:'3 min ago',text:'Resolved 35 help desk tickets',icon:CheckCircle2},{time:'6 min ago',text:'Patched 5 critical vulnerabilities',icon:Clock},{time:'9 min ago',text:'Upgraded cloud infrastructure',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Resolved 35 help desk tickets',icon: CircleCheckBig},{time:'6 min ago',text:'Patched 5 critical vulnerabilities',icon:Clock},{time:'9 min ago',text:'Upgraded cloud infrastructure',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#28359320' }]}><Bot size={48} color="#283593" /></View>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#28359320' }]}><User size={48} color="#283593" /></View>
         <Text style={[styles.heroTitle, { color: theme.colors.text }]}>AI Infrastructure Manager</Text>
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>IT & Technology</Text>
         <View style={styles.badgesRow}>

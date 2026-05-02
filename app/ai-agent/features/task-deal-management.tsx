@@ -5,18 +5,19 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { 
   ChevronLeft, 
   Plus, 
-  CheckCircle2, 
+  CircleCheckBig, 
   Clock, 
-  AlertCircle, 
-  MoreHorizontal,
+  CircleAlert, 
+  GripHorizontal,
   Calendar,
   Flag,
   User,
   FolderOpen,
   TrendingUp,
-  Filter,
+  ListFilter,
   Search
 } from 'lucide-react-native';
+import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 interface Task {
   id: string;
@@ -123,7 +124,7 @@ export default function TaskDealManagementPage() {
           style={[styles.tab, activeTab === 'tasks' && { backgroundColor: theme.colors.primary }]}
           onPress={() => setActiveTab('tasks')}
         >
-          <CheckCircle2 size={18} color={activeTab === 'tasks' ? '#fff' : theme.colors.textSecondary} />
+          <CircleCheckBig size={18} color={activeTab === 'tasks' ? '#fff' : theme.colors.textSecondary} />
           <Text style={[styles.tabText, { color: activeTab === 'tasks' ? '#fff' : theme.colors.textSecondary }]}>Tasks</Text>
         </TouchableOpacity>
         <TouchableOpacity 

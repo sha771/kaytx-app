@@ -1,7 +1,7 @@
 
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Shield, AlertTriangle, Activity, BarChart3, TrendingDown, CheckCircle } from 'lucide-react-native';
+import { Shield, TriangleAlert, Activity, ChartBar, TrendingDown, CircleCheck } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
@@ -44,7 +44,7 @@ export default function TradingRiskManagerScreen() {
           <Text style={styles.metricLabel}>Daily VaR (95%)</Text>
         </LinearGradient>
         <LinearGradient colors={['#00C853', '#009624']} style={styles.metricCard}>
-          <CheckCircle size={20} color="#fff" />
+          <CircleCheck size={20} color="#fff" />
           <Text style={styles.metricValue}>8,000</Text>
           <Text style={styles.metricLabel}>Checks/Day</Text>
         </LinearGradient>
@@ -53,7 +53,7 @@ export default function TradingRiskManagerScreen() {
       <View style={[styles.section, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.sectionHeader}>
           <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Risk Alerts</Text>
-          <AlertTriangle size={18} color="#FF9500" />
+          <TriangleAlert size={18} color="#FF9500" />
         </View>
         {riskAlerts.map((alert, i) => (
           <View key={i} style={[styles.alertCard, { backgroundColor: alert.color + '0D', borderLeftColor: alert.color }]}>
@@ -96,7 +96,7 @@ export default function TradingRiskManagerScreen() {
 
   const customTabs = [
     { id: 'risk', label: 'Risk Monitor', icon: Shield, component: riskTab },
-    { id: 'reports', label: 'Reports', icon: BarChart3, component: <View /> },
+    { id: 'reports', label: 'Reports', icon: ChartBar, component: <View /> },
   ];
 
   return <AgentShell agent={agent} customTabs={customTabs} />;

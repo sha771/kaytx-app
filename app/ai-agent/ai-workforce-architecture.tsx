@@ -400,7 +400,7 @@ const AIWorkforceArchitectureDashboard = () => {
             <View style={[styles.connectorLine, { backgroundColor: colors.border }]} />
             <View style={styles.levelHeader}>
               <View style={[styles.levelBadge, { backgroundColor: '#388E3C' }]}>
-                <Icons.Bot size={14} color="#FFF" />
+                <Icons.User size={14} color="#FFF" />
               </View>
               <Text style={[styles.levelTitle, { color: colors.text }]}>Specialists</Text>
               <Text style={[styles.levelSubtitle, { color: colors.textSecondary }]}>
@@ -496,7 +496,7 @@ const AIWorkforceArchitectureDashboard = () => {
               <View style={styles.connectionAgents}>
                 <View style={styles.connectionAgent}>
                   <View style={[styles.connectionAgentIcon, { backgroundColor: `${fromAgent.color}15` }]}>
-                    <Icons.Bot size={16} color={fromAgent.color} />
+                    <Icons.User size={16} color={fromAgent.color} />
                   </View>
                   <Text style={[styles.connectionAgentName, { color: colors.text }]} numberOfLines={1}>
                     {fromAgent.name}
@@ -513,7 +513,7 @@ const AIWorkforceArchitectureDashboard = () => {
                 
                 <View style={styles.connectionAgent}>
                   <View style={[styles.connectionAgentIcon, { backgroundColor: `${toAgent.color}15` }]}>
-                    <Icons.Bot size={16} color={toAgent.color} />
+                    <Icons.User size={16} color={toAgent.color} />
                   </View>
                   <Text style={[styles.connectionAgentName, { color: colors.text }]} numberOfLines={1}>
                     {toAgent.name}
@@ -578,7 +578,7 @@ const AIWorkforceArchitectureDashboard = () => {
       <Text style={[styles.sectionTitle, { color: colors.text }]}>Consulting Styles</Text>
       <View style={styles.consultingStyles}>
         {[
-          { style: 'analytical', count: 28, color: '#2196F3', icon: Icons.BarChart3 },
+          { style: 'analytical', count: 28, color: '#2196F3', icon: Icons.ChartBar },
           { style: 'directive', count: 24, color: '#F44336', icon: Icons.Target },
           { style: 'collaborative', count: 32, color: '#4CAF50', icon: Icons.Users },
           { style: 'supportive', count: 22, color: '#9C27B0', icon: Icons.Heart },
@@ -644,13 +644,13 @@ const AIWorkforceArchitectureDashboard = () => {
             <View style={styles.sessionHeader}>
               <View style={styles.sessionParticipants}>
                 <View style={[styles.sessionAvatar, { backgroundColor: '#2196F315' }]}>
-                  <Icons.Bot size={16} color="#2196F3" />
+                  <Icons.User size={16} color="#2196F3" />
                 </View>
                 <View style={styles.sessionArrow}>
                   <Icons.ArrowRight size={14} color={colors.textSecondary} />
                 </View>
                 <View style={[styles.sessionAvatar, { backgroundColor: '#4CAF5015' }]}>
-                  <Icons.Bot size={16} color="#4CAF50" />
+                  <Icons.User size={16} color="#4CAF50" />
                 </View>
               </View>
               <View style={[styles.sessionOutcome, { 
@@ -703,7 +703,7 @@ const AIWorkforceArchitectureDashboard = () => {
                     { backgroundColor: `${selectedAgent.color}20` }
                   ]}
                 >
-                  <Icons.Bot size={32} color={selectedAgent.color} />
+                  <Icons.User size={32} color={selectedAgent.color} />
                 </View>
                 <TouchableOpacity 
                   style={styles.modalClose}
@@ -854,7 +854,7 @@ const AgentCard = ({
     onPress={onPress}
   >
     <View style={[styles.agentCardIcon, { backgroundColor: `${agent.color}15` }]}>
-      <Icons.Bot size={compact ? 20 : 24} color={agent.color} />
+      <Icons.User size={compact ? 20 : 24} color={agent.color} />
     </View>
     <View style={styles.agentCardInfo}>
       <Text 

@@ -20,8 +20,7 @@ import {
   User,
   Zap,
   TrendingUp,
-  Bot,
-  Filter,
+  ListFilter,
   Plus,
   ChevronRight,
 } from 'lucide-react-native';
@@ -181,7 +180,7 @@ export default function AccountingAgentsScreen() {
             <Text style={[styles.headerTitle, { color: colors.text }]}>Accounting & Finance AI</Text>
           </View>
           <TouchableOpacity onPress={() => setShowFilters(!showFilters)} style={styles.filterButton}>
-            <Filter size={20} color={colors.text} />
+            <ListFilter size={20} color={colors.text} />
           </TouchableOpacity>
         </View>
 
@@ -209,7 +208,7 @@ export default function AccountingAgentsScreen() {
         {/* Stats */}
         <View style={styles.statsContainer}>
           <Animated.View entering={FadeInRight.delay(100)} style={[styles.statBadge, { backgroundColor: colors.border + '30' }]}>
-            <Bot size={16} color={colors.text} />
+            <User size={16} color={colors.text} />
             <Text style={[styles.statValue, { color: colors.text }]}>{stats.total}</Text>
             <Text style={[styles.statLabel, { color: colors.text + '60' }]}>Agents</Text>
           </Animated.View>

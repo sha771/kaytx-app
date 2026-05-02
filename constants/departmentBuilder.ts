@@ -187,8 +187,9 @@ export const C_SUITE_LIAISONS = [
   { id: 'cdao', name: 'CDAO', title: 'Chief Data & AI Officer', departments: ['data_intelligence', 'analytics', 'ai'] },
   { id: 'clo', name: 'CLO', title: 'Chief Legal Officer', departments: ['legal_compliance', 'regulatory'] },
   { id: 'cco', name: 'CCO', title: 'Chief Customer Officer', departments: ['customer_experience', 'success', 'support'] },
-  { id: 'cao_auto', name: 'CAO-Auto', title: 'Chief Automation Officer', departments: ['automation', 'rpa', 'efficiency'] },
+  { id: 'cao', name: 'CAO', title: 'Chief Administrative Officer', departments: ['automation', 'rpa', 'efficiency'] },
   { id: 'cs', name: 'CSO', title: 'Chief Sales Officer', departments: ['sales', 'business_development'] },
+  { id: 'ccio', name: 'CCIO', title: 'Chief Customer Insights Officer', departments: ['customer_insights_analytics', 'customer_behavior', 'predictive_analytics'] },
 ];
 
 // ============================================
@@ -347,8 +348,18 @@ export const DEFAULT_DEPARTMENTS: Partial<CustomDepartment>[] = [
     name: 'Data & Intelligence',
     category: 'specialized',
     functions: [
-      { id: 'analytics', name: 'Analytics', description: 'Business intelligence', keyActivities: ['Reporting', 'Dashboards', 'Insights'] },
-      { id: 'ml', name: 'Machine Learning', description: 'AI and predictive models', keyActivities: ['Modeling', 'Training', 'Deployment'] },
+      {
+        id: 'analytics',
+        name: 'Analytics',
+        description: 'Business intelligence',
+        keyActivities: ['Reporting', 'Dashboards', 'Insights'],
+      },
+      {
+        id: 'ml',
+        name: 'Machine Learning',
+        description: 'AI and predictive models',
+        keyActivities: ['Modeling', 'Training', 'Deployment'],
+      },
     ],
     head: { title: 'CDAO', requiredSkills: ['data', 'ai', 'strategy'], reportingLine: 'c_suite', cSuiteLiaison: 'cdao' },
   },
@@ -357,8 +368,18 @@ export const DEFAULT_DEPARTMENTS: Partial<CustomDepartment>[] = [
     name: 'Security',
     category: 'specialized',
     functions: [
-      { id: 'cyber', name: 'Cybersecurity', description: 'Threat protection', keyActivities: ['Monitoring', 'Response', 'Hardening'] },
-      { id: 'physical', name: 'Physical Security', description: 'Facility protection', keyActivities: ['Access control', 'Surveillance', 'Response'] },
+      {
+        id: 'cyber',
+        name: 'Cybersecurity',
+        description: 'Threat protection',
+        keyActivities: ['Monitoring', 'Response', 'Hardening'],
+      },
+      {
+        id: 'physical',
+        name: 'Physical Security',
+        description: 'Facility protection',
+        keyActivities: ['Access control', 'Surveillance', 'Response'],
+      },
     ],
     head: { title: 'CISO', requiredSkills: ['security', 'risk', 'technology'], reportingLine: 'c_suite', cSuiteLiaison: 'ciso' },
   },
@@ -367,10 +388,45 @@ export const DEFAULT_DEPARTMENTS: Partial<CustomDepartment>[] = [
     name: 'Product',
     category: 'core',
     functions: [
-      { id: 'product_mgmt', name: 'Product Management', description: 'Product strategy', keyActivities: ['Roadmap', 'Features', 'Launch'] },
-      { id: 'ux', name: 'UX/Design', description: 'User experience', keyActivities: ['Research', 'Design', 'Testing'] },
+      {
+        id: 'product_mgmt',
+        name: 'Product Management',
+        description: 'Product strategy',
+        keyActivities: ['Roadmap', 'Features', 'Launch'],
+      },
+      {
+        id: 'ux',
+        name: 'UX/Design',
+        description: 'User experience',
+        keyActivities: ['Research', 'Design', 'Testing'],
+      },
     ],
     head: { title: 'CPO', requiredSkills: ['product', 'ux', 'strategy'], reportingLine: 'c_suite', cSuiteLiaison: 'cto' },
+  },
+  {
+    id: 'customer_insights_analytics',
+    name: 'Customer Insights & Analytics',
+    category: 'specialized',
+    functions: [
+      {
+        id: 'journey_behavior',
+        name: 'Journey & Behavior Analytics',
+        description: 'Map customer journeys and analyze behavioral patterns',
+        keyActivities: ['Journey mapping', 'Behavior modeling', 'Touchpoint analysis', 'Funnel optimization'],
+      },
+      {
+        id: 'predictive_personalization',
+        name: 'Predictive & Personalization',
+        description: 'Predict customer actions and personalize experiences',
+        keyActivities: ['Churn prediction', 'CLV forecasting', 'Personalization engines', 'Segmentation'],
+      },
+    ],
+    head: {
+      title: 'CCIO',
+      requiredSkills: ['analytics', 'customer_focus', 'data_science', 'behavioral_modeling'],
+      reportingLine: 'c_suite',
+      cSuiteLiaison: 'ccio',
+    },
   },
 ];
 
@@ -647,7 +703,7 @@ export const DEPARTMENT_TEMPLATES: BuilderTemplate[] = [
     description: 'Emergency response and business continuity',
     mode: 'department',
     category: 'specialized',
-    icon: 'AlertTriangle',
+    icon: 'TriangleAlert',
     presetData: {
       category: 'specialized',
       functions: [
@@ -737,8 +793,8 @@ export const DEPARTMENT_PRESETS_BY_USECASE = {
   enterprise: {
     name: 'Enterprise Full Suite',
     description: 'Complete enterprise department structure',
-    departments: ['executive', 'finance', 'technology', 'marketing', 'sales', 'customer_experience', 'operations', 'human_resources', 'legal_compliance', 'security', 'data_intelligence'],
-    totalBudget: '$1.2M/month',
+    departments: ['executive', 'finance', 'technology', 'marketing', 'sales', 'customer_experience', 'operations', 'human_resources', 'legal_compliance', 'security', 'data_intelligence', 'customer_insights_analytics'],
+    totalBudget: '$1.3M/month',
   },
   fintech: {
     name: 'FinTech Stack',

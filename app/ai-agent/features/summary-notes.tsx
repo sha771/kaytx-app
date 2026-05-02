@@ -8,14 +8,15 @@ import {
   FileText, 
   Clock, 
   Tag, 
-  MoreVertical, 
+  EllipsisVertical, 
   Search,
-  Edit3,
+  PenLine,
   Trash2,
   Bookmark,
   Share2,
-  Filter
+  ListFilter
 } from 'lucide-react-native';
+import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 interface Note {
   id: string;

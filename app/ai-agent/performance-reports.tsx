@@ -1,9 +1,9 @@
-import React from 'react';
+﻿import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { Stack, router } from 'expo-router';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ArrowLeft, TrendingUp, DollarSign, Clock, Users, PieChart, Download } from 'lucide-react-native';
+import { ArrowLeft, TrendingUp, DollarSign, Clock, Users, ChartPie, Download } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const { width } = Dimensions.get('window');
@@ -72,7 +72,7 @@ export default function PerformanceReportsScreen() {
                     <Text style={styles.sectionTitle}>Task Volume Distribution</Text>
                     <View style={styles.chartArea}>
                         <View style={styles.piePlaceholder}>
-                            <PieChart size={120} color="#444" />
+                            <ChartPie size={120} color="#444" />
                             <View style={styles.legend}>
                                 <View style={styles.legendItem}><View style={[styles.dot, { backgroundColor: '#5856D6' }]} /><Text style={styles.lText}>Prospecting (45%)</Text></View>
                                 <View style={styles.legendItem}><View style={[styles.dot, { backgroundColor: '#34C759' }]} /><Text style={styles.lText}>Support (30%)</Text></View>

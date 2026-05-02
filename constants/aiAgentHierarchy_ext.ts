@@ -9,10 +9,10 @@ import {
 } from './aiAgentHierarchy';
 import {
   Settings, Zap, GitBranch, Shield, Truck, Award,
-  BarChart3, TrendingUp, LineChart, Brain, Activity, AlertTriangle,
+  ChartBar, TrendingUp, ChartLine, Brain, Activity, TriangleAlert,
   Eye, Gauge, Cpu, Sparkles, Crown, MessagesSquare,
-  Target, Megaphone, PieChart, Globe,
-  CheckSquare, Box, Lightbulb,
+  Target, Megaphone, ChartPie, Globe,
+  SquareCheck, Box, Lightbulb,
   Target as GoalIcon
 } from 'lucide-react-native';
 
@@ -166,7 +166,7 @@ export const operationsManagementSubAgents: AIAgent[] = [
     name: 'AI Task Coordinator',
     title: 'Task Management & Assignment',
     description: 'Coordinates tasks across teams, manages priorities, and ensures timely completion of deliverables.',
-    icon: CheckSquare,
+    icon: SquareCheck,
     color: '#34C759',
     type: 'subagent',
     category: 'operations_management',
@@ -569,7 +569,7 @@ export const dataIntelligenceSubAgents: AIAgent[] = [
     name: 'AI Data Analyst',
     title: 'Business Intelligence Analyst',
     description: 'Analyzes business data, creates reports, and provides actionable insights for decision-making.',
-    icon: BarChart3,
+    icon: ChartBar,
     color: '#007AFF',
     type: 'subagent',
     category: 'data_intelligence',
@@ -701,7 +701,7 @@ export const dataIntelligenceSubAgents: AIAgent[] = [
     name: 'AI Financial Analyst',
     title: 'Financial Intelligence Specialist',
     description: 'Analyzes financial data, creates projections, and provides strategic financial insights.',
-    icon: LineChart,
+    icon: ChartLine,
     color: '#5856D6',
     type: 'subagent',
     category: 'data_intelligence',
@@ -899,7 +899,7 @@ export const dataIntelligenceSubAgents: AIAgent[] = [
     name: 'AI Risk Analyst',
     title: 'Risk Assessment Specialist',
     description: 'Identifies, assesses, and monitors business risks with mitigation recommendations.',
-    icon: AlertTriangle,
+    icon: TriangleAlert,
     color: '#FF9500',
     type: 'subagent',
     category: 'data_intelligence',
@@ -1422,7 +1422,7 @@ export const analysisInsightsPerformanceSubAgents: AIAgent[] = [
     name: 'ROI & Profitability Analysis AI',
     title: 'Financial Performance Specialist',
     description: 'Analyzes ROI, profitability, and financial performance across all initiatives.',
-    icon: PieChart,
+    icon: ChartPie,
     color: '#FF9500',
     type: 'subagent',
     category: 'analysis_performance',

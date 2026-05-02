@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Shield, Activity, CheckCircle2, Clock, Target, BarChart3, MessageSquare, Calendar, ShieldCheck, ArrowRight, Users, Zap, Star, Lock, Eye, AlertTriangle } from 'lucide-react-native';
+import { Shield, Activity, CircleCheckBig, Clock, Target, ChartBar, MessageSquare, Calendar, ShieldCheck, ArrowRight, Users, Zap, Star, Lock, Eye, TriangleAlert } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function VPSecurityOpsPage() {
   const { theme } = useTheme();
 
   const stats = [
-    { label: 'Threats Blocked', value: '45,231', icon: CheckCircle2, color: '#34C759' },
+    { label: 'Threats Blocked', value: '45,231', icon: CircleCheckBig, color: '#34C759' },
     { label: 'Uptime', value: '99.99%', icon: Activity, color: '#007AFF' },
     { label: 'Response', value: '0.3s', icon: Clock, color: '#FF9500' },
     { label: 'Accuracy', value: '99.8%', icon: Target, color: '#AF52DE' },
@@ -34,12 +34,12 @@ export default function VPSecurityOpsPage() {
     { time: '1 min ago', text: 'Blocked 847 malicious login attempts', icon: Lock },
     { time: '8 min ago', text: 'Updated threat intelligence feed', icon: Eye },
     { time: '25 min ago', text: 'Completed vulnerability scan cycle', icon: ShieldCheck },
-    { time: '1 hour ago', text: 'Escalated 3 critical incidents to IR team', icon: AlertTriangle },
+    { time: '1 hour ago', text: 'Escalated 3 critical incidents to IR team', icon: TriangleAlert },
     { time: '3 hours ago', text: 'Published monthly security posture report', icon: Zap },
   ];
 
   const quickActions = [
-    { label: 'View Reports', icon: BarChart3 },
+    { label: 'View Reports', icon: ChartBar },
     { label: 'Team Chat', icon: MessageSquare },
     { label: 'Schedule', icon: Calendar },
     { label: 'Settings', icon: ShieldCheck },

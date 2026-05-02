@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Bitcoin, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Bitcoin, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'2,459',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.6s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.1%',icon:Target,color:'#0277BD'}];
+  const stats = [{label:'Tasks',value:'2,459',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.6s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.1%',icon:Target,color:'#0277BD'}];
   const capabilities = ['Crypto Trading','DeFi Analysis','Blockchain Analytics','Risk Management','Market Making','Yield Optimization'];
   const responsibilities = ['Cryptocurrency market analysis & trading','DeFi protocol analysis & yield farming','Blockchain analytics & on-chain monitoring','Crypto risk management & hedging','Market making & liquidity provision','Yield optimization strategies'];
-  const activities = [{time:'3 min ago',text:'Executed BTC/ETH arbitrage strategy',icon:CheckCircle2},{time:'6 min ago',text:'Analyzed DeFi yield opportunities',icon:Clock},{time:'9 min ago',text:'Monitored whale wallet movements',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Executed BTC/ETH arbitrage strategy',icon: CircleCheckBig},{time:'6 min ago',text:'Analyzed DeFi yield opportunities',icon:Clock},{time:'9 min ago',text:'Monitored whale wallet movements',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

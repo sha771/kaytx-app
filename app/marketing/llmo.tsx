@@ -15,16 +15,16 @@ import {
   Target,
   Users,
   TrendingUp,
-  BarChart3,
+  ChartBar,
   Calendar,
-  Filter,
+  ListFilter,
   Download,
   ArrowLeft,
   Plus,
   Activity,
   Clock,
-  CheckCircle,
-  AlertTriangle,
+  CircleCheck,
+  TriangleAlert,
   ArrowRight,
   Mail,
   Phone,
@@ -461,7 +461,7 @@ export default function LLMOScreen() {
         <Text style={[styles.title, { color: theme.colors.text }]}>LLMO</Text>
         <View style={styles.headerActions}>
           <TouchableOpacity style={styles.headerButton}>
-            <Filter size={20} color={theme.colors.text} />
+            <ListFilter size={20} color={theme.colors.text} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerButton}>
             <Plus size={20} color={theme.colors.text} />

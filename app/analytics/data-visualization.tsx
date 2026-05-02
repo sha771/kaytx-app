@@ -1,8 +1,8 @@
- 
+﻿ 
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Stack } from 'expo-router';
-import { BarChart3, TrendingUp, PieChart, LineChart, Download, Share2, Calendar } from 'lucide-react-native';
+import { ChartBar, TrendingUp, ChartPie, ChartLine, Download, Share2, Calendar } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface ChartData {
@@ -55,15 +55,15 @@ export default function DataVisualizationScreen() {
   const getChartIcon = (type: ChartData['type']) => {
     switch (type) {
       case 'bar':
-        return <BarChart3 size={24} color="#60A5FA" />;
+        return <ChartBarBig size={24} color="#60A5FA" />;
       case 'line':
-        return <LineChart size={24} color="#10B981" />;
+        return <ChartLine size={24} color="#10B981" />;
       case 'pie':
-        return <PieChart size={24} color="#F59E0B" />;
+        return <ChartPie size={24} color="#F59E0B" />;
       case 'area':
         return <TrendingUp size={24} color="#A78BFA" />;
       default:
-        return <BarChart3 size={24} color="#60A5FA" />;
+        return <ChartBarBig size={24} color="#60A5FA" />;
     }
   };
 
@@ -221,7 +221,7 @@ export default function DataVisualizationScreen() {
 
           <View style={styles.insightCard}>
             <View style={styles.insightIcon}>
-              <BarChart3 size={20} color="#F59E0B" />
+              <ChartBarBig size={20} color="#F59E0B" />
             </View>
             <View style={styles.insightContent}>
               <Text style={styles.insightTitle}>Top Traffic Source</Text>

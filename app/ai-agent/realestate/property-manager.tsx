@@ -1,19 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Home, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { House, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'4,647',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.6s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.1%',icon:Target,color:'#33691E'}];
+  const stats = [{label:'Tasks',value:'4,647',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.6s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.1%',icon:Target,color:'#33691E'}];
   const capabilities = ['Property Operations','Tenant Mgmt','Financial Mgmt','Maintenance','Compliance','Reporting'];
   const responsibilities = ['Property operations management','Tenant relationship management','Property financial management','Maintenance & vendor coordination','Property compliance & inspections','Owner reporting & communication'];
-  const activities = [{time:'3 min ago',text:'Managed portfolio of 8 properties',icon:CheckCircle2},{time:'6 min ago',text:'Resolved 15 tenant issues',icon:Clock},{time:'9 min ago',text:'Prepared monthly owner reports',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Managed portfolio of 8 properties',icon: CircleCheckBig},{time:'6 min ago',text:'Resolved 15 tenant issues',icon:Clock},{time:'9 min ago',text:'Prepared monthly owner reports',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#33691E20' }]}><Home size={48} color="#33691E" /></View>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#33691E20' }]}><House size={48} color="#33691E" /></View>
         <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Property Manager</Text>
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Property Management</Text>
         <View style={styles.badgesRow}>

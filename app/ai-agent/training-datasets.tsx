@@ -17,13 +17,13 @@ import {
   FileText,
   Database,
   Trash2,
-  CheckCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleAlert,
   Clock,
   File,
   Folder,
   X,
-  MoreVertical,
+  EllipsisVertical,
   Play,
   Pause,
   RefreshCw,
@@ -32,7 +32,7 @@ import {
   Zap,
   Save,
   Download,
-  Filter,
+  ListFilter,
   Search,
   Plus,
   Link,
@@ -194,14 +194,14 @@ export default function TrainingDatasetScreen() {
     switch (status) {
       case 'ready':
       case 'completed':
-        return <CheckCircle size={16} color="#10B981" />;
+        return <CircleCheck size={16} color="#10B981" />;
       case 'uploading':
       case 'processing':
       case 'training':
         return <Clock size={16} color="#F59E0B" />;
       case 'error':
       case 'failed':
-        return <AlertCircle size={16} color="#EF4444" />;
+        return <CircleAlert size={16} color="#EF4444" />;
       case 'queued':
         return <Zap size={16} color="#6B7280" />;
       default:
@@ -384,7 +384,7 @@ export default function TrainingDatasetScreen() {
             <Text style={[styles.jobActionText, { color: colors.tint }]}>Pause</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.jobActionButton}>
-            <AlertCircle size={16} color="#EF4444" />
+            <CircleAlert size={16} color="#EF4444" />
             <Text style={[styles.jobActionText, { color: '#EF4444' }]}>Cancel</Text>
           </TouchableOpacity>
         </View>
@@ -477,7 +477,7 @@ export default function TrainingDatasetScreen() {
                 onChangeText={setSearchQuery}
               />
               <TouchableOpacity>
-                <Filter size={18} color={colors.icon} />
+                <ListFilter size={18} color={colors.icon} />
               </TouchableOpacity>
             </View>
 

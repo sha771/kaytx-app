@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Bot, Mic, Phone, MessageSquare, Settings, Plus, Search, Filter, Clock, Users } from 'lucide-react-native';
+import { Mic, Phone, MessageSquare, Settings, Plus, Search, ListFilter, Clock, Users, User } from 'lucide-react-native';
 import { trpc } from '@/lib/trpc';
 
 interface AIVoiceAssistant {
@@ -103,7 +103,7 @@ export default function AIVoiceAssistantScreen() {
         
         <View style={styles.filterContainer}>
           <TouchableOpacity style={styles.filterButton}>
-            <Filter size={20} color="#3B82F6" />
+            <ListFilter size={20} color="#3B82F6" />
           </TouchableOpacity>
           
           <TouchableOpacity style={styles.addButton}>
@@ -116,7 +116,7 @@ export default function AIVoiceAssistantScreen() {
       <ScrollView style={styles.content}>
         <View style={styles.statsContainer}>
           <View style={styles.statCard}>
-            <Bot size={24} color="#3B82F6" />
+            <User size={24} color="#3B82F6" />
             <Text style={styles.statNumber}>{totalAssistants.toLocaleString()}</Text>
             <Text style={styles.statLabel}>AI Assistants</Text>
           </View>
@@ -184,7 +184,7 @@ export default function AIVoiceAssistantScreen() {
                 </TouchableOpacity>
                 
                 <TouchableOpacity style={styles.actionButton}>
-                  <Bot size={16} color="#10B981" />
+                  <User size={16} color="#10B981" />
                   <Text style={styles.actionText}>Train</Text>
                 </TouchableOpacity>
                 
@@ -202,7 +202,7 @@ export default function AIVoiceAssistantScreen() {
           
           <View style={styles.actionGrid}>
             <TouchableOpacity style={styles.actionCard}>
-              <Bot size={24} color="#3B82F6" />
+              <User size={24} color="#3B82F6" />
               <Text style={styles.actionCardText}>Create New Assistant</Text>
             </TouchableOpacity>
             
@@ -244,7 +244,7 @@ export default function AIVoiceAssistantScreen() {
             </TouchableOpacity>
             
             <TouchableOpacity style={styles.featureCard}>
-              <Bot size={20} color="#F59E0B" />
+              <User size={20} color="#F59E0B" />
               <View style={styles.featureInfo}>
                 <Text style={styles.featureName}>Continuous Learning</Text>
                 <Text style={styles.featureDescription}>AI improves with each interaction</Text>

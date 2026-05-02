@@ -16,7 +16,7 @@ import {
 import {
   Plus,
   Search,
-  Filter,
+  ListFilter,
   Smartphone,
   MessageSquare,
   Activity,
@@ -27,7 +27,7 @@ import {
   Cloud,
   X,
   QrCode,
-  CheckCircle,
+  CircleCheck,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
@@ -368,7 +368,7 @@ export default function PlatformsScreen() {
             />
           </View>
           <TouchableOpacity style={[styles.filterButton, { backgroundColor: theme.colors.cardBackground }]}>
-            <Filter size={20} color={theme.colors.text} />
+            <ListFilter size={20} color={theme.colors.text} />
           </TouchableOpacity>
         </View>
 
@@ -614,7 +614,7 @@ const ConnectionModal = ({ visible, platform, step, onSetStep, onClose, ...props
 
         {step === 'success' && (
           <View style={{ alignItems: 'center', paddingVertical: 40 }}>
-            <CheckCircle size={64} color="#34C759" />
+            <CircleCheck size={64} color="#34C759" />
             <Text style={{ fontSize: 24, fontWeight: '800', color: theme.colors.text, marginTop: 20 }}>
               Success!
             </Text>

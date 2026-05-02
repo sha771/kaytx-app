@@ -13,7 +13,7 @@ import {
   TrendingUp,
   Megaphone,
   Settings,
-  BarChart3,
+  ChartBar,
   Layers,
   Activity,
   Users,
@@ -26,7 +26,6 @@ import {
   Monitor as MonitorIcon,
   Scale,
   Code,
-  Bot,
   History,
   ToggleRight,
 } from 'lucide-react-native';
@@ -132,12 +131,12 @@ export default function AIAgentsEmployeesScreen() {
     { id: 'operations-management', label: 'Operations & Management AI', icon: Settings, color: '#FF6482' },
     { id: 'social-media-management', label: 'Social Media Management AI', icon: Share2, color: '#1DA1F2' },
     { id: 'data-intelligence', label: 'Data & Intelligence AI', icon: Database, color: '#06B6D4' },
-    { id: 'analysis-insights-performance', label: 'Analysis & Performance AI', icon: BarChart3, color: '#F97316' },
+    { id: 'analysis-insights-performance', label: 'Analysis & Performance AI', icon: ChartBar, color: '#F97316' },
     { id: 'human-resources', label: 'Human Resources AI', icon: Users, color: '#EC4899' },
     { id: 'it-technology', label: 'IT & Technology AI', icon: MonitorIcon, color: '#6366F1' },
     { id: 'legal-compliance', label: 'Legal & Compliance AI', icon: Scale, color: '#F59E0B' },
     { id: 'engineering-development', label: 'Engineering & Development AI', icon: Code, color: '#14B8A6' },
-    { id: 'ai-personal-assistant', label: 'AI Personal Assistant', icon: Bot, color: '#6366F1' },
+    { id: 'ai-personal-assistant', label: 'AI Personal Assistant', icon: User, color: '#6366F1' },
     { id: 'trading-investment', label: 'Trading & Investment AI', icon: TrendingUp, color: '#00C853' },
   ];
 
@@ -152,12 +151,12 @@ export default function AIAgentsEmployeesScreen() {
     { id: 'operations-management', label: 'Operations', icon: Settings },
     { id: 'social-media-management', label: 'Social Media', icon: Share2 },
     { id: 'data-intelligence', label: 'Data', icon: Database },
-    { id: 'analysis-insights-performance', label: 'Analytics', icon: BarChart3 },
+    { id: 'analysis-insights-performance', label: 'Analytics', icon: ChartBar },
     { id: 'human-resources', label: 'HR', icon: Users },
     { id: 'it-technology', label: 'IT', icon: MonitorIcon },
     { id: 'legal-compliance', label: 'Legal', icon: Scale },
     { id: 'engineering-development', label: 'Engineering', icon: Code },
-    { id: 'ai-personal-assistant', label: 'Assistant', icon: Bot },
+    { id: 'ai-personal-assistant', label: 'Assistant', icon: User },
     { id: 'trading-investment', label: 'Trading', icon: TrendingUp },
   ];
 
@@ -184,7 +183,7 @@ export default function AIAgentsEmployeesScreen() {
     <TouchableOpacity
       key={action.id}
       style={[styles.quickActionCard, { backgroundColor: theme.colors.cardBackground }]}
-      onPress={() => router.push(action.route as any)}
+      onPress={() => router.push(action.route)}
     >
       <LinearGradient colors={action.bgGradient} style={styles.quickActionIcon}>
         <action.icon size={20} color="#fff" />
@@ -203,7 +202,7 @@ export default function AIAgentsEmployeesScreen() {
           borderLeftColor: emp.isActive ? '#34C759' : theme.colors.border
         }
       ]}
-      onPress={() => router.push(emp.route as any)}
+      onPress={() => router.push(emp.route)}
     >
       <View style={styles.employeeHeader}>
         <View style={[styles.employeeIconContainer, { backgroundColor: emp.color + '15' }]}>
@@ -312,7 +311,7 @@ export default function AIAgentsEmployeesScreen() {
               <TouchableOpacity
                 key={dept.id}
                 style={[styles.deptCard, { backgroundColor: theme.colors.cardBackground }]}
-                onPress={() => router.push(departmentRoutes[dept.id] as any)}
+                onPress={() => router.push(departmentRoutes[dept.id])}
               >
                 <View style={[styles.deptIconBox, { backgroundColor: dept.color + '15' }]}>
                   <dept.icon size={18} color={dept.color} />
@@ -362,7 +361,7 @@ export default function AIAgentsEmployeesScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = {
   container: { flex: 1 },
   header: { paddingHorizontal: 20, paddingBottom: 25, borderBottomLeftRadius: 30, borderBottomRightRadius: 30 },
   navBar: { flexDirection: 'row', alignItems: 'center', marginBottom: 25 },
@@ -412,4 +411,4 @@ const styles = StyleSheet.create({
   tagContainer: { flexDirection: 'row', gap: 8 },
   tag: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 8 },
   tagText: { fontSize: 10, fontWeight: '600' },
-});
+};

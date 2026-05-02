@@ -221,7 +221,7 @@ const A2ANetworkScreen = () => {
             }}
           >
             <View style={[styles.nodeIcon, { backgroundColor: `${agent.color}15` }]}>
-              <Icons.Bot size={20} color={agent.color} />
+              <Icons.User size={20} color={agent.color} />
             </View>
             <Text style={[styles.nodeName, { color: colors.text }]} numberOfLines={1}>
               {agent.name}
@@ -347,7 +347,7 @@ const A2ANetworkScreen = () => {
               <View style={styles.logConnection}>
                 <View style={styles.logAgent}>
                   <View style={[styles.logAgentIcon, { backgroundColor: `${typeColors[log.type]}15` }]}>
-                    <Icons.Bot size={14} color={typeColors[log.type]} />
+                    <Icons.User size={14} color={typeColors[log.type]} />
                   </View>
                   <Text style={[styles.logAgentName, { color: colors.text }]} numberOfLines={1}>
                     {log.from}
@@ -361,7 +361,7 @@ const A2ANetworkScreen = () => {
                 
                 <View style={styles.logAgent}>
                   <View style={[styles.logAgentIcon, { backgroundColor: '#9C27B015' }]}>
-                    <Icons.Bot size={14} color="#9C27B0" />
+                    <Icons.User size={14} color="#9C27B0" />
                   </View>
                   <Text style={[styles.logAgentName, { color: colors.text }]} numberOfLines={1}>
                     {log.to}

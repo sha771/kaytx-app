@@ -5,7 +5,7 @@ import { AnimatedCard, AnimatedButton, Skeleton } from '@/components/ai-agent/Co
 
 export default function CounselingSearchScreen() {
   const [_searchQuery] = useState('');
-  const [activeTab, setActiveTab] = useState<'filter' | 'search'>('filter');
+  const [activeTab, setActiveTab] = useState<'Filter' | 'search'>('Filter');
   const [filters, setFilters] = useState({
     status: [] as string[],
     priority: [] as string[],
@@ -26,7 +26,7 @@ export default function CounselingSearchScreen() {
         name: `Search ${new Date().toLocaleDateString()}`,
         filters,
       });
-      Alert.alert('Success', 'Search filter saved');
+      Alert.alert('Success', 'Search Filter saved');
     } catch {
       Alert.alert('Error', 'Failed to save search');
     }
@@ -154,13 +154,13 @@ export default function CounselingSearchScreen() {
         <TouchableOpacity
           style={[
             styles.tab,
-            activeTab === 'filter' && styles.activeTab,
+            activeTab === 'Filter' && styles.activeTab,
           ]}
-          onPress={() => setActiveTab('filter')}
+          onPress={() => setActiveTab('Filter')}
         >
           <Text style={[
             styles.tabText,
-            activeTab === 'filter' && styles.activeTabText,
+            activeTab === 'Filter' && styles.activeTabText,
           ]}>
             Filter Search
           </Text>
@@ -182,7 +182,7 @@ export default function CounselingSearchScreen() {
       </View>
 
       {/* Filter Search Tab */}
-      {activeTab === 'filter' && (
+      {activeTab === 'Filter' && (
         <ScrollView style={styles.filterContent}>
           {renderFilterSection('Status', statusOptions, 'status')}
           {renderFilterSection('Priority', priorityOptions, 'priority')}

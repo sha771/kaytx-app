@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Colors } from '@/constants/Colors';
-import { ChevronLeft, Bot } from 'lucide-react-native';
+import { ChevronLeft , User} from 'lucide-react-native';
 import { TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { EnhancedAgentShell } from '@/components/ai-agent/EnhancedAgentShell';
@@ -13,7 +13,7 @@ const agent = {
   name: 'AI Treasury Manager',
   title: 'Treasury Management AI',
   description: 'Manages cash flow, optimizes working capital, and handles financial liquidity.',
-  icon: Bot,
+  icon: User,
   color: '#00897B',
   type: 'subagent' as const,
   category: 'accounting',
@@ -40,7 +40,7 @@ export default function AgentScreen() {
         <View style={styles.headerRight} />
       </View>
       <ScrollView style={styles.content}>
-        <EnhancedAgentShell agent={agent as any} />
+        <EnhancedAgentShell agent={agent} />
       </ScrollView>
     </SafeAreaView>
   );

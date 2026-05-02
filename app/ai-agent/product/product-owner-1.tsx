@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { ClipboardList, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { ClipboardList, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'951',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.9s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.7%',icon:Target,color:'#6A1B9A'}];
+  const stats = [{label:'Tasks',value:'951',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.9s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.7%',icon:Target,color:'#6A1B9A'}];
   const capabilities = ['Product Strategy','Roadmap Planning','UX Research','Feature Analysis','Release Management','Market Analysis'];
   const responsibilities = ['Product strategy & roadmap development','User experience research & testing','Feature prioritization & analysis','Release planning & coordination','Market & competitive analysis','Product performance tracking'];
-  const activities = [{time:'3 min ago',text:'Prioritized 15 feature requests',icon:CheckCircle2},{time:'6 min ago',text:'Completed UX research interviews',icon:Clock},{time:'9 min ago',text:'Released v2.4 product update',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Prioritized 15 feature requests',icon: CircleCheckBig},{time:'6 min ago',text:'Completed UX research interviews',icon:Clock},{time:'9 min ago',text:'Released v2.4 product update',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

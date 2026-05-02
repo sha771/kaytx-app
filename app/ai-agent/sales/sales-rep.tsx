@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Phone, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Phone, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'1,338',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.4s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.8%',icon:Target,color:'#E65100'}];
+  const stats = [{label:'Tasks',value:'1,338',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.4s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.8%',icon:Target,color:'#E65100'}];
   const capabilities = ['Prospecting','Qualification','Demo/Presentation','Negotiation','Closing','Account Management'];
   const responsibilities = ['Lead prospecting & outreach','Lead qualification & scoring','Product demonstrations & presentations','Deal negotiation & proposal delivery','Deal closing & contract execution','Account management & growth'];
-  const activities = [{time:'3 min ago',text:'Prospected 50 new leads',icon:CheckCircle2},{time:'6 min ago',text:'Closed 4 deals totaling $180K',icon:Clock},{time:'9 min ago',text:'Managed 25 active accounts',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Prospected 50 new leads',icon: CircleCheckBig},{time:'6 min ago',text:'Closed 4 deals totaling $180K',icon:Clock},{time:'9 min ago',text:'Managed 25 active accounts',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

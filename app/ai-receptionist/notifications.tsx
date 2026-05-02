@@ -17,8 +17,8 @@ import {
   Mail,
   MessageSquare,
   Clock,
-  CheckCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleAlert,
   Info,
   Settings,
   Trash2,
@@ -87,7 +87,7 @@ export default function ReceptionistNotificationsScreen() {
       case 'message':
         return MessageSquare;
       case 'alert':
-        return AlertCircle;
+        return CircleAlert;
       case 'info':
         return Info;
       default:
@@ -219,7 +219,7 @@ export default function ReceptionistNotificationsScreen() {
 
               <View style={styles.settingRow}>
                 <View style={styles.settingLeft}>
-                  <AlertCircle size={20} color="#FF3B30" />
+                  <CircleAlert size={20} color="#FF3B30" />
                   <Text style={[styles.settingLabel, { color: theme.colors.text }]}>Alerts</Text>
                 </View>
                 <Switch

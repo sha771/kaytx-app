@@ -19,7 +19,6 @@ import {
   Pause,
   Save,
   Trash2,
-  Bot,
   Settings,
   Check,
   X,
@@ -31,6 +30,7 @@ import {
   Bell,
   MessageSquare,
   Database,
+  User,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInUp } from 'react-native-reanimated';
@@ -380,7 +380,7 @@ export default function WorkflowBuilderScreen() {
             <Text style={[styles.statLabel, { color: colors.text + '60' }]}>Active</Text>
           </View>
           <View style={[styles.statCard, { backgroundColor: '#8B5CF6' + '15' }]}>
-            <Bot size={20} color="#8B5CF6" />
+            <User size={20} color="#8B5CF6" />
             <Text style={[styles.statValue, { color: '#8B5CF6' }]}>
               {workflows.reduce((acc, w) => acc + w.steps.length, 0)}
             </Text>

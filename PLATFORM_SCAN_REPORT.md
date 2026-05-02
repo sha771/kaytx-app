@@ -139,4 +139,53 @@ The full `tsconfig.json` typecheck times out (>5 min) due to the project's size 
 
 ---
 
+## 7. Follow-Up Scan - 2026-04-29
+
+### Dependency & Security Audit
+| Metric | Value |
+|--------|-------|
+| npm install status | PASS |
+| Backend typecheck (`tsconfig.server.json`) | PASS |
+| Vulnerabilities (moderate) | 17 (mostly Expo transitive deps) |
+| `uuid` package | Moderate CVE - requires review |
+| `jaeger-client` (via `@opentelemetry/exporter-jaeger`) | Moderate CVE |
+| `postcss` | Moderate CVE (CWE-79) |
+| Frontend typecheck (`tsconfig.json`) | In progress (project too large for single pass) |
+| Jest test files discovered | 175 |
+
+### Code Quality Scan Results
+| Issue | Count | Files |
+|-------|-------|-------|
+| `as any` type casts (app/) | 61 (was 163, removed 102) | 52 files |
+| `as any` type casts (backend/) | 1185 | backend services |
+| `console.log` (backend, non-test) | 167 | redirected via `replaceConsoleLog()` |
+| `console.log/warn/error` (frontend) | 153 | 53 files |
+| TODO/FIXME/HACK markers (frontend) | 39 | 29 files |
+| TODO/FIXME/HACK markers (backend) | 33 | 9 files |
+
+### Fixes Applied (2026-04-29 Session 2)
+1. **`as any` removal (app/):** 102 casts removed via proper typing:
+   - `router.push(... as any)` → `router.push(...)` (22 files, 43 casts)
+   - `setCategory(cat as any)` → `([...as const].map(cat => setCategory(cat))` (1 file)
+   - `setSelectedFilter(filter as any)` → `([...as const].map(filter => setSelectedFilter(filter))` (1 file)
+   - `width: '...' as any` → removed `as any` from style strings (6 trading files)
+   - `toggleWebhookStatus(... as any)` → proper union type assertions (2 files)
+   - `ActivityEvent` type introduced for `smart-task-automation.tsx` (4 casts)
+   - AgentShell/EnhancedAgentShell/EnterpriseAgentShell: `Partial<AIEmployee>` with required core fields (51 casts)
+2. **Console.log redirect:** Added `replaceConsoleLog('HonoServer')` in `backend/hono.ts` - all 167 backend console.log calls now redirected to structured logger at runtime
+3. **Jest config fix:** Added `moduleNameMapper` entries for 8 missing `@opentelemetry/*` packages in `jest.config.js`
+4. **Lucide mock fix:** Updated `__mocks__/lucide-react-native.tsx` to accept `size`/`color` props + added missing `Filter` export
+5. **.env.example:** Fixed duplicate WhatsApp section, updated API versions (WhatsApp v21.0, Stripe 2025-04-30)
+6. **app.json:** Enabled `typedRoutes`, updated scheme to `kaytx`
+7. **eas.json:** Updated CLI version to >= 15.0.0
+
+### Recommendations
+1. **Security:** Monitor Expo ecosystem for patched releases addressing `@expo/config` and `expo-constants` transitive vulnerabilities
+2. **Type Safety:** Continue replacing `as any` casts in backend (1185 remaining) - prioritize service files
+3. **Logging:** All backend console.log now redirected; consider direct logger calls for new code
+4. **Node.js:** Upgrade from v22.11.0 to v22.12.0+ to satisfy engine requirements of newer packages
+5. **Cleanup:** Address TODO/FIXME markers (72 total across frontend and backend)
+6. **Testing:** Jest tests need OpenTelemetry mocks resolved; test suite runs but some suites timeout
+
 *Report generated 2026-04-02 after full platform scan and error resolution*
+*Updated 2026-04-29 with dependency audit, code quality scan, and fix session 2*

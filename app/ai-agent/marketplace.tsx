@@ -12,12 +12,11 @@ import {
   ChevronLeft,
   Store,
   Search,
-  Filter,
+  ListFilter,
   Star,
   Download,
   Users,
   Zap,
-  Bot,
   Brain,
   MessageSquare,
   Target,
@@ -27,6 +26,7 @@ import {
   Clock,
   Grid3X3,
   List,
+  User,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInUp } from 'react-native-reanimated';
@@ -245,7 +245,7 @@ export default function AgentMarketplaceScreen() {
             onChangeText={setSearchQuery}
           />
           <TouchableOpacity style={styles.filterBtn}>
-            <Filter size={20} color={colors.text + '60'} />
+            <ListFilter size={20} color={colors.text + '60'} />
           </TouchableOpacity>
         </View>
 
@@ -337,7 +337,7 @@ export default function AgentMarketplaceScreen() {
                     <Text style={[styles.installText, { color: colors.text + '60' }]}>{template.installTime}</Text>
                   </View>
                   <View style={styles.installDetail}>
-                    <Bot size={14} color={colors.text + '40'} />
+                    <User size={14} color={colors.text + '40'} />
                     <Text style={[styles.installText, { color: colors.text + '60' }]}>{template.model}</Text>
                   </View>
                 </View>

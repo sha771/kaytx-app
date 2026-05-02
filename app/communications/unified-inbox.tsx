@@ -19,14 +19,14 @@ import {
   Twitter,
   Facebook,
   Search,
-  Filter,
+  ListFilter,
   Archive,
   Star,
-  MoreVertical,
+  EllipsisVertical,
   ArrowLeft,
-  CheckCircle,
+  CircleCheck,
   Clock,
-  AlertCircle,
+  CircleAlert,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
@@ -145,10 +145,10 @@ export default function UnifiedInboxScreen() {
 
   const getPriorityIcon = (priority: string) => {
     switch (priority) {
-      case 'high': return AlertCircle;
+      case 'high': return CircleAlert;
       case 'medium': return Clock;
-      case 'low': return CheckCircle;
-      default: return CheckCircle;
+      case 'low': return CircleCheck;
+      default: return CircleCheck;
     }
   };
 
@@ -207,7 +207,7 @@ export default function UnifiedInboxScreen() {
                 )}
               </View>
               <TouchableOpacity>
-                <MoreVertical size={16} color={theme.colors.secondaryText} />
+                <EllipsisVertical size={16} color={theme.colors.secondaryText} />
               </TouchableOpacity>
             </View>
           </View>
@@ -226,7 +226,7 @@ export default function UnifiedInboxScreen() {
         <Text style={[styles.title, { color: theme.colors.text }]}>Unified Inbox</Text>
         <View style={styles.headerActions}>
           <TouchableOpacity style={styles.headerButton}>
-            <Filter size={20} color={theme.colors.text} />
+            <ListFilter size={20} color={theme.colors.text} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerButton}>
             <Archive size={20} color={theme.colors.text} />
@@ -251,24 +251,24 @@ export default function UnifiedInboxScreen() {
       {/* Filters */}
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filtersContainer}>
         <View style={styles.filters}>
-          {(['all', 'unread', 'starred', 'high'] as const).map((filter) => (
+          {(['all', 'unread', 'starred', 'high'] as const).map((Filter) => (
             <TouchableOpacity
-              key={filter}
+              key={Filter}
               style={[
                 styles.filterChip,
-                selectedFilter === filter && { backgroundColor: theme.colors.primary },
+                selectedFilter === Filter && { backgroundColor: theme.colors.primary },
               ]}
-              onPress={() => setSelectedFilter(filter)}
+              onPress={() => setSelectedFilter(Filter)}
             >
               <Text
                 style={[
                   styles.filterText,
                   {
-                    color: selectedFilter === filter ? 'white' : theme.colors.secondaryText,
+                    color: selectedFilter === Filter ? 'white' : theme.colors.secondaryText,
                   },
                 ]}
               >
-                {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                {Filter.charAt(0).toUpperCase() + Filter.slice(1)}
               </Text>
             </TouchableOpacity>
           ))}

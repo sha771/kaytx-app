@@ -1,19 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { CheckCircle2, Activity, Star, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { CircleCheckBig, Activity, Star, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'2,346',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.2s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.1%',icon:Target,color:'#0277BD'}];
+  const stats = [{label:'Tasks',value:'2,346',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.2s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.1%',icon:Target,color:'#0277BD'}];
   const capabilities = ['Trade Settlement','Clearing','Reconciliation','Corporate Actions','Fail Management','Regulatory Reporting'];
   const responsibilities = ['Trade settlement processing & monitoring','Clearing & settlement coordination','Position reconciliation & break resolution','Corporate action processing','Settlement fail management','Post-trade regulatory reporting'];
-  const activities = [{time:'3 min ago',text:'Settled 2,400 trades T+1',icon:CheckCircle2},{time:'6 min ago',text:'Resolved 15 reconciliation breaks',icon:Clock},{time:'9 min ago',text:'Processed dividend payments',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Settled 2,400 trades T+1',icon: CircleCheckBig},{time:'6 min ago',text:'Resolved 15 reconciliation breaks',icon:Clock},{time:'9 min ago',text:'Processed dividend payments',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#0277BD20' }]}><CheckCircle2 size={48} color="#0277BD" /></View>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#0277BD20' }]}><CircleCheckBig size={48} color="#0277BD" /></View>
         <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Settlement Specialist</Text>
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Post-Trade Operations</Text>
         <View style={styles.badgesRow}>

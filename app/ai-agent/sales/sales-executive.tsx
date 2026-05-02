@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Briefcase, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Briefcase, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'3,405',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.0s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.2%',icon:Target,color:'#E65100'}];
+  const stats = [{label:'Tasks',value:'3,405',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.0s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.2%',icon:Target,color:'#E65100'}];
   const capabilities = ['Enterprise Sales','Account Strategy','Negotiation','Pipeline Mgmt','C-Suite Selling','Revenue Target'];
   const responsibilities = ['Enterprise account strategy & development','C-suite relationship building','Complex deal negotiation','Pipeline management & forecasting','Revenue target achievement','Strategic account planning'];
-  const activities = [{time:'3 min ago',text:'Closed $2.5M enterprise deal',icon:CheckCircle2},{time:'6 min ago',text:'Presented to Fortune 500 CIO',icon:Clock},{time:'9 min ago',text:'Managed pipeline of $15M',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Closed $2.5M enterprise deal',icon: CircleCheckBig},{time:'6 min ago',text:'Presented to Fortune 500 CIO',icon:Clock},{time:'9 min ago',text:'Managed pipeline of $15M',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

@@ -15,13 +15,13 @@ import {
     Brain,
     Zap,
     Settings,
-    MoreVertical,
-    BarChart3,
+    EllipsisVertical,
+    ChartBar,
     Target,
     DollarSign,
-    CheckCircle,
+    CircleCheck,
     Timer,
-    LineChart,
+    ChartLine,
     Eye,
     RefreshCw,
     Shield,
@@ -32,8 +32,10 @@ import { AIEmployee } from '@/constants/aiEmployees';
 
 // const { width } = Dimensions.get('window'); // unused
 
+type AgentInput = Partial<AIEmployee> & Pick<AIEmployee, 'id' | 'name' | 'title' | 'description' | 'capabilities'>;
+
 interface EnhancedAgentShellProps {
-    agent: AIEmployee;
+    agent: AgentInput;
     customTabs?: {
         id: string;
         label: string;
@@ -140,7 +142,7 @@ export const EnhancedAgentShell: React.FC<EnhancedAgentShellProps> = ({ agent, c
 
     const tabs = [
         { id: 'overview', label: 'Overview', icon: Eye },
-        { id: 'analytics', label: 'Analytics', icon: BarChart3 },
+        { id: 'analytics', label: 'Analytics', icon: ChartBar },
         { id: 'performance', label: 'Performance', icon: TrendingUp },
         { id: 'capabilities', label: 'Capabilities', icon: Brain },
         { id: 'activity', label: 'Live Activity', icon: Activity },
@@ -208,7 +210,7 @@ export const EnhancedAgentShell: React.FC<EnhancedAgentShellProps> = ({ agent, c
                         <Text style={[styles.quickStatLabel, { color: theme.colors.secondaryText }]}>Total Tasks</Text>
                     </View>
                     <View style={[styles.quickStatCard, { backgroundColor: theme.colors.cardBackground }]}>
-                        <CheckCircle size={20} color="#34C759" />
+                        <CircleCheck size={20} color="#34C759" />
                         <Text style={[styles.quickStatValue, { color: theme.colors.text }]}>{analytics.successRate.toFixed(1)}%</Text>
                         <Text style={[styles.quickStatLabel, { color: theme.colors.secondaryText }]}>Success Rate</Text>
                     </View>
@@ -405,7 +407,7 @@ export const EnhancedAgentShell: React.FC<EnhancedAgentShellProps> = ({ agent, c
                         {(counselingSessions || []).slice(0, 10).map((s: any) => (
                             <View key={s.id} style={[styles.historyItem, { borderBottomColor: theme.colors.border }]}>
                                 <View style={styles.historyLeft}>
-                                    <CheckCircle size={16} color={agent.color} />
+                                    <CircleCheck size={16} color={agent.color} />
                                     <View style={{ flex: 1 }}>
                                         <Text style={[styles.historyTask, { color: theme.colors.text }]} numberOfLines={1}>
                                             {s?.requests?.[0]?.topic || 'Counseling Session'}
@@ -438,7 +440,7 @@ export const EnhancedAgentShell: React.FC<EnhancedAgentShellProps> = ({ agent, c
                     {/* Performance Metrics */}
                     <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
                         <View style={styles.sectionHeader}>
-                            <BarChart3 size={24} color={agent.color} />
+                            <ChartBarBig size={24} color={agent.color} />
                             <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Performance Metrics</Text>
                         </View>
                         <View style={styles.metricsGrid}>
@@ -464,7 +466,7 @@ export const EnhancedAgentShell: React.FC<EnhancedAgentShellProps> = ({ agent, c
                     {/* Activity Chart */}
                     <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
                         <View style={styles.sectionHeader}>
-                            <LineChart size={24} color={agent.color} />
+                            <ChartLine size={24} color={agent.color} />
                             <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>7-Day Activity Trend</Text>
                         </View>
                         <View style={styles.chartContainer}>
@@ -589,7 +591,7 @@ export const EnhancedAgentShell: React.FC<EnhancedAgentShellProps> = ({ agent, c
                         {customActions}
                         <Switch value={isActive} onValueChange={setIsActive} />
                         <TouchableOpacity style={styles.headerBtn}>
-                            <MoreVertical size={24} color="#fff" />
+                            <EllipsisVertical size={24} color="#fff" />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -681,7 +683,7 @@ export const EnhancedAgentShell: React.FC<EnhancedAgentShellProps> = ({ agent, c
                                 {agent.capabilities.map((cap, i) => (
                                     <View key={i} style={styles.capabilityItem}>
                                         <View style={[styles.capIcon, { backgroundColor: agent.color + '15' }]}>
-                                            <CheckCircle size={14} color={agent.color} />
+                                            <CircleCheck size={14} color={agent.color} />
                                         </View>
                                         <Text style={[styles.capText, { color: theme.colors.text }]}>{cap}</Text>
                                     </View>

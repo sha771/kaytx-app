@@ -20,15 +20,15 @@ import {
   Calendar,
   Plus,
   Search,
-  Edit,
+  Pencil,
   Download,
   Share2,
   Mic,
   Play,
   Pause,
   Volume2,
-  CheckCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleAlert,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
@@ -133,9 +133,9 @@ export default function CallSummaryNoteScreen() {
 
   const getStatusIcon = (status: CallSummary['status']) => {
     switch (status) {
-      case 'completed': return CheckCircle;
+      case 'completed': return CircleCheck;
       case 'processing': return Clock;
-      case 'failed': return AlertCircle;
+      case 'failed': return CircleAlert;
       default: return Clock;
     }
   };
@@ -270,7 +270,7 @@ export default function CallSummaryNoteScreen() {
 
       <View style={styles.noteActions}>
         <TouchableOpacity style={styles.actionButton}>
-          <Edit size={16} color={theme.colors.primary} />
+          <Pencil size={16} color={theme.colors.primary} />
           <Text style={[styles.actionText, { color: theme.colors.primary }]}>Edit</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.actionButton}>

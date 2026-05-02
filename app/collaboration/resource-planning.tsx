@@ -1,4 +1,4 @@
- 
+﻿ 
 import React, { useState } from 'react';
 import {
     View,
@@ -13,9 +13,9 @@ import {
     Users,
     Calendar,
     Clock,
-    CheckSquare,
-    AlertCircle,
-    BarChart,
+    SquareCheck,
+    CircleAlert,
+    ChartBar,
     ChevronRight,
     UserPlus
 } from 'lucide-react-native';
@@ -80,7 +80,7 @@ export default function ResourcePlanningScreen() {
                 </TouchableOpacity>
 
                 <View style={[styles.warningCard, { backgroundColor: '#FF3B3010', borderColor: '#FF3B3040' }]}>
-                    <AlertCircle size={20} color="#FF3B30" />
+                    <CircleAlert size={20} color="#FF3B30" />
                     <Text style={[styles.warningText, { color: theme.colors.text }]}>
                         Marketing PR team is at 95% capacity. Delay in Q3 campaigns expected if no resources added.
                     </Text>

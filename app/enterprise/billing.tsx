@@ -14,8 +14,8 @@ import {
   CreditCard,
   Download,
   Calendar,
-  CheckCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleAlert,
   Clock,
   Receipt,
   Package,
@@ -190,13 +190,13 @@ export default function BillingScreen() {
     switch (status) {
       case 'paid':
       case 'active':
-        return CheckCircle;
+        return CircleCheck;
       case 'pending':
       case 'trial':
         return Clock;
       case 'overdue':
       case 'past_due':
-        return AlertCircle;
+        return CircleAlert;
       default:
         return Receipt;
     }
@@ -243,7 +243,7 @@ export default function BillingScreen() {
           <Text style={[styles.featuresTitle, { color: theme.colors.text }]}>Included Features</Text>
           {activeSubscription.features.map((feature, index) => (
             <View key={index} style={styles.featureRow}>
-              <CheckCircle size={16} color={theme.colors.primary} />
+              <CircleCheck size={16} color={theme.colors.primary} />
               <Text style={[styles.featureText, { color: theme.colors.text }]}>{feature}</Text>
             </View>
           ))}

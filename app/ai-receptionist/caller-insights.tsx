@@ -14,7 +14,7 @@ import { Stack, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   Search,
-  Filter,
+  ListFilter,
   TrendingUp,
   TrendingDown,
   Users,
@@ -23,8 +23,8 @@ import {
   MapPin,
   Building,
   Award,
-  BarChart2,
-  PieChart,
+  ChartBar,
+  ChartPie,
   Activity,
   Lock,
 } from 'lucide-react-native';
@@ -122,24 +122,24 @@ export default function CallerInsightsScreen() {
                 showsHorizontalScrollIndicator={false}
                 style={styles.filterContainer}
               >
-                {['all', 'positive', 'neutral', 'negative'].map((filter) => (
+                {['all', 'positive', 'neutral', 'negative'].map((Filter) => (
                   <TouchableOpacity
-                    key={filter}
+                    key={Filter}
                     style={[
                       styles.filterChip,
                       { backgroundColor: theme.colors.cardBackground },
-                      filterType === filter && { backgroundColor: theme.colors.primary },
+                      filterType === Filter && { backgroundColor: theme.colors.primary },
                     ]}
-                    onPress={() => setFilterType(filter as typeof filterType)}
+                    onPress={() => setFilterType(Filter as typeof filterType)}
                   >
                     <Text
                       style={[
                         styles.filterChipText,
                         { color: theme.colors.secondaryText },
-                        filterType === filter && { color: '#FFFFFF' },
+                        filterType === Filter && { color: '#FFFFFF' },
                       ]}
                     >
-                      {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                      {Filter.charAt(0).toUpperCase() + Filter.slice(1)}
                     </Text>
                   </TouchableOpacity>
                 ))}

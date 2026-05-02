@@ -28,16 +28,16 @@ export class AuditService {
     return newEvent;
   }
 
-  async getEvents(filter?: { userId?: string; organizationId?: string; action?: string }): Promise<AuditEvent[]> {
+  async getEvents(Filter?: { userId?: string; organizationId?: string; action?: string }): Promise<AuditEvent[]> {
     let filtered = this.events;
-    if (filter?.userId) {
-      filtered = filtered.filter(e => e.userId === filter.userId);
+    if (Filter?.userId) {
+      filtered = filtered.filter(e => e.userId === Filter.userId);
     }
-    if (filter?.organizationId) {
-      filtered = filtered.filter(e => e.organizationId === filter.organizationId);
+    if (Filter?.organizationId) {
+      filtered = filtered.filter(e => e.organizationId === Filter.organizationId);
     }
-    if (filter?.action) {
-      filtered = filtered.filter(e => e.action === filter.action);
+    if (Filter?.action) {
+      filtered = filtered.filter(e => e.action === Filter.action);
     }
     return filtered.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
   }

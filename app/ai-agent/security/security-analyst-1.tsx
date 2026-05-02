@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Eye, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, AlertTriangle, Zap } from 'lucide-react-native';
+import { Eye, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, TriangleAlert, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Events/Day',value:'50K+',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.3s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.7%',icon:Target,color:'#581C84'}];
+  const stats = [{label:'Events/Day',value:'50K+',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.3s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.7%',icon:Target,color:'#581C84'}];
   const capabilities = ['Threat Analysis','SIEM','Log Review','Malware Analysis','Threat Intel','Hunting'];
   const responsibilities = ['Security event monitoring & analysis','Threat intelligence gathering & correlation','Log review & anomaly detection','Malware analysis & classification','Threat hunting & proactive detection','Security alert triage & escalation'];
-  const activities = [{time:'3 min ago',text:'Analyzed 5K security events',icon:Eye},{time:'20 min ago',text:'Identified APT29 indicators',icon:AlertTriangle},{time:'1 hour ago',text:'Updated threat intel feed',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Analyzed 5K security events',icon:Eye},{time:'20 min ago',text:'Identified APT29 indicators',icon:TriangleAlert},{time:'1 hour ago',text:'Updated threat intel feed',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

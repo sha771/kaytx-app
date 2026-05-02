@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, Alert, Re
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { 
-  ArrowLeft, Shield, CheckCircle, XCircle, Clock, FileText, 
+  ArrowLeft, Shield, CircleCheck, CircleX, Clock, FileText, 
   Download, Eye, Settings, Info, ChevronRight 
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
@@ -176,9 +176,9 @@ export default function ConsentManagementScreen() {
                   <View style={styles.consentStatus}>
                     <View style={styles.statusContainer}>
                       {isGranted ? (
-                        <CheckCircle size={16} color={theme.colors.success} />
+                        <CircleCheck size={16} color={theme.colors.success} />
                       ) : (
-                        <XCircle size={16} color={theme.colors.error} />
+                        <CircleX size={16} color={theme.colors.error} />
                       )}
                       <Text style={[
                         styles.statusText, 

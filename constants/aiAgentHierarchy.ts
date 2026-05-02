@@ -6,7 +6,7 @@
 import type { AIEmployee } from './aiEmployeesEnhanced';
 import { enhanceAllAIAgents } from './utils/agent-capability-enhancer';
 import {
-  Settings, Zap, MessagesSquare, Target, Megaphone, Crown, Shield,
+  Settings, Zap, MessagesSquare, Target, Megaphone, Crown, Shield, ChartBar,
 } from 'lucide-react-native';
 import {
   allPrivacyAgents,
@@ -33,6 +33,7 @@ export {
   customerExperienceSubAgents,
   salesRevenueSubAgents,
   marketingGrowthSubAgents,
+  customerInsightsAnalyticsSubAgents,
 } from './aiEmployeesEnhanced';
 
 // ============================================
@@ -42,6 +43,7 @@ export const accountingFinanceSubAgents: AIAgent[] = [];
 export const operationsManagementSubAgents: AIAgent[] = [];
 export const dataIntelligenceSubAgents: AIAgent[] = [];
 export const analysisInsightsPerformanceSubAgents: AIAgent[] = [];
+export const customerInsightsAnalyticsPlaceholder: AIAgent[] = [];
 export const mainAgents: AIAgent[] = [];
 
 // ============================================
@@ -51,6 +53,7 @@ import {
   customerExperienceSubAgents as cxAgents,
   salesRevenueSubAgents as salesAgents,
   marketingGrowthSubAgents as marketingAgents,
+  customerInsightsAnalyticsSubAgents as ciaAgents,
 } from './aiEmployeesEnhanced';
 
 export const allSubAgents: AIAgent[] = [
@@ -60,6 +63,7 @@ export const allSubAgents: AIAgent[] = [
   ...operationsManagementSubAgents,
   ...dataIntelligenceSubAgents,
   ...analysisInsightsPerformanceSubAgents,
+  ...ciaAgents,
 ];
 
 export const allMainAgents: AIAgent[] = mainAgents;
@@ -81,6 +85,7 @@ export const agentCategories = [
   { id: 'data-intelligence', label: 'Data & Intelligence AI', icon: Zap, color: '#AF52DE' },
   { id: 'analysis-insights-performance', label: 'Analysis, Insights & Performance AI', icon: Crown, color: '#FFD700' },
   { id: 'privacy-security', label: 'Privacy & Security AI', icon: Shield, color: '#FF5252' },
+  { id: 'customer-insights-analytics', label: 'Customer Insights & Analytics AI', icon: ChartBar, color: '#6366F1' },
 ];
 
 // ============================================
@@ -152,7 +157,7 @@ export const getAgentsWithConsultingCapability = (): AIAgent[] => {
 export const getPrivacyAgentsByGate = (gate: 'input' | 'agent' | 'output'): AIAgent[] => {
   const gateMap: Record<string, string[]> = {
     input: ['privacy-data-classifier','privacy-purpose-validator','privacy-access-controller'],
-    agent: ['privacy-data-masker','privacy-context-filter','privacy-permission-enforcer'],
+    agent: ['privacy-data-masker','privacy-context-Filter','privacy-permission-enforcer'],
     output: ['privacy-output-sanitizer','privacy-compliance-checker','privacy-audit-logger'],
   };
   return privacyAgents.filter(agent => gateMap[gate]?.includes(agent.id));

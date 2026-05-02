@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { DollarSign, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { DollarSign, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'1,499',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.8s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.1%',icon:Target,color:'#E65100'}];
+  const stats = [{label:'Tasks',value:'1,499',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.8s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.1%',icon:Target,color:'#E65100'}];
   const capabilities = ['Revenue Strategy','Forecasting','Pricing Strategy','Sales/Marketing Alignment','Analytics','Growth Planning'];
   const responsibilities = ['Revenue strategy & planning','Revenue forecasting & modeling','Pricing strategy oversight','Sales & marketing alignment','Revenue analytics & insights','Growth planning & execution'];
-  const activities = [{time:'3 min ago',text:'Set Q3 revenue targets',icon:CheckCircle2},{time:'6 min ago',text:'Reviewed revenue forecast accuracy',icon:Clock},{time:'9 min ago',text:'Aligned sales & marketing on Q3 plan',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Set Q3 revenue targets',icon: CircleCheckBig},{time:'6 min ago',text:'Reviewed revenue forecast accuracy',icon:Clock},{time:'9 min ago',text:'Aligned sales & marketing on Q3 plan',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

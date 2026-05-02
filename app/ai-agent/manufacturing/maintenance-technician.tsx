@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Wrench, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Wrench, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'4,360',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.7s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.7%',icon:Target,color:'#BF360C'}];
+  const stats = [{label:'Tasks',value:'4,360',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.7s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.7%',icon:Target,color:'#BF360C'}];
   const capabilities = ['Preventive Maintenance','Equipment Repair','Diagnostics','Calibration','Safety Compliance','CMMS'];
   const responsibilities = ['Preventive maintenance scheduling & execution','Equipment repair & troubleshooting','Predictive diagnostics & monitoring','Equipment calibration & certification','Maintenance safety compliance','CMMS data entry & work order management'];
-  const activities = [{time:'3 min ago',text:'Completed 15 PM work orders',icon:CheckCircle2},{time:'6 min ago',text:'Diagnosed CNC machine fault',icon:Clock},{time:'9 min ago',text:'Updated equipment maintenance logs',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Completed 15 PM work orders',icon: CircleCheckBig},{time:'6 min ago',text:'Diagnosed CNC machine fault',icon:Clock},{time:'9 min ago',text:'Updated equipment maintenance logs',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

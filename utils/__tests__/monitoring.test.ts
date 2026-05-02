@@ -16,7 +16,7 @@ describe('Monitoring Service', () => {
       expect(events.length).toBe(4);
     });
 
-    it('should filter events by level', () => {
+    it('should Filter events by level', () => {
       monitoring.debug('test', 'Debug');
       monitoring.error('test', 'Error');
       
@@ -25,7 +25,7 @@ describe('Monitoring Service', () => {
       expect(errors[0]!.level).toBe(MonitoringLevel.ERROR);
     });
 
-    it('should filter events by category', () => {
+    it('should Filter events by category', () => {
       monitoring.info('auth', 'Login');
       monitoring.info('api', 'API call');
       

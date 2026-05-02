@@ -15,16 +15,15 @@ import {
   ThumbsUp,
   ThumbsDown,
   Send,
-  Filter,
+  ListFilter,
   Search,
-  MoreVertical,
-  CheckCircle,
-  AlertCircle,
+  EllipsisVertical,
+  CircleCheck,
+  CircleAlert,
   Clock,
   User,
-  Bot,
   TrendingUp,
-  BarChart3,
+  ChartBar,
   Flag,
   Lightbulb,
   ChevronRight,
@@ -126,7 +125,7 @@ const TYPE_CONFIG = {
   rating: { icon: Star, color: '#F59E0B', label: 'Rating' },
   comment: { icon: MessageSquare, color: '#3B82F6', label: 'Comment' },
   suggestion: { icon: Lightbulb, color: '#10B981', label: 'Suggestion' },
-  bug: { icon: AlertCircle, color: '#EF4444', label: 'Bug Report' },
+  bug: { icon: CircleAlert, color: '#EF4444', label: 'Bug Report' },
 };
 
 const STATUS_COLORS = {
@@ -264,7 +263,7 @@ export default function AgentFeedbackScreen() {
 
             <View style={styles.quickActions}>
               <TouchableOpacity style={[styles.quickAction, { backgroundColor: '#10B981' + '15' }]}>
-                <CheckCircle size={16} color="#10B981" />
+                <CircleCheck size={16} color="#10B981" />
                 <Text style={[styles.quickActionText, { color: '#10B981' }]}>
                   Mark Resolved
                 </Text>
@@ -276,7 +275,7 @@ export default function AgentFeedbackScreen() {
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.quickAction, { backgroundColor: '#EF4444' + '15' }]}>
-                <AlertCircle size={16} color="#EF4444" />
+                <CircleAlert size={16} color="#EF4444" />
                 <Text style={[styles.quickActionText, { color: '#EF4444' }]}>
                   Escalate
                 </Text>
@@ -306,7 +305,7 @@ export default function AgentFeedbackScreen() {
           </View>
         </View>
         <TouchableOpacity>
-          <BarChart3 size={24} color={colors.text} />
+          <ChartBarBig size={24} color={colors.text} />
         </TouchableOpacity>
       </View>
 
@@ -335,7 +334,7 @@ export default function AgentFeedbackScreen() {
         </View>
         <View style={[styles.statCard, { backgroundColor: '#EF4444' + '10' }]}>
           <View style={[styles.statIcon, { backgroundColor: '#EF4444' + '15' }]}>
-            <AlertCircle size={20} color="#EF4444" />
+            <CircleAlert size={20} color="#EF4444" />
           </View>
           <Text style={[styles.statValue, { color: '#EF4444' }]}>{stats.pendingIssues}</Text>
           <Text style={[styles.statLabel, { color: colors.icon }]}>Pending</Text>
@@ -366,7 +365,7 @@ export default function AgentFeedbackScreen() {
           style={[styles.tab, activeTab === 'issues' && { backgroundColor: colors.tint }]}
           onPress={() => setActiveTab('issues')}
         >
-          <AlertCircle size={16} color={activeTab === 'issues' ? 'white' : colors.icon} />
+          <CircleAlert size={16} color={activeTab === 'issues' ? 'white' : colors.icon} />
           <Text style={[styles.tabText, { color: activeTab === 'issues' ? 'white' : colors.text }]}>
             Issues
           </Text>

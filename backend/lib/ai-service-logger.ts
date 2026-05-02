@@ -54,9 +54,9 @@ export class AIServiceLogger {
    * Initialize logger and start flush timer
    */
   static initialize() {
-    const timer = setInterval(() => this.flush(), this.FLUSH_INTERVAL);
+    const timer: ReturnType<typeof setInterval> = setInterval(() => this.flush(), this.FLUSH_INTERVAL);
     // Avoid keeping the process alive in unit tests / short-lived CLI runs
-    timer.unref?.();
+    (timer as unknown as NodeJS.Timeout).unref?.();
     loggerInstance.info("[AIServiceLogger] Initialized with structured logging");
   }
 

@@ -10,17 +10,16 @@ import {
 import { useRouter } from 'expo-router';
 import {
   ChevronLeft,
-  BarChart3,
+  ChartBar,
   Search,
   Database,
   Brain,
   Mic,
   User,
   Zap,
-  Bot,
-  PieChart,
+  ChartPie,
   Database as DatabaseIcon,
-  LineChart,
+  ChartLine,
   Activity,
   Network,
   Binary,
@@ -113,7 +112,7 @@ export default function DataIntelligenceAgentsScreen() {
             <ChevronLeft size={24} color={colors.text} />
           </TouchableOpacity>
           <View style={styles.titleContainer}>
-            <BarChart3 size={22} color="#9B59B6" />
+            <ChartBarBig size={22} color="#9B59B6" />
             <Text style={[styles.title, { color: colors.text }]}>Data Intelligence AI</Text>
           </View>
           <View style={{ width: 40 }} />
@@ -134,7 +133,7 @@ export default function DataIntelligenceAgentsScreen() {
 
         <View style={styles.statsRow}>
           <View style={[styles.statPill, { backgroundColor: colors.border + '30' }]}>
-            <Bot size={14} color={colors.text} />
+            <User size={14} color={colors.text} />
             <Text style={[styles.statValue, { color: colors.text }]}>{stats.total}</Text>
           </View>
           <View style={[styles.statPill, { backgroundColor: '#9B59B615' }]}>

@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { TrendingUp, Activity, CheckCircle2, Clock, Target, BarChart3, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, DollarSign, Award } from 'lucide-react-native';
+import { TrendingUp, Activity, CircleCheckBig, Clock, Target, ChartBar, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, DollarSign, Award } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function VPSalesPage() {
   const { theme } = useTheme();
 
   const stats = [
-    { label: 'Deals Closed', value: '3,847', icon: CheckCircle2, color: '#34C759' },
+    { label: 'Deals Closed', value: '3,847', icon: CircleCheckBig, color: '#34C759' },
     { label: 'Uptime', value: '99.94%', icon: Activity, color: '#007AFF' },
     { label: 'Response', value: '0.9s', icon: Clock, color: '#FF9500' },
     { label: 'Accuracy', value: '97.5%', icon: Target, color: '#AF52DE' },
@@ -32,14 +32,14 @@ export default function VPSalesPage() {
 
   const activities = [
     { time: '3 min ago', text: 'Closed enterprise deal worth $2.4M', icon: DollarSign },
-    { time: '18 min ago', text: 'Updated Q3 revenue forecast', icon: BarChart3 },
+    { time: '18 min ago', text: 'Updated Q3 revenue forecast', icon: ChartBar },
     { time: '1 hour ago', text: 'Coached 5 reps on objection handling', icon: Award },
     { time: '2 hours ago', text: 'Approved competitive pricing strategy', icon: Shield },
     { time: '5 hours ago', text: 'Launched new territory alignment', icon: Zap },
   ];
 
   const quickActions = [
-    { label: 'View Reports', icon: BarChart3 },
+    { label: 'View Reports', icon: ChartBar },
     { label: 'Team Chat', icon: MessageSquare },
     { label: 'Schedule', icon: Calendar },
     { label: 'Settings', icon: Shield },

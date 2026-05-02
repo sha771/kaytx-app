@@ -16,8 +16,8 @@ import {
   Phone,
   Calendar,
   DollarSign,
-  AlertCircle,
-  CheckCircle,
+  CircleAlert,
+  CircleCheck,
   X,
   Mail,
   MessageSquare,
@@ -63,7 +63,7 @@ export default function NotificationsScreen() {
       case 'deal':
         return <DollarSign size={20} color="#34C759" />;
       case 'system':
-        return <AlertCircle size={20} color="#FF9500" />;
+        return <CircleAlert size={20} color="#FF9500" />;
       default:
         return <Bell size={20} color="#8E8E93" />;
     }
@@ -106,12 +106,12 @@ export default function NotificationsScreen() {
               <Text style={styles.statLabel}>Total</Text>
             </View>
             <View style={[styles.statCard, { backgroundColor: '#E8F5FF' }]}>
-              <AlertCircle size={20} color="#007AFF" />
+              <CircleAlert size={20} color="#007AFF" />
               <Text style={[styles.statValue, { color: '#007AFF' }]}>{unreadCount}</Text>
               <Text style={styles.statLabel}>Unread</Text>
             </View>
             <View style={[styles.statCard, { backgroundColor: '#FFF5F0' }]}>
-              <CheckCircle size={20} color="#34C759" />
+              <CircleCheck size={20} color="#34C759" />
               <Text style={[styles.statValue, { color: '#34C759' }]}>
                 {mockNegotiationNotifications.filter((n: NegotiationNotification) => n.priority === 'high').length}
               </Text>
@@ -243,7 +243,7 @@ export default function NotificationsScreen() {
                     </TouchableOpacity>
                     {!selectedNotification.isRead && (
                       <TouchableOpacity style={styles.markReadButton}>
-                        <CheckCircle size={20} color="#FFFFFF" />
+                        <CircleCheck size={20} color="#FFFFFF" />
                         <Text style={styles.markReadButtonText}>Mark as Read</Text>
                       </TouchableOpacity>
                     )}
@@ -325,7 +325,7 @@ export default function NotificationsScreen() {
 
                 <View style={styles.settingItem}>
                   <View style={styles.settingLeft}>
-                    <AlertCircle size={20} color="#FF9500" />
+                    <CircleAlert size={20} color="#FF9500" />
                     <View style={styles.settingInfo}>
                       <Text style={styles.settingLabel}>System Notifications</Text>
                       <Text style={styles.settingDescription}>
@@ -452,7 +452,7 @@ export default function NotificationsScreen() {
               </View>
 
               <TouchableOpacity style={styles.saveSettingsButton}>
-                <CheckCircle size={20} color="#FFFFFF" />
+                <CircleCheck size={20} color="#FFFFFF" />
                 <Text style={styles.saveSettingsButtonText}>Save Settings</Text>
               </TouchableOpacity>
             </ScrollView>

@@ -10,7 +10,7 @@ import {
 import { useRouter } from 'expo-router';
 import {
   ChevronLeft,
-  BarChart3,
+  ChartBar,
   TrendingUp,
   TrendingDown,
   Activity,
@@ -18,7 +18,7 @@ import {
   Zap,
   Target,
   Users,
-  Bot,
+  User,
   Award,
   ChevronRight,
 } from 'lucide-react-native';
@@ -92,7 +92,7 @@ export default function AIAgentsAnalyticsScreen() {
             <ChevronLeft size={24} color={colors.text} />
           </TouchableOpacity>
           <View style={styles.headerTitleContainer}>
-            <BarChart3 size={22} color={colors.primary} />
+            <ChartBarBig size={22} color={colors.primary} />
             <Text style={[styles.headerTitle, { color: colors.text }]}>AI Agents Analytics</Text>
           </View>
           <View style={{ width: 40 }} />
@@ -166,7 +166,7 @@ export default function AIAgentsAnalyticsScreen() {
         {/* Tasks Completed */}
         <Animated.View entering={FadeInRight.delay(100)} style={[styles.tasksCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <View style={styles.tasksHeader}>
-            <Bot size={24} color={colors.primary} />
+            <User size={24} color={colors.primary} />
             <Text style={[styles.tasksTitle, { color: colors.text }]}>Tasks Completed</Text>
           </View>
           <Text style={[styles.tasksNumber, { color: colors.primary }]}>{totalTasksCompleted.toLocaleString()}</Text>

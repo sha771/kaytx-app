@@ -20,12 +20,12 @@
 
 import type { LucideIcon } from 'lucide-react-native';
 import {
-  // Trading & Investment Icons
+  // TrendingUp & Investment Icons
   TrendingUp,
   DollarSign,
-  BarChart3,
-  LineChart,
-  PieChart,
+  ChartBar,
+  ChartLine,
+  ChartPie,
   Activity,
   Wallet,
   CreditCard,
@@ -35,15 +35,15 @@ import {
 
   // Real Estate Icons
   Building,
-  Home,
+  House,
   Truck,
   MapPin,
 
   // Insurance Icons
   Shield,
   ShieldCheck,
-  AlertTriangle,
-  AlertCircle,
+  TriangleAlert,
+  CircleAlert,
   Scale,
   FileText,
 
@@ -64,18 +64,17 @@ import {
   Zap,
 
   // Transportation Icons
-  Truck as TruckIcon,
-  Ship,
-  PlaneIcon,
+  Truck as Truck as TruckIcon,
+  Anchor,
+  Plane as PlaneIcon,
   TrainFront,
   Navigation,
   Clock,
 
   // Government Icons
-  Building,
   FileCheck,
   ScrollText,
-  FlagIcon,
+  Flag as FlagIcon,
   Gavel,
 
   // Common Icons
@@ -168,7 +167,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
     level: 'vp_director',
     department: 'trading_investments',
     description: 'Manages trading desk operations, execution strategies, and order flow optimization. Oversees all trading activities across asset classes.',
-    icon: BarChart3,
+    icon: ChartBar,
     color: '#10B981',
     orgChart: {
       id: 'vp-trading',
@@ -217,7 +216,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
     level: 'vp_director',
     department: 'trading_investments',
     description: 'Develops strategic asset allocation, long-term portfolio construction, and investment policy. Oversees manager selection and ESG strategies.',
-    icon: PieChart,
+    icon: ChartPie,
     color: '#10B981',
     orgChart: {
       id: 'vp-investments',
@@ -363,7 +362,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
     level: 'manager',
     department: 'trading_investments',
     description: 'Monitors risk limits, enforces compliance, and manages VaR and stress testing. Oversees counterparty risk and margin management.',
-    icon: AlertTriangle,
+    icon: TriangleAlert,
     color: '#10B981',
     orgChart: {
       id: 'risk-manager-trading',
@@ -460,7 +459,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
     title: 'Crypto Trading Team Lead',
     level: 'team_lead',
     department: 'trading_investments',
-    description: 'Leads cryptocurrency market analysis, DeFi protocol trading, and blockchain analysis. Manages NFT market analysis and yield strategies.',
+    description: 'Leads cryptocurrency market analysis, DeFi protocol TrendingUp, and blockchain analysis. Manages NFT market analysis and yield strategies.',
     icon: Wallet,
     color: '#10B981',
     orgChart: {
@@ -556,8 +555,8 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
     title: 'Options & Futures Lead',
     level: 'team_lead',
     department: 'trading_investments',
-    description: 'Leads options strategies, futures trading, and volatility trading. Manages Greeks analysis and structured products.',
-    icon: LineChart,
+    description: 'Leads options strategies, futures TrendingUp, and volatility trading. Manages Greeks analysis and structured products.',
+    icon: ChartLine,
     color: '#10B981',
     orgChart: {
       id: 'derivatives-lead',
@@ -751,7 +750,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
     level: 'specialist',
     department: 'trading_investments',
     description: 'Trades options flow, implied volatility, and spread strategies. Specializes in earnings volatility plays and hedging.',
-    icon: BarChart3,
+    icon: ChartBar,
     color: '#10B981',
     orgChart: {
       id: 'options-trader',
@@ -799,7 +798,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
     level: 'specialist',
     department: 'trading_investments',
     description: 'Performs investment research, due diligence, and financial modeling. Specializes in ESG scoring and factor analysis.',
-    icon: PieChart,
+    icon: ChartPie,
     color: '#10B981',
     orgChart: {
       id: 'portfolio-analyst',
@@ -1003,7 +1002,7 @@ export const realEstatePropertyAgents: AIEmployeeProfile[] = [
     level: 'manager',
     department: 'real_estate_property',
     description: 'Manages property operations, tenant relations, and maintenance coordination. Oversees rent collection and lease enforcement.',
-    icon: Home,
+    icon: House,
     color: '#8B5CF6',
     orgChart: {
       id: 'property-manager',
@@ -1051,7 +1050,7 @@ export const realEstatePropertyAgents: AIEmployeeProfile[] = [
     level: 'manager',
     department: 'real_estate_property',
     description: 'Manages leasing operations, lease negotiations, and tenant screening. Oversees marketing of available units.',
-    icon: Home,
+    icon: House,
     color: '#8B5CF6',
     orgChart: {
       id: 'leasing-manager',
@@ -1149,7 +1148,7 @@ export const realEstatePropertyAgents: AIEmployeeProfile[] = [
     level: 'team_lead',
     department: 'real_estate_property',
     description: 'Leads residential property operations, tenant relations, and leasing for residential units.',
-    icon: Home,
+    icon: House,
     color: '#8B5CF6',
     orgChart: {
       id: 'residential-lead',
@@ -1295,7 +1294,7 @@ export const realEstatePropertyAgents: AIEmployeeProfile[] = [
     level: 'specialist',
     department: 'real_estate_property',
     description: 'Shows properties, processes applications, and negotiates lease terms. Specializes in tenant placement.',
-    icon: Home,
+    icon: House,
     color: '#8B5CF6',
     orgChart: {
       id: 'leasing-agent',
@@ -1837,7 +1836,7 @@ export const insuranceRiskAgents: AIEmployeeProfile[] = [
     level: 'team_lead',
     department: 'insurance_risk',
     description: 'Leads personal underwriting for auto, home, and life policies. Manages personal lines portfolio.',
-    icon: Home,
+    icon: House,
     color: '#F59E0B',
     orgChart: {
       id: 'personal-underwriting-lead',
@@ -1933,7 +1932,7 @@ export const insuranceRiskAgents: AIEmployeeProfile[] = [
     level: 'team_lead',
     department: 'insurance_risk',
     description: 'Leads fraud detection efforts, manages special investigation unit, and coordinates with law enforcement.',
-    icon: AlertTriangle,
+    icon: TriangleAlert,
     color: '#F59E0B',
     orgChart: {
       id: 'fraud-detection-lead',
@@ -2127,7 +2126,7 @@ export const insuranceRiskAgents: AIEmployeeProfile[] = [
     level: 'specialist',
     department: 'insurance_risk',
     description: 'Assesses risks for underwriting and claims. Provides technical risk analysis and recommendations.',
-    icon: AlertCircle,
+    icon: CircleAlert,
     color: '#F59E0B',
     orgChart: {
       id: 'risk-assessor',
@@ -3880,7 +3879,7 @@ export const transportationLogisticsAgents: AIEmployeeProfile[] = [
       'Process Management',
       'Problem Solving'
     ],
-    keyMetrics: ['Accuracy', 'On-Time Ship', 'Cost per Package', 'Damage Rate'],
+    keyMetrics: ['Accuracy', 'On-Time Boat', 'Cost per Package', 'Damage Rate'],
     humanCostEquivalent: '$70,000/year',
     aiCost: '$3,500/year',
     efficiency: '20x cost efficiency',

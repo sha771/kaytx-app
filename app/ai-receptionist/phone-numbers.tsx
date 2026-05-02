@@ -18,8 +18,8 @@ import {
   Search,
   MapPin,
   Globe,
-  CheckCircle,
-  Edit,
+  CircleCheck,
+  Pencil,
   X,
   PhoneCall,
   PhoneIncoming,
@@ -27,7 +27,7 @@ import {
   TrendingUp,
   Shield,
   Zap,
-  BarChart3,
+  ChartBar,
   Route,
   Mic,
   FileText,
@@ -242,10 +242,10 @@ export default function PhoneNumbersScreen() {
     if (statsData) {
       return [
         { title: 'Total Numbers', value: phoneNumbersList.length.toString(), icon: Phone, color: '#007AFF', bgColor: '#007AFF15' },
-        { title: 'Active Lines', value: phoneNumbersList.filter((n: PhoneNumber) => n.status === 'active').length.toString(), icon: CheckCircle, color: '#34C759', bgColor: '#34C75915' },
+        { title: 'Active Lines', value: phoneNumbersList.filter((n: PhoneNumber) => n.status === 'active').length.toString(), icon: CircleCheck, color: '#34C759', bgColor: '#34C75915' },
         { title: 'Calls Today', value: statsData.tasksToday.toString(), icon: PhoneIncoming, color: '#FF9500', bgColor: '#FF950015' },
         { title: 'WhatsApp', value: phoneNumbersList.filter((n: PhoneNumber) => n.type === 'whatsapp').length.toString(), icon: MessageCircle, color: '#25D366', bgColor: '#25D36615' },
-        { title: 'Capacity', value: `${statsData.avgHealthScore}%`, icon: BarChart3, color: '#AF52DE', bgColor: '#AF52DE15' },
+        { title: 'Capacity', value: `${statsData.avgHealthScore}%`, icon: ChartBar, color: '#AF52DE', bgColor: '#AF52DE15' },
         { title: 'Avg Response', value: '1.8s', icon: Zap, color: '#32ADE6', bgColor: '#32ADE615' },
         { title: 'Call Quality', value: `${statsData.avgSuccessRate}%`, icon: Shield, color: '#5856D6', bgColor: '#5856D615' },
         { title: 'Uptime', value: '99.9%', icon: TrendingUp, color: '#34C759', bgColor: '#34C75915' },
@@ -253,10 +253,10 @@ export default function PhoneNumbersScreen() {
     }
     return [
       { title: 'Total Numbers', value: '47', icon: Phone, color: '#007AFF', bgColor: '#007AFF15' },
-      { title: 'Active Lines', value: '42', icon: CheckCircle, color: '#34C759', bgColor: '#34C75915' },
+      { title: 'Active Lines', value: '42', icon: CircleCheck, color: '#34C759', bgColor: '#34C75915' },
       { title: 'Calls Today', value: '1,847', icon: PhoneIncoming, color: '#FF9500', bgColor: '#FF950015' },
       { title: 'WhatsApp', value: '12', icon: MessageCircle, color: '#25D366', bgColor: '#25D36615' },
-      { title: 'Capacity', value: '94%', icon: BarChart3, color: '#AF52DE', bgColor: '#AF52DE15' },
+      { title: 'Capacity', value: '94%', icon: ChartBar, color: '#AF52DE', bgColor: '#AF52DE15' },
       { title: 'Avg Response', value: '1.8s', icon: Zap, color: '#32ADE6', bgColor: '#32ADE615' },
       { title: 'Call Quality', value: '99.7%', icon: Shield, color: '#5856D6', bgColor: '#5856D615' },
       { title: 'Uptime', value: '99.9%', icon: TrendingUp, color: '#34C759', bgColor: '#34C75915' },
@@ -484,21 +484,21 @@ export default function PhoneNumbersScreen() {
         <View style={styles.filterContainer}>
           {(['all', 'active', 'inactive'] as const).map(filter => (
             <TouchableOpacity
-              key={filter}
+              key={Filter}
               style={[
                 styles.filterButton,
-                selectedFilter === filter && { backgroundColor: theme.colors.primary },
-                selectedFilter !== filter && { backgroundColor: theme.colors.cardBackground },
+                selectedFilter === Filter && { backgroundColor: theme.colors.primary },
+                selectedFilter !== Filter && { backgroundColor: theme.colors.cardBackground },
               ]}
-              onPress={() => setSelectedFilter(filter)}
+              onPress={() => setSelectedFilter(Filter)}
             >
               <Text
                 style={[
                   styles.filterText,
-                  { color: selectedFilter === filter ? 'white' : theme.colors.secondaryText },
+                  { color: selectedFilter === Filter ? 'white' : theme.colors.secondaryText },
                 ]}
               >
-                {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                {Filter.charAt(0).toUpperCase() + Filter.slice(1)}
               </Text>
             </TouchableOpacity>
           ))}
@@ -569,7 +569,7 @@ export default function PhoneNumbersScreen() {
                     </View>
                   </View>
                   <TouchableOpacity style={styles.actionButton}>
-                    <Edit size={18} color={theme.colors.secondaryText} />
+                    <Pencil size={18} color={theme.colors.secondaryText} />
                   </TouchableOpacity>
                 </View>
 
@@ -604,7 +604,7 @@ export default function PhoneNumbersScreen() {
                     <Text style={[styles.whatsappText, { color: '#25D366' }]}>
                       WhatsApp Business Verified
                     </Text>
-                    <CheckCircle size={14} color="#25D366" />
+                    <CircleCheck size={14} color="#25D366" />
                   </View>
                 )}
 
@@ -645,7 +645,7 @@ export default function PhoneNumbersScreen() {
                         key={idx}
                         style={[styles.integrationBadge, { backgroundColor: theme.colors.background }]}
                       >
-                        <CheckCircle size={10} color="#34C759" />
+                        <CircleCheck size={10} color="#34C759" />
                         <Text style={[styles.integrationText, { color: theme.colors.text }]}>
                           {integration}
                         </Text>

@@ -16,18 +16,18 @@ import {
   Upload,
   X,
   Check,
-  AlertTriangle,
+  TriangleAlert,
   Trash2,
   RefreshCw,
   Database,
   ChevronLeft,
-  Filter,
+  ListFilter,
   Search,
   Cloud,
   Clock,
-  CheckCircle,
-  XCircle,
-  Loader2,
+  CircleCheck,
+  CircleX,
+  LoaderCircle,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BlurView } from 'expo-blur';
@@ -322,12 +322,12 @@ export default function AgentDataUploadScreen() {
   const getStatusIcon = (status: UploadStatus) => {
     switch (status) {
       case 'completed':
-        return <CheckCircle size={20} color="#34C759" />;
+        return <CircleCheck size={20} color="#34C759" />;
       case 'failed':
-        return <XCircle size={20} color="#FF3B30" />;
+        return <CircleX size={20} color="#FF3B30" />;
       case 'processing':
       case 'uploading':
-        return <Loader2 size={20} color="#007AFF" />;
+        return <LoaderCircle size={20} color="#007AFF" />;
       default:
         return <Clock size={20} color="#8E8E93" />;
     }
@@ -378,7 +378,7 @@ export default function AgentDataUploadScreen() {
     return (
       <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.errorContainer}>
-          <AlertTriangle size={48} color={colors.error} />
+          <TriangleAlert size={48} color={colors.error} />
           <Text style={[styles.errorText, { color: colors.text }]}>Agent not found</Text>
           <TouchableOpacity
             style={[styles.button, { backgroundColor: colors.primary }]}
@@ -419,7 +419,7 @@ export default function AgentDataUploadScreen() {
                 onPress={() => setShowFilterModal(true)}
                 style={[styles.iconButton, { backgroundColor: colors.border + '30' }]}
               >
-                <Filter size={20} color={colors.text} />
+                <ListFilter size={20} color={colors.text} />
               </TouchableOpacity>
             )}
           </View>
@@ -433,12 +433,12 @@ export default function AgentDataUploadScreen() {
             <Text style={[styles.statLabel, { color: colors.text + '80' }]}>Total</Text>
           </Animated.View>
           <Animated.View entering={FadeInRight.delay(150)} style={[styles.statCard, { backgroundColor: '#34C75915' }]}>
-            <CheckCircle size={20} color="#34C759" />
+            <CircleCheck size={20} color="#34C759" />
             <Text style={[styles.statValue, { color: '#34C759' }]}>{stats.uploaded}</Text>
             <Text style={[styles.statLabel, { color: colors.text + '80' }]}>Processed</Text>
           </Animated.View>
           <Animated.View entering={FadeInRight.delay(200)} style={[styles.statCard, { backgroundColor: '#007AFF15' }]}>
-            <Loader2 size={20} color="#007AFF" />
+            <LoaderCircle size={20} color="#007AFF" />
             <Text style={[styles.statValue, { color: '#007AFF' }]}>{stats.processing}</Text>
             <Text style={[styles.statLabel, { color: colors.text + '80' }]}>Processing</Text>
           </Animated.View>

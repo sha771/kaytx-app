@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { 
   ArrowLeft, Shield, Lock, Download, Eye, FileText, 
-  AlertTriangle, CheckCircle, Clock, Database, UserX, Settings 
+  TriangleAlert, CircleCheck, Clock, Database, UserX, Settings 
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { trpc } from '@/lib/trpc';
@@ -97,7 +97,7 @@ export default function PrivacyDashboardScreen() {
       description: 'Your data is encrypted and secure',
       icon: Shield,
       color: theme.colors.success,
-      action: () => router.push('/security-privacy' as any),
+      action: () => router.push('/security-privacy'),
     },
     {
       id: 'privacy-settings',
@@ -105,7 +105,7 @@ export default function PrivacyDashboardScreen() {
       description: 'Manage your privacy preferences',
       icon: Settings,
       color: theme.colors.primary,
-      action: () => router.push('/security-privacy' as any),
+      action: () => router.push('/security-privacy'),
     },
     {
       id: 'data-export',
@@ -119,7 +119,7 @@ export default function PrivacyDashboardScreen() {
       id: 'breach-check',
       title: 'Breach Monitor',
       description: `${breachCheck.data?.breachesFound || 0} breaches found`,
-      icon: AlertTriangle,
+      icon: TriangleAlert,
       color: breachCheck.data?.breachesFound ? theme.colors.error : theme.colors.success,
       action: () => router.push('/privacy/breach-monitor'),
     },
@@ -209,7 +209,7 @@ export default function PrivacyDashboardScreen() {
 
         {breachCheck.data && breachCheck.data.breachesFound > 0 && (
           <View style={[styles.alertBanner, { backgroundColor: theme.colors.error + '15' }]}>
-            <AlertTriangle size={24} color={theme.colors.error} />
+            <TriangleAlert size={24} color={theme.colors.error} />
             <View style={styles.alertContent}>
               <Text style={[styles.alertTitle, { color: theme.colors.error }]}>
                 Data Breach Detected
@@ -312,7 +312,7 @@ export default function PrivacyDashboardScreen() {
 
         <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
           <View style={styles.cardHeader}>
-            <CheckCircle size={24} color={theme.colors.success} />
+            <CircleCheck size={24} color={theme.colors.success} />
             <Text style={[styles.cardHeaderTitle, { color: theme.colors.text }]}>
               GDPR Compliance
             </Text>
@@ -322,25 +322,25 @@ export default function PrivacyDashboardScreen() {
           </Text>
           <View style={styles.complianceList}>
             <View style={styles.complianceItem}>
-              <CheckCircle size={16} color={theme.colors.success} />
+              <CircleCheck size={16} color={theme.colors.success} />
               <Text style={[styles.complianceItemText, { color: theme.colors.text }]}>
                 Right to access your data
               </Text>
             </View>
             <View style={styles.complianceItem}>
-              <CheckCircle size={16} color={theme.colors.success} />
+              <CircleCheck size={16} color={theme.colors.success} />
               <Text style={[styles.complianceItemText, { color: theme.colors.text }]}>
                 Right to rectification
               </Text>
             </View>
             <View style={styles.complianceItem}>
-              <CheckCircle size={16} color={theme.colors.success} />
+              <CircleCheck size={16} color={theme.colors.success} />
               <Text style={[styles.complianceItemText, { color: theme.colors.text }]}>
                 Right to erasure
               </Text>
             </View>
             <View style={styles.complianceItem}>
-              <CheckCircle size={16} color={theme.colors.success} />
+              <CircleCheck size={16} color={theme.colors.success} />
               <Text style={[styles.complianceItemText, { color: theme.colors.text }]}>
                 Right to data portability
               </Text>

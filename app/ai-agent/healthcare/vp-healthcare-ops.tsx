@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { HeartPulse, Activity, CheckCircle2, Clock, Target, BarChart3, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star } from 'lucide-react-native';
+import { HeartPulse, Activity, CircleCheckBig, Clock, Target, ChartBar, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function VPHealthcareOpsPage() {
@@ -22,7 +22,7 @@ export default function VPHealthcareOpsPage() {
       </View>
 
       <View style={styles.statsContainer}>
-        {[{label:'Patients',value:'12,847',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.98%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.8s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.9%',icon:Target,color:'#AF52DE'}].map((stat,index)=>(
+        {[{label:'Patients',value:'12,847',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.98%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.8s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.9%',icon:Target,color:'#AF52DE'}].map((stat,index)=>(
           <View key={index} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
             <stat.icon size={22} color={stat.color} />
             <Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text>
@@ -77,7 +77,7 @@ export default function VPHealthcareOpsPage() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:BarChart3},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((action,index)=>(
+          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((action,index)=>(
             <TouchableOpacity key={index} style={[styles.actionButton, { backgroundColor: theme.colors.primary + '12' }]}>
               <action.icon size={24} color={theme.colors.primary} />
               <Text style={[styles.actionText, { color: theme.colors.primary }]}>{action.label}</Text>

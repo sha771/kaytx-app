@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { Stack } from 'expo-router';
-import { Layout, Plus, Edit2, Trash2, Copy, Eye, TrendingUp, Search } from 'lucide-react-native';
+import { LayoutDashboard, Plus, PenLine, Trash2, Copy, Eye, TrendingUp, Search } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface LandingPage {
@@ -19,7 +19,7 @@ interface LandingPage {
 export default function LandingPagesScreen() {
   const insets = useSafeAreaInsets();
   const [searchQuery, setSearchQuery] = useState('');
-  const [filter, setFilter] = useState<'all' | 'published' | 'draft'>('all');
+  const [Filter, setFilter] = useState<'all' | 'published' | 'draft'>('all');
   const [pages, setPages] = useState<LandingPage[]>([
     {
       id: '1',
@@ -77,7 +77,7 @@ export default function LandingPagesScreen() {
 
   const filteredPages = pages.filter(page => {
     const matchesSearch = page.name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesFilter = filter === 'all' || page.status === filter;
+    const matchesFilter = filter === 'all' || page.status === Filter;
     return matchesSearch && matchesFilter;
   });
 
@@ -119,7 +119,7 @@ export default function LandingPagesScreen() {
             <TouchableOpacity
               key={f}
               style={[styles.filterButton, filter === f && styles.filterButtonActive]}
-              onPress={() => setFilter(f as typeof filter)}
+              onPress={() => setFilter(f as typeof Filter)}
             >
               <Text style={[styles.filterButtonText, filter === f && styles.filterButtonTextActive]}>
                 {f.charAt(0).toUpperCase() + f.slice(1)}
@@ -141,7 +141,7 @@ export default function LandingPagesScreen() {
           <Text style={styles.statLabel}>Conversions</Text>
         </View>
         <View style={styles.statCard}>
-          <Layout size={18} color="#F59E0B" />
+          <LayoutDashboard size={18} color="#F59E0B" />
           <Text style={styles.statValue}>9.5%</Text>
           <Text style={styles.statLabel}>Avg. CVR</Text>
         </View>
@@ -154,7 +154,7 @@ export default function LandingPagesScreen() {
         {filteredPages.map((page) => (
           <View key={page.id} style={styles.pageCard}>
             <View style={styles.pagePreview}>
-              <Layout size={40} color="#374151" />
+              <LayoutDashboard size={40} color="#374151" />
             </View>
 
             <View style={styles.pageContent}>
@@ -202,7 +202,7 @@ export default function LandingPagesScreen() {
                   <Text style={styles.actionButtonText}>Preview</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.actionButton}>
-                  <Edit2 size={16} color="#10B981" />
+                  <PenLine size={16} color="#10B981" />
                   <Text style={[styles.actionButtonText, { color: '#10B981' }]}>Edit</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 

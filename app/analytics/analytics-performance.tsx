@@ -12,24 +12,24 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
-  BarChart3,
+  ChartBar,
   TrendingUp,
   Users,
   Eye,
   MousePointer,
   DollarSign,
   Calendar,
-  Filter,
+  ListFilter,
   Download,
   ArrowLeft,
-  PieChart,
-  LineChart,
+  ChartPie,
+  ChartLine,
   Activity,
   Target,
   Clock,
   Zap,
-  CheckCircle,
-  AlertTriangle,
+  CircleCheck,
+  TriangleAlert,
   ArrowUp,
   ArrowDown,
 } from 'lucide-react-native';
@@ -86,7 +86,7 @@ const analyticsMetrics: AnalyticsMetric[] = [
     value: '0',
     change: 'Clean',
     trend: 'neutral',
-    icon: AlertTriangle,
+    icon: TriangleAlert,
     color: '#FF9500',
   },
   {
@@ -182,10 +182,10 @@ export default function AnalyticsScreen() {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'ready': return CheckCircle;
+      case 'ready': return CircleCheck;
       case 'generating': return Activity;
       case 'scheduled': return Calendar;
-      default: return AlertTriangle;
+      default: return TriangleAlert;
     }
   };
 
@@ -317,7 +317,7 @@ export default function AnalyticsScreen() {
       <View style={[styles.chartCard, { backgroundColor: theme.colors.cardBackground }]}>
         <Text style={[styles.chartTitle, { color: theme.colors.text }]}>Traffic Overview</Text>
         <View style={styles.chartPlaceholder}>
-          <LineChart size={48} color={theme.colors.primary} />
+          <ChartLine size={48} color={theme.colors.primary} />
           <Text style={[styles.chartPlaceholderText, { color: theme.colors.secondaryText }]}>
             Interactive chart will be displayed here
           </Text>

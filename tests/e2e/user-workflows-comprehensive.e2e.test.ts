@@ -277,7 +277,7 @@ test.describe('User Workflows - Comprehensive E2E Tests', () => {
       await expect(page.locator('[data-testid="response-time"]')).toBeVisible();
       await expect(page.locator('[data-testid="satisfaction-rate"]')).toBeVisible();
 
-      // Test date range filter
+      // Test date range Filter
       await page.click('[data-testid="date-range-picker"]');
       await page.click('[data-testid="last-30-days"]');
       await page.waitForTimeout(1000);

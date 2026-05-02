@@ -1,7 +1,7 @@
 
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { FlaskConical, TrendingUp, Activity, BarChart3, Brain, Zap } from 'lucide-react-native';
+import { FlaskConical, TrendingUp, Activity, ChartBar, Brain, Zap } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
@@ -107,7 +107,7 @@ export default function QuantitativeResearcherScreen() {
 
   const customTabs = [
     { id: 'research', label: 'Research', icon: FlaskConical, component: researchTab },
-    { id: 'backtests', label: 'Backtests', icon: BarChart3, component: <View /> },
+    { id: 'backtests', label: 'Backtests', icon: ChartBar, component: <View /> },
   ];
 
   return <AgentShell agent={agent} customTabs={customTabs} />;

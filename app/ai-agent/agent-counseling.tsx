@@ -19,15 +19,15 @@ import {
   MessageCircle,
   ChevronRight,
   Clock,
-  CheckCircle2,
-  AlertTriangle,
+  CircleCheckBig,
+  TriangleAlert,
   Send,
   User,
   Crown,
   GitBranch,
   Target,
   Sparkles,
-  BarChart3,
+  ChartBar,
   Calendar,
   Shield,
   Zap,
@@ -51,7 +51,7 @@ const counselingTypes: CounselingType[] = [
     id: 'performance',
     label: 'Performance Review',
     description: 'Review and improve agent performance',
-    icon: BarChart3,
+    icon: ChartBar,
     color: '#007AFF',
     applicableModes: ['main_to_sub', 'peer_to_peer'],
   },
@@ -75,7 +75,7 @@ const counselingTypes: CounselingType[] = [
     id: 'crisis',
     label: 'Crisis Intervention',
     description: 'Urgent issue resolution',
-    icon: AlertTriangle,
+    icon: TriangleAlert,
     color: '#FF3B30',
     applicableModes: ['main_to_sub', 'sub_to_main'],
   },
@@ -199,7 +199,7 @@ export default function AgentCounselingScreen() {
           await mainToSub({
             mainAgentId: agentId,
             subagentId: selectedTargetAgent,
-            counselingType: selectedCounselingType as any,
+            counselingType: selectedCounselingType as CounselingType['id'],
             topic,
             details: { issue: details },
             options: { priority },
@@ -209,7 +209,7 @@ export default function AgentCounselingScreen() {
           await subToMain({
             subagentId: agentId,
             mainAgentId: selectedTargetAgent,
-            requestType: selectedCounselingType as any,
+            requestType: selectedCounselingType as CounselingType['id'],
             topic,
             details: { challenge: details },
             options: { priority },
@@ -219,7 +219,7 @@ export default function AgentCounselingScreen() {
           await peer({
             agentId1: agentId,
             agentId2: selectedTargetAgent,
-            counselingType: selectedCounselingType as any,
+            counselingType: selectedCounselingType as CounselingType['id'],
             topic,
             details: { sharedChallenge: details },
             options: { priority },
@@ -266,7 +266,7 @@ export default function AgentCounselingScreen() {
         style={[styles.sessionCard, { backgroundColor: theme.colors.cardBackground }]}
         onPress={() => {
           // Navigate to session detail
-          router.push(`/ai-agent/counseling/${session.id}` as any);
+          router.push(`/ai-agent/counseling/${session.id}`);
         }}
       >
         <View style={styles.sessionHeader}>
@@ -614,7 +614,7 @@ export default function AgentCounselingScreen() {
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {error && (
           <View style={[styles.errorBanner, { backgroundColor: '#FF3B3020' }]}>
-            <AlertTriangle size={16} color="#FF3B30" />
+            <TriangleAlert size={16} color="#FF3B30" />
             <Text style={[styles.errorText, { color: '#FF3B30' }]}>{error}</Text>
           </View>
         )}

@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
-    BarChart3,
+    ChartBar,
     TrendingUp,
     Users,
     Brain,

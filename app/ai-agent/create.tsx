@@ -5,7 +5,7 @@ import { useTheme } from '@/providers/ThemeProvider';
 import { useAIAssistant } from '@/providers/AIAssistantProvider';
 import { aiEmployees, AIEmployee } from '@/constants/aiEmployees';
 import { trpc } from '@/lib/trpc';
-import { ArrowLeft, Save, Plus, Search, CheckCircle, Bot, ShoppingBag, Sparkles, User, Users, Briefcase, Zap, Settings, Shield, Power, Lock } from 'lucide-react-native';
+import { ArrowLeft, Save, Plus, Search, CircleCheck, ShoppingBag, Sparkles, User, Users, Briefcase, Zap, Settings, Shield, Power, Lock } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function CreateAgentScreen() {
@@ -138,7 +138,7 @@ export default function CreateAgentScreen() {
                 name,
                 title: role,
                 description: description || 'Custom AI Agent trained for specific business logic.',
-                icon: Bot,
+                icon: User,
                 color: '#AF52DE',
                 humanCost: '—',
                 aiCost: '—',
@@ -279,7 +279,7 @@ export default function CreateAgentScreen() {
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
             <View style={[styles.formCard, { backgroundColor: theme.colors.cardBackground }]}>
                 <View style={styles.formHeader}>
-                    <Bot size={32} color={theme.colors.primary} />
+                    <User size={32} color={theme.colors.primary} />
                     <Text style={[styles.formTitle, { color: theme.colors.text }]}>Design Your Agent</Text>
                 </View>
 
@@ -287,7 +287,7 @@ export default function CreateAgentScreen() {
                     <Text style={[styles.label, { color: theme.colors.text }]}>Agent Name</Text>
                     <TextInput
                         style={[styles.input, { backgroundColor: theme.colors.background, color: theme.colors.text }]}
-                        placeholder="e.g. Compliance Bot 3000"
+                        placeholder="e.g. Compliance User 3000"
                         placeholderTextColor={theme.colors.secondaryText}
                         value={name}
                         onChangeText={setName}
@@ -308,14 +308,14 @@ export default function CreateAgentScreen() {
                 <View style={styles.inputGroup}>
                     <Text style={[styles.label, { color: theme.colors.text }]}>Department</Text>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.categoryScroll}>
-                        {['sales', 'marketing', 'operations', 'support', 'analytics', 'executive'].map(cat => (
+                        {(['sales', 'marketing', 'operations', 'support', 'analytics', 'executive'] as const).map(cat => (
                             <TouchableOpacity
                                 key={cat}
                                 style={[
                                     styles.catChip,
                                     category === cat ? { backgroundColor: theme.colors.primary } : { backgroundColor: theme.colors.background }
                                 ]}
-                                onPress={() => setCategory(cat as any)}
+                                onPress={() => setCategory(cat)}
                             >
                                 <Text style={[
                                     styles.catText,

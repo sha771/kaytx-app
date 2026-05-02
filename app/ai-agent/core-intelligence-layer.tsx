@@ -21,7 +21,7 @@ import {
   RefreshCw,
   Zap,
   Sparkles,
-  CheckCircle,
+  CircleCheck,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
@@ -263,7 +263,7 @@ export default function CoreIntelligenceLayerScreen() {
             <View style={styles.featureContainer}>
               {cap.features.map((feature, i) => (
                 <View key={i} style={[styles.featureTag, { backgroundColor: theme.colors.background }]}>
-                  <CheckCircle size={10} color="#34C759" />
+                  <CircleCheck size={10} color="#34C759" />
                   <Text style={[styles.featureText, { color: theme.colors.secondaryText }]}>{feature}</Text>
                 </View>
               ))}

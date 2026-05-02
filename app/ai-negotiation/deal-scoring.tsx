@@ -9,7 +9,7 @@ import {
   TextInput,
 } from 'react-native';
 import { Stack } from 'expo-router';
-import { TrendingUp, Target, Award, AlertTriangle, Search, ChevronRight } from 'lucide-react-native';
+import { TrendingUp, Target, Award, TriangleAlert, Search, ChevronRight } from 'lucide-react-native';
 
 interface Deal {
   id: string;
@@ -167,7 +167,7 @@ export default function DealScoringScreen() {
           </View>
 
           <View style={[styles.statCard, { backgroundColor: '#F59E0B' }]}>
-            <AlertTriangle size={20} color="#fff" />
+            <TriangleAlert size={20} color="#fff" />
             <Text style={styles.statValue}>{stats.avgProbability}%</Text>
             <Text style={styles.statLabel}>Avg Probability</Text>
           </View>
@@ -190,22 +190,22 @@ export default function DealScoringScreen() {
             showsHorizontalScrollIndicator={false}
             style={styles.filterContainer}
           >
-            {['all', 'hot', 'warm', 'cold'].map((filter) => (
+            {['all', 'hot', 'warm', 'cold'].map((Filter) => (
               <TouchableOpacity
-                key={filter}
+                key={Filter}
                 style={[
                   styles.filterButton,
-                  selectedFilter === filter && styles.filterButtonActive,
+                  selectedFilter === Filter && styles.filterButtonActive,
                 ]}
-                onPress={() => setSelectedFilter(filter)}
+                onPress={() => setSelectedFilter(Filter)}
               >
                 <Text
                   style={[
                     styles.filterText,
-                    selectedFilter === filter && styles.filterTextActive,
+                    selectedFilter === Filter && styles.filterTextActive,
                   ]}
                 >
-                  {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                  {Filter.charAt(0).toUpperCase() + Filter.slice(1)}
                 </Text>
               </TouchableOpacity>
             ))}

@@ -1,19 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { BarChart3, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { ChartBar, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'5,183',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.3s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.5%',icon:Target,color:'#004D40'}];
+  const stats = [{label:'Tasks',value:'5,183',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.3s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.5%',icon:Target,color:'#004D40'}];
   const capabilities = ['Risk Modeling','Statistical Analysis','Stochastic Models','Validation','Data Engineering','Reporting'];
   const responsibilities = ['Risk model development & calibration','Statistical analysis & hypothesis testing','Stochastic process modeling','Model validation & backtesting','Data engineering for risk models','Risk model reporting & documentation'];
-  const activities = [{time:'3 min ago',text:'Calibrated severity & frequency models',icon:CheckCircle2},{time:'6 min ago',text:'Validated 5 production models',icon:Clock},{time:'9 min ago',text:'Published model performance report',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Calibrated severity & frequency models',icon: CircleCheckBig},{time:'6 min ago',text:'Validated 5 production models',icon:Clock},{time:'9 min ago',text:'Published model performance report',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#004D4020' }]}><BarChart3 size={48} color="#004D40" /></View>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#004D4020' }]}><ChartBarBig size={48} color="#004D40" /></View>
         <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Risk Modeler</Text>
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Risk Modeling</Text>
         <View style={styles.badgesRow}>

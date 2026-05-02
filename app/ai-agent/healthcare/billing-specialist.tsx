@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { DollarSign, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { DollarSign, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'3,838',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.4s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.7%',icon:Target,color:'#B71C1C'}];
+  const stats = [{label:'Tasks',value:'3,838',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.4s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.7%',icon:Target,color:'#B71C1C'}];
   const capabilities = ['Medical Billing','Claims Processing','Insurance Verification','Coding Compliance','Payment Posting','Denial Management'];
   const responsibilities = ['Medical billing & claims processing','Insurance verification & authorization','Coding compliance & validation','Payment posting & reconciliation','Denial management & appeals','Patient billing inquiries'];
-  const activities = [{time:'3 min ago',text:'Processed 450 claims today',icon:CheckCircle2},{time:'6 min ago',text:'Resolved 23 denial appeals',icon:Clock},{time:'9 min ago',text:'Verified insurance for 67 patients',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Processed 450 claims today',icon: CircleCheckBig},{time:'6 min ago',text:'Resolved 23 denial appeals',icon:Clock},{time:'9 min ago',text:'Verified insurance for 67 patients',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

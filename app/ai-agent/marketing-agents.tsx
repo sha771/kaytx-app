@@ -25,10 +25,9 @@ import {
   DollarSign,
   Users,
   Megaphone,
-  BarChart3,
-  Filter,
+  ChartBar,
+  ListFilter,
   ChevronRight,
-  Bot,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BlurView } from 'expo-blur';
@@ -179,7 +178,7 @@ export default function MarketingAgentsScreen() {
             <Text style={[styles.headerTitle, { color: colors.text }]}>Marketing & Growth AI</Text>
           </View>
           <TouchableOpacity onPress={() => setShowFilters(!showFilters)} style={styles.filterButton}>
-            <Filter size={20} color={colors.text} />
+            <ListFilter size={20} color={colors.text} />
           </TouchableOpacity>
         </View>
 
@@ -207,7 +206,7 @@ export default function MarketingAgentsScreen() {
         {/* Stats */}
         <View style={styles.statsContainer}>
           <Animated.View entering={FadeInRight.delay(100)} style={[styles.statBadge, { backgroundColor: colors.border + '30' }]}>
-            <Bot size={16} color={colors.text} />
+            <User size={16} color={colors.text} />
             <Text style={[styles.statValue, { color: colors.text }]}>{stats.total}</Text>
             <Text style={[styles.statLabel, { color: colors.text + '60' }]}>Agents</Text>
           </Animated.View>

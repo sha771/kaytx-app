@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Headphones, Activity, CheckCircle2, Clock, Target, BarChart3, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, TrendingUp, Heart } from 'lucide-react-native';
+import { Headphones, Activity, CircleCheckBig, Clock, Target, ChartBar, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, TrendingUp, Heart } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function VPCustomerSuccessPage() {
   const { theme } = useTheme();
 
   const stats = [
-    { label: 'Tasks Done', value: '18,742', icon: CheckCircle2, color: '#34C759' },
+    { label: 'Tasks Done', value: '18,742', icon: CircleCheckBig, color: '#34C759' },
     { label: 'Uptime', value: '99.95%', icon: Activity, color: '#007AFF' },
     { label: 'Response', value: '1.1s', icon: Clock, color: '#FF9500' },
     { label: 'Accuracy', value: '98.8%', icon: Target, color: '#AF52DE' },
@@ -33,13 +33,13 @@ export default function VPCustomerSuccessPage() {
   const activities = [
     { time: '5 min ago', text: 'Flagged 12 accounts at churn risk', icon: Heart },
     { time: '22 min ago', text: 'Published Q3 onboarding playbook', icon: Zap },
-    { time: '1 hour ago', text: 'Completed 45 health score updates', icon: BarChart3 },
+    { time: '1 hour ago', text: 'Completed 45 health score updates', icon: ChartBar },
     { time: '4 hours ago', text: 'Kicked off expansion campaign for Tier 1', icon: TrendingUp },
     { time: '6 hours ago', text: 'Reviewed CSM performance dashboards', icon: Users },
   ];
 
   const quickActions = [
-    { label: 'View Reports', icon: BarChart3 },
+    { label: 'View Reports', icon: ChartBar },
     { label: 'Team Chat', icon: MessageSquare },
     { label: 'Schedule', icon: Calendar },
     { label: 'Settings', icon: Shield },

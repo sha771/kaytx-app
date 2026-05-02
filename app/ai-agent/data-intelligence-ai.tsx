@@ -12,12 +12,12 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   ArrowLeft,
-  BarChart3,
-  LineChart,
+  ChartBar,
+  ChartLine,
   DollarSign,
   Users,
   TrendingUp,
-  AlertTriangle,
+  TriangleAlert,
   Lock,
   Eye,
   ChevronRight,
@@ -28,7 +28,7 @@ import {
   Sparkles,
   Crown,
   Star,
-  CheckCircle,
+  CircleCheck,
   Settings,
   Zap,
   Target,
@@ -41,7 +41,7 @@ import {
   Shield,
   Gauge,
   FileText,
-  PieChart,
+  ChartPie,
   Lightbulb,
   Search,
 } from 'lucide-react-native';
@@ -85,7 +85,7 @@ const initialSubAgents: SubAgent[] = [
     id: 'di-1',
     name: 'AI Data Analyst',
     description: 'Analyzes data with advanced statistical methods',
-    icon: BarChart3,
+    icon: ChartBar,
     enabled: true,
     status: 'active',
     tasksCompleted: 2340,
@@ -110,7 +110,7 @@ const initialSubAgents: SubAgent[] = [
     id: 'di-2',
     name: 'AI Sales Data Analyst',
     description: 'Analyzes sales performance with predictive insights',
-    icon: LineChart,
+    icon: ChartLine,
     enabled: true,
     status: 'active',
     tasksCompleted: 1890,
@@ -210,7 +210,7 @@ const initialSubAgents: SubAgent[] = [
     id: 'di-6',
     name: 'AI Risk Analyst',
     description: 'Identifies risks with mitigation recommendations',
-    icon: AlertTriangle,
+    icon: TriangleAlert,
     enabled: true,
     status: 'active',
     tasksCompleted: 670,
@@ -414,7 +414,7 @@ export default function DataIntelligenceAIScreen() {
     switch (tier) {
       case 'enterprise': return Crown;
       case 'premium': return Star;
-      default: return CheckCircle;
+      default: return CircleCheck;
     }
   };
 
@@ -608,7 +608,7 @@ export default function DataIntelligenceAIScreen() {
                 <Text style={[styles.actionButtonText, { color: ACCENT_COLOR }]}>Configure</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#007AFF15' }]}>
-                <BarChart3 size={16} color="#007AFF" />
+                <ChartBarBig size={16} color="#007AFF" />
                 <Text style={[styles.actionButtonText, { color: '#007AFF' }]}>Analytics</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#34C75915' }]}>
@@ -649,7 +649,7 @@ export default function DataIntelligenceAIScreen() {
         <View style={styles.mainAgentCard}>
           <View style={styles.mainAgentHeader}>
             <View style={styles.mainAgentIcon}>
-              <BarChart3 size={28} color="#fff" />
+              <ChartBarBig size={28} color="#fff" />
               {mainAgentEnabled && (
                 <Animated.View style={[styles.mainLiveIndicator, { transform: [{ scale: pulseAnim }] }]}>
                   <View style={styles.mainLiveIndicatorInner} />

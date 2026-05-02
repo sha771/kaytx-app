@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { HeadphonesIcon, MessageCircle, Phone, Clock, Star, Users } from 'lucide-react-native';
+import { Headphones as HeadphonesIcon, MessageCircle, Phone, Clock, Star, Users } from 'lucide-react-native';
 
 interface SupportTicket {
   id: string;
@@ -199,7 +199,7 @@ export default function CustomerSupportScreen() {
       <ScrollView style={styles.content}>
         <View style={styles.header}>
           <View style={styles.titleSection}>
-            <HeadphonesIcon size={28} color="#007AFF" />
+            <Headphones size={28} color="#007AFF" />
             <View>
               <Text style={styles.title}>Customer Support</Text>
               <Text style={styles.subtitle}>Manage support tickets and agents</Text>
@@ -270,7 +270,7 @@ export default function CustomerSupportScreen() {
               <Text style={styles.quickActionText}>New Ticket</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.quickAction}>
-              <HeadphonesIcon size={24} color="#34C759" />
+              <Headphones size={24} color="#34C759" />
               <Text style={styles.quickActionText}>Live Chat</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.quickAction}>

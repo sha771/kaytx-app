@@ -18,14 +18,14 @@ import {
   Clock,
   Save,
   Plus,
-  Edit,
+  Pencil,
   Trash2,
   X,
   BookOpen,
   Shield,
   MessageSquare,
-  BarChart3,
-  AlertCircle,
+  ChartBar,
+  CircleAlert,
   Users,
   Mic,
   Volume2,
@@ -398,7 +398,7 @@ export default function ReceptionistConfigScreen() {
             <Text style={[styles.scriptName, { color: theme.colors.text }]}>{item.name}</Text>
             <View style={styles.scriptActions}>
               <TouchableOpacity style={styles.iconButton} onPress={() => handleEditScript(item)}>
-                <Edit size={16} color={theme.colors.text} />
+                <Pencil size={16} color={theme.colors.text} />
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.iconButton}
@@ -488,7 +488,7 @@ export default function ReceptionistConfigScreen() {
                   thumbColor={item.enabled ? '#fff' : '#f4f3f4'}
                 />
                 <TouchableOpacity style={styles.iconButton} onPress={() => handleEditRule(item)}>
-                  <Edit size={16} color={theme.colors.text} />
+                  <Pencil size={16} color={theme.colors.text} />
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.iconButton}
@@ -547,7 +547,7 @@ export default function ReceptionistConfigScreen() {
                 thumbColor={item.enabled ? '#fff' : '#f4f3f4'}
               />
               <TouchableOpacity style={styles.iconButton} onPress={() => handleEditSlot(item)}>
-                <Edit size={16} color={theme.colors.text} />
+                <Pencil size={16} color={theme.colors.text} />
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.iconButton}

@@ -1,19 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Bot, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap, User } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks/Day',value:'120',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.99%',icon:Activity,color:'#007AFF'},{label:'Response',value:'<1 second',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.2%',icon:Target,color:'#0D47A1'}];
+  const stats = [{label:'Tasks/Day',value:'120',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.99%',icon:Activity,color:'#007AFF'},{label:'Response',value:'<1 second',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.2%',icon:Target,color:'#0D47A1'}];
   const capabilities = ['Financial Auditing','Discrepancy Detection','Standards Compliance','Risk Assessment','Internal Controls','Regulatory Reporting'];
   const responsibilities = ['Financial statement preparation & analysis','Budget planning & variance monitoring','Audit coordination & compliance enforcement','Revenue recognition & tracking','Cost optimization & reduction initiatives','Regulatory & tax compliance reporting'];
-  const activities = [{time:'3 min ago',text:'Analyzing journal entries for discrepancies',icon:CheckCircle2},{time:'6 min ago',text:'Running compliance check on expense reports',icon:Clock},{time:'9 min ago',text:'Generating audit trail for Q2 transactions',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Analyzing journal entries for discrepancies',icon: CircleCheckBig},{time:'6 min ago',text:'Running compliance check on expense reports',icon:Clock},{time:'9 min ago',text:'Generating audit trail for Q2 transactions',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#0D47A120' }]}><Bot size={48} color="#0D47A1" /></View>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#0D47A120' }]}><User size={48} color="#0D47A1" /></View>
         <Text style={[styles.heroTitle, { color: theme.colors.text }]}>AI Auditor</Text>
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Accounting & Finance</Text>
         <View style={styles.badgesRow}>
@@ -41,7 +41,7 @@ export default function AgentPage() {
       </View>
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Recent Results</Text>
-        {[{task:'Monthly Compliance Audit',result:'No Violations',status:'Success'},{task:'Expense Reconciliation',result:'Discrepancies Resolved',status:'Success'},{task:'Internal Control Review',result:'98% Coverage',status:'Success'}].map((h,i)=>(<View key={i} style={styles.responsibilityRow}><CheckCircle2 size={14} color={h.status==='Success'?'#34C759':'#FF3B30'} /><View style={{flex:1}}><Text style={[styles.responsibilityText, { color: theme.colors.text }]}>{h.task}</Text><Text style={[styles.activityTime, { color: theme.colors.textSecondary }]}>{h.result} - {h.status}</Text></View></View>))}
+        {[{task:'Monthly Compliance Audit',result:'No Violations',status:'Success'},{task:'Expense Reconciliation',result:'Discrepancies Resolved',status:'Success'},{task:'Internal Control Review',result:'98% Coverage',status:'Success'}].map((h,i)=>(<View key={i} style={styles.responsibilityRow}><CircleCheckBig size={14} color={h.status==='Success'?'#34C759':'#FF3B30'} /><View style={{flex:1}}><Text style={[styles.responsibilityText, { color: theme.colors.text }]}>{h.task}</Text><Text style={[styles.activityTime, { color: theme.colors.textSecondary }]}>{h.result} - {h.status}</Text></View></View>))}
       </View>
       <AgentFeatures agentId="auditor" agentName="AI Auditor" />
     </ScrollView>

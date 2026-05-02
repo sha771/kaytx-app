@@ -14,10 +14,10 @@ import {
   TrendingDown,
   Calendar,
   Target,
-  BarChart3,
-  PieChart,
+  ChartBar,
+  ChartPie,
   Activity,
-  Filter,
+  ListFilter,
   Download,
   RefreshCw,
 } from 'lucide-react-native';
@@ -304,7 +304,7 @@ export default function CohortAnalysisScreen() {
           ))}
         </ScrollView>
         <TouchableOpacity style={[styles.filterButton, { backgroundColor: theme.colors.cardBackground }]}>
-          <Filter size={20} color={theme.colors.text} />
+          <ListFilter size={20} color={theme.colors.text} />
         </TouchableOpacity>
       </View>
 
@@ -318,7 +318,7 @@ export default function CohortAnalysisScreen() {
             Retention Curve Comparison
           </Text>
           <View style={styles.chartPlaceholder}>
-            <BarChart3 size={48} color={theme.colors.secondaryText} />
+            <ChartBarBig size={48} color={theme.colors.secondaryText} />
             <Text style={[styles.chartPlaceholderText, { color: theme.colors.secondaryText }]}>
               Interactive retention curves would appear here
             </Text>
@@ -330,7 +330,7 @@ export default function CohortAnalysisScreen() {
             Revenue by Cohort
           </Text>
           <View style={styles.chartPlaceholder}>
-            <PieChart size={48} color={theme.colors.secondaryText} />
+            <ChartPie size={48} color={theme.colors.secondaryText} />
             <Text style={[styles.chartPlaceholderText, { color: theme.colors.secondaryText }]}>
               Revenue distribution chart would appear here
             </Text>

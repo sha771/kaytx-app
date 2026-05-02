@@ -15,16 +15,16 @@ import {
   Users,
   Search,
   Plus,
-  Filter,
-  MoreVertical,
+  ListFilter,
+  EllipsisVertical,
   Calendar,
   Clock,
-  CheckCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleAlert,
   Target,
-  BarChart3,
+  ChartBar,
   ArrowLeft,
-  Edit,
+  Pencil,
   Trash2,
   Share2,
   FileText,
@@ -201,7 +201,7 @@ const collaborationMetrics: CollaborationMetric[] = [
     title: 'Sync Velocity',
     value: '1.2s',
     change: '-0.3s',
-    icon: CheckCircle,
+    icon: CircleCheck,
     color: '#FF9500',
   },
   {
@@ -296,7 +296,7 @@ export default function CollaborationScreen() {
         </View>
         <View style={styles.memberActions}>
           <TouchableOpacity style={styles.actionButton}>
-            <MoreVertical size={16} color={theme.colors.text} />
+            <EllipsisVertical size={16} color={theme.colors.text} />
           </TouchableOpacity>
         </View>
       </View>
@@ -461,24 +461,24 @@ export default function CollaborationScreen() {
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filtersContainer}>
         <View style={styles.filters}>
-          {(['all', 'online', 'busy', 'offline'] as const).map((filter) => (
+          {(['all', 'online', 'busy', 'offline'] as const).map((Filter) => (
             <TouchableOpacity
-              key={filter}
+              key={Filter}
               style={[
                 styles.filterChip,
-                filterStatus === filter && { backgroundColor: theme.colors.primary },
+                filterStatus === Filter && { backgroundColor: theme.colors.primary },
               ]}
-              onPress={() => setFilterStatus(filter)}
+              onPress={() => setFilterStatus(Filter)}
             >
               <Text
                 style={[
                   styles.filterText,
                   {
-                    color: filterStatus === filter ? 'white' : theme.colors.secondaryText,
+                    color: filterStatus === Filter ? 'white' : theme.colors.secondaryText,
                   },
                 ]}
               >
-                {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                {Filter.charAt(0).toUpperCase() + Filter.slice(1)}
               </Text>
             </TouchableOpacity>
           ))}

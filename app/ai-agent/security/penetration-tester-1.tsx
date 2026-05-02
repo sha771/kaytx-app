@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Crosshair, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, AlertTriangle, FileText } from 'lucide-react-native';
+import { Crosshair, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, TriangleAlert, FileText } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tests',value:'1.2K',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Turnaround',value:'<1hr',icon:Clock,color:'#FF9500'},{label:'Find Rate',value:'98%',icon:Target,color:'#581C84'}];
+  const stats = [{label:'Tests',value:'1.2K',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Turnaround',value:'<1hr',icon:Clock,color:'#FF9500'},{label:'Find Rate',value:'98%',icon:Target,color:'#581C84'}];
   const capabilities = ['Pen Testing', 'Vulnerability Scanning', 'Red Team', 'Exploit Dev', 'Social Engineering', 'Reporting'];
   const responsibilities = ['Automated penetration testing execution','Vulnerability identification & exploitation','Red team attack simulation','Social engineering campaign management','Security assessment reporting','Exploit development & validation'];
-  const activities = [{time:'3 min ago',text:'Completed external pentest on 50 assets',icon:Crosshair},{time:'20 min ago',text:'Discovered 12 critical vulnerabilities',icon:AlertTriangle},{time:'1 hour ago',text:'Submitted red team engagement report',icon:FileText}];
+  const activities = [{time:'3 min ago',text:'Completed external pentest on 50 assets',icon:Crosshair},{time:'20 min ago',text:'Discovered 12 critical vulnerabilities',icon:TriangleAlert},{time:'1 hour ago',text:'Submitted red team engagement report',icon:FileText}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

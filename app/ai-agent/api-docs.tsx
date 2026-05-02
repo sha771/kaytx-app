@@ -21,14 +21,14 @@ import {
   Copy,
   Check,
   Play,
-  MoreVertical,
-  FileJson,
+  EllipsisVertical,
+  FileCode,
   FileCode,
   Search,
   Star,
   Zap,
   Shield,
-  AlertCircle,
+  CircleAlert,
   ExternalLink,
   Download,
 } from 'lucide-react-native';
@@ -541,7 +541,7 @@ print(response.json())`;
           <Animated.View entering={FadeInUp} style={styles.sdkContent}>
             <View style={[styles.sdkCard, { backgroundColor: colors.card }]}>
               <View style={[styles.sdkIcon, { backgroundColor: '#F7DF1E' + '20' }]}>
-                <FileJson size={32} color="#F7DF1E" />
+                <FileCode size={32} color="#F7DF1E" />
               </View>
               <Text style={[styles.sdkName, { color: colors.text }]}>
                 JavaScript SDK

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
-import { ArrowLeft, Eye, User, Calendar, CheckCircle, XCircle } from 'lucide-react-native';
+import { ArrowLeft, Eye, User, Calendar, CircleCheck, CircleX } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { trpc } from '@/lib/trpc';
 
@@ -120,9 +120,9 @@ export default function AccessLogsScreen() {
                       </Text>
                     </View>
                     {log.success ? (
-                      <CheckCircle size={20} color={theme.colors.success} />
+                      <CircleCheck size={20} color={theme.colors.success} />
                     ) : (
-                      <XCircle size={20} color={theme.colors.error} />
+                      <CircleX size={20} color={theme.colors.error} />
                     )}
                   </View>
 

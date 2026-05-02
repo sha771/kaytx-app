@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Building2, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Building2, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'600',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.8s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.2%',icon:Target,color:'#33691E'}];
+  const stats = [{label:'Tasks',value:'600',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.8s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.2%',icon:Target,color:'#33691E'}];
   const capabilities = ['Project Coordination','Entitlements','Contractor Mgmt','Timeline Tracking','Budget Monitoring','Compliance'];
   const responsibilities = ['Development project coordination','Entitlement & permitting management','General contractor management','Project timeline tracking & reporting','Budget monitoring & variance analysis','Development compliance & reporting'];
-  const activities = [{time:'3 min ago',text:'Coordinated 3 development projects',icon:CheckCircle2},{time:'6 min ago',text:'Obtained permits for new build',icon:Clock},{time:'9 min ago',text:'Managed contractor payment schedules',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Coordinated 3 development projects',icon: CircleCheckBig},{time:'6 min ago',text:'Obtained permits for new build',icon:Clock},{time:'9 min ago',text:'Managed contractor payment schedules',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

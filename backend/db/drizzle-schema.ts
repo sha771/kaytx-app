@@ -1528,7 +1528,7 @@ export const browserActionEnum = pgEnum('browser_action', [
   'navigate', 'click', 'type', 'scroll', 'screenshot', 'extract', 'wait',
   'select', 'hover', 'focus', 'submit', 'download', 'upload', 'evaluate',
   'authenticate', 'fill_form', 'check_element', 'get_text', 'get_links',
-  'search', 'filter', 'sort'
+  'search', 'Filter', 'sort'
 ]);
 export const systemCommandEnum = pgEnum('system_command', [
   'file_read', 'file_write', 'file_delete', 'file_move', 'directory_list',

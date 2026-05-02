@@ -1,19 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { BarChart3, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { ChartBar, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'3,784',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.2s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.7%',icon:Target,color:'#0277BD'}];
+  const stats = [{label:'Tasks',value:'3,784',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.2s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.7%',icon:Target,color:'#0277BD'}];
   const capabilities = ['Equity Trading','Technical Analysis','Fundamental Analysis','Order Execution','Market Analysis','Position Management'];
   const responsibilities = ['Equity market analysis & trade execution','Technical & fundamental analysis','Order management & execution','Position tracking & management','Market sentiment analysis','Trade reporting & documentation'];
-  const activities = [{time:'3 min ago',text:'Executed block trade for 50K shares',icon:CheckCircle2},{time:'6 min ago',text:'Updated technical analysis models',icon:Clock},{time:'9 min ago',text:'Managed 12 active positions',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Executed block trade for 50K shares',icon: CircleCheckBig},{time:'6 min ago',text:'Updated technical analysis models',icon:Clock},{time:'9 min ago',text:'Managed 12 active positions',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#0277BD20' }]}><BarChart3 size={48} color="#0277BD" /></View>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#0277BD20' }]}><ChartBarBig size={48} color="#0277BD" /></View>
         <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Equity Trader</Text>
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Equities Trading</Text>
         <View style={styles.badgesRow}>

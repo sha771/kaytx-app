@@ -183,7 +183,7 @@
 │           │    │   MANAGER     │ │ WORKFORCE     │    │                                    │
 │           │    │               │ │  MANAGER      │    │                                    │
 │           │    │• Agent sched  │ │• Team assign  │    │                                    │
-│           │    │• Task routing │ │• Training     │    │                                    │
+│           │    │• Task routing │ │• human approval    │                                    │
 │           │    │• Performance  │ │• Supervision  │    │                                    │
 │           │    └───────┬───────┘ └───────┬───────┘    │                                    │
 │           │            │                 │            │                                    │

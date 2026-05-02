@@ -28,7 +28,7 @@ import {
   Settings,
   Crown,
   ArrowRight,
-  Bot,
+  User,
 } from 'lucide-react-native';
 import { useAIAssistant } from '@/providers/AIAssistantProvider';
 import { AIWorkforceSidebar } from '@/components/AIWorkforceSidebar';
@@ -151,7 +151,7 @@ export default function AIAgentScreen() {
     return (
       <TouchableOpacity
         style={[styles.agentCard, { backgroundColor: theme.colors.cardBackground, borderLeftWidth: 4, borderLeftColor: item.color }]}
-        onPress={() => router.push(item.route as any)}
+        onPress={() => router.push(item.route)}
       >
         <View style={styles.agentHeader}>
           <View style={styles.agentInfo}>
@@ -208,7 +208,7 @@ export default function AIAgentScreen() {
           </View>
           <TouchableOpacity
             style={[styles.manageBtn, { backgroundColor: item.color }]}
-            onPress={() => router.push(item.route as any)}
+            onPress={() => router.push(item.route)}
           >
             <Zap size={14} color="#fff" />
           </TouchableOpacity>
@@ -389,7 +389,7 @@ export default function AIAgentScreen() {
               },
             ]}
           >
-            <Bot size={16} color={ROLE_CONFIGS.AOD.color} />
+            <User size={16} color={ROLE_CONFIGS.AOD.color} />
             <Text style={[styles.commandBadgeText, { color: ROLE_CONFIGS.AOD.color }]}>AOD</Text>
           </View>
           <View style={styles.commandBannerMeta}>

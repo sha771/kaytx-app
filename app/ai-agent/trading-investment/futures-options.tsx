@@ -1,7 +1,7 @@
 
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { TrendingDown, Activity, BarChart3, Zap, DollarSign, Shield } from 'lucide-react-native';
+import { TrendingDown, Activity, ChartBar, Zap, DollarSign, Shield } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
@@ -87,7 +87,7 @@ export default function FuturesOptionsScreen() {
 
   const customTabs = [
     { id: 'positions', label: 'Positions', icon: TrendingDown, component: positionsTab },
-    { id: 'strategies', label: 'Strategies', icon: BarChart3, component: <View /> },
+    { id: 'strategies', label: 'Strategies', icon: ChartBar, component: <View /> },
   ];
 
   return <AgentShell agent={agent} customTabs={customTabs} />;

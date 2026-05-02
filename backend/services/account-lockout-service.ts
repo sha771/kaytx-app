@@ -121,7 +121,7 @@ export class AccountLockoutService {
       timestamp: now,
       ipAddress: identifier,
       userAgent: metadata?.userAgent,
-      deviceFingerprint: metadata?.deviceFingerprint,
+      deviceFingerprint: metadata?.deviceFingerprintPattern,
       location: metadata?.location,
       riskScore,
       attemptType: metadata?.attemptType || 'login'
@@ -136,7 +136,7 @@ export class AccountLockoutService {
         timestamp: attempt.timestamp,
         ipAddress: attempt.ipAddress,
         userAgent: attempt.userAgent,
-        deviceFingerprint: attempt.deviceFingerprint,
+        deviceFingerprint: attempt.deviceFingerprintPattern,
         location: attempt.location ? JSON.stringify(attempt.location) : null,
         riskScore: attempt.riskScore,
         attemptType: attempt.attemptType
@@ -192,7 +192,7 @@ export class AccountLockoutService {
       timestamp: now,
       ipAddress: identifier,
       userAgent: metadata?.userAgent,
-      deviceFingerprint: metadata?.deviceFingerprint,
+      deviceFingerprint: metadata?.deviceFingerprintPattern,
       location: metadata?.location,
       riskScore,
       attemptType: 'login'
@@ -207,7 +207,7 @@ export class AccountLockoutService {
         timestamp: attempt.timestamp,
         ipAddress: attempt.ipAddress,
         userAgent: attempt.userAgent,
-        deviceFingerprint: attempt.deviceFingerprint,
+        deviceFingerprint: attempt.deviceFingerprintPattern,
         location: attempt.location ? JSON.stringify(attempt.location) : null,
         riskScore: attempt.riskScore,
         attemptType: attempt.attemptType
@@ -472,7 +472,7 @@ export class AccountLockoutService {
         .from(loginAttempts)
         .where(and(
           eq(loginAttempts.identifier, identifier),
-          eq(loginAttempts.deviceFingerprint, deviceFingerprint),
+          eq(loginAttempts.deviceFingerprintPattern, deviceFingerprint),
           gte(loginAttempts.timestamp, new Date(Date.now() - 24 * 60 * 60 * 1000))
         ));
       return recentDevices.length === 0 ? 10 : 0;

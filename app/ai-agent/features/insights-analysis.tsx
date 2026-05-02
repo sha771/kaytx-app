@@ -4,17 +4,18 @@ import { useTheme } from '@/providers/ThemeProvider';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { 
   ChevronLeft, 
-  BarChart3, 
+  ChartBar, 
   TrendingUp, 
-  PieChart, 
+  ChartPie, 
   Activity, 
   Target, 
   Zap, 
   Lightbulb,
   ArrowUpRight,
-  Filter,
+  ListFilter,
   Download
 } from 'lucide-react-native';
+import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function InsightsAnalysisPage() {
   const { theme } = useTheme();
@@ -57,9 +58,9 @@ export default function InsightsAnalysisPage() {
   ];
 
   const analysisCategories = [
-    { name: 'Workflow Efficiency', score: 92, icon: BarChart3 },
+    { name: 'Workflow Efficiency', score: 92, icon: ChartBar },
     { name: 'Decision Accuracy', score: 88, icon: Target },
-    { name: 'User Satisfaction', score: 95, icon: PieChart },
+    { name: 'User Satisfaction', score: 95, icon: ChartPie },
     { name: 'Learning Progress', score: 78, icon: Lightbulb },
   ];
 
@@ -93,7 +94,7 @@ export default function InsightsAnalysisPage() {
         <View style={styles.sectionHeader}>
           <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Metrics</Text>
           <TouchableOpacity style={styles.filterBtn}>
-            <Filter size={16} color={theme.colors.primary} />
+            <ListFilter size={16} color={theme.colors.primary} />
             <Text style={[styles.filterText, { color: theme.colors.primary }]}>Filter</Text>
           </TouchableOpacity>
         </View>
@@ -150,7 +151,7 @@ export default function InsightsAnalysisPage() {
 
       {/* Action Button */}
       <TouchableOpacity style={[styles.fullReportBtn, { backgroundColor: theme.colors.primary }]}>
-        <BarChart3 size={20} color="#fff" />
+        <ChartBarBig size={20} color="#fff" />
         <Text style={styles.fullReportText}>Generate Full Report</Text>
       </TouchableOpacity>
     

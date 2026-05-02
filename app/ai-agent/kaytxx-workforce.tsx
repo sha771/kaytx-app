@@ -20,16 +20,16 @@ import {
   Brain,
   Gauge,
   Calculator,
-  Bot,
   ChevronRight,
   Activity,
   DollarSign,
   Plus,
-  CheckCircle,
+  CircleCheck,
   Cpu,
-  Grid,
+  LayoutGrid,
   UsersRound,
   X,
+  User,
 } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -272,7 +272,7 @@ const KAYT_AI_WORKFORCE_SYSTEM = () => {
   const filteredAgents = useMemo(() => {
     let agents = allSubAgents;
 
-    // Apply search filter
+    // Apply search Filter
     if (searchQuery) {
       agents = agents.filter(agent =>
         agent.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -281,12 +281,12 @@ const KAYT_AI_WORKFORCE_SYSTEM = () => {
       );
     }
 
-    // Apply category filter
+    // Apply category Filter
     if (selectedCategory) {
       agents = agents.filter(agent => agent.category === selectedCategory);
     }
 
-    // Apply status/type filter
+    // Apply status/type Filter
     switch (filterType) {
       case 'active':
         agents = agents.filter(agent => agent.status === 'active');
@@ -393,13 +393,13 @@ const KAYT_AI_WORKFORCE_SYSTEM = () => {
 
           <View style={styles.categoryStats}>
             <View style={styles.statItem}>
-              <Bot size={14} color={item.color} />
+              <User size={14} color={item.color} />
               <Text style={[styles.statText, { color: colors.text }]}>
                 {item.activeSubAgents}/{item.subAgentCount} Active
               </Text>
             </View>
             <View style={styles.statItem}>
-              <Bot size={14} color={item.color} />
+              <User size={14} color={item.color} />
               <Text style={[styles.statText, { color: colors.text }]}>
                 {item.totalPerformance}% Performance
               </Text>
@@ -460,19 +460,19 @@ const KAYT_AI_WORKFORCE_SYSTEM = () => {
 
         <View style={styles.agentMetrics}>
           <View style={styles.metricItem}>
-            <CheckCircle size={14} color={categoryColor} />
+            <CircleCheck size={14} color={categoryColor} />
             <Text style={[styles.metricText, { color: colors.text }]}>
               {item.performance.successRate}%
             </Text>
           </View>
           <View style={styles.metricItem}>
-            <CheckCircle size={14} color={categoryColor} />
+            <CircleCheck size={14} color={categoryColor} />
             <Text style={[styles.metricText, { color: colors.text }]}>
               {item.performance.averageResponseTime}s
             </Text>
           </View>
           <View style={styles.metricItem}>
-            <CheckCircle size={14} color={categoryColor} />
+            <CircleCheck size={14} color={categoryColor} />
             <Text style={[styles.metricText, { color: colors.text }]}>
               {item.performance.customerSatisfaction}
             </Text>
@@ -553,7 +553,7 @@ const KAYT_AI_WORKFORCE_SYSTEM = () => {
           />
           {searchQuery.length > 0 && (
             <TouchableOpacity onPress={() => setSearchQuery('')}>
-              <Grid size={18} color={colors.textSecondary} />
+              <LayoutGrid size={18} color={colors.textSecondary} />
             </TouchableOpacity>
           )}
         </View>
@@ -565,22 +565,22 @@ const KAYT_AI_WORKFORCE_SYSTEM = () => {
           style={styles.filterScroll}
           contentContainerStyle={styles.filterContent}
         >
-          {(['all', 'active', 'standby', 'main', 'sub'] as FilterType[]).map((filter) => (
+          {(['all', 'active', 'standby', 'main', 'sub'] as FilterType[]).map((Filter) => (
             <TouchableOpacity
-              key={filter}
+              key={Filter}
               style={[
                 styles.filterChip,
-                { backgroundColor: filterType === filter ? '#007AFF' : colors.card },
+                { backgroundColor: filterType === Filter ? '#007AFF' : colors.card },
               ]}
-              onPress={() => setFilterType(filter)}
+              onPress={() => setFilterType(Filter)}
             >
               <Text
                 style={[
                   styles.filterText,
-                  { color: filterType === filter ? '#FFFFFF' : colors.text },
+                  { color: filterType === Filter ? '#FFFFFF' : colors.text },
                 ]}
               >
-                {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                {Filter.charAt(0).toUpperCase() + Filter.slice(1)}
               </Text>
             </TouchableOpacity>
           ))}
@@ -595,7 +595,7 @@ const KAYT_AI_WORKFORCE_SYSTEM = () => {
             ]}
             onPress={() => setViewMode('grid')}
           >
-            <Grid size={18} color={viewMode === 'grid' ? '#FFFFFF' : colors.text} />
+            <LayoutGrid size={18} color={viewMode === 'grid' ? '#FFFFFF' : colors.text} />
           </TouchableOpacity>
           <TouchableOpacity
             style={[
@@ -604,7 +604,7 @@ const KAYT_AI_WORKFORCE_SYSTEM = () => {
             ]}
             onPress={() => setViewMode('list')}
           >
-            <Grid size={18} color={viewMode === 'list' ? '#FFFFFF' : colors.text} />
+            <LayoutGrid size={18} color={viewMode === 'list' ? '#FFFFFF' : colors.text} />
           </TouchableOpacity>
           <TouchableOpacity
             style={[
@@ -613,7 +613,7 @@ const KAYT_AI_WORKFORCE_SYSTEM = () => {
             ]}
             onPress={() => setViewMode('hierarchy')}
           >
-            <Grid size={18} color={viewMode === 'hierarchy' ? '#FFFFFF' : colors.text} />
+            <LayoutGrid size={18} color={viewMode === 'hierarchy' ? '#FFFFFF' : colors.text} />
           </TouchableOpacity>
         </View>
       </View>
@@ -651,7 +651,7 @@ const KAYT_AI_WORKFORCE_SYSTEM = () => {
             {/* Stats Overview */}
             <View style={styles.statsOverview}>
               <View style={[styles.statCard, { backgroundColor: colors.card }]}>
-                <Bot size={24} color="#007AFF" />
+                <User size={24} color="#007AFF" />
                 <Text style={[styles.statValue, { color: colors.text }]}>
                   {allSubAgents.length}
                 </Text>

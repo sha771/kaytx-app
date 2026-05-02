@@ -15,7 +15,7 @@ import {
   Moon,
   Bell,
   Globe,
-  HelpCircle,
+  LifeBuoy,
   LogOut,
   ChevronRight,
   User,
@@ -139,7 +139,7 @@ export default function SettingsScreen() {
       title: 'Support',
       items: [
         {
-          icon: HelpCircle,
+          icon: LifeBuoy,
           label: 'Help Center',
           onPress: () => {},
         },

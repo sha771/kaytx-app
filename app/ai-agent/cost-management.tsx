@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+﻿import React, { useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -16,17 +16,17 @@ import {
   TrendingDown,
   Wallet,
   CreditCard,
-  AlertTriangle,
-  PieChart,
+  TriangleAlert,
+  ChartPie,
   Calendar,
   Download,
-  Bot,
   Target,
   Zap,
   ArrowUpRight,
   ArrowDownRight,
   Save,
   Plus,
+  User,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInUp } from 'react-native-reanimated';
@@ -133,7 +133,7 @@ export default function CostManagementScreen() {
           </Text>
           {budgetUsedPercent > budget.alertThreshold && (
             <View style={styles.budgetAlert}>
-              <AlertTriangle size={16} color="#F59E0B" />
+              <TriangleAlert size={16} color="#F59E0B" />
               <Text style={[styles.alertText, { color: '#F59E0B' }]}>
                 Approaching budget limit ({budget.alertThreshold}% threshold)
               </Text>
@@ -154,7 +154,7 @@ export default function CostManagementScreen() {
             <Text style={[styles.savingsLabel, { color: colors.text + '60' }]}>Cost Reduction</Text>
           </Animated.View>
           <Animated.View entering={FadeInUp.delay(100)} style={[styles.savingsCard, { backgroundColor: '#8B5CF6' + '15' }]}>
-            <Bot size={24} color="#8B5CF6" />
+            <User size={24} color="#8B5CF6" />
             <Text style={[styles.savingsValue, { color: '#8B5CF6' }]}>{allAgents.length}</Text>
             <Text style={[styles.savingsLabel, { color: colors.text + '60' }]}>Active Agents</Text>
           </Animated.View>

@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { TrendingUp, Activity, CheckCircle2, Clock, Target, BarChart3, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star } from 'lucide-react-native';
+import { TrendingUp, Activity, CircleCheckBig, Clock, Target, ChartBar, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function VPTradingPage() {
   const { theme } = useTheme();
   const stats = [
-    { label: 'Trades', value: '45,231', icon: CheckCircle2, color: '#34C759' },
+    { label: 'Trades', value: '45,231', icon: CircleCheckBig, color: '#34C759' },
     { label: 'Uptime', value: '99.99%', icon: Activity, color: '#007AFF' },
     { label: 'Response', value: '0.1s', icon: Clock, color: '#FF9500' },
     { label: 'PnL', value: '+12.4%', icon: Target, color: '#AF52DE' },
@@ -31,7 +31,7 @@ export default function VPTradingPage() {
     { time: '3 hours ago', text: 'Launched new statistical arbitrage strategy' },
   ];
   const quickActions = [
-    { label: 'View Reports', icon: BarChart3 },
+    { label: 'View Reports', icon: ChartBar },
     { label: 'Team Chat', icon: MessageSquare },
     { label: 'Schedule', icon: Calendar },
     { label: 'Settings', icon: Shield },

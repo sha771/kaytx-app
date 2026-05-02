@@ -18,13 +18,13 @@ import {
   Brain,
   MessageCircle,
   Clock,
-  CheckCircle2,
+  CircleCheckBig,
   Send,
   Crown,
   GitBranch,
   Target,
   Sparkles,
-  BarChart3,
+  ChartBar,
   Shield,
   ChevronRight,
   Calendar,
@@ -116,7 +116,7 @@ export default function CounselingSessionScreen() {
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case 'performance_counseling': return BarChart3;
+      case 'performance_counseling': return ChartBarBig;
       case 'mentorship': return Sparkles;
       case 'escalation': return Shield;
       case 'advisory': return Brain;
@@ -187,7 +187,7 @@ export default function CounselingSessionScreen() {
           
           {/* Status */}
           <View style={styles.infoRow}>
-            <CheckCircle2 size={18} color={getStatusColor(session.status)} />
+            <CircleCheckBig size={18} color={getStatusColor(session.status)} />
             <View style={styles.infoContent}>
               <Text style={[styles.infoLabel, { color: theme.colors.secondaryText }]}>Status</Text>
               <Text style={[styles.infoValue, { color: getStatusColor(session.status) }]}>
@@ -342,7 +342,7 @@ export default function CounselingSessionScreen() {
                         )}
                         {response.counselingGuidance.performanceImprovement && (
                           <View style={styles.guidanceItem}>
-                            <BarChart3 size={14} color="#007AFF" />
+                            <ChartBarBig size={14} color="#007AFF" />
                             <Text style={[styles.guidanceText, { color: theme.colors.text }]}>
                               Performance Plan: {response.counselingGuidance.performanceImprovement.timeline}
                             </Text>
@@ -406,7 +406,7 @@ export default function CounselingSessionScreen() {
         {session.status === 'completed' && latestResponse ? (
           <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
             <View style={[styles.outcomeHeader, { backgroundColor: '#34C75915' }]}>
-              <CheckCircle2 size={32} color="#34C759" />
+              <CircleCheckBig size={32} color="#34C759" />
               <Text style={[styles.outcomeTitle, { color: '#34C759' }]}>Session Completed</Text>
             </View>
             
@@ -444,7 +444,7 @@ export default function CounselingSessionScreen() {
                 
                 {latestResponse.counselingGuidance.performanceImprovement && (
                   <View style={styles.guidanceCard}>
-                    <BarChart3 size={18} color="#007AFF" />
+                    <ChartBarBig size={18} color="#007AFF" />
                     <View style={styles.guidanceInfo}>
                       <Text style={[styles.guidanceTitle, { color: theme.colors.text }]}>
                         Performance Improvement
@@ -563,7 +563,7 @@ export default function CounselingSessionScreen() {
             style={[styles.tab, activeTab === 'outcome' && styles.tabActive]}
             onPress={() => setActiveTab('outcome')}
           >
-            <CheckCircle2 size={16} color={activeTab === 'outcome' ? '#fff' : 'rgba(255,255,255,0.6)'} />
+            <CircleCheckBig size={16} color={activeTab === 'outcome' ? '#fff' : 'rgba(255,255,255,0.6)'} />
             <Text style={[styles.tabText, activeTab === 'outcome' && styles.tabTextActive]}>Outcome</Text>
           </TouchableOpacity>
         </View>

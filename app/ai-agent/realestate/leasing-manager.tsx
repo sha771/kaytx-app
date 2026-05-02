@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Key, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Key, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'736',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.9s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.0%',icon:Target,color:'#33691E'}];
+  const stats = [{label:'Tasks',value:'736',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.9s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.0%',icon:Target,color:'#33691E'}];
   const capabilities = ['Leasing Strategy','Tenant Prospecting','Negotiation','Market Analysis','Occupancy Optimization','Tenant Relations'];
   const responsibilities = ['Leasing strategy & pipeline management','Tenant prospecting & qualification','Lease negotiation & execution','Market analysis & rent benchmarking','Occupancy optimization strategies','Tenant relations & retention'];
-  const activities = [{time:'3 min ago',text:'Leased 12,000 sq ft this month',icon:CheckCircle2},{time:'6 min ago',text:'Negotiated 5 new leases',icon:Clock},{time:'9 min ago',text:'Maintained 95% occupancy rate',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Leased 12,000 sq ft this month',icon: CircleCheckBig},{time:'6 min ago',text:'Negotiated 5 new leases',icon:Clock},{time:'9 min ago',text:'Maintained 95% occupancy rate',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

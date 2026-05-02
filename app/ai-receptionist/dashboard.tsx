@@ -22,9 +22,9 @@ import {
   Star,
   Calendar,
   Activity,
-  BarChart3,
-  CheckCircle,
-  AlertCircle,
+  ChartBar,
+  CircleCheck,
+  CircleAlert,
   DollarSign,
   ArrowLeft,
   Plus,
@@ -195,20 +195,20 @@ export default function AIReceptionistDashboard() {
     { id: '1', title: 'View Calls', icon: Phone, route: '/ai-receptionist/call-logs', color: '#007AFF' },
     { id: '2', title: 'Appointments', icon: Calendar, route: '/ai-receptionist/appointments', color: '#34C759' },
     { id: '3', title: 'Contacts', icon: Users, route: '/ai-receptionist/contacts', color: '#FF9500' },
-    { id: '4', title: 'Analytics', icon: BarChart3, route: '/ai-receptionist/analytics', color: '#AF52DE' },
+    { id: '4', title: 'Analytics', icon: ChartBar, route: '/ai-receptionist/analytics', color: '#AF52DE' },
   ];
 
   const aiInsights = [
     {
       type: 'success',
       message: '97% answer rate achieved - Industry-leading performance',
-      icon: CheckCircle,
+      icon: CircleCheck,
       color: '#34C759',
     },
     {
       type: 'warning',
       message: 'Peak hours: 2-4 PM requires +3 concurrent lines',
-      icon: AlertCircle,
+      icon: CircleAlert,
       color: '#FF9500',
     },
     {
@@ -226,7 +226,7 @@ export default function AIReceptionistDashboard() {
     {
       type: 'alert',
       message: '8 VIP callers in queue - Priority routing active',
-      icon: AlertCircle,
+      icon: CircleAlert,
       color: '#FF3B30',
     },
   ];
@@ -289,7 +289,7 @@ export default function AIReceptionistDashboard() {
                 selectedPeriod === period && { backgroundColor: theme.colors.primary },
               ]}
               onPress={() => handlePeriodChange(period)}
-              testID={`period-filter-${period}`}
+              testID={`period-Filter-${period}`}
             >
               <Text
                 style={[

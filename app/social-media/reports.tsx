@@ -1,9 +1,9 @@
- 
+﻿ 
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { FileText, Download, Calendar, BarChart2, TrendingUp, Users, Clock, ChevronRight, Plus } from 'lucide-react-native';
+import { FileText, Download, Calendar, ChartBar, TrendingUp, Users, Clock, ChevronRight, Plus } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 
 interface Report {
@@ -22,7 +22,7 @@ export default function PerformanceReports() {
     { id: '1', title: 'Weekly Summary', icon: Calendar, color: '#007AFF', desc: 'Overview of last 7 days' },
     { id: '2', title: 'Engagement Report', icon: TrendingUp, color: '#34C759', desc: 'Detailed engagement metrics' },
     { id: '3', title: 'Audience Insights', icon: Users, color: '#FF9500', desc: 'Demographics & growth' },
-    { id: '4', title: 'Content Performance', icon: BarChart2, color: '#AF52DE', desc: 'Post-level analytics' },
+    { id: '4', title: 'Content Performance', icon: ChartBar2, color: '#AF52DE', desc: 'Post-level analytics' },
   ];
 
   const recentReports: Report[] = [

@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Megaphone, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Megaphone, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'791',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.3s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.0%',icon:Target,color:'#33691E'}];
+  const stats = [{label:'Tasks',value:'791',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.3s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.0%',icon:Target,color:'#33691E'}];
   const capabilities = ['Marketing Strategy','Digital Marketing','Content Creation','Lead Generation','Brand Management','Analytics'];
   const responsibilities = ['Property marketing strategy development','Digital marketing campaign management','Marketing content creation & distribution','Lead generation & tracking','Property brand management','Marketing analytics & ROI reporting'];
-  const activities = [{time:'3 min ago',text:'Launched marketing for 3 properties',icon:CheckCircle2},{time:'6 min ago',text:'Generated 200 leads this week',icon:Clock},{time:'9 min ago',text:'Analyzed campaign ROI metrics',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Launched marketing for 3 properties',icon: CircleCheckBig},{time:'6 min ago',text:'Generated 200 leads this week',icon:Clock},{time:'9 min ago',text:'Analyzed campaign ROI metrics',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

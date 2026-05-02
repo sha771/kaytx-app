@@ -34,9 +34,9 @@ import {
   Scale,
   
   // Department Icons
-  BarChart3,
-  PieChart,
-  LineChart,
+  ChartBar,
+  ChartPie,
+  ChartLine,
   Activity,
   Zap,
   Settings,
@@ -59,7 +59,7 @@ import {
   Box,
   Truck,
   ClipboardList,
-  CheckSquare,
+  SquareCheck,
   Calculator,
   Receipt,
   Wallet,
@@ -73,7 +73,7 @@ import {
   ShieldCheck,
   ShieldAlert,
   Siren,
-  Fingerprint,
+  FingerprintPattern,
   ScanEye,
   Lock,
   Bot,
@@ -91,7 +91,7 @@ import {
   BadgeCheck,
   FileBadge,
   FileCheck,
-  FileBarChart,
+  FileChartColumn,
   PenTool,
   Palette,
   BookOpen,
@@ -105,10 +105,10 @@ import {
   Lightbulb,
   Sparkles,
   Gauge,
-  AlertTriangle,
-  AlertCircle,
+  TriangleAlert,
+  CircleAlert,
   Info,
-  HelpCircle,
+  LifeBuoy,
   Bell,
   Flag,
   Pin,
@@ -153,7 +153,8 @@ export type DepartmentId =
   | 'healthcare_medical'       // Healthcare & Medical
   | 'manufacturing_production' // Manufacturing & Production
   | 'transportation_logistics' // Transportation & Logistics
-  | 'government_public';       // Government & Public Sector
+  | 'government_public'         // Government & Public Sector
+  | 'customer_insights_analytics'; // Customer Insights & Analytics
 
 export interface OrgChartPosition {
   id: string;
@@ -389,7 +390,7 @@ export const cSuiteExecutives: AIEmployeeProfile[] = [
       department: 'executive',
       title: 'Chief Executive Officer',
       reportsTo: null,
-      directReports: ['cfo', 'cto', 'cmo', 'cco', 'coo', 'chro', 'clo', 'ciso', 'cio', 'creo', 'cro', 'cmo-healthcare', 'cpo', 'clo-logistics', 'cao'],
+      directReports: ['cfo', 'cto', 'cmo', 'cco', 'coo', 'chro', 'clo', 'ciso', 'cio', 'creo', 'cro', 'cmo-healthcare', 'cpo', 'clo-logistics', 'cao', 'ccio'],
       peerPositions: []
     },
     responsibilities: [
@@ -426,7 +427,7 @@ export const cSuiteExecutives: AIEmployeeProfile[] = [
     efficiency: '20x cost efficiency',
     a2aEndpoints: ['/consult/ceo', '/strategy/vision', '/decision/executive', '/coordinate/c-suite'],
     canEscalateTo: [],
-    canReceiveEscalationFrom: ['cfo', 'cto', 'cmo', 'cco', 'coo', 'chro', 'clo', 'ciso', 'vp-finance', 'vp-tech', 'vp-marketing', 'vp-sales', 'vp-ops'],
+    canReceiveEscalationFrom: ['cfo', 'cto', 'cmo', 'cco', 'coo', 'chro', 'clo', 'ciso', 'vp-finance', 'vp-tech', 'vp-marketing', 'vp-sales', 'vp-ops', 'ccio'],
     consultationStyle: 'directive',
     route: '/ai-agent/executive/ceo',
     apiEndpoint: '/api/agents/executive/ceo',
@@ -1288,6 +1289,68 @@ export const cSuiteExecutives: AIEmployeeProfile[] = [
     status: 'active',
     isPremium: true,
     dangerLevel: 'medium'
+  },
+  // Customer Insights & Analytics Department
+  {
+    id: 'ccio',
+    name: 'AI Chief Customer Insights Officer',
+    title: 'CCIO - Chief Customer Insights Officer',
+    level: 'c_level',
+    department: 'customer_insights_analytics',
+    description: 'Leads customer insights and analytics strategy, driving data-driven decision making through deep customer understanding, behavioral analysis, predictive intelligence, and personalization across the organization.',
+    icon: ChartBar,
+    color: '#6366F1',
+    orgChart: {
+      id: 'ccio',
+      level: 'c_level',
+      department: 'customer_insights_analytics',
+      title: 'Chief Customer Insights Officer',
+      reportsTo: 'ceo',
+      directReports: ['vp-customer-insights', 'vp-behavioral-analytics'],
+      peerPositions: ['cco', 'cmo', 'cfo', 'cio']
+    },
+    responsibilities: [
+      'Customer Insights Strategy',
+      'Behavioral Intelligence Leadership',
+      'Predictive Analytics Governance',
+      'Personalization Strategy',
+      'Voice of Customer Programs',
+      'CLV Optimization',
+      'Churn Prevention Strategy',
+      'Sentiment Intelligence Oversight'
+    ],
+    capabilities: [
+      'Customer Insights Strategy',
+      'Behavioral Intelligence',
+      'Predictive Analytics Leadership',
+      'Personalization Governance',
+      'Voice of Customer Programs',
+      'CLV Optimization',
+      'Churn Prevention Strategy',
+      'Sentiment Intelligence',
+      'Journey Optimization',
+      'Insight-to-Action Orchestration'
+    ],
+    keyMetrics: [
+      'Insight Generation Rate',
+      'Prediction Accuracy',
+      'CLV Growth',
+      'Churn Reduction',
+      'Personalization Impact',
+      'Customer Understanding Score'
+    ],
+    humanCostEquivalent: '$350,000/year',
+    aiCost: '$17,500/year',
+    efficiency: '20x cost efficiency',
+    a2aEndpoints: ['/consult/ccio', '/insights/strategy', '/analytics/lead', '/predict/customer'],
+    canEscalateTo: ['ceo'],
+    canReceiveEscalationFrom: ['vp-customer-insights', 'vp-behavioral-analytics', 'cco', 'cmo'],
+    consultationStyle: 'analytical',
+    route: '/ai-agent/insights/ccio',
+    apiEndpoint: '/api/agents/insights/ccio',
+    status: 'active',
+    isPremium: true,
+    dangerLevel: 'high'
   }
 ];
 
@@ -1304,7 +1367,7 @@ export const vpDirectors: AIEmployeeProfile[] = [
     level: 'vp_director',
     department: 'finance',
     description: 'Leads financial planning, analysis, and strategic forecasting. Supports CFO in financial strategy execution.',
-    icon: BarChart3,
+    icon: ChartBar,
     color: '#4CAF50',
     orgChart: {
       id: 'vp-finance',
@@ -2085,11 +2148,121 @@ export const vpDirectors: AIEmployeeProfile[] = [
     status: 'active',
     isPremium: true,
     dangerLevel: 'critical'
+  },
+  // Customer Insights & Analytics Department
+  {
+    id: 'vp-customer-insights',
+    name: 'AI VP of Customer Insights',
+    title: 'VP Customer Insights & Journey Analytics',
+    level: 'vp_director',
+    department: 'customer_insights_analytics',
+    description: 'Leads customer journey analysis, segmentation, personalization, and voice analytics. Transforms customer data into actionable insights that drive business strategy.',
+    icon: SearchCheck,
+    color: '#6366F1',
+    orgChart: {
+      id: 'vp-customer-insights',
+      level: 'vp_director',
+      department: 'customer_insights_analytics',
+      title: 'VP of Customer Insights',
+      reportsTo: 'ccio',
+      directReports: ['customer-insights-manager', 'cia-journey-analyst', 'cia-segmentation', 'cia-personalization', 'cia-voice-analytics'],
+      peerPositions: ['vp-behavioral-analytics']
+    },
+    responsibilities: [
+      'Customer Journey Analytics',
+      'Segmentation Strategy',
+      'Personalization Architecture',
+      'Voice Analytics Operations',
+      'Insight Delivery',
+      'Cross-channel Analysis'
+    ],
+    capabilities: [
+      'Journey Analytics',
+      'Segmentation Strategy',
+      'Personalization Architecture',
+      'Voice Analytics',
+      'Touchpoint Optimization',
+      'Customer Profiling',
+      'Omnichannel Insights',
+      'Insight Presentation'
+    ],
+    keyMetrics: [
+      'Journey Completion Rate',
+      'Segmentation Accuracy',
+      'Personalization Uplift',
+      'Voice Insight Quality',
+      'Insight Adoption Rate'
+    ],
+    humanCostEquivalent: '$200,000/year',
+    aiCost: '$10,000/year',
+    efficiency: '20x cost efficiency',
+    a2aEndpoints: ['/consult/vp-customer-insights', '/insights/journey', '/analytics/segmentation'],
+    canEscalateTo: ['ccio'],
+    canReceiveEscalationFrom: ['customer-insights-manager', 'cia-journey-analyst', 'cia-segmentation', 'cia-personalization', 'cia-voice-analytics'],
+    consultationStyle: 'collaborative',
+    route: '/ai-agent/insights/vp-customer-insights',
+    apiEndpoint: '/api/agents/insights/vp-insights',
+    status: 'active',
+    isPremium: true,
+    dangerLevel: 'medium'
+  },
+  {
+    id: 'vp-behavioral-analytics',
+    name: 'AI VP of Behavioral Analytics',
+    title: 'VP Behavioral Analytics & Predictive Intelligence',
+    level: 'vp_director',
+    department: 'customer_insights_analytics',
+    description: 'Leads behavioral analysis, sentiment intelligence, CLV optimization, and churn prediction. Uses advanced ML models to predict customer behavior and drive retention.',
+    icon: Brain,
+    color: '#8B5CF6',
+    orgChart: {
+      id: 'vp-behavioral-analytics',
+      level: 'vp_director',
+      department: 'customer_insights_analytics',
+      title: 'VP of Behavioral Analytics',
+      reportsTo: 'ccio',
+      directReports: ['behavioral-analytics-manager', 'cia-behavioral', 'cia-sentiment', 'cia-clv-analyst', 'cia-churn-prediction'],
+      peerPositions: ['vp-customer-insights']
+    },
+    responsibilities: [
+      'Behavioral Analytics Strategy',
+      'Sentiment Intelligence',
+      'CLV Optimization',
+      'Churn Prediction & Prevention',
+      'Predictive Modeling',
+      'Retention Analytics'
+    ],
+    capabilities: [
+      'Behavioral Modeling',
+      'Sentiment Analysis',
+      'CLV Forecasting',
+      'Churn Prediction',
+      'Predictive Analytics',
+      'Retention Strategy',
+      'Survival Analysis',
+      'Decision Science'
+    ],
+    keyMetrics: [
+      'Prediction Accuracy',
+      'CLV Growth Rate',
+      'Churn Reduction Rate',
+      'Sentiment Score',
+      'Retention ROI'
+    ],
+    humanCostEquivalent: '$210,000/year',
+    aiCost: '$10,500/year',
+    efficiency: '20x cost efficiency',
+    a2aEndpoints: ['/consult/vp-behavioral-analytics', '/predict/behavior', '/analytics/churn'],
+    canEscalateTo: ['ccio'],
+    canReceiveEscalationFrom: ['behavioral-analytics-manager', 'cia-behavioral', 'cia-sentiment', 'cia-clv-analyst', 'cia-churn-prediction'],
+    consultationStyle: 'analytical',
+    route: '/ai-agent/insights/vp-behavioral-analytics',
+    apiEndpoint: '/api/agents/insights/vp-behavioral',
+    status: 'active',
+    isPremium: true,
+    dangerLevel: 'high'
   }
 ];
-
-// ============================================
-// HIERARCHY HELPER FUNCTIONS
 // ============================================
 
 export function getAllExecutives(): AIEmployeeProfile[] {
@@ -2146,10 +2319,10 @@ export function getLevelEmployees(level: HierarchyLevel): AIEmployeeProfile[] {
 
 // Total counts
 export const AI_WORKFORCE_STATS = {
-  totalAgents: 199,
-  cSuiteCount: cSuiteExecutives.length, // 15 (8 original + 7 new)
+  totalAgents: 226,
+  cSuiteCount: cSuiteExecutives.length, // 17 (9 original + 8 new)
   vpDirectorCount: vpDirectors.length,
-  departments: 21,
+  departments: 23,
   hierarchyLevels: 5
 };
 

@@ -13,7 +13,7 @@ import {
   Calendar,
   FileText,
   Users,
-  CheckCircle,
+  CircleCheck,
   ArrowLeft,
   DollarSign,
   ChevronRight,
@@ -42,7 +42,7 @@ export default function HealthcareScreen() {
   const industryMetrics = useMemo(() => [
     { label: 'Patient Inquiries/Day', value: statsData?.tasksToday ? `${(statsData.tasksToday / 15).toFixed(1)}K+` : '25K+', icon: Users, color: '#007AFF' },
     { label: 'Avg Triage Time', value: '30s', icon: Activity, color: '#34C759' },
-    { label: 'HIPAA Compliance', value: '100%', icon: CheckCircle, color: '#FF9500' },
+    { label: 'HIPAA Compliance', value: '100%', icon: CircleCheck, color: '#FF9500' },
     { label: 'Provider Efficiency', value: statsData?.avgSuccessRate ? `${(statsData.avgSuccessRate / 5).toFixed(1)}x` : '15x', icon: TrendingUp, color: '#5856D6' },
   ], [statsData]);
 
@@ -80,7 +80,7 @@ export default function HealthcareScreen() {
             router.push('/enterprise/billing');
             return;
           }
-          router.push(item.route as any);
+          router.push(item.route);
         }}
       >
         <View style={[styles.agentIcon, { backgroundColor: item.color + '15' }]}>
@@ -121,7 +121,7 @@ export default function HealthcareScreen() {
               </Text>
             </View>
             <View style={styles.metric}>
-              <CheckCircle size={12} color={theme.colors.primary} />
+              <CircleCheck size={12} color={theme.colors.primary} />
               <Text style={[styles.metricText, { color: theme.colors.primary }]}>
                 {item.roiMetrics.accuracyRate}
               </Text>

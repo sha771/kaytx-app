@@ -4,7 +4,7 @@ import { Stack, router } from 'expo-router';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { trpc } from '@/lib/trpc';
-import { Tv, ArrowLeft, Phone, Users, MessageSquare, CreditCard, TrendingUp, Clock, Star, Zap, Shield, Globe, BarChart3, Heart, Play, Lock } from 'lucide-react-native';
+import { Tv, ArrowLeft, Phone, Users, MessageSquare, CreditCard, TrendingUp, Clock, Star, Zap, Shield, Globe, ChartBar, Heart, Play, Lock } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const { width } = Dimensions.get('window');
@@ -64,7 +64,7 @@ export default function MediaEntertainmentScreen() {
                 <View style={styles.section}>
                     <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Benefits</Text>
                     <View style={styles.benefitsGrid}>
-                        {[{ icon: Zap, color: '#FF6B6B', title: 'Viral Event Ready', desc: 'Handle 100x engagement spikes' }, { icon: Globe, color: '#4ECDC4', title: 'Omnichannel', desc: 'Engage on all social platforms' }, { icon: Shield, color: '#6C5CE7', title: 'Content Safety', desc: 'AI-powered moderation' }, { icon: BarChart3, color: '#00B894', title: 'Fan Analytics', desc: 'Deep engagement insights' }].map((b, i) => { const I = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><I size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
+                        {[{ icon: Zap, color: '#FF6B6B', title: 'Viral Event Ready', desc: 'Handle 100x engagement spikes' }, { icon: Globe, color: '#4ECDC4', title: 'Omnichannel', desc: 'Engage on all social platforms' }, { icon: Shield, color: '#6C5CE7', title: 'Content Safety', desc: 'AI-powered moderation' }, { icon: ChartBar, color: '#00B894', title: 'Fan Analytics', desc: 'Deep engagement insights' }].map((b, i) => { const I = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><I size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
                     </View>
                 </View>
 
@@ -120,7 +120,7 @@ export default function MediaEntertainmentScreen() {
                                         router.push('/enterprise/billing');
                                         return;
                                     }
-                                    router.push(a.route as any);
+                                    router.push(a.route);
                                 }}
                             >
                                 <View style={[styles.agentIcon, { backgroundColor: a.color + '20' }]}><I size={28} color={a.color} /></View>
@@ -142,7 +142,7 @@ export default function MediaEntertainmentScreen() {
 
                 <View style={[styles.cta, { backgroundColor: theme.colors.cardBackground }]}>
                     <Text style={[styles.ctaTitle, { color: theme.colors.text }]}>Engage your audience like never before</Text>
-                    <TouchableOpacity style={[styles.ctaBtn, { backgroundColor: theme.colors.primary }]} onPress={() => router.push('/ai-agent/ai-agent' as any)}><Text style={styles.ctaBtnText}>Get Started</Text></TouchableOpacity>
+                    <TouchableOpacity style={[styles.ctaBtn, { backgroundColor: theme.colors.primary }]} onPress={() => router.push('/ai-agent/ai-agent')}><Text style={styles.ctaBtnText}>Get Started</Text></TouchableOpacity>
                 </View>
                 <View style={{ height: 40 }} />
             </ScrollView>

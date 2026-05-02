@@ -15,11 +15,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   ArrowLeft,
   Search,
-  Filter,
+  ListFilter,
   Clock,
-  CheckCircle,
-  XCircle,
-  AlertTriangle,
+  CircleCheck,
+  CircleX,
+  TriangleAlert,
   Phone,
   Mail,
   FileText,
@@ -41,7 +41,7 @@ import {
   ArrowDownRight,
   Database,
   Zap,
-  BarChart3,
+  ChartBar,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
@@ -358,7 +358,7 @@ const mockHistory: HistoryItem[] = [
       ],
       resolution: 'Report delivered, follow-up scheduled for anomalies',
     },
-    icon: BarChart3,
+    icon: ChartBar,
     color: '#AF52DE',
     confidence: 99,
     tokensUsed: 1200,
@@ -450,7 +450,7 @@ const mockHistory: HistoryItem[] = [
       ],
       resolution: 'Report shared with leadership, action items assigned',
     },
-    icon: AlertTriangle,
+    icon: TriangleAlert,
     color: '#FF2D55',
     confidence: 94,
     tokensUsed: 3100,
@@ -567,9 +567,9 @@ export default function AgentHistoryScreen() {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'success': return CheckCircle;
-      case 'failed': return XCircle;
-      case 'warning': return AlertTriangle;
+      case 'success': return CircleCheck;
+      case 'failed': return CircleX;
+      case 'warning': return TriangleAlert;
       case 'retried': return RotateCcw;
       default: return Clock;
     }
@@ -680,7 +680,7 @@ export default function AgentHistoryScreen() {
             )}
             {item.details.resolution && (
               <View style={[styles.resolutionBox, { backgroundColor: `${item.color}10` }]}>
-                <CheckCircle size={14} color={item.color} />
+                <CircleCheck size={14} color={item.color} />
                 <Text style={[styles.resolutionText, { color: theme.colors.text }]}>{item.details.resolution}</Text>
               </View>
             )}
@@ -754,7 +754,7 @@ export default function AgentHistoryScreen() {
             style={[styles.headerButton, { backgroundColor: theme.colors.cardBackground }]}
             onPress={() => setShowFilters(!showFilters)}
           >
-            <Filter size={18} color={showFilters ? theme.colors.primary : theme.colors.text} />
+            <ListFilter size={18} color={showFilters ? theme.colors.primary : theme.colors.text} />
           </TouchableOpacity>
           <TouchableOpacity style={[styles.headerButton, { backgroundColor: theme.colors.cardBackground }]}>
             <Download size={18} color={theme.colors.text} />
@@ -772,19 +772,19 @@ export default function AgentHistoryScreen() {
         </View>
         <View style={styles.statDivider} />
         <View style={styles.statItem}>
-          <CheckCircle size={16} color="#34C759" />
+          <CircleCheck size={16} color="#34C759" />
           <Text style={[styles.statValue, { color: '#34C759' }]}>{stats.success}</Text>
           <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Success</Text>
         </View>
         <View style={styles.statDivider} />
         <View style={styles.statItem}>
-          <AlertTriangle size={16} color="#FF9500" />
+          <TriangleAlert size={16} color="#FF9500" />
           <Text style={[styles.statValue, { color: '#FF9500' }]}>{stats.warnings}</Text>
           <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Warnings</Text>
         </View>
         <View style={styles.statDivider} />
         <View style={styles.statItem}>
-          <XCircle size={16} color="#FF3B30" />
+          <CircleX size={16} color="#FF3B30" />
           <Text style={[styles.statValue, { color: '#FF3B30' }]}>{stats.failed}</Text>
           <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Failed</Text>
         </View>
@@ -807,7 +807,7 @@ export default function AgentHistoryScreen() {
         />
         {searchQuery.length > 0 && (
           <TouchableOpacity onPress={() => setSearchQuery('')}>
-            <XCircle size={18} color={theme.colors.secondaryText} />
+            <CircleX size={18} color={theme.colors.secondaryText} />
           </TouchableOpacity>
         )}
       </View>

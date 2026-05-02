@@ -1,9 +1,9 @@
- 
+﻿ 
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Users, UserPlus, CheckSquare, Calendar, Clock, BarChart3, Settings } from 'lucide-react-native';
+import { Users, UserPlus, SquareCheck, Calendar, Clock, ChartBar, Settings } from 'lucide-react-native';
 
 interface Task {
   id: string;
@@ -144,7 +144,7 @@ export default function TaskAssignment() {
     <View style={styles.tabContent}>
       <View style={styles.statsGrid}>
         <View style={styles.statCard}>
-          <CheckSquare size={24} color="#4ecdc4" />
+          <SquareCheck size={24} color="#4ecdc4" />
           <Text style={styles.statCardValue}>24</Text>
           <Text style={styles.statCardLabel}>Active Tasks</Text>
         </View>
@@ -154,7 +154,7 @@ export default function TaskAssignment() {
           <Text style={styles.statCardLabel}>Team Members</Text>
         </View>
         <View style={styles.statCard}>
-          <BarChart3 size={24} color="#f39c12" />
+          <ChartBarBig size={24} color="#f39c12" />
           <Text style={styles.statCardValue}>92%</Text>
           <Text style={styles.statCardLabel}>Completion Rate</Text>
         </View>
@@ -200,7 +200,7 @@ export default function TaskAssignment() {
           style={[styles.tab, activeTab === 'tasks' && styles.activeTab]}
           onPress={() => setActiveTab('tasks')}
         >
-          <CheckSquare size={20} color={activeTab === 'tasks' ? '#4ecdc4' : '#666'} />
+          <SquareCheck size={20} color={activeTab === 'tasks' ? '#4ecdc4' : '#666'} />
           <Text style={[styles.tabText, activeTab === 'tasks' && styles.activeTabText]}>Tasks</Text>
         </TouchableOpacity>
         <TouchableOpacity 
@@ -214,7 +214,7 @@ export default function TaskAssignment() {
           style={[styles.tab, activeTab === 'analytics' && styles.activeTab]}
           onPress={() => setActiveTab('analytics')}
         >
-          <BarChart3 size={20} color={activeTab === 'analytics' ? '#4ecdc4' : '#666'} />
+          <ChartBarBig size={20} color={activeTab === 'analytics' ? '#4ecdc4' : '#666'} />
           <Text style={[styles.tabText, activeTab === 'analytics' && styles.activeTabText]}>Analytics</Text>
         </TouchableOpacity>
       </View>

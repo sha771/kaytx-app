@@ -184,7 +184,7 @@ describe('SessionSearchService', () => {
       expect(result.total).toBe(3);
     });
 
-    it('should filter by status', () => {
+    it('should Filter by status', () => {
       const result = sessionSearchService.searchSessions(mockSessions, {
         status: ['pending'],
       });
@@ -192,14 +192,14 @@ describe('SessionSearchService', () => {
       expect(result.sessions[0].id).toBe('session-1');
     });
 
-    it('should filter by multiple statuses', () => {
+    it('should Filter by multiple statuses', () => {
       const result = sessionSearchService.searchSessions(mockSessions, {
         status: ['pending', 'in_progress'],
       });
       expect(result.sessions).toHaveLength(2);
     });
 
-    it('should filter by agent ID', () => {
+    it('should Filter by agent ID', () => {
       const result = sessionSearchService.searchSessions(mockSessions, {
         agentId: mockAgentId1,
       });
@@ -210,98 +210,98 @@ describe('SessionSearchService', () => {
       )).toBe(true);
     });
 
-    it('should filter by participant IDs', () => {
+    it('should Filter by participant IDs', () => {
       const result = sessionSearchService.searchSessions(mockSessions, {
         participantIds: [mockAgentId2],
       });
       expect(result.sessions.length).toBeGreaterThan(0);
     });
 
-    it('should filter by priority', () => {
+    it('should Filter by priority', () => {
       const result = sessionSearchService.searchSessions(mockSessions, {
         priority: ['high'],
       });
       expect(result.sessions.length).toBeGreaterThanOrEqual(0);
     });
 
-    it('should filter by counseling mode', () => {
+    it('should Filter by counseling mode', () => {
       const result = sessionSearchService.searchSessions(mockSessions, {
         counselingMode: ['main_to_sub'],
       });
       expect(result.sessions.length).toBeGreaterThanOrEqual(0);
     });
 
-    it('should filter by counseling type', () => {
+    it('should Filter by counseling type', () => {
       const result = sessionSearchService.searchSessions(mockSessions, {
         counselingType: ['performance_improvement'],
       });
       expect(result.sessions.length).toBeGreaterThanOrEqual(0);
     });
 
-    it('should filter by topic content', () => {
+    it('should Filter by topic content', () => {
       const result = sessionSearchService.searchSessions(mockSessions, {
         topicContains: 'Sales',
       });
       expect(result.sessions.length).toBeGreaterThanOrEqual(0);
     });
 
-    it('should filter by question content', () => {
+    it('should Filter by question content', () => {
       const result = sessionSearchService.searchSessions(mockSessions, {
         questionContains: 'improve',
       });
       expect(result.sessions.length).toBeGreaterThanOrEqual(0);
     });
 
-    it('should filter by answer content', () => {
+    it('should Filter by answer content', () => {
       const result = sessionSearchService.searchSessions(mockSessions, {
         answerContains: 'customer',
       });
       expect(result.sessions.length).toBeGreaterThanOrEqual(0);
     });
 
-    it('should filter by tags', () => {
+    it('should Filter by tags', () => {
       const result = sessionSearchService.searchSessions(mockSessions, {
         tags: ['training'],
       });
       expect(result.sessions.length).toBeGreaterThanOrEqual(0);
     });
 
-    it('should filter by minimum confidence', () => {
+    it('should Filter by minimum confidence', () => {
       const result = sessionSearchService.searchSessions(mockSessions, {
         minConfidence: 0.9,
       });
       expect(result.sessions.length).toBeGreaterThanOrEqual(0);
     });
 
-    it('should filter by maximum confidence', () => {
+    it('should Filter by maximum confidence', () => {
       const result = sessionSearchService.searchSessions(mockSessions, {
         maxConfidence: 0.8,
       });
       expect(result.sessions.length).toBeGreaterThanOrEqual(0);
     });
 
-    it('should filter by escalated status', () => {
+    it('should Filter by escalated status', () => {
       const result = sessionSearchService.searchSessions(mockSessions, {
         isEscalated: true,
       });
       expect(result.sessions.every(s => s.status === 'escalated')).toBe(true);
     });
 
-    it('should filter by initiator ID', () => {
+    it('should Filter by initiator ID', () => {
       const result = sessionSearchService.searchSessions(mockSessions, {
         initiatorId: mockAgentId1,
       });
       expect(result.sessions.every(s => s.initiator.agentId === mockAgentId1)).toBe(true);
     });
 
-    it('should filter by responder ID', () => {
+    it('should Filter by responder ID', () => {
       const result = sessionSearchService.searchSessions(mockSessions, {
         responderId: mockAgentId2,
       });
       expect(result.sessions.length).toBeGreaterThanOrEqual(0);
     });
 
-    it('should filter by date range', () => {
+    it('should Filter by date range', () => {
       const createdAfter = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000);
       const result = sessionSearchService.searchSessions(mockSessions, {
         createdAfter,
@@ -384,7 +384,7 @@ describe('SessionSearchService', () => {
   });
 
   describe('saveSearch and getSavedSearches', () => {
-    it('should save a search filter', () => {
+    it('should save a search Filter', () => {
       const filters: SessionSearchFilters = {
         status: ['pending'],
         priority: ['high'],
@@ -438,44 +438,44 @@ describe('SessionSearchService', () => {
     it('should return predefined quick filters', () => {
       const filters = sessionSearchService.getQuickFilters(mockAgentId1);
       expect(filters.length).toBeGreaterThan(0);
-      expect(filters.every(f => f.id && f.label && f.filter)).toBe(true);
+      expect(filters.every(f => f.id && f.label && f.Filter)).toBe(true);
     });
 
-    it('should include My Sessions filter', () => {
+    it('should include My Sessions Filter', () => {
       const filters = sessionSearchService.getQuickFilters(mockAgentId1);
       const mySessions = filters.find(f => f.id === 'my_sessions');
       expect(mySessions).toBeDefined();
       expect(mySessions?.filter.participantIds).toContain(mockAgentId1);
     });
 
-    it('should include Initiated by Me filter', () => {
+    it('should include Initiated by Me Filter', () => {
       const filters = sessionSearchService.getQuickFilters(mockAgentId1);
       const initiatedByMe = filters.find(f => f.id === 'initiated_by_me');
       expect(initiatedByMe).toBeDefined();
       expect(initiatedByMe?.filter.initiatorId).toBe(mockAgentId1);
     });
 
-    it('should include Awaiting Response filter', () => {
+    it('should include Awaiting Response Filter', () => {
       const filters = sessionSearchService.getQuickFilters(mockAgentId1);
       const awaitingResponse = filters.find(f => f.id === 'awaiting_response');
       expect(awaitingResponse).toBeDefined();
     });
 
-    it('should include High Priority filter', () => {
+    it('should include High Priority Filter', () => {
       const filters = sessionSearchService.getQuickFilters(mockAgentId1);
       const highPriority = filters.find(f => f.id === 'high_priority');
       expect(highPriority).toBeDefined();
       expect(highPriority?.filter.priority).toContain('critical');
     });
 
-    it('should include Recently Completed filter', () => {
+    it('should include Recently Completed Filter', () => {
       const filters = sessionSearchService.getQuickFilters(mockAgentId1);
       const recentlyCompleted = filters.find(f => f.id === 'recently_completed');
       expect(recentlyCompleted).toBeDefined();
       expect(recentlyCompleted?.filter.status).toContain('completed');
     });
 
-    it('should include Escalated filter', () => {
+    it('should include Escalated Filter', () => {
       const filters = sessionSearchService.getQuickFilters(mockAgentId1);
       const escalated = filters.find(f => f.id === 'escalated');
       expect(escalated).toBeDefined();

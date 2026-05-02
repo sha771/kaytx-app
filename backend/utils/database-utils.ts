@@ -141,7 +141,7 @@ export class DatabaseUtils {
   }
 
   /**
-   * Get records with soft delete filter
+   * Get records with soft delete Filter
    */
   static getWithoutDeleted(table: any) {
     const db = this.getDatabase();
@@ -277,8 +277,8 @@ export class DatabaseUtils {
       const result = await db.execute(`
         SELECT 
           count(*) as total_connections,
-          count(*) FILTER (WHERE state = 'idle') as idle_connections,
-          count(*) FILTER (WHERE state = 'active') as active_connections
+          count(*) Filter (WHERE state = 'idle') as idle_connections,
+          count(*) Filter (WHERE state = 'active') as active_connections
         FROM pg_stat_activity 
         WHERE datname = current_database()
       `);

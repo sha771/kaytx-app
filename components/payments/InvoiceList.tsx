@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, RefreshControl, Alert } from 'react-native';
 import { trpc } from '@/lib/trpc';
 import { Invoice } from '../../types/payment';
-import { Receipt, Visibility, Download, Payment } from 'lucide-react-native';
+import { Receipt, Eye, Download, CreditCard } from 'lucide-react-native';
 
 interface InvoiceListProps {
   organizationId: string;
@@ -197,7 +197,7 @@ export const InvoiceList: React.FC<InvoiceListProps> = ({
                   style={styles.actionButton}
                   onPress={() => handleInvoicePress(invoice)}
                 >
-                  <Visibility size={20} color="#007AFF" />
+                  <Eye size={20} color="#007AFF" />
                   <Text style={styles.actionButtonText}>View</Text>
                 </TouchableOpacity>
 
@@ -214,7 +214,7 @@ export const InvoiceList: React.FC<InvoiceListProps> = ({
                     style={[styles.actionButton, styles.payButton]}
                     onPress={() => handlePaymentPress(invoice)}
                   >
-                    <Payment size={20} color="#fff" />
+                    <CreditCard size={20} color="#fff" />
                     <Text style={[styles.actionButtonText, styles.payButtonText]}>
                       Pay Now
                     </Text>

@@ -22,15 +22,15 @@ import {
   Download,
   Share2,
   Sparkles,
-  Filter,
+  ListFilter,
   X,
   Play,
   Link2,
   FileText,
   Mail,
   Bot,
-  AlertCircle,
-  CheckCircle,
+  CircleAlert,
+  CircleCheck,
   Copy,
   ExternalLink,
   Zap,
@@ -255,7 +255,7 @@ export default function ReceptionistTranscriptsScreen() {
           <View style={[styles.filterCard, { backgroundColor: theme.colors.cardBackground }]} testID="receptionist-transcripts-filters">
             <View style={styles.filterHeader}>
               <View style={styles.filterTitleRow}>
-                <Filter size={16} color={theme.colors.primary} />
+                <ListFilter size={16} color={theme.colors.primary} />
                 <Text style={[styles.filterTitle, { color: theme.colors.text }]}>Filter & route</Text>
               </View>
               <TouchableOpacity style={styles.clearButton} onPress={() => {
@@ -480,11 +480,11 @@ export default function ReceptionistTranscriptsScreen() {
                       <Text style={[styles.analysisSectionTitle, { color: theme.colors.text }]}>Recommended Next Steps</Text>
                       <View style={styles.recommendationsList}>
                         <View style={styles.recommendationItem}>
-                          <CheckCircle size={16} color="#34C759" />
+                          <CircleCheck size={16} color="#34C759" />
                           <Text style={[styles.recommendationText, { color: theme.colors.text }]}>Send WhatsApp receipt with tracking link</Text>
                         </View>
                         <View style={styles.recommendationItem}>
-                          <AlertCircle size={16} color="#FFCC00" />
+                          <CircleAlert size={16} color="#FFCC00" />
                           <Text style={[styles.recommendationText, { color: theme.colors.text }]}>Update CRM with VIP status confirmation</Text>
                         </View>
                         <View style={styles.recommendationItem}>

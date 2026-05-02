@@ -13,8 +13,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import {
   ArrowLeft,
   Activity,
-  BarChart3,
-  LineChart,
+  ChartBar,
+  ChartLine,
   Brain,
   Lightbulb,
   Users,
@@ -28,14 +28,14 @@ import {
   Power,
   Sparkles,
   Star,
-  CheckCircle,
+  CircleCheck,
   Settings,
   Zap,
   Radio,
   Eye,
   Shield,
   Gauge,
-  PieChart,
+  ChartPie,
   Layers,
   Cpu,
   Database,
@@ -110,7 +110,7 @@ const initialSubAgents: SubAgent[] = [
     id: 'ap-2',
     name: 'Business Intelligence AI',
     description: 'Transforms raw data into actionable business insights',
-    icon: BarChart3,
+    icon: ChartBar,
     enabled: true,
     status: 'active',
     tasksCompleted: 3890,
@@ -135,7 +135,7 @@ const initialSubAgents: SubAgent[] = [
     id: 'ap-3',
     name: 'Predictive Analytics AI',
     description: 'ML-powered forecasting and trend prediction',
-    icon: LineChart,
+    icon: ChartLine,
     enabled: true,
     status: 'active',
     tasksCompleted: 2340,
@@ -445,7 +445,7 @@ export default function AnalysisPerformanceAIScreen() {
     switch (tier) {
       case 'enterprise': return Crown;
       case 'premium': return Star;
-      default: return CheckCircle;
+      default: return CircleCheck;
     }
   };
 
@@ -551,7 +551,7 @@ export default function AnalysisPerformanceAIScreen() {
                 <Text style={[styles.quickStatLabel, { color: theme.colors.secondaryText }]}>Insights</Text>
               </View>
               <View style={[styles.quickStatItem, { backgroundColor: theme.colors.background }]}>
-                <BarChart3 size={14} color="#007AFF" />
+                <ChartBarBig size={14} color="#007AFF" />
                 <Text style={[styles.quickStatValue, { color: theme.colors.text }]}>{agent.reportsCreated}</Text>
                 <Text style={[styles.quickStatLabel, { color: theme.colors.secondaryText }]}>Reports</Text>
               </View>
@@ -639,7 +639,7 @@ export default function AnalysisPerformanceAIScreen() {
                 <Text style={[styles.actionButtonText, { color: ACCENT_COLOR }]}>Configure</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#007AFF15' }]}>
-                <BarChart3 size={16} color="#007AFF" />
+                <ChartBarBig size={16} color="#007AFF" />
                 <Text style={[styles.actionButtonText, { color: '#007AFF' }]}>Analytics</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#34C75915' }]}>
@@ -680,7 +680,7 @@ export default function AnalysisPerformanceAIScreen() {
         <View style={styles.mainAgentCard}>
           <View style={styles.mainAgentHeader}>
             <View style={styles.mainAgentIcon}>
-              <PieChart size={28} color="#fff" />
+              <ChartPie size={28} color="#fff" />
               {mainAgentEnabled && (
                 <Animated.View style={[styles.mainLiveIndicator, { transform: [{ scale: pulseAnim }] }]}>
                   <View style={styles.mainLiveIndicatorInner} />

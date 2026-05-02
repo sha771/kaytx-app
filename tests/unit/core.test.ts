@@ -306,7 +306,7 @@ describe('Core Application Tests', () => {
       expect(allOrgs.some((o: any) => o.id === orgId)).toBe(true);
     });
 
-    it('should filter users', async () => {
+    it('should Filter users', async () => {
       const orgId = 'org1';
       const userId1 = memoryDb.createUser({ email: 'user1@test.com', organizationId: orgId });
       const userId2 = memoryDb.createUser({ email: 'user2@test.com', organizationId: orgId });

@@ -1,7 +1,7 @@
 
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { TrendingUp, Activity, BarChart3, Shield, Globe, Zap, DollarSign } from 'lucide-react-native';
+import { TrendingUp, Activity, ChartBar, Shield, Globe, Zap, DollarSign } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
@@ -78,7 +78,7 @@ export default function TradingMainScreen() {
 
   const customTabs = [
     { id: 'orchestration', label: 'Orchestration', icon: Activity, component: orchestrationTab },
-    { id: 'analytics', label: 'Analytics', icon: BarChart3, component: <View /> },
+    { id: 'analytics', label: 'Analytics', icon: ChartBar, component: <View /> },
   ];
 
   return <AgentShell agent={agent} customTabs={customTabs} />;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
@@ -9,7 +9,7 @@ import {
   MessageCircle,
   Share2,
   Eye,
-  BarChart2,
+  ChartBar,
   Instagram,
   Twitter,
   Facebook,
@@ -68,7 +68,7 @@ export default function SocialAnalytics() {
     { id: 'engagement', title: 'Engagement', value: '324K', change: '+18.2%', isPositive: true, icon: Heart, color: '#FF2D55' },
     { id: 'followers', title: 'Total Followers', value: '562K', change: '+12.4%', isPositive: true, icon: Users, color: '#34C759' },
     { id: 'posts', title: 'Posts Published', value: '156', change: '+8.1%', isPositive: true, icon: Share2, color: '#AF52DE' },
-    { id: 'impressions', title: 'Impressions', value: '8.7M', change: '+32.1%', isPositive: true, icon: BarChart2, color: '#FF9500' },
+    { id: 'impressions', title: 'Impressions', value: '8.7M', change: '+32.1%', isPositive: true, icon: ChartBar2, color: '#FF9500' },
     { id: 'clicks', title: 'Link Clicks', value: '45.2K', change: '-2.3%', isPositive: false, icon: Target, color: '#5AC8FA' },
   ];
 

@@ -22,9 +22,9 @@ import {
   DollarSign,
   Tag,
   Search,
-  Filter,
+  ListFilter,
   Plus,
-  Edit,
+  Pencil,
   Trash2,
   ArrowLeft,
   Star,
@@ -192,7 +192,7 @@ export default function CRMIntegrationScreen() {
         </View>
         <View style={styles.integrationActions}>
           <TouchableOpacity style={styles.actionButton}>
-            <Edit size={16} color={theme.colors.text} />
+            <Pencil size={16} color={theme.colors.text} />
           </TouchableOpacity>
           <Switch
             value={item.status === 'connected'}

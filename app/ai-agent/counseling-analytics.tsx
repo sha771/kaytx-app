@@ -12,20 +12,20 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import {
   ArrowLeft,
-  BarChart3,
+  ChartBar,
   TrendingUp,
   TrendingDown,
   Users,
   Clock,
-  CheckCircle2,
-  AlertTriangle,
+  CircleCheckBig,
+  TriangleAlert,
   MessageCircle,
   Crown,
   GitBranch,
   Target,
   Calendar,
   ChevronRight,
-  Filter,
+  ListFilter,
   Download,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
@@ -297,7 +297,7 @@ export default function CounselingAnalyticsScreen() {
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filtersContent}>
           {/* Time Range Filter */}
           <View style={styles.filterGroup}>
-            <Filter size={14} color={theme.colors.secondaryText} />
+            <ListFilter size={14} color={theme.colors.secondaryText} />
             <View style={styles.filterButtons}>
               {(['7d', '30d', '90d', 'all'] as TimeRange[]).map(range => (
                 <TouchableOpacity
@@ -365,7 +365,7 @@ export default function CounselingAnalyticsScreen() {
             title="Completed"
             value={analytics.completedSessions}
             subtitle={`${completionRate}% completion rate`}
-            icon={CheckCircle2}
+            icon={CircleCheckBig}
             color="#34C759"
             trend="up"
           />
@@ -381,7 +381,7 @@ export default function CounselingAnalyticsScreen() {
             title="Escalated"
             value={analytics.escalatedSessions}
             subtitle="Require attention"
-            icon={AlertTriangle}
+            icon={TriangleAlert}
             color="#FF3B30"
             trend="down"
           />

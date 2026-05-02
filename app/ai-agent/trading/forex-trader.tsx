@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { DollarSign, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { DollarSign, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'1,921',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.9s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'100.0%',icon:Target,color:'#0277BD'}];
+  const stats = [{label:'Tasks',value:'1,921',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.9s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'100.0%',icon:Target,color:'#0277BD'}];
   const capabilities = ['FX Trading','Currency Analysis','Carry Trade','Hedging','Cross-Border','Central Bank Policy'];
   const responsibilities = ['Foreign exchange market analysis & trading','Currency pair analysis & forecasting','Carry trade strategy execution','FX hedging & risk management','Cross-border payment optimization','Central bank policy monitoring'];
-  const activities = [{time:'3 min ago',text:'Traded EUR/USD carry strategy',icon:CheckCircle2},{time:'6 min ago',text:'Analyzed BOJ policy impact',icon:Clock},{time:'9 min ago',text:'Hedged USD exposure for Q3',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Traded EUR/USD carry strategy',icon: CircleCheckBig},{time:'6 min ago',text:'Analyzed BOJ policy impact',icon:Clock},{time:'9 min ago',text:'Hedged USD exposure for Q3',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

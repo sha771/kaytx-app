@@ -19,15 +19,15 @@ import {
   TrendingUp,
   Save,
   Plus,
-  Edit,
+  Pencil,
   Trash2,
   X,
   BookOpen,
   Zap,
   Shield,
   MessageSquare,
-  BarChart3,
-  AlertCircle,
+  ChartBar,
+  CircleAlert,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { Stack } from 'expo-router';
@@ -312,7 +312,7 @@ export default function NegotiationConfigScreen() {
                 style={styles.iconButton}
                 onPress={() => handleEditTraining(item)}
               >
-                <Edit size={16} color={theme.colors.text} />
+                <Pencil size={16} color={theme.colors.text} />
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.iconButton}
@@ -362,7 +362,7 @@ export default function NegotiationConfigScreen() {
             </Text>
             <View style={styles.limitActions}>
               <TouchableOpacity style={styles.iconButton} onPress={() => handleEditLimit(item)}>
-                <Edit size={16} color={theme.colors.text} />
+                <Pencil size={16} color={theme.colors.text} />
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.iconButton}
@@ -394,7 +394,7 @@ export default function NegotiationConfigScreen() {
           </View>
           {item.requiresManagerApproval && (
             <View style={[styles.approvalBadge, { backgroundColor: '#FF950020' }]}>
-              <AlertCircle size={12} color="#FF9500" />
+              <CircleAlert size={12} color="#FF9500" />
               <Text style={[styles.approvalText, { color: '#FF9500' }]}>
                 Requires Manager Approval
               </Text>
@@ -652,7 +652,7 @@ export default function NegotiationConfigScreen() {
           ]}
           onPress={() => setActiveTab('analytics')}
         >
-          <BarChart3
+          <ChartBarBig
             size={20}
             color={activeTab === 'analytics' ? theme.colors.primary : theme.colors.secondaryText}
           />

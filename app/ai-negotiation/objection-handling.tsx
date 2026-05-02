@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { Stack } from 'expo-router';
-import { Shield, Plus, Edit2, Trash2, TrendingUp, AlertCircle } from 'lucide-react-native';
+import { Shield, Plus, PenLine, Trash2, TrendingUp, CircleAlert } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface Objection {
@@ -103,7 +103,7 @@ export default function ObjectionHandlingScreen() {
           <Text style={styles.statLabel}>Total Responses</Text>
         </View>
         <View style={styles.statCard}>
-          <AlertCircle size={18} color="#F59E0B" />
+          <CircleAlert size={18} color="#F59E0B" />
           <Text style={styles.statValue}>511</Text>
           <Text style={styles.statLabel}>Times Used</Text>
         </View>
@@ -139,7 +139,7 @@ export default function ObjectionHandlingScreen() {
               
               <View style={styles.actionButtons}>
                 <TouchableOpacity style={styles.actionButton}>
-                  <Edit2 size={16} color="#10B981" />
+                  <PenLine size={16} color="#10B981" />
                   <Text style={styles.actionButtonText}>Edit</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 

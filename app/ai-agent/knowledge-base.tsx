@@ -17,20 +17,20 @@ import {
   Folder,
   Tag,
   Clock,
-  MoreVertical,
-  Edit,
+  EllipsisVertical,
+  Pencil,
   Trash2,
   Upload,
   Download,
   RefreshCw,
-  CheckCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleAlert,
   Globe,
   Link,
   File,
   Book,
   Layers,
-  Filter,
+  ListFilter,
   ChevronRight,
   Star,
 } from 'lucide-react-native';
@@ -221,7 +221,7 @@ export default function KnowledgeBaseScreen() {
             </Text>
           </View>
           <TouchableOpacity>
-            <MoreVertical size={20} color={colors.icon} />
+            <EllipsisVertical size={20} color={colors.icon} />
           </TouchableOpacity>
         </View>
 
@@ -329,7 +329,7 @@ export default function KnowledgeBaseScreen() {
           </View>
         </View>
         <TouchableOpacity>
-          <MoreVertical size={18} color={colors.icon} />
+          <EllipsisVertical size={18} color={colors.icon} />
         </TouchableOpacity>
       </View>
 
@@ -346,7 +346,7 @@ export default function KnowledgeBaseScreen() {
             </Text>
           </View>
           <View style={styles.itemStat}>
-            <CheckCircle size={12} color={colors.icon} />
+            <CircleCheck size={12} color={colors.icon} />
             <Text style={[styles.itemStatText, { color: colors.icon }]}>
               {item.helpful}% helpful
             </Text>
@@ -441,7 +441,7 @@ export default function KnowledgeBaseScreen() {
           />
         </View>
         <TouchableOpacity style={[styles.filterButton, { backgroundColor: colors.card }]}>
-          <Filter size={18} color={colors.icon} />
+          <ListFilter size={18} color={colors.icon} />
         </TouchableOpacity>
       </View>
 

@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Heart, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Heart, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'1,968',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.5s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.3%',icon:Target,color:'#B71C1C'}];
+  const stats = [{label:'Tasks',value:'1,968',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.5s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.3%',icon:Target,color:'#B71C1C'}];
   const capabilities = ['Patient Experience','Service Design','Satisfaction Metrics','Complaint Resolution','Culture Development','Innovation'];
   const responsibilities = ['Patient experience strategy & design','Satisfaction metrics & survey management','Service recovery & complaint resolution','Patient-centered culture development','Experience innovation programs','Cross-functional experience coordination'];
-  const activities = [{time:'3 min ago',text:'Launched patient feedback program',icon:CheckCircle2},{time:'6 min ago',text:'Improved NPS by 15 points',icon:Clock},{time:'9 min ago',text:'Redesigned intake process flow',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Launched patient feedback program',icon: CircleCheckBig},{time:'6 min ago',text:'Improved NPS by 15 points',icon:Clock},{time:'9 min ago',text:'Redesigned intake process flow',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

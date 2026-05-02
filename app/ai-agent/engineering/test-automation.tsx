@@ -1,19 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Bot, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap, User } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks/Day',value:'231',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'2.0s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.6%',icon:Target,color:'#1565C0'}];
+  const stats = [{label:'Tasks/Day',value:'231',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'2.0s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.6%',icon:Target,color:'#1565C0'}];
   const capabilities = ['Test Automation','Bug Detection','Quality Assurance'];
   const responsibilities = ['Software architecture & development','CI/CD pipeline management & optimization','Code quality & testing standards','Security vulnerability assessment & remediation','Infrastructure provisioning & monitoring','Technical documentation & knowledge sharing'];
-  const activities = [{time:'3 min ago',text:'Deployed 12 production releases',icon:CheckCircle2},{time:'6 min ago',text:'Resolved 8 critical bugs',icon:Clock},{time:'9 min ago',text:'Optimized API response times by 25%',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Deployed 12 production releases',icon: CircleCheckBig},{time:'6 min ago',text:'Resolved 8 critical bugs',icon:Clock},{time:'9 min ago',text:'Optimized API response times by 25%',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#1565C020' }]}><Bot size={48} color="#1565C0" /></View>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#1565C020' }]}><User size={48} color="#1565C0" /></View>
         <Text style={[styles.heroTitle, { color: theme.colors.text }]}>AI Test Automation</Text>
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Engineering</Text>
         <View style={styles.badgesRow}>

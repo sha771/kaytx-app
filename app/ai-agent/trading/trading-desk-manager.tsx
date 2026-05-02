@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Monitor, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Monitor, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'4,194',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.1s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.9%',icon:Target,color:'#0277BD'}];
+  const stats = [{label:'Tasks',value:'4,194',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.1s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.9%',icon:Target,color:'#0277BD'}];
   const capabilities = ['Desk Operations','Team Mgmt','Order Flow','Risk Oversight','P&L Management','Compliance'];
   const responsibilities = ['Trading desk operations management','Trader team coordination & oversight','Order flow management & optimization','Real-time risk oversight','Desk P&L management & reporting','Trading compliance enforcement'];
-  const activities = [{time:'3 min ago',text:'Managed desk P&L of $2.4M',icon:CheckCircle2},{time:'6 min ago',text:'Coordinated 8 trader activities',icon:Clock},{time:'9 min ago',text:'Reviewed order flow quality',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Managed desk P&L of $2.4M',icon: CircleCheckBig},{time:'6 min ago',text:'Coordinated 8 trader activities',icon:Clock},{time:'9 min ago',text:'Reviewed order flow quality',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

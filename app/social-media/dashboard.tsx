@@ -1,4 +1,4 @@
- 
+﻿ 
 import React, { useState } from 'react';
 import {
   View,
@@ -22,7 +22,7 @@ import {
   Hash,
   Image,
   Video,
-  BarChart2,
+  ChartBar,
   ArrowUpRight,
   ArrowDownRight,
   Instagram,
@@ -233,7 +233,7 @@ export default function SocialMediaDashboard() {
       id: 'analytics',
       title: 'View Analytics',
       subtitle: 'Detailed performance metrics',
-      icon: BarChart2,
+      icon: ChartBar2,
       color: '#FF9500',
       route: '/social-media/analytics',
     },
@@ -348,7 +348,7 @@ export default function SocialMediaDashboard() {
                 <TouchableOpacity
                   key={action.id}
                   style={[styles.actionCard, { backgroundColor: theme.colors.cardBackground }]}
-                  onPress={() => router.push(action.route as any)}
+                  onPress={() => router.push(action.route)}
                 >
                   <View style={[styles.actionIcon, { backgroundColor: `${action.color}15` }]}>
                     <IconComponent size={22} color={action.color} />
@@ -365,7 +365,7 @@ export default function SocialMediaDashboard() {
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Platform Overview</Text>
-            <TouchableOpacity onPress={() => router.push('/social-media/multi-account' as any)}>
+            <TouchableOpacity onPress={() => router.push('/social-media/multi-account')}>
               <Text style={[styles.seeAll, { color: theme.colors.primary }]}>Manage</Text>
             </TouchableOpacity>
           </View>
@@ -410,7 +410,7 @@ export default function SocialMediaDashboard() {
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Scheduled Posts</Text>
-            <TouchableOpacity onPress={() => router.push('/social-media/content-calendar' as any)}>
+            <TouchableOpacity onPress={() => router.push('/social-media/content-calendar')}>
               <Text style={[styles.seeAll, { color: theme.colors.primary }]}>View Calendar</Text>
             </TouchableOpacity>
           </View>
@@ -421,7 +421,7 @@ export default function SocialMediaDashboard() {
               <TouchableOpacity
                 key={post.id}
                 style={[styles.postCard, { backgroundColor: theme.colors.cardBackground }]}
-                onPress={() => router.push('/social-media/post-scheduler' as any)}
+                onPress={() => router.push('/social-media/post-scheduler')}
               >
                 <View style={[styles.postPlatformIcon, { backgroundColor: `${post.platformColor}15` }]}>
                   <PlatformIcon size={20} color={post.platformColor} />

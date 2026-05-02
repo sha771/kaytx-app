@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Calendar, Clock, Plus, Search, Filter, Users, MapPin, Bell, Video } from 'lucide-react-native';
+import { Calendar, Clock, Plus, Search, ListFilter, Users, MapPin, Bell, Video } from 'lucide-react-native';
 
 interface Meeting {
   id: string;
@@ -133,7 +133,7 @@ export default function MeetingScreen() {
           placeholderTextColor="#9CA3AF"
         />
         <TouchableOpacity style={styles.filterButton}>
-          <Filter size={20} color="#6B7280" />
+          <ListFilter size={20} color="#6B7280" />
         </TouchableOpacity>
       </View>
 

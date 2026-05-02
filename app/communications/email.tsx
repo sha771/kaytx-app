@@ -22,18 +22,18 @@ import {
   Paperclip,
   Flag,
   Inbox,
-  Filter,
+  ListFilter,
   Clock,
   Users,
   Tag,
   Eye,
   Trash2,
   ArrowLeft,
-  MoreVertical,
+  EllipsisVertical,
   Reply,
   Forward,
-  AlertCircle,
-  CheckCircle,
+  CircleAlert,
+  CircleCheck,
   Calendar,
   FileText,
 } from 'lucide-react-native';
@@ -252,7 +252,7 @@ export default function EmailScreen() {
                   <Archive size={16} color={theme.colors.secondaryText} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.actionButton}>
-                  <MoreVertical size={16} color={theme.colors.secondaryText} />
+                  <EllipsisVertical size={16} color={theme.colors.secondaryText} />
                 </TouchableOpacity>
               </View>
             </View>
@@ -315,7 +315,7 @@ export default function EmailScreen() {
             style={styles.headerButton}
             onPress={() => setShowFilters(!showFilters)}
           >
-            <Filter size={20} color={theme.colors.text} />
+            <ListFilter size={20} color={theme.colors.text} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.composeButton}>
             <Plus size={20} color="white" />
@@ -403,13 +403,13 @@ export default function EmailScreen() {
           </Text>
         </View>
         <View style={styles.statItem}>
-          <CheckCircle size={16} color="#34C759" />
+          <CircleCheck size={16} color="#34C759" />
           <Text style={[styles.statText, { color: theme.colors.text }]}>
             98% delivered
           </Text>
         </View>
         <View style={styles.statItem}>
-          <AlertCircle size={16} color="#FF9500" />
+          <CircleAlert size={16} color="#FF9500" />
           <Text style={[styles.statText, { color: theme.colors.text }]}>
             2 spam
           </Text>

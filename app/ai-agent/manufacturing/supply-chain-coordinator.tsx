@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Link, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Link, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'559',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.3s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.8%',icon:Target,color:'#BF360C'}];
+  const stats = [{label:'Tasks',value:'559',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.3s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.8%',icon:Target,color:'#BF360C'}];
   const capabilities = ['Supply Coordination','Vendor Mgmt','Order Tracking','Inventory Sync','Logistics','Demand Forecasting'];
   const responsibilities = ['Supply chain coordination & management','Vendor relationship management','Purchase order tracking & expediting','Inventory synchronization across sites','Logistics coordination & optimization','Demand forecasting support'];
-  const activities = [{time:'3 min ago',text:'Coordinated 80 supplier deliveries',icon:CheckCircle2},{time:'6 min ago',text:'Expedited 12 critical orders',icon:Clock},{time:'9 min ago',text:'Synchronized inventory across 3 sites',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Coordinated 80 supplier deliveries',icon: CircleCheckBig},{time:'6 min ago',text:'Expedited 12 critical orders',icon:Clock},{time:'9 min ago',text:'Synchronized inventory across 3 sites',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

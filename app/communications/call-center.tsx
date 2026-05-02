@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Phone, Users, Clock, BarChart3, Settings, Plus, Search, Filter, PhoneCall } from 'lucide-react-native';
+import { Phone, Users, Clock, ChartBar, Settings, Plus, Search, ListFilter, PhoneCall } from 'lucide-react-native';
 
 interface CallCenter {
   id: string;
@@ -90,7 +90,7 @@ export default function CallCenterScreen() {
         
         <View style={styles.filterContainer}>
           <TouchableOpacity style={styles.filterButton}>
-            <Filter size={20} color="#3B82F6" />
+            <ListFilter size={20} color="#3B82F6" />
           </TouchableOpacity>
           
           <TouchableOpacity style={styles.addButton}>
@@ -121,7 +121,7 @@ export default function CallCenterScreen() {
           </View>
           
           <View style={styles.statCard}>
-            <BarChart3 size={24} color="#8B5CF6" />
+            <ChartBarBig size={24} color="#8B5CF6" />
             <Text style={styles.statNumber}>72</Text>
             <Text style={styles.statLabel}>Calls Today</Text>
           </View>
@@ -172,7 +172,7 @@ export default function CallCenterScreen() {
                 </TouchableOpacity>
                 
                 <TouchableOpacity style={styles.actionButton}>
-                  <BarChart3 size={16} color="#10B981" />
+                  <ChartBarBig size={16} color="#10B981" />
                   <Text style={styles.actionText}>Stats</Text>
                 </TouchableOpacity>
                 
@@ -200,7 +200,7 @@ export default function CallCenterScreen() {
             </TouchableOpacity>
             
             <TouchableOpacity style={styles.actionCard}>
-              <BarChart3 size={24} color="#F59E0B" />
+              <ChartBarBig size={24} color="#F59E0B" />
               <Text style={styles.actionCardText}>View Reports</Text>
             </TouchableOpacity>
             

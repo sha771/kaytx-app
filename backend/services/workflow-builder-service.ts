@@ -155,7 +155,7 @@ export interface NodeConfig {
   // Data Transform Node
   dataTransform?: {
     operations: {
-      type: 'map' | 'filter' | 'reduce' | 'sort' | 'group' | 'flatten' | 'validate';
+      type: 'map' | 'Filter' | 'reduce' | 'sort' | 'group' | 'flatten' | 'validate';
       config: Record<string, any>;
     }[];
   };
@@ -1381,8 +1381,8 @@ class WorkflowBuilderService {
           case 'map':
             // Apply mapping transformation
             break;
-          case 'filter':
-            // Apply filter
+          case 'Filter':
+            // Apply Filter
             break;
           case 'sort':
             // Apply sorting

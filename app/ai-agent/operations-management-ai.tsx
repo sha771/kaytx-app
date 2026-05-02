@@ -20,7 +20,7 @@ import {
   Package,
   Shield,
   Boxes,
-  CheckCircle,
+  CircleCheck,
   ChevronRight,
   Play,
   Pause,
@@ -30,7 +30,7 @@ import {
   Star,
   TrendingUp,
   Clock,
-  BarChart3,
+  ChartBar,
   Zap,
   Activity,
   Gauge,
@@ -42,7 +42,7 @@ import {
   Timer,
   Cpu,
   GitBranch,
-  AlertTriangle,
+  TriangleAlert,
   Target,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
@@ -260,7 +260,7 @@ const initialSubAgents: SubAgent[] = [
     id: 'om-8',
     name: 'AI Quality Control Agent',
     description: 'Maintains quality with automated testing and monitoring',
-    icon: CheckCircle,
+    icon: CircleCheck,
     enabled: true,
     status: 'active',
     tasksCompleted: 190,
@@ -414,7 +414,7 @@ export default function OperationsManagementAIScreen() {
     switch (tier) {
       case 'enterprise': return Crown;
       case 'premium': return Star;
-      default: return CheckCircle;
+      default: return CircleCheck;
     }
   };
 
@@ -608,7 +608,7 @@ export default function OperationsManagementAIScreen() {
                 <Text style={[styles.actionButtonText, { color: ACCENT_COLOR }]}>Configure</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#007AFF15' }]}>
-                <BarChart3 size={16} color="#007AFF" />
+                <ChartBarBig size={16} color="#007AFF" />
                 <Text style={[styles.actionButtonText, { color: '#007AFF' }]}>Analytics</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#34C75915' }]}>

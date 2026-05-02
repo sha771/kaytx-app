@@ -10,11 +10,10 @@ import {
 import { useRouter } from 'expo-router';
 import {
   ChevronLeft,
-  GitCompare,
+  ArrowLeftRight,
   Plus,
   X,
   Check,
-  Bot,
   Target,
   Zap,
   Clock,
@@ -24,6 +23,7 @@ import {
   ChevronRight,
   Brain,
   Mic,
+  User,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInUp } from 'react-native-reanimated';
@@ -66,7 +66,7 @@ export default function AgentComparisonScreen() {
 
   const comparisonMetrics = [
     { key: 'successRate', label: 'Success Rate', icon: Target, suffix: '%' },
-    { key: 'tasksCompleted', label: 'Tasks Done', icon: Bot, format: (v: number) => (v / 1000).toFixed(0) + 'K' },
+    { key: 'tasksCompleted', label: 'Tasks Done', icon: User, format: (v: number) => (v / 1000).toFixed(0) + 'K' },
     { key: 'averageResponseTime', label: 'Response', icon: Clock, suffix: 's' },
     { key: 'customerSatisfaction', label: 'Satisfaction', icon: Award, suffix: '/5' },
     { key: 'uptime', label: 'Uptime', icon: Zap },

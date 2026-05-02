@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Calculator, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Calculator, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'4,396',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.3s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.4%',icon:Target,color:'#0277BD'}];
+  const stats = [{label:'Tasks',value:'4,396',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.3s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.4%',icon:Target,color:'#0277BD'}];
   const capabilities = ['Quant Modeling','Statistical Analysis','Machine Learning','Factor Analysis','Time Series','Risk Modeling'];
   const responsibilities = ['Quantitative model development & testing','Statistical analysis & hypothesis testing','Machine learning model deployment','Factor analysis & alpha generation','Time series forecasting','Quantitative risk modeling'];
-  const activities = [{time:'3 min ago',text:'Deployed new ML alpha model',icon:CheckCircle2},{time:'6 min ago',text:'Validated factor return predictions',icon:Clock},{time:'9 min ago',text:'Updated risk model parameters',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Deployed new ML alpha model',icon: CircleCheckBig},{time:'6 min ago',text:'Validated factor return predictions',icon:Clock},{time:'9 min ago',text:'Updated risk model parameters',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

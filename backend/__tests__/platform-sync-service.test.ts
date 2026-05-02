@@ -138,7 +138,7 @@ describe('ConsolidatedPlatformSyncService', () => {
       const analytics = await platformSyncService.getAnalytics(testOrganizationId, dateRange);
 
       expect(analytics).toBeDefined();
-      // Should filter data by date range
+      // Should Filter data by date range
     });
 
     it('should generate meaningful recommendations', async () => {

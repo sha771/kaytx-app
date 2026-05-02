@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Handshake, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Handshake, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'3,967',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.1s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.8%',icon:Target,color:'#E65100'}];
+  const stats = [{label:'Tasks',value:'3,967',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.1s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.8%',icon:Target,color:'#E65100'}];
   const capabilities = ['Deal Structuring','Negotiation Strategy','Contract Review','Pricing Strategy','Objection Handling','Closing'];
   const responsibilities = ['Deal structuring & proposal development','Negotiation strategy & execution','Contract terms review & optimization','Pricing strategy & discount management','Objection handling & resolution','Deal closing & signature management'];
-  const activities = [{time:'3 min ago',text:'Negotiated 3 enterprise deals',icon:CheckCircle2},{time:'6 min ago',text:'Structured $1.2M contract',icon:Clock},{time:'9 min ago',text:'Resolved pricing objections',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Negotiated 3 enterprise deals',icon: CircleCheckBig},{time:'6 min ago',text:'Structured $1.2M contract',icon:Clock},{time:'9 min ago',text:'Resolved pricing objections',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

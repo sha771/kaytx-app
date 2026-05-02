@@ -18,13 +18,13 @@ import {
   Clock,
   Calendar,
   Search,
-  Filter,
+  ListFilter,
   Download,
   Play,
   FileText,
   TrendingUp,
   DollarSign,
-  CheckCircle,
+  CircleCheck,
   ShieldCheck,
   MessageCircle,
   Signal,
@@ -254,7 +254,7 @@ export default function CallLogsScreen() {
               testID="call-stat-answered"
             >
               <View style={[styles.statIcon, { backgroundColor: '#34C75920' }]}> 
-                <CheckCircle size={20} color="#34C759" />
+                <CircleCheck size={20} color="#34C759" />
               </View>
               <Text style={[styles.statValue, { color: theme.colors.text }]}>{stats.answered}</Text>
               <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Answered</Text>
@@ -331,7 +331,7 @@ export default function CallLogsScreen() {
             style={[styles.filterButton, { backgroundColor: theme.colors.cardBackground }]}
             onPress={() => setShowFilterModal(true)}
           >
-            <Filter size={20} color={theme.colors.primary} />
+            <ListFilter size={20} color={theme.colors.primary} />
           </TouchableOpacity>
         </View>
 
@@ -340,12 +340,12 @@ export default function CallLogsScreen() {
         >
           {(['all', 'answered', 'missed', 'won', 'lost'] as const).map(filter => (
             <TouchableOpacity
-              key={filter}
-              style={[styles.filterChip, selectedFilter === filter && { backgroundColor: theme.colors.primary }, selectedFilter !== filter && { backgroundColor: theme.colors.cardBackground }]}
-              onPress={() => setSelectedFilter(filter)}
+              key={Filter}
+              style={[styles.filterChip, selectedFilter === Filter && { backgroundColor: theme.colors.primary }, selectedFilter !== Filter && { backgroundColor: theme.colors.cardBackground }]}
+              onPress={() => setSelectedFilter(Filter)}
             >
-              <Text style={[styles.filterChipText, { color: selectedFilter === filter ? '#fff' : theme.colors.text }]}>
-                {filter.charAt(0).toUpperCase() + filter.slice(1)}
+              <Text style={[styles.filterChipText, { color: selectedFilter === Filter ? '#fff' : theme.colors.text }]}>
+                {Filter.charAt(0).toUpperCase() + Filter.slice(1)}
               </Text>
             </TouchableOpacity>
           ))}
@@ -509,7 +509,7 @@ export default function CallLogsScreen() {
             </View>
 
             <View style={styles.modalSection}
-              testID="call-filter-calltype"
+              testID="call-Filter-calltype"
             >
               <Text style={[styles.modalSectionTitle, { color: theme.colors.text }]}>Call Type</Text>
               <View style={styles.optionsRow}>
@@ -528,7 +528,7 @@ export default function CallLogsScreen() {
             </View>
 
             <View style={styles.modalSection}
-              testID="call-filter-channel"
+              testID="call-Filter-channel"
             >
               <Text style={[styles.modalSectionTitle, { color: theme.colors.text }]}>Channel</Text>
               <View style={styles.optionsRow}>

@@ -117,7 +117,7 @@ describe('Counseling Templates Service', () => {
       expect(templates.length).toBeGreaterThan(0);
     });
 
-    it('should filter by category', () => {
+    it('should Filter by category', () => {
       counselingTemplates.createTemplate(validTemplateInput);
 
       const performanceTemplates = counselingTemplates.getAllTemplates({ category: 'performance' });
@@ -125,7 +125,7 @@ describe('Counseling Templates Service', () => {
       expect(performanceTemplates.every(t => t.category === 'performance')).toBe(true);
     });
 
-    it('should filter by counseling mode', () => {
+    it('should Filter by counseling mode', () => {
       counselingTemplates.createTemplate(validTemplateInput);
 
       const mainToSubTemplates = counselingTemplates.getAllTemplates({ counselingMode: 'main_to_sub' });
@@ -133,7 +133,7 @@ describe('Counseling Templates Service', () => {
       expect(mainToSubTemplates.every(t => t.counselingMode === 'main_to_sub')).toBe(true);
     });
 
-    it('should filter by organization ID', () => {
+    it('should Filter by organization ID', () => {
       counselingTemplates.createTemplate(validTemplateInput);
 
       const orgTemplates = counselingTemplates.getAllTemplates({ organizationId: mockOrgId });
@@ -142,7 +142,7 @@ describe('Counseling Templates Service', () => {
       expect(orgTemplates.length).toBeGreaterThan(0);
     });
 
-    it('should filter by system templates only', () => {
+    it('should Filter by system templates only', () => {
       counselingTemplates.createTemplate(validTemplateInput);
 
       const systemTemplates = counselingTemplates.getAllTemplates({ isSystem: true });
@@ -150,7 +150,7 @@ describe('Counseling Templates Service', () => {
       expect(systemTemplates.every(t => t.metadata.isSystemTemplate)).toBe(true);
     });
 
-    it('should filter by tags', () => {
+    it('should Filter by tags', () => {
       const templateWithTags = counselingTemplates.createTemplate({
         ...validTemplateInput,
         tags: ['test-tag', 'performance'],

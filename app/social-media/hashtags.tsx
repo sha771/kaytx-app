@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Hash, TrendingUp, Search, Plus, Copy, Star, BarChart2, Eye } from 'lucide-react-native';
+import { Hash, TrendingUp, Search, Plus, Copy, Star, ChartBar, Eye } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 
 interface HashtagData {
@@ -26,7 +26,7 @@ export default function HashtagManager() {
     { id: 'trending', label: 'Trending', icon: TrendingUp },
     { id: 'saved', label: 'Saved', icon: Star },
     { id: 'suggested', label: 'Suggested', icon: Hash },
-  ];
+  ] as const;
 
   const hashtags: HashtagData[] = [
     { id: '1', tag: '#Innovation', posts: '2.4M', reach: '890M', engagement: '4.2%', trending: true, saved: true },
@@ -81,7 +81,7 @@ export default function HashtagManager() {
               <TouchableOpacity
                 key={cat.id}
                 style={[styles.categoryTab, selectedCategory === cat.id && { backgroundColor: theme.colors.primary }]}
-                onPress={() => setSelectedCategory(cat.id as any)}
+                onPress={() => setSelectedCategory(cat.id)}
               >
                 <IconComponent size={16} color={selectedCategory === cat.id ? '#FFF' : theme.colors.secondaryText} />
                 <Text style={[styles.categoryText, { color: selectedCategory === cat.id ? '#FFF' : theme.colors.secondaryText }]}>
@@ -165,7 +165,7 @@ export default function HashtagManager() {
                 </View>
                 <View style={[styles.statDivider, { backgroundColor: theme.colors.border }]} />
                 <View style={styles.hashtagStat}>
-                  <BarChart2 size={14} color={theme.colors.secondaryText} />
+                  <ChartBar size={14} color={theme.colors.secondaryText} />
                   <Text style={[styles.statValue, { color: theme.colors.text }]}>{hashtag.engagement}</Text>
                   <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Engagement</Text>
                 </View>

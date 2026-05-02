@@ -12,8 +12,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   ArrowLeft,
   HardDrive,
-  CheckCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleAlert,
   Clock,
   Database,
   Server,
@@ -288,7 +288,7 @@ const metrics: BackupMetric[] = [
     label: 'Success Rate',
     value: '98.5%',
     change: 2,
-    icon: CheckCircle,
+    icon: CircleCheck,
     color: '#5AC8FA',
   },
   {
@@ -659,7 +659,7 @@ export default function BackupScreen() {
 
   const renderSimulation = ({ item }: { item: SimulationResult }) => {
     const color = item.outcome === 'pass' ? '#34C759' : item.outcome === 'partial' ? '#FF9500' : '#FF3B30';
-    const OutcomeIcon = item.outcome === 'pass' ? ShieldCheck : item.outcome === 'partial' ? AlertCircle : AlertCircle;
+    const OutcomeIcon = item.outcome === 'pass' ? ShieldCheck : item.outcome === 'partial' ? CircleAlert : CircleAlert;
 
     return (
       <View style={[styles.simulationCard, { backgroundColor: theme.colors.cardBackground }]}
@@ -727,7 +727,7 @@ export default function BackupScreen() {
             />
 
             <View style={styles.alertCard}>
-              <AlertCircle size={20} color="#FF3B30" />
+              <CircleAlert size={20} color="#FF3B30" />
               <View>
                 <Text style={[styles.alertTitle, { color: theme.colors.text }]}>1 job needs attention</Text>
                 <Text style={[styles.alertDescription, { color: theme.colors.secondaryText }]}>Configuration Files backup failed 30 minutes ago</Text>
@@ -813,7 +813,7 @@ export default function BackupScreen() {
 
             <Text style={[styles.sectionTitle, { color: theme.colors.text, marginTop: 24 }]}>Recent Restorations</Text>
             <View style={[styles.emptyState, { backgroundColor: theme.colors.cardBackground }]}>
-              <AlertCircle size={32} color={theme.colors.secondaryText} />
+              <CircleAlert size={32} color={theme.colors.secondaryText} />
               <Text style={[styles.emptyText, { color: theme.colors.secondaryText }]}>No recent restore operations</Text>
             </View>
           </View>

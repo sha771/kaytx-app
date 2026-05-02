@@ -592,7 +592,7 @@ describe('ConsolidatedPlatformSyncService', () => {
 
       const result = await syncService.transformPlatformData('salesforce', invalidData);
 
-      expect(result.contacts).toHaveLength(0); // Should filter out invalid records
+      expect(result.contacts).toHaveLength(0); // Should Filter out invalid records
     });
 
     it('should apply field mappings during transformation', async () => {

@@ -13,7 +13,7 @@ import {
   ChevronLeft,
   Plus,
   Search,
-  Filter,
+  ListFilter,
   Settings,
   Truck,
   Boxes,
@@ -22,15 +22,15 @@ import {
   Wrench,
   ShieldCheck,
   Clock,
-  BarChart3,
-  CheckCircle,
+  ChartBar,
+  CircleCheck,
   MessageSquare,
   Star,
   Sparkles,
-  Bot,
   Factory,
   Users,
   FileText,
+  User,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInUp, FadeIn } from 'react-native-reanimated';
@@ -124,7 +124,7 @@ const OPERATIONS_SUB_AGENTS: SubAgent[] = [
     name: 'Demand Planning AI',
     title: 'Forecasting Specialist',
     description: 'Analyzes demand patterns, forecasts needs, and optimizes production schedules',
-    icon: BarChart3,
+    icon: ChartBar,
     status: 'active',
     tasksCompleted: 1876,
     performance: 93.5,
@@ -283,7 +283,7 @@ export default function OperationsAgentsScreen() {
 
           <View style={[styles.agentStats, { borderTopColor: colors.border }]}>
             <View style={styles.stat}>
-              <CheckCircle size={14} color={colors.tint} />
+              <CircleCheck size={14} color={colors.tint} />
               <Text style={[styles.statValue, { color: colors.text }]}>
                 {agent.tasksCompleted.toLocaleString()}
               </Text>
@@ -413,7 +413,7 @@ export default function OperationsAgentsScreen() {
           onChangeText={setSearchQuery}
         />
         <TouchableOpacity>
-          <Filter size={20} color={colors.icon} />
+          <ListFilter size={20} color={colors.icon} />
         </TouchableOpacity>
       </View>
 
@@ -436,7 +436,7 @@ export default function OperationsAgentsScreen() {
 
         {filteredAgents.length === 0 && (
           <View style={styles.emptyState}>
-            <Bot size={48} color={colors.icon} />
+            <User size={48} color={colors.icon} />
             <Text style={[styles.emptyTitle, { color: colors.text }]}>
               No agents found
             </Text>

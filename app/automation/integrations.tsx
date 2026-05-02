@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Link, Zap, Settings, BarChart3, Plus, CheckCircle, AlertCircle } from 'lucide-react-native';
+import { Link, Zap, Settings, ChartBar, Plus, CircleCheck, CircleAlert } from 'lucide-react-native';
 
 interface Integration {
   id: string;
@@ -44,9 +44,9 @@ export default function Integrations() {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'active': return <CheckCircle size={16} color="#27ae60" />;
-      case 'error': return <AlertCircle size={16} color="#e74c3c" />;
-      default: return <AlertCircle size={16} color="#95a5a6" />;
+      case 'active': return <CircleCheck size={16} color="#27ae60" />;
+      case 'error': return <CircleAlert size={16} color="#e74c3c" />;
+      default: return <CircleAlert size={16} color="#95a5a6" />;
     }
   };
 
@@ -130,7 +130,7 @@ export default function Integrations() {
             <Text style={styles.statLabel}>Active</Text>
           </View>
           <View style={styles.statItem}>
-            <BarChart3 size={20} color="#f39c12" />
+            <ChartBarBig size={20} color="#f39c12" />
             <Text style={styles.statValue}>{integrations.length}</Text>
             <Text style={styles.statLabel}>Total</Text>
           </View>

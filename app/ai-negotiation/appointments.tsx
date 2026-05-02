@@ -21,15 +21,15 @@ import {
   MapPin,
   Clock,
   User,
-  CheckCircle,
+  CircleCheck,
   X,
-  Edit,
+  Pencil,
   Trash2,
   Bell,
-  Filter,
+  ListFilter,
   ChevronLeft,
   ChevronRight,
-  AlertCircle,
+  CircleAlert,
 } from 'lucide-react-native';
 import { mockNegotiationAppointments } from '@/utils/mockNegotiationData';
 import type { NegotiationAppointment } from '@/types/negotiation';
@@ -179,7 +179,7 @@ export default function AppointmentsScreen() {
               <Text style={styles.statLabel}>Upcoming</Text>
             </View>
             <View style={[styles.statCard, { backgroundColor: '#FFF0F5' }]}>
-              <CheckCircle size={20} color="#FF2D92" />
+              <CircleCheck size={20} color="#FF2D92" />
               <Text style={[styles.statValue, { color: '#FF2D92' }]}>
                 {appointments.filter((a: NegotiationAppointment) => a.status === 'completed').length}
               </Text>
@@ -291,7 +291,7 @@ export default function AppointmentsScreen() {
                 <Text style={styles.modalTitle}>Appointment Details</Text>
                 <View style={styles.modalHeaderActions}>
                   <TouchableOpacity style={styles.modalHeaderButton}>
-                    <Edit size={20} color="#FF2D92" />
+                    <Pencil size={20} color="#FF2D92" />
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.modalHeaderButton}>
                     <Trash2 size={20} color="#FF3B30" />
@@ -406,7 +406,7 @@ export default function AppointmentsScreen() {
                     {selectedAppointment.type === 'video' ? (
                       <Video size={20} color="#FFFFFF" />
                     ) : (
-                      <CheckCircle size={20} color="#FFFFFF" />
+                      <CircleCheck size={20} color="#FFFFFF" />
                     )}
                     <Text style={styles.primaryActionText}>
                       {selectedAppointment.type === 'video' ? 'Join Meeting' : 'Mark Complete'}
@@ -504,7 +504,7 @@ export default function AppointmentsScreen() {
               </View>
 
               <TouchableOpacity style={styles.createButton}>
-                <CheckCircle size={20} color="#FFFFFF" />
+                <CircleCheck size={20} color="#FFFFFF" />
                 <Text style={styles.createButtonText}>Create Appointment</Text>
               </TouchableOpacity>
             </ScrollView>

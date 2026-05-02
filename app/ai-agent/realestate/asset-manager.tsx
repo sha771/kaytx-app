@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Building, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Building, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'914',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.9s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.6%',icon:Target,color:'#33691E'}];
+  const stats = [{label:'Tasks',value:'914',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.9s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.6%',icon:Target,color:'#33691E'}];
   const capabilities = ['Asset Strategy','Performance Optimization','Capital Planning','Lease Strategy','Disposition','Reporting'];
   const responsibilities = ['Asset strategy & business plan development','Property performance optimization','Capital expenditure planning & management','Lease strategy & tenant retention','Asset disposition & sale management','Investor reporting & analytics'];
-  const activities = [{time:'3 min ago',text:'Reviewed portfolio of 15 assets',icon:CheckCircle2},{time:'6 min ago',text:'Approved $2M capex project',icon:Clock},{time:'9 min ago',text:'Prepared quarterly investor report',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Reviewed portfolio of 15 assets',icon: CircleCheckBig},{time:'6 min ago',text:'Approved $2M capex project',icon:Clock},{time:'9 min ago',text:'Prepared quarterly investor report',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

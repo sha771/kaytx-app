@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { CheckSquare, Plus, Calendar, User, Flag, Clock, Search, Filter, MoreHorizontal } from 'lucide-react-native';
+import { SquareCheck, Plus, Calendar, User, Flag, Clock, Search, ListFilter, GripHorizontal } from 'lucide-react-native';
 
 const tasks = [
   { 
@@ -160,19 +160,19 @@ export default function TaskManagementScreen() {
               onChangeText={setSearchQuery}
             />
             <TouchableOpacity style={styles.filterButton}>
-              <Filter size={20} color="#6B7280" />
+              <ListFilter size={20} color="#6B7280" />
             </TouchableOpacity>
           </View>
           
           <View style={styles.filterTabs}>
-            {['all', 'pending', 'in-progress', 'completed'].map((filter) => (
+            {['all', 'pending', 'in-progress', 'completed'].map((Filter) => (
               <TouchableOpacity
-                key={filter}
-                style={[styles.filterTab, selectedFilter === filter && styles.activeFilterTab]}
-                onPress={() => setSelectedFilter(filter as any)}
+                key={Filter}
+                style={[styles.filterTab, selectedFilter === Filter && styles.activeFilterTab]}
+                onPress={() => setSelectedFilter(Filter as any)}
               >
-                <Text style={[styles.filterTabText, selectedFilter === filter && styles.activeFilterTabText]}>
-                  {filter.charAt(0).toUpperCase() + filter.slice(1).replace('-', ' ')}
+                <Text style={[styles.filterTabText, selectedFilter === Filter && styles.activeFilterTabText]}>
+                  {Filter.charAt(0).toUpperCase() + Filter.slice(1).replace('-', ' ')}
                 </Text>
               </TouchableOpacity>
             ))}
@@ -190,7 +190,7 @@ export default function TaskManagementScreen() {
                   <Text style={styles.taskDescription}>{task.description}</Text>
                 </View>
                 <TouchableOpacity style={styles.taskMenu}>
-                  <MoreHorizontal size={20} color="#6B7280" />
+                  <GripHorizontal size={20} color="#6B7280" />
                 </TouchableOpacity>
               </View>
 
@@ -249,7 +249,7 @@ export default function TaskManagementScreen() {
           <Text style={styles.sectionTitle}>Quick Actions</Text>
           <View style={styles.actionGrid}>
             <TouchableOpacity style={styles.actionButton}>
-              <CheckSquare size={24} color="#3B82F6" />
+              <SquareCheck size={24} color="#3B82F6" />
               <Text style={styles.actionText}>Create Project</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.actionButton}>

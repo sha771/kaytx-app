@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Calculator, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Calculator, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'5,216',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'2.0s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.6%',icon:Target,color:'#004D40'}];
+  const stats = [{label:'Tasks',value:'5,216',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'2.0s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.6%',icon:Target,color:'#004D40'}];
   const capabilities = ['Actuarial Modeling','Pricing Analysis','Reserving','Risk Quantification','Statistical Analysis','Regulatory Compliance'];
   const responsibilities = ['Actuarial model development & maintenance','Pricing analysis & rate filing support','Loss reserving & estimation','Risk quantification & measurement','Statistical analysis & data modeling','Regulatory compliance for actuarial work'];
-  const activities = [{time:'3 min ago',text:'Updated loss development factors',icon:CheckCircle2},{time:'6 min ago',text:'Completed pricing review for 3 products',icon:Clock},{time:'9 min ago',text:'Validated reserve estimates',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Updated loss development factors',icon: CircleCheckBig},{time:'6 min ago',text:'Completed pricing review for 3 products',icon:Clock},{time:'9 min ago',text:'Validated reserve estimates',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

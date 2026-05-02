@@ -14,7 +14,7 @@ import {
   Volume2,
   VolumeX,
   PhoneOff,
-  MoreVertical,
+  EllipsisVertical,
   MessageSquare,
   Bot,
   Signal,
@@ -174,7 +174,7 @@ export default function VoiceCallScreen() {
           </View>
         </View>
         <TouchableOpacity>
-          <MoreVertical size={24} color={colors.text} />
+          <EllipsisVertical size={24} color={colors.text} />
         </TouchableOpacity>
       </View>
 

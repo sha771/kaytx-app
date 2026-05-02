@@ -22,7 +22,7 @@ import {
   Link2,
   Wifi,
   Copy,
-  Edit,
+  Pencil,
   Star,
   TrendingUp,
   Check,
@@ -130,13 +130,13 @@ export default function ReceptionistCallScriptsScreen() {
   };
 
   const handleChannelChange = (channel: ChannelType | 'all') => {
-    console.log('Channel filter changed', channel);
+    console.log('Channel Filter changed', channel);
     setSelectedChannel(channel);
   };
 
   const handleComplianceChange = (filter: ComplianceState) => {
-    console.log('Compliance filter changed', filter);
-    setComplianceFilter(filter);
+    console.log('Compliance Filter changed', Filter);
+    setComplianceFilter(Filter);
   };
 
   return (
@@ -263,12 +263,12 @@ export default function ReceptionistCallScriptsScreen() {
             <View style={styles.complianceRow}>
               {(['all', 'approved', 'review'] as const).map(filter => (
                 <TouchableOpacity
-                  key={filter}
-                  style={[styles.complianceChip, complianceFilter === filter && styles.complianceChipActive]}
-                  onPress={() => handleComplianceChange(filter)}
+                  key={Filter}
+                  style={[styles.complianceChip, complianceFilter === Filter && styles.complianceChipActive]}
+                  onPress={() => handleComplianceChange(Filter)}
                 >
-                  <Text style={[styles.complianceChipText, { color: complianceFilter === filter ? '#fff' : theme.colors.secondaryText }]}>
-                    {filter === 'all' ? 'All compliance' : filter}
+                  <Text style={[styles.complianceChipText, { color: complianceFilter === Filter ? '#fff' : theme.colors.secondaryText }]}>
+                    {filter === 'all' ? 'All compliance' : Filter}
                   </Text>
                 </TouchableOpacity>
               ))}
@@ -292,7 +292,7 @@ export default function ReceptionistCallScriptsScreen() {
                       <Copy size={18} color={theme.colors.secondaryText} />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.iconButton} onPress={() => console.log('Edit script', script.id)}>
-                      <Edit size={18} color={theme.colors.primary} />
+                      <Pencil size={18} color={theme.colors.primary} />
                     </TouchableOpacity>
                   </View>
                 </View>

@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Briefcase, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Briefcase, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'5,408',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'2.0s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.3%',icon:Target,color:'#33691E'}];
+  const stats = [{label:'Tasks',value:'5,408',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'2.0s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.3%',icon:Target,color:'#33691E'}];
   const capabilities = ['RE Strategy','Portfolio Oversight','Capital Allocation','Market Analysis','Stakeholder Mgmt','Risk Management'];
   const responsibilities = ['Real estate strategy & vision','Portfolio oversight & performance','Capital allocation & investment decisions','Market analysis & trend identification','Stakeholder relationship management','Real estate risk management'];
-  const activities = [{time:'3 min ago',text:'Approved $100M acquisition pipeline',icon:CheckCircle2},{time:'6 min ago',text:'Presented portfolio performance to board',icon:Clock},{time:'9 min ago',text:'Reviewed market outlook for Q3',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Approved $100M acquisition pipeline',icon: CircleCheckBig},{time:'6 min ago',text:'Presented portfolio performance to board',icon:Clock},{time:'9 min ago',text:'Reviewed market outlook for Q3',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

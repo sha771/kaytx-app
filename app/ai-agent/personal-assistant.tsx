@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { User, Calendar, CheckCircle, Clock, Plus, Search, Filter, Bell } from 'lucide-react-native';
+import { User, Calendar, CircleCheck, Clock, Plus, Search, ListFilter, Bell } from 'lucide-react-native';
 import { trpc } from '@/lib/trpc';
 import { useAIAssistant } from '@/providers/AIAssistantProvider';
 import { useTheme } from '@/providers/ThemeProvider';
@@ -28,7 +28,7 @@ export default function PersonalAssistantScreen() {
     { id: 'qa-calendar', title: 'Schedule', icon: Calendar, color: theme.colors.primary },
     { id: 'qa-remind', title: 'Reminder', icon: Bell, color: '#FF9500' },
     { id: 'qa-search', title: 'Search', icon: Search, color: '#34C759' },
-    { id: 'qa-filter', title: 'Filter', icon: Filter, color: '#AF52DE' },
+    { id: 'qa-Filter', title: 'Filter', icon: ListFilter, color: '#AF52DE' },
   ];
 
   const upcomingEvents = useMemo(() => {
@@ -151,7 +151,7 @@ export default function PersonalAssistantScreen() {
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>My Tasks</Text>
             <TouchableOpacity style={styles.filterButton}>
-              <Filter size={20} color="#6B7280" />
+              <ListFilter size={20} color="#6B7280" />
             </TouchableOpacity>
           </View>
 
@@ -167,14 +167,14 @@ export default function PersonalAssistantScreen() {
           </View>
 
           <View style={styles.filterTabs}>
-            {['all', 'pending', 'in-progress', 'completed'].map((filter) => (
+            {(['all', 'pending', 'in-progress', 'completed'] as const).map((Filter) => (
               <TouchableOpacity
-                key={filter}
-                style={[styles.filterTab, selectedFilter === filter && styles.activeFilterTab]}
-                onPress={() => setSelectedFilter(filter as any)}
+                key={Filter}
+                style={[styles.filterTab, selectedFilter === Filter && styles.activeFilterTab]}
+                onPress={() => setSelectedFilter(Filter)}
               >
-                <Text style={[styles.filterTabText, selectedFilter === filter && styles.activeFilterTabText]}>
-                  {filter.charAt(0).toUpperCase() + filter.slice(1).replace('-', ' ')}
+                <Text style={[styles.filterTabText, selectedFilter === Filter && styles.activeFilterTabText]}>
+                  {Filter.charAt(0).toUpperCase() + Filter.slice(1).replace('-', ' ')}
                 </Text>
               </TouchableOpacity>
             ))}
@@ -221,7 +221,7 @@ export default function PersonalAssistantScreen() {
               </Text>
             </View>
             <TouchableOpacity style={styles.suggestionAction}>
-              <CheckCircle size={20} color="#10B981" />
+              <CircleCheck size={20} color="#10B981" />
             </TouchableOpacity>
           </View>
           
@@ -234,7 +234,7 @@ export default function PersonalAssistantScreen() {
               </Text>
             </View>
             <TouchableOpacity style={styles.suggestionAction}>
-              <CheckCircle size={20} color="#10B981" />
+              <CircleCheck size={20} color="#10B981" />
             </TouchableOpacity>
           </View>
         </View>

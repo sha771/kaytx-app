@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Stack } from 'expo-router';
-import { Zap, Plus, Edit2, Play, Pause, BarChart3, Clock, CheckCircle } from 'lucide-react-native';
+import { Zap, Plus, PenLine, Play, Pause, ChartBar, Clock, CircleCheck } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface Workflow {
@@ -113,12 +113,12 @@ export default function WorkflowAutomationScreen() {
           <Text style={styles.statLabel}>Total Runs</Text>
         </View>
         <View style={styles.statCard}>
-          <CheckCircle size={18} color="#10B981" />
+          <CircleCheck size={18} color="#10B981" />
           <Text style={styles.statValue}>{avgSuccessRate}%</Text>
           <Text style={styles.statLabel}>Success Rate</Text>
         </View>
         <View style={styles.statCard}>
-          <BarChart3 size={18} color="#60A5FA" />
+          <ChartBarBig size={18} color="#60A5FA" />
           <Text style={styles.statValue}>{workflows.length}</Text>
           <Text style={styles.statLabel}>Workflows</Text>
         </View>
@@ -187,10 +187,10 @@ export default function WorkflowAutomationScreen() {
               </View>
               <View style={styles.workflowActions}>
                 <TouchableOpacity style={styles.actionButton}>
-                  <BarChart3 size={16} color="#60A5FA" />
+                  <ChartBarBig size={16} color="#60A5FA" />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.actionButton}>
-                  <Edit2 size={16} color="#F59E0B" />
+                  <PenLine size={16} color="#F59E0B" />
                 </TouchableOpacity>
                 <TouchableOpacity 
                   style={styles.actionButton}

@@ -1,19 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Bot, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap, User } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks/Day',value:'219',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.6s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.7%',icon:Target,color:'#1B5E20'}];
+  const stats = [{label:'Tasks/Day',value:'219',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.6s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.7%',icon:Target,color:'#1B5E20'}];
   const capabilities = ['Goal Tracking','OKR Management','Progress Reporting'];
   const responsibilities = ['Performance data collection & analysis','KPI dashboard management','Business intelligence reporting','Predictive model development','ROI calculation & tracking','Executive performance briefings'];
-  const activities = [{time:'3 min ago',text:'Generated executive KPI dashboard',icon:CheckCircle2},{time:'6 min ago',text:'Updated predictive analytics models',icon:Clock},{time:'9 min ago',text:'Published quarterly performance report',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Generated executive KPI dashboard',icon: CircleCheckBig},{time:'6 min ago',text:'Updated predictive analytics models',icon:Clock},{time:'9 min ago',text:'Published quarterly performance report',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#1B5E2020' }]}><Bot size={48} color="#1B5E20" /></View>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#1B5E2020' }]}><User size={48} color="#1B5E20" /></View>
         <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Goal & OKR Tracking AI</Text>
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Performance & Analytics</Text>
         <View style={styles.badgesRow}>

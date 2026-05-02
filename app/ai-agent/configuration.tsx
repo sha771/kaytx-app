@@ -613,7 +613,7 @@ const AgentConfigurationScreen = () => {
         
         <View style={styles.agentOverview}>
           <View style={styles.agentIconCircle}>
-            <Icons.Bot size={32} color={agent.color} />
+            <Icons.User size={32} color={agent.color} />
           </View>
           <View>
             <Text style={styles.agentName}>{agent.name}</Text>

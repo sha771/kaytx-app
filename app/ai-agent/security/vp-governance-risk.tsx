@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Scale, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, AlertTriangle, BarChart3 } from 'lucide-react-native';
+import { Scale, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, TriangleAlert, ChartBar } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Controls',value:'500+',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Compliance',value:'100%',icon:Clock,color:'#FF9500'},{label:'Risk Score',value:'98%',icon:Target,color:'#581C84'}];
+  const stats = [{label:'Controls',value:'500+',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Compliance',value:'100%',icon:Clock,color:'#FF9500'},{label:'Risk Score',value:'98%',icon:Target,color:'#581C84'}];
   const capabilities = ['GRC','Risk Assessment','Compliance','Audit','Policy','Frameworks'];
   const responsibilities = ['Governance risk & compliance strategy','Risk assessment framework management','Regulatory compliance oversight','Audit coordination & management','Policy development & enforcement','Security framework implementation'];
-  const activities = [{time:'3 min ago',text:'Completed annual GRC assessment',icon:Scale},{time:'20 min ago',text:'Updated risk register entries',icon:AlertTriangle},{time:'1 hour ago',text:'Published compliance dashboard',icon:BarChart3}];
+  const activities = [{time:'3 min ago',text:'Completed annual GRC assessment',icon:Scale},{time:'20 min ago',text:'Updated risk register entries',icon:TriangleAlert},{time:'1 hour ago',text:'Published compliance dashboard',icon:ChartBarBig}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

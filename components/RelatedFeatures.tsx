@@ -141,10 +141,10 @@ export function QuickLinks({
   const features = groupFeatures
     .slice(0, maxItems)
     .map(id => {
-       
+
       const allFeatures = require('@/constants/feature-relationships').FEATURE_RELATIONSHIPS;
       const feature = allFeatures[id];
-      if (!feature) return null;
+      if (!feature || !feature.icon) return null;
       return {
         id: feature.id,
         title: feature.title,

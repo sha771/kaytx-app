@@ -26,13 +26,13 @@ import {
   ChevronLeft,
   Plus,
   Search,
-  Filter,
+  ListFilter,
   Building2,
   Briefcase,
   TrendingUp,
   UserCheck,
-  MoreVertical,
-  Edit,
+  EllipsisVertical,
+  Pencil,
   Trash2,
   Mail,
   Phone,
@@ -172,7 +172,7 @@ export default function EmployeesPage() {
           <Text style={styles.searchPlaceholder}>Search employees...</Text>
         </View>
         <TouchableOpacity style={styles.filterButton}>
-          <Filter size={20} color="#64748b" />
+          <ListFilter size={20} color="#64748b" />
         </TouchableOpacity>
       </View>
 
@@ -274,7 +274,7 @@ export default function EmployeesPage() {
 
             <View style={styles.employeeActions}>
               <TouchableOpacity style={styles.actionButton}>
-                <Edit size={18} color="#3B82F6" />
+                <Pencil size={18} color="#3B82F6" />
                 <Text style={[styles.actionText, { color: '#3B82F6' }]}>Edit</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.actionButton}>

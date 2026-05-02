@@ -1,4 +1,4 @@
-// Web stub for react-native-chart-kit
+﻿// Web stub for react-native-chart-kit
 // Provides mock implementations for web builds
  
 
@@ -6,7 +6,7 @@ import React from 'react';
 import { View, Text, Dimensions } from 'react-native';
 
 // Mock chart components
-export const LineChart = (props: any) => {
+export const ChartLine = (props: any) => {
   const { width, height, chartConfig } = props;
   return (
     <View style={{ width, height, backgroundColor: chartConfig?.backgroundColor || '#f5f5f5', justifyContent: 'center', alignItems: 'center' }}>
@@ -24,7 +24,7 @@ export const BarChart = (props: any) => {
   );
 };
 
-export const PieChart = (props: any) => {
+export const ChartPie = (props: any) => {
   const { width, height, chartConfig } = props;
   return (
     <View style={{ width, height, backgroundColor: chartConfig?.backgroundColor || '#f5f5f5', justifyContent: 'center', alignItems: 'center' }}>
@@ -83,12 +83,12 @@ export const defaultChartConfig = (props: any = {}) => ({
 });
 
 export default {
-  LineChart,
-  BarChart,
-  PieChart,
+  ChartLine,
+  ChartBar,
+  ChartPie,
   ProgressChart,
   ContributionGraph,
-  StackedBarChart,
+  StackedChartBar,
   chartDimensions,
   defaultChartConfig,
 };

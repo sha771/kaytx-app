@@ -12,11 +12,11 @@ import {
   Rocket,
   Globe,
   Server,
-  CheckCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleAlert,
   Clock,
   RefreshCw,
-  MoreVertical,
+  EllipsisVertical,
   Cloud,
   Shield,
   Zap,
@@ -230,7 +230,7 @@ export default function AgentDeploymentScreen() {
               <Text style={[styles.liveMetricLabel, { color: colors.icon }]}>latency</Text>
             </View>
             <View style={styles.liveMetric}>
-              <AlertCircle size={14} color={deployment.errorRate > 0.05 ? '#EF4444' : '#10B981'} />
+              <CircleAlert size={14} color={deployment.errorRate > 0.05 ? '#EF4444' : '#10B981'} />
               <Text style={[styles.liveMetricValue, { color: colors.text }]}>
                 {deployment.errorRate}%
               </Text>
@@ -300,7 +300,7 @@ export default function AgentDeploymentScreen() {
           <Text style={[styles.statLabel, { color: colors.icon }]}>Active</Text>
         </View>
         <View style={[styles.statCard, { backgroundColor: colors.card }]}>
-          <CheckCircle size={20} color="#10B981" />
+          <CircleCheck size={20} color="#10B981" />
           <Text style={[styles.statValue, { color: colors.text }]}>2</Text>
           <Text style={[styles.statLabel, { color: colors.icon }]}>Healthy</Text>
         </View>
@@ -310,7 +310,7 @@ export default function AgentDeploymentScreen() {
           <Text style={[styles.statLabel, { color: colors.icon }]}>Deploying</Text>
         </View>
         <View style={[styles.statCard, { backgroundColor: '#EF4444' + '10' }]}>
-          <AlertCircle size={20} color="#EF4444" />
+          <CircleAlert size={20} color="#EF4444" />
           <Text style={[styles.statValue, { color: '#EF4444' }]}>1</Text>
           <Text style={[styles.statLabel, { color: colors.icon }]}>Failed</Text>
         </View>

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Send, Instagram, Twitter, Facebook, Linkedin, Youtube, CheckCircle, Settings, Sparkles, Clock, Globe } from 'lucide-react-native';
+import { Send, Instagram, Twitter, Facebook, Linkedin, Youtube, CircleCheck, Settings, Sparkles, Clock, Globe } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 
 interface Platform {
@@ -95,7 +95,7 @@ export default function CrossPlatformPublishing() {
                     <View style={styles.platformStatus}>
                       {platform.connected ? (
                         <>
-                          <CheckCircle size={12} color="#34C759" />
+                          <CircleCheck size={12} color="#34C759" />
                           <Text style={styles.connectedText}>Connected</Text>
                         </>
                       ) : (

@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { ClipboardList, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { ClipboardList, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'3,469',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.0s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.3%',icon:Target,color:'#004D40'}];
+  const stats = [{label:'Tasks',value:'3,469',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.0s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.3%',icon:Target,color:'#004D40'}];
   const capabilities = ['Claims Investigation','Damage Assessment','Settlement','Policy Interpretation','Fraud Detection','Documentation'];
   const responsibilities = ['Claims investigation & evaluation','Damage assessment & estimation','Settlement negotiation & processing','Policy interpretation & coverage analysis','Fraud detection & referral','Claims documentation & reporting'];
-  const activities = [{time:'3 min ago',text:'Processed 25 claims today',icon:CheckCircle2},{time:'6 min ago',text:'Investigated 3 suspicious claims',icon:Clock},{time:'9 min ago',text:'Settled total loss vehicle claim',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Processed 25 claims today',icon: CircleCheckBig},{time:'6 min ago',text:'Investigated 3 suspicious claims',icon:Clock},{time:'9 min ago',text:'Settled total loss vehicle claim',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

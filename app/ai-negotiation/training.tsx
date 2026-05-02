@@ -20,12 +20,12 @@ import {
   Settings,
   Play,
   Pause,
-  CheckCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleAlert,
   Clock,
   Award,
-  BarChart3,
-  Edit,
+  ChartBar,
+  Pencil,
   Plus,
   Trash2,
   Save,
@@ -128,7 +128,7 @@ export default function AITrainingScreen() {
     { label: 'Win Rate Improvement', value: '+12%', icon: TrendingUp, color: '#34C759' },
     { label: 'Avg Deal Size', value: '+$8.4K', icon: Target, color: '#007AFF' },
     { label: 'Call Duration', value: '-3:24', icon: Clock, color: '#FF9500' },
-    { label: 'Objections Handled', value: '94%', icon: CheckCircle, color: '#AF52DE' },
+    { label: 'Objections Handled', value: '94%', icon: CircleCheck, color: '#AF52DE' },
   ];
 
   const getCategoryColor = (category: string) => {
@@ -176,7 +176,7 @@ export default function AITrainingScreen() {
               </Text>
             </View>
             <View style={styles.statItem}>
-              <BarChart3 size={14} color={theme.colors.secondaryText} />
+              <ChartBarBig size={14} color={theme.colors.secondaryText} />
               <Text style={[styles.statText, { color: theme.colors.secondaryText }]}>
                 {strategy.timesUsed} times used
               </Text>
@@ -238,7 +238,7 @@ export default function AITrainingScreen() {
               style={styles.flowActionButton}
               onPress={() => setEditingFlow(flow)}
             >
-              <Edit size={16} color={theme.colors.primary} />
+              <Pencil size={16} color={theme.colors.primary} />
               <Text style={[styles.flowActionText, { color: theme.colors.primary }]}>Edit</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -399,19 +399,19 @@ export default function AITrainingScreen() {
           <Text style={[styles.insightTitle, { color: theme.colors.text }]}>Recent Improvements</Text>
         </View>
         <View style={styles.insightItem}>
-          <CheckCircle size={16} color="#34C759" />
+          <CircleCheck size={16} color="#34C759" />
           <Text style={[styles.insightText, { color: theme.colors.text }]}>
             AI learned to handle budget objections 15% more effectively
           </Text>
         </View>
         <View style={styles.insightItem}>
-          <CheckCircle size={16} color="#34C759" />
+          <CircleCheck size={16} color="#34C759" />
           <Text style={[styles.insightText, { color: theme.colors.text }]}>
             Improved closing rate by adapting to customer urgency signals
           </Text>
         </View>
         <View style={styles.insightItem}>
-          <CheckCircle size={16} color="#34C759" />
+          <CircleCheck size={16} color="#34C759" />
           <Text style={[styles.insightText, { color: theme.colors.text }]}>
             Identified optimal discount range: 8-12% for best outcomes
           </Text>
@@ -420,17 +420,17 @@ export default function AITrainingScreen() {
 
       <View style={[styles.insightCard, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.insightHeader}>
-          <AlertCircle size={24} color="#FF9500" />
+          <CircleAlert size={24} color="#FF9500" />
           <Text style={[styles.insightTitle, { color: theme.colors.text }]}>Areas for Improvement</Text>
         </View>
         <View style={styles.insightItem}>
-          <AlertCircle size={16} color="#FF9500" />
+          <CircleAlert size={16} color="#FF9500" />
           <Text style={[styles.insightText, { color: theme.colors.text }]}>
             Consider more follow-up questions during discovery phase
           </Text>
         </View>
         <View style={styles.insightItem}>
-          <AlertCircle size={16} color="#FF9500" />
+          <CircleAlert size={16} color="#FF9500" />
           <Text style={[styles.insightText, { color: theme.colors.text }]}>
             Practice handling competitor comparison objections
           </Text>

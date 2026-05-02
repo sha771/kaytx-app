@@ -13,7 +13,7 @@ import {
   Package,
   Users,
   DollarSign,
-  CheckCircle,
+  CircleCheck,
   ArrowLeft,
   ChevronRight,
   TrendingUp,
@@ -81,7 +81,7 @@ export default function EcommerceScreen() {
             router.push('/enterprise/billing');
             return;
           }
-          router.push(item.route as any);
+          router.push(item.route);
         }}
       >
         <View style={[styles.agentIcon, { backgroundColor: item.color + '15' }]}>
@@ -107,7 +107,7 @@ export default function EcommerceScreen() {
               <Text style={[styles.metricText, { color: '#34C759' }]}>{item.efficiency}</Text>
             </View>
             <View style={styles.metric}>
-              <CheckCircle size={12} color={theme.colors.primary} />
+              <CircleCheck size={12} color={theme.colors.primary} />
               <Text style={[styles.metricText, { color: theme.colors.primary }]}>{item.roiMetrics.accuracyRate}</Text>
             </View>
           </View>

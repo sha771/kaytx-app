@@ -17,11 +17,12 @@ import {
   Eye,
   EyeOff,
   ChevronRight,
-  AlertCircle,
-  CheckCircle2,
+  CircleAlert,
+  CircleCheckBig,
   Cpu,
   MemoryStick
 } from 'lucide-react-native';
+import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 interface MemoryStats {
   totalMemories: number;
@@ -105,7 +106,7 @@ export default function MemorySettingsPage() {
           </Text>
         </View>
         <View style={styles.memoryHealth}>
-          <CheckCircle2 size={20} color="#34C759" />
+          <CircleCheckBig size={20} color="#34C759" />
           <Text style={[styles.healthText, { color: '#34C759' }]}>Healthy</Text>
         </View>
       </View>
@@ -281,7 +282,7 @@ export default function MemorySettingsPage() {
             </View>
             <Text style={[styles.actionLabel, { color: '#FF3B30' }]}>Clear All Memory</Text>
           </View>
-          <AlertCircle size={20} color="#FF3B30" />
+          <CircleAlert size={20} color="#FF3B30" />
         </TouchableOpacity>
       </View>
 

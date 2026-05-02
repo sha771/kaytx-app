@@ -21,7 +21,7 @@ import {
   Twitter,
   Facebook,
   Linkedin,
-  MoreHorizontal,
+  GripHorizontal,
   Clock,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
@@ -308,7 +308,7 @@ export default function ContentCalendar() {
                       </View>
                     </View>
                     <TouchableOpacity style={styles.moreButton}>
-                      <MoreHorizontal size={18} color={theme.colors.secondaryText} />
+                      <GripHorizontal size={18} color={theme.colors.secondaryText} />
                     </TouchableOpacity>
                   </TouchableOpacity>
                 );

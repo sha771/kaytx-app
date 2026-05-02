@@ -14,17 +14,17 @@ import {
   Play,
   Pause,
   RotateCcw,
-  CheckCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleAlert,
   Clock,
   ArrowRight,
   Layers,
   Zap,
-  Bot,
   Workflow,
   Settings,
   Plus,
   Trash2,
+  User,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInUp } from 'react-native-reanimated';
@@ -163,7 +163,7 @@ export default function MultiAgentOrchestrationScreen() {
             <View style={styles.agentChips}>
               {orch.agents.slice(0, 3).map((agent, i) => (
                 <View key={i} style={[styles.agentChip, { backgroundColor: colors.background }]}>
-                  <Bot size={10} color={colors.icon} />
+                  <User size={10} color={colors.icon} />
                   <Text style={[styles.agentChipText, { color: colors.icon }]}>
                     {agent.split(' ')[0]}
                   </Text>
@@ -194,7 +194,7 @@ export default function MultiAgentOrchestrationScreen() {
             <Text style={[styles.metricLabel, { color: colors.icon }]}>runs</Text>
           </View>
           <View style={styles.metric}>
-            <CheckCircle size={14} color="#10B981" />
+            <CircleCheck size={14} color="#10B981" />
             <Text style={[styles.metricValue, { color: colors.text }]}>
               {orch.successRate}%
             </Text>
@@ -314,12 +314,12 @@ export default function MultiAgentOrchestrationScreen() {
           <Text style={[styles.statLabel, { color: colors.icon }]}>Active</Text>
         </View>
         <View style={[styles.statCard, { backgroundColor: colors.card }]}>
-          <CheckCircle size={20} color="#8B5CF6" />
+          <CircleCheck size={20} color="#8B5CF6" />
           <Text style={[styles.statValue, { color: colors.text }]}>524</Text>
           <Text style={[styles.statLabel, { color: colors.icon }]}>Completed</Text>
         </View>
         <View style={[styles.statCard, { backgroundColor: '#EF4444' + '10' }]}>
-          <AlertCircle size={20} color="#EF4444" />
+          <CircleAlert size={20} color="#EF4444" />
           <Text style={[styles.statValue, { color: '#EF4444' }]}>3</Text>
           <Text style={[styles.statLabel, { color: colors.icon }]}>Failed</Text>
         </View>

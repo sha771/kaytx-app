@@ -28,7 +28,7 @@ const WORKFLOWS = [
         industry: 'Finance',
         steps: [
             { agent: 'AI Receptionist', action: 'Intake Call', status: 'completed' },
-            { agent: 'AI KYC Bot', action: 'Verify ID', status: 'completed' },
+            { agent: 'AI KYC User', action: 'Verify ID', status: 'completed' },
             { agent: 'AI Risk Analyst', action: 'Credit Check', status: 'processing' },
             { agent: 'AI Underwriter', action: 'Final Approval', status: 'pending' },
         ]

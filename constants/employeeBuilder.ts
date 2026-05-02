@@ -1,4 +1,4 @@
-/**
+﻿/**
  * =============================================================================
  * EMPLOYEE BUILDER - Configuration & Templates
  * =============================================================================
@@ -502,7 +502,7 @@ export const EMPLOYEE_TEMPLATES: BuilderTemplate[] = [
     description: 'Experienced data or business analyst',
     mode: 'employee',
     category: 'data_intelligence',
-    icon: 'BarChart3',
+    icon: 'ChartBarBig',
     presetData: {
       level: 'senior',
       employmentType: 'full_time',

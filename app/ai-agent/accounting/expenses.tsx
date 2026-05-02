@@ -19,14 +19,14 @@ import {
   DollarSign,
   Receipt,
   FileText,
-  CheckCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleAlert,
   Clock,
   CreditCard,
   Wallet,
   Tag,
   ScanLine,
-  PieChart,
+  ChartPie,
   User,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -212,11 +212,11 @@ export default function ExpenseManagementScreen() {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'approved':
-        return <CheckCircle size={18} color="#10B981" />;
+        return <CircleCheck size={18} color="#10B981" />;
       case 'pending':
         return <Clock size={18} color="#F59E0B" />;
       case 'rejected':
-        return <AlertCircle size={18} color="#EF4444" />;
+        return <CircleAlert size={18} color="#EF4444" />;
       case 'reimbursed':
         return <DollarSign size={18} color="#3B82F6" />;
       default:
@@ -307,7 +307,7 @@ export default function ExpenseManagementScreen() {
 
         {expense.policyViolation && (
           <View style={[styles.violationBanner, { backgroundColor: '#EF4444' + '10' }]}>
-            <AlertCircle size={16} color="#EF4444" />
+            <CircleAlert size={16} color="#EF4444" />
             <Text style={[styles.violationText, { color: '#EF4444' }]}>
               {expense.policyViolation}
             </Text>
@@ -382,7 +382,7 @@ export default function ExpenseManagementScreen() {
       <View style={styles.summaryRow}>
         <View style={[styles.summaryCard, { backgroundColor: colors.card }]}>
           <View style={[styles.summaryIcon, { backgroundColor: '#10B981' + '15' }]}>
-            <CheckCircle size={20} color="#10B981" />
+            <CircleCheck size={20} color="#10B981" />
           </View>
           <Text style={[styles.summaryValue, { color: '#10B981' }]}>
             {formatCurrency(approvedAmount)}
@@ -423,39 +423,39 @@ export default function ExpenseManagementScreen() {
       >
         {STATUS_FILTERS.map(filter => (
           <TouchableOpacity
-            key={filter.id}
+            key={Filter.id}
             style={[
               styles.filterChip,
               {
-                backgroundColor: selectedStatus === filter.id ? colors.tint : colors.card,
+                backgroundColor: selectedStatus === Filter.id ? colors.tint : colors.card,
               },
             ]}
-            onPress={() => setSelectedStatus(filter.id)}
+            onPress={() => setSelectedStatus(Filter.id)}
           >
             <Text
               style={[
                 styles.filterText,
-                { color: selectedStatus === filter.id ? 'white' : colors.text },
+                { color: selectedStatus === Filter.id ? 'white' : colors.text },
               ]}
             >
-              {filter.label}
+              {Filter.label}
             </Text>
             <View
               style={[
                 styles.filterBadge,
                 {
                   backgroundColor:
-                    selectedStatus === filter.id ? 'rgba(255,255,255,0.3)' : colors.background,
+                    selectedStatus === Filter.id ? 'rgba(255,255,255,0.3)' : colors.background,
                 },
               ]}
             >
               <Text
                 style={[
                   styles.filterBadgeText,
-                  { color: selectedStatus === filter.id ? 'white' : colors.icon },
+                  { color: selectedStatus === Filter.id ? 'white' : colors.icon },
                 ]}
               >
-                {filter.count}
+                {Filter.count}
               </Text>
             </View>
           </TouchableOpacity>
@@ -467,7 +467,7 @@ export default function ExpenseManagementScreen() {
         <View style={styles.budgetHeader}>
           <Text style={[styles.budgetTitle, { color: colors.text }]}>Budget Overview</Text>
           <TouchableOpacity>
-            <PieChart size={20} color={colors.tint} />
+            <ChartPie size={20} color={colors.tint} />
           </TouchableOpacity>
         </View>
         <ScrollView
@@ -537,7 +537,7 @@ export default function ExpenseManagementScreen() {
               No expenses found
             </Text>
             <Text style={[styles.emptyText, { color: colors.icon }]}>
-              Try adjusting your search or filter criteria
+              Try adjusting your search or Filter criteria
             </Text>
           </View>
         )}

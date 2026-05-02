@@ -13,9 +13,9 @@ import {
   ArrowLeft,
   Search,
   Clock,
-  CheckCircle,
-  XCircle,
-  AlertTriangle,
+  CircleCheck,
+  CircleX,
+  TriangleAlert,
   Users,
   Target,
   TrendingUp,
@@ -25,7 +25,7 @@ import {
   Mail,
   FileText,
   Shield,
-  BarChart3,
+  ChartBar,
   Zap,
   Play,
   Pause,
@@ -214,7 +214,7 @@ const mockWorkItems: WorkItem[] = [
     progress: 0,
     startTime: 'Queued',
     estimatedDuration: '20 min',
-    icon: BarChart3,
+    icon: ChartBar,
     color: '#AF52DE',
     confidence: 0,
     tokensUsed: 0,
@@ -490,10 +490,10 @@ export default function AgentWorkScreen() {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'completed': return CheckCircle;
+      case 'completed': return CircleCheck;
       case 'in_progress': return Play;
       case 'queued': return Clock;
-      case 'failed': return XCircle;
+      case 'failed': return CircleX;
       case 'paused': return Pause;
       case 'reviewing': return Eye;
       default: return Clock;
@@ -512,7 +512,7 @@ export default function AgentWorkScreen() {
 
   const getPriorityIcon = (priority: string) => {
     switch (priority) {
-      case 'critical': return AlertTriangle;
+      case 'critical': return TriangleAlert;
       case 'high': return Flag;
       case 'medium': return CircleDot;
       case 'low': return Star;
@@ -742,7 +742,7 @@ export default function AgentWorkScreen() {
               )}
               {item.status === 'reviewing' && (
                 <TouchableOpacity style={[styles.actionBtn, { backgroundColor: '#34C75920' }]}>
-                  <CheckCircle size={14} color="#34C759" />
+                  <CircleCheck size={14} color="#34C759" />
                   <Text style={[styles.actionBtnText, { color: '#34C759' }]}>Approve</Text>
                 </TouchableOpacity>
               )}
@@ -792,7 +792,7 @@ export default function AgentWorkScreen() {
           </View>
           <View style={styles.summaryItem}>
             <View style={[styles.summaryIconBg, { backgroundColor: '#34C75920' }]}>
-              <CheckCircle size={16} color="#34C759" />
+              <CircleCheck size={16} color="#34C759" />
             </View>
             <Text style={[styles.summaryValue, { color: theme.colors.text }]}>{summary.completed}</Text>
             <Text style={[styles.summaryLabel, { color: theme.colors.secondaryText }]}>Done</Text>
@@ -806,7 +806,7 @@ export default function AgentWorkScreen() {
           </View>
           <View style={styles.summaryItem}>
             <View style={[styles.summaryIconBg, { backgroundColor: '#FF3B3020' }]}>
-              <XCircle size={16} color="#FF3B30" />
+              <CircleX size={16} color="#FF3B30" />
             </View>
             <Text style={[styles.summaryValue, { color: theme.colors.text }]}>{summary.failed}</Text>
             <Text style={[styles.summaryLabel, { color: theme.colors.secondaryText }]}>Failed</Text>
@@ -853,7 +853,7 @@ export default function AgentWorkScreen() {
         />
         {searchQuery.length > 0 && (
           <TouchableOpacity onPress={() => setSearchQuery('')}>
-            <XCircle size={16} color={theme.colors.secondaryText} />
+            <CircleX size={16} color={theme.colors.secondaryText} />
           </TouchableOpacity>
         )}
       </View>

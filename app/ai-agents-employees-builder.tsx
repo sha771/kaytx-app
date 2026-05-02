@@ -55,7 +55,7 @@ import {
   Settings,
   User,
   Code,
-  BarChart3,
+  ChartBar,
   Megaphone,
   DollarSign,
   Headphones,
@@ -65,18 +65,19 @@ import {
   Package,
   Palette,
   FileText,
-  CheckCircle,
+  CircleCheck,
   Database,
   Smile,
   Briefcase,
   Microscope,
   Handshake,
   Globe,
-  AlertTriangle,
+  TriangleAlert,
   Download,
   Share2,
   Calculator,
-  AlertCircle,
+  CircleAlert,
+  ChartBarBig,
 } from 'lucide-react-native';
 
 // Types
@@ -424,7 +425,7 @@ export default function AIAgentsEmployeesBuilder() {
             
             {EMPLOYEE_TEMPLATES.map((template) => {
               const Icon = template.icon === 'Code' ? Code :
-                          template.icon === 'BarChart3' ? BarChart3 :
+                          template.icon === 'ChartBarBig' ? ChartBarBig :
                           template.icon === 'Megaphone' ? Megaphone :
                           template.icon === 'Headphones' ? Headphones :
                           template.icon === 'Users' ? Users :
@@ -1219,7 +1220,7 @@ export default function AIAgentsEmployeesBuilder() {
                   <Text style={styles.riskTitle}>⚠️ Risk Assessment</Text>
                   {aiGeneratedConfig.risks.map((risk: any, idx: number) => (
                     <View key={idx} style={[styles.riskItem, risk.level === 'high' ? styles.riskHigh : risk.level === 'medium' ? styles.riskMedium : styles.riskLow]}>
-                      <AlertCircle size={16} color={risk.level === 'high' ? '#ef4444' : risk.level === 'medium' ? '#f59e0b' : '#10b981'} />
+                      <CircleAlert size={16} color={risk.level === 'high' ? '#ef4444' : risk.level === 'medium' ? '#f59e0b' : '#10b981'} />
                       <Text style={[styles.riskText, { color: risk.level === 'high' ? '#ef4444' : risk.level === 'medium' ? '#f59e0b' : '#10b981' }]}>
                         {risk.description}
                       </Text>
@@ -1904,7 +1905,7 @@ export default function AIAgentsEmployeesBuilder() {
         {validationErrors.length > 0 && (
           <View style={styles.validationCard}>
             <View style={styles.validationHeader}>
-              <AlertCircle size={20} color="#ef4444" />
+              <CircleAlert size={20} color="#ef4444" />
               <Text style={styles.validationTitle}>Please fix the following:</Text>
             </View>
             {validationErrors.map((error, index) => (

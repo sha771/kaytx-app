@@ -17,17 +17,17 @@ import {
   Shield,
   Activity,
   TrendingUp,
-  AlertTriangle,
-  CheckCircle,
+  TriangleAlert,
+  CircleCheck,
   Network,
   Server,
   Lock,
   Zap,
   Eye,
   Settings,
-  BarChart3,
+  ChartBar,
   Radar,
-  Globe2,
+  GlobeLock,
   ShieldCheck,
   KeyRound,
   CloudLightning,
@@ -173,9 +173,9 @@ export default function NetworkingScreen() {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'active': return CheckCircle;
-      case 'warning': return AlertTriangle;
-      case 'inactive': return AlertTriangle;
+      case 'active': return CircleCheck;
+      case 'warning': return TriangleAlert;
+      case 'inactive': return TriangleAlert;
       default: return Activity;
     }
   };
@@ -261,7 +261,7 @@ export default function NetworkingScreen() {
           <TouchableOpacity style={[styles.actionButton, { backgroundColor: theme.colors.background }]}
             testID={`service-analytics-${item.id}`}
           >
-            <BarChart3 size={16} color={theme.colors.text} />
+            <ChartBarBig size={16} color={theme.colors.text} />
             <Text style={[styles.actionButtonText, { color: theme.colors.text }]}>Analytics</Text>
           </TouchableOpacity>
         </View>
@@ -518,11 +518,11 @@ export default function NetworkingScreen() {
               <View style={[styles.monitoringCard, { backgroundColor: theme.colors.cardBackground }]}
                 testID="traffic-analytics-card"
               >
-                <BarChart3 size={32} color={theme.colors.primary} />
+                <ChartBarBig size={32} color={theme.colors.primary} />
                 <Text style={[styles.monitoringTitle, { color: theme.colors.text }]}>Traffic Analytics</Text>
                 <Text style={[styles.monitoringDescription, { color: theme.colors.secondaryText }]}>Real-time visibility into logs, metrics, traces, and user journeys.</Text>
                 <TouchableOpacity style={[styles.monitoringButton, { backgroundColor: theme.colors.primary }]}>
-                  <BarChart3 size={16} color="#FFFFFF" />
+                  <ChartBarBig size={16} color="#FFFFFF" />
                   <Text style={styles.monitoringButtonText}>Open Observability</Text>
                 </TouchableOpacity>
               </View>
@@ -549,7 +549,7 @@ export default function NetworkingScreen() {
             />
 
             <View style={styles.worldMap}>
-              <Globe2 size={42} color={theme.colors.primary} />
+              <GlobeLock size={42} color={theme.colors.primary} />
               <Text style={[styles.worldMapText, { color: theme.colors.secondaryText }]}>Global telemetry overlay with AI-based anomaly detection</Text>
             </View>
           </View>

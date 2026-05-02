@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Users, Phone, MessageCircle, Calendar, Clock, Star, Search, Filter, Plus, MoreHorizontal } from 'lucide-react-native';
+import { Users, Phone, MessageCircle, Calendar, Clock, Star, Search, ListFilter, Plus, GripHorizontal } from 'lucide-react-native';
 
 const contacts = [
   { 
@@ -146,19 +146,19 @@ export default function ContactCenterScreen() {
                     onChangeText={setSearchQuery}
                   />
                   <TouchableOpacity style={styles.filterButton}>
-                    <Filter size={20} color="#6B7280" />
+                    <ListFilter size={20} color="#6B7280" />
                   </TouchableOpacity>
                 </View>
 
                 <View style={styles.filterTabs}>
-                  {['all', 'customer', 'lead', 'partner'].map((filter) => (
+                  {['all', 'customer', 'lead', 'partner'].map((Filter) => (
                     <TouchableOpacity
-                      key={filter}
-                      style={[styles.filterTab, selectedFilter === filter && styles.activeFilterTab]}
-                      onPress={() => setSelectedFilter(filter as any)}
+                      key={Filter}
+                      style={[styles.filterTab, selectedFilter === Filter && styles.activeFilterTab]}
+                      onPress={() => setSelectedFilter(Filter as any)}
                     >
-                      <Text style={[styles.filterTabText, selectedFilter === filter && styles.activeFilterTabText]}>
-                        {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                      <Text style={[styles.filterTabText, selectedFilter === Filter && styles.activeFilterTabText]}>
+                        {Filter.charAt(0).toUpperCase() + Filter.slice(1)}
                       </Text>
                     </TouchableOpacity>
                   ))}
@@ -176,7 +176,7 @@ export default function ContactCenterScreen() {
                         <Text style={styles.contactEmail}>{contact.email}</Text>
                       </View>
                       <TouchableOpacity style={styles.contactMenu}>
-                        <MoreHorizontal size={20} color="#6B7280" />
+                        <GripHorizontal size={20} color="#6B7280" />
                       </TouchableOpacity>
                     </View>
 

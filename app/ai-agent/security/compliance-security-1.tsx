@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { ShieldCheck, Activity, Star, Users, CheckCircle2, Clock, Target, ArrowRight, AlertTriangle, FileText, Eye, Lock } from 'lucide-react-native';
+import { ShieldCheck, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, TriangleAlert, FileText, Eye, Lock } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
 
   const stats = [
-    { label: 'Audits', value: '340', icon: CheckCircle2, color: '#34C759' },
+    { label: 'Audits', value: '340', icon: CircleCheckBig, color: '#34C759' },
     { label: 'Uptime', value: '99.9%', icon: Activity, color: '#007AFF' },
     { label: 'Response', value: '0.5s', icon: Clock, color: '#FF9500' },
     { label: 'Compliance', value: '100%', icon: Target, color: '#581C84' },
@@ -28,7 +28,7 @@ export default function AgentPage() {
   const activities = [
     { time: '5 min ago', text: 'Completed SOC 2 Type II audit', icon: FileText },
     { time: '30 min ago', text: 'Updated GDPR compliance checklist', icon: ShieldCheck },
-    { time: '2 hours ago', text: 'Flagged 3 policy violations', icon: AlertTriangle },
+    { time: '2 hours ago', text: 'Flagged 3 policy violations', icon: TriangleAlert },
   ];
 
   return (

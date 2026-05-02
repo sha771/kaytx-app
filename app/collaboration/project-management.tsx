@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { FileText, Users, BarChart3, Folder, Settings, Plus, Search, Filter, Calendar, Download, Share } from 'lucide-react-native';
+import { FileText, Users, ChartBar, Folder, Settings, Plus, Search, ListFilter, Calendar, Download, Share } from 'lucide-react-native';
 
 interface ProjectItem {
   id: string;
@@ -174,7 +174,7 @@ export default function ProjectManagementScreen() {
         
         <View style={styles.filterContainer}>
           <TouchableOpacity style={styles.filterButton}>
-            <Filter size={20} color="#3B82F6" />
+            <ListFilter size={20} color="#3B82F6" />
           </TouchableOpacity>
           
           <TouchableOpacity style={styles.addButton}>
@@ -225,7 +225,7 @@ export default function ProjectManagementScreen() {
           </View>
           
           <View style={styles.statCard}>
-            <BarChart3 size={24} color="#8B5CF6" />
+            <ChartBarBig size={24} color="#8B5CF6" />
             <Text style={styles.statNumber}>68%</Text>
             <Text style={styles.statLabel}>Completion Rate</Text>
           </View>

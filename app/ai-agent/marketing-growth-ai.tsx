@@ -28,10 +28,10 @@ import {
   Power,
   Crown,
   Star,
-  CheckCircle,
+  CircleCheck,
   TrendingUp,
   Settings,
-  BarChart3,
+  ChartBar,
   Zap,
   Users,
   Globe,
@@ -46,8 +46,8 @@ import {
   Image,
   FileText,
   Send,
-  LineChart,
-  PieChart,
+  ChartLine,
+  ChartPie,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
@@ -443,7 +443,7 @@ export default function MarketingGrowthAIScreen() {
     switch (tier) {
       case 'enterprise': return Crown;
       case 'premium': return Star;
-      default: return CheckCircle;
+      default: return CircleCheck;
     }
   };
 
@@ -567,14 +567,14 @@ export default function MarketingGrowthAIScreen() {
 
             <View style={styles.liveMetrics}>
               <View style={[styles.liveMetricItem, { backgroundColor: `${ACCENT_COLOR}08` }]}>
-                <LineChart size={16} color={ACCENT_COLOR} />
+                <ChartLine size={16} color={ACCENT_COLOR} />
                 <View style={styles.liveMetricContent}>
                   <Text style={[styles.liveMetricValue, { color: theme.colors.text }]}>{agent.impressions}</Text>
                   <Text style={[styles.liveMetricLabel, { color: theme.colors.secondaryText }]}>Impressions</Text>
                 </View>
               </View>
               <View style={[styles.liveMetricItem, { backgroundColor: '#34C75908' }]}>
-                <PieChart size={16} color="#34C759" />
+                <ChartPie size={16} color="#34C759" />
                 <View style={styles.liveMetricContent}>
                   <Text style={[styles.liveMetricValue, { color: theme.colors.text }]}>{agent.roi}</Text>
                   <Text style={[styles.liveMetricLabel, { color: theme.colors.secondaryText }]}>ROI</Text>
@@ -637,7 +637,7 @@ export default function MarketingGrowthAIScreen() {
                 <Text style={[styles.actionButtonText, { color: ACCENT_COLOR }]}>Configure</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#007AFF15' }]}>
-                <BarChart3 size={16} color="#007AFF" />
+                <ChartBarBig size={16} color="#007AFF" />
                 <Text style={[styles.actionButtonText, { color: '#007AFF' }]}>Analytics</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#34C75915' }]}>

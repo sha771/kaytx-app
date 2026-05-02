@@ -12,8 +12,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   ArrowLeft,
   GitBranch,
-  CheckCircle,
-  XCircle,
+  CircleCheck,
+  CircleX,
   Clock,
   Play,
   RefreshCw,
@@ -21,7 +21,7 @@ import {
   Terminal,
   Package,
   Rocket,
-  AlertCircle,
+  CircleAlert,
   Activity,
   Code,
   FileText,
@@ -107,7 +107,7 @@ const deployments: Deployment[] = [
 ];
 
 const cicdMetrics: CICDMetric[] = [
-  { label: 'Success Rate', value: '94%', change: '+2%', icon: CheckCircle, color: '#34C759' },
+  { label: 'Success Rate', value: '94%', change: '+2%', icon: CircleCheck, color: '#34C759' },
   { label: 'Avg Duration', value: '3m 42s', change: '-15s', icon: Clock, color: '#007AFF' },
   { label: 'Deployments', value: '156', change: '+12', icon: Rocket, color: '#FF9500' },
   { label: 'Active Pipelines', value: '8', change: '+2', icon: Activity, color: '#AF52DE' },
@@ -166,12 +166,12 @@ export default function CICDScreen() {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'success':
-      case 'deployed': return CheckCircle;
+      case 'deployed': return CircleCheck;
       case 'running':
       case 'deploying': return RefreshCw;
-      case 'failed': return XCircle;
+      case 'failed': return CircleX;
       case 'pending': return Clock;
-      case 'rolled-back': return AlertCircle;
+      case 'rolled-back': return CircleAlert;
       default: return Activity;
     }
   };

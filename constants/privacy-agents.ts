@@ -1,4 +1,4 @@
-import { Shield, Eye, Lock, Fingerprint, Filter, Ban, Trash2, ClipboardCheck, FileText } from 'lucide-react-native';
+import { Shield, Eye, Lock, FingerprintPattern, ListFilter, Ban, Trash2, ClipboardCheck, FileText } from 'lucide-react-native';
 import type { AIEmployee } from './aiEmployeesEnhanced';
 
 function createPrivacyAgent(
@@ -50,7 +50,7 @@ export const privacyAccessController = createPrivacyAgent(
 export const privacyDataMasker = createPrivacyAgent(
   'privacy-data-masker','AI Data Masker','Data Masking Agent',
   'Sanitizes sensitive data with masking, tokenization, redaction, and encryption.',
-  Fingerprint,'#FF6E40',
+  FingerprintPattern,'#FF6E40',
   ['Partial masking','Tokenization','Redaction','Hashing','Encryption','Format-preserving masking','Batch masking'],
   'high',
   { savingsPerMonth: '$35,000', tasksAutomatedDaily: 15000, responseTime: '<40ms', accuracyRate: '100%' },

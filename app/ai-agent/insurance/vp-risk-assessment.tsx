@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Target, Activity, Star, CheckCircle2, Clock, ArrowRight, Zap } from 'lucide-react-native';
+import { Target, Activity, Star, CircleCheckBig, Clock, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'3,581',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.6s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.7%',icon:Target,color:'#004D40'}];
+  const stats = [{label:'Tasks',value:'3,581',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.6s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.7%',icon:Target,color:'#004D40'}];
   const capabilities = ['Risk Strategy','Assessment Framework','Regulatory Relations','Capital Planning','Emerging Risk','Reporting'];
   const responsibilities = ['Risk assessment strategy & framework','Risk evaluation methodology development','Regulatory relationship management','Capital planning & allocation support','Emerging risk identification & monitoring','Risk reporting to senior leadership'];
-  const activities = [{time:'3 min ago',text:'Presented risk assessment to board',icon:CheckCircle2},{time:'6 min ago',text:'Updated risk evaluation methodology',icon:Clock},{time:'9 min ago',text:'Reviewed emerging risk landscape',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Presented risk assessment to board',icon: CircleCheckBig},{time:'6 min ago',text:'Updated risk evaluation methodology',icon:Clock},{time:'9 min ago',text:'Reviewed emerging risk landscape',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

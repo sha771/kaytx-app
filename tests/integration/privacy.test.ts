@@ -59,7 +59,7 @@ describe('Privacy Features Integration Tests', () => {
       expect(Array.isArray(result.result.data.consents)).toBe(true);
     });
 
-    it('should filter consents by type', async () => {
+    it('should Filter consents by type', async () => {
       const response = await fetch('http://localhost:3000/api/trpc/privacy.getConsents', {
         method: 'POST',
         headers: {

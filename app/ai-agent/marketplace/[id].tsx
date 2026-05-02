@@ -13,7 +13,7 @@ import {
   Download,
   Share2,
   Heart,
-  CheckCircle,
+  CircleCheck,
   User,
   Bot,
   Shield,
@@ -183,7 +183,7 @@ export default function AgentTemplateDetailScreen() {
         <View style={styles.capabilitiesGrid}>
           {template.capabilities.map((capability, index) => (
             <View key={index} style={[styles.capabilityCard, { backgroundColor: colors.background }]}>
-              <CheckCircle size={16} color={colors.tint} />
+              <CircleCheck size={16} color={colors.tint} />
               <Text style={[styles.capabilityText, { color: colors.text }]}>
                 {capability}
               </Text>
@@ -230,7 +230,7 @@ export default function AgentTemplateDetailScreen() {
           {template.features.map((feature, index) => (
             <View key={index} style={styles.featureRow}>
               <View style={[styles.featureBullet, { backgroundColor: colors.tint }]}>
-                <CheckCircle size={12} color="white" />
+                <CircleCheck size={12} color="white" />
               </View>
               <Text style={[styles.featureText, { color: colors.text }]}>{feature}</Text>
             </View>
@@ -419,7 +419,7 @@ export default function AgentTemplateDetailScreen() {
           >
             {isInstalled ? (
               <>
-                <CheckCircle size={20} color="white" />
+                <CircleCheck size={20} color="white" />
                 <Text style={styles.installButtonText}>Installed</Text>
               </>
             ) : (

@@ -29,8 +29,10 @@ module.exports = async function (env, argv) {
     '@opentelemetry/exporter-jaeger': path.resolve(__dirname, 'lib/empty-stub.ts'),
     '@opentelemetry/exporter-otlp-grpc': path.resolve(__dirname, 'lib/empty-stub.ts'),
     // React Native module stubs for web
+    'react-native': path.resolve(__dirname, 'lib/react-native-web-patched.ts'),
     'react-native-reanimated': path.resolve(__dirname, 'lib/react-native-reanimated.web.ts'),
     'react-native-chart-kit': path.resolve(__dirname, 'lib/react-native-chart-kit.web.tsx'),
+    'lucide-react-native': path.resolve(__dirname, '__mocks__/lucide-react-native.tsx'),
     'nanoid/non-secure': path.resolve(__dirname, 'lib/nanoid-stub.js'),
     'react-native-web/dist/exports/NativeEventEmitter': path.resolve(__dirname, 'lib/NativeEventEmitter-stub.ts'),
     'react-native-web/dist/exports/createElement': path.resolve(__dirname, 'lib/react-native-web-exports.ts'),

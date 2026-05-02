@@ -164,7 +164,7 @@ describe('Counseling Notifications Service', () => {
       expect(notifications).toHaveLength(2);
     });
 
-    it('should filter by read status', () => {
+    it('should Filter by read status', () => {
       const unread = counselingNotifications.createNotification({
         type: 'session_created',
         priority: 'high',
@@ -189,7 +189,7 @@ describe('Counseling Notifications Service', () => {
       expect(unreadNotifications[0].id).toBe(unread.id);
     });
 
-    it('should filter by type', () => {
+    it('should Filter by type', () => {
       counselingNotifications.createNotification({
         type: 'session_created',
         priority: 'high',
@@ -212,7 +212,7 @@ describe('Counseling Notifications Service', () => {
       expect(sessionNotifications[0].type).toBe('session_created');
     });
 
-    it('should filter by priority', () => {
+    it('should Filter by priority', () => {
       counselingNotifications.createNotification({
         type: 'session_created',
         priority: 'high',
@@ -494,7 +494,7 @@ describe('Counseling Notifications Service', () => {
       expect(alerts).toHaveLength(2);
     });
 
-    it('should filter by severity', () => {
+    it('should Filter by severity', () => {
       counselingNotifications.createAlert({
         type: 'overdue_session',
         severity: 'warning',
@@ -517,7 +517,7 @@ describe('Counseling Notifications Service', () => {
       expect(criticalAlerts[0].severity).toBe('critical');
     });
 
-    it('should filter by acknowledged status', () => {
+    it('should Filter by acknowledged status', () => {
       const unacknowledged = counselingNotifications.createAlert({
         type: 'overdue_session',
         severity: 'warning',

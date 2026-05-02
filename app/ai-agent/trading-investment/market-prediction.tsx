@@ -1,7 +1,7 @@
 
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { TrendingUp, TrendingDown, Activity, BarChart3, Brain, Zap } from 'lucide-react-native';
+import { TrendingUp, TrendingDown, Activity, ChartBar, Brain, Zap } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
@@ -102,7 +102,7 @@ export default function MarketPredictionScreen() {
 
   const customTabs = [
     { id: 'predictions', label: 'Predictions', icon: Brain, component: predictionsTab },
-    { id: 'models', label: 'Models', icon: BarChart3, component: <View /> },
+    { id: 'models', label: 'Models', icon: ChartBar, component: <View /> },
   ];
 
   return <AgentShell agent={agent} customTabs={customTabs} />;

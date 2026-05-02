@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
-import { ArrowLeft, Search, TrendingUp, Users, Target, Zap, Plus, Filter } from 'lucide-react-native';
+import { ArrowLeft, Search, TrendingUp, Users, Target, Zap, Plus, ListFilter } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 
 export default function SEOOptimizationScreen() {

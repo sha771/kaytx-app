@@ -16,7 +16,7 @@ import {
   Mic,
   Bot,
   User,
-  MoreVertical,
+  EllipsisVertical,
   Phone,
   Settings,
   Sparkles,

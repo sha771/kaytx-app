@@ -490,7 +490,7 @@ describe('ConversationManager', () => {
       expect(result[0].sessionId).toBe('session-1');
     });
 
-    it('should filter by agent ID when specified', async () => {
+    it('should Filter by agent ID when specified', async () => {
       // Arrange
       const conversations: ConversationContext[] = [
         {

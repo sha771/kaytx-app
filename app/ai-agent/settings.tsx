@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -22,7 +22,7 @@ import {
   EyeOff,
   Save,
   RefreshCw,
-  AlertTriangle,
+  TriangleAlert,
   Check,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -140,7 +140,7 @@ export default function AIAgentsGlobalSettingsScreen() {
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Info Banner */}
         <Animated.View entering={FadeInUp} style={[styles.infoBanner, { backgroundColor: colors.primary + '15' }]}>
-          <AlertTriangle size={20} color={colors.primary} />
+          <TriangleAlert size={20} color={colors.primary} />
           <Text style={[styles.infoText, { color: colors.text }]}>
             These settings apply globally to all AI agents and employees
           </Text>
@@ -248,7 +248,7 @@ export default function AIAgentsGlobalSettingsScreen() {
             />
             <View style={[styles.divider, { backgroundColor: colors.border }]} />
             <SettingItem
-              icon={AlertTriangle}
+              icon={TriangleAlert}
               label="Error Notifications"
               description="Alert when agents encounter errors"
               settingKey="errorNotifications"
@@ -303,7 +303,7 @@ export default function AIAgentsGlobalSettingsScreen() {
           <Text style={[styles.sectionTitle, { color: colors.text + '60' }]}>DANGER ZONE</Text>
           <View style={[styles.sectionCard, { backgroundColor: '#EF444415', borderColor: '#EF4444' }]}>
             <TouchableOpacity style={styles.dangerButton}>
-              <AlertTriangle size={20} color="#EF4444" />
+              <TriangleAlert size={20} color="#EF4444" />
               <View style={styles.dangerContent}>
                 <Text style={[styles.dangerLabel, { color: '#EF4444' }]}>Reset All Agents</Text>
                 <Text style={[styles.dangerDescription, { color: colors.text + '60' }]}>
@@ -332,7 +332,7 @@ export default function AIAgentsGlobalSettingsScreen() {
 function Trash2Icon({ size, color }: { size: number; color: string }) {
   return (
     <View style={{ width: size, height: size }}>
-      <AlertTriangle size={size} color={color} />
+      <TriangleAlert size={size} color={color} />
     </View>
   );
 }

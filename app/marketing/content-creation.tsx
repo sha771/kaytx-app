@@ -19,7 +19,7 @@ import {
   Calendar,
   Plus,
   Search,
-  Edit,
+  Pencil,
   Share2,
   Eye,
   Heart,
@@ -225,7 +225,7 @@ export default function ContentCreationScreen() {
 
         <View style={styles.contentActions}>
           <TouchableOpacity style={styles.actionButton}>
-            <Edit size={16} color={theme.colors.primary} />
+            <Pencil size={16} color={theme.colors.primary} />
             <Text style={[styles.actionText, { color: theme.colors.primary }]}>Edit</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton}>

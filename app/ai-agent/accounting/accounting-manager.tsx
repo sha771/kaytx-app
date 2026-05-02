@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Calculator, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Calculator, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'2289',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.3s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.4%',icon:Target,color:'#0D47A1'}];
+  const stats = [{label:'Tasks',value:'2289',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.3s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.4%',icon:Target,color:'#0D47A1'}];
   const capabilities = ['Financial Analysis','Budget Management','Audit & Compliance','Revenue Tracking','Cost Optimization','Regulatory Reporting'];
   const responsibilities = ['Financial statement preparation & analysis','Budget planning & variance monitoring','Audit coordination & compliance enforcement','Revenue recognition & tracking','Cost optimization & reduction initiatives','Regulatory & tax compliance reporting'];
-  const activities = [{time:'3 min ago',text:'Reconciled 45 financial statements',icon:CheckCircle2},{time:'6 min ago',text:'Updated quarterly budget forecasts',icon:Clock},{time:'9 min ago',text:'Processed 120 invoice approvals',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Reconciled 45 financial statements',icon: CircleCheckBig},{time:'6 min ago',text:'Updated quarterly budget forecasts',icon:Clock},{time:'9 min ago',text:'Processed 120 invoice approvals',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

@@ -279,8 +279,8 @@ export class ReportingService extends EventEmitter {
     // Apply parameter overrides to filters
     for (const [key, value] of Object.entries(parameters)) {
       const filter = appliedConfig.filters.find((f: ReportFilter) => f.field === key);
-      if (filter) {
-        filter.value = value;
+      if (Filter) {
+        Filter.value = value;
       }
     }
 
@@ -326,8 +326,8 @@ export class ReportingService extends EventEmitter {
 
       // Apply filters
       let matchesFilters = true;
-      for (const filter of filters) {
-        if (!this.matchesFilter(row, filter)) {
+      for (const Filter of filters) {
+        if (!this.matchesFilter(row, Filter)) {
           matchesFilters = false;
           break;
         }
@@ -342,29 +342,29 @@ export class ReportingService extends EventEmitter {
   }
 
   private matchesFilter(row: any, filter: ReportFilter): boolean {
-    const value = row[filter.field];
+    const value = row[Filter.field];
 
-    switch (filter.operator) {
+    switch (Filter.operator) {
       case 'equals':
-        return value === filter.value;
+        return value === Filter.value;
       case 'not_equals':
-        return value !== filter.value;
+        return value !== Filter.value;
       case 'contains':
-        return String(value).includes(String(filter.value));
+        return String(value).includes(String(Filter.value));
       case 'not_contains':
-        return !String(value).includes(String(filter.value));
+        return !String(value).includes(String(Filter.value));
       case 'greater_than':
-        return Number(value) > Number(filter.value);
+        return Number(value) > Number(Filter.value);
       case 'less_than':
-        return Number(value) < Number(filter.value);
+        return Number(value) < Number(Filter.value);
       case 'in':
-        return Array.isArray(filter.value) && filter.value.includes(value);
+        return Array.isArray(Filter.value) && Filter.value.includes(value);
       case 'not_in':
-        return Array.isArray(filter.value) && !filter.value.includes(value);
+        return Array.isArray(Filter.value) && !Filter.value.includes(value);
       case 'between':
-        return Array.isArray(filter.value) && 
-               Number(value) >= Number(filter.value[0]) && 
-               Number(value) <= Number(filter.value[1]);
+        return Array.isArray(Filter.value) && 
+               Number(value) >= Number(Filter.value[0]) && 
+               Number(value) <= Number(Filter.value[1]);
       default:
         return true;
     }

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Video, Play, Users, Star, Calendar, BarChart3 } from 'lucide-react-native';
+import { Video, Play, Users, Star, Calendar, ChartBar } from 'lucide-react-native';
 
 interface VideoSurvey {
   id: string;
@@ -89,7 +89,7 @@ export default function VideoInterviewSurveyScreen() {
           <Text style={styles.actionText}>Schedule</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.actionButton}>
-          <BarChart3 size={16} color="#007AFF" />
+          <ChartBarBig size={16} color="#007AFF" />
           <Text style={styles.actionText}>Analytics</Text>
         </TouchableOpacity>
       </View>
@@ -133,7 +133,7 @@ export default function VideoInterviewSurveyScreen() {
             style={[styles.tab, activeTab === 'survey' && styles.activeTab]}
             onPress={() => setActiveTab('survey')}
           >
-            <BarChart3 size={20} color={activeTab === 'survey' ? '#fff' : '#666'} />
+            <ChartBarBig size={20} color={activeTab === 'survey' ? '#fff' : '#666'} />
             <Text style={[styles.tabText, activeTab === 'survey' && styles.activeTabText]}>
               Video Surveys
             </Text>
@@ -167,7 +167,7 @@ export default function VideoInterviewSurveyScreen() {
               <Text style={styles.quickActionText}>Schedule</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.quickAction}>
-              <BarChart3 size={24} color="#FF9500" />
+              <ChartBarBig size={24} color="#FF9500" />
               <Text style={styles.quickActionText}>Reports</Text>
             </TouchableOpacity>
           </View>

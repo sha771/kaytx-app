@@ -18,10 +18,10 @@ import {
   Target,
   Clock,
   Users,
-  CheckCircle,
+  CircleCheck,
   Activity,
-  BarChart3,
-  AlertCircle,
+  ChartBar,
+  CircleAlert,
   PhoneCall,
   Award,
   ArrowUpRight,
@@ -321,7 +321,7 @@ export default function AINegotiationDashboard() {
     { id: '1', title: 'Start Call', icon: Phone, route: '/ai-negotiation/calls', color: '#007AFF' },
     { id: '2', title: 'View Deals', icon: Target, route: '/ai-negotiation/deals', color: '#34C759' },
     { id: '3', title: 'CRM', icon: Users, route: '/ai-negotiation/crm', color: '#FF9500' },
-    { id: '4', title: 'Analytics', icon: BarChart3, route: '/ai-negotiation/analytics', color: '#AF52DE' },
+    { id: '4', title: 'Analytics', icon: ChartBar, route: '/ai-negotiation/analytics', color: '#AF52DE' },
     { id: '5', title: 'Scripts', icon: FileText, route: '/ai-negotiation/scripts', color: '#FF2D92' },
     { id: '6', title: 'Training', icon: Play, route: '/ai-negotiation/training', color: '#5856D6' },
   ];
@@ -330,13 +330,13 @@ export default function AINegotiationDashboard() {
     {
       type: 'success',
       message: 'Win rate increased by 5% this week - Great momentum!',
-      icon: CheckCircle,
+      icon: CircleCheck,
       color: '#34C759',
     },
     {
       type: 'warning',
       message: "3 high-value deals need follow-up today - Don&apos;t miss out!",
-      icon: AlertCircle,
+      icon: CircleAlert,
       color: '#FF9500',
     },
     {

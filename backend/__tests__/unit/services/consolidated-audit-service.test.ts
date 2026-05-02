@@ -193,7 +193,7 @@ describe('ConsolidatedAuditService', () => {
       );
     });
 
-    it('should filter audit logs by multiple criteria', async () => {
+    it('should Filter audit logs by multiple criteria', async () => {
       const filters = {
         organizationId: 'org-123',
         userId: 'user-123',

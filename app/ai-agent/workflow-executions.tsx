@@ -15,22 +15,22 @@ import {
   Pause,
   Square,
   RotateCcw,
-  CheckCircle,
-  XCircle,
+  CircleCheck,
+  CircleX,
   Clock,
-  AlertCircle,
+  CircleAlert,
   Zap,
   GitBranch,
   ArrowRight,
-  Bot,
   Database,
   Mail,
   FileText,
   Calculator,
   Globe,
-  BarChart3,
+  ChartBar,
   Layers,
   Download,
+  User,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInUp } from 'react-native-reanimated';
@@ -73,10 +73,10 @@ const WORKFLOWS: Workflow[] = [
     nodes: [
       { id: 'n1', type: 'trigger', name: 'New Signup', status: 'completed', icon: Globe, outputs: ['n2'] },
       { id: 'n2', type: 'agent', name: 'Welcome Email', status: 'completed', agent: 'Email AI', icon: Mail, outputs: ['n3'] },
-      { id: 'n3', type: 'agent', name: 'Account Setup', status: 'running', agent: 'Support AI', icon: Bot, outputs: ['n4'] },
+      { id: 'n3', type: 'agent', name: 'Account Setup', status: 'running', agent: 'Support AI', icon: User, outputs: ['n4'] },
       { id: 'n4', type: 'condition', name: 'Verify Email?', status: 'pending', icon: GitBranch, outputs: ['n5', 'n6'] },
       { id: 'n5', type: 'action', name: 'Send Reminder', status: 'pending', icon: Clock, outputs: ['n7'] },
-      { id: 'n6', type: 'action', name: 'Activate Account', status: 'pending', icon: CheckCircle, outputs: ['n7'] },
+      { id: 'n6', type: 'action', name: 'Activate Account', status: 'pending', icon: CircleCheck, outputs: ['n7'] },
       { id: 'n7', type: 'end', name: 'Complete', status: 'pending', icon: Layers, outputs: [] },
     ],
     startedAt: '2026-03-01 09:23:15',
@@ -95,7 +95,7 @@ const WORKFLOWS: Workflow[] = [
       { id: 'n1', type: 'trigger', name: 'New Lead', status: 'completed', icon: Globe, outputs: ['n2'] },
       { id: 'n2', type: 'agent', name: 'Score Lead', status: 'completed', agent: 'Sales AI', icon: Calculator, outputs: ['n3'] },
       { id: 'n3', type: 'condition', name: 'Score > 70?', status: 'completed', icon: GitBranch, outputs: ['n4', 'n5'] },
-      { id: 'n4', type: 'agent', name: 'Assign to Rep', status: 'completed', agent: 'Sales AI', icon: Bot, outputs: ['n6'] },
+      { id: 'n4', type: 'agent', name: 'Assign to Rep', status: 'completed', agent: 'Sales AI', icon: User, outputs: ['n6'] },
       { id: 'n5', type: 'action', name: 'Add to Nurture', status: 'completed', icon: Database, outputs: ['n6'] },
       { id: 'n6', type: 'end', name: 'Done', status: 'completed', icon: Layers, outputs: [] },
     ],
@@ -130,11 +130,11 @@ const WORKFLOWS: Workflow[] = [
     progress: 0,
     nodes: [
       { id: 'n1', type: 'trigger', name: 'New Ticket', status: 'pending', icon: Globe, outputs: ['n2'] },
-      { id: 'n2', type: 'agent', name: 'Classify', status: 'pending', agent: 'Support AI', icon: Bot, outputs: ['n3'] },
+      { id: 'n2', type: 'agent', name: 'Classify', status: 'pending', agent: 'Support AI', icon: User, outputs: ['n3'] },
       { id: 'n3', type: 'condition', name: 'Priority?', status: 'pending', icon: GitBranch, outputs: ['n4', 'n5', 'n6'] },
-      { id: 'n4', type: 'action', name: 'High Priority', status: 'pending', icon: AlertCircle, outputs: ['n7'] },
+      { id: 'n4', type: 'action', name: 'High Priority', status: 'pending', icon: CircleAlert, outputs: ['n7'] },
       { id: 'n5', type: 'action', name: 'Medium Priority', status: 'pending', icon: Clock, outputs: ['n7'] },
-      { id: 'n6', type: 'action', name: 'Low Priority', status: 'pending', icon: CheckCircle, outputs: ['n7'] },
+      { id: 'n6', type: 'action', name: 'Low Priority', status: 'pending', icon: CircleCheck, outputs: ['n7'] },
       { id: 'n7', type: 'end', name: 'Routed', status: 'pending', icon: Layers, outputs: [] },
     ],
     startedAt: 'Pending',
@@ -178,9 +178,9 @@ export default function WorkflowExecutionScreen() {
       case 'running':
         return <Zap size={16} color="#3B82F6" />;
       case 'completed':
-        return <CheckCircle size={16} color="#10B981" />;
+        return <CircleCheck size={16} color="#10B981" />;
       case 'failed':
-        return <XCircle size={16} color="#EF4444" />;
+        return <CircleX size={16} color="#EF4444" />;
       case 'paused':
         return <Pause size={16} color="#F59E0B" />;
       case 'queued':
@@ -236,13 +236,13 @@ export default function WorkflowExecutionScreen() {
                 </Text>
               </View>
               <View style={styles.metaItem}>
-                <BarChart3 size={12} color={colors.icon} />
+                <ChartBarBig size={12} color={colors.icon} />
                 <Text style={[styles.metaText, { color: colors.icon }]}>
                   {workflow.runCount.toLocaleString()} runs
                 </Text>
               </View>
               <View style={styles.metaItem}>
-                <CheckCircle size={12} color="#10B981" />
+                <CircleCheck size={12} color="#10B981" />
                 <Text style={[styles.metaText, { color: '#10B981' }]}>
                   {workflow.successRate}% success
                 </Text>
@@ -400,14 +400,14 @@ export default function WorkflowExecutionScreen() {
         </View>
         <View style={[styles.statCard, { backgroundColor: '#10B981' + '10' }]}>
           <View style={[styles.statIcon, { backgroundColor: '#10B981' + '15' }]}>
-            <CheckCircle size={20} color="#10B981" />
+            <CircleCheck size={20} color="#10B981" />
           </View>
           <Text style={[styles.statValue, { color: '#10B981' }]}>{completedToday}</Text>
           <Text style={[styles.statLabel, { color: colors.icon }]}>Completed</Text>
         </View>
         <View style={[styles.statCard, { backgroundColor: '#EF4444' + '10' }]}>
           <View style={[styles.statIcon, { backgroundColor: '#EF4444' + '15' }]}>
-            <XCircle size={20} color="#EF4444" />
+            <CircleX size={20} color="#EF4444" />
           </View>
           <Text style={[styles.statValue, { color: '#EF4444' }]}>{failedToday}</Text>
           <Text style={[styles.statLabel, { color: colors.icon }]}>Failed</Text>

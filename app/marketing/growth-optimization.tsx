@@ -16,10 +16,10 @@ import {
   Target,
   Users,
   Zap,
-  BarChart3,
-  PieChart,
+  ChartBar,
+  ChartPie,
   Calendar,
-  Filter,
+  ListFilter,
   Download,
   ArrowLeft,
   Plus,
@@ -27,8 +27,8 @@ import {
   DollarSign,
   Percent,
   Clock,
-  CheckCircle,
-  AlertTriangle,
+  CircleCheck,
+  TriangleAlert,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
@@ -523,7 +523,7 @@ export default function GrowthOptimizationScreen() {
         <Text style={[styles.title, { color: theme.colors.text }]}>Growth Optimization</Text>
         <View style={styles.headerActions}>
           <TouchableOpacity style={styles.headerButton}>
-            <Filter size={20} color={theme.colors.text} />
+            <ListFilter size={20} color={theme.colors.text} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerButton}>
             <Download size={20} color={theme.colors.text} />

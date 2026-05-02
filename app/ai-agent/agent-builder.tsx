@@ -11,8 +11,7 @@ import {
 import { useRouter } from 'expo-router';
 import {
   ChevronLeft,
-  Wand2,
-  Bot,
+  Wand,
   Brain,
   Mic,
   Globe,
@@ -44,7 +43,7 @@ export default function AgentBuilderScreen() {
     name: '',
     description: '',
     category: '',
-    icon: 'Bot',
+    icon: 'User',
     color: '#3B82F6',
     model: 'gpt-4o',
     voiceEnabled: false,
@@ -60,7 +59,7 @@ export default function AgentBuilderScreen() {
   const [newCapability, setNewCapability] = useState('');
   const models = ['gpt-4o', 'gpt-4o-mini', 'claude-3-5-sonnet', 'claude-3-haiku', 'gemini-1.5-pro'];
   const totalSteps = 4;
-  const icons = ['Bot', 'Brain', 'MessageSquare', 'Target', 'Zap', 'Globe', 'User', 'Sparkles'];
+  const icons = ['User', 'Brain', 'MessageSquare', 'Target', 'Zap', 'Globe', 'User', 'Sparkles'];
   const colorOptions = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899', '#14B8A6', '#6366F1'];
   const languages = ['english', 'spanish', 'french', 'german', 'chinese', 'japanese', 'arabic'];
   const personalities = ['helpful', 'professional', 'friendly', 'analytical', 'creative', 'formal'];
@@ -132,7 +131,7 @@ export default function AgentBuilderScreen() {
             <Text style={[styles.inputLabel, { color: colors.text + '60' }]}>Icon</Text>
             <View style={styles.iconGrid}>
               {icons.map(iconName => {
-                const IconComponent = { Bot, Brain, MessageSquare, Target, Zap, Globe, User, Sparkles }[iconName] || Bot;
+                const IconComponent = { Brain, MessageSquare, Target, Zap, Globe, User, Sparkles }[iconName] || User;
                 const isSelected = agentConfig.icon === iconName;
                 return (
                   <TouchableOpacity
@@ -365,7 +364,7 @@ export default function AgentBuilderScreen() {
             <ChevronLeft size={24} color={colors.text} />
           </TouchableOpacity>
           <View style={styles.headerTitle}>
-            <Wand2 size={22} color={colors.primary} />
+            <Wand size={22} color={colors.primary} />
             <Text style={[styles.titleText, { color: colors.text }]}>Agent Builder</Text>
           </View>
           <View style={{ width: 24 }} />

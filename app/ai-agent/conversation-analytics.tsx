@@ -15,13 +15,13 @@ import {
   TrendingDown,
   Users,
   Clock,
-  CheckCircle,
-  AlertCircle,
-  BarChart3,
-  PieChart,
+  CircleCheck,
+  CircleAlert,
+  ChartBar,
+  ChartPie,
   Calendar,
-  Filter,
-  MoreVertical,
+  ListFilter,
+  EllipsisVertical,
   Download,
   ChevronDown,
   Zap,
@@ -149,7 +149,7 @@ export default function ConversationAnalyticsScreen() {
           style={[styles.tab, activeTab === 'overview' && { backgroundColor: colors.tint }]}
           onPress={() => setActiveTab('overview')}
         >
-          <BarChart3 size={16} color={activeTab === 'overview' ? 'white' : colors.icon} />
+          <ChartBarBig size={16} color={activeTab === 'overview' ? 'white' : colors.icon} />
           <Text style={[styles.tabText, { color: activeTab === 'overview' ? 'white' : colors.text }]}>
             Overview
           </Text>
@@ -167,7 +167,7 @@ export default function ConversationAnalyticsScreen() {
           style={[styles.tab, activeTab === 'topics' && { backgroundColor: colors.tint }]}
           onPress={() => setActiveTab('topics')}
         >
-          <PieChart size={16} color={activeTab === 'topics' ? 'white' : colors.icon} />
+          <ChartPie size={16} color={activeTab === 'topics' ? 'white' : colors.icon} />
           <Text style={[styles.tabText, { color: activeTab === 'topics' ? 'white' : colors.text }]}>
             Topics
           </Text>
@@ -243,7 +243,7 @@ export default function ConversationAnalyticsScreen() {
                   Conversation Volume
                 </Text>
                 <TouchableOpacity style={styles.filterButton}>
-                  <Filter size={16} color={colors.icon} />
+                  <ListFilter size={16} color={colors.icon} />
                 </TouchableOpacity>
               </View>
 
@@ -341,7 +341,7 @@ export default function ConversationAnalyticsScreen() {
                     </Text>
                   </View>
                   <View style={styles.agentMetric}>
-                    <CheckCircle size={14} color={colors.icon} />
+                    <CircleCheck size={14} color={colors.icon} />
                     <Text style={[styles.agentMetricValue, { color: colors.text }]}>
                       {agent.resolutionRate}%
                     </Text>
@@ -475,7 +475,7 @@ export default function ConversationAnalyticsScreen() {
             </View>
             <View style={styles.trendItem}>
               <View style={[styles.trendIcon, { backgroundColor: '#F59E0B' + '15' }]}>
-                <AlertCircle size={20} color="#F59E0B" />
+                <CircleAlert size={20} color="#F59E0B" />
               </View>
               <View style={styles.trendContent}>
                 <Text style={[styles.trendItemTitle, { color: colors.text }]}>

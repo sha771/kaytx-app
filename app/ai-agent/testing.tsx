@@ -13,24 +13,24 @@ import {
   Play,
   RefreshCw,
   Save,
-  Bot,
   MessageSquare,
   Zap,
-  CheckCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleAlert,
   Clock,
   Settings,
   ChevronDown,
-  MoreVertical,
+  EllipsisVertical,
   History,
   Bug,
   Lightbulb,
-  BarChart3,
+  ChartBar,
   Send,
   Mic,
   Paperclip,
   X,
   Plus,
+  User,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInUp } from 'react-native-reanimated';
@@ -168,7 +168,7 @@ export default function AgentTestingScreen() {
           ]}
         >
           {isAgent ? (
-            <Bot size={16} color="white" />
+            <User size={16} color="white" />
           ) : (
             <MessageSquare size={16} color="white" />
           )}
@@ -197,7 +197,7 @@ export default function AgentTestingScreen() {
                 </Text>
               </View>
               <View style={[styles.metaBadge, { backgroundColor: '#10B981' + '15' }]}>
-                <CheckCircle size={10} color="#10B981" />
+                <CircleCheck size={10} color="#10B981" />
                 <Text style={[styles.metaText, { color: '#10B981' }]}>
                   {message.confidence}%
                 </Text>
@@ -298,7 +298,7 @@ export default function AgentTestingScreen() {
       <View style={[styles.agentSelector, { backgroundColor: colors.card }]}>
         <Text style={[styles.selectorLabel, { color: colors.icon }]}>Testing:</Text>
         <TouchableOpacity style={styles.selectorButton}>
-          <Bot size={18} color={colors.tint} />
+          <User size={18} color={colors.tint} />
           <Text style={[styles.selectorText, { color: colors.text }]}>
             {selectedAgent}
           </Text>
@@ -330,7 +330,7 @@ export default function AgentTestingScreen() {
           style={[styles.tab, activeTab === 'results' && { backgroundColor: colors.tint }]}
           onPress={() => setActiveTab('results')}
         >
-          <BarChart3 size={16} color={activeTab === 'results' ? 'white' : colors.icon} />
+          <ChartBarBig size={16} color={activeTab === 'results' ? 'white' : colors.icon} />
           <Text style={[styles.tabText, { color: activeTab === 'results' ? 'white' : colors.text }]}>
             Results
           </Text>
@@ -450,7 +450,7 @@ export default function AgentTestingScreen() {
                 </Text>
               </View>
               <View style={styles.metricItem}>
-                <CheckCircle size={18} color="#10B981" />
+                <CircleCheck size={18} color="#10B981" />
                 <Text style={[styles.metricValue, { color: colors.text }]}>
                   94.5%
                 </Text>
@@ -466,7 +466,7 @@ export default function AgentTestingScreen() {
               Recent Test Runs
             </Text>
             <View style={styles.historyItem}>
-              <CheckCircle size={16} color="#10B981" />
+              <CircleCheck size={16} color="#10B981" />
               <View style={styles.historyInfo}>
                 <Text style={[styles.historyName, { color: colors.text }]}>
                   Password Reset Flow
@@ -477,7 +477,7 @@ export default function AgentTestingScreen() {
               </View>
             </View>
             <View style={styles.historyItem}>
-              <AlertCircle size={16} color="#EF4444" />
+              <CircleAlert size={16} color="#EF4444" />
               <View style={styles.historyInfo}>
                 <Text style={[styles.historyName, { color: colors.text }]}>
                   Billing Inquiry

@@ -341,7 +341,7 @@ export const integrationGenerators = {
     }),
     transformations: fc.array(fc.record({
       name: fc.string({ minLength: 1, maxLength: 50 }),
-      type: fc.constantFrom('filter', 'map', 'aggregate', 'join', 'validate'),
+      type: fc.constantFrom('Filter', 'map', 'aggregate', 'join', 'validate'),
       config: fc.record({}),
       order: fc.integer({ min: 0 })
     })),

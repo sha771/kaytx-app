@@ -13,26 +13,25 @@ import {
   Shield,
   Eye,
   EyeOff,
-  AlertTriangle,
-  CheckCircle,
+  TriangleAlert,
+  CircleCheck,
   Clock,
   User,
-  Bot,
   MessageSquare,
   FileText,
   Settings,
   LogIn,
   LogOut,
-  Edit,
+  Pencil,
   Trash2,
   Download,
-  Filter,
+  ListFilter,
   Search,
   Calendar,
   ChevronDown,
   Lock,
-  Unlock,
-  MoreVertical,
+  LockOpen,
+  EllipsisVertical,
   RefreshCw,
   Zap,
   Globe,
@@ -207,8 +206,7 @@ const STATUS_COLORS = {
 
 const ACTOR_TYPE_ICONS = {
   user: User,
-  agent: Bot,
-  system: Settings,
+  agent: Settings,
 };
 
 export default function AuditLogsScreen() {
@@ -229,7 +227,7 @@ export default function AuditLogsScreen() {
   const getActionIcon = (action: string) => {
     if (action.includes('LOGIN')) return LogIn;
     if (action.includes('LOGOUT')) return LogOut;
-    if (action.includes('CREATE')) return Edit;
+    if (action.includes('CREATE')) return Pencil;
     if (action.includes('DELETE')) return Trash2;
     if (action.includes('EXPORT')) return Download;
     if (action.includes('CONVERSATION')) return MessageSquare;
@@ -269,9 +267,9 @@ export default function AuditLogsScreen() {
             ]}
           >
             {log.status === 'success' ? (
-              <CheckCircle size={12} color={STATUS_COLORS[log.status]} />
+              <CircleCheck size={12} color={STATUS_COLORS[log.status]} />
             ) : log.status === 'failure' ? (
-              <AlertTriangle size={12} color={STATUS_COLORS[log.status]} />
+              <TriangleAlert size={12} color={STATUS_COLORS[log.status]} />
             ) : (
               <Clock size={12} color={STATUS_COLORS[log.status]} />
             )}
@@ -325,7 +323,7 @@ export default function AuditLogsScreen() {
     >
       <View style={styles.eventHeader}>
         <View style={[styles.severityBadge, { backgroundColor: SEVERITY_COLORS[event.severity] + '15' }]}>
-          <AlertTriangle size={14} color={SEVERITY_COLORS[event.severity]} />
+          <TriangleAlert size={14} color={SEVERITY_COLORS[event.severity]} />
           <Text style={[styles.severityText, { color: SEVERITY_COLORS[event.severity] }]}>
             {event.severity.toUpperCase()}
           </Text>
@@ -356,7 +354,7 @@ export default function AuditLogsScreen() {
           ]}
         >
           {event.resolved ? (
-            <CheckCircle size={12} color="#10B981" />
+            <CircleCheck size={12} color="#10B981" />
           ) : (
             <Clock size={12} color="#F59E0B" />
           )}
@@ -456,7 +454,7 @@ export default function AuditLogsScreen() {
             />
           </View>
           <TouchableOpacity style={[styles.filterButton, { backgroundColor: colors.card }]}>
-            <Filter size={18} color={colors.icon} />
+            <ListFilter size={18} color={colors.icon} />
           </TouchableOpacity>
         </View>
       )}
@@ -535,7 +533,7 @@ export default function AuditLogsScreen() {
               <View style={styles.complianceItems}>
                 <View style={styles.complianceItem}>
                   <View style={[styles.checkIcon, { backgroundColor: '#10B981' + '15' }]}>
-                    <CheckCircle size={16} color="#10B981" />
+                    <CircleCheck size={16} color="#10B981" />
                   </View>
                   <View style={styles.complianceInfo}>
                     <Text style={[styles.complianceName, { color: colors.text }]}>
@@ -549,7 +547,7 @@ export default function AuditLogsScreen() {
 
                 <View style={styles.complianceItem}>
                   <View style={[styles.checkIcon, { backgroundColor: '#10B981' + '15' }]}>
-                    <CheckCircle size={16} color="#10B981" />
+                    <CircleCheck size={16} color="#10B981" />
                   </View>
                   <View style={styles.complianceInfo}>
                     <Text style={[styles.complianceName, { color: colors.text }]}>
@@ -563,7 +561,7 @@ export default function AuditLogsScreen() {
 
                 <View style={styles.complianceItem}>
                   <View style={[styles.checkIcon, { backgroundColor: '#10B981' + '15' }]}>
-                    <CheckCircle size={16} color="#10B981" />
+                    <CircleCheck size={16} color="#10B981" />
                   </View>
                   <View style={styles.complianceInfo}>
                     <Text style={[styles.complianceName, { color: colors.text }]}>

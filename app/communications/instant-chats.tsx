@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { MessageCircle, Send, Search, Filter, Star, Archive, Trash2, MoreHorizontal } from 'lucide-react-native';
+import { MessageCircle, Send, Search, ListFilter, Star, Archive, Trash2, GripHorizontal } from 'lucide-react-native';
 
 const conversations = [
   { id: 1, name: 'John Smith', lastMessage: 'Hey, how are you doing?', time: '2m ago', unread: 2, online: true },
@@ -56,7 +56,7 @@ export default function InstantChatsScreen() {
               onChangeText={setSearchQuery}
             />
             <TouchableOpacity style={styles.filterButton}>
-              <Filter size={20} color="#6B7280" />
+              <ListFilter size={20} color="#6B7280" />
             </TouchableOpacity>
           </View>
 
@@ -118,7 +118,7 @@ export default function InstantChatsScreen() {
                     <Archive size={20} color="#6B7280" />
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.headerAction}>
-                    <MoreHorizontal size={20} color="#6B7280" />
+                    <GripHorizontal size={20} color="#6B7280" />
                   </TouchableOpacity>
                 </View>
               </View>

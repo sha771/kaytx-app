@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Users, Search, Plus, Filter, Phone, Mail, Calendar, DollarSign, Star } from 'lucide-react-native';
+import { Users, Search, Plus, ListFilter, Phone, Mail, Calendar, DollarSign, Star } from 'lucide-react-native';
 
 interface Customer {
   id: string;
@@ -114,7 +114,7 @@ export default function CustomerManagementScreen() {
           placeholderTextColor="#9CA3AF"
         />
         <TouchableOpacity style={styles.filterButton}>
-          <Filter size={20} color="#6B7280" />
+          <ListFilter size={20} color="#6B7280" />
         </TouchableOpacity>
       </View>
 

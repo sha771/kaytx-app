@@ -239,7 +239,7 @@ describe('Compliance Reporting Service', () => {
       expect(result.data?.total).toBe(2);
     });
 
-    it('should filter by report type', async () => {
+    it('should Filter by report type', async () => {
       const mockReports = [
         {
           id: 'report-1',

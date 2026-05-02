@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, ActivityIndicator } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
-import { GitBranch, Plus, Edit2, Trash2, Clock, Users, Phone, AlertCircle, Lock } from 'lucide-react-native';
+import { GitBranch, Plus, PenLine, Trash2, Clock, Users, Phone, CircleAlert, Lock } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { trpc } from '@/lib/trpc';
 import { useTheme } from '@/providers/ThemeProvider';
@@ -75,7 +75,7 @@ export default function CallRoutingScreen() {
           </View>
 
           <View style={[styles.infoCard, { backgroundColor: theme.colors.primary + '20' }]}>
-            <AlertCircle size={20} color={theme.colors.primary} />
+            <CircleAlert size={20} color={theme.colors.primary} />
             <View style={styles.infoContent}>
               <Text style={[styles.infoText, { color: theme.colors.primary }]}>
                 Rules are evaluated in priority order. First matching rule will be applied.
@@ -144,7 +144,7 @@ export default function CallRoutingScreen() {
 
                 <View style={[styles.ruleActions, { borderTopColor: theme.colors.border }]}>
                   <TouchableOpacity style={styles.actionButton}>
-                    <Edit2 size={16} color={theme.colors.primary} />
+                    <PenLine size={16} color={theme.colors.primary} />
                     <Text style={[styles.actionButtonText, { color: theme.colors.primary }]}>Edit</Text>
                   </TouchableOpacity>
                   <TouchableOpacity 

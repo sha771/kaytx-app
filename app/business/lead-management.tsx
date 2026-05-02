@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { Stack } from 'expo-router';
-import { Users, Plus, Search, Filter, Tag, Calendar, DollarSign, TrendingUp, Mail, Phone } from 'lucide-react-native';
+import { Users, Plus, Search, ListFilter, Tag, Calendar, DollarSign, TrendingUp, Mail, Phone } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface Lead {
@@ -138,7 +138,7 @@ export default function LeadManagementScreen() {
             onChangeText={setSearchQuery}
           />
           <TouchableOpacity style={styles.filterIcon}>
-            <Filter size={18} color="#60A5FA" />
+            <ListFilter size={18} color="#60A5FA" />
           </TouchableOpacity>
         </View>
       </View>

@@ -124,18 +124,18 @@ export class LocalBridge extends BaseBridge {
     }
   }
 
-  getMessages(filter?: { from?: string; to?: string; after?: number }): BridgeMessage[] {
+  getMessages(Filter?: { from?: string; to?: string; after?: number }): BridgeMessage[] {
     let messages = Array.from(this.messageStore.values());
 
-    if (filter) {
-      if (filter.from) {
-        messages = messages.filter(m => m.from === filter.from);
+    if (Filter) {
+      if (Filter.from) {
+        messages = messages.filter(m => m.from === Filter.from);
       }
-      if (filter.to) {
-        messages = messages.filter(m => m.to === filter.to);
+      if (Filter.to) {
+        messages = messages.filter(m => m.to === Filter.to);
       }
-      if (filter.after !== undefined) {
-        messages = messages.filter(m => (m.timestamp ?? 0) > filter.after!);
+      if (Filter.after !== undefined) {
+        messages = messages.filter(m => (m.timestamp ?? 0) > Filter.after!);
       }
     }
 

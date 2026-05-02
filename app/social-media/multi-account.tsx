@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, Alert } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Instagram, Twitter, Facebook, Linkedin, Youtube, Plus, Settings, RefreshCw, Trash2, CheckCircle, AlertCircle, ExternalLink } from 'lucide-react-native';
+import { Instagram, Twitter, Facebook, Linkedin, Youtube, Plus, Settings, RefreshCw, Trash2, CircleCheck, CircleAlert, ExternalLink } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 
 interface Account {
@@ -50,9 +50,9 @@ export default function MultiAccountManager() {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'connected': return <CheckCircle size={16} color="#34C759" />;
-      case 'expired': return <AlertCircle size={16} color="#FF9500" />;
-      case 'error': return <AlertCircle size={16} color="#FF3B30" />;
+      case 'connected': return <CircleCheck size={16} color="#34C759" />;
+      case 'expired': return <CircleAlert size={16} color="#FF9500" />;
+      case 'error': return <CircleAlert size={16} color="#FF3B30" />;
       default: return null;
     }
   };

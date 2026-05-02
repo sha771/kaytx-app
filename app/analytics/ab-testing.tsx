@@ -12,13 +12,13 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
-  BarChart3,
+  ChartBar,
   TrendingUp,
   TrendingDown,
   Users,
   Target,
   Calendar,
-  Filter,
+  ListFilter,
   Download,
   ArrowLeft,
   Eye,
@@ -410,7 +410,7 @@ export default function ABTestingScreen() {
             <Download size={20} color={theme.colors.text} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerButton}>
-            <Filter size={20} color={theme.colors.text} />
+            <ListFilter size={20} color={theme.colors.text} />
           </TouchableOpacity>
         </View>
       </View>

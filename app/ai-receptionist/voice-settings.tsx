@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, ActivityIndicator } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
-import { Settings, Volume2, Mic, PlayCircle, Save, RotateCcw, Lock } from 'lucide-react-native';
+import { Settings, Volume2, Mic, CirclePlay, Save, RotateCcw, Lock } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { trpc } from '@/lib/trpc';
 import { useTheme } from '@/providers/ThemeProvider';
@@ -121,7 +121,7 @@ export default function VoiceSettingsScreen() {
                 </View>
               )}
               <TouchableOpacity style={styles.playButton}>
-                <PlayCircle size={24} color="#60A5FA" />
+                <CirclePlay size={24} color="#60A5FA" />
               </TouchableOpacity>
             </TouchableOpacity>
           ))}

@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Wrench, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Wrench, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'1,239',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.6s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.7%',icon:Target,color:'#33691E'}];
+  const stats = [{label:'Tasks',value:'1,239',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.6s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.7%',icon:Target,color:'#33691E'}];
   const capabilities = ['Work Order Mgmt','Vendor Coordination','Preventive Maintenance','Emergency Response','Budget Tracking','Quality Assurance'];
   const responsibilities = ['Work order management & dispatch','Vendor & contractor coordination','Preventive maintenance scheduling','Emergency maintenance response','Maintenance budget tracking','Quality assurance for completed work'];
-  const activities = [{time:'3 min ago',text:'Managed 45 work orders today',icon:CheckCircle2},{time:'6 min ago',text:'Coordinated emergency HVAC repair',icon:Clock},{time:'9 min ago',text:'Scheduled preventive maintenance for 8 units',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Managed 45 work orders today',icon: CircleCheckBig},{time:'6 min ago',text:'Coordinated emergency HVAC repair',icon:Clock},{time:'9 min ago',text:'Scheduled preventive maintenance for 8 units',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

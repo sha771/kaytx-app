@@ -23,11 +23,11 @@ import {
   Shield,
   TrendingUp,
   Copy,
-  Edit,
+  Pencil,
   X,
   Check,
   Rocket,
-  BarChart3,
+  ChartBar,
   CalendarRange,
   RefreshCw,
 } from 'lucide-react-native';
@@ -121,7 +121,7 @@ export default function NegotiationCallScriptsScreen() {
   }, [scripts, searchQuery, stageFilter, channelFilter]);
 
   const pipelineStats = [
-    { id: 'coverage', label: 'Pipeline coverage', value: '4.1x', delta: '+0.4 QoQ', icon: BarChart3 },
+    { id: 'coverage', label: 'Pipeline coverage', value: '4.1x', delta: '+0.4 QoQ', icon: ChartBar },
     { id: 'time', label: 'Cycle time', value: '26d', delta: '-3 days', icon: CalendarRange },
     { id: 'win', label: 'Win rate', value: '38%', delta: '+6 pts', icon: Target },
     { id: 'expansion', label: 'Expansion ready', value: '14 deals', delta: '>$3.2M', icon: Briefcase },
@@ -224,7 +224,7 @@ export default function NegotiationCallScriptsScreen() {
                   key={stage}
                   style={[styles.filterChip, stageFilter === stage && styles.filterChipActive]}
                   onPress={() => {
-                    console.log('Stage filter', stage);
+                    console.log('Stage Filter', stage);
                     setStageFilter(stage);
                   }}
                 >
@@ -241,7 +241,7 @@ export default function NegotiationCallScriptsScreen() {
                   key={channel}
                   style={[styles.channelChip, channelFilter === channel && styles.channelChipActive]}
                   onPress={() => {
-                    console.log('Channel filter', channel);
+                    console.log('Channel Filter', channel);
                     setChannelFilter(channel);
                   }}
                 >
@@ -271,7 +271,7 @@ export default function NegotiationCallScriptsScreen() {
                       <Copy size={16} color={theme.colors.secondaryText} />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.iconButton} onPress={() => console.log('Edit script', script.id)}>
-                      <Edit size={16} color={theme.colors.primary} />
+                      <Pencil size={16} color={theme.colors.primary} />
                     </TouchableOpacity>
                   </View>
                 </View>

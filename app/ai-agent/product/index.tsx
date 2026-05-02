@@ -1,30 +1,31 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Lightbulb, Activity, Star, Users, CheckCircle2, Clock, Target, ArrowRight, BarChart3, MessageSquare, Calendar, Shield, FlaskConical, Palette, Code, Rocket } from 'lucide-react-native';
+import { Lightbulb, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBar, MessageSquare, Calendar, Shield, FlaskConical, Palette, Code, Rocket, LayoutDashboard } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { useRouter } from 'expo-router';
 
 const DEPARTMENT_AGENTS = [
-  { id: 'ab-test-agent', name: 'AI A/B Test Agent', description: 'AI A/B Test Agent AI Agent', icon: Layout, color: '#6A1B9A' },
-  { id: 'ai-product-analyst', name: 'AI Product Analyst', description: 'AI Product Analyst AI Agent', icon: Layout, color: '#6A1B9A' },
-  { id: 'ai-product-manager', name: 'AI Product Manager', description: 'AI Product Manager AI Agent', icon: Layout, color: '#6A1B9A' },
-  { id: 'ai-product-marketer', name: 'AI Product Marketer', description: 'AI Product Marketer AI Agent', icon: Layout, color: '#6A1B9A' },
-  { id: 'ai-release-manager', name: 'AI Release Manager', description: 'AI Release Manager AI Agent', icon: Layout, color: '#6A1B9A' },
-  { id: 'ai-ux-researcher', name: 'AI UX Researcher', description: 'AI UX Researcher AI Agent', icon: Layout, color: '#6A1B9A' },
-  { id: 'feature-analyst', name: 'AI Feature Analyst', description: 'AI Feature Analyst AI Agent', icon: Layout, color: '#6A1B9A' },
-  { id: 'product-manager-1', name: 'Product Manager', description: 'Product Manager AI Agent', icon: Layout, color: '#6A1B9A' },
-  { id: 'product-owner-1', name: 'Product Owner', description: 'Product Owner AI Agent', icon: Layout, color: '#6A1B9A' },
-  { id: 'prototype-builder', name: 'AI Prototype Builder', description: 'AI Prototype Builder AI Agent', icon: Layout, color: '#6A1B9A' },
-  { id: 'roadmap-planner', name: 'AI Roadmap Planner', description: 'AI Roadmap Planner AI Agent', icon: Layout, color: '#6A1B9A' },
-  { id: 'ux-researcher', name: 'AI UX Researcher', description: 'AI UX Researcher AI Agent', icon: Layout, color: '#6A1B9A' },
-  { id: 'vp-product-operations', name: 'VP Product Operations', description: 'VP Product Operations AI Agent', icon: Layout, color: '#6A1B9A' },
-  { id: 'vp-product-strategy', name: 'VP Product Strategy', description: 'VP Product Strategy AI Agent', icon: Layout, color: '#6A1B9A' },
-  { id: 'vp-product', name: 'VP Product', description: 'VP Product AI Agent', icon: Layout, color: '#6A1B9A' }
+  { id: 'ab-test-agent', name: 'AI A/B Test Agent', description: 'AI A/B Test Agent AI Agent', icon: LayoutDashboard, color: '#6A1B9A' },
+  { id: 'ai-product-analyst', name: 'AI Product Analyst', description: 'AI Product Analyst AI Agent', icon: LayoutDashboard, color: '#6A1B9A' },
+  { id: 'ai-product-manager', name: 'AI Product Manager', description: 'AI Product Manager AI Agent', icon: LayoutDashboard, color: '#6A1B9A' },
+  { id: 'ai-product-marketer', name: 'AI Product Marketer', description: 'AI Product Marketer AI Agent', icon: LayoutDashboard, color: '#6A1B9A' },
+  { id: 'ai-release-manager', name: 'AI Release Manager', description: 'AI Release Manager AI Agent', icon: LayoutDashboard, color: '#6A1B9A' },
+  { id: 'ai-ux-researcher', name: 'AI UX Researcher', description: 'AI UX Researcher AI Agent', icon: LayoutDashboard, color: '#6A1B9A' },
+  { id: 'feature-analyst', name: 'AI Feature Analyst', description: 'AI Feature Analyst AI Agent', icon: LayoutDashboard, color: '#6A1B9A' },
+  { id: 'product-manager-1', name: 'Product Manager', description: 'Product Manager AI Agent', icon: LayoutDashboard, color: '#6A1B9A' },
+  { id: 'product-owner-1', name: 'Product Owner', description: 'Product Owner AI Agent', icon: LayoutDashboard, color: '#6A1B9A' },
+  { id: 'prototype-builder', name: 'AI Prototype Builder', description: 'AI Prototype Builder AI Agent', icon: LayoutDashboard, color: '#6A1B9A' },
+  { id: 'roadmap-planner', name: 'AI Roadmap Planner', description: 'AI Roadmap Planner AI Agent', icon: LayoutDashboard, color: '#6A1B9A' },
+  { id: 'ux-researcher', name: 'AI UX Researcher', description: 'AI UX Researcher AI Agent', icon: LayoutDashboard, color: '#6A1B9A' },
+  { id: 'vp-product-operations', name: 'VP Product Operations', description: 'VP Product Operations AI Agent', icon: LayoutDashboard, color: '#6A1B9A' },
+  { id: 'vp-product-strategy', name: 'VP Product Strategy', description: 'VP Product Strategy AI Agent', icon: LayoutDashboard, color: '#6A1B9A' },
+  { id: 'vp-product', name: 'VP Product', description: 'VP Product AI Agent', icon: LayoutDashboard, color: '#6A1B9A' }
 ];;
 
 export default function ProductDevelopmentIndex() {
   const { theme } = useTheme();
+  const router = useRouter();
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
@@ -38,7 +39,7 @@ export default function ProductDevelopmentIndex() {
         </View>
       </View>
       <View style={styles.statsContainer}>
-        {[{label:'Agents',value:'9',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Sprints',value:'2/week',icon:Clock,color:'#FF9500'},{label:'Features',value:'50+',icon:Target,color:'#AF52DE'}].map((stat,i)=>(<View key={i} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><stat.icon size={22} color={stat.color} /><Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text><Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text></View>))}
+        {[{label:'Agents',value:'9',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Sprints',value:'2/week',icon:Clock,color:'#FF9500'},{label:'Features',value:'50+',icon:Target,color:'#AF52DE'}].map((stat,i)=>(<View key={i} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><stat.icon size={22} color={stat.color} /><Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text><Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text></View>))}
       </View>
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Overview</Text>
@@ -60,7 +61,7 @@ export default function ProductDevelopmentIndex() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:BarChart3},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: theme.colors.primary + '12' }]}><act.icon size={24} color={theme.colors.primary} /><Text style={[styles.actionText, { color: theme.colors.primary }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: theme.colors.primary + '12' }]}><act.icon size={24} color={theme.colors.primary} /><Text style={[styles.actionText, { color: theme.colors.primary }]}>{act.label}</Text></TouchableOpacity>))}
         </View>
       </View>
     <AgentFeatures agentId="product-index" agentName="Product Department" />

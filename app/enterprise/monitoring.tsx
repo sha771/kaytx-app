@@ -12,9 +12,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   ArrowLeft,
   Activity,
-  AlertTriangle,
-  AlertCircle,
-  CheckCircle,
+  TriangleAlert,
+  CircleAlert,
+  CircleCheck,
   TrendingUp,
   TrendingDown,
   Clock,
@@ -28,7 +28,7 @@ import {
   Bell,
   Settings,
   Zap,
-  BarChart3,
+  ChartBar,
   RefreshCw,
   Shield,
   History,
@@ -143,7 +143,7 @@ const metrics: MetricData[] = [
     value: '0.12',
     change: -15,
     status: 'healthy',
-    icon: AlertTriangle,
+    icon: TriangleAlert,
     color: '#AF52DE',
     unit: '%',
   },
@@ -406,9 +406,9 @@ export default function MonitoringScreen() {
   const renderAlert = ({ item }: { item: Alert }) => {
     const severityColor = getSeverityColor(item.severity);
     const SeverityIcon = item.severity === 'critical'
-      ? AlertCircle
+      ? CircleAlert
       : item.severity === 'warning'
-        ? AlertTriangle
+        ? TriangleAlert
         : CheckCircle;
 
     return (
@@ -602,7 +602,7 @@ export default function MonitoringScreen() {
             <View style={[styles.statusCard, { backgroundColor: '#34C75915' }]}
               testID="monitoring-status-card">
               <View style={styles.statusHeader}>
-                <CheckCircle size={32} color="#34C759" />
+                <CircleCheck size={32} color="#34C759" />
                 <View style={styles.statusInfo}>
                   <Text style={[styles.statusTitle, { color: theme.colors.text }]}>All Systems Operational</Text>
                   <Text style={[styles.statusDescription, { color: theme.colors.secondaryText }]}>4 services running smoothly • 99.97% uptime</Text>
@@ -674,7 +674,7 @@ export default function MonitoringScreen() {
                 <Text style={[styles.logStreamStat, { color: theme.colors.secondaryText }]}>96% logs indexed • 14 traces correlated</Text>
                 <View style={styles.streamFooter}>
                   <View style={[styles.streamInsight, { backgroundColor: theme.colors.background }]}>
-                    <BarChart3 size={14} color={theme.colors.text} />
+                    <ChartBarBig size={14} color={theme.colors.text} />
                     <Text style={[styles.streamInsightText, { color: theme.colors.text }]}>p99 412ms</Text>
                   </View>
                   <View style={[styles.streamInsight, { backgroundColor: theme.colors.background }]}>
@@ -808,14 +808,14 @@ export default function MonitoringScreen() {
               </TouchableOpacity>
             </View>
             <View style={styles.logFilters}>
-              {(['all', 'prod', 'staging', 'dev'] as const).map((filter) => (
+              {(['all', 'prod', 'staging', 'dev'] as const).map((Filter) => (
                 <TouchableOpacity
-                  key={filter}
-                  style={[styles.logFilterChip, logFilter === filter && { backgroundColor: theme.colors.primary }]}
-                  onPress={() => setLogFilter(filter)}
+                  key={Filter}
+                  style={[styles.logFilterChip, logFilter === Filter && { backgroundColor: theme.colors.primary }]}
+                  onPress={() => setLogFilter(Filter)}
                 >
-                  <Text style={[styles.logFilterText, { color: logFilter === filter ? '#FFFFFF' : theme.colors.secondaryText }]}>
-                    {filter.toUpperCase()}
+                  <Text style={[styles.logFilterText, { color: logFilter === Filter ? '#FFFFFF' : theme.colors.secondaryText }]}>
+                    {Filter.toUpperCase()}
                   </Text>
                 </TouchableOpacity>
               ))}

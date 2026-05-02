@@ -12,7 +12,7 @@ import {
 import { useRouter } from 'expo-router';
 import {
   ChevronLeft,
-  MoreVertical,
+  EllipsisVertical,
   Phone,
   Video,
   Mic,
@@ -25,6 +25,10 @@ import {
   CheckCheck,
   Sparkles,
   Zap,
+  FileText,
+  ChartBar,
+  Calendar,
+  Briefcase,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeIn, FadeInUp } from 'react-native-reanimated';
@@ -88,7 +92,7 @@ const INITIAL_MESSAGES: Message[] = [
 
 const QUICK_ACTIONS = [
   { icon: FileText, label: 'Reports', color: '#3B82F6' },
-  { icon: BarChart3, label: 'Analytics', color: '#8B5CF6' },
+  { icon: ChartBar, label: 'Analytics', color: '#8B5CF6' },
   { icon: Calendar, label: 'Schedule', color: '#F59E0B' },
   { icon: Briefcase, label: 'Tasks', color: '#10B981' },
 ];
@@ -382,7 +386,7 @@ export default function AgentChatScreen() {
             <Video size={20} color={colors.tint} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerButton}>
-            <MoreVertical size={20} color={colors.text} />
+            <EllipsisVertical size={20} color={colors.text} />
           </TouchableOpacity>
         </View>
       </View>

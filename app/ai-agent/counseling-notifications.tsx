@@ -92,18 +92,18 @@ export default function CounselingNotificationsScreen() {
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filterScroll}>
         {filters.map(filter => (
           <TouchableOpacity
-            key={filter.value}
+            key={Filter.value}
             style={[
               styles.filterChip,
-              selectedFilter === filter.value && styles.selectedFilter,
+              selectedFilter === Filter.value && styles.selectedFilter,
             ]}
-            onPress={() => setSelectedFilter(filter.value)}
+            onPress={() => setSelectedFilter(Filter.value)}
           >
             <Text style={[
               styles.filterText,
-              selectedFilter === filter.value && styles.selectedFilterText,
+              selectedFilter === Filter.value && styles.selectedFilterText,
             ]}>
-              {filter.label}
+              {Filter.label}
             </Text>
           </TouchableOpacity>
         ))}
@@ -123,7 +123,7 @@ export default function CounselingNotificationsScreen() {
             <Text style={styles.emptySubtext}>
               {selectedFilter === 'unread' 
                 ? 'All caught up!' 
-                : 'No notifications match this filter'
+                : 'No notifications match this Filter'
               }
             </Text>
           </View>

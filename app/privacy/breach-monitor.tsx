@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
-import { ArrowLeft, AlertTriangle, Shield, CheckCircle, Clock, AlertCircle } from 'lucide-react-native';
+import { ArrowLeft, TriangleAlert, Shield, CircleCheck, Clock, CircleAlert } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { trpc } from '@/lib/trpc';
 
@@ -57,7 +57,7 @@ export default function BreachMonitorScreen() {
         >
           {breachCheck.data?.breachesFound ? (
             <>
-              <AlertTriangle size={48} color={theme.colors.error} />
+              <TriangleAlert size={48} color={theme.colors.error} />
               <Text style={[styles.statusTitle, { color: theme.colors.error }]}>
                 Breaches Detected
               </Text>
@@ -99,7 +99,7 @@ export default function BreachMonitorScreen() {
                   >
                     <View style={styles.breachHeader}>
                       <View style={[styles.severityBadge, { backgroundColor: severityColor + '20' }]}>
-                        <AlertCircle size={16} color={severityColor} />
+                        <CircleAlert size={16} color={severityColor} />
                         <Text style={[styles.severityText, { color: severityColor }]}>
                           {breach.severity.toUpperCase()}
                         </Text>
@@ -121,7 +121,7 @@ export default function BreachMonitorScreen() {
                         </Text>
                       </View>
                       <View style={styles.metaItem}>
-                        <AlertTriangle size={14} color={theme.colors.secondaryText} />
+                        <TriangleAlert size={14} color={theme.colors.secondaryText} />
                         <Text style={[styles.metaText, { color: theme.colors.secondaryText }]}>
                           {breach.affectedData.join(', ')}
                         </Text>
@@ -134,7 +134,7 @@ export default function BreachMonitorScreen() {
                       </Text>
                       {breach.recommendations.map((recommendation: any, index: number) => (
                         <View key={index} style={styles.recommendationItem}>
-                          <CheckCircle size={14} color={theme.colors.primary} />
+                          <CircleCheck size={14} color={theme.colors.primary} />
                           <Text style={[styles.recommendationText, { color: theme.colors.text }]}>
                             {recommendation}
                           </Text>

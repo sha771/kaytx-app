@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Zap, Activity, Star, Users, CheckCircle2, Clock, Target, ArrowRight, BarChart3, MessageSquare, Calendar, Shield } from 'lucide-react-native';
+import { Zap, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBar, MessageSquare, Calendar, Shield } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function CAOAutomationPage() {
@@ -19,30 +19,30 @@ export default function CAOAutomationPage() {
         </View>
       </View>
       <View style={styles.statsContainer}>
-        {[{label:'Automations',value:'4,521',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.97%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.1s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.8%',icon:Target,color:'#AF52DE'}].map((stat,i)=>(<View key={i} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><stat.icon size={22} color={stat.color} /><Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text><Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text></View>))}
+        {[{label:'Automations',value:'4,521',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.97%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.1s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.8%',icon:Target,color:'#AF52DE'}].map((stat,i)=>(<View key={i} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><stat.icon size={22} color={stat.color} /><Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text><Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text></View>))}
       </View>
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Overview</Text>
-        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>The AI CAO Automation specializes in RPA, workflow automation, and efficiency optimization across all operations. This agent streamlines processes, manages bot fleets, and maximizes operational efficiency.</Text>
+        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>The AI CAO Automation specializes in RPA, workflow automation, and efficiency optimization across all operations. This agent streamlines processes, manages User fleets, and maximizes operational efficiency.</Text>
       </View>
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Capabilities</Text>
         <View style={styles.tagsContainer}>
-          {['Automation Strategy','RPA','Process Optimization','Workflow Design','Efficiency','Bot Management'].map((cap,i)=>(<View key={i} style={[styles.tag, { backgroundColor: theme.colors.primary + '18' }]}><Text style={[styles.tagText, { color: theme.colors.primary }]}>{cap}</Text></View>))}
+          {['Automation Strategy','RPA','Process Optimization','Workflow Design','Efficiency','User Management'].map((cap,i)=>(<View key={i} style={[styles.tag, { backgroundColor: theme.colors.primary + '18' }]}><Text style={[styles.tagText, { color: theme.colors.primary }]}>{cap}</Text></View>))}
         </View>
       </View>
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Responsibilities</Text>
-        {['Automation Strategy & Roadmap','RPA Implementation & Scaling','Workflow Design & Optimization','Process Mining & Analysis','Bot Fleet Management','Efficiency Metrics & Reporting','Citizen Automation Enablement','Integration Architecture'].map((item,i)=>(<View key={i} style={styles.responsibilityRow}><ArrowRight size={14} color={theme.colors.primary} /><Text style={[styles.responsibilityText, { color: theme.colors.textSecondary }]}>{item}</Text></View>))}
+        {['Automation Strategy & Roadmap','RPA Implementation & Scaling','Workflow Design & Optimization','Process Mining & Analysis','User Fleet Management','Efficiency Metrics & Reporting','Citizen Automation Enablement','Integration Architecture'].map((item,i)=>(<View key={i} style={styles.responsibilityRow}><ArrowRight size={14} color={theme.colors.primary} /><Text style={[styles.responsibilityText, { color: theme.colors.textSecondary }]}>{item}</Text></View>))}
       </View>
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Recent Activity</Text>
-        {[{time:'2 min ago',text:'Deployed 12 new bots for finance reconciliation'},{time:'15 min ago',text:'Optimized workflow reducing process time by 40%'},{time:'40 min ago',text:'Updated bot monitoring dashboards'},{time:'2 hours ago',text:'Published automation ROI report for Q3'},{time:'4 hours ago',text:'Conducted RPA training for operations team'}].map((act,i)=>(<View key={i} style={styles.activityRow}><View style={[styles.activityIcon, { backgroundColor: theme.colors.primary + '15' }]}><Zap size={14} color={theme.colors.primary} /></View><View style={styles.activityContent}><Text style={[styles.activityText, { color: theme.colors.text }]}>{act.text}</Text><Text style={[styles.activityTime, { color: theme.colors.textSecondary }]}>{act.time}</Text></View></View>))}
+        {[{time:'2 min ago',text:'Deployed 12 new bots for finance reconciliation'},{time:'15 min ago',text:'Optimized workflow reducing process time by 40%'},{time:'40 min ago',text:'Updated User monitoring dashboards'},{time:'2 hours ago',text:'Published automation ROI report for Q3'},{time:'4 hours ago',text:'Conducted RPA training for operations team'}].map((act,i)=>(<View key={i} style={styles.activityRow}><View style={[styles.activityIcon, { backgroundColor: theme.colors.primary + '15' }]}><Zap size={14} color={theme.colors.primary} /></View><View style={styles.activityContent}><Text style={[styles.activityText, { color: theme.colors.text }]}>{act.text}</Text><Text style={[styles.activityTime, { color: theme.colors.textSecondary }]}>{act.time}</Text></View></View>))}
       </View>
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:BarChart3},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: theme.colors.primary + '12' }]}><act.icon size={24} color={theme.colors.primary} /><Text style={[styles.actionText, { color: theme.colors.primary }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: theme.colors.primary + '12' }]}><act.icon size={24} color={theme.colors.primary} /><Text style={[styles.actionText, { color: theme.colors.primary }]}>{act.label}</Text></TouchableOpacity>))}
         </View>
       </View>
     

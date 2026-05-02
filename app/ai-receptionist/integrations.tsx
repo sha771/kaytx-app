@@ -15,7 +15,7 @@ import { Stack, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   Search,
-  CheckCircle,
+  CircleCheck,
   Circle,
   Settings,
   X,
@@ -25,7 +25,7 @@ import {
   MessageCircle,
   Video,
   Mail,
-  BarChart2,
+  ChartBar,
   Users,
   Database,
   Lock,
@@ -68,7 +68,7 @@ export default function IntegrationsScreen() {
       crm: Database,
       calendar: Calendar,
       communication: MessageCircle,
-      analytics: BarChart2,
+      analytics: ChartBar,
       productivity: Zap,
     } as Record<string, React.ComponentType<any>>;
     return icons[category] || Zap;
@@ -181,7 +181,7 @@ export default function IntegrationsScreen() {
                       </View>
                       {integration.isConnected ? (
                         <View style={styles.connectedBadge}>
-                          <CheckCircle size={16} color="#34C759" />
+                          <CircleCheck size={16} color="#34C759" />
                           <Text style={styles.connectedText}>Connected</Text>
                         </View>
                       ) : (
@@ -327,19 +327,19 @@ export default function IntegrationsScreen() {
                     <View style={[styles.featuresSection, { backgroundColor: theme.colors.cardBackground }]}>
                       <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Features</Text>
                       <View style={[styles.featureItem, { borderBottomColor: theme.colors.border }]}>
-                        <CheckCircle size={16} color="#34C759" />
+                        <CircleCheck size={16} color="#34C759" />
                         <Text style={[styles.featureText, { color: theme.colors.text }]}>Two-way data synchronization</Text>
                       </View>
                       <View style={[styles.featureItem, { borderBottomColor: theme.colors.border }]}>
-                        <CheckCircle size={16} color="#34C759" />
+                        <CircleCheck size={16} color="#34C759" />
                         <Text style={[styles.featureText, { color: theme.colors.text }]}>Real-time updates</Text>
                       </View>
                       <View style={[styles.featureItem, { borderBottomColor: theme.colors.border }]}>
-                        <CheckCircle size={16} color="#34C759" />
+                        <CircleCheck size={16} color="#34C759" />
                         <Text style={[styles.featureText, { color: theme.colors.text }]}>Automated workflows</Text>
                       </View>
                       <View style={[styles.featureItem, { borderBottomColor: theme.colors.border }]}>
-                        <CheckCircle size={16} color="#34C759" />
+                        <CircleCheck size={16} color="#34C759" />
                         <Text style={[styles.featureText, { color: theme.colors.text }]}>Custom field mapping</Text>
                       </View>
                     </View>

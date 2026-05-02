@@ -2,8 +2,10 @@ import React from 'react';
 import { AIEmployee } from '@/constants/aiEmployees';
 import { AgentShell } from './AgentShell';
 
+type AgentInput = Partial<AIEmployee> & Pick<AIEmployee, 'id' | 'name' | 'title' | 'description' | 'capabilities'>;
+
 interface EnterpriseAgentShellProps {
-  agent: AIEmployee;
+  agent: AgentInput;
   customTabs?: {
     id: string;
     label: string;

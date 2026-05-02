@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Cpu, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Cpu, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'2,790',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.5s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.2%',icon:Target,color:'#006064'}];
+  const stats = [{label:'Tasks',value:'2,790',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.5s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.2%',icon:Target,color:'#006064'}];
   const capabilities = ['Rapid Prototyping','ML Engineering','Experiment Design','Model Training','Evaluation','Deployment'];
   const responsibilities = ['Rapid prototype development','ML model engineering & training','Experiment design & execution','Model evaluation & benchmarking','Prototype-to-production transition','Technical documentation'];
-  const activities = [{time:'3 min ago',text:'Built 3 ML prototypes this sprint',icon:CheckCircle2},{time:'6 min ago',text:'Trained & evaluated transformer model',icon:Clock},{time:'9 min ago',text:'Documented experiment results',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Built 3 ML prototypes this sprint',icon: CircleCheckBig},{time:'6 min ago',text:'Trained & evaluated transformer model',icon:Clock},{time:'9 min ago',text:'Documented experiment results',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

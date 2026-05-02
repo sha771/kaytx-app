@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Monitor, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Monitor, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'738',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.5s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.7%',icon:Target,color:'#B71C1C'}];
+  const stats = [{label:'Tasks',value:'738',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.5s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.7%',icon:Target,color:'#B71C1C'}];
   const capabilities = ['Telehealth Platform','Virtual Visits','Technical Support','Patient Onboarding','Remote Monitoring','Compliance'];
   const responsibilities = ['Telehealth platform management & support','Virtual visit facilitation','Technical troubleshooting for patients','Patient onboarding for telehealth','Remote patient monitoring coordination','Telehealth compliance & documentation'];
-  const activities = [{time:'3 min ago',text:'Supported 45 virtual visits today',icon:CheckCircle2},{time:'6 min ago',text:'Onboarded 12 new telehealth patients',icon:Clock},{time:'9 min ago',text:'Resolved 8 technical issues',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Supported 45 virtual visits today',icon: CircleCheckBig},{time:'6 min ago',text:'Onboarded 12 new telehealth patients',icon:Clock},{time:'9 min ago',text:'Resolved 8 technical issues',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

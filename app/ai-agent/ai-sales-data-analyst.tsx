@@ -1,7 +1,7 @@
  
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { BarChart3, TrendingUp } from 'lucide-react-native';
+import { ChartBar, TrendingUp } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { EnterpriseAgentShell } from '@/components/ai-agent/EnterpriseAgentShell';
@@ -36,7 +36,7 @@ export default function AISalesDataAnalystScreen() {
   );
 
   const customTabs = [
-    { id: 'insights', label: 'Insights', icon: BarChart3, component: renderInsightsTab }
+    { id: 'insights', label: 'Insights', icon: ChartBar, component: renderInsightsTab }
   ];
 
   return <EnterpriseAgentShell agent={agent} customTabs={customTabs} />;

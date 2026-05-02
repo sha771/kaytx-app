@@ -209,6 +209,10 @@ function RootLayoutNav() {
       <Stack.Screen name="automation/team-performance" />
       <Stack.Screen name="automation/workflow-builder" />
       <Stack.Screen name="automation/integrations" />
+      <Stack.Screen name="automation/message-automate" />
+      <Stack.Screen name="automation/reply-automate" />
+      <Stack.Screen name="automation/scheduled-messages" />
+      <Stack.Screen name="automation/ai-responder" />
       <Stack.Screen name="business/crm" />
       <Stack.Screen name="business/customer-management" />
       <Stack.Screen name="business/business-analysis" />

@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Shield, AlertTriangle, CheckCircle, TrendingUp, Globe, Bell, Eye, Settings } from 'lucide-react-native';
+import { Shield, TriangleAlert, CircleCheck, TrendingUp, Globe, Bell, Eye, Settings } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 
 export default function BrandMonitoring() {
@@ -27,8 +27,8 @@ export default function BrandMonitoring() {
 
   const getAlertIcon = (type: string) => {
     switch (type) {
-      case 'warning': return <AlertTriangle size={18} color="#FF9500" />;
-      case 'success': return <CheckCircle size={18} color="#34C759" />;
+      case 'warning': return <TriangleAlert size={18} color="#FF9500" />;
+      case 'success': return <CircleCheck size={18} color="#34C759" />;
       default: return <Bell size={18} color="#007AFF" />;
     }
   };

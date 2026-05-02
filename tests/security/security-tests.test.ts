@@ -101,7 +101,7 @@ describe('Security Tests', () => {
       }
     });
 
-    it('should prevent SQL injection in filter parameters', async () => {
+    it('should prevent SQL injection in Filter parameters', async () => {
       const maliciousFilters = [
         "status='; DROP TABLE users; --",
         "name' OR '1'='1",
@@ -109,9 +109,9 @@ describe('Security Tests', () => {
         "created_at' UNION SELECT password FROM users --",
       ];
 
-      for (const filter of maliciousFilters) {
+      for (const Filter of maliciousFilters) {
         const response = await request(app)
-          .get(`/api/leads?filter=${encodeURIComponent(filter)}`)
+          .get(`/api/leads?filter=${encodeURIComponent(Filter)}`)
           .set('Authorization', `Bearer ${authToken}`)
           .expect(400);
 

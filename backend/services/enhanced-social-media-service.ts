@@ -1637,7 +1637,7 @@ class EnhancedSocialMediaService {
   private getDefaultModerationRules(): ModerationRule[] {
     return [
       {
-        id: 'spam-filter',
+        id: 'spam-Filter',
         name: 'Spam Filter',
         condition: 'spam',
         parameters: {},
@@ -1645,7 +1645,7 @@ class EnhancedSocialMediaService {
         isEnabled: true
       },
       {
-        id: 'toxic-filter',
+        id: 'toxic-Filter',
         name: 'Toxic Language Filter',
         condition: 'toxic',
         parameters: {},

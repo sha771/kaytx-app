@@ -183,7 +183,7 @@ class MonitoringService {
     };
   }
 
-  getEvents(filter?: {
+  getEvents(Filter?: {
     level?: MonitoringLevel;
     category?: string;
     startDate?: Date;
@@ -191,18 +191,18 @@ class MonitoringService {
   }): MonitoringEvent[] {
     let filtered = this.events;
 
-    if (filter) {
-      if (filter.level) {
-        filtered = filtered.filter(e => e.level === filter.level);
+    if (Filter) {
+      if (Filter.level) {
+        filtered = filtered.filter(e => e.level === Filter.level);
       }
-      if (filter.category) {
-        filtered = filtered.filter(e => e.category === filter.category);
+      if (Filter.category) {
+        filtered = filtered.filter(e => e.category === Filter.category);
       }
-      if (filter.startDate) {
-        filtered = filtered.filter(e => e.timestamp >= filter.startDate!);
+      if (Filter.startDate) {
+        filtered = filtered.filter(e => e.timestamp >= Filter.startDate!);
       }
-      if (filter.endDate) {
-        filtered = filtered.filter(e => e.timestamp <= filter.endDate!);
+      if (Filter.endDate) {
+        filtered = filtered.filter(e => e.timestamp <= Filter.endDate!);
       }
     }
 

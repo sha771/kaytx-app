@@ -21,7 +21,7 @@ import {
   Clock,
   Crown,
   Shield,
-  AlertTriangle,
+  TriangleAlert,
   MessageCircle,
   ChevronRight,
   Settings,
@@ -36,12 +36,12 @@ import {
   VolumeX,
   Timer,
   Target,
-  BarChart3,
+  ChartBar,
   Layers,
-  CheckCircle,
+  CircleCheck,
   Plus,
   Trash2,
-  Edit3,
+  PenLine,
   RefreshCw,
   Award,
   Flame,
@@ -138,7 +138,7 @@ export default function PriorityMessagingModal({ visible, onClose }: Props) {
       condition: 'Message contains urgent keywords',
       action: 'Mark as high priority, send alert',
       enabled: true,
-      icon: <AlertTriangle size={18} color="#EF4444" />,
+      icon: <TriangleAlert size={18} color="#EF4444" />,
       color: '#EF4444',
     },
     {
@@ -242,7 +242,7 @@ export default function PriorityMessagingModal({ visible, onClose }: Props) {
   const getSentimentIcon = (sentiment: string) => {
     switch (sentiment) {
       case 'positive': return <Heart size={12} color="#10B981" />;
-      case 'negative': return <AlertTriangle size={12} color="#EF4444" />;
+      case 'negative': return <TriangleAlert size={12} color="#EF4444" />;
       default: return <Circle size={12} color="#6B7280" />;
     }
   };
@@ -407,7 +407,7 @@ export default function PriorityMessagingModal({ visible, onClose }: Props) {
                   inbox: MessageCircle,
                   vip: Crown,
                   rules: Layers,
-                  analytics: BarChart3,
+                  analytics: ChartBar,
                   settings: Settings,
                 };
                 const TabIcon = tabIcons[tab];
@@ -449,7 +449,7 @@ export default function PriorityMessagingModal({ visible, onClose }: Props) {
                 <View style={[styles.urgentAlert, { backgroundColor: '#FEE2E2' }]}>
                   <View style={styles.urgentHeader}>
                     <View style={[styles.urgentIconBg, { backgroundColor: '#EF4444' }]}>
-                      <AlertTriangle size={18} color="#FFF" />
+                      <TriangleAlert size={18} color="#FFF" />
                     </View>
                     <View style={styles.urgentContent}>
                       <Text style={styles.urgentTitle}>Urgent Messages</Text>
@@ -651,7 +651,7 @@ export default function PriorityMessagingModal({ visible, onClose }: Props) {
                     </View>
                     <View style={styles.ruleFooter}>
                       <TouchableOpacity style={styles.ruleEditButton}>
-                        <Edit3 size={14} color={theme.colors.secondaryText} />
+                        <PenLine size={14} color={theme.colors.secondaryText} />
                         <Text style={[styles.ruleEditText, { color: theme.colors.secondaryText }]}>Edit</Text>
                       </TouchableOpacity>
                       <TouchableOpacity style={styles.ruleDeleteButton}>
@@ -729,7 +729,7 @@ export default function PriorityMessagingModal({ visible, onClose }: Props) {
                 <View style={[styles.analyticsCard, { backgroundColor: '#8B5CF615' }]}>
                   <View style={styles.analyticsCardHeader}>
                     <Brain size={20} color="#8B5CF6" />
-                    <CheckCircle size={14} color="#10B981" />
+                    <CircleCheck size={14} color="#10B981" />
                   </View>
                   <Text style={[styles.analyticsValue, { color: theme.colors.text }]}>
                     {analyticsData.aiAccuracy}%
@@ -938,7 +938,7 @@ export default function PriorityMessagingModal({ visible, onClose }: Props) {
                         autoFocus
                       />
                       <TouchableOpacity onPress={addKeyword}>
-                        <CheckCircle size={18} color={theme.colors.primary} />
+                        <CircleCheck size={18} color={theme.colors.primary} />
                       </TouchableOpacity>
                     </View>
                   ) : (

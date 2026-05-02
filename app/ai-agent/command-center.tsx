@@ -17,19 +17,18 @@ import {
   Settings,
   Brain,
   Upload,
-  BarChart3,
+  ChartBar,
   Users,
   MessageSquare,
   RefreshCw,
-  CheckCircle,
-  AlertTriangle,
+  CircleCheck,
+  TriangleAlert,
   Power,
   Sparkles,
   Command,
   Activity,
   Database,
   FileText,
-  Bot,
   Target,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -137,7 +136,7 @@ export default function AIAgentsCommandCenterScreen() {
     {
       id: 'analytics',
       label: 'Analytics Dashboard',
-      icon: BarChart3,
+      icon: ChartBar,
       color: '#3B82F6',
       route: '/ai-agent/analytics',
       badge: 'Live',
@@ -180,15 +179,15 @@ export default function AIAgentsCommandCenterScreen() {
   ];
 
   const recentActivity = [
-    { id: 1, text: 'AI Bookkeeper processed 1,240 transactions', time: '2 min ago', icon: CheckCircle, color: '#10B981' },
-    { id: 2, text: 'AI Tax Agent completed compliance check', time: '15 min ago', icon: CheckCircle, color: '#10B981' },
+    { id: 1, text: 'AI Bookkeeper processed 1,240 transactions', time: '2 min ago', icon: CircleCheck, color: '#10B981' },
+    { id: 2, text: 'AI Tax Agent completed compliance check', time: '15 min ago', icon: CircleCheck, color: '#10B981' },
     { id: 3, text: 'New training data uploaded to 3 agents', time: '1 hour ago', icon: Upload, color: '#3B82F6' },
     { id: 4, text: 'AI Sales Agent achieved 98% success rate', time: '2 hours ago', icon: Target, color: '#8B5CF6' },
   ];
 
   const handleAction = (item: typeof quickActions[0]) => {
     if (item.route) {
-      router.push(item.route as any);
+      router.push(item.route);
     } else if (item.action) {
       item.action();
     }
@@ -266,7 +265,7 @@ export default function AIAgentsCommandCenterScreen() {
               <TouchableOpacity
                 key={item.id}
                 style={[styles.navItem, index !== navigationItems.length - 1 && { borderBottomWidth: 1, borderBottomColor: colors.border }]}
-                onPress={() => router.push(item.route as any)}
+                onPress={() => router.push(item.route)}
               >
                 <View style={[styles.navIcon, { backgroundColor: item.color + '15' }]}>
                   <item.icon size={20} color={item.color} />
@@ -311,7 +310,7 @@ export default function AIAgentsCommandCenterScreen() {
           <Text style={[styles.sectionTitle, { color: colors.text + '60' }]}>SYSTEM STATUS</Text>
           <View style={[styles.systemCard, { backgroundColor: '#10B981' + '15', borderColor: '#10B981' }]}>
             <View style={styles.systemHeader}>
-              <CheckCircle size={24} color="#10B981" />
+              <CircleCheck size={24} color="#10B981" />
               <Text style={[styles.systemTitle, { color: '#10B981' }]}>All Systems Operational</Text>
             </View>
             <View style={styles.systemMetrics}>

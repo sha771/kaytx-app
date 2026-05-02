@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Settings, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Settings, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'2,270',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.2s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.4%',icon:Target,color:'#33691E'}];
+  const stats = [{label:'Tasks',value:'2,270',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.2s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.4%',icon:Target,color:'#33691E'}];
   const capabilities = ['Facility Operations','Maintenance','Space Planning','Vendor Mgmt','Energy Management','Safety Compliance'];
   const responsibilities = ['Facility operations management','Preventive maintenance programs','Space planning & optimization','Vendor & contractor management','Energy management & sustainability','Safety & compliance oversight'];
-  const activities = [{time:'3 min ago',text:'Managed 500K sq ft portfolio',icon:CheckCircle2},{time:'6 min ago',text:'Reduced energy costs by 15%',icon:Clock},{time:'9 min ago',text:'Completed quarterly safety inspection',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Managed 500K sq ft portfolio',icon: CircleCheckBig},{time:'6 min ago',text:'Reduced energy costs by 15%',icon:Clock},{time:'9 min ago',text:'Completed quarterly safety inspection',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

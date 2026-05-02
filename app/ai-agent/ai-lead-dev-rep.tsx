@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { UserPlus, Filter } from 'lucide-react-native';
+import { UserPlus, ListFilter } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { EnterpriseAgentShell } from '@/components/ai-agent/EnterpriseAgentShell';

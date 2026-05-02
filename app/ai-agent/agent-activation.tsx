@@ -13,12 +13,11 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   ArrowLeft,
-  Bot,
   Users,
   Headphones,
   Phone,
   Ticket,
-  AlertCircle,
+  CircleAlert,
   Heart,
   Gift,
   ClipboardList,
@@ -46,13 +45,13 @@ import {
   Package,
   Shield,
   Boxes,
-  CheckCircle,
-  BarChart3,
-  LineChart,
-  PieChart,
+  CircleCheck,
+  ChartBar,
+  ChartLine,
+  ChartPie,
   Brain,
   Lightbulb,
-  AlertTriangle,
+  TriangleAlert,
   Lock,
   Activity,
   Gauge,
@@ -63,7 +62,7 @@ import {
   Zap,
   Power,
   RefreshCw,
-  CheckSquare,
+  SquareCheck,
   Square,
   ToggleLeft,
   ToggleRight,
@@ -72,7 +71,7 @@ import {
   Globe,
   Layers,
   Command,
-  Wand2,
+  Wand,
   CircuitBoard,
   Rocket,
   Crown,
@@ -80,6 +79,7 @@ import {
   Clock,
   Play,
   Pause,
+  User,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
@@ -149,7 +149,7 @@ const initialMainAgents: MainAgent[] = [
       { id: 'ce-1', name: 'AI Receptionist', description: 'First point of contact for all inquiries', icon: Phone, enabled: true, status: 'active', tasksCompleted: 3240, successRate: 96, lastActive: '2 min ago', capabilities: ['Call Handling', 'Appointment Scheduling', 'FAQ Response', 'Multi-language Support'], tier: 'premium', learningProgress: 92, efficiency: 98 },
       { id: 'ce-2', name: 'AI Customer Support Agent', description: 'Handles general support requests', icon: Headphones, enabled: true, status: 'active', tasksCompleted: 4520, successRate: 93, lastActive: '1 min ago', capabilities: ['Ticket Resolution', 'Live Chat', 'Email Support', 'Knowledge Base'], tier: 'enterprise', learningProgress: 88, efficiency: 95 },
       { id: 'ce-3', name: 'AI Ticket Resolution Agent', description: 'Resolves support tickets automatically', icon: Ticket, enabled: true, status: 'active', tasksCompleted: 2890, successRate: 91, lastActive: '5 min ago', capabilities: ['Auto-Resolution', 'Escalation', 'SLA Tracking', 'Priority Management'], tier: 'premium', learningProgress: 85, efficiency: 92 },
-      { id: 'ce-4', name: 'AI Complaint Handling Agent', description: 'Manages and resolves customer complaints', icon: AlertCircle, enabled: true, status: 'training', tasksCompleted: 1560, successRate: 88, lastActive: '10 min ago', capabilities: ['Complaint Analysis', 'Resolution Suggestions', 'Follow-up', 'Sentiment Detection'], tier: 'enterprise', learningProgress: 78, efficiency: 86 },
+      { id: 'ce-4', name: 'AI Complaint Handling Agent', description: 'Manages and resolves customer complaints', icon: CircleAlert, enabled: true, status: 'training', tasksCompleted: 1560, successRate: 88, lastActive: '10 min ago', capabilities: ['Complaint Analysis', 'Resolution Suggestions', 'Follow-up', 'Sentiment Detection'], tier: 'enterprise', learningProgress: 78, efficiency: 86 },
       { id: 'ce-5', name: 'AI Retention Specialist', description: 'Prevents churn and retains customers', icon: Heart, enabled: true, status: 'active', tasksCompleted: 890, successRate: 95, lastActive: '3 min ago', capabilities: ['Churn Prediction', 'Win-back Campaigns', 'Loyalty Offers', 'Customer Journey'], tier: 'enterprise', learningProgress: 91, efficiency: 97 },
       { id: 'ce-6', name: 'AI Loyalty & Engagement Agent', description: 'Drives customer loyalty programs', icon: Gift, enabled: false, status: 'inactive', tasksCompleted: 650, successRate: 92, lastActive: '1 hour ago', capabilities: ['Rewards Management', 'Engagement Tracking', 'Program Optimization', 'Gamification'], tier: 'premium', learningProgress: 72, efficiency: 88 },
       { id: 'ce-7', name: 'AI Feedback & Survey Agent', description: 'Collects and analyzes feedback', icon: ClipboardList, enabled: true, status: 'active', tasksCompleted: 1120, successRate: 97, lastActive: '8 min ago', capabilities: ['Survey Creation', 'Sentiment Analysis', 'Insight Generation', 'NPS Tracking'], tier: 'standard', learningProgress: 94, efficiency: 99 },
@@ -230,7 +230,7 @@ const initialMainAgents: MainAgent[] = [
       { id: 'om-5', name: 'AI Resource Planner', description: 'Plans resource allocation', icon: Package, enabled: true, status: 'active', tasksCompleted: 560, successRate: 96, lastActive: '12 min ago', capabilities: ['Capacity Planning', 'Budget Forecasting', 'Resource Optimization', 'Demand Planning'], tier: 'premium', learningProgress: 91, efficiency: 96 },
       { id: 'om-6', name: 'AI Compliance Monitoring Agent', description: 'Ensures regulatory compliance', icon: Shield, enabled: true, status: 'active', tasksCompleted: 450, successRate: 99, lastActive: '8 min ago', capabilities: ['Policy Enforcement', 'Audit Trails', 'Risk Assessment', 'Regulatory Updates'], tier: 'enterprise', learningProgress: 97, efficiency: 99 },
       { id: 'om-7', name: 'AI Vendor Management Agent', description: 'Manages vendor relationships', icon: Boxes, enabled: false, status: 'inactive', tasksCompleted: 230, successRate: 93, lastActive: '4 hours ago', capabilities: ['Vendor Evaluation', 'Contract Management', 'Performance Review', 'Procurement'], tier: 'premium', learningProgress: 78, efficiency: 88 },
-      { id: 'om-8', name: 'AI Quality Control Agent', description: 'Maintains quality standards', icon: CheckCircle, enabled: true, status: 'active', tasksCompleted: 190, successRate: 97, lastActive: '18 min ago', capabilities: ['Quality Audits', 'Defect Detection', 'Process Improvement', 'Standards Compliance'], tier: 'premium', learningProgress: 93, efficiency: 97 },
+      { id: 'om-8', name: 'AI Quality Control Agent', description: 'Maintains quality standards', icon: CircleCheck, enabled: true, status: 'active', tasksCompleted: 190, successRate: 97, lastActive: '18 min ago', capabilities: ['Quality Audits', 'Defect Detection', 'Process Improvement', 'Standards Compliance'], tier: 'premium', learningProgress: 93, efficiency: 97 },
     ],
   },
   {
@@ -238,7 +238,7 @@ const initialMainAgents: MainAgent[] = [
     name: 'Data & Intelligence AI',
     description: 'Provides analytics, forecasting & decision support',
     mainArea: 'Analytics, Forecasting & Decision Support',
-    icon: BarChart3,
+    icon: ChartBar,
     color: '#FF2D55',
     gradient: ['#FF2D55', '#FF6B8A'],
     enabled: true,
@@ -248,12 +248,12 @@ const initialMainAgents: MainAgent[] = [
     aiModel: 'GPT-4 Analysis',
     version: '2.9.1',
     subAgents: [
-      { id: 'di-1', name: 'AI Data Analyst', description: 'Analyzes business data', icon: BarChart3, enabled: true, status: 'active', tasksCompleted: 2340, successRate: 94, lastActive: '3 min ago', capabilities: ['Data Mining', 'Statistical Analysis', 'Report Generation', 'Data Visualization'], tier: 'enterprise', learningProgress: 92, efficiency: 96 },
-      { id: 'di-2', name: 'AI Sales Data Analyst', description: 'Analyzes sales performance', icon: LineChart, enabled: true, status: 'active', tasksCompleted: 1890, successRate: 92, lastActive: '5 min ago', capabilities: ['Pipeline Analysis', 'Win/Loss Analysis', 'Forecasting', 'Territory Planning'], tier: 'premium', learningProgress: 88, efficiency: 93 },
+      { id: 'di-1', name: 'AI Data Analyst', description: 'Analyzes business data', icon: ChartBar, enabled: true, status: 'active', tasksCompleted: 2340, successRate: 94, lastActive: '3 min ago', capabilities: ['Data Mining', 'Statistical Analysis', 'Report Generation', 'Data Visualization'], tier: 'enterprise', learningProgress: 92, efficiency: 96 },
+      { id: 'di-2', name: 'AI Sales Data Analyst', description: 'Analyzes sales performance', icon: ChartLine, enabled: true, status: 'active', tasksCompleted: 1890, successRate: 92, lastActive: '5 min ago', capabilities: ['Pipeline Analysis', 'Win/Loss Analysis', 'Forecasting', 'Territory Planning'], tier: 'premium', learningProgress: 88, efficiency: 93 },
       { id: 'di-3', name: 'AI Financial Analyst', description: 'Analyzes financial data', icon: DollarSign, enabled: true, status: 'active', tasksCompleted: 1560, successRate: 95, lastActive: '10 min ago', capabilities: ['Financial Modeling', 'Budget Analysis', 'Cash Flow Forecasting', 'Variance Analysis'], tier: 'enterprise', learningProgress: 94, efficiency: 97 },
       { id: 'di-4', name: 'AI Customer Insights Agent', description: 'Extracts customer insights', icon: Users, enabled: true, status: 'active', tasksCompleted: 1120, successRate: 91, lastActive: '7 min ago', capabilities: ['Behavior Analysis', 'Segmentation', 'Journey Mapping', 'Voice of Customer'], tier: 'premium', learningProgress: 86, efficiency: 92 },
       { id: 'di-5', name: 'AI Forecasting Agent', description: 'Predicts future trends', icon: TrendingUp, enabled: true, status: 'training', tasksCompleted: 890, successRate: 89, lastActive: '20 min ago', capabilities: ['Demand Forecasting', 'Trend Prediction', 'Scenario Planning', 'Anomaly Detection'], tier: 'enterprise', learningProgress: 80, efficiency: 88 },
-      { id: 'di-6', name: 'AI Risk Analyst', description: 'Identifies and assesses risks', icon: AlertTriangle, enabled: true, status: 'active', tasksCompleted: 670, successRate: 96, lastActive: '15 min ago', capabilities: ['Risk Assessment', 'Mitigation Planning', 'Impact Analysis', 'Early Warning'], tier: 'enterprise', learningProgress: 93, efficiency: 97 },
+      { id: 'di-6', name: 'AI Risk Analyst', description: 'Identifies and assesses risks', icon: TriangleAlert, enabled: true, status: 'active', tasksCompleted: 670, successRate: 96, lastActive: '15 min ago', capabilities: ['Risk Assessment', 'Mitigation Planning', 'Impact Analysis', 'Early Warning'], tier: 'enterprise', learningProgress: 93, efficiency: 97 },
       { id: 'di-7', name: 'AI Fraud Detection Agent', description: 'Detects fraudulent activity', icon: Lock, enabled: true, status: 'active', tasksCompleted: 560, successRate: 98, lastActive: '2 min ago', capabilities: ['Anomaly Detection', 'Pattern Recognition', 'Alert Generation', 'Investigation Support'], tier: 'enterprise', learningProgress: 95, efficiency: 99 },
       { id: 'di-8', name: 'AI Competitive Analyst', description: 'Analyzes market competition', icon: Eye, enabled: false, status: 'inactive', tasksCompleted: 420, successRate: 90, lastActive: '5 hours ago', capabilities: ['Market Research', 'Competitor Benchmarking', 'SWOT Analysis', 'Market Sizing'], tier: 'premium', learningProgress: 77, efficiency: 86 },
     ],
@@ -278,7 +278,7 @@ const initialMainAgents: MainAgent[] = [
       { id: 'ap-3', name: 'Predictive Analytics AI', description: 'Predicts business outcomes', icon: TrendingUp, enabled: true, status: 'active', tasksCompleted: 1120, successRate: 91, lastActive: '8 min ago', capabilities: ['Predictive Modeling', 'Machine Learning', 'Outcome Forecasting', 'What-if Analysis'], tier: 'enterprise', learningProgress: 88, efficiency: 93 },
       { id: 'ap-4', name: 'Insight Generation AI', description: 'Generates actionable insights', icon: Sparkles, enabled: true, status: 'active', tasksCompleted: 890, successRate: 93, lastActive: '4 min ago', capabilities: ['Pattern Recognition', 'Recommendation Engine', 'Action Suggestions', 'Natural Language'], tier: 'enterprise', learningProgress: 90, efficiency: 95 },
       { id: 'ap-5', name: 'Customer Behavior Analysis AI', description: 'Analyzes customer behavior', icon: Activity, enabled: true, status: 'training', tasksCompleted: 780, successRate: 95, lastActive: '12 min ago', capabilities: ['Behavior Tracking', 'Cohort Analysis', 'Churn Prediction', 'LTV Modeling'], tier: 'premium', learningProgress: 84, efficiency: 91 },
-      { id: 'ap-6', name: 'Customer & Market Insights AI', description: 'Market research and insights', icon: PieChart, enabled: true, status: 'active', tasksCompleted: 560, successRate: 94, lastActive: '18 min ago', capabilities: ['Market Analysis', 'Customer Research', 'Competitive Intelligence', 'Trend Spotting'], tier: 'enterprise', learningProgress: 89, efficiency: 94 },
+      { id: 'ap-6', name: 'Customer & Market Insights AI', description: 'Market research and insights', icon: ChartPie, enabled: true, status: 'active', tasksCompleted: 560, successRate: 94, lastActive: '18 min ago', capabilities: ['Market Analysis', 'Customer Research', 'Competitive Intelligence', 'Trend Spotting'], tier: 'enterprise', learningProgress: 89, efficiency: 94 },
       { id: 'ap-7', name: 'ROI & Profitability Analysis AI', description: 'Analyzes ROI and margins', icon: DollarSign, enabled: true, status: 'active', tasksCompleted: 450, successRate: 96, lastActive: '25 min ago', capabilities: ['ROI Calculation', 'Margin Analysis', 'Cost Optimization', 'Investment Analysis'], tier: 'enterprise', learningProgress: 92, efficiency: 97 },
       { id: 'ap-8', name: 'Goal & OKR Tracking AI', description: 'Tracks goals and OKRs', icon: Target, enabled: true, status: 'active', tasksCompleted: 340, successRate: 98, lastActive: '9 min ago', capabilities: ['Goal Setting', 'Progress Tracking', 'Achievement Analysis', 'Alignment Check'], tier: 'premium', learningProgress: 96, efficiency: 99 },
       { id: 'ap-9', name: 'Executive Intelligence AI', description: 'Strategic advisor for executives', icon: Brain, enabled: false, status: 'inactive', tasksCompleted: 230, successRate: 97, lastActive: '6 hours ago', capabilities: ['Strategic Analysis', 'Board Reporting', 'Decision Support', 'Executive Summary'], tier: 'enterprise', learningProgress: 85, efficiency: 93 },
@@ -297,7 +297,7 @@ const initialCoreCapabilities: CoreCapability[] = [
   { id: 'cc-7', name: 'Natural Language Understanding', description: 'Deep comprehension of context and intent', icon: Lightbulb, enabled: true, category: 'intelligence', impact: 'critical', performance: 96 },
   { id: 'cc-8', name: 'Multi-channel Sync', description: 'Seamless experience across all channels', icon: Globe, enabled: true, category: 'adaptation', impact: 'high', performance: 93 },
   { id: 'cc-9', name: 'Autonomous Decision Making', description: 'Makes decisions within defined parameters', icon: Command, enabled: true, category: 'intelligence', impact: 'high', performance: 89 },
-  { id: 'cc-10', name: 'Self-Optimization', description: 'Continuously improves own performance', icon: Wand2, enabled: true, category: 'learning', impact: 'high', performance: 90 },
+  { id: 'cc-10', name: 'Self-Optimization', description: 'Continuously improves own performance', icon: Wand, enabled: true, category: 'learning', impact: 'high', performance: 90 },
 ];
 
 export default function AgentActivationScreen() {
@@ -475,7 +475,7 @@ export default function AgentActivationScreen() {
     switch (tier) {
       case 'enterprise': return Crown;
       case 'premium': return Star;
-      default: return CheckCircle;
+      default: return CircleCheck;
     }
   };
 
@@ -640,7 +640,7 @@ export default function AgentActivationScreen() {
                 style={[styles.bulkSubButton, { backgroundColor: `${agent.color}15` }]}
                 onPress={() => activateAllSubAgents(agent.id)}
               >
-                <CheckSquare size={14} color={agent.color} />
+                <SquareCheck size={14} color={agent.color} />
                 <Text style={[styles.bulkSubText, { color: agent.color }]}>Activate All</Text>
               </TouchableOpacity>
               <TouchableOpacity 
@@ -720,7 +720,7 @@ export default function AgentActivationScreen() {
       <View style={[styles.statsBar, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.statItem}>
           <Animated.View style={[styles.statIconBg, { backgroundColor: '#34C75920', transform: [{ scale: pulseAnim }] }]}>
-            <Bot size={16} color="#34C759" />
+            <User size={16} color="#34C759" />
           </Animated.View>
           <Text style={[styles.statValue, { color: theme.colors.text }]}>{stats.activeMainAgents}/{stats.totalMainAgents}</Text>
           <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Main Agents</Text>
@@ -775,7 +775,7 @@ export default function AgentActivationScreen() {
           style={[styles.viewTab, selectedView === 'agents' && { backgroundColor: theme.colors.primary }]}
           onPress={() => setSelectedView('agents')}
         >
-          <Bot size={16} color={selectedView === 'agents' ? '#fff' : theme.colors.secondaryText} />
+          <User size={16} color={selectedView === 'agents' ? '#fff' : theme.colors.secondaryText} />
           <Text style={[styles.viewTabText, { color: selectedView === 'agents' ? '#fff' : theme.colors.secondaryText }]}>
             AI Agents
           </Text>
@@ -804,7 +804,7 @@ export default function AgentActivationScreen() {
             />
             {searchQuery.length > 0 && (
               <TouchableOpacity onPress={() => setSearchQuery('')}>
-                <AlertCircle size={18} color={theme.colors.secondaryText} />
+                <CircleAlert size={18} color={theme.colors.secondaryText} />
               </TouchableOpacity>
             )}
           </View>

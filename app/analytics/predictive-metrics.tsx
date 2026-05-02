@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
-    LineChart,
-    PieChart,
+    ChartLine,
+    ChartPie,
     Activity,
     TrendingUp,
     Zap,

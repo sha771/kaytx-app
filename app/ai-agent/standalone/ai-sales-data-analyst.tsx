@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Activity, BarChart3, CheckCircle, Zap, ChevronLeft } from 'lucide-react-native';
+import { Activity, ChartBar, CircleCheck, Zap, ChevronLeft } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
@@ -107,7 +107,7 @@ export default function AgentScreen() {
           </View>
           {RECENT_TASKS.map((task, i) => (
             <View key={i} style={[styles.taskRow, { borderBottomColor: colors.border }]}>
-              <CheckCircle size={16} color="#00C853" />
+              <CircleCheck size={16} color="#00C853" />
               <Text style={[styles.taskText, { color: colors.text }]}>{task.action}</Text>
               <Text style={[styles.taskTime, { color: colors.text + '60' }]}>{task.time}</Text>
             </View>
@@ -130,7 +130,7 @@ export default function AgentScreen() {
 
         <View style={[styles.section, { backgroundColor: colors.card }]}>
           <View style={styles.sectionHeader}>
-            <BarChart3 size={18} color={ACCENT} />
+            <ChartBarBig size={18} color={ACCENT} />
             <Text style={[styles.sectionTitle, { color: colors.text }]}>Performance</Text>
           </View>
           {[

@@ -16,14 +16,14 @@ import {
   Users,
   Bot,
   ChevronLeft,
-  CheckCircle,
-  XCircle,
+  CircleCheck,
+  CircleX,
   ArrowUp,
   Activity,
   Briefcase,
   Cpu,
   Clock,
-  AlertCircle,
+  CircleAlert,
   Shield,
   ArrowRight,
   Check,
@@ -128,7 +128,7 @@ export default function CommandCenterScreen() {
       case 'assignment': return Briefcase;
       case 'configuration': return Cpu;
       case 'approval': return Shield;
-      default: return CheckCircle;
+      default: return CircleCheck;
     }
   };
 
@@ -315,7 +315,7 @@ export default function CommandCenterScreen() {
           <View style={styles.decisionList}>
             {filteredDecisions.length === 0 ? (
               <View style={styles.emptyState}>
-                <CheckCircle size={48} color="#64748b" />
+                <CircleCheck size={48} color="#64748b" />
                 <Text style={styles.emptyText}>No decisions in this queue</Text>
               </View>
             ) : (
@@ -373,14 +373,14 @@ export default function CommandCenterScreen() {
                               style={[styles.actionBtn, styles.approveBtn]}
                               onPress={() => handleApprove(decision)}
                             >
-                              <CheckCircle size={16} color="#fff" />
+                              <CircleCheck size={16} color="#fff" />
                               <Text style={styles.actionBtnText}>Approve</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                               style={[styles.actionBtn, styles.rejectBtn]}
                               onPress={() => handleReject(decision)}
                             >
-                              <XCircle size={16} color="#fff" />
+                              <CircleX size={16} color="#fff" />
                               <Text style={styles.actionBtnText}>Reject</Text>
                             </TouchableOpacity>
                           </>

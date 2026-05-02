@@ -397,7 +397,7 @@ const exportCounselingSessionsProcedure = protectedProcedure
   .mutation(async ({ input, ctx }) => {
     const userSessions = await agentConsultingService.getSessionsForAgent(ctx.user.id);
     
-    // Apply date range filter if provided
+    // Apply date range Filter if provided
     let filteredSessions = userSessions;
     if (input.dateRange?.from) {
       filteredSessions = filteredSessions.filter(s => 

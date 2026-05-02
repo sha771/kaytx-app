@@ -20,13 +20,13 @@ import {
   Archive,
   Star,
   ArrowLeft,
-  Filter,
+  ListFilter,
   Clock,
-  CheckCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleAlert,
   Users,
   Tag,
-  MoreVertical,
+  EllipsisVertical,
   Bell,
   Settings,
   Trash2,
@@ -119,11 +119,11 @@ export default function SMSTextScreen() {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'delivered':
-        return <CheckCircle size={14} color="#34C759" />;
+        return <CircleCheck size={14} color="#34C759" />;
       case 'sent':
         return <Clock size={14} color="#FF9500" />;
       case 'failed':
-        return <AlertCircle size={14} color="#EF4444" />;
+        return <CircleAlert size={14} color="#EF4444" />;
       default:
         return null;
     }
@@ -227,7 +227,7 @@ export default function SMSTextScreen() {
                   <Star size={16} color={theme.colors.secondaryText} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.actionButton}>
-                  <MoreVertical size={16} color={theme.colors.secondaryText} />
+                  <EllipsisVertical size={16} color={theme.colors.secondaryText} />
                 </TouchableOpacity>
               </View>
             </View>
@@ -254,7 +254,7 @@ export default function SMSTextScreen() {
             style={styles.headerButton}
             onPress={() => setShowFilters(!showFilters)}
           >
-            <Filter size={20} color={theme.colors.text} />
+            <ListFilter size={20} color={theme.colors.text} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.composeButton}>
             <Plus size={20} color="white" />
@@ -304,26 +304,26 @@ export default function SMSTextScreen() {
       <View style={styles.filterContainer}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <View style={styles.filterChips}>
-            {(['all', 'unread', 'sent'] as const).map((filter) => (
+            {(['all', 'unread', 'sent'] as const).map((Filter) => (
               <TouchableOpacity
-                key={filter}
+                key={Filter}
                 style={[
                   styles.filterChip,
                   { backgroundColor: theme.colors.cardBackground },
-                  activeFilter === filter && { backgroundColor: theme.colors.primary },
+                  activeFilter === Filter && { backgroundColor: theme.colors.primary },
                 ]}
-                onPress={() => setActiveFilter(filter)}
+                onPress={() => setActiveFilter(Filter)}
               >
                 <Text
                   style={[
                     styles.filterText,
                     {
                       color:
-                        activeFilter === filter ? 'white' : theme.colors.text,
+                        activeFilter === Filter ? 'white' : theme.colors.text,
                     },
                   ]}
                 >
-                  {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                  {Filter.charAt(0).toUpperCase() + Filter.slice(1)}
                 </Text>
               </TouchableOpacity>
             ))}
@@ -339,7 +339,7 @@ export default function SMSTextScreen() {
           </Text>
         </View>
         <View style={styles.statItem}>
-          <CheckCircle size={16} color="#34C759" />
+          <CircleCheck size={16} color="#34C759" />
           <Text style={[styles.statText, { color: theme.colors.text }]}>
             100% delivered
           </Text>

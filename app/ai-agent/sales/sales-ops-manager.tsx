@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Settings, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Settings, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'1,377',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.6s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.4%',icon:Target,color:'#E65100'}];
+  const stats = [{label:'Tasks',value:'1,377',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.6s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.4%',icon:Target,color:'#E65100'}];
   const capabilities = ['Sales Operations','Process Optimization','CRM Strategy','Analytics','Compensation','Forecasting'];
   const responsibilities = ['Sales operations strategy & management','Process optimization & automation','CRM strategy & administration','Sales analytics & insights','Compensation plan management','Sales forecasting support'];
-  const activities = [{time:'3 min ago',text:'Optimized 5 sales processes',icon:CheckCircle2},{time:'6 min ago',text:'Managed CRM for 50 reps',icon:Clock},{time:'9 min ago',text:'Published ops performance report',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Optimized 5 sales processes',icon: CircleCheckBig},{time:'6 min ago',text:'Managed CRM for 50 reps',icon:Clock},{time:'9 min ago',text:'Published ops performance report',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

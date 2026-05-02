@@ -220,9 +220,9 @@ test.describe('User Workflows E2E Tests', () => {
     await expect(page.locator('[data-testid="active-agents-card"]')).toBeVisible();
     await expect(page.locator('[data-testid="workflow-executions-chart"]')).toBeVisible();
 
-    // Test date range filter
+    // Test date range Filter
     await page.selectOption('[data-testid="date-range"]', 'last-30-days');
-    await page.click('[data-testid="apply-filter-button"]');
+    await page.click('[data-testid="apply-Filter-button"]');
 
     // Verify data is refreshed
     await expect(page.locator('[data-testid="analytics-loading"]')).not.toBeVisible();

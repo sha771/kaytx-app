@@ -29,11 +29,11 @@ import {
   Menu,
   X,
   Activity,
-  CheckCircle,
+  CircleCheck,
   RefreshCw,
   Globe,
   Newspaper,
-  Filter,
+  ListFilter,
   Sparkles,
   Crown,
   Zap,
@@ -240,7 +240,7 @@ export default function MessagesScreen() {
               }]}>
                 <View style={styles.realTimeLeft}>
                   {isRealTimeConnected ? (
-                    <CheckCircle size={16} color="#4CAF50" />
+                    <CircleCheck size={16} color="#4CAF50" />
                   ) : (
                     <Activity size={16} color="#FF9800" />
                   )}
@@ -330,7 +330,7 @@ export default function MessagesScreen() {
                 ]}
                 onPress={() => setActiveFilter('all')}
               >
-                <Filter size={14} color={activeFilter === 'all' ? '#FFF' : theme.colors.secondaryText} />
+                <ListFilter size={14} color={activeFilter === 'all' ? '#FFF' : theme.colors.secondaryText} />
                 <Text style={[
                   styles.filterChipText,
                   { color: activeFilter === 'all' ? '#FFF' : theme.colors.text },

@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Settings, Activity, CheckCircle2, Clock, Target, BarChart3, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, Layers, Gauge } from 'lucide-react-native';
+import { Settings, Activity, CircleCheckBig, Clock, Target, ChartBar, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, Layers, Gauge } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function VPOperationsPage() {
   const { theme } = useTheme();
 
   const stats = [
-    { label: 'Processes', value: '8,421', icon: CheckCircle2, color: '#34C759' },
+    { label: 'Processes', value: '8,421', icon: CircleCheckBig, color: '#34C759' },
     { label: 'Uptime', value: '99.98%', icon: Activity, color: '#007AFF' },
     { label: 'Response', value: '0.7s', icon: Clock, color: '#FF9500' },
     { label: 'Accuracy', value: '99.1%', icon: Target, color: '#AF52DE' },
@@ -39,7 +39,7 @@ export default function VPOperationsPage() {
   ];
 
   const quickActions = [
-    { label: 'View Reports', icon: BarChart3 },
+    { label: 'View Reports', icon: ChartBar },
     { label: 'Team Chat', icon: MessageSquare },
     { label: 'Schedule', icon: Calendar },
     { label: 'Settings', icon: Shield },

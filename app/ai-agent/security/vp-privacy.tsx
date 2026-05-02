@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Lock, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Database, Eye } from 'lucide-react-native';
+import { Lock, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Database, Eye } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'GDPR',value:'100%',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'PII Breaches',value:'0',icon:Clock,color:'#FF9500'},{label:'PIAs',value:'500+',icon:Target,color:'#581C84'}];
+  const stats = [{label:'GDPR',value:'100%',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'PII Breaches',value:'0',icon:Clock,color:'#FF9500'},{label:'PIAs',value:'500+',icon:Target,color:'#581C84'}];
   const capabilities = ['Privacy','GDPR','CCPA','DPO','Data Governance','Consent Mgmt'];
   const responsibilities = ['Privacy program strategy & governance','GDPR & CCPA compliance management','Data protection officer coordination','Data governance framework development','Consent management & privacy controls','Privacy impact assessment oversight'];
   const activities = [{time:'3 min ago',text:'Completed PIA for new product',icon:Lock},{time:'20 min ago',text:'Updated data processing records',icon:Database},{time:'1 hour ago',text:'Reviewed consent compliance',icon:Eye}];

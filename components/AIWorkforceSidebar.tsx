@@ -17,7 +17,7 @@ import {
     CircleDollarSign,
     Star as StarIcon,
     Sparkles as SparklesIcon,
-    AlertTriangle,
+    TriangleAlert,
     Activity as ActivityIcon,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
@@ -248,7 +248,7 @@ export const AIWorkforceSidebar: React.FC<AIWorkforceSidebarProps> = ({ isVisibl
                                                 )}
                                                 {employee.dangerLevel === 'critical' && (
                                                     <View style={[styles.dangerBadge, { backgroundColor: '#FF3B3030' }]}>
-                                                        <AlertTriangle size={8} color="#FF3B30" />
+                                                        <TriangleAlert size={8} color="#FF3B30" />
                                                     </View>
                                                 )}
                                             </View>

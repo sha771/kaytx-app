@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Video, Users, Calendar, Clock, Settings, Plus, Search, Filter } from 'lucide-react-native';
+import { Video, Users, Calendar, Clock, Settings, Plus, Search, ListFilter } from 'lucide-react-native';
 
 interface Conference {
   id: string;
@@ -91,7 +91,7 @@ export default function ConferenceScreen() {
         
         <View style={styles.filterContainer}>
           <TouchableOpacity style={styles.filterButton}>
-            <Filter size={20} color="#3B82F6" />
+            <ListFilter size={20} color="#3B82F6" />
           </TouchableOpacity>
           
           <TouchableOpacity style={styles.addButton}>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Key, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Users, Shield, Lock } from 'lucide-react-native';
+import { Key, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Users, Shield, Lock } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {

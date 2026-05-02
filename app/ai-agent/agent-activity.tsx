@@ -15,16 +15,15 @@ import {
   Activity,
   Wifi,
   WifiOff,
-  Bot,
   Users,
   Play,
   Pause,
   RefreshCw,
-  CheckCircle,
-  XCircle,
+  CircleCheck,
+  CircleX,
   Clock,
   Zap,
-  AlertTriangle,
+  TriangleAlert,
   TrendingUp,
   MessageSquare,
   Phone,
@@ -36,7 +35,7 @@ import {
   Brain,
   Headphones,
   Settings,
-  BarChart3,
+  ChartBar,
   Megaphone,
   Circle,
   Cpu,
@@ -51,10 +50,11 @@ import {
   ArrowDownRight,
   Eye,
   EyeOff,
-  Filter,
+  ListFilter,
   Layers,
   Sparkles,
   Plus,
+  User,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
@@ -117,7 +117,7 @@ const mockAgentStatuses: AgentStatus[] = [
   { id: '7', name: 'Marketing & Growth AI', type: 'main', status: 'online', currentTask: 'Optimizing 5 active campaigns', tasksInQueue: 18, lastActivity: '3m ago', uptime: '99.6%', cpu: 42, memory: 58, icon: Megaphone, color: '#FF9500', responseTime: '1.8s', successRate: 91, tokensUsed: 156700, requestsPerMin: 35, errorRate: 0.9, healthScore: 95 },
   { id: '8', name: 'AI Email Marketing', type: 'sub', parentAgent: 'Marketing & Growth AI', status: 'busy', currentTask: 'Sending batch emails - 2,450/5,000', tasksInQueue: 5, lastActivity: '1m ago', uptime: '99.5%', cpu: 72, memory: 64, icon: Mail, color: '#FF9500', responseTime: '1.2s', successRate: 90, tokensUsed: 78900, requestsPerMin: 125, errorRate: 0.5, healthScore: 97 },
   { id: '9', name: 'Operations & Management AI', type: 'main', status: 'online', currentTask: 'Monitoring 24 active workflows', tasksInQueue: 8, lastActivity: '1m ago', uptime: '99.9%', cpu: 28, memory: 42, icon: Settings, color: '#5856D6', responseTime: '0.9s', successRate: 96, tokensUsed: 45600, requestsPerMin: 52, errorRate: 0.3, healthScore: 99 },
-  { id: '10', name: 'Data & Intelligence AI', type: 'main', status: 'online', currentTask: 'Analyzing Q4 sales data patterns', tasksInQueue: 14, lastActivity: '5m ago', uptime: '99.7%', cpu: 55, memory: 68, icon: BarChart3, color: '#FF2D55', responseTime: '2.5s', successRate: 93, tokensUsed: 234500, requestsPerMin: 15, errorRate: 0.7, healthScore: 94 },
+  { id: '10', name: 'Data & Intelligence AI', type: 'main', status: 'online', currentTask: 'Analyzing Q4 sales data patterns', tasksInQueue: 14, lastActivity: '5m ago', uptime: '99.7%', cpu: 55, memory: 68, icon: ChartBar, color: '#FF2D55', responseTime: '2.5s', successRate: 93, tokensUsed: 234500, requestsPerMin: 15, errorRate: 0.7, healthScore: 94 },
   { id: '11', name: 'AI Fraud Detection', type: 'sub', parentAgent: 'Data & Intelligence AI', status: 'online', currentTask: 'Real-time transaction monitoring', tasksInQueue: 0, lastActivity: '10s ago', uptime: '99.99%', cpu: 35, memory: 45, icon: Shield, color: '#FF2D55', responseTime: '0.5s', successRate: 98, tokensUsed: 89200, requestsPerMin: 245, errorRate: 0.1, healthScore: 99 },
   { id: '12', name: 'Analysis & Performance AI', type: 'main', status: 'maintenance', tasksInQueue: 2, lastActivity: '20m ago', uptime: '99.8%', cpu: 8, memory: 32, icon: Brain, color: '#AF52DE', responseTime: '1.5s', successRate: 95, tokensUsed: 67800, requestsPerMin: 0, errorRate: 0.6, healthScore: 88 },
 ];
@@ -130,7 +130,7 @@ const mockLiveActivities: LiveActivity[] = [
   { id: '5', agentName: 'AI Fraud Detection', action: 'Flagged suspicious transaction $4,250', timestamp: '2m ago', status: 'completed', icon: Shield, color: '#FF2D55', duration: '0.3s', confidence: 91 },
   { id: '6', agentName: 'AI Campaign Optimizer', action: 'Adjusting bid strategy - Holiday Campaign', timestamp: '3m ago', status: 'processing', icon: TrendingUp, color: '#FF9500', confidence: 89 },
   { id: '7', agentName: 'AI Negotiator', action: 'Deal negotiation paused - awaiting response', timestamp: '5m ago', status: 'queued', icon: DollarSign, color: '#34C759' },
-  { id: '8', agentName: 'AI Data Analyst', action: 'Generated weekly sales report', timestamp: '8m ago', status: 'completed', icon: BarChart3, color: '#FF2D55', duration: '4m 12s', confidence: 99 },
+  { id: '8', agentName: 'AI Data Analyst', action: 'Generated weekly sales report', timestamp: '8m ago', status: 'completed', icon: ChartBar, color: '#FF2D55', duration: '4m 12s', confidence: 99 },
 ];
 
 const systemMetrics: SystemMetric[] = [
@@ -199,7 +199,7 @@ export default function AgentActivityScreen() {
       case 'busy': return Activity;
       case 'idle': return Clock;
       case 'offline': return WifiOff;
-      case 'error': return AlertTriangle;
+      case 'error': return TriangleAlert;
       case 'maintenance': return Settings;
       default: return Circle;
     }
@@ -208,8 +208,8 @@ export default function AgentActivityScreen() {
   const getActivityStatusIcon = (status: string) => {
     switch (status) {
       case 'processing': return Activity;
-      case 'completed': return CheckCircle;
-      case 'failed': return XCircle;
+      case 'completed': return CircleCheck;
+      case 'failed': return CircleX;
       case 'queued': return Clock;
       default: return Circle;
     }
@@ -240,7 +240,7 @@ export default function AgentActivityScreen() {
         status: a.status as any,
         icon: a.details?.category === 'sales' ? DollarSign : 
               a.details?.category === 'customer' ? Headphones : 
-              a.details?.category === 'marketing' ? Megaphone : Bot,
+              a.details?.category === 'marketing' ? Megaphone : Activity,
         color: a.details?.category === 'sales' ? '#34C759' : 
                a.details?.category === 'customer' ? '#007AFF' : 
                a.details?.category === 'marketing' ? '#FF9500' : '#8E8E93',
@@ -411,7 +411,7 @@ export default function AgentActivityScreen() {
               <Text style={[styles.footerStatText, { color: theme.colors.secondaryText }]}>{agent.requestsPerMin}/min</Text>
             </View>
             <View style={styles.footerStatItem}>
-              <AlertTriangle size={10} color={agent.errorRate > 2 ? '#FF3B30' : theme.colors.secondaryText} />
+              <TriangleAlert size={10} color={agent.errorRate > 2 ? '#FF3B30' : theme.colors.secondaryText} />
               <Text style={[styles.footerStatText, { color: agent.errorRate > 2 ? '#FF3B30' : theme.colors.secondaryText }]}>{agent.errorRate}% err</Text>
             </View>
           </View>
@@ -506,7 +506,7 @@ export default function AgentActivityScreen() {
           style={[styles.statBtn, selectedStatus === 'all' && styles.statBtnActive]}
           onPress={() => setSelectedStatus('all')}
         >
-          <Bot size={14} color={selectedStatus === 'all' ? '#fff' : theme.colors.secondaryText} />
+          <User size={14} color={selectedStatus === 'all' ? '#fff' : theme.colors.secondaryText} />
           <Text style={[styles.statBtnText, { color: selectedStatus === 'all' ? '#fff' : theme.colors.secondaryText }]}>
             All ({mockAgentStatuses.length})
           </Text>
@@ -541,18 +541,18 @@ export default function AgentActivityScreen() {
       </View>
 
       <View style={styles.filterRow}>
-        {(['all', 'main', 'sub'] as const).map((filter) => (
+        {(['all', 'main', 'sub'] as const).map((Filter) => (
           <TouchableOpacity
-            key={filter}
+            key={Filter}
             style={[
               styles.filterBtn,
-              selectedFilter === filter && { backgroundColor: theme.colors.primary },
+              selectedFilter === Filter && { backgroundColor: theme.colors.primary },
             ]}
-            onPress={() => setSelectedFilter(filter)}
+            onPress={() => setSelectedFilter(Filter)}
           >
             <Text style={[
               styles.filterText,
-              { color: selectedFilter === filter ? '#fff' : theme.colors.secondaryText }
+              { color: selectedFilter === Filter ? '#fff' : theme.colors.secondaryText }
             ]}>
               {filter === 'all' ? 'All Agents' : filter === 'main' ? 'Main Agents' : 'Sub-Agents'}
             </Text>

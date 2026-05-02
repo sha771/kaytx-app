@@ -1,7 +1,7 @@
  
 import React, { useMemo, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
-import { UserCheck, Target, Zap, TrendingUp, BarChart3, Users, MessageSquare, Lock } from 'lucide-react-native';
+import { UserCheck, Target, Zap, TrendingUp, ChartBar, Users, MessageSquare, Lock } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
@@ -123,7 +123,7 @@ export default function AISalesRepScreen() {
 
   const customTabs = [
     { id: 'prospecting', label: 'Prospecting', icon: UserCheck, component: renderProspectingTab },
-    { id: 'pipeline', label: 'Pipeline', icon: BarChart3, component: <View /> },
+    { id: 'pipeline', label: 'Pipeline', icon: ChartBar, component: <View /> },
   ];
 
   return <AgentShell agent={agent} customTabs={customTabs} />;

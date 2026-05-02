@@ -16,7 +16,7 @@ import {
   ShoppingBag,
   Heart,
   GraduationCap,
-  Home,
+  House,
   Factory,
   Scale,
   Briefcase,
@@ -44,7 +44,7 @@ const industryConfig: { [key: string]: { icon: any; colors: readonly [string, st
   'retail-ecommerce': { icon: ShoppingBag, colors: ['#c31432', '#240b36'] },
   'healthcare': { icon: Heart, colors: ['#11998e', '#38ef7d'] },
   'education-training': { icon: GraduationCap, colors: ['#2193b0', '#6dd5ed'] },
-  'real-estate': { icon: Home, colors: ['#834d9b', '#d04ed6'] },
+  'real-estate': { icon: House, colors: ['#834d9b', '#d04ed6'] },
   'manufacturing': { icon: Factory, colors: ['#3a6073', '#16222a'] },
   'legal-services': { icon: Scale, colors: ['#373B44', '#4286f4'] },
   'professional-services': { icon: Briefcase, colors: ['#4b6cb7', '#182848'] },
@@ -141,7 +141,7 @@ export default function IndustriesIndexScreen() {
               <TouchableOpacity
                 key={industry.id}
                 style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}
-                onPress={() => router.push(`/ai-agent/industries/${industry.id}` as any)}
+                onPress={() => router.push(`/ai-agent/industries/${industry.id}`)}
                 activeOpacity={0.7}
               >
                 <LinearGradient

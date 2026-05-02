@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { BarChart3, TrendingUp, Users, DollarSign, Settings, Plus, Search, Filter, Calendar, Target } from 'lucide-react-native';
+import { ChartBar, TrendingUp, Users, DollarSign, Settings, Plus, Search, ListFilter, Calendar, Target } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { trpc } from '@/lib/trpc';
 
@@ -163,7 +163,7 @@ export default function ReportsInsightsScreen() {
         
         <View style={styles.filterContainer}>
           <TouchableOpacity style={styles.filterButton}>
-            <Filter size={20} color="#3B82F6" />
+            <ListFilter size={20} color="#3B82F6" />
           </TouchableOpacity>
           
           <TouchableOpacity style={styles.addButton}>
@@ -226,7 +226,7 @@ export default function ReportsInsightsScreen() {
               
               <View style={styles.reportActions}>
                 <TouchableOpacity style={styles.actionButton}>
-                  <BarChart3 size={16} color="#3B82F6" />
+                  <ChartBarBig size={16} color="#3B82F6" />
                   <Text style={styles.actionText}>View</Text>
                 </TouchableOpacity>
                 
@@ -249,7 +249,7 @@ export default function ReportsInsightsScreen() {
           
           <View style={styles.actionGrid}>
             <TouchableOpacity style={styles.actionCard}>
-              <BarChart3 size={24} color="#3B82F6" />
+              <ChartBarBig size={24} color="#3B82F6" />
               <Text style={styles.actionCardText}>Sales Dashboard</Text>
             </TouchableOpacity>
             

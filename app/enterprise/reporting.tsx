@@ -14,11 +14,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   ArrowLeft,
   Download,
-  Filter,
+  ListFilter,
   Calendar,
   FileText,
-  BarChart3,
-  PieChart,
+  ChartBar,
+  ChartPie,
   TrendingUp,
   Users,
   DollarSign,
@@ -66,7 +66,7 @@ const reports: Report[] = [
     status: 'ready',
     lastGenerated: '2 hours ago',
     size: '2.4 MB',
-    icon: BarChart3,
+    icon: ChartBar,
     color: '#007AFF',
   },
   {
@@ -260,7 +260,7 @@ export default function EnterpriseReportingScreen() {
         </TouchableOpacity>
         <Text style={[styles.title, { color: theme.colors.text }]}>Advanced Reporting</Text>
         <TouchableOpacity style={styles.headerButton}>
-          <Filter size={20} color={theme.colors.text} />
+          <ListFilter size={20} color={theme.colors.text} />
         </TouchableOpacity>
       </View>
 

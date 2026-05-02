@@ -17,7 +17,7 @@ import {
     Search,
     Send,
     Plus,
-    MoreVertical,
+    EllipsisVertical,
     Layers,
     Zap
 } from 'lucide-react-native';
@@ -130,7 +130,7 @@ export default function ChatterScreen() {
                             <Search size={20} color={theme.colors.secondaryText} />
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.headerIconButton}>
-                            <MoreVertical size={20} color={theme.colors.secondaryText} />
+                            <EllipsisVertical size={20} color={theme.colors.secondaryText} />
                         </TouchableOpacity>
                     </View>
                 </View>

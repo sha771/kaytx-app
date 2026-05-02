@@ -10,15 +10,15 @@ import {
   Mail, 
   Phone, 
   MessageSquare, 
-  Filter, 
+  ListFilter, 
   Search, 
   Plus,
-  BarChart3,
+  ChartBar,
   Calendar,
   DollarSign,
-  CheckCircle,
+  CircleCheck,
   Clock,
-  AlertCircle,
+  CircleAlert,
   Star,
   Download
 } from 'lucide-react-native';
@@ -127,10 +127,10 @@ export default function LeadGenerationScreen() {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'new': return AlertCircle;
+      case 'new': return CircleAlert;
       case 'contacted': return MessageSquare;
       case 'qualified': return Star;
-      case 'converted': return CheckCircle;
+      case 'converted': return CircleCheck;
       case 'lost': return Clock;
       default: return Target;
     }
@@ -234,7 +234,7 @@ export default function LeadGenerationScreen() {
           />
         </View>
         <TouchableOpacity style={styles.filterButton}>
-          <Filter size={20} color="#007AFF" />
+          <ListFilter size={20} color="#007AFF" />
         </TouchableOpacity>
       </View>
 
@@ -295,7 +295,7 @@ export default function LeadGenerationScreen() {
           <Text style={styles.statLabel}>Qualified</Text>
         </View>
         <View style={styles.statCard}>
-          <CheckCircle size={24} color="#AF52DE" />
+          <CircleCheck size={24} color="#AF52DE" />
           <Text style={styles.statValue}>{leads.filter(l => l.status === 'converted').length}</Text>
           <Text style={styles.statLabel}>Converted</Text>
         </View>
@@ -309,7 +309,7 @@ export default function LeadGenerationScreen() {
       <View style={styles.chartCard}>
         <Text style={styles.chartTitle}>Lead Generation Trend</Text>
         <View style={styles.chartPlaceholder}>
-          <BarChart3 size={48} color="#007AFF" />
+          <ChartBarBig size={48} color="#007AFF" />
           <Text style={styles.chartText}>Interactive chart visualization</Text>
         </View>
       </View>
@@ -362,7 +362,7 @@ export default function LeadGenerationScreen() {
           style={[styles.tabButton, activeTab === 'analytics' && styles.activeTabButton]}
           onPress={() => setActiveTab('analytics')}
         >
-          <BarChart3 size={20} color={activeTab === 'analytics' ? '#007AFF' : '#666'} />
+          <ChartBarBig size={20} color={activeTab === 'analytics' ? '#007AFF' : '#666'} />
           <Text style={[styles.tabButtonText, activeTab === 'analytics' && styles.activeTabButtonText]}>
             Analytics
           </Text>

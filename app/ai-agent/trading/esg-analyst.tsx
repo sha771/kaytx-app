@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Leaf, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Leaf, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'2,349',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.7s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.3%',icon:Target,color:'#0277BD'}];
+  const stats = [{label:'Tasks',value:'2,349',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.7s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.3%',icon:Target,color:'#0277BD'}];
   const capabilities = ['ESG Scoring','Sustainability Reporting','Impact Analysis','Climate Risk','Social Governance','Green Finance'];
   const responsibilities = ['ESG scoring & rating analysis','Sustainability reporting & metrics','Environmental impact assessment','Climate risk modeling','Social governance evaluation','Green finance & ESG compliance'];
-  const activities = [{time:'3 min ago',text:'Updated ESG scores for 200 companies',icon:CheckCircle2},{time:'6 min ago',text:'Published quarterly sustainability report',icon:Clock},{time:'9 min ago',text:'Assessed climate risk for energy sector',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Updated ESG scores for 200 companies',icon: CircleCheckBig},{time:'6 min ago',text:'Published quarterly sustainability report',icon:Clock},{time:'9 min ago',text:'Assessed climate risk for energy sector',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

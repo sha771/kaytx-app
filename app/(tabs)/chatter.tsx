@@ -20,7 +20,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack, useRouter } from 'expo-router';
 import {
   Phone,
-  MoreVertical,
+  EllipsisVertical,
   Send,
   Check,
   CheckCheck,
@@ -45,7 +45,7 @@ import {
   UserPlus,
   Copy,
   Star,
-  Edit3,
+  PenLine,
   Mic,
   Users,
   AtSign,
@@ -59,11 +59,11 @@ import {
   FileText,
   Image as ImageIcon,
   Film,
-  HeadphonesIcon,
+  Headphones as HeadphonesIcon,
   Radio,
   Inbox,
   Command,
-  Filter,
+  ListFilter,
   Clock,
   MessageCircle,
   CornerUpLeft,
@@ -72,8 +72,8 @@ import {
   Eye,
   EyeOff,
   Lock,
-  Unlock,
-  MoreHorizontal,
+  LockOpen,
+  GripHorizontal,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { trpc } from '@/lib/trpc';
@@ -1026,7 +1026,7 @@ export default function ChatterScreen() {
                   <View style={styles.noResults}>
                     <Search size={48} color={theme.colors.secondaryText} />
                     <Text style={[styles.noResultsText, { color: theme.colors.secondaryText }]}>
-                      No results found for "{searchQuery}"
+                      No results found for &quot;{searchQuery}&quot;
                     </Text>
                   </View>
                 ) : (
@@ -1094,7 +1094,7 @@ export default function ChatterScreen() {
             <Video size={18} color={theme.colors.text} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.chatActionButton} onPress={() => setShowChannelInfo(true)}>
-            <MoreVertical size={18} color={theme.colors.text} />
+            <EllipsisVertical size={18} color={theme.colors.text} />
           </TouchableOpacity>
         </View>
       </View>
@@ -1299,7 +1299,7 @@ export default function ChatterScreen() {
             {selectedMessage?.userId === 'currentUser' && (
               <>
                 <TouchableOpacity style={styles.messageAction}>
-                  <Edit3 size={20} color={theme.colors.text} />
+                  <PenLine size={20} color={theme.colors.text} />
                   <Text style={[styles.messageActionText, { color: theme.colors.text }]}>Edit</Text>
                 </TouchableOpacity>
 

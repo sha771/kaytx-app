@@ -6,18 +6,19 @@ import {
   ChevronLeft, 
   Brain,
   TrendingUp, 
-  AlertTriangle,
+  TriangleAlert,
   Lightbulb,
   Calendar,
   ArrowRight,
   Sparkles,
   RefreshCw,
   Target,
-  BarChart3,
+  ChartBar,
   Zap,
-  CheckCircle2,
+  CircleCheckBig,
   Clock
 } from 'lucide-react-native';
+import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 interface Prediction {
   id: string;
@@ -187,12 +188,12 @@ export default function PredictiveInsightsPage() {
           <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>Accuracy</Text>
         </View>
         <View style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-          <BarChart3 size={20} color={theme.colors.primary} />
+          <ChartBarBig size={20} color={theme.colors.primary} />
           <Text style={[styles.statValue, { color: theme.colors.text }]}>{(modelStats.predictionsMade / 1000).toFixed(1)}k</Text>
           <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>Predictions</Text>
         </View>
         <View style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-          <CheckCircle2 size={20} color={theme.colors.primary} />
+          <CircleCheckBig size={20} color={theme.colors.primary} />
           <Text style={[styles.statValue, { color: theme.colors.text }]}>{modelStats.successRate}%</Text>
           <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>Success Rate</Text>
         </View>
@@ -235,7 +236,7 @@ export default function PredictiveInsightsPage() {
                   <Text style={[styles.categoryText, { color: theme.colors.primary }]}>{prediction.category}</Text>
                 </View>
                 <View style={[styles.impactBadge, { backgroundColor: getImpactColor(prediction.impact) + '15' }]}>
-                  <AlertTriangle size={12} color={getImpactColor(prediction.impact)} />
+                  <TriangleAlert size={12} color={getImpactColor(prediction.impact)} />
                   <Text style={[styles.impactText, { color: getImpactColor(prediction.impact) }]}>
                     {prediction.impact.toUpperCase()}
                   </Text>

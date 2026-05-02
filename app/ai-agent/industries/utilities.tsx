@@ -6,16 +6,16 @@ import { aiEmployees } from '@/constants/aiEmployees';
 import { trpc } from '@/lib/trpc';
 import {
     Zap,
-    ArrowLeft, AlertTriangle, CreditCard, Home, TrendingUp, Clock, Shield, Globe, BarChart3, Wrench, Activity, Lock, CheckCircle, ChevronRight
+    ArrowLeft, TriangleAlert, CreditCard, House, TrendingUp, Clock, Shield, Globe, ChartBar, Wrench, Activity, Lock, CircleCheck, ChevronRight
 } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const { width } = Dimensions.get('window');
 
 const USE_CASES = [
-    { id: 'outages', title: 'Outage Reporting', description: 'Proactive outage notifications and restoration updates', icon: AlertTriangle, color: '#FF6B6B', stats: { automated: '96%', avgTime: '20s', satisfaction: '4.5/5' }, isPremium: true },
+    { id: 'outages', title: 'Outage Reporting', description: 'Proactive outage notifications and restoration updates', icon: TriangleAlert, color: '#FF6B6B', stats: { automated: '96%', avgTime: '20s', satisfaction: '4.5/5' }, isPremium: true },
     { id: 'billing', title: 'Billing & Payments', description: 'Payment plans, billing inquiries, and account updates', icon: CreditCard, color: '#4ECDC4', stats: { automated: '93%', avgTime: '1m', satisfaction: '4.7/5' } },
-    { id: 'movein', title: 'Move-in / Move-out', description: 'Service activation, transfers, and final bill processing', icon: Home, color: '#6C5CE7', stats: { automated: '91%', avgTime: '2m', satisfaction: '4.8/5' }, isPremium: true },
+    { id: 'movein', title: 'Move-in / Move-out', description: 'Service activation, transfers, and final bill processing', icon: House, color: '#6C5CE7', stats: { automated: '91%', avgTime: '2m', satisfaction: '4.8/5' }, isPremium: true },
     { id: 'service', title: 'Field Service Scheduling', description: 'Appointment scheduling and technician dispatch', icon: Wrench, color: '#00B894', stats: { automated: '88%', avgTime: '3m', satisfaction: '4.6/5' }, isPremium: true },
 ];
 
@@ -64,7 +64,7 @@ export default function UtilitiesIndustryScreen() {
                         router.push('/enterprise/billing');
                         return;
                     }
-                    router.push(item.route as any);
+                    router.push(item.route);
                 }}
             >
                 <View style={[styles.agentIcon, { backgroundColor: item.color + '15' }]}>
@@ -90,7 +90,7 @@ export default function UtilitiesIndustryScreen() {
                             <Text style={[styles.metricText, { color: '#34C759' }]}>{item.efficiency}</Text>
                         </View>
                         <View style={styles.metric}>
-                            <CheckCircle size={12} color={theme.colors.primary} />
+                            <CircleCheck size={12} color={theme.colors.primary} />
                             <Text style={[styles.metricText, { color: theme.colors.primary }]}>{item.roiMetrics.accuracyRate}</Text>
                         </View>
                     </View>
@@ -125,7 +125,7 @@ export default function UtilitiesIndustryScreen() {
                 <View style={styles.section}>
                     <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Benefits</Text>
                     <View style={styles.benefitsGrid}>
-                        {[{ icon: Zap, color: '#FF6B6B', title: 'Storm Surge Ready', desc: 'Handle 50x call volume during emergencies' }, { icon: Globe, color: '#4ECDC4', title: '24/7 Availability', desc: 'Round-the-clock customer support' }, { icon: Shield, color: '#6C5CE7', title: 'PCI Compliant', desc: 'Secure payment processing' }, { icon: BarChart3, color: '#00B894', title: 'Predictive Ops', desc: 'AI-powered demand forecasting' }].map((b, i) => { const I = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><I size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
+                        {[{ icon: Zap, color: '#FF6B6B', title: 'Storm Surge Ready', desc: 'Handle 50x call volume during emergencies' }, { icon: Globe, color: '#4ECDC4', title: '24/7 Availability', desc: 'Round-the-clock customer support' }, { icon: Shield, color: '#6C5CE7', title: 'PCI Compliant', desc: 'Secure payment processing' }, { icon: ChartBar, color: '#00B894', title: 'Predictive Ops', desc: 'AI-powered demand forecasting' }].map((b, i) => { const I = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><I size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
                     </View>
                 </View>
 
@@ -178,7 +178,7 @@ export default function UtilitiesIndustryScreen() {
 
                 <View style={[styles.cta, { backgroundColor: theme.colors.cardBackground }]}>
                     <Text style={[styles.ctaTitle, { color: theme.colors.text }]}>Transform your utility operations</Text>
-                    <TouchableOpacity style={[styles.ctaBtn, { backgroundColor: theme.colors.primary }]} onPress={() => router.push('/ai-agent/ai-agent' as any)}><Text style={styles.ctaBtnText}>Get Started</Text></TouchableOpacity>
+                    <TouchableOpacity style={[styles.ctaBtn, { backgroundColor: theme.colors.primary }]} onPress={() => router.push('/ai-agent/ai-agent')}><Text style={styles.ctaBtnText}>Get Started</Text></TouchableOpacity>
                 </View>
                 <View style={{ height: 40 }} />
             </ScrollView>

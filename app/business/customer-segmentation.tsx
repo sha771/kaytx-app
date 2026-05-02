@@ -15,9 +15,9 @@ import {
   Target,
   DollarSign,
   Search,
-  Filter,
+  ListFilter,
   Plus,
-  BarChart3,
+  ChartBar,
 } from 'lucide-react-native';
 
 interface Segment {
@@ -191,7 +191,7 @@ export default function CustomerSegmentationScreen() {
               onChangeText={setSearchQuery}
             />
             <TouchableOpacity>
-              <Filter size={20} color="#64748B" />
+              <ListFilter size={20} color="#64748B" />
             </TouchableOpacity>
           </View>
 
@@ -256,7 +256,7 @@ export default function CustomerSegmentationScreen() {
                 </View>
 
                 <View style={styles.metricItem}>
-                  <BarChart3 size={16} color="#64748B" />
+                  <ChartBarBig size={16} color="#64748B" />
                   <Text style={styles.metricValue}>
                     ${((segment.size * segment.avgValue) / 1000000).toFixed(1)}M
                   </Text>

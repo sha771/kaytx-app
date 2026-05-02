@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Users, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Users, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'1,115',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.6s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.9%',icon:Target,color:'#004D40'}];
+  const stats = [{label:'Tasks',value:'1,115',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.6s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.9%',icon:Target,color:'#004D40'}];
   const capabilities = ['Team Leadership','Underwriting Strategy','Authority Management','Quality Review','Training','Performance Metrics'];
   const responsibilities = ['Underwriting team leadership & development','Underwriting strategy & appetite setting','Authority level management & delegation','Underwriting quality review & audit','Underwriter training & development','Team performance metrics & reporting'];
-  const activities = [{time:'3 min ago',text:'Managed team of 12 underwriters',icon:CheckCircle2},{time:'6 min ago',text:'Conducted quality audit on 50 files',icon:Clock},{time:'9 min ago',text:'Updated underwriting guidelines',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Managed team of 12 underwriters',icon: CircleCheckBig},{time:'6 min ago',text:'Conducted quality audit on 50 files',icon:Clock},{time:'9 min ago',text:'Updated underwriting guidelines',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

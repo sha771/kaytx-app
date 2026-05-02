@@ -30,12 +30,12 @@ import {
   Sparkles,
   Crown,
   Star,
-  CheckCircle,
+  CircleCheck,
   Settings,
-  BarChart3,
+  ChartBar,
   Zap,
   Target,
-  PieChart,
+  ChartPie,
   Radio,
   Eye,
   Brain,
@@ -442,7 +442,7 @@ export default function SalesRevenueAIScreen() {
     switch (tier) {
       case 'enterprise': return Crown;
       case 'premium': return Star;
-      default: return CheckCircle;
+      default: return CircleCheck;
     }
   };
 
@@ -553,7 +553,7 @@ export default function SalesRevenueAIScreen() {
                 <Text style={[styles.quickStatLabel, { color: theme.colors.secondaryText }]}>Revenue</Text>
               </View>
               <View style={[styles.quickStatItem, { backgroundColor: theme.colors.background }]}>
-                <PieChart size={14} color="#007AFF" />
+                <ChartPie size={14} color="#007AFF" />
                 <Text style={[styles.quickStatValue, { color: theme.colors.text }]}>{agent.conversionRate}%</Text>
                 <Text style={[styles.quickStatLabel, { color: theme.colors.secondaryText }]}>Convert</Text>
               </View>
@@ -636,7 +636,7 @@ export default function SalesRevenueAIScreen() {
                 <Text style={[styles.actionButtonText, { color: ACCENT_COLOR }]}>Configure</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#007AFF15' }]}>
-                <BarChart3 size={16} color="#007AFF" />
+                <ChartBarBig size={16} color="#007AFF" />
                 <Text style={[styles.actionButtonText, { color: '#007AFF' }]}>Analytics</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#FF950015' }]}>

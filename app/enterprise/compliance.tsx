@@ -14,15 +14,15 @@ import {
   ArrowLeft,
   Shield,
   FileText,
-  CheckCircle,
-  AlertTriangle,
+  CircleCheck,
+  TriangleAlert,
   Lock,
   Eye,
   Database,
   Globe,
   Server,
   FileCheck,
-  AlertCircle,
+  CircleAlert,
   Download,
   Settings,
 } from 'lucide-react-native';
@@ -208,12 +208,12 @@ export default function ComplianceScreen() {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'compliant': return CheckCircle;
-      case 'partial': return AlertTriangle;
-      case 'non-compliant': return AlertCircle;
-      case 'success': return CheckCircle;
-      case 'warning': return AlertTriangle;
-      case 'failed': return AlertCircle;
+      case 'compliant': return CircleCheck;
+      case 'partial': return TriangleAlert;
+      case 'non-compliant': return CircleAlert;
+      case 'success': return CircleCheck;
+      case 'warning': return TriangleAlert;
+      case 'failed': return CircleAlert;
       default: return FileCheck;
     }
   };

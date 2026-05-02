@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Workflow, Play, Pause, Settings, Plus, Search, Filter, Clock, CheckCircle, AlertCircle } from 'lucide-react-native';
+import { Workflow, Play, Pause, Settings, Plus, Search, ListFilter, Clock, CircleCheck, CircleAlert } from 'lucide-react-native';
 import { trpc } from '@/lib/trpc';
 
 interface AIWorkflow {
@@ -117,9 +117,9 @@ export default function AIWorkflowScreen() {
     switch (status) {
       case 'running': return <Play size={16} color="#10B981" />;
       case 'paused': return <Pause size={16} color="#F59E0B" />;
-      case 'stopped': return <CheckCircle size={16} color="#6B7280" />;
-      case 'error': return <AlertCircle size={16} color="#EF4444" />;
-      default: return <CheckCircle size={16} color="#6B7280" />;
+      case 'stopped': return <CircleCheck size={16} color="#6B7280" />;
+      case 'error': return <CircleAlert size={16} color="#EF4444" />;
+      default: return <CircleCheck size={16} color="#6B7280" />;
     }
   };
 
@@ -157,7 +157,7 @@ export default function AIWorkflowScreen() {
         
         <View style={styles.filterContainer}>
           <TouchableOpacity style={styles.filterButton}>
-            <Filter size={20} color="#3B82F6" />
+            <ListFilter size={20} color="#3B82F6" />
           </TouchableOpacity>
           
           <TouchableOpacity style={styles.addButton}>
@@ -182,7 +182,7 @@ export default function AIWorkflowScreen() {
           </View>
           
           <View style={styles.statCard}>
-            <CheckCircle size={22} color="#F59E0B" />
+            <CircleCheck size={22} color="#F59E0B" />
             <Text style={styles.statNumber}>{totalExecutions.toLocaleString()}</Text>
             <Text style={styles.statLabel}>Total Executions</Text>
           </View>
@@ -279,7 +279,7 @@ export default function AIWorkflowScreen() {
             </TouchableOpacity>
             
             <TouchableOpacity style={styles.actionCard}>
-              <CheckCircle size={24} color="#F59E0B" />
+              <CircleCheck size={24} color="#F59E0B" />
               <Text style={styles.actionCardText}>View Logs</Text>
             </TouchableOpacity>
             
@@ -303,7 +303,7 @@ export default function AIWorkflowScreen() {
             </TouchableOpacity>
             
             <TouchableOpacity style={styles.templateCard}>
-              <CheckCircle size={20} color="#10B981" />
+              <CircleCheck size={20} color="#10B981" />
               <View style={styles.templateInfo}>
                 <Text style={styles.templateName}>Sales Pipeline</Text>
                 <Text style={styles.templateDescription}>Lead qualification and follow-up</Text>

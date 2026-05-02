@@ -1,19 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { AlertTriangle, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Shield, Zap, Eye } from 'lucide-react-native';
+import { TriangleAlert, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Shield, Zap, Eye } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Incidents',value:'2.4K',icon:AlertTriangle,color:'#FF3B30'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'<5min',icon:Clock,color:'#FF9500'},{label:'Resolved',value:'99.5%',icon:Target,color:'#34C759'}];
+  const stats = [{label:'Incidents',value:'2.4K',icon:TriangleAlert,color:'#FF3B30'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'<5min',icon:Clock,color:'#FF9500'},{label:'Resolved',value:'99.5%',icon:Target,color:'#34C759'}];
   const capabilities = ['Incident Triage', 'Forensic Analysis', 'Containment', 'Eradication', 'Recovery', 'Post-Mortem'];
   const responsibilities = ['Real-time incident detection & triage','Automated containment & isolation','Forensic evidence collection & analysis','Threat eradication & system recovery','Post-incident review & reporting','Playbook execution & escalation'];
-  const activities = [{time:'1 min ago',text:'Contained ransomware outbreak in zone 3',icon:Shield},{time:'15 min ago',text:'Initiated forensic analysis on breach',icon:Eye},{time:'1 hour ago',text:'Escalated APT incident to CISO',icon:AlertTriangle}];
+  const activities = [{time:'1 min ago',text:'Contained ransomware outbreak in zone 3',icon:Shield},{time:'15 min ago',text:'Initiated forensic analysis on breach',icon:Eye},{time:'1 hour ago',text:'Escalated APT incident to CISO',icon:TriangleAlert}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#581C8420' }]}><AlertTriangle size={48} color="#581C84" /></View>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#581C8420' }]}><TriangleAlert size={48} color="#581C84" /></View>
         <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Incident Responder</Text>
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Security & Risk Department</Text>
         <View style={styles.badgesRow}>

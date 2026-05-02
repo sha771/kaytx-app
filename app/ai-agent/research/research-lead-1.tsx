@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { GraduationCap, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { GraduationCap, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'5,476',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.1s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.1%',icon:Target,color:'#006064'}];
+  const stats = [{label:'Tasks',value:'5,476',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.1s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.1%',icon:Target,color:'#006064'}];
   const capabilities = ['Research Direction','Team Leadership','Publication Strategy','Grant Writing','Collaboration','Mentoring'];
   const responsibilities = ['Research direction & agenda setting','Research team leadership & development','Publication strategy & quality oversight','Grant proposal writing & management','Cross-institutional collaboration','Researcher mentoring & development'];
-  const activities = [{time:'3 min ago',text:'Set Q3 research priorities',icon:CheckCircle2},{time:'6 min ago',text:'Led team of 8 researchers',icon:Clock},{time:'9 min ago',text:'Submitted 2 grant proposals',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Set Q3 research priorities',icon: CircleCheckBig},{time:'6 min ago',text:'Led team of 8 researchers',icon:Clock},{time:'9 min ago',text:'Submitted 2 grant proposals',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

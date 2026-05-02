@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Globe, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Globe, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'3,487',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.6s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.5%',icon:Target,color:'#E65100'}];
+  const stats = [{label:'Tasks',value:'3,487',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.6s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.5%',icon:Target,color:'#E65100'}];
   const capabilities = ['BD Strategy','Partnership Development','Market Expansion','Strategic Alliances','Revenue Growth','Team Leadership'];
   const responsibilities = ['Business development strategy','Partnership development & management','New market expansion planning','Strategic alliance cultivation','Revenue growth initiatives','BD team leadership & development'];
-  const activities = [{time:'3 min ago',text:'Closed 3 strategic partnerships',icon:CheckCircle2},{time:'6 min ago',text:'Entered 2 new market segments',icon:Clock},{time:'9 min ago',text:'Managed BD team of 12',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Closed 3 strategic partnerships',icon: CircleCheckBig},{time:'6 min ago',text:'Entered 2 new market segments',icon:Clock},{time:'9 min ago',text:'Managed BD team of 12',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

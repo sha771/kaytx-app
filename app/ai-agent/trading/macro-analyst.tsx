@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Globe, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Globe, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'756',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'2.1s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.9%',icon:Target,color:'#0277BD'}];
+  const stats = [{label:'Tasks',value:'756',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'2.1s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.9%',icon:Target,color:'#0277BD'}];
   const capabilities = ['Macro Analysis','Economic Forecasting','Geopolitical Risk','Central Bank Policy','Commodity Markets','Fixed Income'];
   const responsibilities = ['Macroeconomic trend analysis & forecasting','Geopolitical risk assessment','Central bank policy analysis','Commodity market correlation studies','Fixed income market analysis','Global economic indicator monitoring'];
-  const activities = [{time:'3 min ago',text:'Published monthly macro outlook',icon:CheckCircle2},{time:'6 min ago',text:'Analyzed Fed rate decision impact',icon:Clock},{time:'9 min ago',text:'Updated GDP growth forecasts',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Published monthly macro outlook',icon: CircleCheckBig},{time:'6 min ago',text:'Analyzed Fed rate decision impact',icon:Clock},{time:'9 min ago',text:'Updated GDP growth forecasts',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

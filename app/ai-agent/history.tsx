@@ -5,7 +5,7 @@ import { useTheme } from '@/providers/ThemeProvider';
 import { useAIAssistant } from '@/providers/AIAssistantProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { trpc } from '@/lib/trpc';
-import { ArrowLeft, Clock, Activity, CheckCircle, AlertTriangle, Filter, Search, Calendar, Bot, Power } from 'lucide-react-native';
+import { ArrowLeft, Clock, Activity, CircleCheck, TriangleAlert, ListFilter, Search, Calendar, Power, User } from 'lucide-react-native';
 
 export default function HistoryScreen() {
     const { theme } = useTheme();
@@ -57,10 +57,10 @@ export default function HistoryScreen() {
 
     const getStatusIcon = (status: string) => {
         switch (status) {
-            case 'active': return <CheckCircle size={16} color="#34C759" />;
-            case 'paused': return <AlertTriangle size={16} color="#FF9500" />;
+            case 'active': return <CircleCheck size={16} color="#34C759" />;
+            case 'paused': return <TriangleAlert size={16} color="#FF9500" />;
             case 'draft': return <Activity size={16} color="#8E8E93" />;
-            case 'archived': return <AlertTriangle size={16} color="#FF3B30" />;
+            case 'archived': return <TriangleAlert size={16} color="#FF3B30" />;
             default: return <Activity size={16} color="#8E8E93" />;
         }
     };
@@ -84,7 +84,7 @@ export default function HistoryScreen() {
                 <View style={styles.itemHeader}>
                     <View style={styles.agentBadge}>
                         <View style={[styles.iconBox, { backgroundColor: agentColor + '15' }]}>
-                            <Bot size={20} color={agentColor} />
+                            <User size={20} color={agentColor} />
                         </View>
                         <View style={styles.agentInfo}>
                             <Text style={[styles.agentName, { color: theme.colors.text }]}>{item.name}</Text>
@@ -173,7 +173,7 @@ export default function HistoryScreen() {
                             </>
                         ) : (
                             <>
-                                <Bot size={48} color={theme.colors.secondaryText} />
+                                <User size={48} color={theme.colors.secondaryText} />
                                 <Text style={[styles.emptyText, { color: theme.colors.secondaryText }]}>No AI agents created yet</Text>
                                 <Text style={[styles.emptySubtext, { color: theme.colors.secondaryText }]}>Create your first agent to get started</Text>
                             </>

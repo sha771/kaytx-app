@@ -121,8 +121,8 @@ test.describe('AI Agent Interactions E2E Tests', () => {
     await expect(page.locator('[data-testid="total-requests-metric"]')).toBeVisible();
 
     // Test date range filtering
-    await page.selectOption('[data-testid="date-range-filter"]', 'last-7-days');
-    await page.click('[data-testid="apply-filter"]');
+    await page.selectOption('[data-testid="date-range-Filter"]', 'last-7-days');
+    await page.click('[data-testid="apply-Filter"]');
 
     // Verify data updates
     await expect(page.locator('[data-testid="analytics-loading"]')).not.toBeVisible();

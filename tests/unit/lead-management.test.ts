@@ -194,7 +194,7 @@ describe('LeadManagementService', () => {
       expect(result.leads[0].email).toBe('test@example.com');
     });
 
-    it('should filter leads by status', async () => {
+    it('should Filter leads by status', async () => {
       const result = await service.getLeads(mockOrganizationId, {
         status: 'qualified'
       });

@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Crown, Activity, CheckCircle2, Clock, Target, BarChart3, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, TrendingUp } from 'lucide-react-native';
+import { Crown, Activity, CircleCheckBig, Clock, Target, ChartBar, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, TrendingUp } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function CCOPage() {
   const { theme } = useTheme();
 
   const stats = [
-    { label: 'Tasks Done', value: '24,531', icon: CheckCircle2, color: '#34C759' },
+    { label: 'Tasks Done', value: '24,531', icon: CircleCheckBig, color: '#34C759' },
     { label: 'Uptime', value: '99.97%', icon: Activity, color: '#007AFF' },
     { label: 'Response', value: '0.8s', icon: Clock, color: '#FF9500' },
     { label: 'Accuracy', value: '99.2%', icon: Target, color: '#AF52DE' },
@@ -31,15 +31,15 @@ export default function CCOPage() {
   ];
 
   const activities = [
-    { time: '2 min ago', text: 'Completed quarterly CX performance review', icon: CheckCircle2 },
-    { time: '15 min ago', text: 'Updated NPS dashboard with latest results', icon: BarChart3 },
+    { time: '2 min ago', text: 'Completed quarterly CX performance review', icon: CircleCheckBig },
+    { time: '15 min ago', text: 'Updated NPS dashboard with latest results', icon: ChartBar },
     { time: '1 hour ago', text: 'Approved new customer journey optimization', icon: Zap },
     { time: '3 hours ago', text: 'Resolved escalated enterprise customer issue', icon: Shield },
     { time: '5 hours ago', text: 'Launched retention campaign for Q3', icon: TrendingUp },
   ];
 
   const quickActions = [
-    { label: 'View Reports', icon: BarChart3 },
+    { label: 'View Reports', icon: ChartBar },
     { label: 'Team Chat', icon: MessageSquare },
     { label: 'Schedule', icon: Calendar },
     { label: 'Settings', icon: Shield },

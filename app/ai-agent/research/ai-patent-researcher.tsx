@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Scroll, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Scroll, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'4,694',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.4s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.8%',icon:Target,color:'#006064'}];
+  const stats = [{label:'Tasks',value:'4,694',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.4s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.8%',icon:Target,color:'#006064'}];
   const capabilities = ['Patent Search','Prior Art Analysis','IP Strategy','Patent Drafting','Freedom to Operate','Landscape Analysis'];
   const responsibilities = ['Patent search & analysis','Prior art identification & analysis','IP strategy development support','Patent drafting assistance','Freedom to operate assessments','Patent landscape analysis & mapping'];
-  const activities = [{time:'3 min ago',text:'Completed prior art search for 3 inventions',icon:CheckCircle2},{time:'6 min ago',text:'Analyzed patent landscape for AI/ML',icon:Clock},{time:'9 min ago',text:'Drafted 2 patent applications',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Completed prior art search for 3 inventions',icon: CircleCheckBig},{time:'6 min ago',text:'Analyzed patent landscape for AI/ML',icon:Clock},{time:'9 min ago',text:'Drafted 2 patent applications',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

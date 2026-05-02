@@ -20,10 +20,9 @@ import {
   Settings,
   Play,
   Pause,
-  StopCircle,
+  CircleStop,
   Languages,
   User,
-  Bot,
   Sparkles,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -103,7 +102,7 @@ export default function VoiceCenterScreen() {
               <Text style={[styles.agentStatus, { color: selectedAgentData.color }]}>● Voice Ready</Text>
             </View>
             <TouchableOpacity style={[styles.callButton, { backgroundColor: isRecording ? '#EF4444' : selectedAgentData.color }]} onPress={simulateVoiceResponse}>
-              {isRecording ? <StopCircle size={24} color="#fff" /> : <Phone size={24} color="#fff" />}
+              {isRecording ? <CircleStop size={24} color="#fff" /> : <Phone size={24} color="#fff" />}
             </TouchableOpacity>
           </Animated.View>
         ) : (
@@ -127,7 +126,7 @@ export default function VoiceCenterScreen() {
                   }]}>
                     {msg.role === 'agent' && (
                       <View style={styles.messageHeader}>
-                        <Bot size={12} color={colors.primary} />
+                        <User size={12} color={colors.primary} />
                         <Text style={[styles.messageAgent, { color: colors.primary }]}>{msg.agent}</Text>
                       </View>
                     )}

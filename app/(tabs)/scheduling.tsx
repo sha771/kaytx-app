@@ -20,16 +20,16 @@ import {
   Users,
   MessageSquare,
   Search,
-  Edit,
+  Pencil,
   Trash2,
   Bell,
   Repeat,
   MapPin,
   Video,
   Phone,
-  CheckCircle,
+  CircleCheck,
   X,
-  BarChart3,
+  ChartBar,
   TrendingUp,
   Activity,
 } from 'lucide-react-native';
@@ -326,7 +326,7 @@ export default function SchedulingScreen() {
           </View>
           <View style={styles.actionButtons}>
             <TouchableOpacity style={styles.actionButton}>
-              <Edit size={14} color={theme.colors.text} />
+              <Pencil size={14} color={theme.colors.text} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.actionButton}>
               <Trash2 size={14} color={theme.colors.text} />
@@ -398,7 +398,7 @@ export default function SchedulingScreen() {
           </View>
           <View style={styles.actionButtons}>
             <TouchableOpacity style={styles.actionButton}>
-              <Edit size={14} color={theme.colors.text} />
+              <Pencil size={14} color={theme.colors.text} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.actionButton}>
               <Trash2 size={14} color={theme.colors.text} />
@@ -440,7 +440,7 @@ export default function SchedulingScreen() {
             <View style={styles.reminderTitleContainer}>
               <TouchableOpacity>
                 {item.completed ? (
-                  <CheckCircle size={20} color="#34C759" />
+                  <CircleCheck size={20} color="#34C759" />
                 ) : (
                   <View style={[styles.uncheckedCircle, { borderColor: theme.colors.border }]} />
                 )}
@@ -467,7 +467,7 @@ export default function SchedulingScreen() {
         </View>
         <View style={styles.actionButtons}>
           <TouchableOpacity style={styles.actionButton}>
-            <Edit size={14} color={theme.colors.text} />
+            <Pencil size={14} color={theme.colors.text} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton}>
             <Trash2 size={14} color={theme.colors.text} />
@@ -495,15 +495,15 @@ export default function SchedulingScreen() {
     <TouchableOpacity
       style={[
         styles.filterButton,
-        selectedFilter === filter && { backgroundColor: theme.colors.primary },
+        selectedFilter === Filter && { backgroundColor: theme.colors.primary },
       ]}
-      onPress={() => setSelectedFilter(filter)}
+      onPress={() => setSelectedFilter(Filter)}
     >
       <Text
         style={[
           styles.filterButtonText,
           {
-            color: selectedFilter === filter ? 'white' : theme.colors.secondaryText,
+            color: selectedFilter === Filter ? 'white' : theme.colors.secondaryText,
           },
         ]}
       >
@@ -532,7 +532,7 @@ export default function SchedulingScreen() {
             style={styles.headerButton}
             onPress={() => setShowAnalytics(true)}
           >
-            <BarChart3 size={20} color={theme.colors.text} />
+            <ChartBarBig size={20} color={theme.colors.text} />
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.addButton, { backgroundColor: theme.colors.primary }]}
@@ -715,18 +715,7 @@ export default function SchedulingScreen() {
         )}
       </ScrollView>
 
-      {/* Related Features */}
-      <RelatedFeatures
-        featureId="scheduling-calendar"
-        title="Related Scheduling Features"
-        maxItems={6}
-        layout="horizontal"
-      />
-      <QuickLinks
-        groupId="automation"
-        title="Automation Tools"
-        maxItems={4}
-      />
+      {/* Related Features - removed as per request */}
 
       {/* Create Modal */}
       <Modal

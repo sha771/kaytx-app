@@ -1,7 +1,7 @@
-
+﻿
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { BarChart2, TrendingUp, TrendingDown, Activity, Zap, BarChart3 } from 'lucide-react-native';
+import { ChartBar, TrendingUp, TrendingDown, Activity, Zap, ChartBar } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
@@ -32,7 +32,7 @@ export default function TechnicalAnalysisScreen() {
     <ScrollView style={styles.tabContent} showsVerticalScrollIndicator={false}>
       <View style={styles.metricsGrid}>
         <LinearGradient colors={['#64FFDA', '#00BFA5']} style={styles.metricCard}>
-          <BarChart2 size={20} color="#fff" />
+          <ChartBar size={20} color="#fff" />
           <Text style={styles.metricValue}>200+</Text>
           <Text style={styles.metricLabel}>Indicators</Text>
         </LinearGradient>
@@ -101,8 +101,8 @@ export default function TechnicalAnalysisScreen() {
   );
 
   const customTabs = [
-    { id: 'charts', label: 'Charts', icon: BarChart2, component: chartsTab },
-    { id: 'signals', label: 'Signals', icon: BarChart3, component: <View /> },
+    { id: 'charts', label: 'Charts', icon: ChartBar2, component: chartsTab },
+    { id: 'signals', label: 'Signals', icon: ChartBar, component: <View /> },
   ];
 
   return <AgentShell agent={agent} customTabs={customTabs} />;

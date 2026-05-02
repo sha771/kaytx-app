@@ -360,7 +360,7 @@ export class LeadManagementService extends EventEmitter {
       if (filters.minScore && lead.score < filters.minScore) return null;
       if (filters.maxScore && lead.score > filters.maxScore) return null;
 
-      // Special handling for firstName filter in tests
+      // Special handling for firstName Filter in tests
       if (filters.search === 'John' && lead.firstName !== 'John') return null;
 
       return lead;

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'rea
 import { Stack, useLocalSearchParams, router } from 'expo-router';
 import { useTheme } from '@/providers/ThemeProvider';
 import { LinearGradient } from 'expo-linear-gradient';
-import { ArrowLeft, CheckCircle, ArrowRight, Shield, Zap, Users , Activity, ShoppingBag, Wifi } from 'lucide-react-native';
+import { ArrowLeft, CircleCheck, ArrowRight, Shield, Zap, Users , Activity, ShoppingBag, Wifi } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
@@ -228,7 +228,7 @@ export default function IndustryDetailScreen() {
           <View style={styles.featuresGrid}>
             {industry.features.map((feature: string, i: number) => (
               <View key={i} style={styles.featureCard}>
-                <CheckCircle size={20} color={industry.color} />
+                <CircleCheck size={20} color={industry.color} />
                 <Text style={styles.featureText}>{feature}</Text>
               </View>
             ))}

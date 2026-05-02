@@ -130,7 +130,7 @@ class BulkCounselingService {
   ): string[] {
     let filtered = [...subagentIds];
 
-    // Apply category filter
+    // Apply category Filter
     if (filters.categories && filters.categories.length > 0) {
       filtered = filtered.filter((id: string) => {
         const agent = allAgents.find((a: any) => a.id === id);
@@ -138,13 +138,13 @@ class BulkCounselingService {
       });
     }
 
-    // Apply performance threshold filter (would integrate with performance service)
+    // Apply performance threshold Filter (would integrate with performance service)
     if (filters.performanceThreshold) {
       // Placeholder: would check actual performance metrics
       // For now, assume all pass
     }
 
-    // Apply last counseling filter
+    // Apply last counseling Filter
     if (filters.lastCounselingDays !== undefined) {
       // Placeholder: would check counseling history
       // For now, assume all pass

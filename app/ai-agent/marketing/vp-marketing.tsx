@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Megaphone, Activity, CheckCircle2, Clock, Target, BarChart3, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, Globe, Paintbrush } from 'lucide-react-native';
+import { Megaphone, Activity, CircleCheckBig, Clock, Target, ChartBar, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, Globe, Paintbrush } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function VPMarketingPage() {
   const { theme } = useTheme();
 
   const stats = [
-    { label: 'Campaigns', value: '1,256', icon: CheckCircle2, color: '#34C759' },
+    { label: 'Campaigns', value: '1,256', icon: CircleCheckBig, color: '#34C759' },
     { label: 'Uptime', value: '99.96%', icon: Activity, color: '#007AFF' },
     { label: 'Response', value: '1.0s', icon: Clock, color: '#FF9500' },
     { label: 'Accuracy', value: '98.2%', icon: Target, color: '#AF52DE' },
@@ -33,13 +33,13 @@ export default function VPMarketingPage() {
   const activities = [
     { time: '4 min ago', text: 'Launched Q3 integrated campaign', icon: Megaphone },
     { time: '20 min ago', text: 'Updated brand guidelines v3.2', icon: Paintbrush },
-    { time: '1 hour ago', text: 'Analyzed campaign performance metrics', icon: BarChart3 },
+    { time: '1 hour ago', text: 'Analyzed campaign performance metrics', icon: ChartBar },
     { time: '3 hours ago', text: 'Published content calendar for August', icon: Calendar },
     { time: '5 hours ago', text: 'Optimized ad spend across channels', icon: Globe },
   ];
 
   const quickActions = [
-    { label: 'View Reports', icon: BarChart3 },
+    { label: 'View Reports', icon: ChartBar },
     { label: 'Team Chat', icon: MessageSquare },
     { label: 'Schedule', icon: Calendar },
     { label: 'Settings', icon: Shield },

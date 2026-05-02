@@ -18,7 +18,7 @@ import {
   Settings,
   Play,
   Trash2,
-  Edit,
+  Pencil,
   Save,
   X,
   Lock,
@@ -172,7 +172,7 @@ export default function IVRBuilderScreen() {
                           }}
                           style={styles.iconButton}
                         >
-                          <Edit size={18} color={theme.colors.primary} />
+                          <Pencil size={18} color={theme.colors.primary} />
                         </TouchableOpacity>
                         <TouchableOpacity
                           onPress={() => deleteNode(node.id)}

@@ -287,7 +287,7 @@ describe('Bulk Counseling Service', () => {
       expect(operations).toHaveLength(2);
     });
 
-    it('should filter by status', async () => {
+    it('should Filter by status', async () => {
       const draftOp = await bulkCounselingService.createBulkOperation({
         type: 'performance_review',
         targets: {
@@ -328,7 +328,7 @@ describe('Bulk Counseling Service', () => {
       expect(draftOps.every((op) => op.status === 'draft')).toBe(true);
     });
 
-    it('should filter by type', async () => {
+    it('should Filter by type', async () => {
       await bulkCounselingService.createBulkOperation({
         type: 'performance_review',
         targets: {

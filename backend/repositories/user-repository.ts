@@ -107,27 +107,27 @@ export class UserRepository extends BaseRepository<any, UserCreateInput, UserUpd
       conditions.push(searchCondition);
     }
 
-    // Role filter
+    // Role Filter
     if (options.role) {
       conditions.push(eq(users.role, options.role));
     }
 
-    // Status filter
+    // Status Filter
     if (options.status) {
       conditions.push(eq(users.status, options.status));
     }
 
-    // Organization filter
+    // Organization Filter
     if (options.organizationId) {
       conditions.push(eq(users.organizationId, options.organizationId));
     }
 
-    // Email verification filter
+    // Email verification Filter
     if (options.emailVerified !== undefined) {
       conditions.push(eq(users.emailVerified, options.emailVerified));
     }
 
-    // Date range filter
+    // Date range Filter
     if (options.createdAfter || options.createdBefore) {
       const dateCondition = this.buildDateRangeQuery('createdAt', options.createdAfter, options.createdBefore);
       conditions.push(dateCondition);
@@ -243,10 +243,10 @@ export class UserRepository extends BaseRepository<any, UserCreateInput, UserUpd
   }> {
     let baseQuery = pgDb.select({
       total: sql<number>`count(*)`,
-      active: sql<number>`count(*) filter (where ${users.status} = 'active')`,
-      suspended: sql<number>`count(*) filter (where ${users.status} = 'suspended')`,
-      verified: sql<number>`count(*) filter (where ${users.emailVerified} = true)`,
-      unverified: sql<number>`count(*) filter (where ${users.emailVerified} = false)`
+      active: sql<number>`count(*) Filter (where ${users.status} = 'active')`,
+      suspended: sql<number>`count(*) Filter (where ${users.status} = 'suspended')`,
+      verified: sql<number>`count(*) Filter (where ${users.emailVerified} = true)`,
+      unverified: sql<number>`count(*) Filter (where ${users.emailVerified} = false)`
     }).from(users);
 
     if (organizationId) {

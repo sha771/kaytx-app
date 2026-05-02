@@ -390,7 +390,7 @@ export interface ImportResult {
 }
 
 // ============================================
-// SEARCH & FILTER
+// SEARCH & Filter
 // ============================================
 
 export interface SearchFilters {
@@ -472,6 +472,7 @@ export const DEFAULT_DEPARTMENT_IDS = [
   'manufacturing_production',
   'transportation_logistics',
   'government_public',
+  'customer_insights_analytics',
 ] as const;
 
 export type DefaultDepartmentId = typeof DEFAULT_DEPARTMENT_IDS[number];

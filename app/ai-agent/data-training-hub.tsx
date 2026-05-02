@@ -15,16 +15,16 @@ import {
   Upload,
   FileText,
   Search,
-  Filter,
+  ListFilter,
   Trash2,
-  CheckCircle,
+  CircleCheck,
   Clock,
-  AlertCircle,
+  CircleAlert,
   Brain,
   Zap,
   Tag,
   Folder,
-  MoreVertical,
+  EllipsisVertical,
   Plus,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -109,9 +109,9 @@ export default function DataTrainingHubScreen() {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'completed': return <CheckCircle size={16} color="#10B981" />;
+      case 'completed': return <CircleCheck size={16} color="#10B981" />;
       case 'pending': return <Clock size={16} color="#F59E0B" />;
-      case 'failed': return <AlertCircle size={16} color="#EF4444" />;
+      case 'failed': return <CircleAlert size={16} color="#EF4444" />;
       default: return <FileText size={16} color={colors.text + '60'} />;
     }
   };
@@ -141,7 +141,7 @@ export default function DataTrainingHubScreen() {
             <Text style={[styles.statLabel, { color: colors.text + '60' }]}>Documents</Text>
           </View>
           <View style={[styles.statCard, { backgroundColor: '#10B981' + '15' }]}>
-            <CheckCircle size={18} color="#10B981" />
+            <CircleCheck size={18} color="#10B981" />
             <Text style={[styles.statValue, { color: '#10B981' }]}>{stats.processed}</Text>
             <Text style={[styles.statLabel, { color: colors.text + '60' }]}>Processed</Text>
           </View>

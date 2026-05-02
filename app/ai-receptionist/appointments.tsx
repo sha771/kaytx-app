@@ -18,9 +18,9 @@ import {
   MapPin,
   Plus,
   X,
-  CheckCircle,
-  AlertCircle,
-  Edit,
+  CircleCheck,
+  CircleAlert,
+  Pencil,
   Trash2,
   Bell,
   ChevronRight,
@@ -350,7 +350,7 @@ export default function ReceptionistAppointmentsScreen() {
                 style={[styles.submitButton, { backgroundColor: theme.colors.primary }]}
                 onPress={() => setShowAddModal(false)}
               >
-                <CheckCircle size={20} color="white" />
+                <CircleCheck size={20} color="white" />
                 <Text style={styles.submitButtonText}>Schedule Appointment</Text>
               </TouchableOpacity>
             </ScrollView>

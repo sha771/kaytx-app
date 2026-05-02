@@ -20,16 +20,16 @@ import {
   Target,
   TrendingUp,
   Users,
-  CheckCircle,
+  CircleCheck,
   Clock,
   Play,
   Pause,
   Settings,
   Plus,
   X,
-  Edit,
+  Pencil,
   Trash2,
-  BarChart3,
+  ChartBar,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { Stack } from 'expo-router';
@@ -192,7 +192,7 @@ export default function SalesAutomationScreen() {
                   setShowWorkflowModal(true);
                 }}
               >
-                <Edit size={16} color={theme.colors.text} />
+                <Pencil size={16} color={theme.colors.text} />
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.actionButton, { backgroundColor: theme.colors.background }]}
@@ -247,7 +247,7 @@ export default function SalesAutomationScreen() {
 
         <View style={styles.statCard}>
           <View style={[styles.statIcon, { backgroundColor: '#34C75920' }]}>
-            <CheckCircle size={24} color="#34C759" />
+            <CircleCheck size={24} color="#34C759" />
           </View>
           <Text style={[styles.statValue, { color: theme.colors.text }]}>
             {stats.conversions}
@@ -266,7 +266,7 @@ export default function SalesAutomationScreen() {
           Last 30 days
         </Text>
         <View style={styles.chartPlaceholder}>
-          <BarChart3 size={48} color={theme.colors.secondaryText} />
+          <ChartBarBig size={48} color={theme.colors.secondaryText} />
           <Text style={[styles.chartPlaceholderText, { color: theme.colors.secondaryText }]}>
             Performance chart would appear here
           </Text>
@@ -281,7 +281,7 @@ export default function SalesAutomationScreen() {
           { icon: Mail, text: 'Sent welcome email to John Smith', time: '2 min ago', color: '#FF9500' },
           { icon: Calendar, text: 'Scheduled demo call with Sarah Johnson', time: '15 min ago', color: '#AF52DE' },
           { icon: MessageSquare, text: 'Sent follow-up SMS to Mike Davis', time: '1 hour ago', color: '#007AFF' },
-          { icon: CheckCircle, text: 'Lead converted: Emily Brown', time: '2 hours ago', color: '#34C759' },
+          { icon: CircleCheck, text: 'Lead converted: Emily Brown', time: '2 hours ago', color: '#34C759' },
         ].map((activity, index) => {
           const Icon = activity.icon;
           return (
@@ -410,7 +410,7 @@ export default function SalesAutomationScreen() {
           ]}
           onPress={() => setActiveTab('stats')}
         >
-          <BarChart3
+          <ChartBarBig
             size={20}
             color={activeTab === 'stats' ? theme.colors.primary : theme.colors.secondaryText}
           />

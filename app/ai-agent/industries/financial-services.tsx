@@ -16,7 +16,7 @@ import {
   Zap,
   Globe,
   Lock,
-  CheckCircle,
+  CircleCheck,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { Stack, router } from 'expo-router';
@@ -77,7 +77,7 @@ export default function FinancialServicesScreen() {
             router.push('/enterprise/billing');
             return;
           }
-          router.push(item.route as any);
+          router.push(item.route);
         }}
       >
         <View style={[styles.agentIcon, { backgroundColor: item.color + '15' }]}>
@@ -118,7 +118,7 @@ export default function FinancialServicesScreen() {
               </Text>
             </View>
             <View style={styles.metric}>
-              <CheckCircle size={12} color={theme.colors.primary} />
+              <CircleCheck size={12} color={theme.colors.primary} />
               <Text style={[styles.metricText, { color: theme.colors.primary }]}>
                 {item.roiMetrics.accuracyRate}
               </Text>

@@ -2,7 +2,7 @@
 import React, { useState, useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
-import { Voicemail, Play, Pause, Download, Trash2, Search, Filter, Star, Clock, Phone, Lock } from 'lucide-react-native';
+import { Voicemail, Play, Pause, Download, Trash2, Search, ListFilter, Star, Clock, Phone, Lock } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { trpc } from '@/lib/trpc';
 import { useTheme } from '@/providers/ThemeProvider';
@@ -115,7 +115,7 @@ export default function VoicemailScreen() {
             onChangeText={setSearchQuery}
           />
           <TouchableOpacity style={styles.filterButton}>
-            <Filter size={18} color={theme.colors.primary} />
+            <ListFilter size={18} color={theme.colors.primary} />
           </TouchableOpacity>
         </View>
       </View>

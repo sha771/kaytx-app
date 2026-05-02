@@ -24,12 +24,12 @@ import {
   HardDrive,
   Wifi,
   Clock,
-  CheckCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleAlert,
   Settings,
   Plus,
   Search,
-  BarChart3,
+  ChartBar,
   Globe,
   Layers,
   Shield,
@@ -401,7 +401,7 @@ export default function ContainersScreen() {
 
   const renderContainer = ({ item }: { item: Container }) => {
     const statusColor = getStatusColor(item.status);
-    const StatusIcon = item.status === 'running' ? CheckCircle : item.status === 'stopped' ? Square : AlertCircle;
+    const StatusIcon = item.status === 'running' ? CircleCheck : item.status === 'stopped' ? Square : CircleAlert;
 
     return (
       <View style={[styles.containerCard, { backgroundColor: theme.colors.cardBackground }]} testID={`docker-card-${item.id}`}>
@@ -753,7 +753,7 @@ export default function ContainersScreen() {
               <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}
                 testID="stat-card-total">
                 <View style={[styles.statIcon, { backgroundColor: 'rgba(0,0,0,0.05)' }]}>
-                  <BarChart3 size={18} color={theme.colors.text} />
+                  <ChartBarBig size={18} color={theme.colors.text} />
                 </View>
                 <Text style={[styles.statValue, { color: theme.colors.text }]}>{filteredContainers.length}</Text>
                 <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Total Services</Text>

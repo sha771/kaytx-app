@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { Stack, router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ArrowLeft, CheckCircle, AlertTriangle } from 'lucide-react-native';
+import { ArrowLeft, CircleCheck, TriangleAlert } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { trpc } from '@/lib/trpc';
 
 export default function GlobalActivityLogScreen() {
     const insets = useSafeAreaInsets();
-    const [filter, setFilter] = useState('All');
+    const [Filter, setFilter] = useState('All');
 
     const { data: activityData } = trpc.aiAgents.getAgentActivity.useQuery({ limit: 200 });
 
@@ -35,7 +35,7 @@ export default function GlobalActivityLogScreen() {
     const filteredData =
         filter === 'All'
             ? activities
-            : activities.filter(item => item.category === filter);
+            : activities.filter(item => item.category === Filter);
 
     const completedToday = activities.filter(a => {
         const now = new Date();
@@ -89,7 +89,7 @@ export default function GlobalActivityLogScreen() {
                 renderItem={({ item }) => (
                     <View style={styles.logRow}>
                         <View style={[styles.iconBox, { backgroundColor: item.status === 'success' ? 'rgba(52, 199, 89, 0.1)' : 'rgba(255, 189, 46, 0.1)' }]}>
-                            {item.status === 'success' ? <CheckCircle size={16} color="#34C759" /> : <AlertTriangle size={16} color="#FFBD2E" />}
+                            {item.status === 'success' ? <CircleCheck size={16} color="#34C759" /> : <TriangleAlert size={16} color="#FFBD2E" />}
                         </View>
                         <View style={styles.logInfo}>
                             <Text style={styles.logAction}>{item.action}</Text>

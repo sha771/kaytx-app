@@ -19,8 +19,7 @@ import {
   User,
   Zap,
   TrendingUp,
-  Filter,
-  Bot,
+  ListFilter,
   Phone,
   MessageSquare,
   Ticket,
@@ -137,7 +136,7 @@ export default function CustomerExperienceAgentsScreen() {
 
         <View style={styles.statsRow}>
           <View style={[styles.statPill, { backgroundColor: colors.border + '30' }]}>
-            <Bot size={14} color={colors.text} />
+            <User size={14} color={colors.text} />
             <Text style={[styles.statValue, { color: colors.text }]}>{stats.total}</Text>
           </View>
           <View style={[styles.statPill, { backgroundColor: '#007AFF15' }]}>

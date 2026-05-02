@@ -13,18 +13,18 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   ArrowLeft,
   TrendingUp,
-  BarChart3,
+  ChartBar,
   Users,
   Target,
   Eye,
   MousePointer,
   DollarSign,
   Calendar,
-  Filter,
+  ListFilter,
   Download,
   Lightbulb,
-  AlertTriangle,
-  CheckCircle,
+  TriangleAlert,
+  CircleCheck,
   ArrowUp,
   ArrowDown,
   Activity,
@@ -239,7 +239,7 @@ export default function MarketingAnalyticsInsightsScreen() {
       case 'paid': return Target;
       case 'organic': return TrendingUp;
       case 'direct': return Activity;
-      default: return BarChart3;
+      default: return ChartBarBig;
     }
   };
 

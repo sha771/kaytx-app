@@ -1,7 +1,7 @@
-
+﻿
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Zap, Activity, BarChart3, TrendingUp, TrendingDown, Clock } from 'lucide-react-native';
+import { Zap, Activity, ChartBar, TrendingUp, TrendingDown, Clock } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
@@ -45,7 +45,7 @@ export default function AlgorithmicTradingScreen() {
           <Text style={styles.metricLabel}>Win Rate</Text>
         </LinearGradient>
         <LinearGradient colors={['#00C853', '#009624']} style={styles.metricCard}>
-          <BarChart3 size={20} color="#fff" />
+          <ChartBarBig size={20} color="#fff" />
           <Text style={styles.metricValue}>$18K</Text>
           <Text style={styles.metricLabel}>Monthly Alpha</Text>
         </LinearGradient>
@@ -99,7 +99,7 @@ export default function AlgorithmicTradingScreen() {
 
   const customTabs = [
     { id: 'orders', label: 'Orders', icon: Zap, component: ordersTab },
-    { id: 'strategies', label: 'Strategies', icon: BarChart3, component: <View /> },
+    { id: 'strategies', label: 'Strategies', icon: ChartBar, component: <View /> },
   ];
 
   return <AgentShell agent={agent} customTabs={customTabs} />;

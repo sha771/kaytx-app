@@ -377,7 +377,7 @@ describe('PaymentService', () => {
       expect(result.payments[0].amount).toBe(100);
     });
 
-    it('should filter by status', async () => {
+    it('should Filter by status', async () => {
       await service.getPaymentHistory(mockOrganizationId, {
         status: 'succeeded'
       });

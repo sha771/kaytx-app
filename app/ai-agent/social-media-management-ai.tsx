@@ -16,7 +16,7 @@ import {
   PenTool,
   Calendar,
   MessageCircle,
-  BarChart3,
+  ChartBar,
   Users,
   Eye,
   Megaphone,
@@ -29,7 +29,7 @@ import {
   Sparkles,
   Crown,
   Star,
-  CheckCircle,
+  CircleCheck,
   TrendingUp,
   Settings,
   Zap,
@@ -155,7 +155,7 @@ const initialSubAgents: SubAgent[] = [
     id: 'smm-4',
     name: 'AI Social Analytics Agent',
     description: 'Tracks performance metrics, generates reports, and provides actionable insights',
-    icon: BarChart3,
+    icon: ChartBar,
     enabled: true,
     status: 'active',
     tasksCompleted: 2140,
@@ -409,7 +409,7 @@ export default function SocialMediaManagementAIScreen() {
     switch (tier) {
       case 'enterprise': return Crown;
       case 'premium': return Star;
-      default: return CheckCircle;
+      default: return CircleCheck;
     }
   };
 
@@ -603,7 +603,7 @@ export default function SocialMediaManagementAIScreen() {
                 <Text style={[styles.actionButtonText, { color: ACCENT_COLOR }]}>Configure</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#34C75915' }]}>
-                <BarChart3 size={16} color="#34C759" />
+                <ChartBarBig size={16} color="#34C759" />
                 <Text style={[styles.actionButtonText, { color: '#34C759' }]}>Analytics</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#FF950015' }]}>

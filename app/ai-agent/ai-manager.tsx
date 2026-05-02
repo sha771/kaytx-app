@@ -1,6 +1,6 @@
-import React, { useMemo, useRef, useEffect } from 'react';
+﻿import React, { useMemo, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, Animated, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { Shield, AlertTriangle, Zap, Layers, Activity, Users, Target, Lock } from 'lucide-react-native';
+import { Shield, TriangleAlert, Zap, Layers, Activity, Users, Target, Lock } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { trpc } from '@/lib/trpc';
 import { EnterpriseAgentShell } from '@/components/ai-agent/EnterpriseAgentShell';
@@ -65,7 +65,7 @@ export default function AIManagerScreen() {
     <View style={styles.container}>
       <View style={styles.tabContent}>
         <View style={[styles.warningCard, { backgroundColor: managerData?.autonomousCommandActive ? '#FF3B3010' : '#10B98110', borderColor: managerData?.autonomousCommandActive ? '#FF3B3030' : '#10B98130', borderWidth: 1 }]}>
-          <AlertTriangle size={24} color={managerData?.autonomousCommandActive ? "#FF3B30" : "#10B981"} />
+          <TriangleAlert size={24} color={managerData?.autonomousCommandActive ? "#FF3B30" : "#10B981"} />
           <View style={styles.warningContent}>
             <Text style={[styles.warningTitle, { color: managerData?.autonomousCommandActive ? '#FF3B30' : '#10B981' }]}>
               {managerData?.autonomousCommandActive ? 'Autonomous Command Active' : 'Autonomous Command Monitoring'}

@@ -16,7 +16,6 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import {
   ChevronLeft,
   Save,
-  Bot,
   Brain,
   Mic,
   Globe,
@@ -27,11 +26,11 @@ import {
   ChevronDown,
   Check,
   X,
-  AlertTriangle,
+  TriangleAlert,
   Shield,
   Clock,
   Zap,
-  BarChart3,
+  ChartBar,
   FileText,
   Lock,
 } from 'lucide-react-native';
@@ -345,7 +344,7 @@ export default function AgentConfigurationScreen() {
     return (
       <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.errorContainer}>
-          <AlertTriangle size={48} color={colors.error} />
+          <TriangleAlert size={48} color={colors.error} />
           <Text style={[styles.errorText, { color: colors.text }]}>Agent not found</Text>
           <TouchableOpacity style={[styles.button, { backgroundColor: colors.primary }]} onPress={() => router.back()}>
             <Text style={styles.buttonText}>Go Back</Text>
@@ -375,7 +374,7 @@ export default function AgentConfigurationScreen() {
             <ChevronLeft size={24} color={colors.text} />
           </TouchableOpacity>
           <View style={styles.headerTitleContainer}>
-            <Bot size={24} color={colors.primary} />
+            <User size={24} color={colors.primary} />
             <Text style={[styles.headerTitle, { color: colors.text }]}>Agent Configuration</Text>
           </View>
           <TouchableOpacity
@@ -397,7 +396,7 @@ export default function AgentConfigurationScreen() {
         {/* Agent Info Card */}
         <Animated.View entering={FadeInUp.delay(100)} style={[styles.agentCard, { backgroundColor: agent.color + '15' }]}>
           <View style={[styles.agentIconContainer, { backgroundColor: agent.color }]}>
-            <Bot size={32} color="#fff" />
+            <User size={32} color="#fff" />
           </View>
           <View style={styles.agentInfo}>
             <Text style={[styles.agentName, { color: colors.text }]}>{agent.name}</Text>
@@ -571,7 +570,7 @@ function ModelConfiguration({
         {/* Cost Badge */}
         {selectedModel && (
           <View style={[styles.costBadge, { backgroundColor: colors.primary + '15' }]}>
-            <BarChart3 size={14} color={colors.primary} />
+            <ChartBarBig size={14} color={colors.primary} />
             <Text style={[styles.costText, { color: colors.primary }]}>
               Cost: {selectedModel.cost}
             </Text>

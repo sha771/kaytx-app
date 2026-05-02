@@ -18,16 +18,16 @@ import {
   Tag,
   Search,
   Plus,
-  Filter,
+  ListFilter,
   ChevronDown,
   User,
   Zap,
   Shield,
-  CheckCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleAlert,
   Sparkles,
   Trash2,
-  Edit3,
+  PenLine,
 } from 'lucide-react-native';
 import { router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -110,7 +110,7 @@ const MEMORIES = [
 const MEMORY_TYPES = [
   { id: 'all', label: 'All', icon: Brain, color: '#6366f1' },
   { id: 'preference', label: 'Preferences', icon: Heart, color: '#ec4899' },
-  { id: 'fact', label: 'Facts', icon: CheckCircle, color: '#22c55e' },
+  { id: 'fact', label: 'Facts', icon: CircleCheck, color: '#22c55e' },
   { id: 'goal', label: 'Goals', icon: Star, color: '#f59e0b' },
   { id: 'habit', label: 'Habits', icon: Clock, color: '#3b82f6' },
   { id: 'value', label: 'Values', icon: Shield, color: '#8b5cf6' },
@@ -218,7 +218,7 @@ export default function PersonalMemoryScreen() {
           <View style={styles.memoryBadges}>
             {memory.verified && (
               <View style={[styles.badge, { backgroundColor: colors.success + '20' }]}>
-                <CheckCircle size={12} color={colors.success} />
+                <CircleCheck size={12} color={colors.success} />
               </View>
             )}
             <View style={[styles.importanceBadge, { backgroundColor: color + '20' }]}>
@@ -253,7 +253,7 @@ export default function PersonalMemoryScreen() {
           </View>
           <View style={styles.memoryActions}>
             <TouchableOpacity style={styles.actionIcon}>
-              <Edit3 size={16} color={colors.textSecondary} />
+              <PenLine size={16} color={colors.textSecondary} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.actionIcon}>
               <Trash2 size={16} color={colors.danger} />
@@ -298,7 +298,7 @@ export default function PersonalMemoryScreen() {
           />
           {searchQuery.length > 0 && (
             <TouchableOpacity onPress={() => setSearchQuery('')}>
-              <AlertCircle size={18} color={colors.textSecondary} />
+              <CircleAlert size={18} color={colors.textSecondary} />
             </TouchableOpacity>
           )}
         </View>
@@ -343,7 +343,7 @@ export default function PersonalMemoryScreen() {
             <Text style={[styles.statLabel, { color: colors.textSecondary }]}>Total Memories</Text>
           </View>
           <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <CheckCircle size={20} color={colors.success} />
+            <CircleCheck size={20} color={colors.success} />
             <Text style={[styles.statValue, { color: colors.text }]}>
               {MEMORIES.filter((m) => m.verified).length}
             </Text>
@@ -377,7 +377,7 @@ export default function PersonalMemoryScreen() {
               },
             ]}
           >
-            <CheckCircle size={18} color={colors.success} />
+            <CircleCheck size={18} color={colors.success} />
             <View style={styles.insightContent}>
               <Text style={[styles.insightTitle, { color: colors.text }]}>Strong Preference Pattern</Text>
               <Text style={[styles.insightDesc, { color: colors.textSecondary }]}>
@@ -394,7 +394,7 @@ export default function PersonalMemoryScreen() {
               },
             ]}
           >
-            <AlertCircle size={18} color={colors.warning} />
+            <CircleAlert size={18} color={colors.warning} />
             <View style={styles.insightContent}>
               <Text style={[styles.insightTitle, { color: colors.text }]}>Unverified Memory</Text>
               <Text style={[styles.insightDesc, { color: colors.textSecondary }]}>

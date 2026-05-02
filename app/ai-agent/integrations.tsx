@@ -21,7 +21,7 @@ import {
   Check,
   RefreshCw,
   Shield,
-  AlertTriangle,
+  TriangleAlert,
   Globe,
   Database,
   Cloud,

@@ -90,7 +90,7 @@ class WebAuditLogger {
     this.log({ type, severity, userId, action, result: 'failure', metadata });
   }
 
-  getEvents(filter?: any): AuditEvent[] {
+  getEvents(Filter?: any): AuditEvent[] {
     return this.events.slice().reverse();
   }
 

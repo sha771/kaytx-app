@@ -6,7 +6,7 @@ import { aiEmployees } from '@/constants/aiEmployees';
 import { trpc } from '@/lib/trpc';
 import {
     Signal,
-    ArrowLeft, Phone, Wifi, Smartphone, CreditCard, TrendingUp, Clock, Star, Zap, Shield, Globe, BarChart3, Headphones, Users, Radio, Activity, Lock } from 'lucide-react-native';
+    ArrowLeft, Phone, Wifi, Smartphone, CreditCard, TrendingUp, Clock, Star, Zap, Shield, Globe, ChartBar, Headphones, Users, Radio, Activity, Lock } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const { width } = Dimensions.get('window');
@@ -55,7 +55,7 @@ export default function TelecommunicationsIndustryScreen() {
                         router.push('/enterprise/billing');
                         return;
                     }
-                    router.push(agent.route as any);
+                    router.push(agent.route);
                 }}
             >
                 <View style={[styles.agentIcon, { backgroundColor: agent.color + '20' }]}><IconComponent size={28} color={agent.color} /></View>
@@ -99,7 +99,7 @@ export default function TelecommunicationsIndustryScreen() {
                 <View style={styles.section}>
                     <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Benefits</Text>
                     <View style={styles.benefitsGrid}>
-                        {[{ icon: Zap, color: '#FF6B6B', title: 'Outage Surge Ready', desc: 'Handle 20x call volume during outages' }, { icon: Globe, color: '#4ECDC4', title: 'Omnichannel', desc: 'Phone, chat, SMS, and social media' }, { icon: Shield, color: '#6C5CE7', title: 'PCI & SOC2', desc: 'Secure payment compliance' }, { icon: BarChart3, color: '#00B894', title: 'Predictive Analytics', desc: 'Identify churn risk proactively' }].map((b: { icon: any; color: string; title: string; desc: string }, i: number) => { const Icon = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><Icon size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
+                        {[{ icon: Zap, color: '#FF6B6B', title: 'Outage Surge Ready', desc: 'Handle 20x call volume during outages' }, { icon: Globe, color: '#4ECDC4', title: 'Omnichannel', desc: 'Phone, chat, SMS, and social media' }, { icon: Shield, color: '#6C5CE7', title: 'PCI & SOC2', desc: 'Secure payment compliance' }, { icon: ChartBar, color: '#00B894', title: 'Predictive Analytics', desc: 'Identify churn risk proactively' }].map((b: { icon: any; color: string; title: string; desc: string }, i: number) => { const Icon = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><Icon size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
                     </View>
                 </View>
 
@@ -157,7 +157,7 @@ export default function TelecommunicationsIndustryScreen() {
                                         router.push('/enterprise/billing');
                                         return;
                                     }
-                                    router.push(a.route as any);
+                                    router.push(a.route);
                                 }}
                             >
                                 <View style={[styles.agentIcon, { backgroundColor: a.color + '20' }]}><IconComponent size={28} color={a.color} /></View>
@@ -180,7 +180,7 @@ export default function TelecommunicationsIndustryScreen() {
 
                 <View style={[styles.cta, { backgroundColor: theme.colors.cardBackground }]}>
                     <Text style={[styles.ctaTitle, { color: theme.colors.text }]}>Transform your telecom support</Text>
-                    <TouchableOpacity style={[styles.ctaBtn, { backgroundColor: theme.colors.primary }]} onPress={() => router.push('/ai-agent/ai-agent' as any)}><Text style={styles.ctaBtnText}>Get Started</Text></TouchableOpacity>
+                    <TouchableOpacity style={[styles.ctaBtn, { backgroundColor: theme.colors.primary }]} onPress={() => router.push('/ai-agent/ai-agent')}><Text style={styles.ctaBtnText}>Get Started</Text></TouchableOpacity>
                 </View>
                 <View style={{ height: 40 }} />
             </ScrollView>

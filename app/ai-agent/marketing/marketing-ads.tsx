@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Target, Activity, Star, CheckCircle2, Clock, ArrowRight, Zap } from 'lucide-react-native';
+import { Target, Activity, Star, CircleCheckBig, Clock, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'2085',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.5s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.0%',icon:Target,color:'#C62828'}];
+  const stats = [{label:'Tasks',value:'2085',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.5s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.0%',icon:Target,color:'#C62828'}];
   const capabilities = ['Campaign Management','Brand Strategy','Content Creation','Digital Marketing','Analytics & ROI','Growth Optimization'];
   const responsibilities = ['Campaign strategy & execution','Brand identity & positioning','Content creation & distribution','Digital marketing & SEO/SEM','Marketing analytics & ROI tracking','Growth hacking & optimization'];
-  const activities = [{time:'3 min ago',text:'Launched 4 new ad campaigns',icon:CheckCircle2},{time:'6 min ago',text:'Analyzed campaign ROI metrics',icon:Clock},{time:'9 min ago',text:'Published 12 content pieces',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Launched 4 new ad campaigns',icon: CircleCheckBig},{time:'6 min ago',text:'Analyzed campaign ROI metrics',icon:Clock},{time:'9 min ago',text:'Published 12 content pieces',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

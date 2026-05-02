@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Award, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Award, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'3,547',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.2s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.0%',icon:Target,color:'#BF360C'}];
+  const stats = [{label:'Tasks',value:'3,547',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.2s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.0%',icon:Target,color:'#BF360C'}];
   const capabilities = ['Quality Strategy','QMS Governance','Regulatory Affairs','Supplier Strategy','Continuous Improvement','Metrics & Reporting'];
   const responsibilities = ['Quality assurance strategy & governance','QMS framework development & oversight','Regulatory affairs & compliance management','Supplier quality strategy','Continuous improvement program leadership','Quality metrics & executive reporting'];
-  const activities = [{time:'3 min ago',text:'Set Q3 quality improvement targets',icon:CheckCircle2},{time:'6 min ago',text:'Reviewed regulatory audit findings',icon:Clock},{time:'9 min ago',text:'Approved supplier quality program',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Set Q3 quality improvement targets',icon: CircleCheckBig},{time:'6 min ago',text:'Reviewed regulatory audit findings',icon:Clock},{time:'9 min ago',text:'Approved supplier quality program',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

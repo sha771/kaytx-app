@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import {
-  Shield, Eye, Lock, Fingerprint, Filter, Ban, Trash2, ClipboardCheck, FileText,
-  Activity, CheckCircle2, AlertTriangle, ArrowRight
+  Shield, Eye, Lock, FingerprintPattern, ListFilter, Ban, Trash2, ClipboardCheck, FileText,
+  Activity, CircleCheckBig, TriangleAlert, ArrowRight
 } from 'lucide-react-native';
 import {
   getPrivacyAgentsByGate,
@@ -70,7 +70,7 @@ export default function PrivacyDashboard() {
           <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>Privacy Agents</Text>
         </View>
         <View style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-          <CheckCircle2 size={22} color="#34C759" />
+          <CircleCheckBig size={22} color="#34C759" />
           <Text style={[styles.statValue, { color: theme.colors.text }]}>3</Text>
           <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>Gates</Text>
         </View>
@@ -80,7 +80,7 @@ export default function PrivacyDashboard() {
           <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>Uptime</Text>
         </View>
         <View style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-          <AlertTriangle size={22} color="#FF9500" />
+          <TriangleAlert size={22} color="#FF9500" />
           <Text style={[styles.statValue, { color: theme.colors.text }]}>0</Text>
           <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>Violations</Text>
         </View>

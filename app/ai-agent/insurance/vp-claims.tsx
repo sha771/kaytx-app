@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { ClipboardList, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { ClipboardList, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'1,791',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.6s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.2%',icon:Target,color:'#004D40'}];
+  const stats = [{label:'Tasks',value:'1,791',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.6s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.2%',icon:Target,color:'#004D40'}];
   const capabilities = ['Claims Strategy','Operations Oversight','Vendor Strategy','Reserving','Compliance','Customer Experience'];
   const responsibilities = ['Claims strategy & policy development','Claims operations oversight & optimization','Vendor strategy & network management','Claims reserving & financial oversight','Claims compliance & regulatory affairs','Customer experience in claims process'];
-  const activities = [{time:'3 min ago',text:'Set Q3 claims strategy direction',icon:CheckCircle2},{time:'6 min ago',text:'Reviewed reserve adequacy analysis',icon:Clock},{time:'9 min ago',text:'Approved new vendor partnerships',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Set Q3 claims strategy direction',icon: CircleCheckBig},{time:'6 min ago',text:'Reviewed reserve adequacy analysis',icon:Clock},{time:'9 min ago',text:'Approved new vendor partnerships',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

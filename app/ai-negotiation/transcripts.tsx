@@ -19,10 +19,10 @@ import {
   TrendingDown,
   Minus,
   Download,
-  Filter,
+  ListFilter,
   X,
-  CheckCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleAlert,
   MessageSquare,
   Tag,
   Brain,
@@ -78,7 +78,7 @@ export default function TranscriptsScreen() {
               onPress={() => setShowFilters(!showFilters)}
               style={styles.filterButton}
             >
-              <Filter size={22} color="#FF2D92" />
+              <ListFilter size={22} color="#FF2D92" />
             </TouchableOpacity>
           ),
         }}
@@ -204,7 +204,7 @@ export default function TranscriptsScreen() {
 
                 <View style={styles.transcriptFooter}>
                   <View style={styles.actionItemsCount}>
-                    <CheckCircle size={14} color="#34C759" />
+                    <CircleCheck size={14} color="#34C759" />
                     <Text style={styles.actionItemsText}>
                       {transcript.actionItems.length} action items
                     </Text>
@@ -293,7 +293,7 @@ export default function TranscriptsScreen() {
 
                 <View style={styles.section}>
                   <View style={styles.sectionHeader}>
-                    <CheckCircle size={20} color="#34C759" />
+                    <CircleCheck size={20} color="#34C759" />
                     <Text style={styles.sectionTitle}>Action Items</Text>
                   </View>
                   <View style={styles.sectionContent}>

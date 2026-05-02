@@ -1,7 +1,7 @@
 import { Tabs } from 'expo-router';
  
 import React from 'react';
-import { Home, MessageSquare, Layers, Zap, Calendar, MessageCircle, Brain } from 'lucide-react-native';
+import { House, MessageSquare, Layers, Zap, Calendar, MessageCircle, Brain } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 
 export default function TabLayout() {
@@ -28,7 +28,7 @@ export default function TabLayout() {
         name="home"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color, size }) => <Home size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => <House size={size} color={color} />,
         }}
       />
       <Tabs.Screen

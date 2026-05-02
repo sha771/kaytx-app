@@ -97,7 +97,7 @@ export interface WebhookConfig {
     backoffMultiplier: number;
     initialDelay: number;
   };
-  filter?: {
+  Filter?: {
     field: string;
     operator: 'equals' | 'contains' | 'starts-with' | 'ends-with';
     value: string;
@@ -589,7 +589,7 @@ class ApiKeysIntegrationsService {
         method: config.method,
         headers: config.headers ? JSON.stringify(config.headers) : null,
         retryPolicy: config.retryPolicy ? JSON.stringify(config.retryPolicy) : null,
-        filter: config.filter ? JSON.stringify(config.filter) : null,
+        filter: config.Filter ? JSON.stringify(config.Filter) : null,
         status: 'active',
         lastTriggeredAt: null,
         failureCount: 0,
@@ -637,10 +637,10 @@ class ApiKeysIntegrationsService {
         return { success: false, error: 'Event not subscribed' };
       }
 
-      // Check filter
-      if (webhook.filter) {
-        const filter = JSON.parse(webhook.filter as string);
-        const shouldTrigger = this.evaluateFilter(payload, filter);
+      // Check Filter
+      if (webhook.Filter) {
+        const filter = JSON.parse(webhook.Filter as string);
+        const shouldTrigger = this.evaluateFilter(payload, Filter);
         if (!shouldTrigger) {
           return { success: true, deliveryId: 'filtered' }; // Filtered out, not an error
         }
@@ -1002,10 +1002,10 @@ class ApiKeysIntegrationsService {
   }
 
   private evaluateFilter(payload: any, filter: any): boolean {
-    const value = this.getNestedValue(payload, filter.field);
-    const filterValue = filter.value;
+    const value = this.getNestedValue(payload, Filter.field);
+    const filterValue = Filter.value;
 
-    switch (filter.operator) {
+    switch (Filter.operator) {
       case 'equals':
         return value === filterValue;
       case 'contains':

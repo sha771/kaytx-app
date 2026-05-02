@@ -86,7 +86,7 @@ function generateFileForAgent(agent) {
   const template = `
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Bot, Activity, BarChart3, TrendingUp, Clock, Zap, Target } from 'lucide-react-native';
+import { Bot, Activity, ChartBar, TrendingUp, Clock, Zap, Target } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -150,7 +150,7 @@ export default function ${agent.id.replace(/-./g, x => x[1].toUpperCase()).repla
   );
 
   const customTabs = [
-    { id: 'dashboard', label: 'Dashboard', icon: BarChart3, component: dashboardTab },
+    { id: 'dashboard', label: 'Dashboard', icon: ChartBar, component: dashboardTab },
   ];
 
   return <AgentShell agent={agent as any} customTabs={customTabs} />;

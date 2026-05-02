@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Shield, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Eye, AlertTriangle } from 'lucide-react-native';
+import { Shield, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Eye, TriangleAlert } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Threats Blocked',value:'45K+',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.99%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.2s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.9%',icon:Target,color:'#581C84'}];
+  const stats = [{label:'Threats Blocked',value:'45K+',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.99%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.2s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.9%',icon:Target,color:'#581C84'}];
   const capabilities = ['Cyber Strategy','Threat Intel','Risk Mgmt','Incident Mgmt','Compliance','Governance'];
   const responsibilities = ['Cybersecurity strategy & roadmap','Threat intelligence program management','Risk management & mitigation','Incident management oversight','Security compliance & governance','Cross-functional security leadership'];
-  const activities = [{time:'3 min ago',text:'Approved cyber strategy for Q3',icon:Shield},{time:'20 min ago',text:'Reviewed threat landscape briefing',icon:Eye},{time:'1 hour ago',text:'Coordinated incident response drill',icon:AlertTriangle}];
+  const activities = [{time:'3 min ago',text:'Approved cyber strategy for Q3',icon:Shield},{time:'20 min ago',text:'Reviewed threat landscape briefing',icon:Eye},{time:'1 hour ago',text:'Coordinated incident response drill',icon:TriangleAlert}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

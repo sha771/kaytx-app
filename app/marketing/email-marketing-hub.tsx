@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Mail, Send, Users, BarChart3, Settings, Plus, Search, Filter, Calendar, Target, Eye } from 'lucide-react-native';
+import { Mail, Send, Users, ChartBar, Settings, Plus, Search, ListFilter, Calendar, Target, Eye } from 'lucide-react-native';
 
 interface EmailCampaign {
   id: string;
@@ -145,7 +145,7 @@ export default function EmailMarketingHubScreen() {
         
         <View style={styles.filterContainer}>
           <TouchableOpacity style={styles.filterButton}>
-            <Filter size={20} color="#3B82F6" />
+            <ListFilter size={20} color="#3B82F6" />
           </TouchableOpacity>
           
           <TouchableOpacity style={styles.addButton}>
@@ -233,7 +233,7 @@ export default function EmailMarketingHubScreen() {
               
               <View style={styles.campaignActions}>
                 <TouchableOpacity style={styles.actionButton}>
-                  <BarChart3 size={16} color="#3B82F6" />
+                  <ChartBarBig size={16} color="#3B82F6" />
                   <Text style={styles.actionText}>Analytics</Text>
                 </TouchableOpacity>
                 
@@ -288,7 +288,7 @@ export default function EmailMarketingHubScreen() {
             </TouchableOpacity>
             
             <TouchableOpacity style={styles.actionCard}>
-              <BarChart3 size={24} color="#F59E0B" />
+              <ChartBarBig size={24} color="#F59E0B" />
               <Text style={styles.actionCardText}>View Analytics</Text>
             </TouchableOpacity>
             

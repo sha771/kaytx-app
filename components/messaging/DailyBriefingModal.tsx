@@ -20,14 +20,14 @@ import {
   Clock,
   TrendingUp,
   Calendar,
-  CheckCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleAlert,
   Sparkles,
   Play,
   Volume2,
   Share2,
   Bookmark,
-  BarChart3,
+  ChartBar,
   Zap,
   Coffee,
   Target,
@@ -303,7 +303,7 @@ export default function DailyBriefingModal({ visible, onClose }: Props) {
   const getSentimentIcon = (sentiment: string) => {
     switch (sentiment) {
       case 'positive': return <ThumbsUp size={12} color="#10B981" />;
-      case 'negative': return <AlertCircle size={12} color="#EF4444" />;
+      case 'negative': return <CircleAlert size={12} color="#EF4444" />;
       default: return <MessageSquare size={12} color="#6B7280" />;
     }
   };
@@ -540,7 +540,7 @@ export default function DailyBriefingModal({ visible, onClose }: Props) {
 
               <View style={styles.section}>
                 <View style={styles.sectionHeader}>
-                  <BarChart3 size={18} color="#10B981" />
+                  <ChartBarBig size={18} color="#10B981" />
                   <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
                     Today Activity
                   </Text>
@@ -568,7 +568,7 @@ export default function DailyBriefingModal({ visible, onClose }: Props) {
                     </View>
                     <View style={[styles.activityDivider, { backgroundColor: theme.colors.border }]} />
                     <View style={styles.activityItem}>
-                      <CheckCircle size={16} color="#8B5CF6" />
+                      <CircleCheck size={16} color="#8B5CF6" />
                       <Text style={[styles.activityValue, { color: theme.colors.text }]}>
                         {todayStats.responseRate}%
                       </Text>
@@ -630,7 +630,7 @@ export default function DailyBriefingModal({ visible, onClose }: Props) {
                         </Text>
                         {msg.priority === 'high' && (
                           <View style={[styles.priorityTag, { backgroundColor: '#FEE2E2' }]}>
-                            <AlertCircle size={12} color="#EF4444" />
+                            <CircleAlert size={12} color="#EF4444" />
                             <Text style={styles.priorityTagText}>High Priority</Text>
                           </View>
                         )}
@@ -647,7 +647,7 @@ export default function DailyBriefingModal({ visible, onClose }: Props) {
 
               <View style={styles.section}>
                 <View style={styles.sectionHeader}>
-                  <BarChart3 size={18} color={theme.colors.primary} />
+                  <ChartBarBig size={18} color={theme.colors.primary} />
                   <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
                     Platform Breakdown
                   </Text>
@@ -810,7 +810,7 @@ export default function DailyBriefingModal({ visible, onClose }: Props) {
                     >
                       <TouchableOpacity style={styles.taskCheckbox}>
                         {task.completed ? (
-                          <CheckCircle size={24} color="#10B981" />
+                          <CircleCheck size={24} color="#10B981" />
                         ) : (
                           <View style={[styles.checkbox, { borderColor: theme.colors.border }]} />
                         )}
@@ -890,7 +890,7 @@ export default function DailyBriefingModal({ visible, onClose }: Props) {
                       </View>
                     </View>
                     {achievement.progress === 100 && (
-                      <CheckCircle size={20} color="#10B981" />
+                      <CircleCheck size={20} color="#10B981" />
                     )}
                   </View>
                 ))}
@@ -908,7 +908,7 @@ export default function DailyBriefingModal({ visible, onClose }: Props) {
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={[styles.quickAction, { backgroundColor: '#10B98120' }]}>
-                    <CheckCircle size={24} color="#10B981" />
+                    <CircleCheck size={24} color="#10B981" />
                     <Text style={[styles.quickActionText, { color: '#10B981' }]}>
                       Mark Read
                     </Text>

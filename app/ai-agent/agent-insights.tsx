@@ -13,18 +13,17 @@ import {
   ArrowLeft,
   TrendingUp,
   TrendingDown,
-  BarChart3,
-  PieChart,
-  LineChart,
+  ChartBar,
+  ChartPie,
+  ChartLine,
   Users,
-  Bot,
   Zap,
   Target,
   Clock,
   DollarSign,
   MessageSquare,
-  CheckCircle,
-  AlertTriangle,
+  CircleCheck,
+  TriangleAlert,
   Lightbulb,
   Brain,
   Activity,
@@ -32,7 +31,7 @@ import {
   ArrowDownRight,
   Sparkles,
   Eye,
-  Filter,
+  ListFilter,
   Calendar,
   RefreshCw,
   Award,
@@ -100,12 +99,12 @@ interface TrendData {
 }
 
 const metricsData: MetricCard[] = [
-  { id: '1', title: 'Total Tasks Completed', value: '58,430', change: 12.5, changeLabel: 'vs last week', icon: CheckCircle, color: '#34C759', trend: 'up', sparkline: [45, 52, 48, 61, 55, 67, 72] },
+  { id: '1', title: 'Total Tasks Completed', value: '58,430', change: 12.5, changeLabel: 'vs last week', icon: CircleCheck, color: '#34C759', trend: 'up', sparkline: [45, 52, 48, 61, 55, 67, 72] },
   { id: '2', title: 'Overall Success Rate', value: '94.2%', change: 2.8, changeLabel: 'vs last week', icon: Target, color: '#007AFF', trend: 'up', sparkline: [91, 92, 91, 93, 94, 93, 94] },
   { id: '3', title: 'Avg Response Time', value: '1.4s', change: -15, changeLabel: 'improvement', icon: Clock, color: '#FF9500', trend: 'up', sparkline: [2.1, 1.9, 1.8, 1.6, 1.5, 1.4, 1.4] },
   { id: '4', title: 'Cost Savings', value: '$142K', change: 18.3, changeLabel: 'this month', icon: DollarSign, color: '#5856D6', trend: 'up', sparkline: [95, 105, 112, 125, 130, 138, 142] },
   { id: '5', title: 'Customer Satisfaction', value: '4.8/5', change: 0.3, changeLabel: 'points up', icon: Users, color: '#FF2D55', trend: 'up', sparkline: [4.5, 4.5, 4.6, 4.6, 4.7, 4.8, 4.8] },
-  { id: '6', title: 'Active Agents', value: '48/52', change: 4, changeLabel: 'more active', icon: Bot, color: '#AF52DE', trend: 'up', sparkline: [42, 43, 44, 45, 46, 47, 48] },
+  { id: '6', title: 'Active Agents', value: '48/52', change: 4, changeLabel: 'more active', icon: Users, color: '#AF52DE', trend: 'up', sparkline: [42, 43, 44, 45, 46, 47, 48] },
   { id: '7', title: 'AI Efficiency Score', value: '96.5%', change: 3.2, changeLabel: 'improvement', icon: Cpu, color: '#00C7BE', trend: 'up', sparkline: [92, 93, 94, 95, 95, 96, 96] },
   { id: '8', title: 'Tokens Processed', value: '12.4M', change: 8.5, changeLabel: 'vs last week', icon: Database, color: '#FF6B6B', trend: 'up', sparkline: [10.2, 10.8, 11.1, 11.5, 11.9, 12.1, 12.4] },
 ];
@@ -271,8 +270,8 @@ export default function AgentInsightsScreen() {
 
   const getInsightIcon = (type: string) => {
     switch (type) {
-      case 'success': return CheckCircle;
-      case 'warning': return AlertTriangle;
+      case 'success': return CircleCheck;
+      case 'warning': return TriangleAlert;
       case 'opportunity': return Lightbulb;
       case 'critical': return Shield;
       case 'info': return Eye;
@@ -448,7 +447,7 @@ export default function AgentInsightsScreen() {
         </View>
         <View style={styles.perfMeta}>
           <View style={styles.perfMetaItem}>
-            <CheckCircle size={10} color={theme.colors.secondaryText} />
+            <CircleCheck size={10} color={theme.colors.secondaryText} />
             <Text style={[styles.perfMetaText, { color: theme.colors.secondaryText }]}>
               {data.tasksCompleted.toLocaleString()}
             </Text>

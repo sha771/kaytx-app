@@ -16,15 +16,15 @@ import {
   HardDrive,
   Activity,
   TrendingUp,
-  AlertTriangle,
-  CheckCircle,
+  TriangleAlert,
+  CircleCheck,
   Cpu,
   MemoryStick,
   Wifi,
   Cloud,
   Globe,
   Zap,
-  BarChart3,
+  ChartBar,
   Settings,
   RefreshCw,
   Shield,
@@ -423,14 +423,14 @@ export default function CloudInfrastructureScreen() {
       case 'healthy':
       case 'aligned':
       case 'in_sync':
-        return CheckCircle;
+        return CircleCheck;
       case 'warning':
       case 'monitoring':
       case 'drift_detected':
-        return AlertTriangle;
+        return TriangleAlert;
       case 'critical':
       case 'drifted':
-        return AlertTriangle;
+        return TriangleAlert;
       case 'maintenance':
       default:
         return Settings;
@@ -518,7 +518,7 @@ export default function CloudInfrastructureScreen() {
             <Text style={[styles.actionButtonText, { color: theme.colors.text }]}>Configure</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton}>
-            <BarChart3 size={16} color={theme.colors.text} />
+            <ChartBarBig size={16} color={theme.colors.text} />
             <Text style={[styles.actionButtonText, { color: theme.colors.text }]}>Metrics</Text>
           </TouchableOpacity>
         </View>

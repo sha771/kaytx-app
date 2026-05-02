@@ -1,11 +1,11 @@
-import React from 'react';
+﻿import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useRouter } from 'expo-router';
 import { 
-  BarChart3, 
+  ChartBar, 
   FileText, 
-  CheckSquare, 
+  SquareCheck, 
   TrendingUp, 
   Sparkles, 
   Settings,
@@ -22,7 +22,7 @@ const features = [
   { 
     id: 'insights-analysis', 
     label: 'Insights & Analysis', 
-    icon: BarChart3,
+    icon: ChartBar,
     description: 'Performance analytics'
   },
   { 
@@ -34,7 +34,7 @@ const features = [
   { 
     id: 'task-deal-management', 
     label: 'Task & Deal Management', 
-    icon: CheckSquare,
+    icon: SquareCheck,
     description: 'Tasks & deals'
   },
   { 
@@ -74,28 +74,35 @@ export default function AgentFeatures({ agentId, agentName }: AgentFeaturesProps
     } as any);
   };
 
+  const themeColors = theme?.colors || {};
+  const backgroundColor = themeColors.card || themeColors.background || '#F2F2F7';
+  const textColor = themeColors.text || '#000000';
+  const textSecondaryColor = themeColors.textSecondary || '#666666';
+  const primaryColor = themeColors.primary || '#007AFF';
+  const backgroundSecondaryColor = themeColors.background || '#FFFFFF';
+
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-      <Text style={[styles.title, { color: theme.colors.text }]}>Features & Tools</Text>
+    <View style={[styles.container, { backgroundColor }]}>
+      <Text style={[styles.title, { color: textColor }]}>Features & Tools</Text>
       <View style={styles.grid}>
         {features.map((feature) => (
           <TouchableOpacity
             key={feature.id}
-            style={[styles.featureCard, { backgroundColor: theme.colors.background }]}
+            style={[styles.featureCard, { backgroundColor: backgroundSecondaryColor }]}
             onPress={() => navigateToFeature(feature.id)}
           >
-            <View style={[styles.iconContainer, { backgroundColor: theme.colors.primary + '15' }]}>
-              <feature.icon size={22} color={theme.colors.primary} />
+            <View style={[styles.iconContainer, { backgroundColor: primaryColor + '15' }]}>
+              <feature.icon size={22} color={primaryColor} />
             </View>
             <View style={styles.content}>
-              <Text style={[styles.featureLabel, { color: theme.colors.text }]}>
+              <Text style={[styles.featureLabel, { color: textColor }]}>
                 {feature.label}
               </Text>
-              <Text style={[styles.featureDesc, { color: theme.colors.textSecondary }]}>
+              <Text style={[styles.featureDesc, { color: textSecondaryColor }]}>
                 {feature.description}
               </Text>
             </View>
-            <ChevronRight size={18} color={theme.colors.textSecondary} />
+            <ChevronRight size={18} color={textSecondaryColor} />
           </TouchableOpacity>
         ))}
       </View>

@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Box, Activity, CheckCircle2, Clock, Target, BarChart3, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, Rocket, Lightbulb, Layout, Layers } from 'lucide-react-native';
+import { Box, Activity, CircleCheckBig, Clock, Target, ChartBar, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, Rocket, Lightbulb, LayoutDashboard, Layers } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function VPProductPage() {
   const { theme } = useTheme();
 
   const stats = [
-    { label: 'Shipped', value: '892', icon: CheckCircle2, color: '#34C759' },
+    { label: 'Shipped', value: '892', icon: CircleCheckBig, color: '#34C759' },
     { label: 'Uptime', value: '99.95%', icon: Activity, color: '#007AFF' },
     { label: 'Response', value: '1.0s', icon: Clock, color: '#FF9500' },
     { label: 'Accuracy', value: '98.3%', icon: Target, color: '#AF52DE' },
@@ -32,14 +32,14 @@ export default function VPProductPage() {
 
   const activities = [
     { time: '3 min ago', text: 'Shipped new onboarding flow v4.1', icon: Rocket },
-    { time: '18 min ago', text: 'Updated Q3 product roadmap', icon: Layout },
+    { time: '18 min ago', text: 'Updated Q3 product roadmap', icon: LayoutDashboard },
     { time: '55 min ago', text: 'Completed user interview synthesis', icon: Lightbulb },
     { time: '2 hours ago', text: 'Approved feature spec for AI chat', icon: Layers },
     { time: '5 hours ago', text: 'Launched pricing experiment B', icon: Zap },
   ];
 
   const quickActions = [
-    { label: 'View Reports', icon: BarChart3 },
+    { label: 'View Reports', icon: ChartBar },
     { label: 'Team Chat', icon: MessageSquare },
     { label: 'Schedule', icon: Calendar },
     { label: 'Settings', icon: Shield },

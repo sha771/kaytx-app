@@ -21,13 +21,13 @@ import {
   Calendar,
   FileText,
   X,
-  Filter,
+  ListFilter,
   Search,
   TrendingUp,
   MessageSquare,
   Star,
   Download,
-  AlertTriangle,
+  TriangleAlert,
   RefreshCw,
   ArrowUpRight,
   ArrowDownRight,
@@ -301,7 +301,7 @@ export default function CallLogsScreen() {
                 <Text style={[styles.highlightLabel, { color: theme.colors.secondaryText }]}>
                   {highlight.label}
                 </Text>
-                <AlertTriangle
+                <TriangleAlert
                   size={16}
                   color={highlight.sentiment === 'down' ? '#FF3B30' : highlight.sentiment === 'up' ? '#34C759' : theme.colors.secondaryText}
                 />
@@ -369,9 +369,9 @@ export default function CallLogsScreen() {
         <TouchableOpacity
           style={[styles.filterButton, { backgroundColor: theme.colors.cardBackground }]}
           onPress={() => setShowFilterModal(true)}
-          testID="receptionist-filter-toggle"
+          testID="receptionist-Filter-toggle"
         >
-          <Filter size={20} color={theme.colors.text} />
+          <ListFilter size={20} color={theme.colors.text} />
         </TouchableOpacity>
       </View>
 
@@ -384,24 +384,24 @@ export default function CallLogsScreen() {
       >
         {(['all', 'incoming', 'outgoing', 'missed'] as const).map(filter => (
           <TouchableOpacity
-            key={filter}
+            key={Filter}
             style={[
               styles.filterChip,
               {
                 backgroundColor:
-                  selectedFilter === filter ? theme.colors.primary : theme.colors.cardBackground,
+                  selectedFilter === Filter ? theme.colors.primary : theme.colors.cardBackground,
               },
             ]}
-            onPress={() => setSelectedFilter(filter)}
-            testID={`receptionist-filter-${filter}`}
+            onPress={() => setSelectedFilter(Filter)}
+            testID={`receptionist-Filter-${Filter}`}
           >
             <Text
               style={{
-                color: selectedFilter === filter ? 'white' : theme.colors.text,
+                color: selectedFilter === Filter ? 'white' : theme.colors.text,
                 fontWeight: '600',
               }}
             >
-              {filter.charAt(0).toUpperCase() + filter.slice(1)}
+              {Filter.charAt(0).toUpperCase() + Filter.slice(1)}
             </Text>
           </TouchableOpacity>
         ))}

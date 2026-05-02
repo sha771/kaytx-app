@@ -20,7 +20,7 @@ import {
   Copy,
   Download,
   X,
-  Edit,
+  Pencil,
 } from 'lucide-react-native';
 
 interface ProposalSection {
@@ -105,7 +105,7 @@ export default function ProposalBuilderScreen() {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'draft':
-        return <Edit size={16} color="#64748B" />;
+        return <Pencil size={16} color="#64748B" />;
       case 'sent':
         return <Send size={16} color="#3B82F6" />;
       case 'viewed':
@@ -217,7 +217,7 @@ export default function ProposalBuilderScreen() {
                     setModalVisible(true);
                   }}
                 >
-                  <Edit size={18} color="#3B82F6" />
+                  <Pencil size={18} color="#3B82F6" />
                   <Text style={styles.actionButtonText}>Edit</Text>
                 </TouchableOpacity>
 

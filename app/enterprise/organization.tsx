@@ -25,7 +25,7 @@ import {
   Calendar,
   UserPlus,
   UserMinus,
-  Edit,
+  Pencil,
   Trash2,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
@@ -261,7 +261,7 @@ export default function OrganizationScreen() {
 
         <View style={styles.memberActions}>
           <TouchableOpacity style={styles.actionIcon}>
-            <Edit size={16} color={theme.colors.text} />
+            <Pencil size={16} color={theme.colors.text} />
           </TouchableOpacity>
           {item.role !== 'owner' && (
             <TouchableOpacity style={styles.actionIcon}>
@@ -399,7 +399,7 @@ export default function OrganizationScreen() {
               <TouchableOpacity 
                 style={[styles.editOrgButton, { backgroundColor: theme.colors.primary }]}
               >
-                <Edit size={16} color="#FFFFFF" />
+                <Pencil size={16} color="#FFFFFF" />
                 <Text style={styles.editOrgButtonText}>Edit Organization</Text>
               </TouchableOpacity>
             </View>

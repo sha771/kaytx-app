@@ -15,10 +15,10 @@ import {
   Search,
   TrendingUp,
   TrendingDown,
-  BarChart3,
-  PieChart,
+  ChartBar,
+  ChartPie,
   Calendar,
-  Filter,
+  ListFilter,
   Download,
   ArrowLeft,
   Plus,
@@ -265,7 +265,7 @@ export default function AdvanceAnalyticsScreen() {
 
         <View style={styles.analyticFooter}>
           <TouchableOpacity style={[styles.viewReportButton, { backgroundColor: theme.colors.primary }]}>
-            <BarChart3 size={14} color="white" />
+            <ChartBarBig size={14} color="white" />
             <Text style={styles.viewReportText}>View Full Report</Text>
           </TouchableOpacity>
         </View>
@@ -394,7 +394,7 @@ export default function AdvanceAnalyticsScreen() {
         <Text style={[styles.title, { color: theme.colors.text }]}>Advanced Analytics</Text>
         <View style={styles.headerActions}>
           <TouchableOpacity style={styles.headerButton}>
-            <Filter size={20} color={theme.colors.text} />
+            <ListFilter size={20} color={theme.colors.text} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerButton}>
             <Download size={20} color={theme.colors.text} />

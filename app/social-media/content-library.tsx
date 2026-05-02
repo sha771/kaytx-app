@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Image as ImageIcon, Video, FileText, Upload, Grid, List, Search, MoreVertical, Heart, Eye } from 'lucide-react-native';
+import { Image as ImageIcon, Video, FileText, Upload, LayoutGrid, List, Search, EllipsisVertical, Heart, Eye } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 
 interface MediaItem {
@@ -33,7 +33,7 @@ export default function ContentLibrary() {
   ];
 
   const types = [
-    { id: 'all', label: 'All', icon: Grid, count: mediaItems.length },
+    { id: 'all', label: 'All', icon: LayoutGrid, count: mediaItems.length },
     { id: 'image', label: 'Images', icon: ImageIcon, count: mediaItems.filter(m => m.type === 'image').length },
     { id: 'video', label: 'Videos', icon: Video, count: mediaItems.filter(m => m.type === 'video').length },
     { id: 'text', label: 'Templates', icon: FileText, count: 0 },
@@ -94,7 +94,7 @@ export default function ContentLibrary() {
               style={[styles.viewBtn, viewMode === 'grid' && { backgroundColor: theme.colors.primary }]}
               onPress={() => setViewMode('grid')}
             >
-              <Grid size={16} color={viewMode === 'grid' ? '#FFF' : theme.colors.secondaryText} />
+              <LayoutGrid size={16} color={viewMode === 'grid' ? '#FFF' : theme.colors.secondaryText} />
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.viewBtn, viewMode === 'list' && { backgroundColor: theme.colors.primary }]}
@@ -107,7 +107,7 @@ export default function ContentLibrary() {
 
         {/* Media Grid/List */}
         {viewMode === 'grid' ? (
-          <View style={styles.grid}>
+          <View style={styles.LayoutGrid}>
             {filteredItems.map((item) => (
               <TouchableOpacity key={item.id} style={[styles.gridItem, { backgroundColor: theme.colors.cardBackground }]}>
                 <Image source={{ uri: item.thumbnail }} style={styles.gridImage} />
@@ -149,7 +149,7 @@ export default function ContentLibrary() {
                   <Text style={[styles.listDate, { color: theme.colors.secondaryText }]}>{item.date}</Text>
                 </View>
                 <TouchableOpacity style={styles.moreBtn}>
-                  <MoreVertical size={18} color={theme.colors.secondaryText} />
+                  <EllipsisVertical size={18} color={theme.colors.secondaryText} />
                 </TouchableOpacity>
               </TouchableOpacity>
             ))}

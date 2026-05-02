@@ -304,7 +304,7 @@ describe('ErrorRecoveryService', () => {
       expect(result[0].severity).toBe('high');
     });
 
-    it('should filter by date range', async () => {
+    it('should Filter by date range', async () => {
       const startDate = new Date('2024-01-01');
       const endDate = new Date('2024-01-31');
 
@@ -330,7 +330,7 @@ describe('ErrorRecoveryService', () => {
       expect(result[0].createdAt).toBeInstanceOf(Date);
     });
 
-    it('should filter by error type', async () => {
+    it('should Filter by error type', async () => {
       mockDb.select.mockReturnValue({
         from: jest.fn().mockReturnValue({
           where: jest.fn().mockReturnValue({

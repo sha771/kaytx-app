@@ -235,7 +235,7 @@ describe('Audit Logging', () => {
       expect(logs[1].action).toBe(AuditActions.USER_LOGOUT);
     });
 
-    it('should filter logs by user ID', () => {
+    it('should Filter logs by user ID', () => {
       logAudit({ action: AuditActions.USER_LOGIN, userId: 'user1' });
       logAudit({ action: AuditActions.USER_LOGIN, userId: 'user2' });
       logAudit({ action: AuditActions.USER_LOGOUT, userId: 'user1' });
@@ -245,7 +245,7 @@ describe('Audit Logging', () => {
       expect(user1Logs.every(log => log.userId === 'user1')).toBe(true);
     });
 
-    it('should filter logs by action', () => {
+    it('should Filter logs by action', () => {
       logAudit({ action: AuditActions.USER_LOGIN, userId: 'user1' });
       logAudit({ action: AuditActions.USER_LOGOUT, userId: 'user1' });
       logAudit({ action: AuditActions.USER_LOGIN, userId: 'user2' });
@@ -255,7 +255,7 @@ describe('Audit Logging', () => {
       expect(loginLogs.every(log => log.action === AuditActions.USER_LOGIN)).toBe(true);
     });
 
-    it('should filter logs by date range', () => {
+    it('should Filter logs by date range', () => {
       const now = Date.now();
       const oneHourAgo = now - (60 * 60 * 1000);
 

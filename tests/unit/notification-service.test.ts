@@ -151,7 +151,7 @@ describe('NotificationService', () => {
       expect(result[0].organizationId).toBe(mockOrgId);
     });
 
-    it('should filter by read status', async () => {
+    it('should Filter by read status', async () => {
       mockDb.select.mockReturnValue({
         from: jest.fn().mockReturnValue({
           where: jest.fn().mockReturnValue({
@@ -173,7 +173,7 @@ describe('NotificationService', () => {
       expect(result[0].isRead).toBe(true);
     });
 
-    it('should filter by type', async () => {
+    it('should Filter by type', async () => {
       mockDb.select.mockReturnValue({
         from: jest.fn().mockReturnValue({
           where: jest.fn().mockReturnValue({
@@ -195,7 +195,7 @@ describe('NotificationService', () => {
       expect(result[0].type).toBe('alert');
     });
 
-    it('should filter by priority', async () => {
+    it('should Filter by priority', async () => {
       mockDb.select.mockReturnValue({
         from: jest.fn().mockReturnValue({
           where: jest.fn().mockReturnValue({

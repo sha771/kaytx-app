@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Stack } from 'expo-router';
-import { Users, Plus, Edit2, Trash2, Mail, Shield, Clock } from 'lucide-react-native';
+import { Users, Plus, PenLine, Trash2, Mail, Shield, Clock } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface TeamMember {
@@ -193,7 +193,7 @@ export default function TeamManagementScreen() {
 
             <View style={styles.memberActions}>
               <TouchableOpacity style={styles.actionButton}>
-                <Edit2 size={16} color="#60A5FA" />
+                <PenLine size={16} color="#60A5FA" />
                 <Text style={styles.actionButtonText}>Edit</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.actionButton}>

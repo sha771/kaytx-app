@@ -231,11 +231,11 @@ describe('EmailCampaignService', () => {
       expect(result[1].sentCount).toBe(200);
     });
 
-    it('should filter campaigns by status', async () => {
+    it('should Filter campaigns by status', async () => {
       const result = await service.getCampaigns(mockOrganizationId, 'completed');
 
       expect(mockDb.select).toHaveBeenCalled();
-      // The filter would be applied in the where clause
+      // The Filter would be applied in the where clause
     });
   });
 

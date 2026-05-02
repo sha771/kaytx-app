@@ -5,14 +5,14 @@
  * =============================================================================
  * 
  * This file contains:
- * - Level 4: Team Leads (28 Agents)
- * - Level 5: Specialists (28 Agents)
- * 
- * Total in this file: 56 Agents
- * Combined with other hierarchy files: 106 Total AI Agents
- * 
- * @version 3.0.0
- * @lastUpdated 2026-03-25
+ * - Level 4: Team Leads (36 Agents)
+ * - Level 5: Specialists (36 Agents)
+ *
+ * Total in this file: 72 Agents
+ * Combined with other hierarchy files: 122 Total AI Agents
+ *
+ * @version 3.1.0
+ * @lastUpdated 2026-04-26
  */
 
 import type { LucideIcon } from 'lucide-react-native';
@@ -24,7 +24,7 @@ import {
   TrendingDown,
   DollarSign,
   
-  // Technology Icons
+  // Microchip Icons
   Code,
   Terminal,
   Server,
@@ -35,7 +35,7 @@ import {
   // Marketing Icons
   Megaphone,
   Globe,
-  FileEdit,
+  FilePen,
   Share2,
   Search,
   Mail,
@@ -73,9 +73,9 @@ import {
   
   // Data Icons
   Database,
-  BarChart3,
+  ChartBar,
   Brain,
-  FileBarChart,
+  FileChartColumn,
   
   // Product Icons
   Lightbulb,
@@ -85,7 +85,7 @@ import {
   // Security Icons
   ShieldAlert,
   Siren,
-  Fingerprint,
+  FingerprintPattern,
   
   // Research Icons
   Microscope,
@@ -96,8 +96,8 @@ import {
   Bot,
   Star,
   Zap,
-  CheckCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleAlert,
 } from 'lucide-react-native';
 
 import type { AIEmployeeProfile, HierarchyLevel, DepartmentId } from './aiAgentHierarchyComplete';
@@ -501,7 +501,7 @@ export const teamLeads: AIEmployeeProfile[] = [
     level: 'team_lead',
     department: 'technology',
     description: 'Leads test automation team, framework development, and automated testing strategy.',
-    icon: CheckCircle,
+    icon: CircleCheck,
     color: '#0D47A1',
     orgChart: {
       id: 'automation-lead',
@@ -743,7 +743,7 @@ export const teamLeads: AIEmployeeProfile[] = [
     level: 'team_lead',
     department: 'marketing',
     description: 'Leads content strategy, editorial calendar, and content production teams.',
-    icon: FileEdit,
+    icon: FilePen,
     color: '#E91E63',
     orgChart: {
       id: 'content-lead',
@@ -1131,7 +1131,7 @@ export const teamLeads: AIEmployeeProfile[] = [
     level: 'team_lead',
     department: 'customer_experience',
     description: 'Leads customer implementation projects, onboarding coordination, and setup processes.',
-    icon: CheckCircle,
+    icon: CircleCheck,
     color: '#00838F',
     orgChart: {
       id: 'implementation-lead',
@@ -1463,6 +1463,395 @@ export const teamLeads: AIEmployeeProfile[] = [
     status: 'active',
     isPremium: true,
     dangerLevel: 'medium'
+  },
+
+  // ========== CUSTOMER INSIGHTS & ANALYTICS LEADS (4) ==========
+  {
+    id: 'journey-analytics-lead',
+    name: 'AI Journey Analytics Lead',
+    title: 'Team Lead - Customer Journey Analytics',
+    level: 'team_lead',
+    department: 'customer_insights_analytics',
+    description: 'Leads customer journey mapping, touchpoint analysis, and funnel optimization across all channels.',
+    icon: Search,
+    color: '#6366F1',
+    orgChart: {
+      id: 'journey-analytics-lead',
+      level: 'team_lead',
+      department: 'customer_insights_analytics',
+      title: 'Journey Analytics Lead',
+      reportsTo: 'customer-insights-manager',
+      directReports: ['journey-analyst'],
+      peerPositions: ['segmentation-lead', 'personalization-lead', 'voice-analytics-lead']
+    },
+    responsibilities: [
+      'Journey Mapping',
+      'Touchpoint Analysis',
+      'Funnel Optimization',
+      'Cross-channel Tracking',
+      'Journey Stage Scoring'
+    ],
+    capabilities: [
+      'Journey Analytics',
+      'Touchpoint Analysis',
+      'Funnel Optimization',
+      'Path-to-Purchase Analysis',
+      'Cross-channel Tracking',
+      'Omnichannel Orchestration',
+      'Anomaly Detection'
+    ],
+    keyMetrics: ['Journey Completion Rate', 'Drop-off Reduction', 'Touchpoint Efficiency', 'Cross-channel Attribution'],
+    humanCostEquivalent: '$85,000/year',
+    aiCost: '$4,250/year',
+    efficiency: '20x cost efficiency',
+    a2aEndpoints: ['/consult/journey-lead', '/journey/analyze', '/funnel/optimize'],
+    canEscalateTo: ['customer-insights-manager', 'vp-customer-insights'],
+    canReceiveEscalationFrom: ['journey-analyst'],
+    consultationStyle: 'analytical',
+    route: '/ai-agent/insights/journey-analytics-lead',
+    apiEndpoint: '/api/agents/insights/journey-analytics-lead',
+    status: 'active',
+    isPremium: true,
+    dangerLevel: 'medium'
+  },
+  {
+    id: 'segmentation-lead',
+    name: 'AI Segmentation Lead',
+    title: 'Team Lead - Customer Segmentation',
+    level: 'team_lead',
+    department: 'customer_insights_analytics',
+    description: 'Leads dynamic customer segmentation, clustering models, and persona development using ML-driven approaches.',
+    icon: Target,
+    color: '#EC4899',
+    orgChart: {
+      id: 'segmentation-lead',
+      level: 'team_lead',
+      department: 'customer_insights_analytics',
+      title: 'Segmentation Lead',
+      reportsTo: 'customer-insights-manager',
+      directReports: ['segmentation-analyst'],
+      peerPositions: ['journey-analytics-lead', 'personalization-lead', 'voice-analytics-lead']
+    },
+    responsibilities: [
+      'Dynamic Segmentation',
+      'Cluster Modeling',
+      'Persona Development',
+      'RFM Analysis',
+      'Lifecycle Classification'
+    ],
+    capabilities: [
+      'Dynamic Segmentation',
+      'Micro-segment Creation',
+      'Cluster Modeling',
+      'Persona Development',
+      'Behavioral Segmentation',
+      'Value-based Segmentation',
+      'ML Clustering',
+      'Statistical Analysis'
+    ],
+    keyMetrics: ['Segmentation Accuracy', 'Cluster Cohesion', 'Persona Adoption', 'Targeting Precision'],
+    humanCostEquivalent: '$80,000/year',
+    aiCost: '$4,000/year',
+    efficiency: '20x cost efficiency',
+    a2aEndpoints: ['/consult/segmentation-lead', '/segments/build', '/cluster/analyze'],
+    canEscalateTo: ['customer-insights-manager', 'vp-customer-insights'],
+    canReceiveEscalationFrom: ['segmentation-analyst'],
+    consultationStyle: 'analytical',
+    route: '/ai-agent/insights/segmentation-lead',
+    apiEndpoint: '/api/agents/insights/segmentation-lead',
+    status: 'active',
+    isPremium: true,
+    dangerLevel: 'medium'
+  },
+  {
+    id: 'personalization-lead',
+    name: 'AI Personalization Lead',
+    title: 'Team Lead - Real-time Personalization',
+    level: 'team_lead',
+    department: 'customer_insights_analytics',
+    description: 'Leads real-time personalization systems, recommendation engines, and dynamic content adaptation.',
+    icon: Star,
+    color: '#F59E0B',
+    orgChart: {
+      id: 'personalization-lead',
+      level: 'team_lead',
+      department: 'customer_insights_analytics',
+      title: 'Personalization Lead',
+      reportsTo: 'customer-insights-manager',
+      directReports: ['personalization-analyst'],
+      peerPositions: ['journey-analytics-lead', 'segmentation-lead', 'voice-analytics-lead']
+    },
+    responsibilities: [
+      'Personalization Strategy',
+      'Recommendation Engine',
+      'Dynamic Content',
+      'A/B Testing',
+      'Next-best-action Modeling'
+    ],
+    capabilities: [
+      'Real-time Personalization',
+      'Recommendation Systems',
+      'Dynamic Content Adaptation',
+      'Context-aware Targeting',
+      'A/B Testing',
+      'Cross-channel Personalization',
+      'Rule Engine Design'
+    ],
+    keyMetrics: ['Personalization Uplift', 'Recommendation CTR', 'Content Relevance', 'Conversion Lift'],
+    humanCostEquivalent: '$90,000/year',
+    aiCost: '$4,500/year',
+    efficiency: '20x cost efficiency',
+    a2aEndpoints: ['/consult/personalization-lead', '/personalize/content', '/recommend/optimize'],
+    canEscalateTo: ['customer-insights-manager', 'vp-customer-insights'],
+    canReceiveEscalationFrom: ['personalization-analyst'],
+    consultationStyle: 'collaborative',
+    route: '/ai-agent/insights/personalization-lead',
+    apiEndpoint: '/api/agents/insights/personalization-lead',
+    status: 'active',
+    isPremium: true,
+    dangerLevel: 'medium'
+  },
+  {
+    id: 'voice-analytics-lead',
+    name: 'AI Voice Analytics Lead',
+    title: 'Team Lead - Voice & Conversation Intelligence',
+    level: 'team_lead',
+    department: 'customer_insights_analytics',
+    description: 'Leads voice interaction analysis, call center conversation intelligence, and speech pattern analytics.',
+    icon: Phone,
+    color: '#0EA5E9',
+    orgChart: {
+      id: 'voice-analytics-lead',
+      level: 'team_lead',
+      department: 'customer_insights_analytics',
+      title: 'Voice Analytics Lead',
+      reportsTo: 'customer-insights-manager',
+      directReports: ['voice-analytics-specialist'],
+      peerPositions: ['journey-analytics-lead', 'segmentation-lead', 'personalization-lead']
+    },
+    responsibilities: [
+      'Voice Analytics',
+      'Speech Analysis',
+      'Conversation Intelligence',
+      'Call Quality Scoring',
+      'Emotion Detection'
+    ],
+    capabilities: [
+      'Speech Analytics',
+      'Emotion Detection',
+      'Call Quality Scoring',
+      'Conversation Intelligence',
+      'Voice-of-Customer Extraction',
+      'Keyword Spotting',
+      'Talk Ratio Analysis'
+    ],
+    keyMetrics: ['Insight Quality', 'Emotion Accuracy', 'Call Coverage', 'Topic Detection Rate'],
+    humanCostEquivalent: '$75,000/year',
+    aiCost: '$3,750/year',
+    efficiency: '20x cost efficiency',
+    a2aEndpoints: ['/consult/voice-lead', '/voice/analyze', '/calls/intelligence'],
+    canEscalateTo: ['customer-insights-manager', 'vp-customer-insights'],
+    canReceiveEscalationFrom: ['voice-analytics-specialist'],
+    consultationStyle: 'analytical',
+    route: '/ai-agent/insights/voice-analytics-lead',
+    apiEndpoint: '/api/agents/insights/voice-analytics-lead',
+    status: 'active',
+    isPremium: true,
+    dangerLevel: 'low'
+  },
+
+  // ========== BEHAVIORAL ANALYTICS LEADS (4) ==========
+  {
+    id: 'behavioral-lead',
+    name: 'AI Behavioral Analysis Lead',
+    title: 'Team Lead - Behavioral Analytics',
+    level: 'team_lead',
+    department: 'customer_insights_analytics',
+    description: 'Leads behavioral pattern recognition, decision modeling, and predictive behavior analysis.',
+    icon: Brain,
+    color: '#8B5CF6',
+    orgChart: {
+      id: 'behavioral-lead',
+      level: 'team_lead',
+      department: 'customer_insights_analytics',
+      title: 'Behavioral Analysis Lead',
+      reportsTo: 'behavioral-analytics-manager',
+      directReports: ['behavioral-analyst'],
+      peerPositions: ['sentiment-lead', 'clv-analytics-lead', 'churn-prediction-lead']
+    },
+    responsibilities: [
+      'Behavioral Pattern Recognition',
+      'Decision Modeling',
+      'Motivation Analysis',
+      'Predictive Behavior Modeling',
+      'Nudge Strategy'
+    ],
+    capabilities: [
+      'Behavioral Pattern Recognition',
+      'Decision Modeling',
+      'Motivation Analysis',
+      'Habit Tracking',
+      'Predictive Behavior Modeling',
+      'Behavioral Segmentation',
+      'Nudge Strategy Design'
+    ],
+    keyMetrics: ['Prediction Accuracy', 'Behavior Model Quality', 'Segmentation Precision', 'Nudge Effectiveness'],
+    humanCostEquivalent: '$90,000/year',
+    aiCost: '$4,500/year',
+    efficiency: '20x cost efficiency',
+    a2aEndpoints: ['/consult/behavioral-lead', '/behavior/analyze', '/patterns/model'],
+    canEscalateTo: ['behavioral-analytics-manager', 'vp-behavioral-analytics'],
+    canReceiveEscalationFrom: ['behavioral-analyst'],
+    consultationStyle: 'analytical',
+    route: '/ai-agent/insights/behavioral-lead',
+    apiEndpoint: '/api/agents/insights/behavioral-lead',
+    status: 'active',
+    isPremium: true,
+    dangerLevel: 'high'
+  },
+  {
+    id: 'sentiment-lead',
+    name: 'AI Sentiment Intelligence Lead',
+    title: 'Team Lead - Sentiment & Emotion Analytics',
+    level: 'team_lead',
+    department: 'customer_insights_analytics',
+    description: 'Leads multi-channel sentiment monitoring, real-time emotion detection, and brand perception tracking.',
+    icon: TrendingDown,
+    color: '#10B981',
+    orgChart: {
+      id: 'sentiment-lead',
+      level: 'team_lead',
+      department: 'customer_insights_analytics',
+      title: 'Sentiment Intelligence Lead',
+      reportsTo: 'behavioral-analytics-manager',
+      directReports: ['sentiment-analyst'],
+      peerPositions: ['behavioral-lead', 'clv-analytics-lead', 'churn-prediction-lead']
+    },
+    responsibilities: [
+      'Sentiment Monitoring',
+      'Emotion Detection',
+      'Brand Perception',
+      'Social Listening',
+      'Crisis Signal Detection'
+    ],
+    capabilities: [
+      'Multi-channel Sentiment Monitoring',
+      'Real-time Emotion Detection',
+      'Brand Perception Tracking',
+      'Social Listening Analytics',
+      'Review Analysis',
+      'Sentiment Forecasting',
+      'Crisis Detection'
+    ],
+    keyMetrics: ['Sentiment Accuracy', 'Emotion Detection Rate', 'Brand Score', 'Crisis Detection Speed'],
+    humanCostEquivalent: '$80,000/year',
+    aiCost: '$4,000/year',
+    efficiency: '20x cost efficiency',
+    a2aEndpoints: ['/consult/sentiment-lead', '/sentiment/monitor', '/emotions/analyze'],
+    canEscalateTo: ['behavioral-analytics-manager', 'vp-behavioral-analytics'],
+    canReceiveEscalationFrom: ['sentiment-analyst'],
+    consultationStyle: 'analytical',
+    route: '/ai-agent/insights/sentiment-lead',
+    apiEndpoint: '/api/agents/insights/sentiment-lead',
+    status: 'active',
+    isPremium: true,
+    dangerLevel: 'medium'
+  },
+  {
+    id: 'clv-analytics-lead',
+    name: 'AI CLV Analytics Lead',
+    title: 'Team Lead - Customer Lifetime Value Analytics',
+    level: 'team_lead',
+    department: 'customer_insights_analytics',
+    description: 'Leads CLV calculation, revenue attribution modeling, and high-value customer identification.',
+    icon: DollarSign,
+    color: '#F97316',
+    orgChart: {
+      id: 'clv-analytics-lead',
+      level: 'team_lead',
+      department: 'customer_insights_analytics',
+      title: 'CLV Analytics Lead',
+      reportsTo: 'behavioral-analytics-manager',
+      directReports: ['clv-analyst'],
+      peerPositions: ['behavioral-lead', 'sentiment-lead', 'churn-prediction-lead']
+    },
+    responsibilities: [
+      'CLV Calculation',
+      'Revenue Attribution',
+      'High-value Identification',
+      'Cohort Tracking',
+      'Profitability Analysis'
+    ],
+    capabilities: [
+      'CLV Calculation',
+      'Revenue Attribution Modeling',
+      'High-value Customer Identification',
+      'Profitability Analysis',
+      'Cohort Revenue Tracking',
+      'Upsell Prediction',
+      'Customer Equity Modeling'
+    ],
+    keyMetrics: ['CLV Accuracy', 'Attribution Precision', 'High-value Coverage', 'Revenue Forecast'],
+    humanCostEquivalent: '$85,000/year',
+    aiCost: '$4,250/year',
+    efficiency: '20x cost efficiency',
+    a2aEndpoints: ['/consult/clv-lead', '/clv/calculate', '/revenue/attribute'],
+    canEscalateTo: ['behavioral-analytics-manager', 'vp-behavioral-analytics'],
+    canReceiveEscalationFrom: ['clv-analyst'],
+    consultationStyle: 'analytical',
+    route: '/ai-agent/insights/clv-analytics-lead',
+    apiEndpoint: '/api/agents/insights/clv-analytics-lead',
+    status: 'active',
+    isPremium: true,
+    dangerLevel: 'high'
+  },
+  {
+    id: 'churn-prediction-lead',
+    name: 'AI Churn Prediction Lead',
+    title: 'Team Lead - Churn Prediction & Prevention',
+    level: 'team_lead',
+    department: 'customer_insights_analytics',
+    description: 'Leads churn prediction modeling, at-risk customer identification, and retention intervention strategies.',
+    icon: CircleAlert,
+    color: '#EF4444',
+    orgChart: {
+      id: 'churn-prediction-lead',
+      level: 'team_lead',
+      department: 'customer_insights_analytics',
+      title: 'Churn Prediction Lead',
+      reportsTo: 'behavioral-analytics-manager',
+      directReports: ['churn-analyst'],
+      peerPositions: ['behavioral-lead', 'sentiment-lead', 'clv-analytics-lead']
+    },
+    responsibilities: [
+      'Churn Prediction',
+      'At-risk Identification',
+      'Retention Interventions',
+      'Root Cause Analysis',
+      'Win-back Strategies'
+    ],
+    capabilities: [
+      'Churn Prediction Modeling',
+      'At-risk Customer Identification',
+      'Retention Intervention Design',
+      'Root Cause Analysis',
+      'Win-back Probability Scoring',
+      'Survival Analysis',
+      'Cohort Attrition Tracking'
+    ],
+    keyMetrics: ['Prediction Accuracy', 'Save Rate', 'Churn Reduction', 'Intervention ROI'],
+    humanCostEquivalent: '$88,000/year',
+    aiCost: '$4,400/year',
+    efficiency: '20x cost efficiency',
+    a2aEndpoints: ['/consult/churn-lead', '/churn/predict', '/retention/intervene'],
+    canEscalateTo: ['behavioral-analytics-manager', 'vp-behavioral-analytics'],
+    canReceiveEscalationFrom: ['churn-analyst'],
+    consultationStyle: 'analytical',
+    route: '/ai-agent/insights/churn-prediction-lead',
+    apiEndpoint: '/api/agents/insights/churn-prediction-lead',
+    status: 'active',
+    isPremium: true,
+    dangerLevel: 'high'
   }
 ];
 
@@ -1908,7 +2297,7 @@ export const specialists: AIEmployeeProfile[] = [
     level: 'specialist',
     department: 'technology',
     description: 'Develops automated tests, maintains test frameworks, and ensures quality.',
-    icon: CheckCircle,
+    icon: CircleCheck,
     color: '#0D47A1',
     orgChart: {
       id: 'qa-automation-1',
@@ -2006,7 +2395,7 @@ export const specialists: AIEmployeeProfile[] = [
     level: 'specialist',
     department: 'marketing',
     description: 'Creates marketing content, writes copy, and produces engaging materials.',
-    icon: FileEdit,
+    icon: FilePen,
     color: '#AD1457',
     orgChart: {
       id: 'content-creator-1',
@@ -2490,7 +2879,7 @@ export const specialists: AIEmployeeProfile[] = [
     level: 'specialist',
     department: 'customer_experience',
     description: 'Executes customer implementations, manages setups, and trains customers.',
-    icon: CheckCircle,
+    icon: CircleCheck,
     color: '#00838F',
     orgChart: {
       id: 'implementation-specialist-1',
@@ -2822,6 +3211,392 @@ export const specialists: AIEmployeeProfile[] = [
     status: 'active',
     isPremium: false,
     dangerLevel: 'medium'
+  },
+
+  // ========== CUSTOMER INSIGHTS & ANALYTICS SPECIALISTS (8) ==========
+  {
+    id: 'journey-analyst',
+    name: 'AI Journey Analyst',
+    title: 'Specialist - Customer Journey Analysis',
+    level: 'specialist',
+    department: 'customer_insights_analytics',
+    description: 'Analyzes customer journeys, identifies friction points, and optimizes path-to-purchase across all touchpoints.',
+    icon: MapPin,
+    color: '#6366F1',
+    orgChart: {
+      id: 'journey-analyst',
+      level: 'specialist',
+      department: 'customer_insights_analytics',
+      title: 'Journey Analyst',
+      reportsTo: 'journey-analytics-lead',
+      directReports: [],
+      peerPositions: ['segmentation-analyst', 'personalization-analyst', 'voice-analytics-specialist']
+    },
+    responsibilities: [
+      'Journey Mapping',
+      'Friction Point Analysis',
+      'Path Optimization',
+      'Touchpoint Analysis',
+      'Drop-off Investigation'
+    ],
+    capabilities: [
+      'Journey Mapping',
+      'Funnel Analysis',
+      'Touchpoint Optimization',
+      'Cross-channel Tracking',
+      'UX Research',
+      'Data Analysis',
+      'Visualization'
+    ],
+    keyMetrics: ['Journey Completion', 'Friction Reduction', 'Touchpoint Efficiency', 'Conversion Lift'],
+    humanCostEquivalent: '$65,000/year',
+    aiCost: '$3,250/year',
+    efficiency: '20x cost efficiency',
+    a2aEndpoints: ['/consult/journey-analyst', '/journey/analyze', '/touchpoints/optimize'],
+    canEscalateTo: ['journey-analytics-lead', 'customer-insights-manager'],
+    canReceiveEscalationFrom: [],
+    consultationStyle: 'analytical',
+    route: '/ai-agent/insights/journey-analyst',
+    apiEndpoint: '/api/agents/insights/journey-analyst',
+    status: 'active',
+    isPremium: false,
+    dangerLevel: 'low'
+  },
+  {
+    id: 'segmentation-analyst',
+    name: 'AI Segmentation Analyst',
+    title: 'Specialist - Customer Segmentation',
+    level: 'specialist',
+    department: 'customer_insights_analytics',
+    description: 'Develops dynamic customer segments, performs RFM analysis, and creates behavioral clusters for targeted strategies.',
+    icon: Database,
+    color: '#EC4899',
+    orgChart: {
+      id: 'segmentation-analyst',
+      level: 'specialist',
+      department: 'customer_insights_analytics',
+      title: 'Segmentation Analyst',
+      reportsTo: 'segmentation-lead',
+      directReports: [],
+      peerPositions: ['journey-analyst', 'personalization-analyst', 'voice-analytics-specialist']
+    },
+    responsibilities: [
+      'Segment Development',
+      'RFM Analysis',
+      'Cluster Modeling',
+      'Persona Creation',
+      'Segment Performance Tracking'
+    ],
+    capabilities: [
+      'Dynamic Segmentation',
+      'RFM Analysis',
+      'Cluster Modeling',
+      'Persona Development',
+      'ML Clustering',
+      'Statistical Analysis',
+      'Python/R'
+    ],
+    keyMetrics: ['Segment Accuracy', 'Cluster Cohesion', 'Persona Adoption', 'Targeting Precision'],
+    humanCostEquivalent: '$60,000/year',
+    aiCost: '$3,000/year',
+    efficiency: '20x cost efficiency',
+    a2aEndpoints: ['/consult/segmentation-analyst', '/segments/analyze', '/clusters/model'],
+    canEscalateTo: ['segmentation-lead', 'customer-insights-manager'],
+    canReceiveEscalationFrom: [],
+    consultationStyle: 'analytical',
+    route: '/ai-agent/insights/segmentation-analyst',
+    apiEndpoint: '/api/agents/insights/segmentation-analyst',
+    status: 'active',
+    isPremium: false,
+    dangerLevel: 'low'
+  },
+  {
+    id: 'personalization-analyst',
+    name: 'AI Personalization Analyst',
+    title: 'Specialist - Personalization & Recommendations',
+    level: 'specialist',
+    department: 'customer_insights_analytics',
+    description: 'Builds recommendation engines, designs dynamic content rules, and optimizes personalization algorithms.',
+    icon: Star,
+    color: '#F59E0B',
+    orgChart: {
+      id: 'personalization-analyst',
+      level: 'specialist',
+      department: 'customer_insights_analytics',
+      title: 'Personalization Analyst',
+      reportsTo: 'personalization-lead',
+      directReports: [],
+      peerPositions: ['journey-analyst', 'segmentation-analyst', 'voice-analytics-specialist']
+    },
+    responsibilities: [
+      'Recommendation Engine Tuning',
+      'Dynamic Content Rules',
+      'A/B Test Analysis',
+      'Personalization Algorithms',
+      'Content Relevance Scoring'
+    ],
+    capabilities: [
+      'Recommendation Systems',
+      'A/B Testing',
+      'Dynamic Content',
+      'Algorithm Optimization',
+      'Context-aware Targeting',
+      'ML Models',
+      'SQL/Python'
+    ],
+    keyMetrics: ['Recommendation CTR', 'Content Relevance', 'Conversion Lift', 'Algorithm Accuracy'],
+    humanCostEquivalent: '$70,000/year',
+    aiCost: '$3,500/year',
+    efficiency: '20x cost efficiency',
+    a2aEndpoints: ['/consult/personalization-analyst', '/personalize/analyze', '/recommendations/tune'],
+    canEscalateTo: ['personalization-lead', 'customer-insights-manager'],
+    canReceiveEscalationFrom: [],
+    consultationStyle: 'analytical',
+    route: '/ai-agent/insights/personalization-analyst',
+    apiEndpoint: '/api/agents/insights/personalization-analyst',
+    status: 'active',
+    isPremium: false,
+    dangerLevel: 'low'
+  },
+  {
+    id: 'voice-analytics-specialist',
+    name: 'AI Voice Analytics Specialist',
+    title: 'Specialist - Voice & Speech Intelligence',
+    level: 'specialist',
+    department: 'customer_insights_analytics',
+    description: 'Analyzes voice interactions, extracts sentiment from calls, and generates conversation intelligence reports.',
+    icon: Phone,
+    color: '#0EA5E9',
+    orgChart: {
+      id: 'voice-analytics-specialist',
+      level: 'specialist',
+      department: 'customer_insights_analytics',
+      title: 'Voice Analytics Specialist',
+      reportsTo: 'voice-analytics-lead',
+      directReports: [],
+      peerPositions: ['journey-analyst', 'segmentation-analyst', 'personalization-analyst']
+    },
+    responsibilities: [
+      'Call Analysis',
+      'Speech Pattern Recognition',
+      'Emotion Extraction',
+      'Conversation Quality Scoring',
+      'Keyword & Topic Spotting'
+    ],
+    capabilities: [
+      'Speech Analytics',
+      'Emotion Detection',
+      'Call Quality Scoring',
+      'Conversation Intelligence',
+      'NLP',
+      'Audio Processing',
+      'Python'
+    ],
+    keyMetrics: ['Analysis Coverage', 'Emotion Accuracy', 'Topic Detection Rate', 'Quality Score'],
+    humanCostEquivalent: '$62,000/year',
+    aiCost: '$3,100/year',
+    efficiency: '20x cost efficiency',
+    a2aEndpoints: ['/consult/voice-specialist', '/voice/analyze', '/calls/quality'],
+    canEscalateTo: ['voice-analytics-lead', 'customer-insights-manager'],
+    canReceiveEscalationFrom: [],
+    consultationStyle: 'analytical',
+    route: '/ai-agent/insights/voice-analytics-specialist',
+    apiEndpoint: '/api/agents/insights/voice-analytics-specialist',
+    status: 'active',
+    isPremium: false,
+    dangerLevel: 'low'
+  },
+  {
+    id: 'behavioral-analyst',
+    name: 'AI Behavioral Analyst',
+    title: 'Specialist - Behavioral Pattern Analysis',
+    level: 'specialist',
+    department: 'customer_insights_analytics',
+    description: 'Analyzes customer behavior patterns, builds predictive models, and designs behavioral nudge strategies.',
+    icon: Brain,
+    color: '#8B5CF6',
+    orgChart: {
+      id: 'behavioral-analyst',
+      level: 'specialist',
+      department: 'customer_insights_analytics',
+      title: 'Behavioral Analyst',
+      reportsTo: 'behavioral-lead',
+      directReports: [],
+      peerPositions: ['sentiment-analyst', 'clv-analyst', 'churn-analyst']
+    },
+    responsibilities: [
+      'Behavioral Pattern Analysis',
+      'Predictive Model Building',
+      'Nudge Strategy Design',
+      'Decision Modeling',
+      'Motivation Research'
+    ],
+    capabilities: [
+      'Behavioral Modeling',
+      'Predictive Analytics',
+      'Decision Science',
+      'Nudge Design',
+      'ML/AI',
+      'Statistical Analysis',
+      'Python/R'
+    ],
+    keyMetrics: ['Model Accuracy', 'Prediction Confidence', 'Nudge Effectiveness', 'Behavior Change Rate'],
+    humanCostEquivalent: '$72,000/year',
+    aiCost: '$3,600/year',
+    efficiency: '20x cost efficiency',
+    a2aEndpoints: ['/consult/behavioral-analyst', '/behavior/analyze', '/patterns/model'],
+    canEscalateTo: ['behavioral-lead', 'behavioral-analytics-manager'],
+    canReceiveEscalationFrom: [],
+    consultationStyle: 'analytical',
+    route: '/ai-agent/insights/behavioral-analyst',
+    apiEndpoint: '/api/agents/insights/behavioral-analyst',
+    status: 'active',
+    isPremium: false,
+    dangerLevel: 'medium'
+  },
+  {
+    id: 'sentiment-analyst',
+    name: 'AI Sentiment Analyst',
+    title: 'Specialist - Sentiment & Emotion Analysis',
+    level: 'specialist',
+    department: 'customer_insights_analytics',
+    description: 'Monitors multi-channel sentiment, tracks brand perception, and detects emerging customer concerns in real-time.',
+    icon: TrendingDown,
+    color: '#10B981',
+    orgChart: {
+      id: 'sentiment-analyst',
+      level: 'specialist',
+      department: 'customer_insights_analytics',
+      title: 'Sentiment Analyst',
+      reportsTo: 'sentiment-lead',
+      directReports: [],
+      peerPositions: ['behavioral-analyst', 'clv-analyst', 'churn-analyst']
+    },
+    responsibilities: [
+      'Sentiment Monitoring',
+      'Brand Perception Tracking',
+      'Social Listening',
+      'Review Analysis',
+      'Crisis Signal Detection'
+    ],
+    capabilities: [
+      'Sentiment Analysis',
+      'Emotion Detection',
+      'Social Listening',
+      'NLP',
+      'Brand Monitoring',
+      'Crisis Detection',
+      'Data Visualization'
+    ],
+    keyMetrics: ['Sentiment Accuracy', 'Brand Score', 'Crisis Detection Speed', 'Coverage Rate'],
+    humanCostEquivalent: '$60,000/year',
+    aiCost: '$3,000/year',
+    efficiency: '20x cost efficiency',
+    a2aEndpoints: ['/consult/sentiment-analyst', '/sentiment/analyze', '/brand/monitor'],
+    canEscalateTo: ['sentiment-lead', 'behavioral-analytics-manager'],
+    canReceiveEscalationFrom: [],
+    consultationStyle: 'analytical',
+    route: '/ai-agent/insights/sentiment-analyst',
+    apiEndpoint: '/api/agents/insights/sentiment-analyst',
+    status: 'active',
+    isPremium: false,
+    dangerLevel: 'medium'
+  },
+  {
+    id: 'clv-analyst',
+    name: 'AI CLV Analyst',
+    title: 'Specialist - Customer Lifetime Value Analysis',
+    level: 'specialist',
+    department: 'customer_insights_analytics',
+    description: 'Calculates customer lifetime value, builds revenue attribution models, and identifies high-value customer patterns.',
+    icon: DollarSign,
+    color: '#F97316',
+    orgChart: {
+      id: 'clv-analyst',
+      level: 'specialist',
+      department: 'customer_insights_analytics',
+      title: 'CLV Analyst',
+      reportsTo: 'clv-analytics-lead',
+      directReports: [],
+      peerPositions: ['behavioral-analyst', 'sentiment-analyst', 'churn-analyst']
+    },
+    responsibilities: [
+      'CLV Calculation',
+      'Revenue Attribution',
+      'High-value Pattern Detection',
+      'Cohort Analysis',
+      'Profitability Reporting'
+    ],
+    capabilities: [
+      'CLV Modeling',
+      'Revenue Attribution',
+      'Statistical Analysis',
+      'Cohort Analysis',
+      'SQL',
+      'Python',
+      'Data Visualization'
+    ],
+    keyMetrics: ['CLV Accuracy', 'Attribution Confidence', 'High-value Coverage', 'Forecast Error'],
+    humanCostEquivalent: '$68,000/year',
+    aiCost: '$3,400/year',
+    efficiency: '20x cost efficiency',
+    a2aEndpoints: ['/consult/clv-analyst', '/clv/calculate', '/revenue/attribute'],
+    canEscalateTo: ['clv-analytics-lead', 'behavioral-analytics-manager'],
+    canReceiveEscalationFrom: [],
+    consultationStyle: 'analytical',
+    route: '/ai-agent/insights/clv-analyst',
+    apiEndpoint: '/api/agents/insights/clv-analyst',
+    status: 'active',
+    isPremium: false,
+    dangerLevel: 'medium'
+  },
+  {
+    id: 'churn-analyst',
+    name: 'AI Churn Analyst',
+    title: 'Specialist - Churn Prediction & Analysis',
+    level: 'specialist',
+    department: 'customer_insights_analytics',
+    description: 'Builds churn prediction models, identifies at-risk customers, and recommends targeted retention interventions.',
+    icon: CircleAlert,
+    color: '#EF4444',
+    orgChart: {
+      id: 'churn-analyst',
+      level: 'specialist',
+      department: 'customer_insights_analytics',
+      title: 'Churn Analyst',
+      reportsTo: 'churn-prediction-lead',
+      directReports: [],
+      peerPositions: ['behavioral-analyst', 'sentiment-analyst', 'clv-analyst']
+    },
+    responsibilities: [
+      'Churn Model Development',
+      'At-risk Scoring',
+      'Retention Recommendations',
+      'Root Cause Analysis',
+      'Win-back Strategy Support'
+    ],
+    capabilities: [
+      'Churn Prediction',
+      'Survival Analysis',
+      'ML Classification',
+      'Statistical Modeling',
+      'Python/R',
+      'SQL',
+      'Data Visualization'
+    ],
+    keyMetrics: ['Model Accuracy', 'Precision/Recall', 'Churn Reduction', 'Intervention Success'],
+    humanCostEquivalent: '$70,000/year',
+    aiCost: '$3,500/year',
+    efficiency: '20x cost efficiency',
+    a2aEndpoints: ['/consult/churn-analyst', '/churn/analyze', '/retention/recommend'],
+    canEscalateTo: ['churn-prediction-lead', 'behavioral-analytics-manager'],
+    canReceiveEscalationFrom: [],
+    consultationStyle: 'analytical',
+    route: '/ai-agent/insights/churn-analyst',
+    apiEndpoint: '/api/agents/insights/churn-analyst',
+    status: 'active',
+    isPremium: false,
+    dangerLevel: 'high'
   }
 ];
 
@@ -2830,15 +3605,15 @@ export const specialists: AIEmployeeProfile[] = [
 // ============================================
 
 export const AI_WORKFORCE_COMPLETE_STATS = {
-  totalAgents: 106,
+  totalAgents: 122,
   hierarchyBreakdown: {
     cSuite: 8,        // Level 1
     vpDirectors: 14,  // Level 2
-    managers: 28,     // Level 3
-    teamLeads: 28,    // Level 4
-    specialists: 28   // Level 5
+    managers: 30,     // Level 3
+    teamLeads: 36,    // Level 4
+    specialists: 36   // Level 5
   },
-  departments: 14,
+  departments: 15,
   totalDepartments: [
     'executive',
     'finance',
@@ -2853,7 +3628,8 @@ export const AI_WORKFORCE_COMPLETE_STATS = {
     'product',
     'security',
     'research',
-    'administrative'
+    'administrative',
+    'customer_insights_analytics'
   ]
 };
 

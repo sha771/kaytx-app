@@ -1,19 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { BarChart3, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { ChartBar, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'3,988',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.1s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.8%',icon:Target,color:'#33691E'}];
+  const stats = [{label:'Tasks',value:'3,988',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.1s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.8%',icon:Target,color:'#33691E'}];
   const capabilities = ['Market Analysis','Comparable Analysis','Financial Analysis','Trend Forecasting','Valuation Support','Reporting'];
   const responsibilities = ['Property market analysis & research','Comparable property analysis','Financial performance analysis','Market trend forecasting','Valuation support & modeling','Property analytics reporting'];
-  const activities = [{time:'3 min ago',text:'Analyzed market trends for 3 submarkets',icon:CheckCircle2},{time:'6 min ago',text:'Built comp analysis for 12 properties',icon:Clock},{time:'9 min ago',text:'Published monthly market report',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Analyzed market trends for 3 submarkets',icon: CircleCheckBig},{time:'6 min ago',text:'Built comp analysis for 12 properties',icon:Clock},{time:'9 min ago',text:'Published monthly market report',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#33691E20' }]}><BarChart3 size={48} color="#33691E" /></View>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#33691E20' }]}><ChartBarBig size={48} color="#33691E" /></View>
         <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Property Analyst</Text>
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Property Analytics</Text>
         <View style={styles.badgesRow}>

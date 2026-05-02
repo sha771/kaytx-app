@@ -18,11 +18,11 @@ import {
   MapPin,
   Server,
   Shield,
-  CheckCircle,
-  AlertTriangle,
+  CircleCheck,
+  TriangleAlert,
   Clock,
   Wifi,
-  BarChart3,
+  ChartBar,
   Settings,
   RefreshCw,
   Eye,
@@ -33,7 +33,7 @@ import {
   Router,
   CloudLightning,
   Timer,
-  Filter,
+  ListFilter,
   Trash2,
   SignalHigh,
   ShieldCheck,
@@ -404,7 +404,7 @@ export default function CDNScreen() {
 
   const renderEdgeLocation = ({ item }: { item: EdgeLocation }) => {
     const statusColor = getStatusColor(item.status);
-    const StatusIcon = item.status === 'active' ? CheckCircle : AlertTriangle;
+    const StatusIcon = item.status === 'active' ? CircleCheck : TriangleAlert;
 
     return (
       <TouchableOpacity
@@ -466,7 +466,7 @@ export default function CDNScreen() {
         <View style={styles.edgeActions}>
           <TouchableOpacity style={[styles.edgeActionButton, { backgroundColor: theme.colors.background }]}
             testID={`cdn-edge-analytics-${item.id}`}>
-            <BarChart3 size={16} color={theme.colors.text} />
+            <ChartBarBig size={16} color={theme.colors.text} />
             <Text style={[styles.edgeActionText, { color: theme.colors.text }]}>Analytics</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.edgeActionButton, { backgroundColor: theme.colors.background }]}
@@ -634,7 +634,7 @@ export default function CDNScreen() {
         </TouchableOpacity>
         <TouchableOpacity style={[styles.automationButton, { backgroundColor: theme.colors.background }]}
           testID={`cdn-automation-policy-${item.id}`}>
-          <Filter size={14} color={theme.colors.text} />
+          <ListFilter size={14} color={theme.colors.text} />
           <Text style={[styles.automationButtonText, { color: theme.colors.text }]}>Policy</Text>
         </TouchableOpacity>
       </View>

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Switch } from 're
 import {
   Wifi,
   WifiOff,
-  MoreVertical,
+  EllipsisVertical,
   ExternalLink,
   Smartphone,
   Cloud,
@@ -102,7 +102,7 @@ export const PlatformCard: React.FC<PlatformCardProps> = React.memo(
             </View>
           </View>
           <TouchableOpacity style={styles.moreButton}>
-            <MoreVertical size={16} color={theme.colors.secondaryText} />
+            <EllipsisVertical size={16} color={theme.colors.secondaryText} />
           </TouchableOpacity>
         </View>
 

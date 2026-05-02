@@ -25,9 +25,8 @@ import {
   Plus,
   Trash2,
   Check,
-  AlertCircle,
+  CircleAlert,
   Zap,
-  Bot,
   Settings,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -251,7 +250,7 @@ export default function AgentSchedulingScreen() {
           <View style={[styles.editorSection, { borderBottomColor: colors.border }]}>
             <Text style={[styles.sectionLabel, { color: colors.text + '60' }]}>OVERTIME</Text>
             <View style={styles.editorRow}>
-              <AlertCircle size={20} color={colors.text + '60'} />
+              <CircleAlert size={20} color={colors.text + '60'} />
               <Text style={[styles.editorRowLabel, { color: colors.text }]}>Allow overtime</Text>
               <Switch
                 value={schedule.overtime.enabled}

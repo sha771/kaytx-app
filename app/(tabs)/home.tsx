@@ -15,9 +15,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   Activity,
   ArrowUpRight,
-  BarChart,
-  BarChart2,
-  BarChart3,
+  ChartBar,
   Bell,
   Bot,
   Brain,
@@ -26,25 +24,25 @@ import {
   Building2,
   Calendar,
   Calculator,
-  CheckCircle,
+  CircleCheck,
   Clock,
   Code,
   Database,
   DollarSign,
   Eye,
   FileText,
-  Filter,
+  ListFilter,
   Globe,
   Handshake,
   Hash,
   Headphones,
-  HelpCircle,
+  LifeBuoy,
   Image as ImageIcon,
   Inbox,
   Info,
   Layers,
   Lightbulb,
-  LineChart,
+  ChartLine,
   Mail,
   MapPin,
   Megaphone,
@@ -54,7 +52,7 @@ import {
   Microscope,
   Monitor,
   Phone,
-  PieChart,
+  ChartPie,
   Plus,
   Radio,
   Scale,
@@ -74,18 +72,16 @@ import {
   UserPlus,
   Users,
   Video,
-  Workflow,
   X,
   Zap,
   Crown,
-  AlertTriangle,
+  TriangleAlert,
   Truck,
-  ServerIcon,
+  Server,
   Cpu,
   Palette,
   Trophy,
   Heart,
-  Smile,
   GraduationCap,
   ShieldCheck,
   Landmark,
@@ -94,23 +90,18 @@ import {
   ShieldAlert,
   Siren,
   Lock,
-  Fingerprint,
-  Cog,
-  Home,
-  Navigation,
-  ClipboardList,
+  FingerprintPattern,
+  House,
+  Clipboard,
   FileCheck,
-  FileSignature,
-  CheckSquare,
+  SquareCheck,
   Factory,
-  Command,
-  Network,
+  Share2 as NetworkIcon,
 } from 'lucide-react-native';
-import { useTheme } from '@/providers/ThemeProvider';
-import { useMessaging } from '@/providers/MessagingProvider';
+import { useTheme } from '../../providers/ThemeProvider';
+import { useMessaging } from '../../providers/MessagingProvider';
 import { router } from 'expo-router';
-import { QuickLinks } from '@/components/RelatedFeatures';
-import aiAgentsSidebarSections from '@/constants/aiAgentsSidebarData';
+import aiAgentsSidebarSections from '../../constants/aiAgentsSidebarData';
 
 interface QuickAction {
   id: string;
@@ -157,6 +148,15 @@ interface SidebarSubSectionItem {
   icon: React.ComponentType<any>;
 }
 
+interface SmartFeature {
+  id: string;
+  title: string;
+  description: string;
+  icon: React.ComponentType<any>;
+  color: string;
+  enabled: boolean;
+}
+
 // ... (rest of the code remains the same)
 
 const sidebarOptions: SidebarOption[] = [
@@ -169,7 +169,7 @@ const sidebarOptions: SidebarOption[] = [
       { id: 'sm-1', title: 'Dashboard', icon: Activity },
       { id: 'sm-2', title: 'Content Calendar', icon: Calendar },
       { id: 'sm-3', title: 'Post Scheduler', icon: Clock },
-      { id: 'sm-4', title: 'Social Analytics', icon: LineChart },
+      { id: 'sm-4', title: 'Social Analytics', icon: ChartLine },
       { id: 'sm-5', title: 'Engagement Hub', icon: MessageCircleIcon },
       { id: 'sm-6', title: 'Hashtag Manager', icon: Hash },
       { id: 'sm-7', title: 'Competitor Analysis', icon: Eye },
@@ -231,21 +231,20 @@ const sidebarOptions: SidebarOption[] = [
       {
         id: '2-section-command',
         title: '2: Command Center (7)',
-        icon: Command,
+        icon: Cpu,
         subSections: [
           {
             id: '2-cmd-tier4',
             title: 'Tier 4: Command Center',
-            icon: Command,
+            icon: Cpu,
             items: [
               { id: '2-cdoo', title: 'CDOO - Chief Digital & Ops Officer', icon: Crown },
               { id: '2-ddo', title: 'DDO - Digital Deployment Officer', icon: Zap },
               { id: '2-wol', title: 'WOL - Workforce Optimization Lead', icon: Users },
               { id: '2-aod', title: 'AOD - Automation Ops Director', icon: Bot },
               { id: '2-pred', title: 'PRED - Predictive Ops Controller', icon: Brain },
-              { id: '2-swarm', title: 'SWARM - Swarm Intelligence', icon: Network },
+              { id: '2-swarm', title: 'SWARM - Swarm Intelligence', icon: Users },
               { id: '2-learn', title: 'LEARN - Learning & Adaptation', icon: Sparkles },
-              { id: '2-cc', title: '🎯 Open Command Center', icon: Target },
             ]
           },
           {
@@ -255,7 +254,7 @@ const sidebarOptions: SidebarOption[] = [
             items: [
               { id: '2-pred-engine', title: 'PRED - Predictive Engine', icon: TrendingUp },
               { id: '2-sentiment', title: 'SENTIMENT - Sentiment Core', icon: Heart },
-              { id: '2-anomaly', title: 'ANOMALY - Anomaly Detector', icon: AlertTriangle },
+              { id: '2-anomaly', title: 'ANOMALY - Anomaly Detector', icon: TriangleAlert },
             ]
           },
           {
@@ -268,7 +267,47 @@ const sidebarOptions: SidebarOption[] = [
           },
         ]
       },
-      ...aiAgentsSidebarSections,
+      {
+        id: '2-section-tools',
+        title: '3: AI Command & Visualization',
+        icon: Target,
+        subSections: [
+          {
+            id: '2-tools-main',
+            title: 'Command & Visualization Tools',
+            icon: Target,
+            items: [
+              { id: '2-cc', title: '🎯 Command Center', icon: Target },
+              { id: '2-mindmap', title: '🧠 Mind Map', icon: Brain },
+            ]
+          },
+        ]
+      },
+      ...(aiAgentsSidebarSections || [])
+        .filter((section: any) => section && section.icon)
+        .map((section: any) => ({
+          ...section,
+          color: '#007AFF',
+          subItems: section.subSections
+            ?.filter((subSection: any) => subSection && subSection.icon)
+            .map((subSection: any) => ({
+              ...subSection,
+              subSections: subSection.items
+                ?.filter((item: any) => item && item.icon)
+                ?.map((item: any) => ({
+                  ...item,
+                  icon: item.icon,
+                }))
+                ?.length
+                  ? [{
+                    id: `${subSection.id}-group`,
+                    title: subSection.title,
+                    icon: subSection.icon,
+                    items: subSection.items.filter((item: any) => item && item.icon),
+                  }]
+                  : undefined,
+            })) || [],
+        })),
       {
         id: '2-section-workforce',
         title: '4: AI Workforce (199)',
@@ -285,12 +324,12 @@ const sidebarOptions: SidebarOption[] = [
           {
             id: '2-wf-dashboard',
             title: 'Dashboard & Overview',
-            icon: BarChart2,
+            icon: ChartBar2,
             items: [
               { id: '2-main', title: '📊 View All Agents Dashboard', icon: Bot },
               { id: '2-agent-reactive', title: '⚡ Reactive Agents (199)', icon: Zap },
               { id: '2-agent-learning', title: '📚 Learning Agents (120)', icon: Brain },
-              { id: '2-agent-swarm', title: '🐝 Swarm Agents (Unlimited)', icon: Network },
+              { id: '2-agent-swarm', title: '🐝 Swarm Agents (Unlimited)', icon: Users },
             ]
           },
           {
@@ -312,7 +351,7 @@ const sidebarOptions: SidebarOption[] = [
               { id: '2-team-sales', title: 'Sales Team - SDRs & AEs', icon: TrendingUp },
               { id: '2-team-support', title: 'Support Team - Tiers 1-3', icon: Headphones },
               { id: '2-team-recruiting', title: 'Recruiting Team', icon: UserPlus },
-              { id: '2-team-analytics', title: 'Analytics Team', icon: BarChart2 },
+              { id: '2-team-analytics', title: 'Analytics Team', icon: ChartBar2 },
               { id: '2-team-creative', title: 'Creative Team', icon: Palette },
               { id: '2-team-legal', title: 'Legal Team', icon: Scale },
               { id: '2-team-finance', title: 'Finance Team', icon: Calculator },
@@ -372,17 +411,17 @@ const sidebarOptions: SidebarOption[] = [
     color: '#FF2D92',
     subItems: [
       { id: '5-1', title: 'CRM', icon: Building },
-      { id: '5-5', title: 'Cohort Analysis', icon: PieChart },
+      { id: '5-5', title: 'Cohort Analysis', icon: ChartPie },
     ],
   },
   {
     id: '6',
     title: 'Analysis & Performance',
-    icon: BarChart,
+    icon: ChartBar,
     color: '#FF3B30',
     subItems: [
       { id: '6-1', title: 'Reports', icon: FileText },
-      { id: '6-2', title: 'Insights', icon: BarChart2 },
+      { id: '6-2', title: 'Insights', icon: ChartBar2 },
       { id: '6-3', title: 'Performance Insights', icon: Activity },
     ],
   },
@@ -407,7 +446,7 @@ const sidebarOptions: SidebarOption[] = [
   {
     id: '9',
     title: 'Support',
-    icon: HelpCircle,
+    icon: LifeBuoy,
     color: '#5AC8FA',
   },
   {
@@ -506,7 +545,7 @@ export default function HomeScreen() {
     {
       id: '3',
       title: 'Analytics',
-      icon: BarChart3,
+      icon: ChartBar,
       color: '#FF9500',
       onPress: () => {},
     },
@@ -573,7 +612,7 @@ export default function HomeScreen() {
       title: 'Revenue',
       value: '$45K',
       change: '+18%',
-      icon: BarChart,
+      icon: ChartBar,
       color: '#32D74B',
     },
   ];
@@ -596,11 +635,11 @@ export default function HomeScreen() {
   const getSystemStatusIcon = () => {
     switch (systemStatus) {
       case 'online':
-        return CheckCircle;
+        return CircleCheck;
       case 'maintenance':
         return Info;
       case 'issues':
-        return AlertTriangle;
+        return TriangleAlert;
       default:
         return Activity;
     }
@@ -646,13 +685,11 @@ export default function HomeScreen() {
 
   const handleSubItemPress = (subItem: SidebarSubItem) => {
     setShowSidebar(false);
-    // Navigate to specific pages based on subItem
     const routeMap: { [key: string]: string } = {
       // AI Agents & Employees - Main Dashboard
       '2-main': '/ai-agent',
-      // AI Agents & Employees - Show All
       '2-show-all-agents': '/ai-agent',
-      // AI Agents & Employees - C-Suite Executives
+      // C-Suite Executives
       '2-ceo': '/ai-agent/executive/ceo-advisor',
       '2-cfo': '/ai-agent/executive/cfo-analyst',
       '2-cto': '/ai-agent/executive/cto-advisor',
@@ -672,7 +709,7 @@ export default function HomeScreen() {
       '2-cdao': '/ai-agent/executive/cdao-advisor',
       '2-ethics': '/ai-agent/executive/ceo-advisor',
       '2-ciso-ai': '/ai-agent/executive/ciso-advisor',
-      // AI Agents & Employees - Command Center
+      // Command Center & Intelligence
       '2-cdoo': '/command-center',
       '2-ddo': '/command-center',
       '2-wol': '/command-center',
@@ -684,16 +721,17 @@ export default function HomeScreen() {
       '2-pred-engine': '/ai-agent/data',
       '2-sentiment': '/ai-agent/customer',
       '2-anomaly': '/ai-agent/data/fraud-detection',
-      // AI Agents & Employees - Agent Types
+      '2-cc': '/command-center',
+      '2-mindmap': '/ai-agent/mind-map',
+      // Agent Types & Hierarchy
       '2-agent-reactive': '/ai-agent',
       '2-agent-learning': '/ai-agent',
       '2-agent-swarm': '/ai-agent',
-      // AI Agents & Employees - Hierarchy Levels
       '2-vp-directors': '/ai-agent',
       '2-managers': '/ai-agent',
       '2-team-leads': '/ai-agent',
       '2-specialists': '/ai-agent',
-      // AI Agents & Employees - Specialized Teams
+      // Specialized Teams
       '2-team-sales': '/ai-agent/sales',
       '2-team-support': '/ai-agent/customer',
       '2-team-recruiting': '/ai-agent/hr/recruiter',
@@ -707,15 +745,15 @@ export default function HomeScreen() {
       '2-team-ops': '/ai-agent/operations',
       '2-team-security': '/ai-agent/it',
       '2-team-product': '/ai-agent/product',
-      // AI Agents & Employees - Builder Tools
+      // Builder Tools
       '2-builder-emp': '/ai-agents-employees-builder',
       '2-builder-dept': '/ai-agents-employees-builder',
-      // AI Agents & Employees - Main Features
-      '2-cc': '/command-center',
+      '2-builder': '/ai-agents-employees-builder',
+      // Other Features
       '2-ar': '/ai-receptionist/dashboard',
       '2-an': '/ai-negotiation/dashboard',
-      '2-builder': '/ai-agents-employees-builder',
-      // AI Agents & Employees - 15 Departments
+      '2-pa': '/ai-agent/customer',
+      // Legacy Department Routes
       '2-el': '/ai-agent/executive',
       '2-af': '/ai-agent/accounting',
       '2-ce': '/ai-agent/customer',
@@ -730,7 +768,80 @@ export default function HomeScreen() {
       '2-it': '/ai-agent/it',
       '2-lc': '/ai-agent/legal',
       '2-ed': '/ai-agent/engineering',
-      '2-pa': '/ai-agent/customer',
+      // All Phone Agents
+      '2-cx-phone-receptionist': '/ai-agent/phone',
+      '2-cx-call-center': '/ai-agent/phone',
+      '2-cx-telephone-support': '/ai-agent/phone',
+      '2-sales-cold-caller': '/ai-agent/phone',
+      '2-sales-phone-negotiator': '/ai-agent/phone',
+      '2-sales-deal-closer': '/ai-agent/phone',
+      '2-sales-appointment-setter': '/ai-agent/phone',
+      '2-sales-follow-up': '/ai-agent/phone',
+      '2-sales-receptionist': '/ai-agent/phone',
+      '2-mkt-telemarketer': '/ai-agent/phone',
+      '2-mkt-event-caller': '/ai-agent/phone',
+      '2-mkt-survey-caller': '/ai-agent/phone',
+      '2-mkt-pr-caller': '/ai-agent/phone',
+      '2-mkt-lead-qualifier': '/ai-agent/phone',
+      '2-mkt-partnership-caller': '/ai-agent/phone',
+      '2-ops-receptionist': '/ai-agent/phone',
+      '2-ops-dispatch-caller': '/ai-agent/phone',
+      '2-ops-coordination-caller': '/ai-agent/phone',
+      '2-fin-collections-caller': '/ai-agent/phone',
+      '2-fin-vendor-payment-caller': '/ai-agent/phone',
+      '2-fin-investor-relations-caller': '/ai-agent/phone',
+      '2-tech-it-support-hotline': '/ai-agent/phone',
+      '2-tech-help-desk-caller': '/ai-agent/phone',
+      '2-tech-incident-response-caller': '/ai-agent/phone',
+      '2-hr-receptionist': '/ai-agent/phone',
+      '2-hr-recruiting-caller': '/ai-agent/phone',
+      '2-hr-interview-scheduler': '/ai-agent/phone',
+      '2-legal-receptionist': '/ai-agent/phone',
+      '2-legal-client-intake-caller': '/ai-agent/phone',
+      '2-legal-compliance-caller': '/ai-agent/phone',
+      '2-data-research-caller': '/ai-agent/phone',
+      '2-data-analytics-caller': '/ai-agent/phone',
+      '2-data-report-caller': '/ai-agent/phone',
+      '2-prod-user-research-caller': '/ai-agent/phone',
+      '2-prod-feedback-caller': '/ai-agent/phone',
+      '2-prod-beta-caller': '/ai-agent/phone',
+      '2-sec-incident-response-caller': '/ai-agent/phone',
+      '2-sec-threat-hunting-caller': '/ai-agent/phone',
+      '2-sec-alert-response-caller': '/ai-agent/phone',
+      '2-rnd-research-caller': '/ai-agent/phone',
+      '2-rnd-partner-caller': '/ai-agent/phone',
+      '2-rnd-collab-caller': '/ai-agent/phone',
+      '2-admin-receptionist': '/ai-agent/phone',
+      '2-admin-exec-assistant-caller': '/ai-agent/phone',
+      '2-admin-switchboard': '/ai-agent/phone',
+      '2-trading-client-relations-caller': '/ai-agent/phone',
+      '2-trading-trade-confirmation-caller': '/ai-agent/phone',
+      '2-trading-investor-relations-caller': '/ai-agent/phone',
+      '2-re-property-receptionist': '/ai-agent/phone',
+      '2-re-leasing-negotiator': '/ai-agent/phone',
+      '2-re-tenant-inquiry-caller': '/ai-agent/phone',
+      '2-ins-claims-hotline': '/ai-agent/phone',
+      '2-ins-underwriting-caller': '/ai-agent/phone',
+      '2-ins-policy-caller': '/ai-agent/phone',
+      '2-healthcare-patient-scheduler': '/ai-agent/phone',
+      '2-healthcare-medical-receptionist': '/ai-agent/phone',
+      '2-healthcare-telehealth-caller': '/ai-agent/phone',
+      '2-mfg-floor-ops-caller': '/ai-agent/phone',
+      '2-mfg-shift-supervisor-caller': '/ai-agent/phone',
+      '2-mfg-emergency-response-caller': '/ai-agent/phone',
+      '2-logistics-dispatch-receptionist': '/ai-agent/phone',
+      '2-logistics-driver-hotline': '/ai-agent/phone',
+      '2-logistics-fleet-caller': '/ai-agent/phone',
+      '2-gov-public-inquiry-line': '/ai-agent/phone',
+      '2-gov-permit-hotline': '/ai-agent/phone',
+      '2-gov-citizen-services-caller': '/ai-agent/phone',
+      '2-sc-supplier-coordination-caller': '/ai-agent/phone',
+      '2-sc-logistics-phone-agent': '/ai-agent/phone',
+      '2-sc-order-status-caller': '/ai-agent/phone',
+      '2-ai-mgmt-phone-support': '/ai-agent/phone',
+      '2-ai-mgmt-escalation-caller': '/ai-agent/phone',
+      '2-ai-mgmt-system-alert-caller': '/ai-agent/phone',
+      // AI Receptionist
       '3-1': '/ai-receptionist/dashboard',
       '3-2': '/ai-receptionist/phone-numbers',
       '3-3': '/ai-receptionist/call-logs',
@@ -743,6 +854,7 @@ export default function HomeScreen() {
       '3-10': '/ai-receptionist/integrations',
       '3-11': '/ai-receptionist/notifications',
       '3-12': '/ai-receptionist/setup',
+      // AI Negotiation
       'neg-1': '/ai-negotiation/dashboard',
       'neg-2': '/ai-negotiation/phone-numbers',
       'neg-3': '/ai-negotiation/calls',
@@ -759,17 +871,22 @@ export default function HomeScreen() {
       'neg-14': '/ai-negotiation/integrations',
       'neg-15': '/ai-negotiation/notifications',
       'neg-16': '/ai-negotiation/setup',
+      // Collaboration
       '4-1': '/collaboration/team-collaboration',
       '4-2': '/collaboration/team-management',
+      // Business
       '5-1': '/business/crm',
       '5-5': '/business/cohort-analysis',
+      // Analytics
       '6-1': '/analytics/reports-insights',
       '6-2': '/analytics/analytics-performance',
       '6-3': '/analytics/analytics-performance',
+      // Marketing
       '7-1': '/marketing/sms-marketing-hub',
       '7-2': '/marketing/email-marketing-hub',
       '7-3': '/analytics/ab-testing',
       '7-4': '/marketing/campaign',
+      // Social Media
       'sm-1': '/social-media/dashboard',
       'sm-2': '/social-media/content-calendar',
       'sm-3': '/social-media/post-scheduler',
@@ -789,10 +906,56 @@ export default function HomeScreen() {
       'sm-17': '/social-media/ai-content',
       'sm-18': '/social-media/multi-account',
     };
-    
-    const route = routeMap[subItem.id];
+
+    let route = routeMap[subItem.id];
+
+    // Intelligent fallback routing for AI Agents & Employees based on ID patterns
+    if (!route && subItem.id.startsWith('2-')) {
+      if (subItem.id.startsWith('2-cx-')) route = '/ai-agent/customer';
+      else if (subItem.id.startsWith('2-sales-')) route = '/ai-agent/sales';
+      else if (subItem.id.startsWith('2-mkt-')) route = '/ai-agent/marketing';
+      else if (subItem.id.startsWith('2-ops-') || subItem.id.startsWith('2-ai-ops-')) route = '/ai-agent/operations';
+      else if (subItem.id.startsWith('2-fin-')) route = '/ai-agent/accounting';
+      else if (subItem.id.startsWith('2-tech-')) route = '/ai-agent/engineering';
+      else if (subItem.id.startsWith('2-hr-') || subItem.id.startsWith('2-ai-recruiter') || subItem.id.startsWith('2-hr-ops-') || subItem.id.startsWith('2-learning-') || subItem.id.startsWith('2-comp-')) route = '/ai-agent/hr';
+      else if (subItem.id.startsWith('2-legal-')) route = '/ai-agent/legal';
+      else if (subItem.id.startsWith('2-data-') || subItem.id.startsWith('2-bi-') || subItem.id.startsWith('2-ml-') || subItem.id.startsWith('2-analytics-')) route = '/ai-agent/data';
+      else if (subItem.id.startsWith('2-prod-') || subItem.id.startsWith('2-ai-product')) route = '/ai-agent/product';
+      else if (subItem.id.startsWith('2-sec-') || subItem.id.startsWith('2-incident-') || subItem.id.startsWith('2-pen-') || subItem.id.startsWith('2-identity-')) route = '/ai-agent/it';
+      else if (subItem.id.startsWith('2-research-') || subItem.id.startsWith('2-innovation-') || subItem.id.startsWith('2-prototype-') || subItem.id.startsWith('2-patent-')) route = '/ai-agent';
+      else if (subItem.id.startsWith('2-office-') || subItem.id.startsWith('2-exec-asst') || subItem.id.startsWith('2-facilities-') || subItem.id.startsWith('2-travel-') || subItem.id.startsWith('2-doc-controller')) route = '/ai-agent/operations';
+      else if (subItem.id.startsWith('2-equity-') || subItem.id.startsWith('2-forex-') || subItem.id.startsWith('2-crypto-') || subItem.id.startsWith('2-derivatives-') || subItem.id.startsWith('2-portfolio-') || subItem.id.startsWith('2-risk-analyst') || subItem.id.startsWith('2-compliance-trading') || subItem.id.startsWith('2-quant-') || subItem.id.startsWith('2-esg-') || subItem.id.startsWith('2-macro-') || subItem.id.startsWith('2-algo-') || subItem.id.startsWith('2-settlement-')) route = '/ai-agent';
+      else if (subItem.id.startsWith('2-property-') || subItem.id.startsWith('2-lease-') || subItem.id.startsWith('2-tenant-') || subItem.id.startsWith('2-maintenance-') || subItem.id.startsWith('2-acquisition-') || subItem.id.startsWith('2-asset-') || subItem.id.startsWith('2-dev-coordinator') || subItem.id.startsWith('2-facilities-mgr')) route = '/ai-agent';
+      else if (subItem.id.startsWith('2-underwriter') || subItem.id.startsWith('2-claims-') || subItem.id.startsWith('2-fraud-') || subItem.id.startsWith('2-actuary-') || subItem.id.startsWith('2-risk-modeler') || subItem.id.startsWith('2-policy-admin') || subItem.id.startsWith('2-customer-risk') || subItem.id.startsWith('2-catastrophe-') || subItem.id.startsWith('2-reinsurance-')) route = '/ai-agent';
+      else if (subItem.id.startsWith('2-patient-') || subItem.id.startsWith('2-medical-') || subItem.id.startsWith('2-billing-') || subItem.id.startsWith('2-care-') || subItem.id.startsWith('2-health-') || subItem.id.startsWith('2-telehealth-') || subItem.id.startsWith('2-compliance-healthcare') || subItem.id.startsWith('2-quality-improvement')) route = '/ai-agent';
+      else if (subItem.id.startsWith('2-production-') || subItem.id.startsWith('2-quality-inspector') || subItem.id.startsWith('2-supply-chain-') || subItem.id.startsWith('2-maintenance-tech') || subItem.id.startsWith('2-inventory-') || subItem.id.startsWith('2-lean-') || subItem.id.startsWith('2-safety-') || subItem.id.startsWith('2-logistics-coordinator')) route = '/ai-agent/operations';
+      else if (subItem.id.startsWith('2-route-') || subItem.id.startsWith('2-fleet-') || subItem.id.startsWith('2-warehouse-') || subItem.id.startsWith('2-dispatcher') || subItem.id.startsWith('2-tracking-') || subItem.id.startsWith('2-last-mile-') || subItem.id.startsWith('2-freight-') || subItem.id.startsWith('2-customs-')) route = '/ai-agent/operations';
+      else if (subItem.id.startsWith('2-policy-') || subItem.id.startsWith('2-regulatory-') || subItem.id.startsWith('2-public-affairs') || subItem.id.startsWith('2-grants-') || subItem.id.startsWith('2-compliance-gov') || subItem.id.startsWith('2-transparency-')) route = '/ai-agent/legal';
+      else if (subItem.id.startsWith('2-procurement-') || subItem.id.startsWith('2-inventory-spec') || subItem.id.startsWith('2-demand-') || subItem.id.startsWith('2-supplier-') || subItem.id.startsWith('2-shipping-') || subItem.id.startsWith('2-fulfillment-')) route = '/ai-agent/operations';
+      else if (subItem.id.startsWith('2-cao-') || subItem.id.startsWith('2-aod-') || subItem.id.startsWith('2-rpa-') || subItem.id.startsWith('2-workflow-spec')) route = '/command-center';
+      else if (subItem.id.startsWith('2-coo-dept') || subItem.id.startsWith('2-vp-operations') || subItem.id.startsWith('2-vp-supply-chain') || subItem.id.startsWith('2-vp-quality') || subItem.id.startsWith('2-vp-facilities') || subItem.id.startsWith('2-vp-project') || subItem.id.startsWith('2-ops-mgr')) route = '/ai-agent/operations';
+      else if (subItem.id.startsWith('2-cfo-dept') || subItem.id.startsWith('2-vp-finance') || subItem.id.startsWith('2-vp-accounting') || subItem.id.startsWith('2-vp-treasury') || subItem.id.startsWith('2-vp-investor') || subItem.id.startsWith('2-controller') || subItem.id.startsWith('2-fin-mgr') || subItem.id.startsWith('2-acct-mgr')) route = '/ai-agent/accounting';
+      else if (subItem.id.startsWith('2-cto-dept') || subItem.id.startsWith('2-vp-engineering') || subItem.id.startsWith('2-vp-infra') || subItem.id.startsWith('2-vp-aiml') || subItem.id.startsWith('2-vp-security-tech') || subItem.id.startsWith('2-architect-') || subItem.id.startsWith('2-devops-') || subItem.id.startsWith('2-frontend-') || subItem.id.startsWith('2-backend-') || subItem.id.startsWith('2-sre-')) route = '/ai-agent/engineering';
+      else if (subItem.id.startsWith('2-chro-dept') || subItem.id.startsWith('2-vp-talent') || subItem.id.startsWith('2-vp-hr-') || subItem.id.startsWith('2-vp-learning') || subItem.id.startsWith('2-vp-culture') || subItem.id.startsWith('2-vp-compensation') || subItem.id.startsWith('2-recruiting-mgr')) route = '/ai-agent/hr';
+      else if (subItem.id.startsWith('2-clo-dept') || subItem.id.startsWith('2-vp-legal') || subItem.id.startsWith('2-vp-compliance') || subItem.id.startsWith('2-vp-contracts') || subItem.id.startsWith('2-vp-ip') || subItem.id.startsWith('2-vp-governance') || subItem.id.startsWith('2-compliance-mgr')) route = '/ai-agent/legal';
+      else if (subItem.id.startsWith('2-cdao-dept') || subItem.id.startsWith('2-vp-data-') || subItem.id.startsWith('2-vp-analytics') || subItem.id.startsWith('2-vp-bi') || subItem.id.startsWith('2-data-mgr') || subItem.id.startsWith('2-analytics-mgr')) route = '/ai-agent/data';
+      else if (subItem.id.startsWith('2-ciso-dept') || subItem.id.startsWith('2-vp-security-') || subItem.id.startsWith('2-vp-cyber') || subItem.id.startsWith('2-vp-gov-risk') || subItem.id.startsWith('2-vp-privacy') || subItem.id.startsWith('2-security-arch') || subItem.id.startsWith('2-soc-mgr')) route = '/ai-agent/it';
+      else if (subItem.id.startsWith('2-vp-product') || subItem.id.startsWith('2-product-mgr') || subItem.id.startsWith('2-product-owner')) route = '/ai-agent/product';
+      else if (subItem.id.startsWith('2-vp-research') || subItem.id.startsWith('2-vp-innovation') || subItem.id.startsWith('2-vp-rd-') || subItem.id.startsWith('2-research-') || subItem.id.startsWith('2-innovation-mgr')) route = '/ai-agent';
+      else if (subItem.id.startsWith('2-cao-admin') || subItem.id.startsWith('2-vp-admin') || subItem.id.startsWith('2-vp-facilities-admin') || subItem.id.startsWith('2-admin-mgr')) route = '/ai-agent/operations';
+      else if (subItem.id.startsWith('2-cio-dept') || subItem.id.startsWith('2-vp-trading') || subItem.id.startsWith('2-vp-investments') || subItem.id.startsWith('2-trading-desk') || subItem.id.startsWith('2-portfolio-mgr') || subItem.id.startsWith('2-risk-mgr')) route = '/ai-agent';
+      else if (subItem.id.startsWith('2-creo-dept') || subItem.id.startsWith('2-vp-property') || subItem.id.startsWith('2-vp-re-') || subItem.id.startsWith('2-property-mgr') || subItem.id.startsWith('2-leasing-mgr')) route = '/ai-agent';
+      else if (subItem.id.startsWith('2-cro-dept') || subItem.id.startsWith('2-vp-underwriting') || subItem.id.startsWith('2-vp-claims') || subItem.id.startsWith('2-vp-risk') || subItem.id.startsWith('2-underwriting-mgr') || subItem.id.startsWith('2-claims-mgr') || subItem.id.startsWith('2-policy-mgr')) route = '/ai-agent';
+      else if (subItem.id.startsWith('2-cmo-healthcare') || subItem.id.startsWith('2-vp-healthcare') || subItem.id.startsWith('2-vp-patient') || subItem.id.startsWith('2-patient-services') || subItem.id.startsWith('2-medical-billing') || subItem.id.startsWith('2-scheduling-mgr')) route = '/ai-agent';
+      else if (subItem.id.startsWith('2-cpo-dept') || subItem.id.startsWith('2-vp-manufacturing') || subItem.id.startsWith('2-vp-quality') || subItem.id.startsWith('2-production-mgr') || subItem.id.startsWith('2-quality-mgr') || subItem.id.startsWith('2-safety-mgr')) route = '/ai-agent/operations';
+      else if (subItem.id.startsWith('2-clo-logistics') || subItem.id.startsWith('2-vp-transportation') || subItem.id.startsWith('2-vp-logistics') || subItem.id.startsWith('2-fleet-mgr') || subItem.id.startsWith('2-warehouse-mgr') || subItem.id.startsWith('2-distribution-mgr')) route = '/ai-agent/operations';
+      else if (subItem.id.startsWith('2-cao-gov') || subItem.id.startsWith('2-vp-public') || subItem.id.startsWith('2-vp-regulatory') || subItem.id.startsWith('2-vp-public-engagement') || subItem.id.startsWith('2-policy-mgr') || subItem.id.startsWith('2-grants-mgr')) route = '/ai-agent/legal';
+      else if (subItem.id.startsWith('2-vp-supply-chain-ops') || subItem.id.startsWith('2-procurement-mgr') || subItem.id.startsWith('2-logistics-mgr') || subItem.id.startsWith('2-warehouse-lead')) route = '/ai-agent/operations';
+      else route = '/ai-agent';
+    }
+
     if (route) {
-      router.push(route as any);
+      router.push(route);
     } else {
       Alert.alert(
         subItem.title,
@@ -804,6 +967,7 @@ export default function HomeScreen() {
 
   const renderQuickAction = ({ item }: { item: QuickAction }) => {
     const IconComponent = item.icon;
+    if (!IconComponent) return null;
     return (
       <TouchableOpacity
         style={[styles.quickActionCard, { backgroundColor: theme.colors.cardBackground }]}
@@ -821,13 +985,14 @@ export default function HomeScreen() {
 
   const renderStatCard = ({ item }: { item: StatCard }) => {
     const IconComponent = item.icon;
+    if (!IconComponent) return null;
     const isPositive = item.change.startsWith('+');
     
     return (
       <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.statHeader}>
           <View style={[styles.statIcon, { backgroundColor: `${item.color}20` }]}>
-            <IconComponent size={20} color={item.color} />
+            {IconComponent && <IconComponent size={20} color={item.color} />}
           </View>
           <Text style={[styles.statChange, { color: isPositive ? '#34C759' : '#FF3B30' }]}>
             {item.change}
@@ -939,12 +1104,13 @@ export default function HomeScreen() {
               Smart Features
             </Text>
             <TouchableOpacity>
-              <Filter size={18} color={theme.colors.secondaryText} />
+              <ListFilter size={18} color={theme.colors.secondaryText} />
             </TouchableOpacity>
           </View>
           <View style={styles.smartFeaturesContainer}>
             {smartFeatures.map((feature) => {
               const FeatureIcon = feature.icon;
+              if (!FeatureIcon) return null;
               return (
                 <TouchableOpacity
                   key={feature.id}
@@ -1064,32 +1230,24 @@ export default function HomeScreen() {
         </View>
 
         {/* Related Features - AI & Automation */}
-        <QuickLinks
-          groupId="ai"
-          title="AI Features"
-          maxItems={6}
-        />
+        <View style={{ padding: 20 }}>
+          <Text style={{ color: theme.colors.text }}>AI Features (QuickLinks temporarily disabled)</Text>
+        </View>
 
         {/* Related Features - Automation */}
-        <QuickLinks
-          groupId="automation"
-          title="Automation Tools"
-          maxItems={6}
-        />
+        <View style={{ padding: 20 }}>
+          <Text style={{ color: theme.colors.text }}>Automation Tools (QuickLinks temporarily disabled)</Text>
+        </View>
 
         {/* Related Features - Business */}
-        <QuickLinks
-          groupId="business"
-          title="Business Management"
-          maxItems={6}
-        />
+        <View style={{ padding: 20 }}>
+          <Text style={{ color: theme.colors.text }}>Business Management (QuickLinks temporarily disabled)</Text>
+        </View>
 
         {/* Related Features - Marketing */}
-        <QuickLinks
-          groupId="marketing"
-          title="Marketing Tools"
-          maxItems={6}
-        />
+        <View style={{ padding: 20 }}>
+          <Text style={{ color: theme.colors.text }}>Marketing Tools (QuickLinks temporarily disabled)</Text>
+        </View>
       </ScrollView>
 
       {/* Sidebar Overlay */}
@@ -1114,6 +1272,7 @@ export default function HomeScreen() {
             
             <ScrollView style={styles.sidebarContent} showsVerticalScrollIndicator={false}>
               {sidebarOptions.map((option) => {
+                if (!option.icon) return null;
                 const IconComponent = option.icon;
                 const isExpanded = expandedSections.has(option.id);
                 return (
@@ -1138,6 +1297,7 @@ export default function HomeScreen() {
                     {isExpanded && option.subItems && (
                       <View style={styles.subItemsContainer}>
                         {option.subItems.map((subItem) => {
+                          if (!subItem.icon) return null;
                           const SubIconComponent = subItem.icon;
                           const hasSubSections = subItem.subSections && subItem.subSections.length > 0;
                           const isSubSectionExpanded = expandedSubSections.has(subItem.id);
@@ -1172,6 +1332,7 @@ export default function HomeScreen() {
                                 {isSubSectionExpanded && subItem.subSections && (
                                   <View style={styles.nestedSectionsContainer}>
                                     {subItem.subSections.map((section) => {
+                                      if (!section.icon) return null;
                                       const SectionIcon = section.icon;
                                       const isSectionExpanded = expandedSubSections.has(section.id);
 
@@ -1203,6 +1364,7 @@ export default function HomeScreen() {
                                           {isSectionExpanded && (
                                             <View style={styles.nestedItemsContainer}>
                                               {section.items.map((item) => {
+                                                if (!item.icon) return null;
                                                 const ItemIcon = item.icon;
                                                 return (
                                                   <TouchableOpacity

@@ -17,14 +17,13 @@ import {
   Mic,
   User,
   Zap,
-  Bot,
   Activity,
   TrendingUp,
   Timer,
   Target,
-  BarChart2,
-  LineChart,
-  PieChart,
+  ChartBar,
+  ChartLine,
+  ChartPie,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInUp, FadeInRight } from 'react-native-reanimated';
@@ -133,7 +132,7 @@ export default function AnalysisPerformanceAgentsScreen() {
 
         <View style={styles.statsRow}>
           <View style={[styles.statPill, { backgroundColor: colors.border + '30' }]}>
-            <Bot size={14} color={colors.text} />
+            <User size={14} color={colors.text} />
             <Text style={[styles.statValue, { color: colors.text }]}>{stats.total}</Text>
           </View>
           <View style={[styles.statPill, { backgroundColor: '#E74C3C15' }]}>

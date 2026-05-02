@@ -13,8 +13,8 @@ import {
   ChevronLeft,
   Plus,
   Search,
-  Filter,
-  BarChart3,
+  ListFilter,
+  ChartBar,
   Megaphone,
   Palette,
   PenTool,
@@ -24,13 +24,13 @@ import {
   Mail,
   Globe,
   Sparkles,
-  Bot,
   Star,
-  CheckCircle,
+  CircleCheck,
   Clock,
   MessageSquare,
   TrendingUp as Trending,
   Users,
+  User,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInUp, FadeIn } from 'react-native-reanimated';
@@ -111,7 +111,7 @@ const MARKETING_SUB_AGENTS: SubAgent[] = [
     name: 'Marketing Analytics AI',
     title: 'Data & Insights Specialist',
     description: 'Analyzes marketing data, generates reports, and provides actionable insights',
-    icon: BarChart3,
+    icon: ChartBar,
     status: 'active',
     tasksCompleted: 1876,
     performance: 96.2,
@@ -283,7 +283,7 @@ export default function MarketingAgentsScreen() {
 
           <View style={[styles.agentStats, { borderTopColor: colors.border }]}>
             <View style={styles.stat}>
-              <CheckCircle size={14} color={colors.tint} />
+              <CircleCheck size={14} color={colors.tint} />
               <Text style={[styles.statValue, { color: colors.text }]}>
                 {agent.tasksCompleted.toLocaleString()}
               </Text>
@@ -413,7 +413,7 @@ export default function MarketingAgentsScreen() {
           onChangeText={setSearchQuery}
         />
         <TouchableOpacity>
-          <Filter size={20} color={colors.icon} />
+          <ListFilter size={20} color={colors.icon} />
         </TouchableOpacity>
       </View>
 
@@ -436,7 +436,7 @@ export default function MarketingAgentsScreen() {
 
         {filteredAgents.length === 0 && (
           <View style={styles.emptyState}>
-            <Bot size={48} color={colors.icon} />
+            <User size={48} color={colors.icon} />
             <Text style={[styles.emptyTitle, { color: colors.text }]}>
               No agents found
             </Text>

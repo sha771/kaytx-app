@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { MessageSquare, Phone, Star, BarChart3, Users, Clock } from 'lucide-react-native';
+import { MessageSquare, Phone, Star, ChartBar, Users, Clock } from 'lucide-react-native';
 
 interface Survey {
   id: string;
@@ -69,7 +69,7 @@ export default function TextVoiceSurveyScreen() {
           <Text style={styles.statLabel}>Responses</Text>
         </View>
         <View style={styles.stat}>
-          <BarChart3 size={16} color="#666" />
+          <ChartBarBig size={16} color="#666" />
           <Text style={styles.statValue}>{survey.completion}%</Text>
           <Text style={styles.statLabel}>Completion</Text>
         </View>
@@ -153,7 +153,7 @@ export default function TextVoiceSurveyScreen() {
               <Text style={styles.quickActionText}>Voice Survey</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.quickAction}>
-              <BarChart3 size={24} color="#FF9500" />
+              <ChartBarBig size={24} color="#FF9500" />
               <Text style={styles.quickActionText}>Analytics</Text>
             </TouchableOpacity>
           </View>

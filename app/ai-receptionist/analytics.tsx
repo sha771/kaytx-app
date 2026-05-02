@@ -19,7 +19,7 @@ import {
   Star,
   Calendar,
   PhoneMissed,
-  CheckCircle,
+  CircleCheck,
   Users,
   Activity,
   Zap,
@@ -27,7 +27,7 @@ import {
   Shield,
   Server,
   Layers,
-  AlertTriangle,
+  TriangleAlert,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { Stack } from 'expo-router';
@@ -86,7 +86,7 @@ export default function ReceptionistAnalyticsScreen() {
         title: 'Answered',
         value: analytics.answeredCalls.toLocaleString(),
         change: `${analytics.missedCalls} missed`,
-        icon: CheckCircle,
+        icon: CircleCheck,
         color: '#34C759',
         trend: 'up' as TrendDirection,
         positive: true,
@@ -406,18 +406,18 @@ export default function ReceptionistAnalyticsScreen() {
           <View style={styles.logFilterRow}>
             {(['all', 'errors', 'security'] as const).map(filter => (
               <TouchableOpacity
-                key={filter}
+                key={Filter}
                 style={[
                   styles.logFilterButton,
-                  { backgroundColor: logFilter === filter ? theme.colors.primary : theme.colors.cardBackground },
+                  { backgroundColor: logFilter === Filter ? theme.colors.primary : theme.colors.cardBackground },
                 ]}
-                onPress={() => setLogFilter(filter)}
-                testID={`receptionist-analytics-log-filter-${filter}`}
+                onPress={() => setLogFilter(Filter)}
+                testID={`receptionist-analytics-log-Filter-${Filter}`}
               >
                 <Text
                   style={[
                     styles.logFilterText,
-                    { color: logFilter === filter ? 'white' : theme.colors.secondaryText },
+                    { color: logFilter === Filter ? 'white' : theme.colors.secondaryText },
                   ]}
                 >
                   {filter === 'all' ? 'All' : filter === 'errors' ? 'Errors' : 'Security'}
@@ -430,7 +430,7 @@ export default function ReceptionistAnalyticsScreen() {
               <View key={log.id} style={styles.logRow} testID={`receptionist-analytics-log-${log.id}`}>
                 <View style={styles.logIcon}>
                   {log.level === 'errors' ? (
-                    <AlertTriangle size={16} color="#FF3B30" />
+                    <TriangleAlert size={16} color="#FF3B30" />
                   ) : log.level === 'security' ? (
                     <Shield size={16} color={theme.colors.primary} />
                   ) : (

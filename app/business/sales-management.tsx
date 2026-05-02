@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { DollarSign, TrendingUp, TrendingDown, Target, Users, Calendar, BarChart3, PieChart } from 'lucide-react-native';
+import { DollarSign, TrendingUp, TrendingDown, Target, Users, Calendar, ChartBar, ChartPie } from 'lucide-react-native';
 
 const salesData = [
   { id: 1, rep: 'John Smith', deals: 12, revenue: 145000, target: 120000, conversion: 24 },
@@ -228,11 +228,11 @@ export default function SalesManagementScreen() {
               <Text style={styles.actionText}>Schedule Call</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.actionButton}>
-              <BarChart3 size={24} color="#059669" />
+              <ChartBarBig size={24} color="#059669" />
               <Text style={styles.actionText}>View Reports</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.actionButton}>
-              <PieChart size={24} color="#059669" />
+              <ChartPie size={24} color="#059669" />
               <Text style={styles.actionText}>Analytics</Text>
             </TouchableOpacity>
           </View>

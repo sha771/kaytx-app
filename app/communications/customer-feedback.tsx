@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { MessageCircle, Star, TrendingUp, Users, BarChart3, Heart } from 'lucide-react-native';
+import { MessageCircle, Star, TrendingUp, Users, ChartBar, Heart } from 'lucide-react-native';
 
 interface Feedback {
   id: string;
@@ -165,12 +165,12 @@ export default function CustomerFeedbackScreen() {
         <View style={styles.filterContainer}>
           {['all', 'positive', 'neutral', 'negative'].map(filter => (
             <TouchableOpacity
-              key={filter}
-              style={[styles.filterButton, selectedFilter === filter && styles.activeFilter]}
-              onPress={() => setSelectedFilter(filter as any)}
+              key={Filter}
+              style={[styles.filterButton, selectedFilter === Filter && styles.activeFilter]}
+              onPress={() => setSelectedFilter(Filter as any)}
             >
-              <Text style={[styles.filterText, selectedFilter === filter && styles.activeFilterText]}>
-                {filter.charAt(0).toUpperCase() + filter.slice(1)}
+              <Text style={[styles.filterText, selectedFilter === Filter && styles.activeFilterText]}>
+                {Filter.charAt(0).toUpperCase() + Filter.slice(1)}
               </Text>
             </TouchableOpacity>
           ))}
@@ -187,7 +187,7 @@ export default function CustomerFeedbackScreen() {
           <Text style={styles.sectionTitle}>Quick Actions</Text>
           <View style={styles.quickActions}>
             <TouchableOpacity style={styles.quickAction}>
-              <BarChart3 size={24} color="#007AFF" />
+              <ChartBarBig size={24} color="#007AFF" />
               <Text style={styles.quickActionText}>Analytics</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.quickAction}>

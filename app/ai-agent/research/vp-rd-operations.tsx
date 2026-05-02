@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { FlaskConical, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { FlaskConical, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'867',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.9s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.7%',icon:Target,color:'#006064'}];
+  const stats = [{label:'Tasks',value:'867',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.9s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.7%',icon:Target,color:'#006064'}];
   const capabilities = ['R&D Operations','Resource Planning','Compliance','Lab Management','Budget Oversight','Process Optimization'];
   const responsibilities = ['R&D operations strategy & management','Resource planning & allocation','Research compliance & ethics oversight','Lab & facility management','R&D budget development & oversight','Process optimization & efficiency'];
-  const activities = [{time:'3 min ago',text:'Optimized R&D resource allocation',icon:CheckCircle2},{time:'6 min ago',text:'Reviewed compliance for 5 studies',icon:Clock},{time:'9 min ago',text:'Managed $20M R&D budget',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Optimized R&D resource allocation',icon: CircleCheckBig},{time:'6 min ago',text:'Reviewed compliance for 5 studies',icon:Clock},{time:'9 min ago',text:'Managed $20M R&D budget',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

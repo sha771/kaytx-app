@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bot, Calendar, Mail, ListChecks, MessageCircle, Search, Bell } from 'lucide-react-native';
+import { Calendar, Mail, ListChecks, MessageCircle, Search, Bell , User} from 'lucide-react-native';
 import { DepartmentAIPage, DeptSubAgent } from '@/components/DepartmentAIPage';
 
 const subAgents: DeptSubAgent[] = [
@@ -12,5 +12,5 @@ const subAgents: DeptSubAgent[] = [
 ];
 
 export default function AIPersonalAssistantAIScreen() {
-  return <DepartmentAIPage config={{ title: 'AI Personal Assistant', subtitle: 'Organize → Automate → Focus', accentColor: '#6366F1', gradientColors: ['#6366F1', '#4F46E5'], mainIcon: Bot, mainAgentId: 'main-pa', category: 'ai-personal-assistant', statLabels: ['Tasks Done', 'Success', 'Sub-Agents'], subAgents }} />;
+  return <DepartmentAIPage config={{ title: 'AI Personal Assistant', subtitle: 'Organize → Automate → Focus', accentColor: '#6366F1', gradientColors: ['#6366F1', '#4F46E5'], mainicon: User, mainAgentId: 'main-pa', category: 'ai-personal-assistant', statLabels: ['Tasks Done', 'Success', 'Sub-Agents'], subAgents }} />;
 }

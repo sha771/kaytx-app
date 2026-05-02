@@ -16,11 +16,11 @@ import {
   Link2,
   Briefcase,
   Users,
-  AlertCircle,
+  CircleAlert,
   Globe,
   Activity,
   Timer,
-  CheckCircle,
+  CircleCheck,
   ChevronRight,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
@@ -204,7 +204,7 @@ export default function AINegotiationSetupScreen() {
                     <Text style={[styles.pickupOptionSubtitle, { color: callPickupMode === 'auto' ? 'rgba(255,255,255,0.8)' : theme.colors.secondaryText }]}>AI immediately answers all calls</Text>
                   </View>
                 </View>
-                {callPickupMode === 'auto' && <CheckCircle size={20} color="white" />}
+                {callPickupMode === 'auto' && <CircleCheck size={20} color="white" />}
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -222,7 +222,7 @@ export default function AINegotiationSetupScreen() {
                     <Text style={[styles.pickupOptionSubtitle, { color: callPickupMode === 'wait' ? 'rgba(255,255,255,0.8)' : theme.colors.secondaryText }]}>Let company pick first, AI as fallback</Text>
                   </View>
                 </View>
-                {callPickupMode === 'wait' && <CheckCircle size={20} color="white" />}
+                {callPickupMode === 'wait' && <CircleCheck size={20} color="white" />}
               </TouchableOpacity>
             </View>
 
@@ -260,7 +260,7 @@ export default function AINegotiationSetupScreen() {
           <View style={[styles.orderConfirmCard, { backgroundColor: theme.colors.cardBackground }]} testID="negotiation-order-confirmation">
             <View style={styles.orderConfirmHeader}>
               <View style={styles.orderConfirmTitleRow}>
-                <CheckCircle size={20} color={theme.colors.primary} />
+                <CircleCheck size={20} color={theme.colors.primary} />
                 <Text style={[styles.orderConfirmTitle, { color: theme.colors.text }]}>Automatic Order Confirmation</Text>
               </View>
               <Switch
@@ -341,7 +341,7 @@ export default function AINegotiationSetupScreen() {
                     'Special instructions or notes'
                   ].map((step, index) => (
                     <View key={index} style={styles.featureRow}>
-                      <CheckCircle size={16} color={theme.colors.success} />
+                      <CircleCheck size={16} color={theme.colors.success} />
                       <Text style={[styles.featureText, { color: theme.colors.secondaryText }]}>{step}</Text>
                     </View>
                   ))}
@@ -358,9 +358,9 @@ export default function AINegotiationSetupScreen() {
               <View style={styles.blueprintLeft}>
                 <View style={[styles.statusIcon, { backgroundColor: step.completed ? '#34C75920' : '#FF3B3015' }]}>
                   {step.completed ? (
-                    <CheckCircle size={16} color={theme.colors.success} />
+                    <CircleCheck size={16} color={theme.colors.success} />
                   ) : (
-                    <AlertCircle size={16} color={theme.colors.error} />
+                    <CircleAlert size={16} color={theme.colors.error} />
                   )}
                 </View>
                 <View>

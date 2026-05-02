@@ -21,15 +21,15 @@ import {
   Tag,
   Calendar,
   TrendingUp,
-  Filter,
+  ListFilter,
   X,
-  Edit,
+  Pencil,
   Trash2,
   Star,
-  CheckCircle,
+  CircleCheck,
   Clock,
   DollarSign,
-  AlertCircle,
+  CircleAlert,
   Link2,
 } from 'lucide-react-native';
 import { mockNegotiationContacts, mockDeals, mockIntegrations } from '@/utils/mockNegotiationData';
@@ -146,7 +146,7 @@ export default function CRMScreen() {
           headerRight: () => (
             <View style={styles.headerRight}>
               <TouchableOpacity onPress={() => setShowFilters(!showFilters)} style={styles.headerButton}>
-                <Filter size={22} color="#FF2D92" />
+                <ListFilter size={22} color="#FF2D92" />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => setShowAddModal(true)} style={styles.headerButton}>
                 <Plus size={24} color="#FF2D92" />
@@ -280,7 +280,7 @@ export default function CRMScreen() {
             <Text style={styles.pipelineTitle}>Risk Alerts</Text>
             {riskAlerts.map(alert => (
               <View key={alert.id} style={styles.alertCard}>
-                <AlertCircle size={18} color="#FF3B30" />
+                <CircleAlert size={18} color="#FF3B30" />
                 <View style={{ flex: 1 }}>
                   <Text style={styles.alertTitle}>{alert.title}</Text>
                   <Text style={styles.alertMeta}>{alert.detail}</Text>
@@ -365,7 +365,7 @@ export default function CRMScreen() {
                 <Text style={styles.modalTitleBar}>Contact Details</Text>
                 <View style={styles.modalHeaderActions}>
                   <TouchableOpacity style={styles.modalHeaderButton}>
-                    <Edit size={20} color="#FF2D92" />
+                    <Pencil size={20} color="#FF2D92" />
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.modalHeaderButton}>
                     <Trash2 size={20} color="#FF3B30" />
@@ -537,7 +537,7 @@ export default function CRMScreen() {
               </View>
 
               <TouchableOpacity style={styles.createButton}>
-                <CheckCircle size={20} color="#FFFFFF" />
+                <CircleCheck size={20} color="#FFFFFF" />
                 <Text style={styles.createButtonText}>Create Contact</Text>
               </TouchableOpacity>
             </ScrollView>

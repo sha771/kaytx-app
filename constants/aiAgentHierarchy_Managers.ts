@@ -10,12 +10,12 @@
  * - Level 5: Specialists (Individual Contributors & Sub-Agents)
  * 
  * Combined with aiAgentHierarchyComplete.ts:
- * - Total: 106 Specialized AI Agents
- * - 14 Departments
+ * - Total: 122 Specialized AI Agents
+ * - 15 Departments
  * - 5 Hierarchy Levels
- * 
- * @version 3.0.0
- * @lastUpdated 2026-03-25
+ *
+ * @version 3.1.0
+ * @lastUpdated 2026-04-26
  */
 
 import type { LucideIcon } from 'lucide-react-native';
@@ -31,11 +31,11 @@ import {
   Banknote,
   CreditCard,
   DollarSign,
-  BarChart3,
-  PieChart,
-  LineChart,
+  ChartBar,
+  ChartPie,
+  ChartLine,
   
-  // Technology Icons
+  // Microchip Icons
   Cpu,
   Server,
   Code,
@@ -51,7 +51,7 @@ import {
   Megaphone,
   Zap,
   Globe,
-  FileEdit,
+  FilePen,
   Share2,
   Search,
   Eye,
@@ -84,7 +84,7 @@ import {
   // Operations Icons
   Settings,
   Workflow,
-  CheckSquare,
+  SquareCheck,
   Layers,
   Box,
   ShoppingCart as ShoppingCartIcon,
@@ -105,14 +105,14 @@ import {
   FileCheck,
   FileBadge,
   ShieldCheck,
-  AlertTriangle,
+  TriangleAlert,
   
   // Data Icons
   Brain,
   Activity,
-  FileBarChart2,
+  FileChartColumn,
   ScanLine,
-  
+
   // Product Icons
   Lightbulb,
   Compass,
@@ -122,16 +122,16 @@ import {
   
   // Security Icons
   ShieldAlert,
-  AlertOctagon,
-  Fingerprint,
+  OctagonAlert,
+  FingerprintPattern,
   Scan,
-  AlertCircle,
+  CircleAlert,
   
   // Research Icons
   Microscope,
   Binoculars,
   FlaskConical,
-  AtomIcon,
+  Atom,
   
   // Admin Icons
   Printer,
@@ -162,7 +162,7 @@ export const managers: AIEmployeeProfile[] = [
     level: 'manager',
     department: 'finance',
     description: 'Manages financial planning processes, budget coordination, and financial analysis operations.',
-    icon: BarChart3,
+    icon: ChartBar,
     color: '#4CAF50',
     orgChart: {
       id: 'finance-manager',
@@ -452,7 +452,7 @@ export const managers: AIEmployeeProfile[] = [
     level: 'manager',
     department: 'technology',
     description: 'Leads quality assurance teams, testing strategies, and quality control processes.',
-    icon: CheckSquare,
+    icon: SquareCheck,
     color: '#0D47A1',
     orgChart: {
       id: 'qa-manager',
@@ -1280,7 +1280,7 @@ export const managers: AIEmployeeProfile[] = [
     level: 'manager',
     department: 'data_intelligence',
     description: 'Manages business analytics teams, insights delivery, and data-driven decision support.',
-    icon: BarChart3,
+    icon: ChartBar,
     color: '#5E35B1',
     orgChart: {
       id: 'analytics-manager',
@@ -1328,7 +1328,7 @@ export const managers: AIEmployeeProfile[] = [
     level: 'manager',
     department: 'data_intelligence',
     description: 'Manages BI development, dashboard creation, and self-service analytics programs.',
-    icon: FileBarChart2,
+    icon: FileChartColumn,
     color: '#512DA8',
     orgChart: {
       id: 'bi-manager',
@@ -1418,6 +1418,116 @@ export const managers: AIEmployeeProfile[] = [
     status: 'active',
     isPremium: true,
     dangerLevel: 'critical'
+  },
+
+  // ========== CUSTOMER INSIGHTS & ANALYTICS MANAGERS (2) ==========
+  {
+    id: 'customer-insights-manager',
+    name: 'AI Customer Insights Manager',
+    title: 'Manager - Customer Insights & Journey Analytics',
+    level: 'manager',
+    department: 'customer_insights_analytics',
+    description: 'Manages customer journey analytics, segmentation, personalization, and voice analytics teams. Transforms raw customer data into strategic insights.',
+    icon: Search,
+    color: '#6366F1',
+    orgChart: {
+      id: 'customer-insights-manager',
+      level: 'manager',
+      department: 'customer_insights_analytics',
+      title: 'Customer Insights Manager',
+      reportsTo: 'vp-customer-insights',
+      directReports: ['journey-analytics-lead', 'segmentation-lead', 'personalization-lead', 'voice-analytics-lead'],
+      peerPositions: ['behavioral-analytics-manager']
+    },
+    responsibilities: [
+      'Customer Journey Analytics',
+      'Segmentation Strategy',
+      'Personalization Architecture',
+      'Voice Analytics Operations',
+      'Insight Delivery',
+      'Cross-channel Analysis',
+      'Omnichannel Insights',
+      'Customer Profiling'
+    ],
+    capabilities: [
+      'Journey Analytics',
+      'Segmentation Strategy',
+      'Personalization Architecture',
+      'Voice Analytics',
+      'Touchpoint Optimization',
+      'Customer Profiling',
+      'Omnichannel Insights',
+      'Insight Presentation',
+      'Data Storytelling',
+      'Dashboard Design'
+    ],
+    keyMetrics: ['Journey Completion Rate', 'Segmentation Accuracy', 'Personalization Uplift', 'Voice Insight Quality', 'Insight Adoption Rate'],
+    humanCostEquivalent: '$120,000/year',
+    aiCost: '$6,000/year',
+    efficiency: '20x cost efficiency',
+    a2aEndpoints: ['/consult/customer-insights-mgr', '/insights/journey', '/analytics/segmentation', '/personalization/manage'],
+    canEscalateTo: ['vp-customer-insights', 'ccio'],
+    canReceiveEscalationFrom: ['journey-analytics-lead', 'segmentation-lead', 'personalization-lead', 'voice-analytics-lead'],
+    consultationStyle: 'analytical',
+    route: '/ai-agent/insights/customer-insights-manager',
+    apiEndpoint: '/api/agents/insights/customer-insights-manager',
+    status: 'active',
+    isPremium: true,
+    dangerLevel: 'high'
+  },
+  {
+    id: 'behavioral-analytics-manager',
+    name: 'AI Behavioral Analytics Manager',
+    title: 'Manager - Behavioral Analytics & Predictive Intelligence',
+    level: 'manager',
+    department: 'customer_insights_analytics',
+    description: 'Manages behavioral analysis, sentiment intelligence, CLV optimization, and churn prediction teams. Uses advanced ML models to predict customer behavior and drive retention.',
+    icon: Brain,
+    color: '#8B5CF6',
+    orgChart: {
+      id: 'behavioral-analytics-manager',
+      level: 'manager',
+      department: 'customer_insights_analytics',
+      title: 'Behavioral Analytics Manager',
+      reportsTo: 'vp-behavioral-analytics',
+      directReports: ['behavioral-lead', 'sentiment-lead', 'clv-analytics-lead', 'churn-prediction-lead'],
+      peerPositions: ['customer-insights-manager']
+    },
+    responsibilities: [
+      'Behavioral Analytics Strategy',
+      'Sentiment Intelligence',
+      'CLV Optimization',
+      'Churn Prediction & Prevention',
+      'Predictive Modeling',
+      'Retention Analytics',
+      'Decision Science',
+      'Cohort Analysis'
+    ],
+    capabilities: [
+      'Behavioral Modeling',
+      'Sentiment Analysis',
+      'CLV Forecasting',
+      'Churn Prediction',
+      'Predictive Analytics',
+      'Retention Strategy',
+      'Survival Analysis',
+      'Decision Science',
+      'Machine Learning',
+      'Statistical Modeling'
+    ],
+    keyMetrics: ['Prediction Accuracy', 'CLV Growth Rate', 'Churn Reduction Rate', 'Sentiment Score', 'Retention ROI'],
+    humanCostEquivalent: '$130,000/year',
+    aiCost: '$6,500/year',
+    efficiency: '20x cost efficiency',
+    a2aEndpoints: ['/consult/behavioral-analytics-mgr', '/predict/behavior', '/analytics/churn', '/sentiment/manage'],
+    canEscalateTo: ['vp-behavioral-analytics', 'ccio'],
+    canReceiveEscalationFrom: ['behavioral-lead', 'sentiment-lead', 'clv-analytics-lead', 'churn-prediction-lead'],
+    consultationStyle: 'analytical',
+    route: '/ai-agent/insights/behavioral-analytics-manager',
+    apiEndpoint: '/api/agents/insights/behavioral-analytics-manager',
+    status: 'active',
+    isPremium: true,
+    dangerLevel: 'high'
   }
 ];
 

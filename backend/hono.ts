@@ -26,7 +26,7 @@ import { rateLimitMiddleware, RateLimitPresets } from './services/consolidated-r
 import { secureAuthErrorHandler } from './middleware/secure-auth-error-handler';
 import { secureAuthMiddleware } from './middleware/secure-auth-middleware';
 import { protectAllRoutes } from './middleware/route-protection';
-import { createLogger } from './lib/production-logger';
+import { createLogger, replaceConsoleLog } from './lib/production-logger';
 import { stripeWebhookApp, enhancedStripeWebhookApp } from './webhooks/unified-stripe';
 import { jsonApiError } from './lib/api-error';
 import { validateBody, validateParams, validateQuery } from './middleware/validate';
@@ -67,6 +67,7 @@ import enhancedCRMSMMRoutes from './api/routes/enhanced-crm-smm';
 const emailService = new EmailCampaignService();
 
 const logger = createLogger('HonoServer');
+replaceConsoleLog('HonoServer');
 const app = new Hono();
 
 const mfaEnrollVerifyBodySchema = z.object({

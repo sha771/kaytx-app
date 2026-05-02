@@ -13,8 +13,8 @@ import {
   TrendingDown,
   Target,
   Calendar,
-  AlertTriangle,
-  CheckCircle,
+  TriangleAlert,
+  CircleCheck,
 } from 'lucide-react-native';
 
 interface Forecast {
@@ -136,7 +136,7 @@ export default function PredictiveForecastingScreen() {
 
         <View style={styles.section}>
           <View style={styles.insightsCard}>
-            <CheckCircle size={24} color="#10B981" />
+            <CircleCheck size={24} color="#10B981" />
             <View style={styles.insightsText}>
               <Text style={styles.insightsTitle}>Strong Growth Predicted</Text>
               <Text style={styles.insightsSubtitle}>
@@ -210,7 +210,7 @@ export default function PredictiveForecastingScreen() {
           ))}
 
           <View style={styles.warningCard}>
-            <AlertTriangle size={20} color="#F59E0B" />
+            <TriangleAlert size={20} color="#F59E0B" />
             <View style={styles.warningText}>
               <Text style={styles.warningTitle}>Action Required</Text>
               <Text style={styles.warningMessage}>
@@ -223,19 +223,19 @@ export default function PredictiveForecastingScreen() {
             <Text style={styles.recommendationsTitle}>AI Recommendations</Text>
             <View style={styles.recommendationsList}>
               <View style={styles.recommendationItem}>
-                <CheckCircle size={16} color="#10B981" />
+                <CircleCheck size={16} color="#10B981" />
                 <Text style={styles.recommendationText}>
                   Increase marketing spend by 15% to maximize predicted growth
                 </Text>
               </View>
               <View style={styles.recommendationItem}>
-                <CheckCircle size={16} color="#10B981" />
+                <CircleCheck size={16} color="#10B981" />
                 <Text style={styles.recommendationText}>
                   Focus on customer retention programs to reduce churn
                 </Text>
               </View>
               <View style={styles.recommendationItem}>
-                <CheckCircle size={16} color="#10B981" />
+                <CircleCheck size={16} color="#10B981" />
                 <Text style={styles.recommendationText}>
                   Optimize conversion funnel for 20% improvement potential
                 </Text>

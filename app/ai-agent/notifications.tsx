@@ -14,20 +14,19 @@ import {
   Check,
   Trash2,
   Settings,
-  Filter,
-  AlertCircle,
+  ListFilter,
+  CircleAlert,
   Info,
-  CheckCircle,
+  CircleCheck,
   MessageSquare,
   Zap,
   Star,
   TrendingUp,
   Clock,
   ChevronRight,
-  MoreVertical,
+  EllipsisVertical,
   BellRing,
   BellOff,
-  Bot,
   GitBranch,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -136,15 +135,14 @@ const PREFERENCES: NotificationPreference[] = [
 ];
 
 const TYPE_CONFIG = {
-  alert: { icon: AlertCircle, color: '#EF4444', bg: '#EF4444' },
+  alert: { icon: CircleAlert, color: '#EF4444', bg: '#EF4444' },
   info: { icon: Info, color: '#3B82F6', bg: '#3B82F6' },
-  success: { icon: CheckCircle, color: '#10B981', bg: '#10B981' },
+  success: { icon: CircleCheck, color: '#10B981', bg: '#10B981' },
   warning: { icon: Zap, color: '#F59E0B', bg: '#F59E0B' },
 };
 
 const CATEGORY_ICONS = {
-  agent: Bot,
-  system: Settings,
+  agent: Settings,
   workflow: GitBranch,
   performance: TrendingUp,
 };

@@ -14,20 +14,20 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   ArrowLeft,
   Zap,
-  CheckCircle,
+  CircleCheck,
   Clock,
   Play,
   Pause,
   Settings,
   Plus,
   Search,
-  Filter,
+  ListFilter,
   TrendingUp,
-  BarChart3,
+  ChartBar,
   Users,
   Target,
   Calendar,
-  AlertTriangle,
+  TriangleAlert,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
@@ -57,6 +57,22 @@ interface AutomationTemplate {
   usageCount: number;
 }
 
+interface ActivityEvent {
+  action?: string;
+  eventType?: string;
+  timestamp?: string;
+  status?: string;
+  details?: {
+    trigger?: string;
+    source?: string;
+    description?: string;
+    summary?: string;
+    nextRun?: string;
+    executions?: string;
+    successRate?: string;
+  };
+}
+
 export default function SmartTaskAutomationScreen() {
   const { theme } = useTheme();
   const insets = useSafeAreaInsets();
@@ -69,7 +85,7 @@ export default function SmartTaskAutomationScreen() {
   const { data: analytics } = trpc.aiAgents.getAgentAnalytics.useQuery({ timeRange: '7d' });
   const { data: activityData } = trpc.aiAgents.getAgentActivity.useQuery({ limit: 300 });
 
-  const activities = activityData?.activities ?? [];
+  const activities = (activityData?.activities ?? []) as ActivityEvent[];
 
   const getRelativeTime = (isoTimestamp?: string) => {
     if (!isoTimestamp) return '—';
@@ -91,17 +107,17 @@ export default function SmartTaskAutomationScreen() {
   };
 
   const taskNames = (analytics?.topActions && analytics.topActions.length > 0)
-    ? analytics.topActions.map((a: any) => a.action).filter(Boolean)
+    ? analytics.topActions.map((a: { action?: string }) => a.action).filter(Boolean)
     : Array.from(
         new Set(
           activities
-            .map((ev: any) => ev.action || (ev as any).eventType)
+            .map((ev: ActivityEvent) => ev.action || ev.eventType)
             .filter(Boolean)
         )
       ).slice(0, 50);
 
-  const tasks: AutomationTask[] = taskNames.map((name: any, idx: number) => {
-    const last = activities.find((ev: any) => (ev.action || (ev as any).eventType) === name);
+  const tasks: AutomationTask[] = taskNames.map((name: string, idx: number) => {
+    const last = activities.find((ev: ActivityEvent) => (ev.action || ev.eventType) === name);
     const lastTs = last?.timestamp ? new Date(last.timestamp).getTime() : 0;
     const isRecent = lastTs ? Date.now() - lastTs < 24 * 60 * 60 * 1000 : false;
 
@@ -115,12 +131,12 @@ export default function SmartTaskAutomationScreen() {
             : 'completed';
 
     const category = categorizeAction(name);
-    const trigger = last?.details?.trigger || last?.details?.source || (last as any)?.eventType || 'Event-driven';
+    const trigger = last?.details?.trigger || last?.details?.source || last?.eventType || 'Event-driven';
 
     return {
       id: `automation-${idx}`,
       name,
-      description: last?.details?.description || last?.details?.summary || (last as any)?.eventType || 'Automated workflow execution',
+      description: last?.details?.description || last?.details?.summary || last?.eventType || 'Automated workflow execution',
       category,
       status,
       trigger,
@@ -172,8 +188,8 @@ export default function SmartTaskAutomationScreen() {
     switch (status) {
       case 'active': return Play;
       case 'paused': return Pause;
-      case 'completed': return CheckCircle;
-      case 'failed': return AlertTriangle;
+      case 'completed': return CircleCheck;
+      case 'failed': return TriangleAlert;
       default: return Clock;
     }
   };
@@ -402,7 +418,7 @@ export default function SmartTaskAutomationScreen() {
         </TouchableOpacity>
         
         <TouchableOpacity style={styles.quickAction}>
-          <BarChart3 size={20} color={theme.colors.primary} />
+          <ChartBarBig size={20} color={theme.colors.primary} />
           <Text style={[styles.quickActionText, { color: theme.colors.primary }]}>Export Analytics</Text>
         </TouchableOpacity>
       </View>

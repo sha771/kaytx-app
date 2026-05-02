@@ -6,7 +6,7 @@ import { aiEmployees } from '@/constants/aiEmployees';
 import { trpc } from '@/lib/trpc';
 import {
     Building2,
-    ArrowLeft, Phone, CreditCard, FileText, Shield, TrendingUp, Clock, Star, Zap, Globe, BarChart3, Users, Lock, DollarSign, Landmark } from 'lucide-react-native';
+    ArrowLeft, Phone, CreditCard, FileText, Shield, TrendingUp, Clock, Star, Zap, Globe, ChartBar, Users, Lock, DollarSign, Landmark } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const { width } = Dimensions.get('window');
@@ -53,7 +53,7 @@ export default function BankingIndustryScreen() {
                         router.push('/enterprise/billing');
                         return;
                     }
-                    router.push(agent.route as any);
+                    router.push(agent.route);
                 }}
             >
                 <View style={[styles.agentIcon, { backgroundColor: agent.color + '20' }]}><IconComponent size={28} color={agent.color} /></View>
@@ -97,7 +97,7 @@ export default function BankingIndustryScreen() {
                 <View style={styles.section}>
                     <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Benefits</Text>
                     <View style={styles.benefitsGrid}>
-                        {[{ icon: Lock, color: '#FF6B6B', title: 'Bank-Grade Security', desc: 'PCI DSS, SOC2, and GDPR compliant' }, { icon: Globe, color: '#4ECDC4', title: '24/7 Banking', desc: 'Round-the-clock customer service' }, { icon: Shield, color: '#6C5CE7', title: 'Fraud Prevention', desc: '99.7% fraud detection rate' }, { icon: BarChart3, color: '#00B894', title: 'Risk Analytics', desc: 'AI-powered risk assessment' }].map((b, i) => { const I = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><I size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
+                        {[{ icon: Lock, color: '#FF6B6B', title: 'Bank-Grade Security', desc: 'PCI DSS, SOC2, and GDPR compliant' }, { icon: Globe, color: '#4ECDC4', title: '24/7 Banking', desc: 'Round-the-clock customer service' }, { icon: Shield, color: '#6C5CE7', title: 'Fraud Prevention', desc: '99.7% fraud detection rate' }, { icon: ChartBar, color: '#00B894', title: 'Risk Analytics', desc: 'AI-powered risk assessment' }].map((b, i) => { const I = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><I size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
                     </View>
                 </View>
 
@@ -144,7 +144,7 @@ export default function BankingIndustryScreen() {
 
                 <View style={[styles.cta, { backgroundColor: theme.colors.cardBackground }]}>
                     <Text style={[styles.ctaTitle, { color: theme.colors.text }]}>Transform your banking operations</Text>
-                    <TouchableOpacity style={[styles.ctaBtn, { backgroundColor: theme.colors.primary }]} onPress={() => router.push('/ai-agent/ai-agent' as any)}><Text style={styles.ctaBtnText}>Get Started</Text></TouchableOpacity>
+                    <TouchableOpacity style={[styles.ctaBtn, { backgroundColor: theme.colors.primary }]} onPress={() => router.push('/ai-agent/ai-agent')}><Text style={styles.ctaBtnText}>Get Started</Text></TouchableOpacity>
                 </View>
                 <View style={{ height: 40 }} />
             </ScrollView>

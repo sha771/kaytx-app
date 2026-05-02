@@ -23,10 +23,10 @@ import {
   Zap,
   MessageSquare,
   Clock,
-  Layout,
+  LayoutDashboard,
   Maximize2,
   Minimize2,
-  BarChart3,
+  ChartBar,
   TrendingUp,
   Activity,
   X,
@@ -380,7 +380,7 @@ export default function WorkflowBuilderScreen() {
             <Save size={20} color={colors.icon} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerButton} onPress={() => setShowTemplates(true)}>
-            <Layout size={20} color={colors.icon} />
+            <LayoutDashboard size={20} color={colors.icon} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerButton} onPress={() => setShowSettings(true)}>
             <Settings size={20} color={colors.icon} />
@@ -458,7 +458,7 @@ export default function WorkflowBuilderScreen() {
                   style={[styles.templateCard, { backgroundColor: colors.background }]}
                 >
                   <View style={styles.templateIcon}>
-                    <Layout size={32} color={colors.tint} />
+                    <LayoutDashboard size={32} color={colors.tint} />
                   </View>
                   <View style={styles.templateInfo}>
                     <Text style={[styles.templateName, { color: colors.text }]}>{template.name}</Text>

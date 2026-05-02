@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
-import { ArrowLeft, Archive, Search, Filter, Download, Upload, Trash2, Star, Calendar } from 'lucide-react-native';
+import { ArrowLeft, Archive, Search, ListFilter, Download, Upload, Trash2, Star, Calendar } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 
 export default function ArchiveScreen() {
@@ -192,27 +192,27 @@ export default function ArchiveScreen() {
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View style={styles.filterContainer}>
-              {filters.map((filter) => (
+              {filters.map((Filter) => (
                 <TouchableOpacity
-                  key={filter}
+                  key={Filter}
                   style={[
                     styles.filterButton,
                     {
-                      backgroundColor: selectedFilter === filter ? theme.colors.primary : 'transparent',
+                      backgroundColor: selectedFilter === Filter ? theme.colors.primary : 'transparent',
                       borderColor: theme.colors.border,
                     },
                   ]}
-                  onPress={() => setSelectedFilter(filter)}
+                  onPress={() => setSelectedFilter(Filter)}
                 >
                   <Text
                     style={[
                       styles.filterButtonText,
                       {
-                        color: selectedFilter === filter ? '#FFFFFF' : theme.colors.text,
+                        color: selectedFilter === Filter ? '#FFFFFF' : theme.colors.text,
                       },
                     ]}
                   >
-                    {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                    {Filter.charAt(0).toUpperCase() + Filter.slice(1)}
                   </Text>
                 </TouchableOpacity>
               ))}
@@ -315,7 +315,7 @@ export default function ArchiveScreen() {
 
         <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
           <View style={styles.cardHeader}>
-            <Filter size={24} color={theme.colors.primary} />
+            <ListFilter size={24} color={theme.colors.primary} />
             <Text style={[styles.cardTitle, { color: theme.colors.text }]}>Archive Tips</Text>
           </View>
           

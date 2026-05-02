@@ -19,8 +19,8 @@ import {
   Smartphone,
   Globe,
   UserCheck,
-  AlertTriangle,
-  CheckCircle,
+  TriangleAlert,
+  CircleCheck,
   Settings,
   Plus,
   X,
@@ -485,12 +485,12 @@ export default function SecurityScreen() {
 
               <View style={styles.mfaStats}>
                 <View style={styles.mfaStat}>
-                  <CheckCircle size={24} color="#34C759" />
+                  <CircleCheck size={24} color="#34C759" />
                   <Text style={[styles.mfaStatValue, { color: theme.colors.text }]}>98%</Text>
                   <Text style={[styles.mfaStatLabel, { color: theme.colors.secondaryText }]}>Enrolled</Text>
                 </View>
                 <View style={styles.mfaStat}>
-                  <AlertTriangle size={24} color="#FF9500" />
+                  <TriangleAlert size={24} color="#FF9500" />
                   <Text style={[styles.mfaStatValue, { color: theme.colors.text }]}>2%</Text>
                   <Text style={[styles.mfaStatLabel, { color: theme.colors.secondaryText }]}>Pending</Text>
                 </View>

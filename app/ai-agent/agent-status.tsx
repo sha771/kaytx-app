@@ -12,7 +12,6 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   ArrowLeft,
-  Bot,
   Users,
   Wifi,
   WifiOff,
@@ -20,9 +19,9 @@ import {
   Pause,
   Power,
   RefreshCw,
-  CheckCircle,
-  XCircle,
-  AlertTriangle,
+  CircleCheck,
+  CircleX,
+  TriangleAlert,
   Clock,
   Zap,
   Activity,
@@ -39,7 +38,7 @@ import {
   TrendingUp,
   Megaphone,
   Settings,
-  BarChart3,
+  ChartBar,
   Globe,
   Server,
   Cloud,
@@ -50,13 +49,14 @@ import {
   BellOff,
   ChevronRight,
   ChevronDown,
-  MoreVertical,
-  Filter,
+  EllipsisVertical,
+  ListFilter,
   ArrowUpRight,
   ArrowDownRight,
   Timer,
   Gauge,
   Layers,
+  User,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
@@ -130,7 +130,7 @@ const mockAgentStatuses: AgentStatusData[] = [
   { id: '7', name: 'Marketing & Growth AI', type: 'main', category: 'marketing', icon: Megaphone, color: '#FF9500', status: 'online', health: 95, uptime: '28d 16h', uptimePercent: 99.6, lastActive: '3m ago', currentTask: 'Optimizing 8 campaigns', tasksInQueue: 28, cpu: 42, memory: 58, responseTime: '1.8s', requestsPerMin: 78, errorRate: 0.6, version: '2.8.5', model: 'GPT-4 Vision', alerts: 0 },
   { id: '8', name: 'AI Email Marketing', type: 'sub', parentAgent: 'Marketing & Growth AI', category: 'marketing', icon: Megaphone, color: '#FF9500', status: 'busy', health: 97, uptime: '28d 16h', uptimePercent: 99.5, lastActive: '1m ago', currentTask: 'Sending batch - 3,450/5,000', tasksInQueue: 2, cpu: 72, memory: 64, responseTime: '1.2s', requestsPerMin: 145, errorRate: 0.3, version: '2.8.5', model: 'GPT-4 Turbo', alerts: 0 },
   { id: '9', name: 'Operations & Management AI', type: 'main', category: 'operations', icon: Settings, color: '#5856D6', status: 'online', health: 99, uptime: '45d 2h', uptimePercent: 99.99, lastActive: '1m ago', currentTask: 'Monitoring 32 workflows', tasksInQueue: 12, cpu: 28, memory: 42, responseTime: '0.9s', requestsPerMin: 89, errorRate: 0.1, version: '3.0.2', model: 'GPT-4 Turbo', alerts: 0 },
-  { id: '10', name: 'Data & Intelligence AI', type: 'main', category: 'data', icon: BarChart3, color: '#FF2D55', status: 'online', health: 94, uptime: '32d 8h', uptimePercent: 99.7, lastActive: '5m ago', currentTask: 'Analyzing Q4 data patterns', tasksInQueue: 18, cpu: 55, memory: 68, responseTime: '2.5s', requestsPerMin: 42, errorRate: 0.5, version: '2.9.1', model: 'GPT-4 Analysis', alerts: 0 },
+  { id: '10', name: 'Data & Intelligence AI', type: 'main', category: 'data', icon: ChartBar, color: '#FF2D55', status: 'online', health: 94, uptime: '32d 8h', uptimePercent: 99.7, lastActive: '5m ago', currentTask: 'Analyzing Q4 data patterns', tasksInQueue: 18, cpu: 55, memory: 68, responseTime: '2.5s', requestsPerMin: 42, errorRate: 0.5, version: '2.9.1', model: 'GPT-4 Analysis', alerts: 0 },
   { id: '11', name: 'AI Fraud Detection', type: 'sub', parentAgent: 'Data & Intelligence AI', category: 'data', icon: Shield, color: '#FF2D55', status: 'online', health: 99, uptime: '45d 0h', uptimePercent: 99.99, lastActive: '5s ago', currentTask: 'Real-time monitoring active', tasksInQueue: 0, cpu: 35, memory: 45, responseTime: '0.3s', requestsPerMin: 312, errorRate: 0.05, version: '2.9.1', model: 'GPT-4 Analysis', alerts: 0 },
   { id: '12', name: 'Analysis & Performance AI', type: 'main', category: 'analysis', icon: Brain, color: '#AF52DE', status: 'maintenance', health: 88, uptime: '15d 6h', uptimePercent: 99.8, lastActive: '20m ago', tasksInQueue: 5, cpu: 8, memory: 32, responseTime: '1.5s', requestsPerMin: 0, errorRate: 0.4, version: '3.0.0', model: 'GPT-4 Executive', alerts: 1 },
   { id: '13', name: 'AI Complaint Handling', type: 'sub', parentAgent: 'Customer Experience AI', category: 'customer', icon: Headphones, color: '#007AFF', status: 'training', health: 78, uptime: '5d 12h', uptimePercent: 95.2, lastActive: '1h ago', tasksInQueue: 0, cpu: 45, memory: 52, responseTime: '2.2s', requestsPerMin: 0, errorRate: 3.2, version: '3.2.0-beta', model: 'GPT-4 Turbo', alerts: 0 },
@@ -244,7 +244,7 @@ export default function AgentStatusScreen() {
       case 'busy': return Activity;
       case 'idle': return Clock;
       case 'offline': return WifiOff;
-      case 'error': return XCircle;
+      case 'error': return CircleX;
       case 'maintenance': return Settings;
       case 'training': return Brain;
       default: return CircleDot;
@@ -307,7 +307,7 @@ export default function AgentStatusScreen() {
       style={[styles.alertItem, { backgroundColor: `${getAlertColor(alert.type)}10`, opacity: alert.acknowledged ? 0.6 : 1 }]}
     >
       <View style={[styles.alertIconBg, { backgroundColor: `${getAlertColor(alert.type)}20` }]}>
-        <AlertTriangle size={14} color={getAlertColor(alert.type)} />
+        <TriangleAlert size={14} color={getAlertColor(alert.type)} />
       </View>
       <View style={styles.alertContent}>
         <Text style={[styles.alertAgent, { color: theme.colors.text }]}>{alert.agentName}</Text>
@@ -505,7 +505,7 @@ export default function AgentStatusScreen() {
           style={[styles.statusBtn, selectedStatus === 'all' && styles.statusBtnActive]}
           onPress={() => setSelectedStatus('all')}
         >
-          <Bot size={12} color={selectedStatus === 'all' ? '#fff' : theme.colors.secondaryText} />
+          <User size={12} color={selectedStatus === 'all' ? '#fff' : theme.colors.secondaryText} />
           <Text style={[styles.statusBtnText, { color: selectedStatus === 'all' ? '#fff' : theme.colors.secondaryText }]}>{statusCounts.total}</Text>
         </TouchableOpacity>
         <TouchableOpacity 
@@ -539,13 +539,13 @@ export default function AgentStatusScreen() {
       </View>
 
       <View style={styles.filterRow}>
-        {(['all', 'main', 'sub'] as const).map((filter) => (
+        {(['all', 'main', 'sub'] as const).map((Filter) => (
           <TouchableOpacity
-            key={filter}
-            style={[styles.filterBtn, selectedFilter === filter && { backgroundColor: theme.colors.primary }]}
-            onPress={() => setSelectedFilter(filter)}
+            key={Filter}
+            style={[styles.filterBtn, selectedFilter === Filter && { backgroundColor: theme.colors.primary }]}
+            onPress={() => setSelectedFilter(Filter)}
           >
-            <Text style={[styles.filterText, { color: selectedFilter === filter ? '#fff' : theme.colors.secondaryText }]}>
+            <Text style={[styles.filterText, { color: selectedFilter === Filter ? '#fff' : theme.colors.secondaryText }]}>
               {filter === 'all' ? 'All' : filter === 'main' ? 'Main' : 'Sub'}
             </Text>
           </TouchableOpacity>

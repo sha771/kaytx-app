@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+﻿import React, { useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -19,12 +19,12 @@ import {
   Zap,
   Calendar,
   ChevronDown,
-  BarChart3,
-  PieChart,
+  ChartBar,
+  ChartPie,
   Activity,
   Target,
   Sparkles,
-  Bot,
+  User,
 } from 'lucide-react-native';
 import { router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -62,7 +62,7 @@ const ROI_DATA = {
   ],
   topAgents: [
     { name: 'Sales AI', roi: 456, savings: '$52,340', tasks: 2847 },
-    { name: 'Support Bot', roi: 389, savings: '$38,420', tasks: 4521 },
+    { name: 'Support User', roi: 389, savings: '$38,420', tasks: 4521 },
     { name: 'Data Analyst', roi: 312, savings: '$29,840', tasks: 1234 },
     { name: 'Marketing AI', roi: 298, savings: '$24,630', tasks: 2156 },
   ],
@@ -144,7 +144,7 @@ export default function ROIDashboardScreen() {
   const renderCostBreakdown = () => (
     <Animated.View entering={FadeInUp.delay(400).duration(600)} style={[styles.sectionCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
       <View style={styles.sectionHeader}>
-        <PieChart size={20} color={colors.accent} />
+        <ChartPie size={20} color={colors.accent} />
         <Text style={[styles.sectionTitle, { color: colors.text }]}>Cost Savings Breakdown</Text>
       </View>
       <View style={styles.breakdownContainer}>
@@ -177,7 +177,7 @@ export default function ROIDashboardScreen() {
   const renderTopAgents = () => (
     <Animated.View entering={FadeInUp.delay(500).duration(600)} style={[styles.sectionCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
       <View style={styles.sectionHeader}>
-        <Bot size={20} color={colors.accent} />
+        <User size={20} color={colors.accent} />
         <Text style={[styles.sectionTitle, { color: colors.text }]}>Top Performing Agents</Text>
       </View>
       {ROI_DATA.topAgents.map((agent, index) => (

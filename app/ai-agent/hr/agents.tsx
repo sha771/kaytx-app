@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   ScrollView,
   TouchableOpacity,
   TextInput,
@@ -13,17 +12,24 @@ import {
   ChevronLeft,
   Plus,
   Search,
-  Filter,
+  ListFilter,
   Users,
   DollarSign,
   Clock,
   Calendar,
-  CheckCircle,
+  CircleCheck,
   MessageSquare,
-  BarChart3,
+  ChartBar,
   Star,
   Sparkles,
-  Bot,
+  UserPlus,
+  UserCheck,
+  Target,
+  GraduationCap,
+  Heart,
+  Shield,
+  Award,
+  User,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInUp, FadeIn } from 'react-native-reanimated';
@@ -169,7 +175,7 @@ const HR_SUB_AGENTS: SubAgent[] = [
     name: 'HR Analytics AI',
     title: 'Workforce Intelligence Specialist',
     description: 'Analyzes HR metrics, generates reports, and provides insights',
-    icon: BarChart3,
+    icon: ChartBar,
     status: 'active',
     tasksCompleted: 1876,
     performance: 94.9,
@@ -276,7 +282,7 @@ export default function HRAgentsScreen() {
 
           <View style={[styles.agentStats, { borderTopColor: colors.border }]}>
             <View style={styles.stat}>
-              <CheckCircle size={14} color={colors.tint} />
+              <CircleCheck size={14} color={colors.tint} />
               <Text style={[styles.statValue, { color: colors.text }]}>
                 {agent.tasksCompleted.toLocaleString()}
               </Text>
@@ -406,7 +412,7 @@ export default function HRAgentsScreen() {
           onChangeText={setSearchQuery}
         />
         <TouchableOpacity>
-          <Filter size={20} color={colors.icon} />
+          <ListFilter size={20} color={colors.icon} />
         </TouchableOpacity>
       </View>
 
@@ -429,7 +435,7 @@ export default function HRAgentsScreen() {
 
         {filteredAgents.length === 0 && (
           <View style={styles.emptyState}>
-            <Bot size={48} color={colors.icon} />
+            <User size={48} color={colors.icon} />
             <Text style={[styles.emptyTitle, { color: colors.text }]}>
               No agents found
             </Text>
@@ -443,7 +449,7 @@ export default function HRAgentsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = {
   container: {
     flex: 1,
   },
@@ -750,4 +756,4 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
   },
-});
+};

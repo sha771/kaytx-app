@@ -714,7 +714,7 @@ export const createSecureSubscriptionSchema = z.object({
   metadata: z.record(z.string().transform(safeStringSchema), z.string().transform(safeStringSchema)).optional(),
 });
 
-// Enhanced search and filter schemas with SQL injection prevention
+// Enhanced search and Filter schemas with SQL injection prevention
 export const secureSearchSchema = z.object({
   query: z.string().min(1).max(500).transform(sqlInjectionSafeSchema),
   filters: z.record(z.string(), z.any()).optional(),
@@ -924,7 +924,7 @@ export const createSubscriptionEnhancedSchema = z.object({
   metadata: z.record(z.string().transform(safeStringSchema), z.string().transform(safeStringSchema)).optional(),
 });
 
-// Search and filter schemas with SQL injection prevention
+// Search and Filter schemas with SQL injection prevention
 export const searchSchema = z.object({
   query: z.string().min(1).max(500).transform(sqlInjectionSafeSchema),
   filters: z.record(z.string(), z.any()).optional(),

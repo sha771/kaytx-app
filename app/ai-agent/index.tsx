@@ -38,7 +38,6 @@ import {
   Crown,
   Zap,
   Users,
-  Bot,
   ChevronLeft,
   Building2,
   Layers,
@@ -59,8 +58,8 @@ import {
   Scale,
   ChevronRight,
   Plus,
-  BarChart3,
-  PieChart,
+  ChartBar,
+  ChartPie,
   Activity,
   Globe,
   Server,
@@ -70,8 +69,7 @@ import {
   ScanEye,
   Factory,
   Truck,
-  Ship,
-  Home,
+  House,
   Landmark,
   HeartPulse,
   Stethoscope,
@@ -80,11 +78,11 @@ import {
   FileText,
   GraduationCap,
   Wrench,
-  LineChart,
+  ChartLine,
   Wallet,
   ShieldCheck,
   Siren,
-  Fingerprint,
+  FingerprintPattern,
   Search,
   Eye,
   Telescope,
@@ -93,12 +91,13 @@ import {
   BookOpen,
   Calendar,
   Clock,
+  User,
   UserCheck,
   UserPlus,
   UsersRound,
   Lightbulb,
   Gauge,
-  AlertTriangle,
+  TriangleAlert,
   Bell,
   Flag,
   Pin,
@@ -134,11 +133,10 @@ import {
   MessageSquare,
   Phone,
   Ticket,
-  HelpCircle,
+  LifeBuoy,
   Info,
-  AlertCircle,
+  CircleAlert,
 } from 'lucide-react-native';
-import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -332,7 +330,7 @@ const C_SUITE_EXECUTIVES = [
     id: 'creo',
     title: 'Chief Real Estate Officer',
     shortTitle: 'CREO',
-    icon: Home,
+    icon: House,
     color: '#8B5CF6',
     description: 'Manages real estate portfolio, property investments, and facility operations',
     reportsTo: 'CEO',
@@ -347,7 +345,7 @@ const C_SUITE_EXECUTIVES = [
     id: 'cro-insurance',
     title: 'Chief Risk Officer',
     shortTitle: 'CRO',
-    icon: AlertTriangle,
+    icon: TriangleAlert,
     color: '#EC4899',
     description: 'Oversees enterprise risk management, insurance strategy, and risk assessment',
     reportsTo: 'CEO',
@@ -441,7 +439,7 @@ const COMMAND_CENTER_ROLES = [
     id: 'aod',
     title: 'Automation Operations Director',
     shortTitle: 'AOD',
-    icon: Bot,
+    icon: User,
     color: '#3B82F6',
     description: 'Directs all automation initiatives, RPA, and workflow optimization',
     authority: 'Tier 2 Operator',
@@ -498,8 +496,8 @@ const DEPARTMENTS = [
   { id: 'security', name: 'Security & Risk', icon: Shield, color: '#F44336', agentCount: 11, description: 'Cybersecurity, threat detection, and risk management' },
   { id: 'research', name: 'Research & Innovation', icon: Microscope, color: '#8B5CF6', agentCount: 7, description: 'R&D, innovation, and emerging technologies' },
   { id: 'administrative', name: 'Administrative & Support', icon: Briefcase, color: '#94A3B8', agentCount: 6, description: 'Administrative operations and support services' },
-  { id: 'trading_investments', name: 'Trading & Investments', icon: TrendingUp, color: '#10B981', agentCount: 12, description: 'Portfolio management, trading, and investments', isNew: true },
-  { id: 'real_estate', name: 'Real Estate & Property', icon: Home, color: '#8B5CF6', agentCount: 8, description: 'Property management and real estate operations', isNew: true },
+  { id: 'trading_investments', name: 'Trading & Investments', icon: TrendingUp, color: '#10B981', agentCount: 12, description: 'Portfolio management, TrendingUp, and investments', isNew: true },
+  { id: 'real_estate', name: 'Real Estate & Property', icon: House, color: '#8B5CF6', agentCount: 8, description: 'Property management and real estate operations', isNew: true },
   { id: 'insurance_risk', name: 'Insurance & Risk', icon: ShieldCheck, color: '#EC4899', agentCount: 9, description: 'Insurance operations and risk assessment', isNew: true },
   { id: 'healthcare', name: 'Healthcare & Medical', icon: HeartPulse, color: '#EF4444', agentCount: 14, description: 'Medical operations and patient care management', isNew: true },
   { id: 'manufacturing', name: 'Manufacturing & Production', icon: Factory, color: '#F97316', agentCount: 10, description: 'Production planning and quality control', isNew: true },
@@ -546,7 +544,7 @@ const AGENT_CATEGORIES = [
   { id: 'sales', name: 'Sales Agents', count: 28, icon: Target, color: '#F59E0B' },
   { id: 'marketing', name: 'Marketing Agents', count: 22, icon: Megaphone, color: '#E91E63' },
   { id: 'technical', name: 'Technical Agents', count: 35, icon: Cpu, color: '#1565C0' },
-  { id: 'analytical', name: 'Analytical Agents', count: 31, icon: BarChart3, color: '#6366F1' },
+  { id: 'analytical', name: 'Analytical Agents', count: 31, icon: ChartBar, color: '#6366F1' },
   { id: 'operations', name: 'Operations Agents', count: 24, icon: Settings, color: '#607D8B' },
   { id: 'compliance', name: 'Compliance Agents', count: 14, icon: Shield, color: '#F44336' },
 ];
@@ -737,13 +735,23 @@ export default function AIAgentsIndex() {
         {/* Tier 4 */}
         <View style={styles.tierNode}>
           <View style={[styles.tierBadge, { backgroundColor: '#10B981' }]}>
-            <Bot size={20} color="#fff" />
+            <User size={20} color="#fff" />
           </View>
           <Text style={styles.tierLabel}>Tier 4</Text>
           <Text style={styles.tierName}>Workforce</Text>
           <Text style={styles.tierCount}>{HIERARCHY_STATS.totalAgents} Agents</Text>
         </View>
       </View>
+
+      {/* Mind Map Link */}
+      <TouchableOpacity
+        style={[styles.mindMapButton, { backgroundColor: '#6366F120', borderColor: '#6366F1' }]}
+        onPress={() => router.push('/ai-agent/mind-map')}
+      >
+        <Network size={20} color="#6366F1" />
+        <Text style={[styles.mindMapText, { color: '#6366F1' }]}>View Interactive Mind Map</Text>
+        <ChevronRight size={16} color="#6366F1" />
+      </TouchableOpacity>
     </Animated.View>
   );
 
@@ -852,7 +860,7 @@ export default function AIAgentsIndex() {
             <Text style={[styles.chainNodeText, { color: COMMAND_CENTER_ROLES[2].color }]}>WOL</Text>
           </View>
           <View style={[styles.chainNode, { borderColor: COMMAND_CENTER_ROLES[3].color }]}>
-            <Bot size={16} color={COMMAND_CENTER_ROLES[3].color} />
+            <User size={16} color={COMMAND_CENTER_ROLES[3].color} />
             <Text style={[styles.chainNodeText, { color: COMMAND_CENTER_ROLES[3].color }]}>AOD</Text>
           </View>
         </View>
@@ -974,7 +982,7 @@ export default function AIAgentsIndex() {
               <Text style={styles.departmentDesc} numberOfLines={2}>{dept.description}</Text>
               <View style={styles.departmentStats}>
                 <View style={styles.statItem}>
-                  <Bot size={14} color="#64748b" />
+                  <User size={14} color="#64748b" />
                   <Text style={styles.statText}>{dept.agentCount} Agents</Text>
                 </View>
               </View>
@@ -989,7 +997,7 @@ export default function AIAgentsIndex() {
     <Animated.View entering={FadeInUp.delay(500)} style={styles.sectionContainer}>
       <View style={styles.sectionHeader}>
         <View style={styles.sectionHeaderLeft}>
-          <Bot size={24} color="#10B981" />
+          <User size={24} color="#10B981" />
           <View style={styles.sectionHeaderText}>
             <Text style={styles.sectionTitle}>4. Sub Agents</Text>
             <Text style={styles.sectionSubtitle}>Tier 4: AI Agent Workforce ({HIERARCHY_STATS.totalAgents} Agents)</Text>
@@ -1069,7 +1077,7 @@ export default function AIAgentsIndex() {
           onPress={() => router.push('/ai-agents-employees-builder')}
         >
           <View style={styles.builderIconContainer}>
-            <Bot size={32} color="#fff" />
+            <User size={32} color="#fff" />
           </View>
           <Text style={styles.builderCardTitle}>AI Agent Builder</Text>
           <Text style={styles.builderCardDesc}>Create custom AI agents with specific skills, capabilities, and intelligence features</Text>
@@ -1793,5 +1801,20 @@ const styles = StyleSheet.create({
     width: 1,
     height: 40,
     backgroundColor: '#334155',
+  },
+  mindMapButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    marginTop: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 12,
+    borderWidth: 1,
+  },
+  mindMapText: {
+    fontSize: 14,
+    fontWeight: '600',
   },
 });

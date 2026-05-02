@@ -227,7 +227,7 @@ describe('AIAgentService', () => {
       expect(result[0].organizationId).toBe(mockOrgId);
     });
 
-    it('should filter by agent type', async () => {
+    it('should Filter by agent type', async () => {
       mockDb.select.mockReturnValue({
         from: jest.fn().mockReturnValue({
           where: jest.fn().mockResolvedValue([{
@@ -249,7 +249,7 @@ describe('AIAgentService', () => {
       expect(result[0].type).toBe('chat');
     });
 
-    it('should filter by status', async () => {
+    it('should Filter by status', async () => {
       mockDb.select.mockReturnValue({
         from: jest.fn().mockReturnValue({
           where: jest.fn().mockResolvedValue([{

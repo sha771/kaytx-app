@@ -10,22 +10,21 @@ import { useRouter } from 'expo-router';
 import {
   ChevronLeft,
   GitBranch,
-  GitCommit,
+  GitCommitHorizontal,
   RotateCcw,
   Clock,
   User,
-  Bot,
   MessageSquare,
-  CheckCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleAlert,
   ChevronDown,
   ChevronRight,
-  MoreVertical,
+  EllipsisVertical,
   Download,
-  Compare,
+  ArrowLeftRight,
   Tag,
   Calendar,
-  Filter,
+  ListFilter,
   Search,
   Save,
 } from 'lucide-react-native';
@@ -215,7 +214,7 @@ export default function AgentVersionHistoryScreen() {
                 { backgroundColor: TYPE_COLORS[version.type] + '15' },
               ]}
             >
-              <GitCommit size={14} color={TYPE_COLORS[version.type]} />
+              <GitCommitHorizontal size={14} color={TYPE_COLORS[version.type]} />
               <Text
                 style={[
                   styles.versionBadgeText,
@@ -238,7 +237,7 @@ export default function AgentVersionHistoryScreen() {
           <View style={styles.versionRight}>
             {isCurrent && (
               <View style={[styles.currentBadge, { backgroundColor: '#10B981' + '15' }]}>
-                <CheckCircle size={12} color="#10B981" />
+                <CircleCheck size={12} color="#10B981" />
                 <Text style={[styles.currentText, { color: '#10B981' }]}>Current</Text>
               </View>
             )}
@@ -344,7 +343,7 @@ export default function AgentVersionHistoryScreen() {
             setCompareVersions([]);
           }}
         >
-          <Compare size={20} color={compareMode ? 'white' : colors.icon} />
+          <ArrowLeftRight size={20} color={compareMode ? 'white' : colors.icon} />
         </TouchableOpacity>
       </View>
 

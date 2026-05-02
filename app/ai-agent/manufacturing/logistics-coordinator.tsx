@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Truck, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Truck, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'3,485',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.8s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.0%',icon:Target,color:'#BF360C'}];
+  const stats = [{label:'Tasks',value:'3,485',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.8s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.0%',icon:Target,color:'#BF360C'}];
   const capabilities = ['Shipping Coord','Route Optimization','Carrier Mgmt','Freight Analysis','Customs','Tracking'];
   const responsibilities = ['Shipping coordination & scheduling','Route optimization & cost reduction','Carrier management & negotiation','Freight cost analysis & optimization','Customs documentation & compliance','Shipment tracking & exception management'];
-  const activities = [{time:'3 min ago',text:'Coordinated 120 shipments',icon:CheckCircle2},{time:'6 min ago',text:'Optimized routes saving $8K',icon:Clock},{time:'9 min ago',text:'Managed 5 carrier relationships',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Coordinated 120 shipments',icon: CircleCheckBig},{time:'6 min ago',text:'Optimized routes saving $8K',icon:Clock},{time:'9 min ago',text:'Managed 5 carrier relationships',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

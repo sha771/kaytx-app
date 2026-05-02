@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { GraduationCap, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { GraduationCap, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'4351',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.3s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.4%',icon:Target,color:'#880E4F'}];
+  const stats = [{label:'Tasks',value:'4351',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.3s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.4%',icon:Target,color:'#880E4F'}];
   const capabilities = ['Talent Acquisition','Compensation & Benefits','Employee Relations','Learning & Development','HR Operations','Culture & Engagement'];
   const responsibilities = ['Talent acquisition & recruitment management','Compensation & benefits administration','Employee relations & conflict resolution','Learning & development program management','HR operations & compliance','Culture & engagement initiatives'];
-  const activities = [{time:'3 min ago',text:'Processed 25 new hire onboarding',icon:CheckCircle2},{time:'6 min ago',text:'Updated compensation benchmark data',icon:Clock},{time:'9 min ago',text:'Launched employee wellness program',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Processed 25 new hire onboarding',icon: CircleCheckBig},{time:'6 min ago',text:'Updated compensation benchmark data',icon:Clock},{time:'9 min ago',text:'Launched employee wellness program',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

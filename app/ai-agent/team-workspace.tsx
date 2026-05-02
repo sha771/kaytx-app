@@ -17,12 +17,11 @@ import {
   MessageSquare,
   Folder,
   FileText,
-  MoreVertical,
+  EllipsisVertical,
   Star,
   Clock,
-  CheckCircle,
-  AlertCircle,
-  Bot,
+  CircleCheck,
+  CircleAlert,
   User,
   Send,
   Paperclip,
@@ -34,7 +33,7 @@ import {
   Zap,
   Target,
   TrendingUp,
-  BarChart3,
+  ChartBar,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInUp } from 'react-native-reanimated';
@@ -288,7 +287,7 @@ export default function AgentTeamWorkspaceScreen() {
             ]}
           >
             {member.type === 'agent' ? (
-              <Bot size={12} color="white" />
+              <User size={12} color="white" />
             ) : (
               <User size={12} color="white" />
             )}
@@ -367,7 +366,7 @@ export default function AgentTeamWorkspaceScreen() {
           ]}
         >
           {isAgent ? (
-            <Bot size={16} color="white" />
+            <User size={16} color="white" />
           ) : (
             <User size={16} color="white" />
           )}
@@ -424,7 +423,7 @@ export default function AgentTeamWorkspaceScreen() {
         </View>
         <View style={[styles.statCard, { backgroundColor: colors.card }]}>
           <View style={[styles.statIcon, { backgroundColor: '#8B5CF6' + '15' }]}>
-            <Bot size={20} color="#8B5CF6" />
+            <User size={20} color="#8B5CF6" />
           </View>
           <Text style={[styles.statValue, { color: colors.text }]}>
             {TEAMS.reduce((acc, t) => acc + t.members.filter(m => m.type === 'agent').length, 0)}
@@ -598,7 +597,7 @@ export default function AgentTeamWorkspaceScreen() {
                   </Text>
                 </View>
                 <View style={styles.projectMetaItem}>
-                  <CheckCircle size={14} color={colors.icon} />
+                  <CircleCheck size={14} color={colors.icon} />
                   <Text style={[styles.projectMetaText, { color: colors.icon }]}>
                     {project.tasks.filter(t => t.status === 'completed').length}/{project.tasks.length} tasks
                   </Text>

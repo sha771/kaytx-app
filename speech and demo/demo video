@@ -1,0 +1,29 @@
+I have structured this demo video script to be a **high-energy, professional walk-through** that highlights the core pillars of Kaytx. This is designed for a **3 to 5-minute** screen-recorded demo with professional narration.
+
+# Kaytx Demo Video Script: The AI Operating System
+
+---
+
+| Time | Visual / Screen Action | Audio / Narration |
+| :--- | :--- | :--- |
+| **0:00-0:15** | **Intro Splash:** Fast-paced montage of the Kaytx logo and mobile/web UI. Text overlay: *"The First Enterprise AI OS."* | "Welcome to Kaytx—the world's first true AI Operating System designed to unify your enterprise communication, social media, and human-AI workforce." |
+| **0:15-0:45** | **The Dashboard:** Show the main dashboard (`app/(tabs)/index.tsx`). Hover over the "Infrastructure Health" and "Active Agents" stats. | "We start at the Heart of the OS. Kaytx isn't just an app; it's a command center. Here you monitor the health of your 628+ AI agents, real-time resource allocation, and cross-department KPIs in one view." |
+| **0:45-1:30** | **Unified Inbox:** Open the Inbox view. Show messages from WhatsApp, Email, and LinkedIn appearing in a single stream. Click on a message. | "Fragmentation is the enemy of growth. Our **Unified Inbox** pulls every communication channel—WhatsApp, Email, LinkedIn, and SMS—into a single, AI-powered thread. Watch as our agents automatically draft responses, tag priorities, and extract action items before you even open the message." |
+| **1:30-2:15** | **AI Agent Workforce:** Navigate to the Agent Library. Scroll through the "C-Suite," "Managers," and "Specialists." Click on the **CFO Agent**. | "Now, meet your new workforce. Kaytx gives you a complete corporate hierarchy of 628+ specialized AI agents. Need a financial audit? Your **CFO Agent** is on it. Scaling a new market? Your **VP of Growth** handles the strategy. These agents don't just chat; they execute complex workflows autonomously." |
+| **2:15-3:00** | **Social Media Management:** Switch to the Social Media tab. Show an AI-generated post draft with an image. Show the "Viral Prediction" score. | "Managing your brand shouldn't take a village. Our **Social Media Suite** uses specialized agents to research trends, generate platform-specific content, and schedule posts across all channels. Our agents even monitor engagement, replying to comments in your brand's unique voice 24/7." |
+| **3:00-3:45** | **Insights & Analytics:** Open the Analytics Dashboard (`app/ai-negotiation/analytics.tsx`). Show interactive charts moving and a "Generate Report" button. | "Data becomes wisdom through our **BI Layer**. Our agents analyze millions of data points across your sales, inbox, and social channels to provide predictive insights. Don't just look at what happened—Kaytx tells you what’s going to happen next with automated executive reporting." |
+| **3:45-4:15** | **Security & Infrastructure:** Show a quick "Terminal" or "Log" view showing "AES-256 Encryption" and "Sandbox Isolated." | "Security is our core. Every agent runs in a secure sandbox with role-based access control and field-level encryption. We are GDPR, SOC2, and HIPAA compliant out of the box, ensuring your enterprise data remains yours." |
+| **4:15-5:00** | **Outro:** Show the Kaytx app running on both a MacBook and an iPhone. | "One Inbox. One Workforce. One Operating System. Kaytx is how the modern enterprise scales. Visit us at kaytx.com and deploy your AI workforce today." |
+
+---
+
+### **Video Production Tips:**
+1.  **Cursor Movement:** Keep it smooth and deliberate. Use a "click highlight" effect in your recording software.
+2.  **Transitions:** Use clean "slide" or "fade" transitions between departments to mimic an OS feel.
+3.  **Background Music:** Use a modern, upbeat, "tech-corporate" track that builds in intensity during the AI Agent section.
+4.  **Mobile View:** Ensure you show at least 15 seconds of the **React Native mobile app** to prove the cross-platform capability of the project.
+
+**Task Completion Status:**
+- [x] Demo Speech generated.
+- [x] Focused project points (Inbox, Agents, Social, Analytics) addressed.
+- [x] Demo Video script/storyboard created.

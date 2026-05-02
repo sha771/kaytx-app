@@ -9,7 +9,7 @@ import {
   Bot,
   MessageSquare,
   Calendar,
-  BarChart3,
+  ChartBar,
   Users,
   Mail,
   Phone,
@@ -26,7 +26,7 @@ import {
   Video as VideoIcon,
   Share2,
   Layers,
-  CheckCircle,
+  CircleCheck,
   Sparkles,
   Clock,
   Brain,
@@ -256,7 +256,7 @@ export const FEATURE_RELATIONSHIPS: Record<string, FeatureRelationship> = {
     id: 'task-management',
     title: 'Task Management',
     description: 'Manage and track tasks',
-    icon: CheckCircle,
+    icon: CircleCheck,
     color: '#6366F1',
     route: '/automation/task-management',
     relatedFeatures: [
@@ -536,7 +536,7 @@ export const FEATURE_RELATIONSHIPS: Record<string, FeatureRelationship> = {
     id: 'business-analysis',
     title: 'Business Analysis',
     description: 'Business intelligence',
-    icon: BarChart3,
+    icon: ChartBar,
     color: '#EC4899',
     route: '/business/business-analysis',
     relatedFeatures: [
@@ -721,7 +721,7 @@ export const FEATURE_RELATIONSHIPS: Record<string, FeatureRelationship> = {
     id: 'analytics-performance',
     title: 'Analytics & Performance',
     description: 'Performance analytics',
-    icon: BarChart3,
+    icon: ChartBar,
     color: '#10B981',
     route: '/analytics/analytics-performance',
     relatedFeatures: [
@@ -751,7 +751,7 @@ export const FEATURE_RELATIONSHIPS: Record<string, FeatureRelationship> = {
     id: 'data-visualization',
     title: 'Data Visualization',
     description: 'Visual data representation',
-    icon: BarChart3,
+    icon: ChartBar,
     color: '#EC4899',
     route: '/analytics/data-visualization',
     relatedFeatures: [
@@ -912,7 +912,7 @@ export const FEATURE_RELATIONSHIPS: Record<string, FeatureRelationship> = {
     id: 'enterprise-dashboard',
     title: 'Enterprise Dashboard',
     description: 'Enterprise overview',
-    icon: BarChart3,
+    icon: ChartBar,
     color: '#EC4899',
     route: '/enterprise-dashboard',
     relatedFeatures: [

@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Database, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Database, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'5,153',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.9s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.5%',icon:Target,color:'#E65100'}];
+  const stats = [{label:'Tasks',value:'5,153',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.9s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.5%',icon:Target,color:'#E65100'}];
   const capabilities = ['CRM Management','Data Quality','Pipeline Tracking','Automation','Reporting','Integration'];
   const responsibilities = ['CRM system management & optimization','Data quality & deduplication','Sales pipeline tracking & reporting','CRM workflow automation','Sales reporting & dashboard management','CRM integration with other systems'];
-  const activities = [{time:'3 min ago',text:'Cleaned 5K contact records',icon:CheckCircle2},{time:'6 min ago',text:'Automated lead scoring workflow',icon:Clock},{time:'9 min ago',text:'Generated pipeline report',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Cleaned 5K contact records',icon: CircleCheckBig},{time:'6 min ago',text:'Automated lead scoring workflow',icon:Clock},{time:'9 min ago',text:'Generated pipeline report',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

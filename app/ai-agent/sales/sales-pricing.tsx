@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { DollarSign, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { DollarSign, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'4,926',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.6s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.5%',icon:Target,color:'#E65100'}];
+  const stats = [{label:'Tasks',value:'4,926',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.6s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.5%',icon:Target,color:'#E65100'}];
   const capabilities = ['Pricing Strategy','Competitive Analysis','Margin Optimization','Discount Management','Price Modeling','Market Research'];
   const responsibilities = ['Pricing strategy development & execution','Competitive pricing analysis','Margin optimization & monitoring','Discount policy management','Price modeling & simulation','Market research for pricing decisions'];
-  const activities = [{time:'3 min ago',text:'Updated pricing for 3 product lines',icon:CheckCircle2},{time:'6 min ago',text:'Analyzed competitor pricing data',icon:Clock},{time:'9 min ago',text:'Optimized margins by 8%',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Updated pricing for 3 product lines',icon: CircleCheckBig},{time:'6 min ago',text:'Analyzed competitor pricing data',icon:Clock},{time:'9 min ago',text:'Optimized margins by 8%',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

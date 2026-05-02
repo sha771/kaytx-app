@@ -19,8 +19,8 @@ import {
   Clock,
   BookOpen,
   User,
-  CheckCircle,
-  AlertCircle,
+  CircleCheck,
+  CircleAlert,
   Shield,
   PhoneCall,
   Wifi,
@@ -356,7 +356,7 @@ export default function AIReceptionistSetup() {
                     <Text style={[styles.pickupOptionSubtitle, { color: callPickupMode === 'auto' ? 'rgba(255,255,255,0.8)' : theme.colors.secondaryText }]}>AI immediately answers all calls</Text>
                   </View>
                 </View>
-                {callPickupMode === 'auto' && <CheckCircle size={20} color="white" />}
+                {callPickupMode === 'auto' && <CircleCheck size={20} color="white" />}
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -374,7 +374,7 @@ export default function AIReceptionistSetup() {
                     <Text style={[styles.pickupOptionSubtitle, { color: callPickupMode === 'wait' ? 'rgba(255,255,255,0.8)' : theme.colors.secondaryText }]}>Let company pick first, AI as fallback</Text>
                   </View>
                 </View>
-                {callPickupMode === 'wait' && <CheckCircle size={20} color="white" />}
+                {callPickupMode === 'wait' && <CircleCheck size={20} color="white" />}
               </TouchableOpacity>
             </View>
 
@@ -412,7 +412,7 @@ export default function AIReceptionistSetup() {
           <View style={[styles.orderConfirmCard, { backgroundColor: theme.colors.cardBackground }]} testID="receptionist-order-confirmation">
             <View style={styles.orderConfirmHeader}>
               <View style={styles.orderConfirmTitleRow}>
-                <CheckCircle size={20} color={theme.colors.primary} />
+                <CircleCheck size={20} color={theme.colors.primary} />
                 <Text style={[styles.orderConfirmTitle, { color: theme.colors.text }]}>Automatic Order Confirmation</Text>
               </View>
               <Switch
@@ -493,7 +493,7 @@ export default function AIReceptionistSetup() {
                     'Special instructions or notes'
                   ].map((step, index) => (
                     <View key={index} style={styles.featureRow}>
-                      <CheckCircle size={16} color={theme.colors.success} />
+                      <CircleCheck size={16} color={theme.colors.success} />
                       <Text style={[styles.featureText, { color: theme.colors.secondaryText }]}>{step}</Text>
                     </View>
                   ))}
@@ -523,9 +523,9 @@ export default function AIReceptionistSetup() {
                   <Text style={[styles.setupDescription, { color: theme.colors.secondaryText }]}>{section.description}</Text>
                 </View>
                 {section.completed ? (
-                  <CheckCircle size={20} color={theme.colors.success} />
+                  <CircleCheck size={20} color={theme.colors.success} />
                 ) : (
-                  <AlertCircle size={20} color={theme.colors.secondaryText} />
+                  <CircleAlert size={20} color={theme.colors.secondaryText} />
                 )}
               </TouchableOpacity>
             );
@@ -697,9 +697,9 @@ export default function AIReceptionistSetup() {
                 <View style={[styles.statusBadgeLarge, { backgroundColor: item.status === 'done' ? '#34C75920' : '#FF3B3015' }]}
                   >
                   {item.status === 'done' ? (
-                    <CheckCircle size={16} color={theme.colors.success} />
+                    <CircleCheck size={16} color={theme.colors.success} />
                   ) : (
-                    <AlertCircle size={16} color={theme.colors.error} />
+                    <CircleAlert size={16} color={theme.colors.error} />
                   )}
                 </View>
                 <View style={styles.complianceInfo}>
@@ -768,7 +768,7 @@ export default function AIReceptionistSetup() {
         </View>
 
         <View style={[styles.infoCard, { backgroundColor: theme.colors.cardBackground }]}>
-          <AlertCircle size={24} color={theme.colors.primary} />
+          <CircleAlert size={24} color={theme.colors.primary} />
           <View style={styles.infoContent}>
             <Text style={[styles.infoTitle, { color: theme.colors.text }]}>Complete setup for best resiliency</Text>
             <Text style={[styles.infoText, { color: theme.colors.secondaryText }]}>Finalize negotiation rules and AI configuration to unlock zero-touch onboarding, automated guardrails, and realtime observability hooks.</Text>

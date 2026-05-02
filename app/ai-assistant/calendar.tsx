@@ -21,7 +21,7 @@ import {
   X,
   ChevronLeft,
   Plus,
-  Edit3,
+  PenLine,
   Trash2,
   Check,
   Lock,
@@ -317,7 +317,7 @@ export default function CalendarScreen() {
             <Text style={[styles.modalTitle, { color: theme.colors.text }]}>Meeting Details</Text>
             <View style={styles.modalActions}>
               <TouchableOpacity style={styles.actionButton}>
-                <Edit3 size={20} color={theme.colors.text} />
+                <PenLine size={20} color={theme.colors.text} />
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.actionButton}

@@ -35,7 +35,7 @@ import {
   Brain,
   SlidersHorizontal,
   ArrowRight,
-  CheckCircle,
+  CircleCheck,
   Eye,
   Download,
 } from 'lucide-react-native';
@@ -587,7 +587,7 @@ export default function UniversalSearchModal({ visible, onClose }: Props) {
                   <Text style={[styles.toggleText, { color: filters.hasAttachment ? theme.colors.primary : theme.colors.text }]}>
                     Has Attachments
                   </Text>
-                  {filters.hasAttachment && <CheckCircle size={16} color={theme.colors.primary} />}
+                  {filters.hasAttachment && <CircleCheck size={16} color={theme.colors.primary} />}
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -601,7 +601,7 @@ export default function UniversalSearchModal({ visible, onClose }: Props) {
                   <Text style={[styles.toggleText, { color: filters.isStarred ? '#F59E0B' : theme.colors.text }]}>
                     Starred Only
                   </Text>
-                  {filters.isStarred && <CheckCircle size={16} color="#F59E0B" />}
+                  {filters.isStarred && <CircleCheck size={16} color="#F59E0B" />}
                 </TouchableOpacity>
               </View>
             </ScrollView>

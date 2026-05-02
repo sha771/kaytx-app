@@ -21,8 +21,8 @@ import {
   ArrowLeft,
   Activity,
   Zap,
-  CheckCircle,
-  AlertTriangle,
+  CircleCheck,
+  TriangleAlert,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
@@ -195,9 +195,9 @@ export default function EnterpriseAdminScreen() {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'operational': return CheckCircle;
-      case 'degraded': return AlertTriangle;
-      case 'outage': return AlertTriangle;
+      case 'operational': return CircleCheck;
+      case 'degraded': return TriangleAlert;
+      case 'outage': return TriangleAlert;
       case 'maintenance': return Settings;
       default: return Activity;
     }

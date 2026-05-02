@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
-import { BarChart3, Brain, Clock, CheckCircle2, AlertTriangle } from 'lucide-react-native';
+import { ChartBar, Brain, Clock, CircleCheckBig, TriangleAlert } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useAIAssistant } from '@/providers/AIAssistantProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
@@ -87,7 +87,7 @@ export default function DynamicAgentScreen() {
 
             <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
                 <View style={styles.cardHeader}>
-                    <CheckCircle2 size={20} color={agent.color} />
+                    <CircleCheckBig size={20} color={agent.color} />
                     <Text style={[styles.cardTitle, { color: theme.colors.text }]}>Core capabilities</Text>
                 </View>
                 <View style={styles.tags}>
@@ -291,7 +291,7 @@ export default function DynamicAgentScreen() {
                             (counselingSessions || []).slice(0, 10).map((s: any) => (
                                 <View key={s.id} style={[styles.historyRow, { borderBottomColor: theme.colors.border }]}>
                                     <View style={styles.historyLeft}>
-                                        <CheckCircle2 size={16} color={agent.color} />
+                                        <CircleCheckBig size={16} color={agent.color} />
                                         <View style={{ flex: 1 }}>
                                             <Text style={[styles.historyTitle, { color: theme.colors.text }]} numberOfLines={1}>
                                                 {s?.requests?.[0]?.topic || 'Counseling Session'}
@@ -317,7 +317,7 @@ export default function DynamicAgentScreen() {
         <View style={styles.tabContent}>
             <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
                 <View style={styles.cardHeader}>
-                    <BarChart3 size={20} color={agent.color} />
+                    <ChartBarBig size={20} color={agent.color} />
                     <Text style={[styles.cardTitle, { color: theme.colors.text }]}>Performance & analytics</Text>
                 </View>
 
@@ -376,9 +376,9 @@ export default function DynamicAgentScreen() {
                                 <View key={h.id} style={[styles.historyRow, { borderBottomColor: theme.colors.border }]}>
                                     <View style={styles.historyLeft}>
                                         {isSuccess ? (
-                                            <CheckCircle2 size={16} color={statusColor} />
+                                            <CircleCheckBig size={16} color={statusColor} />
                                         ) : (
-                                            <AlertTriangle size={16} color={statusColor} />
+                                            <TriangleAlert size={16} color={statusColor} />
                                         )}
                                         <View style={{ flex: 1 }}>
                                             <Text style={[styles.historyTitle, { color: theme.colors.text }]}>{h.action}</Text>
@@ -399,7 +399,7 @@ export default function DynamicAgentScreen() {
 
     const customTabs = [
         { id: 'overview', label: 'Overview', icon: Brain, component: renderWhatItDoesTab },
-        { id: 'performance', label: 'Performance', icon: BarChart3, component: renderPerformanceTab },
+        { id: 'performance', label: 'Performance', icon: ChartBar, component: renderPerformanceTab },
         { id: 'history-local', label: 'History', icon: Clock, component: renderHistoryTab },
         { id: 'counseling', label: 'Counseling', icon: Brain, component: renderCounselingTab },
     ];

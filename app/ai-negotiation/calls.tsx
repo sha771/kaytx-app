@@ -24,7 +24,7 @@ import {
   X,
   User,
   Building2,
-  CheckCircle,
+  CircleCheck,
   Signal,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
@@ -102,7 +102,7 @@ export default function CallsScreen() {
       { 
         title: 'Success Rate', 
         value: `${statsData?.avgSuccessRate || realtimeMetrics.successRate}%`, 
-        icon: CheckCircle, 
+        icon: CircleCheck, 
         color: '#AF52DE' 
       },
     ],
@@ -290,12 +290,12 @@ export default function CallsScreen() {
         >
           {(['all', 'voice', 'whatsapp', 'sms'] as const).map(filter => (
             <TouchableOpacity
-              key={filter}
-              style={[styles.channelFilterChip, channelFilter === filter && { backgroundColor: theme.colors.primary }]}
-              onPress={() => setChannelFilter(filter)}
+              key={Filter}
+              style={[styles.channelFilterChip, channelFilter === Filter && { backgroundColor: theme.colors.primary }]}
+              onPress={() => setChannelFilter(Filter)}
             >
-              <Text style={[styles.channelFilterText, { color: channelFilter === filter ? '#fff' : theme.colors.secondaryText }]}>
-                {filter.toUpperCase()}
+              <Text style={[styles.channelFilterText, { color: channelFilter === Filter ? '#fff' : theme.colors.secondaryText }]}>
+                {Filter.toUpperCase()}
               </Text>
             </TouchableOpacity>
           ))}

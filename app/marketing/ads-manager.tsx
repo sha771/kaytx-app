@@ -18,18 +18,18 @@ import {
   Calendar,
   Play,
   Pause,
-  Edit,
+  Pencil,
   Copy,
   Trash2,
   ArrowLeft,
   Plus,
-  Filter,
-  BarChart3,
+  ListFilter,
+  ChartBar,
   Activity,
   Zap,
   Clock,
-  CheckCircle,
-  AlertTriangle,
+  CircleCheck,
+  TriangleAlert,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
@@ -169,11 +169,11 @@ export default function AdsManagerScreen() {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'active': return CheckCircle;
+      case 'active': return CircleCheck;
       case 'paused': return Pause;
-      case 'draft': return Edit;
+      case 'draft': return Pencil;
       case 'ended': return Clock;
-      default: return AlertTriangle;
+      default: return TriangleAlert;
     }
   };
 
@@ -245,7 +245,7 @@ export default function AdsManagerScreen() {
           </View>
           <View style={styles.adActions}>
             <TouchableOpacity style={styles.actionButton}>
-              <Edit size={16} color={theme.colors.text} />
+              <Pencil size={16} color={theme.colors.text} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.actionButton}>
               <Copy size={16} color={theme.colors.text} />
@@ -320,7 +320,7 @@ export default function AdsManagerScreen() {
             {item.startDate} - {item.endDate}
           </Text>
           <TouchableOpacity style={[styles.viewDetailsButton, { backgroundColor: theme.colors.primary }]}>
-            <BarChart3 size={14} color="white" />
+            <ChartBarBig size={14} color="white" />
             <Text style={styles.viewDetailsText}>View Details</Text>
           </TouchableOpacity>
         </View>
@@ -456,7 +456,7 @@ export default function AdsManagerScreen() {
         <Text style={[styles.title, { color: theme.colors.text }]}>Ads Manager</Text>
         <View style={styles.headerActions}>
           <TouchableOpacity style={styles.headerButton}>
-            <Filter size={20} color={theme.colors.text} />
+            <ListFilter size={20} color={theme.colors.text} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerButton}>
             <Plus size={20} color={theme.colors.text} />

@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Building2, Activity, CheckCircle2, Clock, Target, BarChart3, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star } from 'lucide-react-native';
+import { Building2, Activity, CircleCheckBig, Clock, Target, ChartBar, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function VPPropertyMgmtPage() {
   const { theme } = useTheme();
   const stats = [
-    { label: 'Properties', value: '2,847', icon: CheckCircle2, color: '#34C759' },
+    { label: 'Properties', value: '2,847', icon: CircleCheckBig, color: '#34C759' },
     { label: 'Uptime', value: '99.94%', icon: Activity, color: '#007AFF' },
     { label: 'Response', value: '1.1s', icon: Clock, color: '#FF9500' },
     { label: 'Accuracy', value: '97.5%', icon: Target, color: '#AF52DE' },
@@ -31,7 +31,7 @@ export default function VPPropertyMgmtPage() {
     { time: '6 hours ago', text: 'Negotiated 3 vendor service contracts' },
   ];
   const quickActions = [
-    { label: 'View Reports', icon: BarChart3 },
+    { label: 'View Reports', icon: ChartBar },
     { label: 'Team Chat', icon: MessageSquare },
     { label: 'Schedule', icon: Calendar },
     { label: 'Settings', icon: Shield },

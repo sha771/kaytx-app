@@ -2,7 +2,7 @@ import React, { useState, useCallback, useMemo, useEffect, useRef } from 'react'
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, Animated } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import { ArrowLeft, ChevronRight, Play, Pause, RefreshCw, Power, Sparkles, Crown, Star, CheckCircle, Settings, BarChart3, Zap, Radio, Eye, Brain, ArrowUpRight, ArrowDownRight, Activity, Shield, Gauge, Timer, ThumbsUp } from 'lucide-react-native';
+import { ArrowLeft, ChevronRight, Play, Pause, RefreshCw, Power, Sparkles, Crown, Star, CircleCheck, Settings, ChartBar, Zap, Radio, Eye, Brain, ArrowUpRight, ArrowDownRight, Activity, Shield, Gauge, Timer, ThumbsUp } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
 import { trpc } from '@/lib/trpc';
@@ -94,7 +94,7 @@ export function DepartmentAIPage({ config }: { config: DeptPageConfig }) {
   const getStatusColor = (s: string) => ({ active: '#34C759', paused: '#FF9500', training: '#007AFF', inactive: '#8E8E93', optimizing: '#AF52DE' }[s] || '#8E8E93');
   const getStatusIcon = (s: string) => ({ active: Play, paused: Pause, training: RefreshCw, inactive: Power, optimizing: Sparkles }[s] || Power);
   const getTierColor = (t: string) => ({ enterprise: '#AF52DE', premium: '#FF9500', standard: '#007AFF' }[t] || '#8E8E93');
-  const getTierIcon = (t: string) => ({ enterprise: Crown, premium: Star }[t] || CheckCircle);
+  const getTierIcon = (t: string) => ({ enterprise: Crown, premium: Star }[t] || CircleCheck);
   const getTrendIcon = (t: string) => ({ up: ArrowUpRight, down: ArrowDownRight }[t] || Activity);
   const getTrendColor = (t: string) => ({ up: '#34C759', down: '#FF3B30' }[t] || '#FF9500');
   const getHealthColor = (s: number) => s >= 90 ? '#34C759' : s >= 70 ? '#FF9500' : '#FF3B30';
@@ -142,7 +142,7 @@ export function DepartmentAIPage({ config }: { config: DeptPageConfig }) {
             <View style={s.caps}><View style={s.secH}><Sparkles size={14} color={ACCENT} /><Text style={[s.secL, { color: theme.colors.secondaryText }]}>Capabilities</Text></View><View style={s.capList}>{agent.capabilities.map((c, i) => <View key={i} style={[s.capTag, { backgroundColor: `${ACCENT}10` }]}><Text style={[s.capT, { color: ACCENT }]}>{c}</Text></View>)}</View></View>
             <View style={s.btns}>
               <TouchableOpacity style={[s.btn, { backgroundColor: `${ACCENT}15` }]}><Settings size={16} color={ACCENT} /><Text style={[s.btnT, { color: ACCENT }]}>Configure</Text></TouchableOpacity>
-              <TouchableOpacity style={[s.btn, { backgroundColor: '#34C75915' }]}><BarChart3 size={16} color="#34C759" /><Text style={[s.btnT, { color: '#34C759' }]}>Analytics</Text></TouchableOpacity>
+              <TouchableOpacity style={[s.btn, { backgroundColor: '#34C75915' }]}><ChartBarBig size={16} color="#34C759" /><Text style={[s.btnT, { color: '#34C759' }]}>Analytics</Text></TouchableOpacity>
               <TouchableOpacity style={[s.btn, { backgroundColor: '#FF950015' }]}><Eye size={16} color="#FF9500" /><Text style={[s.btnT, { color: '#FF9500' }]}>Monitor</Text></TouchableOpacity>
             </View>
           </View>

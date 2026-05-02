@@ -23,15 +23,15 @@ import {
   TrendingUp,
   Play,
   Pause,
-  Edit,
+  Pencil,
   Copy,
   Trash2,
   Plus,
-  Filter,
+  ListFilter,
   Settings,
   Clock,
-  CheckCircle,
-  AlertTriangle,
+  CircleCheck,
+  TriangleAlert,
   Activity,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
@@ -200,10 +200,10 @@ export default function MarketingAutomationScreen() {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'active': return CheckCircle;
+      case 'active': return CircleCheck;
       case 'paused': return Pause;
-      case 'draft': return Edit;
-      default: return AlertTriangle;
+      case 'draft': return Pencil;
+      default: return TriangleAlert;
     }
   };
 
@@ -211,7 +211,7 @@ export default function MarketingAutomationScreen() {
     switch (type) {
       case 'email_signup': return Mail;
       case 'purchase': return Target;
-      case 'cart_abandon': return AlertTriangle;
+      case 'cart_abandon': return TriangleAlert;
       case 'page_visit': return Activity;
       case 'date_time': return Clock;
       default: return Zap;
@@ -264,7 +264,7 @@ export default function MarketingAutomationScreen() {
             </View>
             <View style={styles.actionButtons}>
               <TouchableOpacity style={styles.actionButton}>
-                <Edit size={16} color={theme.colors.text} />
+                <Pencil size={16} color={theme.colors.text} />
               </TouchableOpacity>
               <TouchableOpacity style={styles.actionButton}>
                 <Copy size={16} color={theme.colors.text} />
@@ -443,7 +443,7 @@ export default function MarketingAutomationScreen() {
         <Text style={[styles.title, { color: theme.colors.text }]}>Marketing Automation</Text>
         <View style={styles.headerActions}>
           <TouchableOpacity style={styles.headerButton}>
-            <Filter size={20} color={theme.colors.text} />
+            <ListFilter size={20} color={theme.colors.text} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerButton}>
             <Plus size={20} color={theme.colors.text} />

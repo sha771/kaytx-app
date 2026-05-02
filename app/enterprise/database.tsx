@@ -13,15 +13,15 @@ import {
   ArrowLeft,
   Database,
   Activity,
-  AlertTriangle,
-  CheckCircle,
+  TriangleAlert,
+  CircleCheck,
   Server,
   Zap,
   RefreshCw,
-  BarChart3,
+  ChartBar,
   Settings,
   Copy,
-  PauseCircle,
+  CirclePause,
   Download,
   Upload,
   Layers,
@@ -29,7 +29,7 @@ import {
   Share2,
   ShieldCheck,
   KeySquare,
-  LineChart,
+  ChartLine,
   CircuitBoard,
   Baseline,
 } from 'lucide-react-native';
@@ -358,7 +358,7 @@ const optimizationInsights: OptimizationInsight[] = [
   {
     id: 'opt-3',
     title: 'Slow query rewrite',
-    description: 'Rewrite customer search query with JSON path filter to avoid full scan.',
+    description: 'Rewrite customer search query with JSON path Filter to avoid full scan.',
     impact: 'high',
     type: 'query',
     status: 'ready',
@@ -503,14 +503,14 @@ export default function DatabaseManagementScreen() {
       case 'running':
       case 'completed':
       case 'synced':
-      case 'healthy': return CheckCircle;
+      case 'healthy': return CircleCheck;
       case 'backup':
       case 'syncing':
       case 'in-progress':
       case 'balancing': return RefreshCw;
       case 'error':
-      case 'failed': return AlertTriangle;
-      case 'stopped': return PauseCircle;
+      case 'failed': return TriangleAlert;
+      case 'stopped': return CirclePause;
       case 'maintenance': return Settings;
       default: return Activity;
     }
@@ -632,7 +632,7 @@ export default function DatabaseManagementScreen() {
             <Text style={[styles.actionButtonText, { color: theme.colors.text }]}>Config</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton} testID={`db-metrics-${item.id}`}>
-            <BarChart3 size={16} color={theme.colors.text} />
+            <ChartBarBig size={16} color={theme.colors.text} />
             <Text style={[styles.actionButtonText, { color: theme.colors.text }]}>Metrics</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton} testID={`db-clone-${item.id}`}>
@@ -1037,7 +1037,7 @@ export default function DatabaseManagementScreen() {
         {selectedTab === 'performance' && (
           <View style={styles.section}>
             <View style={styles.performanceHeader}>
-              <BarChart3 size={24} color={theme.colors.primary} />
+              <ChartBarBig size={24} color={theme.colors.primary} />
               <Text style={[styles.performanceHeaderText, { color: theme.colors.text }]}>Query Performance</Text>
             </View>
             <Text style={[styles.performanceDescription, { color: theme.colors.secondaryText }]}>
@@ -1122,7 +1122,7 @@ export default function DatabaseManagementScreen() {
               testID="ai-scaling-forecast"
             >
               <View style={styles.aiForecastHeader}>
-                <LineChart size={24} color={theme.colors.primary} />
+                <ChartLine size={24} color={theme.colors.primary} />
                 <Text style={[styles.aiForecastTitle, { color: theme.colors.text }]}>Predictive Scaling</Text>
               </View>
               <Text style={[styles.aiForecastMeta, { color: theme.colors.secondaryText }]}>

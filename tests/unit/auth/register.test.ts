@@ -137,7 +137,7 @@ describe('Authentication - Registration', () => {
       const edgeCases = [
         { email: 'a@b.co', valid: true },
         { email: 'very.long.email.address@domain.com', valid: true },
-        { email: 'user+tag+filter@domain.com', valid: true },
+        { email: 'user+tag+Filter@domain.com', valid: true },
         { email: 'user@sub.domain.com', valid: true },
         { email: '', valid: false },
         { email: ' ', valid: false },

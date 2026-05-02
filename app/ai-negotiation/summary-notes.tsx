@@ -15,9 +15,9 @@ import { Stack } from 'expo-router';
 import {
   FileText,
   Clock,
-  CheckCircle,
-  AlertCircle,
-  Edit,
+  CircleCheck,
+  CircleAlert,
+  Pencil,
   Download,
   Share2,
   Tag,
@@ -30,7 +30,7 @@ import {
   Play,
   Pause,
   SkipForward,
-  Filter,
+  ListFilter,
   Search,
   Plus,
   Sparkles,
@@ -163,7 +163,7 @@ export default function NegotiationSummaryNotesScreen() {
   const stats = [
     { id: 'pipeline', label: 'Pipeline Impact', value: '$220k', icon: DollarSign, color: theme.colors.success },
     { id: 'active', label: 'Active Deals', value: '12', icon: Briefcase, color: theme.colors.primary },
-    { id: 'risk', label: 'At Risk', value: '3', icon: AlertCircle, color: '#FF3B30' },
+    { id: 'risk', label: 'At Risk', value: '3', icon: CircleAlert, color: '#FF3B30' },
     { id: 'rate', label: 'Win Rate', value: '68%', icon: TrendingUp, color: '#FF9500' },
   ];
 
@@ -287,7 +287,7 @@ export default function NegotiationSummaryNotesScreen() {
 
                 {note.negotiationPoints.length > 0 && (
                   <View style={styles.actionItemsPreview}>
-                    <AlertCircle size={14} color={theme.colors.primary} />
+                    <CircleAlert size={14} color={theme.colors.primary} />
                     <Text style={[styles.actionItemsText, { color: theme.colors.text }]}>
                       {note.negotiationPoints.length} negotiation points
                     </Text>
@@ -300,7 +300,7 @@ export default function NegotiationSummaryNotesScreen() {
                   </Text>
                   {note.completed && (
                     <View style={styles.completedBadge}>
-                      <CheckCircle size={14} color={theme.colors.success} />
+                      <CircleCheck size={14} color={theme.colors.success} />
                       <Text style={[styles.completedText, { color: theme.colors.success }]}>Resolved</Text>
                     </View>
                   )}
@@ -373,7 +373,7 @@ export default function NegotiationSummaryNotesScreen() {
 
                 <View style={styles.section}>
                   <View style={styles.sectionHeader}>
-                    <AlertCircle size={18} color={theme.colors.warning} />
+                    <CircleAlert size={18} color={theme.colors.warning} />
                     <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Negotiation Points</Text>
                   </View>
                   {selectedNote.negotiationPoints.map((item, index) => (
@@ -386,12 +386,12 @@ export default function NegotiationSummaryNotesScreen() {
 
                 <View style={styles.section}>
                   <View style={styles.sectionHeader}>
-                    <CheckCircle size={18} color={theme.colors.success} />
+                    <CircleCheck size={18} color={theme.colors.success} />
                     <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Next Steps</Text>
                   </View>
                   {selectedNote.nextSteps.map((item, index) => (
                     <View key={index} style={[styles.actionItem, { backgroundColor: theme.colors.cardBackground }]}>
-                      <CheckCircle size={16} color={theme.colors.success} />
+                      <CircleCheck size={16} color={theme.colors.success} />
                       <Text style={[styles.actionItemText, { color: theme.colors.text }]}>{item}</Text>
                     </View>
                   ))}
@@ -413,7 +413,7 @@ export default function NegotiationSummaryNotesScreen() {
                       // Edit logic
                     }}
                   >
-                    <Edit size={18} color={theme.colors.primary} />
+                    <Pencil size={18} color={theme.colors.primary} />
                     <Text style={[styles.modalButtonText, { color: theme.colors.primary }]}>Edit</Text>
                   </TouchableOpacity>
                 </View>
@@ -463,7 +463,7 @@ export default function NegotiationSummaryNotesScreen() {
                   Alert.alert('Success', 'Note added to deal record');
                 }}
               >
-                <CheckCircle size={18} color="#fff" />
+                <CircleCheck size={18} color="#fff" />
                 <Text style={styles.primaryButtonText}>Save Note</Text>
               </TouchableOpacity>
             </ScrollView>

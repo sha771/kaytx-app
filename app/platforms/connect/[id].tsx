@@ -14,13 +14,13 @@ import {
     Dimensions,
 } from 'react-native';
 import {
-    CheckCircle,
+    CircleCheck,
     QrCode,
     Lock,
     Key,
     Smartphone,
     Cloud,
-    AlertCircle,
+    CircleAlert,
     Copy,
     Clock,
     RefreshCw,
@@ -479,7 +479,7 @@ export default function ConnectionScreen() {
                         </View>
 
                         <View style={[styles.warningBox, { backgroundColor: '#FF950010' }]}>
-                            <AlertCircle size={20} color="#FF9500" />
+                            <CircleAlert size={20} color="#FF9500" />
                             <Text style={[styles.warningText, { color: '#FF9500' }]}>
                                 MFA challenge will be triggered after initial authentication.
                             </Text>
@@ -549,7 +549,7 @@ export default function ConnectionScreen() {
                 {step === 'success' && (
                     <View style={[styles.content, styles.successContent]}>
                         <View style={styles.successHalo}>
-                            <CheckCircle size={80} color="#34C759" />
+                            <CircleCheck size={80} color="#34C759" />
                         </View>
                         <Text style={[styles.successTitle, { color: theme.colors.text }]}>System Integrated</Text>
                         <Text style={[styles.successSubtitle, { color: theme.colors.secondaryText }]}>

@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Shield, Activity, Star, Users, CheckCircle2, Clock, Target, ArrowRight, BarChart3, MessageSquare, Calendar, ShieldCheck, AlertTriangle, Eye, Lock, Zap } from 'lucide-react-native';
+import { Shield, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBar, MessageSquare, Calendar, ShieldCheck, TriangleAlert, Eye, Lock, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
 
   const stats = [
-    { label: 'Threats Blocked', value: '52,400', icon: CheckCircle2, color: '#34C759' },
+    { label: 'Threats Blocked', value: '52,400', icon: CircleCheckBig, color: '#34C759' },
     { label: 'Uptime', value: '99.99%', icon: Activity, color: '#007AFF' },
     { label: 'Response', value: '0.2s', icon: Clock, color: '#FF9500' },
     { label: 'Accuracy', value: '99.9%', icon: Target, color: '#AF52DE' },
@@ -32,7 +32,7 @@ export default function AgentPage() {
 
   const activities = [
     { time: '2 min ago', text: 'Approved new zero-trust architecture', icon: ShieldCheck },
-    { time: '15 min ago', text: 'Reviewed quarterly risk assessment', icon: AlertTriangle },
+    { time: '15 min ago', text: 'Reviewed quarterly risk assessment', icon: TriangleAlert },
     { time: '1 hour ago', text: 'Updated security governance framework', icon: Eye },
     { time: '3 hours ago', text: 'Briefed board on threat landscape', icon: Zap },
   ];

@@ -1,19 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Layout, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Cloud, FileText } from 'lucide-react-native';
+import { LayoutDashboard, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Cloud, FileText } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Designs',value:'200+',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Review Time',value:'<4hr',icon:Clock,color:'#FF9500'},{label:'Compliance',value:'100%',icon:Target,color:'#581C84'}];
+  const stats = [{label:'Designs',value:'200+',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Review Time',value:'<4hr',icon:Clock,color:'#FF9500'},{label:'Compliance',value:'100%',icon:Target,color:'#581C84'}];
   const capabilities = ['Security Design','Zero Trust','Cloud Security','Network Arch','AppSec','DevSecOps'];
   const responsibilities = ['Security architecture design & review','Zero-trust implementation & management','Cloud security framework development','Network security topology design','Application security standards','DevSecOps pipeline integration'];
-  const activities = [{time:'3 min ago',text:'Designed zero-trust migration plan',icon:Layout},{time:'20 min ago',text:'Reviewed cloud security posture',icon:Cloud},{time:'1 hour ago',text:'Updated security reference arch',icon:FileText}];
+  const activities = [{time:'3 min ago',text:'Designed zero-trust migration plan',icon: LayoutDashboard},{time:'20 min ago',text:'Reviewed cloud security posture',icon:Cloud},{time:'1 hour ago',text:'Updated security reference arch',icon:FileText}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#581C8420' }]}><Layout size={48} color="#581C84" /></View>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#581C8420' }]}><LayoutDashboard size={48} color="#581C84" /></View>
         <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Security Architect</Text>
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Security Architecture</Text>
         <View style={styles.badgesRow}>

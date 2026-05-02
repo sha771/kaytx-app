@@ -107,22 +107,22 @@ export default function CallerInsightsScreen() {
               showsHorizontalScrollIndicator={false}
               style={styles.filterContainer}
             >
-              {['all', 'positive', 'neutral', 'negative'].map((filter) => (
+              {['all', 'positive', 'neutral', 'negative'].map((Filter) => (
                 <TouchableOpacity
-                  key={filter}
+                  key={Filter}
                   style={[
                     styles.filterChip,
-                    filterType === filter && styles.filterChipActive,
+                    filterType === Filter && styles.filterChipActive,
                   ]}
-                  onPress={() => setFilterType(filter as typeof filterType)}
+                  onPress={() => setFilterType(Filter as typeof filterType)}
                 >
                   <Text
                     style={[
                       styles.filterChipText,
-                      filterType === filter && styles.filterChipTextActive,
+                      filterType === Filter && styles.filterChipTextActive,
                     ]}
                   >
-                    {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                    {Filter.charAt(0).toUpperCase() + Filter.slice(1)}
                   </Text>
                 </TouchableOpacity>
               ))}

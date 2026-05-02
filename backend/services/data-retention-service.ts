@@ -318,8 +318,8 @@ export class DataRetentionService extends BaseService {
       const [policiesResult] = await pgDb
         .select({
           total: sql<number>`count(*)`,
-          active: sql<number>`count(*) FILTER (WHERE status = 'active')`,
-          suspended: sql<number>`count(*) FILTER (WHERE status = 'suspended')`,
+          active: sql<number>`count(*) Filter (WHERE status = 'active')`,
+          suspended: sql<number>`count(*) Filter (WHERE status = 'suspended')`,
           lastExecuted: sql<Date>`MAX(last_executed_at)`,
         })
         .from(dataRetentionPolicies)

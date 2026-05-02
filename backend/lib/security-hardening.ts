@@ -466,17 +466,17 @@ export class SecurityLogger {
     // In production: PagerDuty.trigger(event);
   }
 
-  getEvents(filter?: { severity?: string; userId?: string; limit?: number }): SecurityEvent[] {
+  getEvents(Filter?: { severity?: string; userId?: string; limit?: number }): SecurityEvent[] {
     let result = this.events;
 
-    if (filter?.severity) {
-      result = result.filter((e) => e.severity === filter.severity);
+    if (Filter?.severity) {
+      result = result.filter((e) => e.severity === Filter.severity);
     }
-    if (filter?.userId) {
-      result = result.filter((e) => e.userId === filter.userId);
+    if (Filter?.userId) {
+      result = result.filter((e) => e.userId === Filter.userId);
     }
 
-    return result.slice(-(filter?.limit || 100));
+    return result.slice(-(Filter?.limit || 100));
   }
 }
 

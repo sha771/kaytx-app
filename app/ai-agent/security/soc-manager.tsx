@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Monitor, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Settings, FileText } from 'lucide-react-native';
+import { Monitor, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Settings, FileText } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Alerts/Day',value:'3K+',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Triage',value:'<5min',icon:Clock,color:'#FF9500'},{label:'Coverage',value:'99.8%',icon:Target,color:'#581C84'}];
+  const stats = [{label:'Alerts/Day',value:'3K+',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Triage',value:'<5min',icon:Clock,color:'#FF9500'},{label:'Coverage',value:'99.8%',icon:Target,color:'#581C84'}];
   const capabilities = ['SOC Operations','SIEM Mgmt','Alert Triage','Team Coord','Reporting','Escalation'];
   const responsibilities = ['24/7 SOC operations management','SIEM platform administration & tuning','Alert triage & incident prioritization','Security analyst team coordination','Operational reporting & metrics','Escalation procedures & playbooks'];
   const activities = [{time:'3 min ago',text:'Managed 3K alerts in shift',icon: Activity},{time:'20 min ago',text:'Tuned SIEM correlation rules',icon:Settings},{time:'1 hour ago',text:'Published shift handover report',icon:FileText}];

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Target, Activity, Star, Users, CheckCircle2, Clock, ArrowRight, BarChart3, MessageSquare, Calendar, Shield, Phone, TrendingUp, Handshake, Award } from 'lucide-react-native';
+import { Target, Activity, Star, Users, CircleCheckBig, Clock, ArrowRight, ChartBar, MessageSquare, Calendar, Shield, Phone, TrendingUp, Handshake, Award } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { useRouter } from 'expo-router';
 
@@ -24,6 +24,7 @@ const DEPARTMENT_AGENTS = [
 
 export default function SalesDepartment() {
   const { theme } = useTheme();
+  const router = useRouter();
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
@@ -37,7 +38,7 @@ export default function SalesDepartment() {
         </View>
       </View>
       <View style={styles.statsContainer}>
-        {[{label:'Agents',value:DEPARTMENT_AGENTS.length.toString(),icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Leads',value:'1K+/day',icon:Clock,color:'#FF9500'},{label:'Conversion',value:'35%',icon:Target,color:'#F59E0B'}].map((stat,i)=>(<View key={i} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><stat.icon size={22} color={stat.color} /><Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text><Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text></View>))}
+        {[{label:'Agents',value:DEPARTMENT_AGENTS.length.toString(),icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Leads',value:'1K+/day',icon:Clock,color:'#FF9500'},{label:'Conversion',value:'35%',icon:Target,color:'#F59E0B'}].map((stat,i)=>(<View key={i} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><stat.icon size={22} color={stat.color} /><Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text><Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text></View>))}
       </View>
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Overview</Text>
@@ -59,7 +60,7 @@ export default function SalesDepartment() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:BarChart3},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#F59E0B12' }]}><act.icon size={24} color="#F59E0B" /><Text style={[styles.actionText, { color: '#F59E0B' }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#F59E0B12' }]}><act.icon size={24} color="#F59E0B" /><Text style={[styles.actionText, { color: '#F59E0B' }]}>{act.label}</Text></TouchableOpacity>))}
         </View>
       </View>
     <AgentFeatures agentId="sales-index" agentName="Sales Department" />

@@ -4,16 +4,16 @@
  * =============================================================================
  *
  * Master export file for all AI Agent and Employee hierarchy levels.
- * This is the single entry point for importing the complete 199-agent hierarchy.
+ * This is the single entry point for importing the complete 215-agent hierarchy.
  *
  * Hierarchy Structure:
  * - Level 1: C-Suite Executives (15 agents) - CEO + 8 original + 7 new
  * - Level 2: VP/Directors (23 agents)
- * - Level 3: Managers (40 agents)
- * - Level 4: Team Leads (43 agents)
- * - Level 5: Specialists (48 agents)
+ * - Level 3: Managers (42 agents)
+ * - Level 4: Team Leads (51 agents)
+ * - Level 5: Specialists (56 agents)
  *
- * Total: 199 Specialized AI Agents across 21 Departments
+ * Total: 215 Specialized AI Agents across 22 Departments
  *
  * @version 6.0.0
  * @lastUpdated 2026-04-16
@@ -119,15 +119,15 @@ export {
 // CONSOLIDATED STATS
 // ============================================
 export const AI_WORKFORCE_COMPLETE_STATS = {
-  totalAgents: 199,
+  totalAgents: 215,
   hierarchyBreakdown: {
     cSuite: 15,
     vpDirectors: 23,
-    managers: 40,
-    teamLeads: 43,
-    specialists: 48,
+    managers: 42,
+    teamLeads: 51,
+    specialists: 56,
   },
-  departments: 21,
+  departments: 22,
   departmentList: [
     'executive',
     'finance',
@@ -151,6 +151,7 @@ export const AI_WORKFORCE_COMPLETE_STATS = {
     'manufacturing_production',
     'transportation_logistics',
     'government_public',
+    'customer_insights_analytics',
   ] as const,
   hierarchyLevels: ['c_level', 'vp_director', 'manager', 'team_lead', 'specialist'] as const,
   totalAnnualHumanCost: '$18,450,000', // 199 agents avg $92.7K each
@@ -209,6 +210,7 @@ export const departmentNames: Record<string, string> = {
   manufacturing_production: 'Manufacturing & Production',
   transportation_logistics: 'Transportation & Logistics',
   government_public: 'Government & Public Sector',
+  customer_insights_analytics: 'Customer Insights & Analytics',
 };
 
 /** Department colors for UI */
@@ -235,6 +237,7 @@ export const departmentColors: Record<string, string> = {
   manufacturing_production: '#6366F1', // Indigo
   transportation_logistics: '#0EA5E9', // Sky Blue
   government_public: '#475569',        // Slate
+  customer_insights_analytics: '#6366F1', // Indigo
 };
 
 // ============================================
@@ -266,11 +269,11 @@ export function getAgentCountByLevel(level: string): number {
     case 'vp_director':
       return 23;
     case 'manager':
-      return 40;
+      return 42;
     case 'team_lead':
-      return 43;
+      return 51;
     case 'specialist':
-      return 48;
+      return 56;
     default:
       return 0;
   }

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Calendar, Clock, Users, MapPin, Settings, Plus, Search, Filter, Bell, CheckCircle } from 'lucide-react-native';
+import { Calendar, Clock, Users, MapPin, Settings, Plus, Search, ListFilter, Bell, CircleCheck } from 'lucide-react-native';
 
 interface ScheduleEvent {
   id: string;
@@ -77,7 +77,7 @@ export default function SchedulingCalendarScreen() {
     switch (type) {
       case 'meeting': return <Users size={16} color="#FFFFFF" />;
       case 'call': return <Bell size={16} color="#FFFFFF" />;
-      case 'task': return <CheckCircle size={16} color="#FFFFFF" />;
+      case 'task': return <CircleCheck size={16} color="#FFFFFF" />;
       case 'reminder': return <Clock size={16} color="#FFFFFF" />;
       default: return <Calendar size={16} color="#FFFFFF" />;
     }
@@ -116,7 +116,7 @@ export default function SchedulingCalendarScreen() {
         
         <View style={styles.filterContainer}>
           <TouchableOpacity style={styles.filterButton}>
-            <Filter size={20} color="#3B82F6" />
+            <ListFilter size={20} color="#3B82F6" />
           </TouchableOpacity>
           
           <TouchableOpacity style={styles.addButton}>
@@ -147,7 +147,7 @@ export default function SchedulingCalendarScreen() {
           </View>
           
           <View style={styles.statCard}>
-            <CheckCircle size={24} color="#8B5CF6" />
+            <CircleCheck size={24} color="#8B5CF6" />
             <Text style={styles.statNumber}>1</Text>
             <Text style={styles.statLabel}>Completed</Text>
           </View>
@@ -223,7 +223,7 @@ export default function SchedulingCalendarScreen() {
                 
                 {event.status === 'scheduled' && (
                   <TouchableOpacity style={styles.actionButton}>
-                    <CheckCircle size={16} color="#10B981" />
+                    <CircleCheck size={16} color="#10B981" />
                     <Text style={styles.actionText}>Complete</Text>
                   </TouchableOpacity>
                 )}
@@ -247,7 +247,7 @@ export default function SchedulingCalendarScreen() {
             </TouchableOpacity>
             
             <TouchableOpacity style={styles.actionCard}>
-              <CheckCircle size={24} color="#F59E0B" />
+              <CircleCheck size={24} color="#F59E0B" />
               <Text style={styles.actionCardText}>Add Task</Text>
             </TouchableOpacity>
             

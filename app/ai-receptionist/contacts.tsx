@@ -15,7 +15,7 @@ import {
   Users,
   Search,
   Plus,
-  Filter,
+  ListFilter,
   Tag,
   Phone,
   Mail,
@@ -215,9 +215,9 @@ export default function ContactsScreen() {
           </View>
           <TouchableOpacity
             style={[styles.iconButton, { backgroundColor: theme.colors.cardBackground }]}
-            testID="receptionist-contacts-filter"
+            testID="receptionist-contacts-Filter"
           >
-            <Filter size={20} color={theme.colors.text} />
+            <ListFilter size={20} color={theme.colors.text} />
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.addButton, { backgroundColor: theme.colors.primary }]}

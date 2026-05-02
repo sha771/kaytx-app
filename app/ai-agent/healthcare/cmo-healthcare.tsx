@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Stethoscope, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Stethoscope, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'4,183',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.5s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.5%',icon:Target,color:'#B71C1C'}];
+  const stats = [{label:'Tasks',value:'4,183',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.5s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.5%',icon:Target,color:'#B71C1C'}];
   const capabilities = ['Clinical Strategy','Quality Assurance','Regulatory Compliance','Medical Staff','Patient Safety','Innovation'];
   const responsibilities = ['Clinical strategy & quality oversight','Medical staff credentialing & management','Patient safety program leadership','Regulatory compliance for clinical services','Healthcare innovation & technology adoption','Clinical outcomes monitoring'];
-  const activities = [{time:'3 min ago',text:'Approved new clinical protocols',icon:CheckCircle2},{time:'6 min ago',text:'Reviewed patient safety metrics',icon:Clock},{time:'9 min ago',text:'Led medical staff meeting',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Approved new clinical protocols',icon: CircleCheckBig},{time:'6 min ago',text:'Reviewed patient safety metrics',icon:Clock},{time:'9 min ago',text:'Led medical staff meeting',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

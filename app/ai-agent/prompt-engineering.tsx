@@ -21,14 +21,14 @@ import {
   Settings,
   Zap,
   Lightbulb,
-  AlertCircle,
+  CircleAlert,
   ChevronDown,
   Terminal,
   FileText,
   Plus,
   Trash2,
-  MoreVertical,
-  Wand2,
+  EllipsisVertical,
+  Wand,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInUp } from 'react-native-reanimated';
@@ -349,7 +349,7 @@ How may I assist you today? I'm here to help with any questions or concerns you 
                     )}
                   </TouchableOpacity>
                   <TouchableOpacity>
-                    <MoreVertical size={20} color={colors.icon} />
+                    <EllipsisVertical size={20} color={colors.icon} />
                   </TouchableOpacity>
                 </View>
               </View>
@@ -438,7 +438,7 @@ How may I assist you today? I'm here to help with any questions or concerns you 
             {/* AI Suggestions */}
             <Animated.View entering={FadeInUp.delay(200)} style={[styles.suggestionsCard, { backgroundColor: colors.card }]}>
               <View style={styles.suggestionsHeader}>
-                <Wand2 size={20} color="#F59E0B" />
+                <Wand size={20} color="#F59E0B" />
                 <Text style={[styles.suggestionsTitle, { color: colors.text }]}>
                   AI Suggestions
                 </Text>
@@ -456,7 +456,7 @@ How may I assist you today? I'm here to help with any questions or concerns you 
                 </Text>
               </View>
               <View style={styles.suggestionItem}>
-                <AlertCircle size={16} color="#F59E0B" />
+                <CircleAlert size={16} color="#F59E0B" />
                 <Text style={[styles.suggestionText, { color: colors.text }]}>
                   Consider adding tone guidelines for consistency
                 </Text>

@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Building, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Building, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'1,389',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.9s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.4%',icon:Target,color:'#B71C1C'}];
+  const stats = [{label:'Tasks',value:'1,389',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.9s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.4%',icon:Target,color:'#B71C1C'}];
   const capabilities = ['Operations Strategy','Facility Mgmt','Budget Oversight','Regulatory Compliance','Staff Planning','Performance Improvement'];
   const responsibilities = ['Healthcare operations strategy & planning','Facility management oversight','Budget development & oversight','Regulatory compliance management','Staff planning & workforce optimization','Performance improvement programs'];
-  const activities = [{time:'3 min ago',text:'Approved Q3 operational budget',icon:CheckCircle2},{time:'6 min ago',text:'Reviewed facility compliance reports',icon:Clock},{time:'9 min ago',text:'Led performance improvement initiative',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Approved Q3 operational budget',icon: CircleCheckBig},{time:'6 min ago',text:'Reviewed facility compliance reports',icon:Clock},{time:'9 min ago',text:'Led performance improvement initiative',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

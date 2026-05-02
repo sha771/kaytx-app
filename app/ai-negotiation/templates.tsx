@@ -19,11 +19,11 @@ import {
   FileText,
   Phone,
   Copy,
-  Edit,
+  Pencil,
   X,
   Star,
   TrendingUp,
-  CheckCircle,
+  CircleCheck,
 } from 'lucide-react-native';
 import { mockNegotiationTemplates } from '@/utils/mockNegotiationData';
 import type { NegotiationTemplate } from '@/types/negotiation';
@@ -205,7 +205,7 @@ export default function TemplatesScreen() {
                     <Text style={styles.actionButtonText}>Copy</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.actionButton}>
-                    <Edit size={16} color="#FF2D92" />
+                    <Pencil size={16} color="#FF2D92" />
                     <Text style={styles.actionButtonText}>Edit</Text>
                   </TouchableOpacity>
                 </View>
@@ -229,7 +229,7 @@ export default function TemplatesScreen() {
                     <Copy size={20} color="#FF2D92" />
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.modalHeaderButton}>
-                    <Edit size={20} color="#FF2D92" />
+                    <Pencil size={20} color="#FF2D92" />
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => setSelectedTemplate(null)}>
                     <X size={24} color="#1A1A1A" />
@@ -312,7 +312,7 @@ export default function TemplatesScreen() {
                     <Text style={styles.primaryButtonText}>Copy Template</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.secondaryButton}>
-                    <Edit size={20} color="#FF2D92" />
+                    <Pencil size={20} color="#FF2D92" />
                     <Text style={styles.secondaryButtonText}>Edit Template</Text>
                   </TouchableOpacity>
                 </View>
@@ -390,7 +390,7 @@ export default function TemplatesScreen() {
               </View>
 
               <TouchableOpacity style={styles.createButton}>
-                <CheckCircle size={20} color="#FFFFFF" />
+                <CircleCheck size={20} color="#FFFFFF" />
                 <Text style={styles.createButtonText}>Create Template</Text>
               </TouchableOpacity>
             </ScrollView>

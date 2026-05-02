@@ -6,7 +6,7 @@ import { aiEmployees } from '@/constants/aiEmployees';
 import { trpc } from '@/lib/trpc';
 import {
     ShoppingBag,
-    ArrowLeft, Package, RefreshCw, MessageSquare, TrendingUp, Clock, Zap, Globe, BarChart3, Users, Truck, Lock, CheckCircle, ChevronRight } from 'lucide-react-native';
+    ArrowLeft, Package, RefreshCw, MessageSquare, TrendingUp, Clock, Zap, Globe, ChartBar, Users, Truck, Lock, CircleCheck, ChevronRight } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const { width } = Dimensions.get('window');
@@ -66,7 +66,7 @@ export default function RetailScreen() {
                         router.push('/enterprise/billing');
                         return;
                     }
-                    router.push(item.route as any);
+                    router.push(item.route);
                 }}
             >
                 <View style={[styles.agentIcon, { backgroundColor: item.color + '15' }]}>
@@ -92,7 +92,7 @@ export default function RetailScreen() {
                             <Text style={[styles.metricText, { color: '#34C759' }]}>{item.efficiency}</Text>
                         </View>
                         <View style={styles.metric}>
-                            <CheckCircle size={12} color={theme.colors.primary} />
+                            <CircleCheck size={12} color={theme.colors.primary} />
                             <Text style={[styles.metricText, { color: theme.colors.primary }]}>{(item as any).roiMetrics?.accuracyRate ?? 'N/A'}</Text>
                         </View>
                     </View>
@@ -127,7 +127,7 @@ export default function RetailScreen() {
                 <View style={styles.section}>
                     <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Benefits</Text>
                     <View style={styles.benefitsGrid}>
-                        {[{ icon: Zap, color: '#FF6B6B', title: 'Peak Season Ready', desc: 'Handle 10x order volume' }, { icon: Globe, color: '#4ECDC4', title: 'Omnichannel', desc: 'Web, mobile, social, and in-store' }, { icon: Truck, color: '#6C5CE7', title: 'Delivery Updates', desc: 'Real-time tracking integration' }, { icon: BarChart3, color: '#00B894', title: 'Conversion AI', desc: 'Boost sales with AI upselling' }].map((b, i) => { const I = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><I size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
+                        {[{ icon: Zap, color: '#FF6B6B', title: 'Peak Season Ready', desc: 'Handle 10x order volume' }, { icon: Globe, color: '#4ECDC4', title: 'Omnichannel', desc: 'Web, mobile, social, and in-store' }, { icon: Truck, color: '#6C5CE7', title: 'Delivery Updates', desc: 'Real-time tracking integration' }, { icon: ChartBar, color: '#00B894', title: 'Conversion AI', desc: 'Boost sales with AI upselling' }].map((b, i) => { const I = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><I size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
                     </View>
                 </View>
 
@@ -183,7 +183,7 @@ export default function RetailScreen() {
                                         router.push('/enterprise/billing');
                                         return;
                                     }
-                                    router.push(a.route as any);
+                                    router.push(a.route);
                                 }}
                             >
                                 <View style={[styles.agentIcon, { backgroundColor: a.color + '20' }]}><I size={28} color={a.color} /></View>
@@ -205,7 +205,7 @@ export default function RetailScreen() {
 
                 <View style={[styles.cta, { backgroundColor: theme.colors.cardBackground }]}>
                     <Text style={[styles.ctaTitle, { color: theme.colors.text }]}>Boost your retail performance</Text>
-                    <TouchableOpacity style={[styles.ctaBtn, { backgroundColor: theme.colors.primary }]} onPress={() => router.push('/ai-agent/ai-agent' as any)}><Text style={styles.ctaBtnText}>Get Started</Text></TouchableOpacity>
+                    <TouchableOpacity style={[styles.ctaBtn, { backgroundColor: theme.colors.primary }]} onPress={() => router.push('/ai-agent/ai-agent')}><Text style={styles.ctaBtnText}>Get Started</Text></TouchableOpacity>
                 </View>
                 <View style={{ height: 40 }} />
             </ScrollView>

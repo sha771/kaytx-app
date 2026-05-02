@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Users, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Users, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'920',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.1s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.9%',icon:Target,color:'#33691E'}];
+  const stats = [{label:'Tasks',value:'920',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.1s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.9%',icon:Target,color:'#33691E'}];
   const capabilities = ['Tenant Communication','Issue Resolution','Retention','Community Building','Feedback Analysis','Service Coordination'];
   const responsibilities = ['Tenant communication & engagement','Issue resolution & escalation','Tenant retention program management','Community building & events','Tenant feedback analysis','Service coordination & follow-up'];
-  const activities = [{time:'3 min ago',text:'Resolved 20 tenant inquiries',icon:CheckCircle2},{time:'6 min ago',text:'Organized tenant appreciation event',icon:Clock},{time:'9 min ago',text:'Improved tenant satisfaction by 8%',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Resolved 20 tenant inquiries',icon: CircleCheckBig},{time:'6 min ago',text:'Organized tenant appreciation event',icon:Clock},{time:'9 min ago',text:'Improved tenant satisfaction by 8%',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

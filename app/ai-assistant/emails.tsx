@@ -20,7 +20,7 @@ import {
   Forward,
   X,
   ChevronLeft,
-  Edit3,
+  PenLine,
   Lock,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
@@ -52,7 +52,7 @@ export default function EmailsScreen() {
   const [to, setTo] = useState<string>('');
   const [subject, setSubject] = useState<string>('');
   const [body, setBody] = useState<string>('');
-  const [filter, setFilter] = useState<'all' | 'unread' | 'ai-drafted'>('all');
+  const [Filter, setFilter] = useState<'all' | 'unread' | 'ai-drafted'>('all');
 
   const filteredEmails = emails.filter(email => {
     if (filter === 'unread') return !email.read;
@@ -171,7 +171,7 @@ export default function EmailsScreen() {
           }}
         >
           {isEnterprise ? (
-            <Edit3 size={20} color="white" />
+            <PenLine size={20} color="white" />
           ) : (
             <Lock size={20} color="white" />
           )}

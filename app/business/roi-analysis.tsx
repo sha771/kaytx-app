@@ -14,10 +14,10 @@ import {
   TrendingUp,
   TrendingDown,
   DollarSign,
-  BarChart3,
-  PieChart,
+  ChartBar,
+  ChartPie,
   Calendar,
-  Filter,
+  ListFilter,
   Download,
   ArrowLeft,
   Target,
@@ -221,7 +221,7 @@ export default function ROIAnalysisScreen() {
             <Download size={20} color={theme.colors.text} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerButton}>
-            <Filter size={20} color={theme.colors.text} />
+            <ListFilter size={20} color={theme.colors.text} />
           </TouchableOpacity>
         </View>
       </View>

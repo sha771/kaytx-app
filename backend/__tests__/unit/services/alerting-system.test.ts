@@ -202,7 +202,7 @@ describe('Alerting System', () => {
       expect(alerts).toHaveLength(3);
     });
 
-    it('should filter alerts by status', () => {
+    it('should Filter alerts by status', () => {
       const firingAlerts = alertingSystem.getAlerts({ status: AlertStatus.FIRING });
       expect(firingAlerts).toHaveLength(1);
       expect(firingAlerts[0].severity).toBe(AlertSeverity.HIGH);
@@ -212,7 +212,7 @@ describe('Alerting System', () => {
       expect(resolvedAlerts[0].severity).toBe(AlertSeverity.LOW);
     });
 
-    it('should filter alerts by severity', () => {
+    it('should Filter alerts by severity', () => {
       const highAlerts = alertingSystem.getAlerts({ severity: AlertSeverity.HIGH });
       expect(highAlerts).toHaveLength(1);
 
@@ -220,7 +220,7 @@ describe('Alerting System', () => {
       expect(criticalAlerts).toHaveLength(1);
     });
 
-    it('should filter alerts by source', () => {
+    it('should Filter alerts by source', () => {
       const source1Alerts = alertingSystem.getAlerts({ source: 'source1' });
       expect(source1Alerts).toHaveLength(2);
 

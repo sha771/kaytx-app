@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch } from 'react-native';
 import { Stack } from 'expo-router';
-import { Settings, Volume2, Mic, PlayCircle, Save, RotateCcw } from 'lucide-react-native';
+import { Settings, Volume2, Mic, CirclePlay, Save, RotateCcw } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface VoiceProfile {
@@ -77,7 +77,7 @@ export default function VoiceSettingsScreen() {
                 </View>
               )}
               <TouchableOpacity style={styles.playButton}>
-                <PlayCircle size={24} color="#10B981" />
+                <CirclePlay size={24} color="#10B981" />
               </TouchableOpacity>
             </TouchableOpacity>
           ))}

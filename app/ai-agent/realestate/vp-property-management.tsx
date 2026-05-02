@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Building, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Building, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'1,887',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.3s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.8%',icon:Target,color:'#33691E'}];
+  const stats = [{label:'Tasks',value:'1,887',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.3s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.8%',icon:Target,color:'#33691E'}];
   const capabilities = ['PM Strategy','Portfolio Oversight','Operational Excellence','Talent Management','Client Relations','Financial Performance'];
   const responsibilities = ['Property management strategy & direction','Portfolio oversight & performance','Operational excellence programs','Property management talent development','Client & owner relationship management','Financial performance & budgeting'];
-  const activities = [{time:'3 min ago',text:'Set Q3 property management goals',icon:CheckCircle2},{time:'6 min ago',text:'Reviewed portfolio of 200 properties',icon:Clock},{time:'9 min ago',text:'Approved operational improvement plan',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Set Q3 property management goals',icon: CircleCheckBig},{time:'6 min ago',text:'Reviewed portfolio of 200 properties',icon:Clock},{time:'9 min ago',text:'Approved operational improvement plan',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Search, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Search, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'1,841',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.5s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.7%',icon:Target,color:'#33691E'}];
+  const stats = [{label:'Tasks',value:'1,841',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.5s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.7%',icon:Target,color:'#33691E'}];
   const capabilities = ['Deal Analysis','Financial Modeling','Due Diligence','Market Research','Valuation','Underwriting'];
   const responsibilities = ['Acquisition deal analysis & screening','Financial modeling & pro forma development','Due diligence coordination & review','Market research & comparable analysis','Property valuation & appraisal review','Investment underwriting & approval support'];
-  const activities = [{time:'3 min ago',text:'Analyzed 8 acquisition opportunities',icon:CheckCircle2},{time:'6 min ago',text:'Built financial model for $25M deal',icon:Clock},{time:'9 min ago',text:'Completed due diligence on 3 properties',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Analyzed 8 acquisition opportunities',icon: CircleCheckBig},{time:'6 min ago',text:'Built financial model for $25M deal',icon:Clock},{time:'9 min ago',text:'Completed due diligence on 3 properties',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

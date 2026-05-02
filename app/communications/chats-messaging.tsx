@@ -15,8 +15,8 @@ import {
   MessageCircle,
   Search,
   Plus,
-  Filter,
-  MoreVertical,
+  ListFilter,
+  EllipsisVertical,
   Send,
   Paperclip,
   Smile,
@@ -194,7 +194,7 @@ export default function ChatsMessagingScreen() {
               <Video size={20} color={theme.colors.text} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.actionButton}>
-              <MoreVertical size={20} color={theme.colors.text} />
+              <EllipsisVertical size={20} color={theme.colors.text} />
             </TouchableOpacity>
           </View>
         </View>
@@ -242,7 +242,7 @@ export default function ChatsMessagingScreen() {
         <Text style={[styles.title, { color: theme.colors.text }]}>Chats & Messaging</Text>
         <View style={styles.headerActions}>
           <TouchableOpacity style={styles.headerButton}>
-            <Filter size={20} color={theme.colors.text} />
+            <ListFilter size={20} color={theme.colors.text} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerButton}>
             <Plus size={20} color={theme.colors.text} />

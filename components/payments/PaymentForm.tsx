@@ -10,7 +10,7 @@ import {
   TextInput,
 } from 'react-native';
 // trpc import removed - not currently used
-import { CreditCard, User, Mail, CalendarDays, Lock, CheckCircle } from 'lucide-react-native';
+import { CreditCard, User, Mail, CalendarDays, Lock, CircleCheck } from 'lucide-react-native';
 
 interface PaymentFormProps {
   amount: number;
@@ -189,19 +189,19 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({
       <View style={styles.features}>
         <Text style={styles.featuresTitle}>Payment Features</Text>
         <View style={styles.featureRow}>
-          <CheckCircle size={20} color="#4CAF50" />
+          <CircleCheck size={20} color="#4CAF50" />
           <Text style={styles.featureText}>Secure payment processing</Text>
         </View>
         <View style={styles.featureRow}>
-          <CheckCircle size={20} color="#4CAF50" />
+          <CircleCheck size={20} color="#4CAF50" />
           <Text style={styles.featureText}>PCI DSS compliant</Text>
         </View>
         <View style={styles.featureRow}>
-          <CheckCircle size={20} color="#4CAF50" />
+          <CircleCheck size={20} color="#4CAF50" />
           <Text style={styles.featureText}>Multiple payment methods</Text>
         </View>
         <View style={styles.featureRow}>
-          <CheckCircle size={20} color="#4CAF50" />
+          <CircleCheck size={20} color="#4CAF50" />
           <Text style={styles.featureText}>Instant confirmation</Text>
         </View>
       </View>

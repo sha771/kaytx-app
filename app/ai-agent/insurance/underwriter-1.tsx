@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { PenTool, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { PenTool, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'1,709',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.3s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.3%',icon:Target,color:'#004D40'}];
+  const stats = [{label:'Tasks',value:'1,709',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.3s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.3%',icon:Target,color:'#004D40'}];
   const capabilities = ['Risk Assessment','Policy Pricing','Decision Making','Portfolio Management','Guideline Compliance','Negotiation'];
   const responsibilities = ['Risk assessment & underwriting decisions','Policy pricing & terms determination','Underwriting decision documentation','Portfolio management & risk selection','Underwriting guideline compliance','Broker & agent negotiation'];
-  const activities = [{time:'3 min ago',text:'Underwrote 45 policies today',icon:CheckCircle2},{time:'6 min ago',text:'Reviewed 12 renewal submissions',icon:Clock},{time:'9 min ago',text:'Declined 3 high-risk applications',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Underwrote 45 policies today',icon: CircleCheckBig},{time:'6 min ago',text:'Reviewed 12 renewal submissions',icon:Clock},{time:'9 min ago',text:'Declined 3 high-risk applications',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

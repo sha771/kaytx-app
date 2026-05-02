@@ -28,13 +28,13 @@ export class SecurityAuditService {
     return event;
   }
 
-  async getEvents(filter?: { type?: string; severity?: SecurityEvent['severity'] }): Promise<SecurityEvent[]> {
+  async getEvents(Filter?: { type?: string; severity?: SecurityEvent['severity'] }): Promise<SecurityEvent[]> {
     let filtered = this.events;
-    if (filter?.type) {
-      filtered = filtered.filter(e => e.type === filter.type);
+    if (Filter?.type) {
+      filtered = filtered.filter(e => e.type === Filter.type);
     }
-    if (filter?.severity) {
-      filtered = filtered.filter(e => e.severity === filter.severity);
+    if (Filter?.severity) {
+      filtered = filtered.filter(e => e.severity === Filter.severity);
     }
     return filtered;
   }

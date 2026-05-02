@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, Animated, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { Headphones, CheckCircle, Lock } from 'lucide-react-native';
+import { Headphones, CircleCheck, Lock } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
@@ -70,7 +70,7 @@ export default function AICustomerSupportScreen() {
         {recentResolutions.map((t, i) => (
           <View key={i} style={[styles.ticketCard, { backgroundColor: theme.colors.cardBackground }]}>
             <View style={styles.ticketLeft}>
-              <CheckCircle size={14} color={t.status === 'Resolved' ? '#34C759' : '#FF9500'} />
+              <CircleCheck size={14} color={t.status === 'Resolved' ? '#34C759' : '#FF9500'} />
               <View>
                 <Text style={[styles.ticketId, { color: theme.colors.secondaryText }]}>{t.id}</Text>
                 <Text style={[styles.ticketIssue, { color: theme.colors.text }]}>{t.issue}</Text>

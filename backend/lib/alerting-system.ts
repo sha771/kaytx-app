@@ -252,22 +252,22 @@ class UnifiedAlertingSystem {
     return true;
   }
 
-  getAlerts(filter?: {
+  getAlerts(Filter?: {
     status?: AlertStatus;
     severity?: AlertSeverity;
     source?: string;
   }): Alert[] {
     let alerts = Array.from(this.alerts.values());
 
-    if (filter) {
-      if (filter.status) {
-        alerts = alerts.filter(alert => alert.status === filter.status);
+    if (Filter) {
+      if (Filter.status) {
+        alerts = alerts.filter(alert => alert.status === Filter.status);
       }
-      if (filter.severity) {
-        alerts = alerts.filter(alert => alert.severity === filter.severity);
+      if (Filter.severity) {
+        alerts = alerts.filter(alert => alert.severity === Filter.severity);
       }
-      if (filter.source) {
-        alerts = alerts.filter(alert => alert.source === filter.source);
+      if (Filter.source) {
+        alerts = alerts.filter(alert => alert.source === Filter.source);
       }
     }
 

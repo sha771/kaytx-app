@@ -20,10 +20,10 @@ import {
   User,
   Calendar,
   X,
-  Edit,
-  CheckCircle,
+  Pencil,
+  CircleCheck,
   Target,
-  BarChart3,
+  ChartBar,
   Award,
 } from 'lucide-react-native';
 import { mockDeals } from '@/utils/mockNegotiationData';
@@ -241,7 +241,7 @@ export default function DealsScreen() {
                 <Text style={styles.modalTitle}>Deal Details</Text>
                 <View style={styles.modalHeaderActions}>
                   <TouchableOpacity style={styles.modalHeaderButton}>
-                    <Edit size={20} color="#FF2D92" />
+                    <Pencil size={20} color="#FF2D92" />
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => setSelectedDeal(null)}>
                     <X size={24} color="#1A1A1A" />
@@ -344,7 +344,7 @@ export default function DealsScreen() {
                               },
                             ]}
                           >
-                            {(isActive || isPassed) && <CheckCircle size={16} color="#FFFFFF" />}
+                            {(isActive || isPassed) && <CircleCheck size={16} color="#FFFFFF" />}
                           </View>
                           <Text
                             style={[
@@ -365,7 +365,7 @@ export default function DealsScreen() {
 
                 <View style={styles.modalActionsSection}>
                   <TouchableOpacity style={styles.primaryButton}>
-                    <CheckCircle size={20} color="#FFFFFF" />
+                    <CircleCheck size={20} color="#FFFFFF" />
                     <Text style={styles.primaryButtonText}>Mark as Won</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={[styles.secondaryButton, { borderColor: '#007AFF' }]}>

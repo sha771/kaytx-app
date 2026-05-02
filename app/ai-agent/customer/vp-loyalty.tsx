@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Heart, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Heart, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'1627',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.2s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.9%',icon:Target,color:'#E65100'}];
+  const stats = [{label:'Tasks',value:'1627',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.2s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.9%',icon:Target,color:'#E65100'}];
   const capabilities = ['Customer Support','Issue Resolution','Feedback Analysis','Retention Strategy','Experience Optimization','Communication Management'];
   const responsibilities = ['Customer inquiry resolution & support','Feedback collection & analysis','Retention program management','Customer experience optimization','Support ticket management & escalation','Communication strategy & execution'];
-  const activities = [{time:'3 min ago',text:'Resolved 28 customer escalations',icon:CheckCircle2},{time:'6 min ago',text:'Updated satisfaction survey results',icon:Clock},{time:'9 min ago',text:'Launched new retention campaign',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Resolved 28 customer escalations',icon: CircleCheckBig},{time:'6 min ago',text:'Updated satisfaction survey results',icon:Clock},{time:'9 min ago',text:'Launched new retention campaign',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

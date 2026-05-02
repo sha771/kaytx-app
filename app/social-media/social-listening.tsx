@@ -112,14 +112,14 @@ export default function SocialListening() {
 
         {/* Filter Tabs */}
         <View style={styles.filterTabs}>
-          {(['all', 'positive', 'negative', 'neutral'] as const).map((filter) => (
+          {(['all', 'positive', 'negative', 'neutral'] as const).map((Filter) => (
             <TouchableOpacity
-              key={filter}
-              style={[styles.filterTab, selectedSentiment === filter && { backgroundColor: theme.colors.primary }]}
-              onPress={() => setSelectedSentiment(filter)}
+              key={Filter}
+              style={[styles.filterTab, selectedSentiment === Filter && { backgroundColor: theme.colors.primary }]}
+              onPress={() => setSelectedSentiment(Filter)}
             >
-              <Text style={[styles.filterTabText, { color: selectedSentiment === filter ? '#FFF' : theme.colors.secondaryText }]}>
-                {filter.charAt(0).toUpperCase() + filter.slice(1)}
+              <Text style={[styles.filterTabText, { color: selectedSentiment === Filter ? '#FFF' : theme.colors.secondaryText }]}>
+                {Filter.charAt(0).toUpperCase() + Filter.slice(1)}
               </Text>
             </TouchableOpacity>
           ))}

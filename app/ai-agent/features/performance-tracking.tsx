@@ -9,12 +9,13 @@ import {
   Award, 
   Clock,
   Zap,
-  BarChart3,
+  ChartBar,
   Calendar,
   ChevronDown,
   Share2,
   Download
 } from 'lucide-react-native';
+import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 

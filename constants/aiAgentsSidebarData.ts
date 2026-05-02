@@ -1,22 +1,22 @@
 import {
   Bot, Crown, Calculator, Monitor, Megaphone, Headphones, Settings, Users, Scale,
   ShieldCheck, TrendingUp, Building, ShieldAlert, Activity, Zap, Truck, Building2,
-  Database, Command, Brain, Network, Sparkles, Target, Layers, AlertTriangle, Heart,
-  Star, Smile, Trophy, Phone, ClipboardList, FileText, DollarSign, UserPlus, FileSignature,
-  Handshake, LineChart, GraduationCap, Globe, Mail, Search, Share2, PieChart, BarChart3,
-  Lightbulb, Shield, Fingerprint, Siren, Lock, Cog, HardDrive, Server, Cpu, CheckSquare,
-  Code, Clipboard, CheckCircle, Workflow, Rocket, Microscope, FileCheck, Briefcase,
-  Factory, Landmark, LandPlot, Home, Stethoscope, HeartPulse, Package, Navigation,
-  MessageSquare, Clock, Hash, Radio, Video, Inbox, Send, Eye, Palette, Image,
-  Filter, MapPin, Sun, Moon, Bell, ChevronRight, X, Menu, Plus, Minus, Divide,
-  Calendar,
+  Database, Brain, Sparkles, Target, Layers, TriangleAlert, Heart,
+  Star, Trophy, Phone, FileText, DollarSign, UserPlus,
+  Handshake, ChartLine, GraduationCap, Globe, Mail, Search, Share2, ChartPie,
+  Lightbulb, Shield, FingerprintPattern, Siren, Lock, HardDrive, Server, Cpu,
+  Code, Clipboard, CircleCheck, Rocket, Microscope, FileCheck, Briefcase,
+  Factory, Landmark, House, Package,
+  MessageSquare, Clock, Hash, Radio, Video, Inbox, Send, Eye, Palette, Image as ImageIcon,
+  ListFilter, MapPin, Sun, Moon, Bell, ChevronRight, X, Menu, Plus, Minus,
+  Calendar, Smile, CircleCheck as SquareCheck, ChartBar, Workflow, Terminal,
 } from 'lucide-react-native';
 
 export const aiAgentsSidebarSections = [
-  // Section 1: Customer Experience (14 agents)
+  // Section 4: Customer Experience (17 agents)
   {
     id: '2-section-dept1',
-    title: '3: Customer Experience (14)',
+    title: '4: Customer Experience (17)',
     icon: Headphones,
     subSections: [
       {
@@ -27,7 +27,7 @@ export const aiAgentsSidebarSections = [
           { id: '2-cco-dept', title: 'CCO - Chief Customer Officer', icon: Headphones },
           { id: '2-vp-customer-success', title: 'VP Customer Success', icon: Star },
           { id: '2-vp-support', title: 'VP Support', icon: Headphones },
-          { id: '2-vp-experience', title: 'VP Experience', icon: Smile },
+          { id: '2-vp-experience', title: 'VP Experience', icon: Sun },
           { id: '2-vp-retention', title: 'VP Retention', icon: Heart },
           { id: '2-vp-loyalty', title: 'VP Loyalty', icon: Trophy },
         ]
@@ -39,20 +39,30 @@ export const aiAgentsSidebarSections = [
         items: [
           { id: '2-cx-receptionist', title: 'CX Receptionist', icon: Phone },
           { id: '2-cx-support', title: 'Customer Support Agent', icon: Headphones },
-          { id: '2-cx-ticket', title: 'Ticket Resolution Agent', icon: ClipboardList },
-          { id: '2-cx-complaint', title: 'Complaint Handling Agent', icon: AlertTriangle },
+          { id: '2-cx-ticket', title: 'Ticket Resolution Agent', icon: Clipboard },
+          { id: '2-cx-complaint', title: 'Complaint Handling Agent', icon: TriangleAlert },
           { id: '2-cx-retention', title: 'Retention Specialist', icon: Heart },
           { id: '2-cx-loyalty', title: 'Loyalty & Engagement Agent', icon: Trophy },
           { id: '2-cx-feedback', title: 'Feedback & Survey Agent', icon: FileText },
           { id: '2-cx-billing', title: 'Billing Support Agent', icon: DollarSign },
         ]
       },
+      {
+        id: '2-cx-phone',
+        title: 'Phone/Call Agents (3)',
+        icon: Phone,
+        items: [
+          { id: '2-cx-phone-receptionist', title: 'Phone Receptionist', icon: Phone },
+          { id: '2-cx-call-center', title: 'Call Center Agent', icon: Headphones },
+          { id: '2-cx-telephone-support', title: 'Telephone Support Agent', icon: Phone },
+        ]
+      },
     ]
   },
-  // Section 2: Sales & Revenue (14 agents)
+  // Section 5: Sales & Revenue (20 agents)
   {
     id: '2-section-dept2',
-    title: '4: Sales & Revenue (14)',
+    title: '5: Sales & Revenue (20)',
     icon: TrendingUp,
     subSections: [
       {
@@ -76,19 +86,32 @@ export const aiAgentsSidebarSections = [
           { id: '2-sales-rep', title: 'Sales Rep', icon: Target },
           { id: '2-sales-exec', title: 'Sales Executive', icon: TrendingUp },
           { id: '2-sales-crm', title: 'CRM Assistant', icon: Database },
-          { id: '2-sales-proposal', title: 'Proposal Generator', icon: FileSignature },
+          { id: '2-sales-proposal', title: 'Proposal Generator', icon: FileText },
           { id: '2-sales-negotiator', title: 'Negotiator', icon: Handshake },
           { id: '2-sales-pricing', title: 'Pricing Analyst', icon: DollarSign },
-          { id: '2-sales-forecast', title: 'Sales Forecasting Agent', icon: LineChart },
+          { id: '2-sales-forecast', title: 'Sales Forecasting Agent', icon: ChartLine },
           { id: '2-sales-enablement', title: 'Sales Enablement Agent', icon: GraduationCap },
+        ]
+      },
+      {
+        id: '2-sales-phone',
+        title: 'Phone/Call Agents (6)',
+        icon: Phone,
+        items: [
+          { id: '2-sales-cold-caller', title: 'Cold Calling Agent', icon: Phone },
+          { id: '2-sales-phone-negotiator', title: 'Phone Negotiator', icon: Handshake },
+          { id: '2-sales-deal-closer', title: 'Deal Closer (Phone)', icon: Phone },
+          { id: '2-sales-appointment-setter', title: 'Appointment Setter', icon: Calendar },
+          { id: '2-sales-follow-up', title: 'Follow-Up Caller', icon: Phone },
+          { id: '2-sales-receptionist', title: 'Sales Receptionist', icon: Phone },
         ]
       },
     ]
   },
-  // Section 3: Marketing & Growth (15 agents)
+  // Section 6: Marketing & Growth (21 agents)
   {
     id: '2-section-dept3',
-    title: '5: Marketing & Growth (15)',
+    title: '6: Marketing & Growth (21)',
     icon: Megaphone,
     subSections: [
       {
@@ -115,17 +138,30 @@ export const aiAgentsSidebarSections = [
           { id: '2-mkt-social', title: 'Social Media Manager', icon: Share2 },
           { id: '2-mkt-email', title: 'Email Marketing Agent', icon: Mail },
           { id: '2-mkt-ads', title: 'Ad Campaign Manager', icon: Target },
-          { id: '2-mkt-analytics', title: 'Marketing Analytics Agent', icon: BarChart3 },
+          { id: '2-mkt-analytics', title: 'Marketing Analytics Agent', icon: ChartBar },
           { id: '2-mkt-brand', title: 'Brand Manager', icon: Star },
           { id: '2-mkt-growth', title: 'Growth Hacker', icon: Zap },
         ]
       },
+      {
+        id: '2-mkt-phone',
+        title: 'Phone/Call Agents (6)',
+        icon: Phone,
+        items: [
+          { id: '2-mkt-telemarketer', title: 'Telemarketing Agent', icon: Phone },
+          { id: '2-mkt-event-caller', title: 'Event Registration Caller', icon: Phone },
+          { id: '2-mkt-survey-caller', title: 'Survey/Feedback Caller', icon: Phone },
+          { id: '2-mkt-pr-caller', title: 'PR/Media Caller', icon: Phone },
+          { id: '2-mkt-lead-qualifier', title: 'Lead Qualifier (Phone)', icon: Phone },
+          { id: '2-mkt-partnership-caller', title: 'Partnership Outreach Caller', icon: Phone },
+        ]
+      },
     ]
   },
-  // Section 4: Operations & Management (13+ agents)
+  // Section 7: Operations & Management (16+ agents)
   {
     id: '2-section-dept4',
-    title: '6: Operations & Management (13+)',
+    title: '7: Operations & Management (16+)',
     icon: Settings,
     subSections: [
       {
@@ -136,9 +172,9 @@ export const aiAgentsSidebarSections = [
           { id: '2-coo-dept', title: 'COO - Chief Operating Officer', icon: Settings },
           { id: '2-vp-operations', title: 'VP Operations', icon: Settings },
           { id: '2-vp-supply-chain', title: 'VP Supply Chain', icon: Truck },
-          { id: '2-vp-quality', title: 'VP Quality', icon: CheckCircle },
+          { id: '2-vp-quality', title: 'VP Quality', icon: CircleCheck },
           { id: '2-vp-facilities', title: 'VP Facilities', icon: Building2 },
-          { id: '2-vp-project-mgmt', title: 'VP Project Management', icon: ClipboardList },
+          { id: '2-vp-project-mgmt', title: 'VP Project Management', icon: Clipboard },
           { id: '2-ops-mgr', title: 'Operations Manager', icon: Settings },
         ]
       },
@@ -148,19 +184,29 @@ export const aiAgentsSidebarSections = [
         icon: Bot,
         items: [
           { id: '2-ai-ops-mgr', title: 'AI Operations Manager', icon: Settings },
-          { id: '2-ai-workflow', title: 'Workflow Automation Agent', icon: Workflow },
-          { id: '2-ai-task-coord', title: 'Task Coordinator', icon: ClipboardList },
+          { id: '2-ai-workflow', title: 'Workflow Automation Agent', icon: Settings },
+          { id: '2-ai-task-coord', title: 'Task Coordinator', icon: Clipboard },
           { id: '2-ai-process-opt', title: 'Process Optimization Agent', icon: Zap },
           { id: '2-ai-resource', title: 'Resource Planner', icon: Users },
-          { id: '2-ai-qa', title: 'Quality Assurance Agent', icon: CheckCircle },
+          { id: '2-ai-qa', title: 'Quality Assurance Agent', icon: CircleCheck },
+        ]
+      },
+      {
+        id: '2-ops-phone',
+        title: 'Phone/Call Agents (3)',
+        icon: Phone,
+        items: [
+          { id: '2-ops-receptionist', title: 'Operations Receptionist', icon: Phone },
+          { id: '2-ops-dispatch-caller', title: 'Dispatch Caller', icon: Phone },
+          { id: '2-ops-coordination-caller', title: 'Coordination Caller', icon: Phone },
         ]
       },
     ]
   },
-  // Section 5: Finance & Accounting (13 agents)
+  // Section 8: Finance & Accounting (16 agents)
   {
     id: '2-section-dept5',
-    title: '7: Finance & Accounting (13)',
+    title: '8: Finance & Accounting (16)',
     icon: Calculator,
     subSections: [
       {
@@ -183,19 +229,29 @@ export const aiAgentsSidebarSections = [
         title: 'Sub-Agents (5)',
         icon: Bot,
         items: [
-          { id: '2-fin-analyst', title: 'Financial Analyst', icon: BarChart3 },
+          { id: '2-fin-analyst', title: 'Financial Analyst', icon: ChartBar },
           { id: '2-budget-mgr', title: 'Budget Manager', icon: Calculator },
           { id: '2-tax-specialist', title: 'Tax Specialist', icon: FileText },
-          { id: '2-audit-mgr', title: 'Audit Manager', icon: CheckSquare },
+          { id: '2-audit-mgr', title: 'Audit Manager', icon: SquareCheck },
           { id: '2-treasury-analyst', title: 'Treasury Analyst', icon: DollarSign },
+        ]
+      },
+      {
+        id: '2-fin-phone',
+        title: 'Phone/Call Agents (3)',
+        icon: Phone,
+        items: [
+          { id: '2-fin-collections-caller', title: 'Collections Caller', icon: Phone },
+          { id: '2-fin-vendor-payment-caller', title: 'Vendor Payment Caller', icon: Phone },
+          { id: '2-fin-investor-relations-caller', title: 'Investor Relations Caller', icon: Phone },
         ]
       },
     ]
   },
-  // Section 6: Technology & Engineering (16+ agents)
+  // Section 9: Technology & Engineering (19+ agents)
   {
     id: '2-section-dept6',
-    title: '8: Technology & Engineering (16+)',
+    title: '9: Technology & Engineering (19+)',
     icon: Code,
     subSections: [
       {
@@ -209,7 +265,7 @@ export const aiAgentsSidebarSections = [
           { id: '2-vp-aiml', title: 'VP AI/ML', icon: Brain },
           { id: '2-vp-security-tech', title: 'VP Security Technology', icon: Shield },
           { id: '2-architect-lead', title: 'Lead Architect', icon: Code },
-          { id: '2-devops-mgr', title: 'DevOps Manager', icon: Cog },
+          { id: '2-devops-mgr', title: 'DevOps Manager', icon: Settings },
           { id: '2-frontend-lead', title: 'Frontend Lead', icon: Monitor },
           { id: '2-backend-lead', title: 'Backend Lead', icon: Code },
           { id: '2-sre-lead', title: 'SRE Lead', icon: HardDrive },
@@ -223,17 +279,27 @@ export const aiAgentsSidebarSections = [
           { id: '2-frontend-dev', title: 'Frontend Developer', icon: Monitor },
           { id: '2-backend-dev', title: 'Backend Developer', icon: Code },
           { id: '2-sre-engineer', title: 'SRE Engineer', icon: HardDrive },
-          { id: '2-qa-automation', title: 'QA Automation Engineer', icon: CheckSquare },
+          { id: '2-qa-automation', title: 'QA Automation Engineer', icon: SquareCheck },
           { id: '2-data-engineer', title: 'Data Engineer', icon: Database },
           { id: '2-security-engineer', title: 'Security Engineer', icon: Shield },
         ]
       },
+      {
+        id: '2-tech-phone',
+        title: 'Phone/Call Agents (3)',
+        icon: Phone,
+        items: [
+          { id: '2-tech-it-support-hotline', title: 'IT Support Hotline', icon: Phone },
+          { id: '2-tech-help-desk-caller', title: 'Help Desk Caller', icon: Phone },
+          { id: '2-tech-incident-response-caller', title: 'Incident Response Caller', icon: Phone },
+        ]
+      },
     ]
   },
-  // Section 7: Human Resources (11+ agents)
+  // Section 10: Human Resources (14+ agents)
   {
     id: '2-section-dept7',
-    title: '9: Human Resources (11+)',
+    title: '10: Human Resources (14+)',
     icon: Users,
     subSections: [
       {
@@ -261,23 +327,33 @@ export const aiAgentsSidebarSections = [
           { id: '2-comp-analyst', title: 'Compensation Analyst', icon: DollarSign },
         ]
       },
+      {
+        id: '2-hr-phone',
+        title: 'Phone/Call Agents (3)',
+        icon: Phone,
+        items: [
+          { id: '2-hr-receptionist', title: 'HR Receptionist', icon: Phone },
+          { id: '2-hr-recruiting-caller', title: 'Recruiting Caller', icon: Phone },
+          { id: '2-hr-interview-scheduler', title: 'Interview Scheduler', icon: Phone },
+        ]
+      },
     ]
   },
-  // Section 8: Legal & Compliance (10+ agents)
+  // Section 11: Legal & Compliance (13+ agents)
   {
     id: '2-section-dept8',
-    title: '10: Legal & Compliance (10+)',
-    icon: Scale,
+    title: '11: Legal & Compliance (13+)',
+    icon: ImageIcon,
     subSections: [
       {
         id: '2-legal-main',
         title: 'Main Agents (7)',
-        icon: Scale,
+        icon: ImageIcon,
         items: [
           { id: '2-clo-dept', title: 'CLO - Chief Legal Officer', icon: Scale },
           { id: '2-vp-legal', title: 'VP Legal', icon: Scale },
           { id: '2-vp-compliance', title: 'VP Compliance', icon: Shield },
-          { id: '2-vp-contracts', title: 'VP Contracts', icon: FileSignature },
+          { id: '2-vp-contracts', title: 'VP Contracts', icon: FileText },
           { id: '2-vp-ip', title: 'VP Intellectual Property', icon: Lightbulb },
           { id: '2-vp-governance', title: 'VP Governance', icon: Landmark },
           { id: '2-compliance-mgr', title: 'Compliance Manager', icon: Shield },
@@ -289,16 +365,26 @@ export const aiAgentsSidebarSections = [
         icon: Bot,
         items: [
           { id: '2-legal-researcher', title: 'Legal Researcher', icon: Search },
-          { id: '2-contract-spec', title: 'Contract Specialist', icon: FileSignature },
+          { id: '2-contract-spec', title: 'Contract Specialist', icon: FileText },
           { id: '2-compliance-analyst', title: 'Compliance Analyst', icon: Shield },
+        ]
+      },
+      {
+        id: '2-legal-phone',
+        title: 'Phone/Call Agents (3)',
+        icon: Phone,
+        items: [
+          { id: '2-legal-receptionist', title: 'Legal Receptionist', icon: Phone },
+          { id: '2-legal-client-intake-caller', title: 'Client Intake Caller', icon: Phone },
+          { id: '2-legal-compliance-caller', title: 'Compliance Inquiry Caller', icon: Phone },
         ]
       },
     ]
   },
-  // Section 9: Data & Intelligence (13+ agents)
+  // Section 12: Data & Intelligence (16+ agents)
   {
     id: '2-section-dept9',
-    title: '11: Data & Intelligence (13+)',
+    title: '12: Data & Intelligence (16+)',
     icon: Database,
     subSections: [
       {
@@ -309,10 +395,10 @@ export const aiAgentsSidebarSections = [
           { id: '2-cdao-dept', title: 'CDAO - Chief Data & AI Officer', icon: Database },
           { id: '2-vp-data-science', title: 'VP Data Science', icon: Brain },
           { id: '2-vp-data-eng', title: 'VP Data Engineering', icon: Database },
-          { id: '2-vp-analytics', title: 'VP Analytics', icon: BarChart3 },
-          { id: '2-vp-bi', title: 'VP Business Intelligence', icon: PieChart },
+          { id: '2-vp-analytics', title: 'VP Analytics', icon: ChartBar },
+          { id: '2-vp-bi', title: 'VP Business Intelligence', icon: ChartPie },
           { id: '2-data-mgr', title: 'Data Manager', icon: Database },
-          { id: '2-analytics-mgr', title: 'Analytics Manager', icon: BarChart3 },
+          { id: '2-analytics-mgr', title: 'Analytics Manager', icon: ChartBar },
         ]
       },
       {
@@ -321,19 +407,29 @@ export const aiAgentsSidebarSections = [
         icon: Bot,
         items: [
           { id: '2-data-scientist', title: 'Data Scientist', icon: Brain },
-          { id: '2-data-analyst', title: 'Data Analyst', icon: BarChart3 },
-          { id: '2-bi-developer', title: 'BI Developer', icon: PieChart },
+          { id: '2-data-analyst', title: 'Data Analyst', icon: ChartBar },
+          { id: '2-bi-developer', title: 'BI Developer', icon: ChartPie },
           { id: '2-ml-engineer', title: 'ML Engineer', icon: Cpu },
           { id: '2-data-steward', title: 'Data Steward', icon: Database },
-          { id: '2-analytics-spec', title: 'Analytics Specialist', icon: BarChart3 },
+          { id: '2-analytics-spec', title: 'Analytics Specialist', icon: ChartBar },
+        ]
+      },
+      {
+        id: '2-data-phone',
+        title: 'Phone/Call Agents (3)',
+        icon: Phone,
+        items: [
+          { id: '2-data-research-caller', title: 'Data Research Caller', icon: Phone },
+          { id: '2-data-analytics-caller', title: 'Analytics Inquiry Caller', icon: Phone },
+          { id: '2-data-report-caller', title: 'Report Request Caller', icon: Phone },
         ]
       },
     ]
   },
-  // Section 10: Product Management (10+ agents)
+  // Section 13: Product Management (13+ agents)
   {
     id: '2-section-dept10',
-    title: '12: Product Management (10+)',
+    title: '13: Product Management (10+)',
     icon: Lightbulb,
     subSections: [
       {
@@ -345,7 +441,7 @@ export const aiAgentsSidebarSections = [
           { id: '2-vp-product-strategy', title: 'VP Product Strategy', icon: Target },
           { id: '2-vp-product-ops', title: 'VP Product Operations', icon: Settings },
           { id: '2-product-mgr', title: 'Product Manager', icon: Lightbulb },
-          { id: '2-product-owner', title: 'Product Owner', icon: CheckSquare },
+          { id: '2-product-owner', title: 'Product Owner', icon: CircleCheck },
         ]
       },
       {
@@ -354,18 +450,28 @@ export const aiAgentsSidebarSections = [
         icon: Bot,
         items: [
           { id: '2-ai-product-mgr', title: 'AI Product Manager', icon: Lightbulb },
-          { id: '2-ai-product-analyst', title: 'AI Product Analyst', icon: BarChart3 },
+          { id: '2-ai-product-analyst', title: 'AI Product Analyst', icon: ChartBar },
           { id: '2-ai-ux-researcher', title: 'AI UX Researcher', icon: Search },
           { id: '2-ai-product-marketer', title: 'AI Product Marketer', icon: Megaphone },
           { id: '2-ai-release-mgr', title: 'AI Release Manager', icon: Rocket },
         ]
       },
+      {
+        id: '2-prod-phone',
+        title: 'Phone/Call Agents (3)',
+        icon: Phone,
+        items: [
+          { id: '2-prod-user-research-caller', title: 'User Research Caller', icon: Phone },
+          { id: '2-prod-feedback-caller', title: 'Product Feedback Caller', icon: Phone },
+          { id: '2-prod-beta-caller', title: 'Beta Program Caller', icon: Phone },
+        ]
+      },
     ]
   },
-  // Section 11: Security & Risk (12+ agents)
+  // Section 14: Security & Risk (15+ agents)
   {
     id: '2-section-dept11',
-    title: '13: Security & Risk (12+)',
+    title: '14: Security & Risk (15+)',
     icon: ShieldAlert,
     subSections: [
       {
@@ -377,7 +483,7 @@ export const aiAgentsSidebarSections = [
           { id: '2-vp-security-ops', title: 'VP Security Operations', icon: Shield },
           { id: '2-vp-cyber', title: 'VP Cybersecurity', icon: Lock },
           { id: '2-vp-gov-risk', title: 'VP Governance & Risk', icon: Scale },
-          { id: '2-vp-privacy', title: 'VP Privacy', icon: Fingerprint },
+          { id: '2-vp-privacy', title: 'VP Privacy', icon: FingerprintPattern },
           { id: '2-security-arch', title: 'Security Architect', icon: Shield },
           { id: '2-soc-mgr', title: 'SOC Manager', icon: Siren },
         ]
@@ -388,24 +494,34 @@ export const aiAgentsSidebarSections = [
         icon: Bot,
         items: [
           { id: '2-security-analyst', title: 'Security Analyst', icon: Shield },
-          { id: '2-incident-responder', title: 'Incident Responder', icon: AlertTriangle },
+          { id: '2-incident-responder', title: 'Incident Responder', icon: TriangleAlert },
           { id: '2-sec-compliance', title: 'Security Compliance Specialist', icon: ShieldCheck },
           { id: '2-pen-tester', title: 'Penetration Tester', icon: Lock },
-          { id: '2-identity-mgr', title: 'Identity Manager', icon: Fingerprint },
+          { id: '2-identity-mgr', title: 'Identity Manager', icon: FingerprintPattern },
+        ]
+      },
+      {
+        id: '2-sec-phone',
+        title: 'Phone/Call Agents (3)',
+        icon: Phone,
+        items: [
+          { id: '2-sec-incident-response-caller', title: 'Incident Response Caller', icon: Phone },
+          { id: '2-sec-threat-hunting-caller', title: 'Threat Hunting Caller', icon: Phone },
+          { id: '2-sec-alert-response-caller', title: 'Security Alert Response Caller', icon: Phone },
         ]
       },
     ]
   },
-  // Section 12: Research & Development (9+ agents)
+  // Section 15: Research & Development (12+ agents)
   {
     id: '2-section-dept12',
-    title: '14: Research & Development (9+)',
-    icon: Microscope,
+    title: '15: Research & Development (12+)',
+    icon: Activity,
     subSections: [
       {
         id: '2-rnd-main',
         title: 'Main Agents (5)',
-        icon: Microscope,
+        icon: Activity,
         items: [
           { id: '2-vp-research', title: 'VP Research', icon: Microscope },
           { id: '2-vp-innovation', title: 'VP Innovation', icon: Sparkles },
@@ -421,16 +537,26 @@ export const aiAgentsSidebarSections = [
         items: [
           { id: '2-research-scientist', title: 'Research Scientist', icon: Microscope },
           { id: '2-innovation-analyst', title: 'Innovation Analyst', icon: Sparkles },
-          { id: '2-prototype-engineer', title: 'Prototype Engineer', icon: Cog },
+          { id: '2-prototype-engineer', title: 'Prototype Engineer', icon: Settings },
           { id: '2-patent-researcher', title: 'Patent Researcher', icon: FileText },
+        ]
+      },
+      {
+        id: '2-rnd-phone',
+        title: 'Phone/Call Agents (3)',
+        icon: Phone,
+        items: [
+          { id: '2-rnd-research-caller', title: 'Research Inquiry Caller', icon: Phone },
+          { id: '2-rnd-partner-caller', title: 'Research Partner Caller', icon: Phone },
+          { id: '2-rnd-collab-caller', title: 'Collaboration Caller', icon: Phone },
         ]
       },
     ]
   },
-  // Section 13: Administrative (9+ agents)
+  // Section 16: Administrative (12+ agents)
   {
     id: '2-section-dept13',
-    title: '15: Administrative (9+)',
+    title: '16: Administrative (12+)',
     icon: Briefcase,
     subSections: [
       {
@@ -456,12 +582,22 @@ export const aiAgentsSidebarSections = [
           { id: '2-doc-controller', title: 'Document Controller', icon: FileCheck },
         ]
       },
+      {
+        id: '2-admin-phone',
+        title: 'Phone/Call Agents (3)',
+        icon: Phone,
+        items: [
+          { id: '2-admin-receptionist', title: 'Front Desk Receptionist', icon: Phone },
+          { id: '2-admin-exec-assistant-caller', title: 'Executive Assistant Caller', icon: Phone },
+          { id: '2-admin-switchboard', title: 'Switchboard Operator', icon: Phone },
+        ]
+      },
     ]
   },
-  // Section 14: Trading & Investments (18+ agents)
+  // Section 17: Trading & Investments (21+ agents)
   {
     id: '2-section-dept14',
-    title: '16: Trading & Investments (18+)',
+    title: '17: Trading & Investments (21+)',
     icon: TrendingUp,
     subSections: [
       {
@@ -473,7 +609,7 @@ export const aiAgentsSidebarSections = [
           { id: '2-vp-trading', title: 'VP Trading', icon: TrendingUp },
           { id: '2-vp-investments', title: 'VP Investments', icon: DollarSign },
           { id: '2-trading-desk-mgr', title: 'Trading Desk Manager', icon: Monitor },
-          { id: '2-portfolio-mgr', title: 'Portfolio Manager', icon: PieChart },
+          { id: '2-portfolio-mgr', title: 'Portfolio Manager', icon: ChartPie },
           { id: '2-risk-mgr-trading', title: 'Trading Risk Manager', icon: ShieldAlert },
         ]
       },
@@ -485,8 +621,8 @@ export const aiAgentsSidebarSections = [
           { id: '2-equity-trader', title: 'Equity Trader', icon: TrendingUp },
           { id: '2-forex-trader', title: 'Forex Trader', icon: Globe },
           { id: '2-crypto-trader', title: 'Crypto Trader', icon: Zap },
-          { id: '2-derivatives-spec', title: 'Derivatives Specialist', icon: BarChart3 },
-          { id: '2-portfolio-analyst', title: 'Portfolio Analyst', icon: PieChart },
+          { id: '2-derivatives-spec', title: 'Derivatives Specialist', icon: ChartBar },
+          { id: '2-portfolio-analyst', title: 'Portfolio Analyst', icon: ChartPie },
           { id: '2-risk-analyst-trading', title: 'Trading Risk Analyst', icon: ShieldAlert },
           { id: '2-compliance-trading', title: 'Trading Compliance', icon: Shield },
           { id: '2-quant-analyst', title: 'Quantitative Analyst', icon: Brain },
@@ -496,24 +632,34 @@ export const aiAgentsSidebarSections = [
           { id: '2-settlement-spec', title: 'Settlement Specialist', icon: FileCheck },
         ]
       },
+      {
+        id: '2-trading-phone',
+        title: 'Phone/Call Agents (3)',
+        icon: Phone,
+        items: [
+          { id: '2-trading-client-relations-caller', title: 'Client Relations Caller', icon: Phone },
+          { id: '2-trading-trade-confirmation-caller', title: 'Trade Confirmation Caller', icon: Phone },
+          { id: '2-trading-investor-relations-caller', title: 'Investor Relations Caller', icon: Phone },
+        ]
+      },
     ]
   },
-  // Section 15: Real Estate & Property (14+ agents)
+  // Section 18: Real Estate & Property (17+ agents)
   {
     id: '2-section-dept15',
-    title: '17: Real Estate & Property (14+)',
-    icon: Home,
+    title: '18: Real Estate & Property (17+)',
+    icon: House,
     subSections: [
       {
         id: '2-re-main',
         title: 'Main Agents (6)',
-        icon: Home,
+        icon: House,
         items: [
           { id: '2-creo-dept', title: 'CREO - Chief Real Estate Officer', icon: Building },
           { id: '2-vp-property-mgmt', title: 'VP Property Management', icon: Building2 },
           { id: '2-vp-re-development', title: 'VP Real Estate Development', icon: Building },
           { id: '2-property-mgr', title: 'Property Manager', icon: Building2 },
-          { id: '2-leasing-mgr', title: 'Leasing Manager', icon: FileSignature },
+          { id: '2-leasing-mgr', title: 'Leasing Manager', icon: FileText },
           { id: '2-facilities-mgr-re', title: 'Facilities Manager', icon: Building2 },
         ]
       },
@@ -522,22 +668,32 @@ export const aiAgentsSidebarSections = [
         title: 'Sub-Agents (8+)',
         icon: Bot,
         items: [
-          { id: '2-property-analyst', title: 'Property Analyst', icon: BarChart3 },
-          { id: '2-lease-admin', title: 'Lease Administrator', icon: FileSignature },
+          { id: '2-property-analyst', title: 'Property Analyst', icon: ChartBar },
+          { id: '2-lease-admin', title: 'Lease Administrator', icon: FileText },
           { id: '2-tenant-relations', title: 'Tenant Relations Specialist', icon: Users },
-          { id: '2-maintenance-coord', title: 'Maintenance Coordinator', icon: Cog },
+          { id: '2-maintenance-coord', title: 'Maintenance Coordinator', icon: Settings },
           { id: '2-acquisition-analyst', title: 'Acquisition Analyst', icon: Target },
           { id: '2-asset-mgr', title: 'Asset Manager', icon: DollarSign },
           { id: '2-dev-coordinator', title: 'Development Coordinator', icon: Building },
           { id: '2-property-marketing', title: 'Property Marketing', icon: Megaphone },
         ]
       },
+      {
+        id: '2-re-phone',
+        title: 'Phone/Call Agents (3)',
+        icon: Phone,
+        items: [
+          { id: '2-re-property-receptionist', title: 'Property Receptionist', icon: Phone },
+          { id: '2-re-leasing-negotiator', title: 'Leasing Negotiator', icon: Phone },
+          { id: '2-re-tenant-inquiry-caller', title: 'Tenant Inquiry Caller', icon: Phone },
+        ]
+      },
     ]
   },
-  // Section 16: Insurance & Risk (16+ agents)
+  // Section 19: Insurance & Risk (19+ agents)
   {
     id: '2-section-dept16',
-    title: '18: Insurance & Risk (16+)',
+    title: '19: Insurance & Risk (19+)',
     icon: Shield,
     subSections: [
       {
@@ -561,27 +717,37 @@ export const aiAgentsSidebarSections = [
         items: [
           { id: '2-underwriter', title: 'Underwriter', icon: Shield },
           { id: '2-claims-adjuster', title: 'Claims Adjuster', icon: FileText },
-          { id: '2-fraud-detector', title: 'Fraud Detection Agent', icon: AlertTriangle },
+          { id: '2-fraud-detector', title: 'Fraud Detection Agent', icon: TriangleAlert },
           { id: '2-actuary-analyst', title: 'Actuary Analyst', icon: Calculator },
-          { id: '2-risk-modeler', title: 'Risk Modeler', icon: BarChart3 },
+          { id: '2-risk-modeler', title: 'Risk Modeler', icon: ChartBar },
           { id: '2-policy-admin', title: 'Policy Administrator', icon: FileCheck },
           { id: '2-customer-risk-analyst', title: 'Customer Risk Analyst', icon: Users },
-          { id: '2-catastrophe-modeler', title: 'Catastrophe Modeler', icon: AlertTriangle },
+          { id: '2-catastrophe-modeler', title: 'Catastrophe Modeler', icon: TriangleAlert },
           { id: '2-reinsurance-spec', title: 'Reinsurance Specialist', icon: ShieldCheck },
+        ]
+      },
+      {
+        id: '2-ins-phone',
+        title: 'Phone/Call Agents (3)',
+        icon: Phone,
+        items: [
+          { id: '2-ins-claims-hotline', title: 'Claims Hotline Agent', icon: Phone },
+          { id: '2-ins-underwriting-caller', title: 'Underwriting Inquiry Caller', icon: Phone },
+          { id: '2-ins-policy-caller', title: 'Policy Inquiry Caller', icon: Phone },
         ]
       },
     ]
   },
-  // Section 17: Healthcare & Medical (14+ agents)
+  // Section 20: Healthcare & Medical (17+ agents)
   {
     id: '2-section-dept17',
-    title: '19: Healthcare & Medical (14+)',
-    icon: HeartPulse,
+    title: '20: Healthcare & Medical (17+)',
+    icon: Heart,
     subSections: [
       {
         id: '2-healthcare-main',
         title: 'Main Agents (6)',
-        icon: HeartPulse,
+        icon: Heart,
         items: [
           { id: '2-cmo-healthcare-dept', title: 'CMO - Chief Medical Officer', icon: Activity },
           { id: '2-vp-healthcare-ops', title: 'VP Healthcare Operations', icon: Settings },
@@ -603,15 +769,25 @@ export const aiAgentsSidebarSections = [
           { id: '2-health-records-spec', title: 'Health Records Specialist', icon: FileCheck },
           { id: '2-telehealth-support', title: 'Telehealth Support', icon: Video },
           { id: '2-compliance-healthcare', title: 'Healthcare Compliance', icon: Shield },
-          { id: '2-quality-improvement', title: 'Quality Improvement Specialist', icon: CheckCircle },
+          { id: '2-quality-improvement', title: 'Quality Improvement Specialist', icon: CircleCheck },
+        ]
+      },
+      {
+        id: '2-healthcare-phone',
+        title: 'Phone/Call Agents (3)',
+        icon: Phone,
+        items: [
+          { id: '2-healthcare-patient-scheduler', title: 'Patient Scheduler (Phone)', icon: Phone },
+          { id: '2-healthcare-medical-receptionist', title: 'Medical Receptionist', icon: Phone },
+          { id: '2-healthcare-telehealth-caller', title: 'Telehealth Caller', icon: Phone },
         ]
       },
     ]
   },
-  // Section 18: Manufacturing & Production (14+ agents)
+  // Section 21: Manufacturing & Production (17+ agents)
   {
     id: '2-section-dept18',
-    title: '20: Manufacturing & Production (14+)',
+    title: '21: Manufacturing & Production (17+)',
     icon: Factory,
     subSections: [
       {
@@ -621,9 +797,9 @@ export const aiAgentsSidebarSections = [
         items: [
           { id: '2-cpo-dept', title: 'CPO - Chief Production Officer', icon: Zap },
           { id: '2-vp-manufacturing', title: 'VP Manufacturing', icon: Factory },
-          { id: '2-vp-quality-assurance', title: 'VP Quality Assurance', icon: CheckCircle },
+          { id: '2-vp-quality-assurance', title: 'VP Quality Assurance', icon: CircleCheck },
           { id: '2-production-mgr', title: 'Production Manager', icon: Factory },
-          { id: '2-quality-mgr', title: 'Quality Manager', icon: CheckCircle },
+          { id: '2-quality-mgr', title: 'Quality Manager', icon: CircleCheck },
           { id: '2-safety-mgr', title: 'Safety Manager', icon: Shield },
         ]
       },
@@ -633,21 +809,31 @@ export const aiAgentsSidebarSections = [
         icon: Bot,
         items: [
           { id: '2-production-planner', title: 'Production Planner', icon: Calendar },
-          { id: '2-quality-inspector', title: 'Quality Inspector', icon: CheckSquare },
+          { id: '2-quality-inspector', title: 'Quality Inspector', icon: SquareCheck },
           { id: '2-supply-chain-coord', title: 'Supply Chain Coordinator', icon: Truck },
-          { id: '2-maintenance-tech', title: 'Maintenance Technician', icon: Cog },
+          { id: '2-maintenance-tech', title: 'Maintenance Technician', icon: Settings },
           { id: '2-inventory-controller', title: 'Inventory Controller', icon: Package },
           { id: '2-lean-specialist', title: 'Lean Specialist', icon: Zap },
           { id: '2-safety-inspector', title: 'Safety Inspector', icon: ShieldCheck },
           { id: '2-logistics-coordinator', title: 'Logistics Coordinator', icon: Truck },
         ]
       },
+      {
+        id: '2-mfg-phone',
+        title: 'Phone/Call Agents (3)',
+        icon: Phone,
+        items: [
+          { id: '2-mfg-floor-ops-caller', title: 'Floor Operations Caller', icon: Phone },
+          { id: '2-mfg-shift-supervisor-caller', title: 'Shift Supervisor Caller', icon: Phone },
+          { id: '2-mfg-emergency-response-caller', title: 'Emergency Response Caller', icon: Phone },
+        ]
+      },
     ]
   },
-  // Section 19: Transportation & Logistics (14+ agents)
+  // Section 22: Transportation & Logistics (17+ agents)
   {
     id: '2-section-dept19',
-    title: '21: Transportation & Logistics (14+)',
+    title: '22: Transportation & Logistics (17+)',
     icon: Truck,
     subSections: [
       {
@@ -656,7 +842,7 @@ export const aiAgentsSidebarSections = [
         icon: Truck,
         items: [
           { id: '2-clo-logistics-dept', title: 'CLO - Chief Logistics Officer', icon: Truck },
-          { id: '2-vp-transportation', title: 'VP Transportation', icon: Navigation },
+          { id: '2-vp-transportation', title: 'VP Transportation', icon: MapPin },
           { id: '2-vp-logistics-ops', title: 'VP Logistics Operations', icon: Settings },
           { id: '2-fleet-mgr', title: 'Fleet Manager', icon: Truck },
           { id: '2-warehouse-mgr', title: 'Warehouse Manager', icon: Building2 },
@@ -668,7 +854,7 @@ export const aiAgentsSidebarSections = [
         title: 'Sub-Agents (8+)',
         icon: Bot,
         items: [
-          { id: '2-route-optimizer', title: 'Route Optimizer', icon: Navigation },
+          { id: '2-route-optimizer', title: 'Route Optimizer', icon: MapPin },
           { id: '2-fleet-coordinator', title: 'Fleet Coordinator', icon: Truck },
           { id: '2-warehouse-operator', title: 'Warehouse Operator', icon: Building2 },
           { id: '2-dispatcher', title: 'Dispatcher', icon: Clock },
@@ -678,18 +864,28 @@ export const aiAgentsSidebarSections = [
           { id: '2-customs-spec', title: 'Customs Specialist', icon: ShieldCheck },
         ]
       },
+      {
+        id: '2-logistics-phone',
+        title: 'Phone/Call Agents (3)',
+        icon: Phone,
+        items: [
+          { id: '2-logistics-dispatch-receptionist', title: 'Dispatch Receptionist', icon: Phone },
+          { id: '2-logistics-driver-hotline', title: 'Driver Hotline Agent', icon: Phone },
+          { id: '2-logistics-fleet-caller', title: 'Fleet Coordination Caller', icon: Phone },
+        ]
+      },
     ]
   },
-  // Section 20: Government & Public Sector (12+ agents)
+  // Section 23: Government & Public Sector (15+ agents)
   {
     id: '2-section-dept20',
-    title: '22: Government & Public (12+)',
-    icon: Landmark,
+    title: '23: Government & Public (12+)',
+    icon: MapPin,
     subSections: [
       {
         id: '2-gov-main',
         title: 'Main Agents (6)',
-        icon: Landmark,
+        icon: MapPin,
         items: [
           { id: '2-cao-gov', title: 'CAO - Chief Admin Officer (Gov)', icon: Building2 },
           { id: '2-vp-public-policy', title: 'VP Public Policy', icon: FileText },
@@ -704,7 +900,7 @@ export const aiAgentsSidebarSections = [
         title: 'Sub-Agents (6+)',
         icon: Bot,
         items: [
-          { id: '2-policy-analyst', title: 'Policy Analyst', icon: BarChart3 },
+          { id: '2-policy-analyst', title: 'Policy Analyst', icon: ChartBar },
           { id: '2-regulatory-spec', title: 'Regulatory Specialist', icon: Shield },
           { id: '2-public-affairs', title: 'Public Affairs Specialist', icon: Megaphone },
           { id: '2-grants-spec', title: 'Grants Specialist', icon: FileText },
@@ -712,12 +908,22 @@ export const aiAgentsSidebarSections = [
           { id: '2-transparency-officer', title: 'Transparency Officer', icon: Eye },
         ]
       },
+      {
+        id: '2-gov-phone',
+        title: 'Phone/Call Agents (3)',
+        icon: Phone,
+        items: [
+          { id: '2-gov-public-inquiry-line', title: 'Public Inquiry Line Agent', icon: Phone },
+          { id: '2-gov-permit-hotline', title: 'Permit Hotline Agent', icon: Phone },
+          { id: '2-gov-citizen-services-caller', title: 'Citizen Services Caller', icon: Phone },
+        ]
+      },
     ]
   },
-  // Section 21: Supply Chain & Logistics (10+ agents)
+  // Section 24: Supply Chain & Logistics (13+ agents)
   {
     id: '2-section-dept21',
-    title: '23: Supply Chain & Logistics (10+)',
+    title: '24: Supply Chain & Logistics (13+)',
     icon: Package,
     subSections: [
       {
@@ -738,18 +944,28 @@ export const aiAgentsSidebarSections = [
         items: [
           { id: '2-procurement-buyer', title: 'Procurement Buyer', icon: DollarSign },
           { id: '2-inventory-spec', title: 'Inventory Specialist', icon: Package },
-          { id: '2-demand-planner', title: 'Demand Planner', icon: BarChart3 },
+          { id: '2-demand-planner', title: 'Demand Planner', icon: ChartBar },
           { id: '2-supplier-relations', title: 'Supplier Relations', icon: Handshake },
           { id: '2-shipping-coord', title: 'Shipping Coordinator', icon: Truck },
-          { id: '2-fulfillment-spec', title: 'Fulfillment Specialist', icon: CheckCircle },
+          { id: '2-fulfillment-spec', title: 'Fulfillment Specialist', icon: CircleCheck },
+        ]
+      },
+      {
+        id: '2-supply-chain-phone',
+        title: 'Phone/Call Agents (3)',
+        icon: Phone,
+        items: [
+          { id: '2-sc-supplier-coordination-caller', title: 'Supplier Coordination Caller', icon: Phone },
+          { id: '2-sc-logistics-phone-agent', title: 'Logistics Phone Agent', icon: Phone },
+          { id: '2-sc-order-status-caller', title: 'Order Status Caller', icon: Phone },
         ]
       },
     ]
   },
-  // Section 22: AI Management & Governance (6+ agents)
+  // Section 25: AI Management & Governance (9+ agents)
   {
     id: '2-section-dept22',
-    title: '24: AI Management & Governance (6+)',
+    title: '25: AI Management & Governance (9+)',
     icon: Sparkles,
     subSections: [
       {
@@ -758,8 +974,8 @@ export const aiAgentsSidebarSections = [
         icon: Sparkles,
         items: [
           { id: '2-cao-automation-dept', title: 'CAO - Chief Automation Officer', icon: Zap },
-          { id: '2-vp-automation', title: 'VP Automation', icon: Cog },
-          { id: '2-vp-process-excellence', title: 'VP Process Excellence', icon: CheckCircle },
+          { id: '2-vp-automation', title: 'VP Automation', icon: Settings },
+          { id: '2-vp-process-excellence', title: 'VP Process Excellence', icon: CircleCheck },
         ]
       },
       {
@@ -768,8 +984,18 @@ export const aiAgentsSidebarSections = [
         icon: Bot,
         items: [
           { id: '2-aod-lead', title: 'AOD - Automation Operations Lead', icon: Bot },
-          { id: '2-rpa-mgr', title: 'RPA Manager', icon: Cog },
-          { id: '2-workflow-spec', title: 'Workflow Specialist', icon: Workflow },
+          { id: '2-rpa-mgr', title: 'RPA Manager', icon: Settings },
+          { id: '2-workflow-spec', title: 'Workflow Specialist', icon: Settings },
+        ]
+      },
+      {
+        id: '2-ai-mgmt-phone',
+        title: 'Phone/Call Agents (3)',
+        icon: Phone,
+        items: [
+          { id: '2-ai-mgmt-phone-support', title: 'AI Phone Support Agent', icon: Phone },
+          { id: '2-ai-mgmt-escalation-caller', title: 'AI Escalation Caller', icon: Phone },
+          { id: '2-ai-mgmt-system-alert-caller', title: 'System Alert Caller', icon: Phone },
         ]
       },
     ]

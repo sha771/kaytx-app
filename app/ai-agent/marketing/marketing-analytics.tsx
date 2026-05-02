@@ -1,19 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { BarChart3, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { ChartBar, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'4533',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.1s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.6%',icon:Target,color:'#C62828'}];
+  const stats = [{label:'Tasks',value:'4533',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.1s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.6%',icon:Target,color:'#C62828'}];
   const capabilities = ['Campaign Management','Brand Strategy','Content Creation','Digital Marketing','Analytics & ROI','Growth Optimization'];
   const responsibilities = ['Campaign strategy & execution','Brand identity & positioning','Content creation & distribution','Digital marketing & SEO/SEM','Marketing analytics & ROI tracking','Growth hacking & optimization'];
-  const activities = [{time:'3 min ago',text:'Launched 4 new ad campaigns',icon:CheckCircle2},{time:'6 min ago',text:'Analyzed campaign ROI metrics',icon:Clock},{time:'9 min ago',text:'Published 12 content pieces',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Launched 4 new ad campaigns',icon: CircleCheckBig},{time:'6 min ago',text:'Analyzed campaign ROI metrics',icon:Clock},{time:'9 min ago',text:'Published 12 content pieces',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#C6282820' }]}><BarChart3 size={48} color="#C62828" /></View>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#C6282820' }]}><ChartBarBig size={48} color="#C62828" /></View>
         <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Marketing Analytics</Text>
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Marketing</Text>
         <View style={styles.badgesRow}>

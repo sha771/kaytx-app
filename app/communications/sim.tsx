@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Smartphone, Signal, Settings, Plus, Trash2, Edit3 } from 'lucide-react-native';
+import { Smartphone, Signal, Settings, Plus, Trash2, PenLine } from 'lucide-react-native';
 
 interface SIMCard {
   id: string;
@@ -71,7 +71,7 @@ export default function SIMScreen() {
       
       <View style={styles.simActions}>
         <TouchableOpacity style={styles.actionButton}>
-          <Edit3 size={16} color="#007AFF" />
+          <PenLine size={16} color="#007AFF" />
           <Text style={styles.actionText}>Edit</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.actionButton}>

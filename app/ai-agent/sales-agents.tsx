@@ -25,10 +25,9 @@ import {
   DollarSign,
   Users,
   Briefcase,
-  BarChart3,
-  Filter,
+  ChartBar,
+  ListFilter,
   ChevronRight,
-  Bot,
   Award,
   Phone,
   Mail,
@@ -183,7 +182,7 @@ export default function SalesAgentsScreen() {
             <Text style={[styles.headerTitle, { color: colors.text }]}>Sales & Revenue AI</Text>
           </View>
           <TouchableOpacity onPress={() => setShowFilters(!showFilters)} style={styles.filterButton}>
-            <Filter size={20} color={colors.text} />
+            <ListFilter size={20} color={colors.text} />
           </TouchableOpacity>
         </View>
 
@@ -211,7 +210,7 @@ export default function SalesAgentsScreen() {
         {/* Stats */}
         <View style={styles.statsContainer}>
           <Animated.View entering={FadeInRight.delay(100)} style={[styles.statBadge, { backgroundColor: colors.border + '30' }]}>
-            <Bot size={16} color={colors.text} />
+            <User size={16} color={colors.text} />
             <Text style={[styles.statValue, { color: colors.text }]}>{stats.total}</Text>
             <Text style={[styles.statLabel, { color: colors.text + '60' }]}>Agents</Text>
           </Animated.View>

@@ -11,7 +11,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
-import { PhoneCall, Calendar, CheckCircle, XCircle, Search, Lock } from 'lucide-react-native';
+import { PhoneCall, Calendar, CircleCheck, CircleX, Search, Lock } from 'lucide-react-native';
 import { trpc } from '@/lib/trpc';
 import { useTheme } from '@/providers/ThemeProvider';
 
@@ -193,24 +193,24 @@ export default function CallbackSystemScreen() {
               showsHorizontalScrollIndicator={false}
               style={styles.filterContainer}
             >
-              {filters.map((filter) => (
+              {filters.map((Filter) => (
                 <TouchableOpacity
-                  key={filter}
+                  key={Filter}
                   style={[
                     styles.filterButton,
                     { backgroundColor: theme.colors.cardBackground },
-                    selectedFilter === filter && { backgroundColor: theme.colors.primary },
+                    selectedFilter === Filter && { backgroundColor: theme.colors.primary },
                   ]}
-                  onPress={() => setSelectedFilter(filter)}
+                  onPress={() => setSelectedFilter(Filter)}
                 >
                   <Text
                     style={[
                       styles.filterText,
                       { color: theme.colors.secondaryText },
-                      selectedFilter === filter && { color: '#fff' },
+                      selectedFilter === Filter && { color: '#fff' },
                     ]}
                   >
-                    {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                    {Filter.charAt(0).toUpperCase() + Filter.slice(1)}
                   </Text>
                 </TouchableOpacity>
               ))}
@@ -277,11 +277,11 @@ export default function CallbackSystemScreen() {
                 {callback.status === 'pending' && (
                   <View style={[styles.actions, { borderTopColor: theme.colors.border }]}>
                     <TouchableOpacity style={[styles.scheduleButton, { backgroundColor: theme.colors.success }]}>
-                      <CheckCircle size={18} color="#fff" />
+                      <CircleCheck size={18} color="#fff" />
                       <Text style={styles.scheduleButtonText}>Schedule</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.cancelButton, { borderColor: theme.colors.error }]}>
-                      <XCircle size={18} color={theme.colors.error} />
+                      <CircleX size={18} color={theme.colors.error} />
                       <Text style={[styles.cancelButtonText, { color: theme.colors.error }]}>Cancel</Text>
                     </TouchableOpacity>
                   </View>

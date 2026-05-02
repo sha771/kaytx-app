@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Briefcase, Activity, Star, CheckCircle2, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { Briefcase, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'3,264',icon:CheckCircle2,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'2.0s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.0%',icon:Target,color:'#0277BD'}];
+  const stats = [{label:'Tasks',value:'3,264',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'2.0s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.0%',icon:Target,color:'#0277BD'}];
   const capabilities = ['Portfolio Mgmt','Asset Allocation','Risk Control','Rebalancing','Client Relations','Compliance'];
   const responsibilities = ['Portfolio construction & management','Strategic asset allocation decisions','Risk control & drawdown management','Portfolio rebalancing & optimization','Client relationship management','Investment compliance oversight'];
-  const activities = [{time:'3 min ago',text:'Rebalanced 3 client portfolios',icon:CheckCircle2},{time:'6 min ago',text:'Reviewed risk budget allocations',icon:Clock},{time:'9 min ago',text:'Prepared quarterly client review',icon:Zap}];
+  const activities = [{time:'3 min ago',text:'Rebalanced 3 client portfolios',icon: CircleCheckBig},{time:'6 min ago',text:'Reviewed risk budget allocations',icon:Clock},{time:'9 min ago',text:'Prepared quarterly client review',icon:Zap}];
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>

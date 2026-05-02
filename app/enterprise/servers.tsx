@@ -17,8 +17,8 @@ import {
   MemoryStick,
   Activity,
   TrendingUp,
-  AlertTriangle,
-  CheckCircle,
+  TriangleAlert,
+  CircleCheck,
   Zap,
   RefreshCw,
   Settings,
@@ -26,7 +26,7 @@ import {
   Play,
   Pause,
   RotateCcw,
-  BarChart3,
+  ChartBar,
   Globe,
   Gauge,
   Layers,
@@ -297,12 +297,12 @@ export default function ServersScreen() {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'running': return CheckCircle;
+      case 'running': return CircleCheck;
       case 'stopped': return Pause;
       case 'starting': return RefreshCw;
-      case 'error': return AlertTriangle;
+      case 'error': return TriangleAlert;
       case 'maintenance': return Settings;
-      case 'degraded': return AlertTriangle;
+      case 'degraded': return TriangleAlert;
       default: return Activity;
     }
   };
@@ -648,13 +648,13 @@ export default function ServersScreen() {
               <View style={[styles.monitoringCard, { backgroundColor: theme.colors.cardBackground }]}
                 testID="monitoring-health-card"
               >
-                <BarChart3 size={32} color={theme.colors.primary} />
+                <ChartBarBig size={32} color={theme.colors.primary} />
                 <Text style={[styles.monitoringTitle, { color: theme.colors.text }]}>System Health Map</Text>
                 <Text style={[styles.monitoringDescription, { color: theme.colors.secondaryText }]}>
                   AI anomaly detection, error tracking, and uptime SLA insights.
                 </Text>
                 <TouchableOpacity style={[styles.monitoringButton, { backgroundColor: theme.colors.primary }]}>
-                  <BarChart3 size={16} color="#FFFFFF" />
+                  <ChartBarBig size={16} color="#FFFFFF" />
                   <Text style={styles.monitoringButtonText}>View Detailed Metrics</Text>
                 </TouchableOpacity>
               </View>

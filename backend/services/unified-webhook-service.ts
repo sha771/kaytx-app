@@ -135,7 +135,7 @@ export class UnifiedWebhookService extends EventEmitter {
       const webhooks = await this.getWebhooksForEvent(event.type);
 
       for (const webhook of webhooks) {
-        // Apply event filter if configured
+        // Apply event Filter if configured
         if (webhook.settings.filterEvents && !webhook.settings.filterEvents(event)) {
           continue;
         }

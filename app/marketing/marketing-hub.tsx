@@ -16,11 +16,11 @@ import {
   Target,
   Users,
   TrendingUp,
-  BarChart3,
+  ChartBar,
   Plus,
   Search,
   ArrowLeft,
-  Edit,
+  Pencil,
   MousePointer,
   Share2,
   Zap,
@@ -32,8 +32,8 @@ import {
   MessageSquare,
   Bell,
   ChevronRight,
-  PieChart,
-  BarChart2,
+  ChartPie,
+  ChartBar,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
@@ -234,9 +234,9 @@ const quickActions = [
   { id: '5', title: 'Cold Email', icon: Mail, color: '#5AC8FA', route: '/marketing/cold-email' },
   { id: '6', title: 'Cold Calling', icon: Share2, color: '#FF2D92', route: '/marketing/cold-calling' },
   { id: '7', title: 'SEO', icon: Globe, color: '#32D74B', route: '/marketing/seo-optimization' },
-  { id: '8', title: 'Analytics', icon: BarChart3, color: '#FFD60A', route: '/analytics/analytics-performance' },
-  { id: '9', title: 'A/B Testing', icon: PieChart, color: '#007AFF', route: '/analytics/ab-testing' },
-  { id: '10', title: 'Content', icon: Edit, color: '#34C759', route: '/marketing/content-creation' },
+  { id: '8', title: 'Analytics', icon: ChartBar, color: '#FFD60A', route: '/analytics/analytics-performance' },
+  { id: '9', title: 'A/B Testing', icon: ChartPie, color: '#007AFF', route: '/analytics/ab-testing' },
+  { id: '10', title: 'Content', icon: Pencil, color: '#34C759', route: '/marketing/content-creation' },
   { id: '11', title: 'Lead Gen', icon: Users, color: '#FF9500', route: '/automation/lead-generation' },
   { id: '12', title: 'Campaigns', icon: Target, color: '#AF52DE', route: '/marketing/campaign' },
 ];
@@ -439,7 +439,7 @@ export default function MarketingHubScreen() {
     return (
       <TouchableOpacity
         style={[styles.quickActionCard, { backgroundColor: theme.colors.cardBackground }]}
-        onPress={() => router.push(item.route as any)}
+        onPress={() => router.push(item.route)}
       >
         <View style={[styles.quickActionIcon, { backgroundColor: item.color + '20' }]}>
           <IconComponent size={20} color={item.color} />
@@ -609,24 +609,24 @@ export default function MarketingHubScreen() {
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filtersContainer}>
         <View style={styles.filters}>
-          {(['all', 'active', 'scheduled', 'draft', 'completed'] as const).map((filter) => (
+          {(['all', 'active', 'scheduled', 'draft', 'completed'] as const).map((Filter) => (
             <TouchableOpacity
-              key={filter}
+              key={Filter}
               style={[
                 styles.filterChip,
-                filterStatus === filter && { backgroundColor: theme.colors.primary },
+                filterStatus === Filter && { backgroundColor: theme.colors.primary },
               ]}
-              onPress={() => setFilterStatus(filter)}
+              onPress={() => setFilterStatus(Filter)}
             >
               <Text
                 style={[
                   styles.filterText,
                   {
-                    color: filterStatus === filter ? 'white' : theme.colors.secondaryText,
+                    color: filterStatus === Filter ? 'white' : theme.colors.secondaryText,
                   },
                 ]}
               >
-                {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                {Filter.charAt(0).toUpperCase() + Filter.slice(1)}
               </Text>
             </TouchableOpacity>
           ))}
@@ -660,7 +660,7 @@ export default function MarketingHubScreen() {
       <View style={styles.section}>
         <TouchableOpacity style={[styles.analyticsCard, { backgroundColor: theme.colors.cardBackground }]}>
           <View style={styles.analyticsHeader}>
-            <BarChart2 size={24} color="#007AFF" />
+            <ChartBar size={24} color="#007AFF" />
             <Text style={[styles.analyticsTitle, { color: theme.colors.text }]}>Channel Performance</Text>
           </View>
           <Text style={[styles.analyticsSubtitle, { color: theme.colors.secondaryText }]}>
@@ -671,7 +671,7 @@ export default function MarketingHubScreen() {
 
         <TouchableOpacity style={[styles.analyticsCard, { backgroundColor: theme.colors.cardBackground }]}>
           <View style={styles.analyticsHeader}>
-            <PieChart size={24} color="#34C759" />
+            <ChartPie size={24} color="#34C759" />
             <Text style={[styles.analyticsTitle, { color: theme.colors.text }]}>Audience Insights</Text>
           </View>
           <Text style={[styles.analyticsSubtitle, { color: theme.colors.secondaryText }]}>

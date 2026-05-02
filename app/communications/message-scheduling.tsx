@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Calendar, Clock, Plus, Search, Filter, Users, MapPin, Bell } from 'lucide-react-native';
+import { Calendar, Clock, Plus, Search, ListFilter, Users, MapPin, Bell } from 'lucide-react-native';
 
 interface ScheduledMessage {
   id: string;
@@ -86,7 +86,7 @@ export default function MessageSchedulingScreen() {
         
         <View style={styles.filterContainer}>
           <TouchableOpacity style={styles.filterButton}>
-            <Filter size={20} color="#3B82F6" />
+            <ListFilter size={20} color="#3B82F6" />
           </TouchableOpacity>
           
           <TouchableOpacity style={styles.addButton}>

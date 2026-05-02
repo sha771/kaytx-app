@@ -7,7 +7,7 @@ import { trpc } from '@/lib/trpc';
 import {
     Plane,
     ArrowLeft,
-    CheckCircle2,
+    CircleCheckBig,
     TrendingUp,
     Clock,
     Users,
@@ -16,14 +16,14 @@ import {
     Luggage,
     MapPin,
     Calendar,
-    AlertTriangle,
+    TriangleAlert,
     Star,
     Zap,
     Shield,
     Globe,
     Phone,
     MessageSquare,
-    BarChart3,
+    ChartBar,
     Lock,
 } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -35,7 +35,7 @@ const AIRLINE_USE_CASES = [
         id: 'disruption',
         title: 'Flight Disruption Management',
         description: 'Automated rebooking, delay notifications, and compensation processing during IRROPS',
-        icon: AlertTriangle,
+        icon: TriangleAlert,
         color: '#FF6B6B',
         stats: { automated: '94%', avgTime: '45s', satisfaction: '4.8/5' },
         isPremium: true,
@@ -199,7 +199,7 @@ export default function AirlineIndustryScreen() {
                         router.push('/enterprise/billing');
                         return;
                     }
-                    router.push(agent.route as any);
+                    router.push(agent.route);
                 }}
                 activeOpacity={0.7}
             >
@@ -297,7 +297,7 @@ export default function AirlineIndustryScreen() {
                             </Text>
                         </View>
                         <View style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}>
-                            <BarChart3 size={24} color="#00B894" />
+                            <ChartBarBig size={24} color="#00B894" />
                             <Text style={[styles.benefitTitle, { color: theme.colors.text }]}>Real-time Analytics</Text>
                             <Text style={[styles.benefitDescription, { color: theme.colors.secondaryText }]}>
                                 Track performance, identify trends, optimize operations
@@ -336,7 +336,7 @@ export default function AirlineIndustryScreen() {
                     </Text>
                     <TouchableOpacity
                         style={[styles.ctaButton, { backgroundColor: theme.colors.primary }]}
-                        onPress={() => router.push('/ai-agent/ai-agent' as any)}
+                        onPress={() => router.push('/ai-agent/ai-agent')}
                     >
                         <Text style={styles.ctaButtonText}>Get Started</Text>
                     </TouchableOpacity>

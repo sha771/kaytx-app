@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Cpu, Activity, CheckCircle2, Clock, Target, BarChart3, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, Code2, GitBranch, Layers } from 'lucide-react-native';
+import { Cpu, Activity, CircleCheckBig, Clock, Target, ChartBar, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, SquareCode, GitBranch, Layers } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function VPEngineeringPage() {
   const { theme } = useTheme();
 
   const stats = [
-    { label: 'Commits', value: '24,531', icon: CheckCircle2, color: '#34C759' },
+    { label: 'Commits', value: '24,531', icon: CircleCheckBig, color: '#34C759' },
     { label: 'Uptime', value: '99.99%', icon: Activity, color: '#007AFF' },
     { label: 'Response', value: '0.5s', icon: Clock, color: '#FF9500' },
     { label: 'Accuracy', value: '99.5%', icon: Target, color: '#AF52DE' },
@@ -33,13 +33,13 @@ export default function VPEngineeringPage() {
   const activities = [
     { time: '1 min ago', text: 'Approved critical production deployment', icon: GitBranch },
     { time: '10 min ago', text: 'Reviewed architecture proposal for new service', icon: Layers },
-    { time: '35 min ago', text: 'Updated SLO dashboards for Q3', icon: BarChart3 },
-    { time: '2 hours ago', text: 'Mentored 3 engineers on design patterns', icon: Code2 },
+    { time: '35 min ago', text: 'Updated SLO dashboards for Q3', icon: ChartBar },
+    { time: '2 hours ago', text: 'Mentored 3 engineers on design patterns', icon: SquareCode },
     { time: '4 hours ago', text: 'Launched infrastructure cost optimization', icon: Zap },
   ];
 
   const quickActions = [
-    { label: 'View Reports', icon: BarChart3 },
+    { label: 'View Reports', icon: ChartBar },
     { label: 'Team Chat', icon: MessageSquare },
     { label: 'Schedule', icon: Calendar },
     { label: 'Settings', icon: Shield },
