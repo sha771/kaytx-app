@@ -114,7 +114,7 @@ export default function SocialListening() {
         <View style={styles.filterTabs}>
           {(['all', 'positive', 'negative', 'neutral'] as const).map((Filter) => (
             <TouchableOpacity
-              key={Filter}
+              key={Funnel}
               style={[styles.filterTab, selectedSentiment === Filter && { backgroundColor: theme.colors.primary }]}
               onPress={() => setSelectedSentiment(Filter)}
             >

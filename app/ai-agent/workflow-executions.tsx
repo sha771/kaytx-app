@@ -236,7 +236,7 @@ export default function WorkflowExecutionScreen() {
                 </Text>
               </View>
               <View style={styles.metaItem}>
-                <ChartBarBig size={12} color={colors.icon} />
+                <ChartBar size={12} color={colors.icon} />
                 <Text style={[styles.metaText, { color: colors.icon }]}>
                   {workflow.runCount.toLocaleString()} runs
                 </Text>

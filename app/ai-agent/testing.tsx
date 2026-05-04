@@ -330,7 +330,7 @@ export default function AgentTestingScreen() {
           style={[styles.tab, activeTab === 'results' && { backgroundColor: colors.tint }]}
           onPress={() => setActiveTab('results')}
         >
-          <ChartBarBig size={16} color={activeTab === 'results' ? 'white' : colors.icon} />
+          <ChartBar size={16} color={activeTab === 'results' ? 'white' : colors.icon} />
           <Text style={[styles.tabText, { color: activeTab === 'results' ? 'white' : colors.text }]}>
             Results
           </Text>

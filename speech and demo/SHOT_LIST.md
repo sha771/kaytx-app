@@ -4,7 +4,7 @@ A detailed shot-by-shot breakdown for recording the demo video.
 
 ---
 
-## Shot 1: Title Card (0:00-0:10)
+## Shot 7: Title Card/Brand Opening (2:25-2:35)
 **Duration:** 10 seconds
 
 **Visual:**
@@ -21,8 +21,8 @@ A detailed shot-by-shot breakdown for recording the demo video.
 
 ---
 
-## Shot 2: The Problem (0:10-0:30)
-**Duration:** 20 seconds
+## Shot 8: The Problem (2:35-2:50)
+**Duration:** 15 seconds
 
 **Visual:**
 - Split screen or quick cuts showing:
@@ -44,7 +44,7 @@ A detailed shot-by-shot breakdown for recording the demo video.
 
 ---
 
-## Shot 3: Solution Reveal - Home Dashboard (0:30-0:50)
+## Shot 9: Solution Reveal - Home Dashboard/Command Center (2:50-3:10)
 **Duration:** 20 seconds
 
 **Visual:**
@@ -69,7 +69,7 @@ A detailed shot-by-shot breakdown for recording the demo video.
 
 ---
 
-## Shot 4: AI Workforce Hierarchy (0:50-1:20)
+## Shot 2: AI Workforce Hierarchy (0:25-0:55)
 **Duration:** 30 seconds
 
 **Visual A (C-Suite):**
@@ -202,8 +202,28 @@ A detailed shot-by-shot breakdown for recording the demo video.
 
 ---
 
-## Shot 9: Unified Inbox (2:10-2:25)
-**Duration:** 15 seconds
+## Shot 0: HOOK (0:00-0:05)
+**Duration:** 5 seconds
+
+**Visual:**
+- Black screen
+- Notification cascade: email, WhatsApp, Slack, SMS chiming rapidly
+- Building to overwhelming chaos
+- Sudden freeze frame: chaotic inbox with 99+ messages
+
+**Text Overlay:**
+- "What if you never missed a message again?" — 72px, White, Center
+
+**Transition:**
+- Quick flash to pristine Unified Inbox interface
+
+**Audio:**
+- Notification crescendo → sudden silence → crystalline chime
+
+---
+
+## Shot 1: Unified Inbox (0:05-0:30)
+**Duration:** 25 seconds
 
 **Visual:**
 - Navigate to Messages tab
@@ -230,8 +250,8 @@ A detailed shot-by-shot breakdown for recording the demo video.
 
 ---
 
-## Shot 10: Social Media Management (2:25-2:40)
-**Duration:** 15 seconds
+## Shot 4: Social Media Management (1:15-1:35)
+**Duration:** 20 seconds
 
 **Visual:**
 - Navigate to Social Media section
@@ -259,8 +279,8 @@ A detailed shot-by-shot breakdown for recording the demo video.
 
 ---
 
-## Shot 11: Social CRM (2:40-2:55)
-**Duration:** 15 seconds
+## Shot 5: Social CRM (1:35-2:00)
+**Duration:** 25 seconds
 
 **Visual:**
 - Navigate to CRM section
@@ -288,8 +308,8 @@ A detailed shot-by-shot breakdown for recording the demo video.
 
 ---
 
-## Shot 12: Team Collaboration (2:55-3:10)
-**Duration:** 15 seconds
+## Shot 6: Team Collaboration (2:00-2:25)
+**Duration:** 25 seconds
 
 **Visual:**
 - Navigate to Team Collaboration section

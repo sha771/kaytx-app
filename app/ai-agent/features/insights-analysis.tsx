@@ -151,7 +151,7 @@ export default function InsightsAnalysisPage() {
 
       {/* Action Button */}
       <TouchableOpacity style={[styles.fullReportBtn, { backgroundColor: theme.colors.primary }]}>
-        <ChartBarBig size={20} color="#fff" />
+        <ChartBar size={20} color="#fff" />
         <Text style={styles.fullReportText}>Generate Full Report</Text>
       </TouchableOpacity>
     
@@ -272,3 +272,4 @@ const styles = StyleSheet.create({
     fontWeight: '600' 
   },
 });
+

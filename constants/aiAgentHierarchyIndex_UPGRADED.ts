@@ -668,49 +668,6 @@ export function validateUpgradedHierarchy(): {
 }
 
 // ============================================
-// DEFAULT EXPORT
+// DEFAULT EXPORT (Disabled to prevent Metro bundler conflicts)
+// Use named exports instead
 // ============================================
-
-export default {
-  // Hierarchy data
-  cSuiteExecutives: cSuiteUpgraded,
-  vpDirectors,
-  managers,
-  teamLeads,
-  specialists,
-  allNewDepartmentAgents,
-  completeAIWorkforce,
-
-  // Upgraded components
-  TOKEN_OPTIMIZATION,
-  COST_COMPARISON,
-  INTELLIGENCE_LAYER,
-  COMMAND_CENTER,
-  LAYER_BRIDGE,
-
-  // Info objects
-  NEW_C_SUITE_ROLES,
-  INTELLIGENCE_LAYER_INFO,
-  COMMAND_CENTER_INFO,
-  LAYER_BRIDGE_INFO,
-  AGENT_TYPE_DEFINITIONS,
-  HIERARCHY_TIERS,
-  TOKEN_STATS,
-
-  // Stats
-  AI_WORKFORCE_COMPLETE_STATS_UPGRADED,
-  AI_WORKFORCE_UPGRADED_STATS,
-
-  // Utility functions
-  getAllCSuite,
-  getNewCSuiteRoles,
-  getIntelligenceLayer,
-  getCommandCenter,
-  getLayerBridge,
-  getTokenOptimization,
-  getCostComparison,
-  getAgentTypes,
-  getWorkforceStats,
-  getHierarchyTiers,
-  validateUpgradedHierarchy,
-};

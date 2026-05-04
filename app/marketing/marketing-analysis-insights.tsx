@@ -239,7 +239,7 @@ export default function MarketingAnalyticsInsightsScreen() {
       case 'paid': return Target;
       case 'organic': return TrendingUp;
       case 'direct': return Activity;
-      default: return ChartBarBig;
+      default: return ChartBar;
     }
   };
 

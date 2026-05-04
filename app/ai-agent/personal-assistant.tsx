@@ -169,7 +169,7 @@ export default function PersonalAssistantScreen() {
           <View style={styles.filterTabs}>
             {(['all', 'pending', 'in-progress', 'completed'] as const).map((Filter) => (
               <TouchableOpacity
-                key={Filter}
+                key={Funnel}
                 style={[styles.filterTab, selectedFilter === Filter && styles.activeFilterTab]}
                 onPress={() => setSelectedFilter(Filter)}
               >

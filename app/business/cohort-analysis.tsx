@@ -318,7 +318,7 @@ export default function CohortAnalysisScreen() {
             Retention Curve Comparison
           </Text>
           <View style={styles.chartPlaceholder}>
-            <ChartBarBig size={48} color={theme.colors.secondaryText} />
+            <ChartBar size={48} color={theme.colors.secondaryText} />
             <Text style={[styles.chartPlaceholderText, { color: theme.colors.secondaryText }]}>
               Interactive retention curves would appear here
             </Text>

@@ -317,7 +317,7 @@ export default function DynamicAgentScreen() {
         <View style={styles.tabContent}>
             <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
                 <View style={styles.cardHeader}>
-                    <ChartBarBig size={20} color={agent.color} />
+                    <ChartBar size={20} color={agent.color} />
                     <Text style={[styles.cardTitle, { color: theme.colors.text }]}>Performance & analytics</Text>
                 </View>
 

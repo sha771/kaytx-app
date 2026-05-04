@@ -331,10 +331,10 @@ export default function AgentConfigurationScreen() {
 
   if (loading) {
     return (
-      <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+      <SafeAreaView style= [styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={colors.primary} />
-          <Text style={[styles.loadingText, { color: colors.text }]}>Loading agent configuration...</Text>
+          <Text style= [styles.loadingText, { color: colors.text }]}>Loading agent configuration...</Text>
         </View>
       </SafeAreaView>
     );
@@ -342,11 +342,11 @@ export default function AgentConfigurationScreen() {
 
   if (!agent) {
     return (
-      <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+      <SafeAreaView style= [styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.errorContainer}>
           <TriangleAlert size={48} color={colors.error} />
-          <Text style={[styles.errorText, { color: colors.text }]}>Agent not found</Text>
-          <TouchableOpacity style={[styles.button, { backgroundColor: colors.primary }]} onPress={() => router.back()}>
+          <Text style= [styles.errorText, { color: colors.text }]}>Agent not found</Text>
+          <TouchableOpacity style= [styles.button, { backgroundColor: colors.primary }]} onPress={() => router.back()}>
             <Text style={styles.buttonText}>Go Back</Text>
           </TouchableOpacity>
         </View>
@@ -366,21 +366,21 @@ export default function AgentConfigurationScreen() {
   ];
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView style= [styles.container, { backgroundColor: colors.background }]}>
       {/* Header */}
-      <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
+      <View style= [styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
         <View style={styles.headerTop}>
           <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
             <ChevronLeft size={24} color={colors.text} />
           </TouchableOpacity>
           <View style={styles.headerTitleContainer}>
             <User size={24} color={colors.primary} />
-            <Text style={[styles.headerTitle, { color: colors.text }]}>Agent Configuration</Text>
+            <Text style= [styles.headerTitle, { color: colors.text }]}>Agent Configuration</Text>
           </View>
           <TouchableOpacity
             onPress={handleSave}
             disabled={!unsavedChanges || saving}
-            style={[
+            style= [
               styles.saveButton,
               { backgroundColor: unsavedChanges ? colors.primary : colors.border },
             ]}
@@ -394,13 +394,13 @@ export default function AgentConfigurationScreen() {
         </View>
 
         {/* Agent Info Card */}
-        <Animated.View entering={FadeInUp.delay(100)} style={[styles.agentCard, { backgroundColor: agent.color + '15' }]}>
-          <View style={[styles.agentIconContainer, { backgroundColor: agent.color }]}>
+        <Animated.View entering={FadeInUp.delay(100)} style= [styles.agentCard, { backgroundColor: agent.color + '15' }]}>
+          <View style= [styles.agentIconContainer, { backgroundColor: agent.color }]}>
             <User size={32} color="#fff" />
           </View>
           <View style={styles.agentInfo}>
-            <Text style={[styles.agentName, { color: colors.text }]}>{agent.name}</Text>
-            <Text style={[styles.agentCategory, { color: colors.text + '99' }]}>{agent.parentCategory}</Text>
+            <Text style= [styles.agentName, { color: colors.text }]}>{agent.name}</Text>
+            <Text style= [styles.agentCategory, { color: colors.text + '99' }]}>{agent.parentCategory}</Text>
             {unsavedChanges && (
               <View style={styles.unsavedBadge}>
                 <Text style={styles.unsavedText}>Unsaved Changes</Text>
@@ -411,13 +411,13 @@ export default function AgentConfigurationScreen() {
 
         {/* Quick Actions */}
         <View style={styles.quickActions}>
-          <TouchableOpacity onPress={applyCategoryPreset} style={[styles.quickAction, { backgroundColor: colors.primary + '15' }]}>
+          <TouchableOpacity onPress={applyCategoryPreset} style= [styles.quickAction, { backgroundColor: colors.primary + '15' }]}>
             <Zap size={16} color={colors.primary} />
-            <Text style={[styles.quickActionText, { color: colors.primary }]}>Apply Preset</Text>
+            <Text style= [styles.quickActionText, { color: colors.primary }]}>Apply Preset</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={resetToDefaults} style={[styles.quickAction, { backgroundColor: colors.error + '15' }]}>
+          <TouchableOpacity onPress={resetToDefaults} style= [styles.quickAction, { backgroundColor: colors.error + '15' }]}>
             <Clock size={16} color={colors.error} />
-            <Text style={[styles.quickActionText, { color: colors.error }]}>Reset</Text>
+            <Text style= [styles.quickActionText, { color: colors.error }]}>Reset</Text>
           </TouchableOpacity>
         </View>
 
@@ -427,7 +427,7 @@ export default function AgentConfigurationScreen() {
             <TouchableOpacity
               key={section.id}
               onPress={() => setActiveSection(section.id)}
-              style={[
+              style= [
                 styles.sectionTab,
                 {
                   backgroundColor: activeSection === section.id ? colors.primary : colors.border + '40',
@@ -438,7 +438,7 @@ export default function AgentConfigurationScreen() {
             >
               {section.icon}
               <Text
-                style={[
+                style= [
                   styles.sectionTabText,
                   { color: activeSection === section.id ? '#fff' : colors.text },
                 ]}
@@ -547,20 +547,20 @@ function ModelConfiguration({
 
   return (
     <View style={styles.section}>
-      <Text style={[styles.sectionTitle, { color: colors.text }]}>AI Model Settings</Text>
+      <Text style= [styles.sectionTitle, { color: colors.text }]}>AI Model Settings</Text>
 
       {/* Primary Model */}
       <View style={styles.configCard}>
-        <Text style={[styles.configLabel, { color: colors.text }]}>Primary Model</Text>
+        <Text style= [styles.configLabel, { color: colors.text }]}>Primary Model</Text>
         <TouchableOpacity
-          style={[styles.dropdown, { backgroundColor: colors.border + '30', borderColor: colors.border }]}
+          style= [styles.dropdown, { backgroundColor: colors.border + '30', borderColor: colors.border }]}
           onPress={() => setShowModelPicker(true)}
         >
           <View style={styles.dropdownContent}>
-            <Text style={[styles.dropdownText, { color: colors.text }]}>
+            <Text style= [styles.dropdownText, { color: colors.text }]}>
               {selectedModel?.label || 'Select Model'}
             </Text>
-            <Text style={[styles.dropdownDescription, { color: colors.text + '80' }]}>
+            <Text style= [styles.dropdownDescription, { color: colors.text + '80' }]}>
               {selectedModel?.description}
             </Text>
           </View>
@@ -569,9 +569,9 @@ function ModelConfiguration({
 
         {/* Cost Badge */}
         {selectedModel && (
-          <View style={[styles.costBadge, { backgroundColor: colors.primary + '15' }]}>
-            <ChartBarBig size={14} color={colors.primary} />
-            <Text style={[styles.costText, { color: colors.primary }]}>
+          <View style= [styles.costBadge, { backgroundColor: colors.primary + '15' }]}>
+            <ChartBar size={14} color={colors.primary} />
+            <Text style= [styles.costText, { color: colors.primary }]}>
               Cost: {selectedModel.cost}
             </Text>
           </View>
@@ -580,8 +580,8 @@ function ModelConfiguration({
 
       {/* Fallback Model */}
       <View style={styles.configCard}>
-        <Text style={[styles.configLabel, { color: colors.text }]}>Fallback Model</Text>
-        <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+        <Text style= [styles.configLabel, { color: colors.text }]}>Fallback Model</Text>
+        <Text style= [styles.configDescription, { color: colors.text + '60' }]}>
           Used when primary model is unavailable
         </Text>
         <View style={styles.switchRow}>
@@ -591,7 +591,7 @@ function ModelConfiguration({
               updateModelConfig({ fallback: enabled ? 'gpt-4o-mini' : undefined })
             }
           />
-          <Text style={[styles.switchLabel, { color: colors.text }]}>
+          <Text style= [styles.switchLabel, { color: colors.text }]}>
             {config.model.fallback ? config.model.fallback : 'Disabled'}
           </Text>
         </View>
@@ -624,12 +624,12 @@ function ModelConfiguration({
 
       {/* Reasoning Level */}
       <View style={styles.configCard}>
-        <Text style={[styles.configLabel, { color: colors.text }]}>Reasoning Level</Text>
+        <Text style= [styles.configLabel, { color: colors.text }]}>Reasoning Level</Text>
         <View style={styles.buttonGroup}>
           {(['none', 'low', 'medium', 'high'] as const).map((level) => (
             <TouchableOpacity
               key={level}
-              style={[
+              style= [
                 styles.buttonGroupItem,
                 {
                   backgroundColor: config.model.reasoning === level ? colors.primary : colors.border + '30',
@@ -638,7 +638,7 @@ function ModelConfiguration({
               onPress={() => updateModelConfig({ reasoning: level })}
             >
               <Text
-                style={[
+                style= [
                   styles.buttonGroupText,
                   { color: config.model.reasoning === level ? '#fff' : colors.text },
                 ]}
@@ -654,8 +654,8 @@ function ModelConfiguration({
       <Modal visible={showModelPicker} animationType="slide" transparent>
         <View style={styles.modalOverlay}>
           <BlurView intensity={50} style={styles.modalContent}>
-            <View style={[styles.modalHeader, { backgroundColor: colors.card }]}>
-              <Text style={[styles.modalTitle, { color: colors.text }]}>Select AI Model</Text>
+            <View style= [styles.modalHeader, { backgroundColor: colors.card }]}>
+              <Text style= [styles.modalTitle, { color: colors.text }]}>Select AI Model</Text>
               <TouchableOpacity onPress={() => setShowModelPicker(false)}>
                 <X size={24} color={colors.text} />
               </TouchableOpacity>
@@ -665,7 +665,7 @@ function ModelConfiguration({
               keyExtractor={(item) => item.value}
               renderItem={({ item }) => (
                 <TouchableOpacity
-                  style={[
+                  style= [
                     styles.modelOption,
                     {
                       backgroundColor: config.model.primary === item.value ? colors.primary + '20' : 'transparent',
@@ -679,14 +679,14 @@ function ModelConfiguration({
                 >
                   <View style={styles.modelOptionContent}>
                     <View style={styles.modelOptionHeader}>
-                      <Text style={[styles.modelOptionLabel, { color: colors.text }]}>
+                      <Text style= [styles.modelOptionLabel, { color: colors.text }]}>
                         {item.label}
                       </Text>
-                      <View style={[styles.costTag, { backgroundColor: colors.primary + '15' }]}>
-                        <Text style={[styles.costTagText, { color: colors.primary }]}>{item.cost}</Text>
+                      <View style= [styles.costTag, { backgroundColor: colors.primary + '15' }]}>
+                        <Text style= [styles.costTagText, { color: colors.primary }]}>{item.cost}</Text>
                       </View>
                     </View>
-                    <Text style={[styles.modelOptionDescription, { color: colors.text + '80' }]}>
+                    <Text style= [styles.modelOptionDescription, { color: colors.text + '80' }]}>
                       {item.description}
                     </Text>
                   </View>
@@ -714,14 +714,14 @@ function VoiceConfiguration({
 }) {
   return (
     <View style={styles.section}>
-      <Text style={[styles.sectionTitle, { color: colors.text }]}>Voice Settings</Text>
+      <Text style= [styles.sectionTitle, { color: colors.text }]}>Voice Settings</Text>
 
       {/* Enable Voice */}
       <View style={styles.configCard}>
         <View style={styles.switchRow}>
           <View style={styles.switchInfo}>
-            <Text style={[styles.configLabel, { color: colors.text }]}>Enable Voice</Text>
-            <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+            <Text style= [styles.configLabel, { color: colors.text }]}>Enable Voice</Text>
+            <Text style= [styles.configDescription, { color: colors.text + '60' }]}>
               Allow agent to speak responses
             </Text>
           </View>
@@ -736,12 +736,12 @@ function VoiceConfiguration({
         <>
           {/* Gender */}
           <View style={styles.configCard}>
-            <Text style={[styles.configLabel, { color: colors.text }]}>Voice Gender</Text>
+            <Text style= [styles.configLabel, { color: colors.text }]}>Voice Gender</Text>
             <View style={styles.buttonGroup}>
               {voiceGenderOptions.map((option) => (
                 <TouchableOpacity
                   key={option.value}
-                  style={[
+                  style= [
                     styles.buttonGroupItem,
                     {
                       backgroundColor: config.voice.gender === option.value ? colors.primary : colors.border + '30',
@@ -750,7 +750,7 @@ function VoiceConfiguration({
                   onPress={() => updateVoiceConfig({ gender: option.value })}
                 >
                   <Text
-                    style={[
+                    style= [
                       styles.buttonGroupText,
                       { color: config.voice.gender === option.value ? '#fff' : colors.text },
                     ]}
@@ -764,12 +764,12 @@ function VoiceConfiguration({
 
           {/* Style */}
           <View style={styles.configCard}>
-            <Text style={[styles.configLabel, { color: colors.text }]}>Voice Style</Text>
+            <Text style= [styles.configLabel, { color: colors.text }]}>Voice Style</Text>
             <View style={styles.optionsGrid}>
               {voiceStyleOptions.map((option) => (
                 <TouchableOpacity
                   key={option.value}
-                  style={[
+                  style= [
                     styles.optionChip,
                     {
                       backgroundColor: config.voice.style === option.value ? colors.primary : colors.border + '30',
@@ -779,7 +779,7 @@ function VoiceConfiguration({
                   onPress={() => updateVoiceConfig({ style: option.value })}
                 >
                   <Text
-                    style={[
+                    style= [
                       styles.optionChipText,
                       { color: config.voice.style === option.value ? '#fff' : colors.text },
                     ]}
@@ -793,12 +793,12 @@ function VoiceConfiguration({
 
           {/* Speed */}
           <View style={styles.configCard}>
-            <Text style={[styles.configLabel, { color: colors.text }]}>Speech Speed</Text>
+            <Text style= [styles.configLabel, { color: colors.text }]}>Speech Speed</Text>
             <View style={styles.buttonGroup}>
               {voiceSpeedOptions.map((option) => (
                 <TouchableOpacity
                   key={option.value}
-                  style={[
+                  style= [
                     styles.buttonGroupItem,
                     {
                       backgroundColor: config.voice.speed === option.value ? colors.primary : colors.border + '30',
@@ -807,7 +807,7 @@ function VoiceConfiguration({
                   onPress={() => updateVoiceConfig({ speed: option.value })}
                 >
                   <Text
-                    style={[
+                    style= [
                       styles.buttonGroupText,
                       { color: config.voice.speed === option.value ? '#fff' : colors.text },
                     ]}
@@ -821,12 +821,12 @@ function VoiceConfiguration({
 
           {/* Tone */}
           <View style={styles.configCard}>
-            <Text style={[styles.configLabel, { color: colors.text }]}>Voice Tone</Text>
+            <Text style= [styles.configLabel, { color: colors.text }]}>Voice Tone</Text>
             <View style={styles.optionsGrid}>
               {voiceToneOptions.map((option) => (
                 <TouchableOpacity
                   key={option.value}
-                  style={[
+                  style= [
                     styles.optionChip,
                     {
                       backgroundColor: config.voice.tone === option.value ? colors.primary : colors.border + '30',
@@ -836,7 +836,7 @@ function VoiceConfiguration({
                   onPress={() => updateVoiceConfig({ tone: option.value })}
                 >
                   <Text
-                    style={[
+                    style= [
                       styles.optionChipText,
                       { color: config.voice.tone === option.value ? '#fff' : colors.text },
                     ]}
@@ -894,18 +894,18 @@ function LanguageConfiguration({
 
   return (
     <View style={styles.section}>
-      <Text style={[styles.sectionTitle, { color: colors.text }]}>Language Settings</Text>
+      <Text style= [styles.sectionTitle, { color: colors.text }]}>Language Settings</Text>
 
       {/* Primary Language */}
       <View style={styles.configCard}>
-        <Text style={[styles.configLabel, { color: colors.text }]}>Primary Language</Text>
+        <Text style= [styles.configLabel, { color: colors.text }]}>Primary Language</Text>
         <TouchableOpacity
-          style={[styles.dropdown, { backgroundColor: colors.border + '30', borderColor: colors.border }]}
+          style= [styles.dropdown, { backgroundColor: colors.border + '30', borderColor: colors.border }]}
           onPress={() => setShowLanguagePicker(true)}
         >
           <View style={styles.languageOption}>
             <Text style={styles.flag}>{primaryLang?.flag}</Text>
-            <Text style={[styles.dropdownText, { color: colors.text }]}>
+            <Text style= [styles.dropdownText, { color: colors.text }]}>
               {primaryLang?.label}
             </Text>
           </View>
@@ -917,8 +917,8 @@ function LanguageConfiguration({
       <View style={styles.configCard}>
         <View style={styles.switchRow}>
           <View style={styles.switchInfo}>
-            <Text style={[styles.configLabel, { color: colors.text }]}>Auto-detect Language</Text>
-            <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+            <Text style= [styles.configLabel, { color: colors.text }]}>Auto-detect Language</Text>
+            <Text style= [styles.configDescription, { color: colors.text + '60' }]}>
               Automatically detect user&apos;s language
             </Text>
           </View>
@@ -933,8 +933,8 @@ function LanguageConfiguration({
       <View style={styles.configCard}>
         <View style={styles.switchRow}>
           <View style={styles.switchInfo}>
-            <Text style={[styles.configLabel, { color: colors.text }]}>Translation Enabled</Text>
-            <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+            <Text style= [styles.configLabel, { color: colors.text }]}>Translation Enabled</Text>
+            <Text style= [styles.configDescription, { color: colors.text + '60' }]}>
               Translate responses to user&apos;s language
             </Text>
           </View>
@@ -949,8 +949,8 @@ function LanguageConfiguration({
       <View style={styles.configCard}>
         <View style={styles.switchRow}>
           <View style={styles.switchInfo}>
-            <Text style={[styles.configLabel, { color: colors.text }]}>Cultural Adaptation</Text>
-            <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+            <Text style= [styles.configLabel, { color: colors.text }]}>Cultural Adaptation</Text>
+            <Text style= [styles.configDescription, { color: colors.text + '60' }]}>
               Adapt responses to cultural context
             </Text>
           </View>
@@ -963,12 +963,12 @@ function LanguageConfiguration({
 
       {/* Formality Level */}
       <View style={styles.configCard}>
-        <Text style={[styles.configLabel, { color: colors.text }]}>Formality Level</Text>
+        <Text style= [styles.configLabel, { color: colors.text }]}>Formality Level</Text>
         <View style={styles.buttonGroup}>
           {(['casual', 'neutral', 'formal'] as const).map((level) => (
             <TouchableOpacity
               key={level}
-              style={[
+              style= [
                 styles.buttonGroupItem,
                 {
                   backgroundColor: config.language.formalityLevel === level ? colors.primary : colors.border + '30',
@@ -977,7 +977,7 @@ function LanguageConfiguration({
               onPress={() => updateLanguageConfig({ formalityLevel: level })}
             >
               <Text
-                style={[
+                style= [
                   styles.buttonGroupText,
                   { color: config.language.formalityLevel === level ? '#fff' : colors.text },
                 ]}
@@ -993,8 +993,8 @@ function LanguageConfiguration({
       <Modal visible={showLanguagePicker} animationType="slide" transparent>
         <View style={styles.modalOverlay}>
           <BlurView intensity={50} style={styles.modalContent}>
-            <View style={[styles.modalHeader, { backgroundColor: colors.card }]}>
-              <Text style={[styles.modalTitle, { color: colors.text }]}>Select Language</Text>
+            <View style= [styles.modalHeader, { backgroundColor: colors.card }]}>
+              <Text style= [styles.modalTitle, { color: colors.text }]}>Select Language</Text>
               <TouchableOpacity onPress={() => setShowLanguagePicker(false)}>
                 <X size={24} color={colors.text} />
               </TouchableOpacity>
@@ -1004,7 +1004,7 @@ function LanguageConfiguration({
               keyExtractor={(item) => item.value}
               renderItem={({ item }) => (
                 <TouchableOpacity
-                  style={[
+                  style= [
                     styles.languageListItem,
                     {
                       backgroundColor: config.language.primary === item.value ? colors.primary + '20' : 'transparent',
@@ -1016,7 +1016,7 @@ function LanguageConfiguration({
                   }}
                 >
                   <Text style={styles.flag}>{item.flag}</Text>
-                  <Text style={[styles.languageListText, { color: colors.text }]}>{item.label}</Text>
+                  <Text style= [styles.languageListText, { color: colors.text }]}>{item.label}</Text>
                   {config.language.primary === item.value && (
                     <Check size={20} color={colors.primary} />
                   )}
@@ -1041,16 +1041,16 @@ function PersonalityConfiguration({
 }) {
   return (
     <View style={styles.section}>
-      <Text style={[styles.sectionTitle, { color: colors.text }]}>Personality Settings</Text>
+      <Text style= [styles.sectionTitle, { color: colors.text }]}>Personality Settings</Text>
 
       {/* Age */}
       <View style={styles.configCard}>
-        <Text style={[styles.configLabel, { color: colors.text }]}>Persona Age</Text>
+        <Text style= [styles.configLabel, { color: colors.text }]}>Persona Age</Text>
         <View style={styles.buttonGroup}>
           {ageOptions.map((option) => (
             <TouchableOpacity
               key={option.value}
-              style={[
+              style= [
                 styles.buttonGroupItem,
                 {
                   backgroundColor: config.personality.age === option.value ? colors.primary : colors.border + '30',
@@ -1059,7 +1059,7 @@ function PersonalityConfiguration({
               onPress={() => updatePersonalityConfig({ age: option.value })}
             >
               <Text
-                style={[
+                style= [
                   styles.buttonGroupText,
                   { color: config.personality.age === option.value ? '#fff' : colors.text },
                 ]}
@@ -1073,12 +1073,12 @@ function PersonalityConfiguration({
 
       {/* Communication Style */}
       <View style={styles.configCard}>
-        <Text style={[styles.configLabel, { color: colors.text }]}>Communication Style</Text>
+        <Text style= [styles.configLabel, { color: colors.text }]}>Communication Style</Text>
         <View style={styles.optionsGrid}>
           {communicationStyles.map((style) => (
             <TouchableOpacity
               key={style}
-              style={[
+              style= [
                 styles.optionChip,
                 {
                   backgroundColor: config.personality.communicationStyle === style ? colors.primary : colors.border + '30',
@@ -1088,7 +1088,7 @@ function PersonalityConfiguration({
               onPress={() => updatePersonalityConfig({ communicationStyle: style })}
             >
               <Text
-                style={[
+                style= [
                   styles.optionChipText,
                   { color: config.personality.communicationStyle === style ? '#fff' : colors.text },
                 ]}
@@ -1102,12 +1102,12 @@ function PersonalityConfiguration({
 
       {/* Expertise Level */}
       <View style={styles.configCard}>
-        <Text style={[styles.configLabel, { color: colors.text }]}>Expertise Level</Text>
+        <Text style= [styles.configLabel, { color: colors.text }]}>Expertise Level</Text>
         <View style={styles.buttonGroup}>
           {expertiseOptions.map((level) => (
             <TouchableOpacity
               key={level}
-              style={[
+              style= [
                 styles.buttonGroupItem,
                 {
                   backgroundColor: config.personality.expertiseLevel === level ? colors.primary : colors.border + '30',
@@ -1116,7 +1116,7 @@ function PersonalityConfiguration({
               onPress={() => updatePersonalityConfig({ expertiseLevel: level })}
             >
               <Text
-                style={[
+                style= [
                   styles.buttonGroupText,
                   { color: config.personality.expertiseLevel === level ? '#fff' : colors.text },
                 ]}
@@ -1130,16 +1130,16 @@ function PersonalityConfiguration({
 
       {/* Traits */}
       <View style={styles.configCard}>
-        <Text style={[styles.configLabel, { color: colors.text }]}>Personality Traits</Text>
+        <Text style= [styles.configLabel, { color: colors.text }]}>Personality Traits</Text>
         <TextInput
-          style={[styles.textInput, { backgroundColor: colors.border + '30', color: colors.text, borderColor: colors.border }]}
+          style= [styles.textInput, { backgroundColor: colors.border + '30', color: colors.text, borderColor: colors.border }]}
           value={config.personality.traits.join(', ')}
           onChangeText={(text) => updatePersonalityConfig({ traits: text.split(',').map(t => t.trim()).filter(Boolean) })}
           placeholder="Enter traits separated by commas"
           placeholderTextColor={colors.text + '40'}
           multiline
         />
-        <Text style={[styles.helperText, { color: colors.text + '50' }]}>
+        <Text style= [styles.helperText, { color: colors.text + '50' }]}>
           e.g., helpful, professional, creative, empathetic
         </Text>
       </View>
@@ -1177,12 +1177,12 @@ function PersonalityConfiguration({
 
       {/* Custom Prompt */}
       <View style={styles.configCard}>
-        <Text style={[styles.configLabel, { color: colors.text }]}>Custom Personality Prompt</Text>
-        <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+        <Text style= [styles.configLabel, { color: colors.text }]}>Custom Personality Prompt</Text>
+        <Text style= [styles.configDescription, { color: colors.text + '60' }]}>
           Advanced: Override with custom instructions
         </Text>
         <TextInput
-          style={[
+          style= [
             styles.textInput,
             styles.textArea,
             { backgroundColor: colors.border + '30', color: colors.text, borderColor: colors.border },
@@ -1210,14 +1210,14 @@ function TrainingConfiguration({
 }) {
   return (
     <View style={styles.section}>
-      <Text style={[styles.sectionTitle, { color: colors.text }]}>Training Settings</Text>
+      <Text style= [styles.sectionTitle, { color: colors.text }]}>Training Settings</Text>
 
       {/* Enable Training */}
       <View style={styles.configCard}>
         <View style={styles.switchRow}>
           <View style={styles.switchInfo}>
-            <Text style={[styles.configLabel, { color: colors.text }]}>Enable Training</Text>
-            <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+            <Text style= [styles.configLabel, { color: colors.text }]}>Enable Training</Text>
+            <Text style= [styles.configDescription, { color: colors.text + '60' }]}>
               Allow agent to learn from interactions
             </Text>
           </View>
@@ -1234,8 +1234,8 @@ function TrainingConfiguration({
           <View style={styles.configCard}>
             <View style={styles.switchRow}>
               <View style={styles.switchInfo}>
-                <Text style={[styles.configLabel, { color: colors.text }]}>Auto Training</Text>
-                <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+                <Text style= [styles.configLabel, { color: colors.text }]}>Auto Training</Text>
+                <Text style= [styles.configDescription, { color: colors.text + '60' }]}>
                   Automatically train on schedule
                 </Text>
               </View>
@@ -1248,12 +1248,12 @@ function TrainingConfiguration({
 
           {/* Training Schedule */}
           <View style={styles.configCard}>
-            <Text style={[styles.configLabel, { color: colors.text }]}>Training Schedule</Text>
+            <Text style= [styles.configLabel, { color: colors.text }]}>Training Schedule</Text>
             <View style={styles.optionsList}>
               {trainingScheduleOptions.map((option) => (
                 <TouchableOpacity
                   key={option.value}
-                  style={[
+                  style= [
                     styles.optionRow,
                     {
                       backgroundColor: config.training.trainingSchedule === option.value ? colors.primary + '15' : 'transparent',
@@ -1263,8 +1263,8 @@ function TrainingConfiguration({
                   onPress={() => updateTrainingConfig({ trainingSchedule: option.value })}
                 >
                   <View>
-                    <Text style={[styles.optionRowLabel, { color: colors.text }]}>{option.label}</Text>
-                    <Text style={[styles.optionRowDescription, { color: colors.text + '60' }]}>
+                    <Text style= [styles.optionRowLabel, { color: colors.text }]}>{option.label}</Text>
+                    <Text style= [styles.optionRowDescription, { color: colors.text + '60' }]}>
                       {option.description}
                     </Text>
                   </View>
@@ -1280,8 +1280,8 @@ function TrainingConfiguration({
           <View style={styles.configCard}>
             <View style={styles.switchRow}>
               <View style={styles.switchInfo}>
-                <Text style={[styles.configLabel, { color: colors.text }]}>Feedback Loop</Text>
-                <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+                <Text style= [styles.configLabel, { color: colors.text }]}>Feedback Loop</Text>
+                <Text style= [styles.configDescription, { color: colors.text + '60' }]}>
                   Learn from user feedback and corrections
                 </Text>
               </View>
@@ -1294,9 +1294,9 @@ function TrainingConfiguration({
 
           {/* Learning Goals */}
           <View style={styles.configCard}>
-            <Text style={[styles.configLabel, { color: colors.text }]}>Learning Goals</Text>
+            <Text style= [styles.configLabel, { color: colors.text }]}>Learning Goals</Text>
             <TextInput
-              style={[styles.textInput, { backgroundColor: colors.border + '30', color: colors.text, borderColor: colors.border }]}
+              style= [styles.textInput, { backgroundColor: colors.border + '30', color: colors.text, borderColor: colors.border }]}
               value={config.training.learningGoals?.join('\n') || ''}
               onChangeText={(text) => updateTrainingConfig({ learningGoals: text.split('\n').filter(Boolean) })}
               placeholder="Enter learning goals (one per line)"
@@ -1332,14 +1332,14 @@ function DataUploadConfiguration({
 
   return (
     <View style={styles.section}>
-      <Text style={[styles.sectionTitle, { color: colors.text }]}>Data Upload Settings</Text>
+      <Text style= [styles.sectionTitle, { color: colors.text }]}>Data Upload Settings</Text>
 
       {/* Enable Data Upload */}
       <View style={styles.configCard}>
         <View style={styles.switchRow}>
           <View style={styles.switchInfo}>
-            <Text style={[styles.configLabel, { color: colors.text }]}>Enable Data Upload</Text>
-            <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+            <Text style= [styles.configLabel, { color: colors.text }]}>Enable Data Upload</Text>
+            <Text style= [styles.configDescription, { color: colors.text + '60' }]}>
               Allow uploading documents for training
             </Text>
           </View>
@@ -1354,12 +1354,12 @@ function DataUploadConfiguration({
         <>
           {/* Allowed Formats */}
           <View style={styles.configCard}>
-            <Text style={[styles.configLabel, { color: colors.text }]}>Allowed File Formats</Text>
+            <Text style= [styles.configLabel, { color: colors.text }]}>Allowed File Formats</Text>
             <View style={styles.formatsGrid}>
               {fileFormats.map((format) => (
                 <TouchableOpacity
                   key={format}
-                  style={[
+                  style= [
                     styles.formatChip,
                     {
                       backgroundColor: config.dataUpload.allowedFormats.includes(format) ? colors.primary : colors.border + '30',
@@ -1370,7 +1370,7 @@ function DataUploadConfiguration({
                 >
                   <FileText size={14} color={config.dataUpload.allowedFormats.includes(format) ? '#fff' : colors.text} />
                   <Text
-                    style={[
+                    style= [
                       styles.formatChipText,
                       { color: config.dataUpload.allowedFormats.includes(format) ? '#fff' : colors.text },
                     ]}
@@ -1410,8 +1410,8 @@ function DataUploadConfiguration({
           <View style={styles.configCard}>
             <View style={styles.switchRow}>
               <View style={styles.switchInfo}>
-                <Text style={[styles.configLabel, { color: colors.text }]}>Auto Processing</Text>
-                <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+                <Text style= [styles.configLabel, { color: colors.text }]}>Auto Processing</Text>
+                <Text style= [styles.configDescription, { color: colors.text + '60' }]}>
                   Automatically process uploaded documents
                 </Text>
               </View>
@@ -1425,12 +1425,12 @@ function DataUploadConfiguration({
           {/* Processing Schedule */}
           {config.dataUpload.autoProcessing && (
             <View style={styles.configCard}>
-              <Text style={[styles.configLabel, { color: colors.text }]}>Processing Schedule</Text>
+              <Text style= [styles.configLabel, { color: colors.text }]}>Processing Schedule</Text>
               <View style={styles.optionsList}>
                 {processingScheduleOptions.map((option) => (
                   <TouchableOpacity
                     key={option.value}
-                    style={[
+                    style= [
                       styles.optionRow,
                       {
                         backgroundColor: config.dataUpload.processingSchedule === option.value ? colors.primary + '15' : 'transparent',
@@ -1440,8 +1440,8 @@ function DataUploadConfiguration({
                     onPress={() => updateDataUploadConfig({ processingSchedule: option.value })}
                   >
                     <View>
-                      <Text style={[styles.optionRowLabel, { color: colors.text }]}>{option.label}</Text>
-                      <Text style={[styles.optionRowDescription, { color: colors.text + '60' }]}>
+                      <Text style= [styles.optionRowLabel, { color: colors.text }]}>{option.label}</Text>
+                      <Text style= [styles.optionRowDescription, { color: colors.text + '60' }]}>
                         {option.description}
                       </Text>
                     </View>
@@ -1482,14 +1482,14 @@ function AdvancedConfiguration({
 }) {
   return (
     <View style={styles.section}>
-      <Text style={[styles.sectionTitle, { color: colors.text }]}>Advanced Settings</Text>
+      <Text style= [styles.sectionTitle, { color: colors.text }]}>Advanced Settings</Text>
 
       {/* Memory */}
       <View style={styles.configCard}>
         <View style={styles.switchRow}>
           <View style={styles.switchInfo}>
-            <Text style={[styles.configLabel, { color: colors.text }]}>Memory Enabled</Text>
-            <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+            <Text style= [styles.configLabel, { color: colors.text }]}>Memory Enabled</Text>
+            <Text style= [styles.configDescription, { color: colors.text + '60' }]}>
               Remember past conversations
             </Text>
           </View>
@@ -1502,12 +1502,12 @@ function AdvancedConfiguration({
 
       {config.memoryEnabled && (
         <View style={styles.configCard}>
-          <Text style={[styles.configLabel, { color: colors.text }]}>Memory Depth</Text>
+          <Text style= [styles.configLabel, { color: colors.text }]}>Memory Depth</Text>
           <View style={styles.buttonGroup}>
             {(['short', 'medium', 'long', 'infinite'] as const).map((depth) => (
               <TouchableOpacity
                 key={depth}
-                style={[
+                style= [
                   styles.buttonGroupItem,
                   {
                     backgroundColor: config.memoryDepth === depth ? colors.primary : colors.border + '30',
@@ -1516,7 +1516,7 @@ function AdvancedConfiguration({
                 onPress={() => updateConfig({ memoryDepth: depth })}
               >
                 <Text
-                  style={[
+                  style= [
                     styles.buttonGroupText,
                     { color: config.memoryDepth === depth ? '#fff' : colors.text },
                   ]}
@@ -1533,8 +1533,8 @@ function AdvancedConfiguration({
       <View style={styles.configCard}>
         <View style={styles.switchRow}>
           <View style={styles.switchInfo}>
-            <Text style={[styles.configLabel, { color: colors.text }]}>Context Awareness</Text>
-            <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+            <Text style= [styles.configLabel, { color: colors.text }]}>Context Awareness</Text>
+            <Text style= [styles.configDescription, { color: colors.text + '60' }]}>
               Understand conversation context
             </Text>
           </View>
@@ -1549,8 +1549,8 @@ function AdvancedConfiguration({
       <View style={styles.configCard}>
         <View style={styles.switchRow}>
           <View style={styles.switchInfo}>
-            <Text style={[styles.configLabel, { color: colors.text }]}>Emotion Recognition</Text>
-            <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+            <Text style= [styles.configLabel, { color: colors.text }]}>Emotion Recognition</Text>
+            <Text style= [styles.configDescription, { color: colors.text + '60' }]}>
               Detect and respond to emotions
             </Text>
           </View>
@@ -1565,8 +1565,8 @@ function AdvancedConfiguration({
       <View style={styles.configCard}>
         <View style={styles.switchRow}>
           <View style={styles.switchInfo}>
-            <Text style={[styles.configLabel, { color: colors.text }]}>Multi-modal Input</Text>
-            <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+            <Text style= [styles.configLabel, { color: colors.text }]}>Multi-modal Input</Text>
+            <Text style= [styles.configDescription, { color: colors.text + '60' }]}>
               Support text, voice, image, video
             </Text>
           </View>
@@ -1603,12 +1603,12 @@ function AdvancedConfiguration({
 
       {/* Response Length */}
       <View style={styles.configCard}>
-        <Text style={[styles.configLabel, { color: colors.text }]}>Response Length</Text>
+        <Text style= [styles.configLabel, { color: colors.text }]}>Response Length</Text>
         <View style={styles.optionsList}>
           {responseLengthOptions.map((option) => (
             <TouchableOpacity
               key={option.value}
-              style={[
+              style= [
                 styles.optionRow,
                 {
                   backgroundColor: config.responseLength === option.value ? colors.primary + '15' : 'transparent',
@@ -1618,8 +1618,8 @@ function AdvancedConfiguration({
               onPress={() => updateConfig({ responseLength: option.value })}
             >
               <View>
-                <Text style={[styles.optionRowLabel, { color: colors.text }]}>{option.label}</Text>
-                <Text style={[styles.optionRowDescription, { color: colors.text + '60' }]}>
+                <Text style= [styles.optionRowLabel, { color: colors.text }]}>{option.label}</Text>
+                <Text style= [styles.optionRowDescription, { color: colors.text + '60' }]}>
                   {option.description}
                 </Text>
               </View>
@@ -1635,7 +1635,7 @@ function AdvancedConfiguration({
       <View style={styles.configCard}>
         <View style={styles.switchRow}>
           <View style={styles.switchInfo}>
-            <Text style={[styles.configLabel, { color: colors.text }]}>Use Emojis</Text>
+            <Text style= [styles.configLabel, { color: colors.text }]}>Use Emojis</Text>
           </View>
           <Switch
             value={config.useEmojis}
@@ -1646,9 +1646,9 @@ function AdvancedConfiguration({
 
       {/* Time Zone */}
       <View style={styles.configCard}>
-        <Text style={[styles.configLabel, { color: colors.text }]}>Time Zone</Text>
+        <Text style= [styles.configLabel, { color: colors.text }]}>Time Zone</Text>
         <TextInput
-          style={[styles.textInput, { backgroundColor: colors.border + '30', color: colors.text, borderColor: colors.border }]}
+          style= [styles.textInput, { backgroundColor: colors.border + '30', color: colors.text, borderColor: colors.border }]}
           value={config.timeZone}
           onChangeText={(text) => updateConfig({ timeZone: text })}
           placeholder="e.g., UTC, America/New_York, Europe/London"
@@ -1670,16 +1670,16 @@ function SecurityConfiguration({
 }) {
   return (
     <View style={styles.section}>
-      <Text style={[styles.sectionTitle, { color: colors.text }]}>Security & Privacy</Text>
+      <Text style= [styles.sectionTitle, { color: colors.text }]}>Security & Privacy</Text>
 
       {/* Data Privacy Level */}
       <View style={styles.configCard}>
-        <Text style={[styles.configLabel, { color: colors.text }]}>Data Privacy Level</Text>
+        <Text style= [styles.configLabel, { color: colors.text }]}>Data Privacy Level</Text>
         <View style={styles.optionsList}>
           {privacyLevels.map((option) => (
             <TouchableOpacity
               key={option.value}
-              style={[
+              style= [
                 styles.optionRow,
                 {
                   backgroundColor: config.dataPrivacyLevel === option.value ? colors.primary + '15' : 'transparent',
@@ -1691,8 +1691,8 @@ function SecurityConfiguration({
               <View style={styles.optionRowIcon}>
                 <Shield size={20} color={config.dataPrivacyLevel === option.value ? colors.primary : colors.text} />
                 <View>
-                  <Text style={[styles.optionRowLabel, { color: colors.text }]}>{option.label}</Text>
-                  <Text style={[styles.optionRowDescription, { color: colors.text + '60' }]}>
+                  <Text style= [styles.optionRowLabel, { color: colors.text }]}>{option.label}</Text>
+                  <Text style= [styles.optionRowDescription, { color: colors.text + '60' }]}>
                     {option.description}
                   </Text>
                 </View>
@@ -1707,15 +1707,15 @@ function SecurityConfiguration({
 
       {/* PII Handling */}
       <View style={styles.configCard}>
-        <Text style={[styles.configLabel, { color: colors.text }]}>PII Handling</Text>
-        <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+        <Text style= [styles.configLabel, { color: colors.text }]}>PII Handling</Text>
+        <Text style= [styles.configDescription, { color: colors.text + '60' }]}>
           How to handle personally identifiable information
         </Text>
         <View style={styles.optionsList}>
           {piiHandlingOptions.map((option) => (
             <TouchableOpacity
               key={option.value}
-              style={[
+              style= [
                 styles.optionRow,
                 {
                   backgroundColor: config.piiHandling === option.value ? colors.primary + '15' : 'transparent',
@@ -1727,8 +1727,8 @@ function SecurityConfiguration({
               <View style={styles.optionRowIcon}>
                 <Lock size={20} color={config.piiHandling === option.value ? colors.primary : colors.text} />
                 <View>
-                  <Text style={[styles.optionRowLabel, { color: colors.text }]}>{option.label}</Text>
-                  <Text style={[styles.optionRowDescription, { color: colors.text + '60' }]}>
+                  <Text style= [styles.optionRowLabel, { color: colors.text }]}>{option.label}</Text>
+                  <Text style= [styles.optionRowDescription, { color: colors.text + '60' }]}>
                     {option.description}
                   </Text>
                 </View>
@@ -1745,8 +1745,8 @@ function SecurityConfiguration({
       <View style={styles.configCard}>
         <View style={styles.switchRow}>
           <View style={styles.switchInfo}>
-            <Text style={[styles.configLabel, { color: colors.text }]}>Audit Logging</Text>
-            <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+            <Text style= [styles.configLabel, { color: colors.text }]}>Audit Logging</Text>
+            <Text style= [styles.configDescription, { color: colors.text + '60' }]}>
               Log all agent activities for compliance
             </Text>
           </View>
@@ -1761,8 +1761,8 @@ function SecurityConfiguration({
       <View style={styles.configCard}>
         <View style={styles.switchRow}>
           <View style={styles.switchInfo}>
-            <Text style={[styles.configLabel, { color: colors.text }]}>API Access</Text>
-            <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+            <Text style= [styles.configLabel, { color: colors.text }]}>API Access</Text>
+            <Text style= [styles.configDescription, { color: colors.text + '60' }]}>
               Allow external API calls
             </Text>
           </View>
@@ -1776,12 +1776,12 @@ function SecurityConfiguration({
       {/* Webhook URL */}
       {config.apiAccess && (
         <View style={styles.configCard}>
-          <Text style={[styles.configLabel, { color: colors.text }]}>Webhook URL</Text>
-          <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+          <Text style= [styles.configLabel, { color: colors.text }]}>Webhook URL</Text>
+          <Text style= [styles.configDescription, { color: colors.text + '60' }]}>
             URL for real-time notifications
           </Text>
           <TextInput
-            style={[styles.textInput, { backgroundColor: colors.border + '30', color: colors.text, borderColor: colors.border }]}
+            style= [styles.textInput, { backgroundColor: colors.border + '30', color: colors.text, borderColor: colors.border }]}
             value={config.webhookUrl || ''}
             onChangeText={(text) => updateConfig({ webhookUrl: text })}
             placeholder="https://your-webhook-url.com"
@@ -1823,19 +1823,19 @@ function ConfigSlider({
   return (
     <View style={styles.configCard}>
       <View style={styles.sliderHeader}>
-        <Text style={[styles.configLabel, { color: colors.text }]}>{label}</Text>
-        <Text style={[styles.sliderValue, { color: colors.primary }]}>
+        <Text style= [styles.configLabel, { color: colors.text }]}>{label}</Text>
+        <Text style= [styles.sliderValue, { color: colors.primary }]}>
           {formatValue ? formatValue(localValue) : localValue.toFixed(1)}
         </Text>
       </View>
       {description && (
-        <Text style={[styles.configDescription, { color: colors.text + '60' }]}>{description}</Text>
+        <Text style= [styles.configDescription, { color: colors.text + '60' }]}>{description}</Text>
       )}
       <View style={styles.sliderContainer}>
-        <Text style={[styles.sliderLabel, { color: colors.text + '60' }]}>{formatValue ? formatValue(min) : min}</Text>
+        <Text style= [styles.sliderLabel, { color: colors.text + '60' }]}>{formatValue ? formatValue(min) : min}</Text>
         <View style={styles.sliderTrack}>
           <View
-            style={[
+            style= [
               styles.sliderFill,
               {
                 backgroundColor: colors.primary,
@@ -1857,7 +1857,7 @@ function ConfigSlider({
             ))}
           </View>
         </View>
-        <Text style={[styles.sliderLabel, { color: colors.text + '60' }]}>{formatValue ? formatValue(max) : max}</Text>
+        <Text style= [styles.sliderLabel, { color: colors.text + '60' }]}>{formatValue ? formatValue(max) : max}</Text>
       </View>
     </View>
   );
@@ -2286,3 +2286,4 @@ const styles = StyleSheet.create({
     height: 40,
   },
 });
+

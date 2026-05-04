@@ -253,7 +253,7 @@ export default function UnifiedInboxScreen() {
         <View style={styles.filters}>
           {(['all', 'unread', 'starred', 'high'] as const).map((Filter) => (
             <TouchableOpacity
-              key={Filter}
+              key={Funnel}
               style={[
                 styles.filterChip,
                 selectedFilter === Filter && { backgroundColor: theme.colors.primary },

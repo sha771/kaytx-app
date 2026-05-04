@@ -1,4 +1,4 @@
-ï»¿
+
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Zap, Activity, ChartBar, TrendingUp, TrendingDown, Clock } from 'lucide-react-native';
@@ -45,7 +45,7 @@ export default function AlgorithmicTradingScreen() {
           <Text style={styles.metricLabel}>Win Rate</Text>
         </LinearGradient>
         <LinearGradient colors={['#00C853', '#009624']} style={styles.metricCard}>
-          <ChartBarBig size={20} color="#fff" />
+          <ChartBar size={20} color="#fff" />
           <Text style={styles.metricValue}>$18K</Text>
           <Text style={styles.metricLabel}>Monthly Alpha</Text>
         </LinearGradient>
@@ -64,8 +64,8 @@ export default function AlgorithmicTradingScreen() {
               </Text>
             </View>
             <View style={styles.tradeInfo}>
-              <Text style={[styles.tradeAsset, { color: theme.colors.text }]}>{trade.asset} Ã— {trade.qty}</Text>
-              <Text style={[styles.tradeMeta, { color: theme.colors.secondaryText }]}>{trade.price} Â· {trade.time}</Text>
+              <Text style={[styles.tradeAsset, { color: theme.colors.text }]}>{trade.asset} × {trade.qty}</Text>
+              <Text style={[styles.tradeMeta, { color: theme.colors.secondaryText }]}>{trade.price} · {trade.time}</Text>
             </View>
             <Text style={[styles.tradePnl, { color: trade.pnl.startsWith('+') ? '#00C853' : '#FF3B30' }]}>
               {trade.pnl}

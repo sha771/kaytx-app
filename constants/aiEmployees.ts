@@ -119,7 +119,6 @@
   PanelsRightBottom,
   PanelRight,
   PanelBottom,
-  LayoutDashboard,
   LayoutGrid,
   LayoutList,
   LayoutPanelLeft,
@@ -2726,4 +2725,3 @@ export const aiInfrastructureStats = {
   totalMonthlySavings: '$250,000+',
   totalTasksAutomatedDaily: aiEmployees.reduce((sum, e) => sum + e.roiMetrics.tasksAutomatedDaily, 0),
 };
-      

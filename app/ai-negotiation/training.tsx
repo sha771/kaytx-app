@@ -176,7 +176,7 @@ export default function AITrainingScreen() {
               </Text>
             </View>
             <View style={styles.statItem}>
-              <ChartBarBig size={14} color={theme.colors.secondaryText} />
+              <ChartBar size={14} color={theme.colors.secondaryText} />
               <Text style={[styles.statText, { color: theme.colors.secondaryText }]}>
                 {strategy.timesUsed} times used
               </Text>

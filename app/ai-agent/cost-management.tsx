@@ -1,4 +1,4 @@
-﻿import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -248,7 +248,7 @@ export default function CostManagementScreen() {
             <View style={styles.modalHeader}>
               <Text style={[styles.modalTitle, { color: colors.text }]}>Edit Budget</Text>
               <TouchableOpacity onPress={() => setShowBudgetEditor(false)}>
-                <Text style={{ fontSize: 24, color: colors.text }}>×</Text>
+                <Text style={{ fontSize: 24, color: colors.text }}>�</Text>
               </TouchableOpacity>
             </View>
             <ScrollView style={styles.modalContent}>

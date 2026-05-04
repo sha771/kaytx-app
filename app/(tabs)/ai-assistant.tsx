@@ -444,7 +444,7 @@ export default function AIAssistantScreen() {
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
-          <ChartBarBig size={20} color={theme.colors.primary} />
+          <ChartBar size={20} color={theme.colors.primary} />
           <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
             Productivity Insights
           </Text>
@@ -1528,3 +1528,4 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 });
+

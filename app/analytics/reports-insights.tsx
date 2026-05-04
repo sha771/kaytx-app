@@ -226,7 +226,7 @@ export default function ReportsInsightsScreen() {
               
               <View style={styles.reportActions}>
                 <TouchableOpacity style={styles.actionButton}>
-                  <ChartBarBig size={16} color="#3B82F6" />
+                  <ChartBar size={16} color="#3B82F6" />
                   <Text style={styles.actionText}>View</Text>
                 </TouchableOpacity>
                 
@@ -249,7 +249,7 @@ export default function ReportsInsightsScreen() {
           
           <View style={styles.actionGrid}>
             <TouchableOpacity style={styles.actionCard}>
-              <ChartBarBig size={24} color="#3B82F6" />
+              <ChartBar size={24} color="#3B82F6" />
               <Text style={styles.actionCardText}>Sales Dashboard</Text>
             </TouchableOpacity>
             

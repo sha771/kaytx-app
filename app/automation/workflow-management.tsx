@@ -132,7 +132,7 @@ export default function WorkflowManagementScreen() {
               <Text style={styles.actionText}>Browse Templates</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.actionButton}>
-              <ChartBarBig size={24} color="#7C3AED" />
+              <ChartBar size={24} color="#7C3AED" />
               <Text style={styles.actionText}>View Analytics</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.actionButton}>

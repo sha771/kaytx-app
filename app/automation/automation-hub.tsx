@@ -320,7 +320,7 @@ export default function AutomationHubScreen() {
         <View style={styles.filters}>
           {(['all', 'active', 'paused', 'draft'] as const).map((Filter) => (
             <TouchableOpacity
-              key={Filter}
+              key={Funnel}
               style={[
                 styles.filterChip,
                 filterStatus === Filter && { backgroundColor: theme.colors.primary },

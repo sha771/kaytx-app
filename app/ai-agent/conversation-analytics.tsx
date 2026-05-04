@@ -149,7 +149,7 @@ export default function ConversationAnalyticsScreen() {
           style={[styles.tab, activeTab === 'overview' && { backgroundColor: colors.tint }]}
           onPress={() => setActiveTab('overview')}
         >
-          <ChartBarBig size={16} color={activeTab === 'overview' ? 'white' : colors.icon} />
+          <ChartBar size={16} color={activeTab === 'overview' ? 'white' : colors.icon} />
           <Text style={[styles.tabText, { color: activeTab === 'overview' ? 'white' : colors.text }]}>
             Overview
           </Text>

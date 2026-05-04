@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { Stack, router } from 'expo-router';
 import { useTheme } from '@/providers/ThemeProvider';

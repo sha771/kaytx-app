@@ -90,7 +90,7 @@ export default function CounselingNotificationsScreen() {
 
       {/* Filter Tabs */}
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filterScroll}>
-        {filters.map(filter => (
+        {filters.map(Filter => (
           <TouchableOpacity
             key={Filter.value}
             style={[

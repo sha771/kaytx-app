@@ -1,4 +1,4 @@
-﻿ 
+ 
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -22,7 +22,7 @@ export default function PerformanceReports() {
     { id: '1', title: 'Weekly Summary', icon: Calendar, color: '#007AFF', desc: 'Overview of last 7 days' },
     { id: '2', title: 'Engagement Report', icon: TrendingUp, color: '#34C759', desc: 'Detailed engagement metrics' },
     { id: '3', title: 'Audience Insights', icon: Users, color: '#FF9500', desc: 'Demographics & growth' },
-    { id: '4', title: 'Content Performance', icon: ChartBar2, color: '#AF52DE', desc: 'Post-level analytics' },
+    { id: '4', title: 'Content Performance', icon: ChartBar, color: '#AF52DE', desc: 'Post-level analytics' },
   ];
 
   const recentReports: Report[] = [
@@ -84,7 +84,7 @@ export default function PerformanceReports() {
               </View>
               <View style={styles.reportInfo}>
                 <Text style={[styles.reportTitle, { color: theme.colors.text }]}>{report.title}</Text>
-                <Text style={[styles.reportMeta, { color: theme.colors.secondaryText }]}>{report.type} • {report.date}</Text>
+                <Text style={[styles.reportMeta, { color: theme.colors.secondaryText }]}>{report.type} � {report.date}</Text>
               </View>
               <TouchableOpacity style={[styles.downloadBtn, { backgroundColor: '#34C75915' }]}>
                 <Download size={18} color="#34C759" />

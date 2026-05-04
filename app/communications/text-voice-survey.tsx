@@ -69,7 +69,7 @@ export default function TextVoiceSurveyScreen() {
           <Text style={styles.statLabel}>Responses</Text>
         </View>
         <View style={styles.stat}>
-          <ChartBarBig size={16} color="#666" />
+          <ChartBar size={16} color="#666" />
           <Text style={styles.statValue}>{survey.completion}%</Text>
           <Text style={styles.statLabel}>Completion</Text>
         </View>
@@ -153,7 +153,7 @@ export default function TextVoiceSurveyScreen() {
               <Text style={styles.quickActionText}>Voice Survey</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.quickAction}>
-              <ChartBarBig size={24} color="#FF9500" />
+              <ChartBar size={24} color="#FF9500" />
               <Text style={styles.quickActionText}>Analytics</Text>
             </TouchableOpacity>
           </View>

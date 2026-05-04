@@ -130,7 +130,7 @@ export default function Integrations() {
             <Text style={styles.statLabel}>Active</Text>
           </View>
           <View style={styles.statItem}>
-            <ChartBarBig size={20} color="#f39c12" />
+            <ChartBar size={20} color="#f39c12" />
             <Text style={styles.statValue}>{integrations.length}</Text>
             <Text style={styles.statLabel}>Total</Text>
           </View>

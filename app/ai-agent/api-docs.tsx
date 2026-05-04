@@ -23,7 +23,6 @@ import {
   Play,
   EllipsisVertical,
   FileCode,
-  FileCode,
   Search,
   Star,
   Zap,

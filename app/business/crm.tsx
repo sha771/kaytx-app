@@ -386,7 +386,7 @@ export default function CRMScreen() {
         <View style={styles.filters}>
           {(['all', 'lead', 'prospect', 'customer'] as const).map((Filter) => (
             <TouchableOpacity
-              key={Filter}
+              key={Funnel}
               style={[
                 styles.filterChip,
                 filterStatus === Filter && { backgroundColor: theme.colors.primary },

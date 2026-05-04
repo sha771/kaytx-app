@@ -277,17 +277,17 @@ export default function AgentActivityScreen() {
     const TrendIcon = metric.trend === 'up' ? ArrowUpRight : metric.trend === 'down' ? ArrowDownRight : Circle;
     
     return (
-      <View key={index} style={[styles.systemMetricCard, { backgroundColor: theme.colors.cardBackground }]}>
+      <View key={index} style= [styles.systemMetricCard, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.systemMetricHeader}>
           <metric.icon size={14} color={metric.color} />
-          <Text style={[styles.systemMetricLabel, { color: theme.colors.secondaryText }]}>{metric.label}</Text>
+          <Text style= [styles.systemMetricLabel, { color: theme.colors.secondaryText }]}>{metric.label}</Text>
           <TrendIcon size={10} color={metric.trend === 'up' ? '#34C759' : metric.trend === 'down' ? '#FF3B30' : '#8E8E93'} />
         </View>
-        <Text style={[styles.systemMetricValue, { color: theme.colors.text }]}>
+        <Text style= [styles.systemMetricValue, { color: theme.colors.text }]}>
           {metric.value.toLocaleString()}{metric.unit}
         </Text>
         <View style={styles.systemMetricBarBg}>
-          <View style={[styles.systemMetricBarFill, { width: `${percentage}%`, backgroundColor: metric.color }]} />
+          <View style= [styles.systemMetricBarFill, { width: `${percentage}%`, backgroundColor: metric.color }]} />
         </View>
       </View>
     );
@@ -300,49 +300,49 @@ export default function AgentActivityScreen() {
     return (
       <Animated.View 
         key={agent.id}
-        style={[
+        style= [
           styles.agentCard, 
           { backgroundColor: theme.colors.cardBackground, opacity: fadeAnim, transform: [{ translateY: slideAnim }] }
         ]}
       >
         <View style={styles.agentHeader}>
-          <View style={[styles.agentIconBg, { backgroundColor: `${agent.color}20` }]}>
+          <View style= [styles.agentIconBg, { backgroundColor: `${agent.color}20` }]}>
             <agent.icon size={20} color={agent.color} />
           </View>
           <View style={styles.agentInfo}>
             <View style={styles.agentNameRow}>
-              <Text style={[styles.agentName, { color: theme.colors.text }]} numberOfLines={1}>
+              <Text style= [styles.agentName, { color: theme.colors.text }]} numberOfLines={1}>
                 {agent.name}
               </Text>
               {agent.type === 'sub' && (
-                <View style={[styles.typeBadge, { backgroundColor: 'rgba(0,0,0,0.05)' }]}>
-                  <Text style={[styles.typeText, { color: theme.colors.secondaryText }]}>Sub</Text>
+                <View style= [styles.typeBadge, { backgroundColor: 'rgba(0,0,0,0.05)' }]}>
+                  <Text style= [styles.typeText, { color: theme.colors.secondaryText }]}>Sub</Text>
                 </View>
               )}
             </View>
             {agent.parentAgent && (
-              <Text style={[styles.parentText, { color: theme.colors.secondaryText }]}>
+              <Text style= [styles.parentText, { color: theme.colors.secondaryText }]}>
                 ↳ {agent.parentAgent}
               </Text>
             )}
           </View>
           <View style={styles.statusContainer}>
             <Animated.View 
-              style={[
+              style= [
                 styles.statusDot, 
                 { backgroundColor: statusColor },
                 (agent.status === 'busy' || agent.status === 'online') && { transform: [{ scale: pulseAnim }] }
               ]} 
             />
             <StatusIcon size={14} color={statusColor} />
-            <Text style={[styles.statusText, { color: statusColor }]}>{agent.status}</Text>
+            <Text style= [styles.statusText, { color: statusColor }]}>{agent.status}</Text>
           </View>
         </View>
 
         {agent.currentTask && (
-          <View style={[styles.taskBar, { backgroundColor: `${agent.color}10` }]}>
+          <View style= [styles.taskBar, { backgroundColor: `${agent.color}10` }]}>
             <Zap size={12} color={agent.color} />
-            <Text style={[styles.taskText, { color: agent.color }]} numberOfLines={1}>
+            <Text style= [styles.taskText, { color: agent.color }]} numberOfLines={1}>
               {agent.currentTask}
             </Text>
           </View>
@@ -350,29 +350,29 @@ export default function AgentActivityScreen() {
 
         <View style={styles.metricsRow}>
           <View style={styles.metricItem}>
-            <Text style={[styles.metricValue, { color: theme.colors.text }]}>{agent.tasksInQueue}</Text>
-            <Text style={[styles.metricLabel, { color: theme.colors.secondaryText }]}>Queue</Text>
+            <Text style= [styles.metricValue, { color: theme.colors.text }]}>{agent.tasksInQueue}</Text>
+            <Text style= [styles.metricLabel, { color: theme.colors.secondaryText }]}>Queue</Text>
           </View>
           <View style={styles.metricItem}>
-            <Text style={[styles.metricValue, { color: theme.colors.text }]}>{agent.responseTime}</Text>
-            <Text style={[styles.metricLabel, { color: theme.colors.secondaryText }]}>Response</Text>
+            <Text style= [styles.metricValue, { color: theme.colors.text }]}>{agent.responseTime}</Text>
+            <Text style= [styles.metricLabel, { color: theme.colors.secondaryText }]}>Response</Text>
           </View>
           <View style={styles.metricItem}>
-            <Text style={[styles.metricValue, { color: agent.successRate > 90 ? '#34C759' : agent.successRate > 80 ? '#FF9500' : '#FF3B30' }]}>{agent.successRate}%</Text>
-            <Text style={[styles.metricLabel, { color: theme.colors.secondaryText }]}>Success</Text>
+            <Text style= [styles.metricValue, { color: agent.successRate > 90 ? '#34C759' : agent.successRate > 80 ? '#FF9500' : '#FF3B30' }]}>{agent.successRate}%</Text>
+            <Text style= [styles.metricLabel, { color: theme.colors.secondaryText }]}>Success</Text>
           </View>
           <View style={styles.metricItem}>
-            <Text style={[styles.metricValue, { color: agent.healthScore > 95 ? '#34C759' : agent.healthScore > 85 ? '#FF9500' : '#FF3B30' }]}>{agent.healthScore}</Text>
-            <Text style={[styles.metricLabel, { color: theme.colors.secondaryText }]}>Health</Text>
+            <Text style= [styles.metricValue, { color: agent.healthScore > 95 ? '#34C759' : agent.healthScore > 85 ? '#FF9500' : '#FF3B30' }]}>{agent.healthScore}</Text>
+            <Text style= [styles.metricLabel, { color: theme.colors.secondaryText }]}>Health</Text>
           </View>
         </View>
 
         <View style={styles.resourceBars}>
           <View style={styles.resourceItem}>
-            <Text style={[styles.resourceLabel, { color: theme.colors.secondaryText }]}>CPU</Text>
+            <Text style= [styles.resourceLabel, { color: theme.colors.secondaryText }]}>CPU</Text>
             <View style={styles.resourceBarBg}>
               <View 
-                style={[
+                style= [
                   styles.resourceBarFill, 
                   { 
                     width: `${agent.cpu}%`, 
@@ -381,13 +381,13 @@ export default function AgentActivityScreen() {
                 ]} 
               />
             </View>
-            <Text style={[styles.resourceValue, { color: theme.colors.secondaryText }]}>{agent.cpu}%</Text>
+            <Text style= [styles.resourceValue, { color: theme.colors.secondaryText }]}>{agent.cpu}%</Text>
           </View>
           <View style={styles.resourceItem}>
-            <Text style={[styles.resourceLabel, { color: theme.colors.secondaryText }]}>MEM</Text>
+            <Text style= [styles.resourceLabel, { color: theme.colors.secondaryText }]}>MEM</Text>
             <View style={styles.resourceBarBg}>
               <View 
-                style={[
+                style= [
                   styles.resourceBarFill, 
                   { 
                     width: `${agent.memory}%`, 
@@ -396,7 +396,7 @@ export default function AgentActivityScreen() {
                 ]} 
               />
             </View>
-            <Text style={[styles.resourceValue, { color: theme.colors.secondaryText }]}>{agent.memory}%</Text>
+            <Text style= [styles.resourceValue, { color: theme.colors.secondaryText }]}>{agent.memory}%</Text>
           </View>
         </View>
 
@@ -404,22 +404,22 @@ export default function AgentActivityScreen() {
           <View style={styles.footerStats}>
             <View style={styles.footerStatItem}>
               <Database size={10} color={theme.colors.secondaryText} />
-              <Text style={[styles.footerStatText, { color: theme.colors.secondaryText }]}>{(agent.tokensUsed / 1000).toFixed(0)}K tokens</Text>
+              <Text style= [styles.footerStatText, { color: theme.colors.secondaryText }]}>{(agent.tokensUsed / 1000).toFixed(0)}K tokens</Text>
             </View>
             <View style={styles.footerStatItem}>
               <Zap size={10} color={theme.colors.secondaryText} />
-              <Text style={[styles.footerStatText, { color: theme.colors.secondaryText }]}>{agent.requestsPerMin}/min</Text>
+              <Text style= [styles.footerStatText, { color: theme.colors.secondaryText }]}>{agent.requestsPerMin}/min</Text>
             </View>
             <View style={styles.footerStatItem}>
               <TriangleAlert size={10} color={agent.errorRate > 2 ? '#FF3B30' : theme.colors.secondaryText} />
-              <Text style={[styles.footerStatText, { color: agent.errorRate > 2 ? '#FF3B30' : theme.colors.secondaryText }]}>{agent.errorRate}% err</Text>
+              <Text style= [styles.footerStatText, { color: agent.errorRate > 2 ? '#FF3B30' : theme.colors.secondaryText }]}>{agent.errorRate}% err</Text>
             </View>
           </View>
           <View style={styles.actionButtons}>
-            <TouchableOpacity style={[styles.actionBtn, { backgroundColor: 'rgba(0,0,0,0.05)' }]}>
+            <TouchableOpacity style= [styles.actionBtn, { backgroundColor: 'rgba(0,0,0,0.05)' }]}>
               <RefreshCw size={14} color={theme.colors.secondaryText} />
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.actionBtn, { backgroundColor: agent.status === 'online' || agent.status === 'busy' ? '#FF3B3020' : '#34C75920' }]}>
+            <TouchableOpacity style= [styles.actionBtn, { backgroundColor: agent.status === 'online' || agent.status === 'busy' ? '#FF3B3020' : '#34C75920' }]}>
               {agent.status === 'online' || agent.status === 'busy' ? (
                 <Pause size={14} color="#FF3B30" />
               ) : (
@@ -437,26 +437,26 @@ export default function AgentActivityScreen() {
     const statusColor = getActivityStatusColor(activity.status);
     
     return (
-      <View key={activity.id} style={[styles.liveItem, { backgroundColor: theme.colors.cardBackground }]}>
-        <View style={[styles.liveIconBg, { backgroundColor: `${activity.color}20` }]}>
+      <View key={activity.id} style= [styles.liveItem, { backgroundColor: theme.colors.cardBackground }]}>
+        <View style= [styles.liveIconBg, { backgroundColor: `${activity.color}20` }]}>
           <activity.icon size={14} color={activity.color} />
         </View>
         <View style={styles.liveInfo}>
-          <Text style={[styles.liveAgent, { color: theme.colors.text }]}>{activity.agentName}</Text>
-          <Text style={[styles.liveAction, { color: theme.colors.secondaryText }]} numberOfLines={1}>
+          <Text style= [styles.liveAgent, { color: theme.colors.text }]}>{activity.agentName}</Text>
+          <Text style= [styles.liveAction, { color: theme.colors.secondaryText }]} numberOfLines={1}>
             {activity.action}
           </Text>
           <View style={styles.liveMetaRow}>
             {activity.duration && (
               <View style={styles.liveMeta}>
                 <Clock size={10} color={theme.colors.secondaryText} />
-                <Text style={[styles.liveMetaText, { color: theme.colors.secondaryText }]}>{activity.duration}</Text>
+                <Text style= [styles.liveMetaText, { color: theme.colors.secondaryText }]}>{activity.duration}</Text>
               </View>
             )}
             {activity.confidence && (
               <View style={styles.liveMeta}>
                 <Brain size={10} color={theme.colors.secondaryText} />
-                <Text style={[styles.liveMetaText, { color: activity.confidence > 90 ? '#34C759' : '#FF9500' }]}>{activity.confidence}%</Text>
+                <Text style= [styles.liveMetaText, { color: activity.confidence > 90 ? '#34C759' : '#FF9500' }]}>{activity.confidence}%</Text>
               </View>
             )}
           </View>
@@ -469,31 +469,31 @@ export default function AgentActivityScreen() {
           ) : (
             <StatusIcon size={16} color={statusColor} />
           )}
-          <Text style={[styles.liveTime, { color: theme.colors.secondaryText }]}>{activity.timestamp}</Text>
+          <Text style= [styles.liveTime, { color: theme.colors.secondaryText }]}>{activity.timestamp}</Text>
         </View>
       </View>
     );
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <View style={[styles.header, { paddingTop: insets.top + 10 }]}>
+    <View style= [styles.container, { backgroundColor: theme.colors.background }]}>
+      <View style= [styles.header, { paddingTop: insets.top + 10 }]}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
           <ArrowLeft size={24} color={theme.colors.text} />
         </TouchableOpacity>
         <View style={styles.headerCenter}>
-          <Text style={[styles.title, { color: theme.colors.text }]}>Agent Activity</Text>
-          <Text style={[styles.subtitle, { color: theme.colors.secondaryText }]}>
+          <Text style= [styles.title, { color: theme.colors.text }]}>Agent Activity</Text>
+          <Text style= [styles.subtitle, { color: theme.colors.secondaryText }]}>
             Real-time monitoring & status
           </Text>
         </View>
         <View style={styles.headerActions}>
-          <Animated.View style={[styles.liveIndicator, { transform: [{ scale: pulseAnim }] }]}>
+          <Animated.View style= [styles.liveIndicator, { transform: [{ scale: pulseAnim }] }]}>
             <View style={styles.liveDot} />
             <Text style={styles.liveText}>LIVE</Text>
           </Animated.View>
           <TouchableOpacity 
-            style={[styles.autoRefreshBtn, { backgroundColor: autoRefresh ? '#34C75920' : theme.colors.cardBackground }]}
+            style= [styles.autoRefreshBtn, { backgroundColor: autoRefresh ? '#34C75920' : theme.colors.cardBackground }]}
             onPress={() => setAutoRefresh(!autoRefresh)}
           >
             <RefreshCw size={16} color={autoRefresh ? '#34C759' : theme.colors.secondaryText} />
@@ -501,40 +501,40 @@ export default function AgentActivityScreen() {
         </View>
       </View>
 
-      <View style={[styles.statsBar, { backgroundColor: theme.colors.cardBackground }]}>
+      <View style= [styles.statsBar, { backgroundColor: theme.colors.cardBackground }]}>
         <TouchableOpacity 
-          style={[styles.statBtn, selectedStatus === 'all' && styles.statBtnActive]}
+          style= [styles.statBtn, selectedStatus === 'all' && styles.statBtnActive]}
           onPress={() => setSelectedStatus('all')}
         >
           <User size={14} color={selectedStatus === 'all' ? '#fff' : theme.colors.secondaryText} />
-          <Text style={[styles.statBtnText, { color: selectedStatus === 'all' ? '#fff' : theme.colors.secondaryText }]}>
+          <Text style= [styles.statBtnText, { color: selectedStatus === 'all' ? '#fff' : theme.colors.secondaryText }]}>
             All ({mockAgentStatuses.length})
           </Text>
         </TouchableOpacity>
         <TouchableOpacity 
-          style={[styles.statBtn, selectedStatus === 'online' && { backgroundColor: '#34C759' }]}
+          style= [styles.statBtn, selectedStatus === 'online' && { backgroundColor: '#34C759' }]}
           onPress={() => setSelectedStatus(selectedStatus === 'online' ? 'all' : 'online')}
         >
           <Wifi size={14} color={selectedStatus === 'online' ? '#fff' : '#34C759'} />
-          <Text style={[styles.statBtnText, { color: selectedStatus === 'online' ? '#fff' : '#34C759' }]}>
+          <Text style= [styles.statBtnText, { color: selectedStatus === 'online' ? '#fff' : '#34C759' }]}>
             {stats.online}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity 
-          style={[styles.statBtn, selectedStatus === 'busy' && { backgroundColor: '#FF9500' }]}
+          style= [styles.statBtn, selectedStatus === 'busy' && { backgroundColor: '#FF9500' }]}
           onPress={() => setSelectedStatus(selectedStatus === 'busy' ? 'all' : 'busy')}
         >
           <Activity size={14} color={selectedStatus === 'busy' ? '#fff' : '#FF9500'} />
-          <Text style={[styles.statBtnText, { color: selectedStatus === 'busy' ? '#fff' : '#FF9500' }]}>
+          <Text style= [styles.statBtnText, { color: selectedStatus === 'busy' ? '#fff' : '#FF9500' }]}>
             {stats.busy}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity 
-          style={[styles.statBtn, selectedStatus === 'idle' && { backgroundColor: '#007AFF' }]}
+          style= [styles.statBtn, selectedStatus === 'idle' && { backgroundColor: '#007AFF' }]}
           onPress={() => setSelectedStatus(selectedStatus === 'idle' ? 'all' : 'idle')}
         >
           <Clock size={14} color={selectedStatus === 'idle' ? '#fff' : '#007AFF'} />
-          <Text style={[styles.statBtnText, { color: selectedStatus === 'idle' ? '#fff' : '#007AFF' }]}>
+          <Text style= [styles.statBtnText, { color: selectedStatus === 'idle' ? '#fff' : '#007AFF' }]}>
             {stats.idle}
           </Text>
         </TouchableOpacity>
@@ -543,23 +543,23 @@ export default function AgentActivityScreen() {
       <View style={styles.filterRow}>
         {(['all', 'main', 'sub'] as const).map((Filter) => (
           <TouchableOpacity
-            key={Filter}
-            style={[
+            key={Funnel}
+            style= [
               styles.filterBtn,
               selectedFilter === Filter && { backgroundColor: theme.colors.primary },
             ]}
             onPress={() => setSelectedFilter(Filter)}
           >
-            <Text style={[
+            <Text style= [
               styles.filterText,
               { color: selectedFilter === Filter ? '#fff' : theme.colors.secondaryText }
             ]}>
-              {filter === 'all' ? 'All Agents' : filter === 'main' ? 'Main Agents' : 'Sub-Agents'}
+              {Filter === 'all' ? 'All Agents' : Filter === 'main' ? 'Main Agents' : 'Sub-Agents'}
             </Text>
           </TouchableOpacity>
         ))}
         <TouchableOpacity 
-          style={[styles.metricsToggle, { backgroundColor: theme.colors.cardBackground }]}
+          style= [styles.metricsToggle, { backgroundColor: theme.colors.cardBackground }]}
           onPress={() => setShowSystemMetrics(!showSystemMetrics)}
         >
           {showSystemMetrics ? <Eye size={16} color={theme.colors.primary} /> : <EyeOff size={16} color={theme.colors.secondaryText} />}
@@ -576,10 +576,10 @@ export default function AgentActivityScreen() {
         {showSystemMetrics && (
           <View style={styles.systemMetricsSection}>
             <View style={styles.sectionHeader}>
-              <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>System Health</Text>
-              <View style={[styles.healthBadge, { backgroundColor: stats.avgHealth > 95 ? '#34C75920' : stats.avgHealth > 85 ? '#FF950020' : '#FF3B3020' }]}>
+              <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>System Health</Text>
+              <View style= [styles.healthBadge, { backgroundColor: stats.avgHealth > 95 ? '#34C75920' : stats.avgHealth > 85 ? '#FF950020' : '#FF3B3020' }]}>
                 <Sparkles size={12} color={stats.avgHealth > 95 ? '#34C759' : stats.avgHealth > 85 ? '#FF9500' : '#FF3B30'} />
-                <Text style={[styles.healthText, { color: stats.avgHealth > 95 ? '#34C759' : stats.avgHealth > 85 ? '#FF9500' : '#FF3B30' }]}>{stats.avgHealth}%</Text>
+                <Text style= [styles.healthText, { color: stats.avgHealth > 95 ? '#34C759' : stats.avgHealth > 85 ? '#FF9500' : '#FF3B30' }]}>{stats.avgHealth}%</Text>
               </View>
             </View>
             <View style={styles.systemMetricsGrid}>
@@ -590,10 +590,10 @@ export default function AgentActivityScreen() {
 
         <View style={styles.liveSection}>
           <View style={styles.sectionHeader}>
-            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Live Activity Feed</Text>
+            <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>Live Activity Feed</Text>
             <View style={styles.tasksSummary}>
               <Zap size={12} color={theme.colors.primary} />
-              <Text style={[styles.tasksText, { color: theme.colors.secondaryText }]}>
+              <Text style= [styles.tasksText, { color: theme.colors.secondaryText }]}>
                 {stats.totalTasks} tasks in queue
               </Text>
             </View>
@@ -604,7 +604,7 @@ export default function AgentActivityScreen() {
         </View>
 
         <View style={styles.sectionHeader}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
+          <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>
             Agent Status ({filteredAgents.length})
           </Text>
         </View>
@@ -983,3 +983,4 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
 });
+

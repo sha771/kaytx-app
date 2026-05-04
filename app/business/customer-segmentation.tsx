@@ -256,7 +256,7 @@ export default function CustomerSegmentationScreen() {
                 </View>
 
                 <View style={styles.metricItem}>
-                  <ChartBarBig size={16} color="#64748B" />
+                  <ChartBar size={16} color="#64748B" />
                   <Text style={styles.metricValue}>
                     ${((segment.size * segment.avgValue) / 1000000).toFixed(1)}M
                   </Text>

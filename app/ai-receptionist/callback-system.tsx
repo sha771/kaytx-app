@@ -195,7 +195,7 @@ export default function CallbackSystemScreen() {
             >
               {filters.map((Filter) => (
                 <TouchableOpacity
-                  key={Filter}
+                  key={Funnel}
                   style={[
                     styles.filterButton,
                     { backgroundColor: theme.colors.cardBackground },

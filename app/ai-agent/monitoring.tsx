@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -281,7 +281,7 @@ export default function PerformanceMonitoringScreen() {
 function X({ size, color }: { size: number; color: string }) {
   return (
     <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ color, fontSize: size * 0.7, fontWeight: 'bold' }}>×</Text>
+      <Text style={{ color, fontSize: size * 0.7, fontWeight: 'bold' }}>�</Text>
     </View>
   );
 }

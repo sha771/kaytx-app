@@ -603,7 +603,7 @@ export default function SocialMediaManagementAIScreen() {
                 <Text style={[styles.actionButtonText, { color: ACCENT_COLOR }]}>Configure</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#34C75915' }]}>
-                <ChartBarBig size={16} color="#34C759" />
+                <ChartBar size={16} color="#34C759" />
                 <Text style={[styles.actionButtonText, { color: '#34C759' }]}>Analytics</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#FF950015' }]}>

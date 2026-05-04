@@ -33,7 +33,6 @@ import {
   Bell,
   ChevronRight,
   ChartPie,
-  ChartBar,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
@@ -611,7 +610,7 @@ export default function MarketingHubScreen() {
         <View style={styles.filters}>
           {(['all', 'active', 'scheduled', 'draft', 'completed'] as const).map((Filter) => (
             <TouchableOpacity
-              key={Filter}
+              key={Funnel}
               style={[
                 styles.filterChip,
                 filterStatus === Filter && { backgroundColor: theme.colors.primary },

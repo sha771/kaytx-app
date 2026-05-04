@@ -463,7 +463,7 @@ export default function CollaborationScreen() {
         <View style={styles.filters}>
           {(['all', 'online', 'busy', 'offline'] as const).map((Filter) => (
             <TouchableOpacity
-              key={Filter}
+              key={Funnel}
               style={[
                 styles.filterChip,
                 filterStatus === Filter && { backgroundColor: theme.colors.primary },

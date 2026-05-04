@@ -1,4 +1,4 @@
-﻿ 
+ 
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -27,10 +27,10 @@ interface PerformanceMetric {
 export default function TeamPerformance() {
   const [activeTab, setActiveTab] = useState<'overview' | 'individual' | 'goals'>('overview');
   const [teamMembers] = useState<TeamMember[]>([
-    { id: '1', name: 'John Doe', role: 'Designer', avatar: '👨‍💻', performance: 92, tasksCompleted: 15, efficiency: 88, streak: 7 },
-    { id: '2', name: 'Jane Smith', role: 'Developer', avatar: '👩‍💻', performance: 88, tasksCompleted: 23, efficiency: 92, streak: 12 },
-    { id: '3', name: 'Mike Johnson', role: 'QA Engineer', avatar: '👨‍🔬', performance: 95, tasksCompleted: 18, efficiency: 95, streak: 5 },
-    { id: '4', name: 'Sarah Wilson', role: 'Product Manager', avatar: '👩‍💼', performance: 90, tasksCompleted: 12, efficiency: 87, streak: 9 },
+    { id: '1', name: 'John Doe', role: 'Designer', avatar: '?????', performance: 92, tasksCompleted: 15, efficiency: 88, streak: 7 },
+    { id: '2', name: 'Jane Smith', role: 'Developer', avatar: '?????', performance: 88, tasksCompleted: 23, efficiency: 92, streak: 12 },
+    { id: '3', name: 'Mike Johnson', role: 'QA Engineer', avatar: '?????', performance: 95, tasksCompleted: 18, efficiency: 95, streak: 5 },
+    { id: '4', name: 'Sarah Wilson', role: 'Product Manager', avatar: '?????', performance: 90, tasksCompleted: 12, efficiency: 87, streak: 9 },
   ]);
   const [metrics] = useState<PerformanceMetric[]>([
     { id: '1', name: 'Team Productivity', value: 89, change: 5.2, unit: '%' },
@@ -219,7 +219,7 @@ export default function TeamPerformance() {
           style={[styles.tab, activeTab === 'overview' && styles.activeTab]}
           onPress={() => setActiveTab('overview')}
         >
-          <ChartBarBig size={20} color={activeTab === 'overview' ? '#4ecdc4' : '#666'} />
+          <ChartBar size={20} color={activeTab === 'overview' ? '#4ecdc4' : '#666'} />
           <Text style={[styles.tabText, activeTab === 'overview' && styles.activeTabText]}>Overview</Text>
         </TouchableOpacity>
         <TouchableOpacity 

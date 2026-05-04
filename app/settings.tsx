@@ -171,9 +171,9 @@ export default function SettingsScreen() {
       visible={true}
       onRequestClose={() => router.back()}
     >
-      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-        <View style={[styles.header, { borderBottomColor: theme.colors.border }]}>
-          <Text style={[styles.title, { color: theme.colors.text }]}>Settings</Text>
+      <SafeAreaView style= [styles.container, { backgroundColor: theme.colors.background }]}>
+        <View style= [styles.header, { borderBottomColor: theme.colors.border }]}>
+          <Text style= [styles.title, { color: theme.colors.text }]}>Settings</Text>
           <TouchableOpacity style={styles.closeButton} onPress={() => router.back()}>
             <X size={24} color={theme.colors.text} />
           </TouchableOpacity>
@@ -182,11 +182,11 @@ export default function SettingsScreen() {
         <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
           {settingsSections.map((section, sectionIndex) => (
             <View key={sectionIndex} style={styles.section}>
-              <Text style={[styles.sectionTitle, { color: theme.colors.secondaryText }]}>
+              <Text style= [styles.sectionTitle, { color: theme.colors.secondaryText }]}>
                 {section.title}
               </Text>
               
-              <View style={[styles.sectionContent, { backgroundColor: theme.colors.cardBackground }]}>
+              <View style= [styles.sectionContent, { backgroundColor: theme.colors.cardBackground }]}>
                 {section.items.map((item, itemIndex) => {
                   const Icon = item.icon;
                   const isLast = itemIndex === section.items.length - 1;
@@ -194,7 +194,7 @@ export default function SettingsScreen() {
                   return (
                     <TouchableOpacity
                       key={itemIndex}
-                      style={[
+                      style= [
                         styles.settingItem,
                         !isLast && styles.settingItemBorder,
                         { borderBottomColor: theme.colors.border },
@@ -208,7 +208,7 @@ export default function SettingsScreen() {
                           color={item.isDestructive ? '#FF3B30' : theme.colors.text}
                         />
                         <Text
-                          style={[
+                          style= [
                             styles.settingLabel,
                             { color: item.isDestructive ? '#FF3B30' : theme.colors.text },
                           ]}
@@ -227,7 +227,7 @@ export default function SettingsScreen() {
                         ) : (
                           <>
                             {item.value && (
-                              <Text style={[styles.settingValue, { color: theme.colors.secondaryText }]}>
+                              <Text style= [styles.settingValue, { color: theme.colors.secondaryText }]}>
                                 {item.value}
                               </Text>
                             )}
@@ -245,7 +245,7 @@ export default function SettingsScreen() {
           ))}
           
           <View style={styles.footer}>
-            <Text style={[styles.version, { color: theme.colors.secondaryText }]}>
+            <Text style= [styles.version, { color: theme.colors.secondaryText }]}>
               Version 1.0.0
             </Text>
           </View>
@@ -325,3 +325,4 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
 });
+

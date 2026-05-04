@@ -297,7 +297,7 @@ export default function AirlineIndustryScreen() {
                             </Text>
                         </View>
                         <View style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}>
-                            <ChartBarBig size={24} color="#00B894" />
+                            <ChartBar size={24} color="#00B894" />
                             <Text style={[styles.benefitTitle, { color: theme.colors.text }]}>Real-time Analytics</Text>
                             <Text style={[styles.benefitDescription, { color: theme.colors.secondaryText }]}>
                                 Track performance, identify trends, optimize operations
@@ -590,3 +590,4 @@ const styles = StyleSheet.create({
         fontWeight: '700',
     },
 });
+

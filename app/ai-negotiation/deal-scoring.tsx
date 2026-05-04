@@ -192,7 +192,7 @@ export default function DealScoringScreen() {
           >
             {['all', 'hot', 'warm', 'cold'].map((Filter) => (
               <TouchableOpacity
-                key={Filter}
+                key={Funnel}
                 style={[
                   styles.filterButton,
                   selectedFilter === Filter && styles.filterButtonActive,

@@ -112,7 +112,7 @@ export default function DataIntelligenceAgentsScreen() {
             <ChevronLeft size={24} color={colors.text} />
           </TouchableOpacity>
           <View style={styles.titleContainer}>
-            <ChartBarBig size={22} color="#9B59B6" />
+            <ChartBar size={22} color="#9B59B6" />
             <Text style={[styles.title, { color: colors.text }]}>Data Intelligence AI</Text>
           </View>
           <View style={{ width: 40 }} />
@@ -204,3 +204,4 @@ const styles = StyleSheet.create({
   actionBtnOutline: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 12, paddingVertical: 6, borderRadius: 6, borderWidth: 1 },
   actionBtnTextOutline: { fontSize: 12, fontWeight: '600' },
 });
+

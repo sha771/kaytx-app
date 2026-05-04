@@ -1,4 +1,4 @@
-﻿ 
+ 
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Stack } from 'expo-router';
@@ -55,7 +55,7 @@ export default function DataVisualizationScreen() {
   const getChartIcon = (type: ChartData['type']) => {
     switch (type) {
       case 'bar':
-        return <ChartBarBig size={24} color="#60A5FA" />;
+        return <ChartBar size={24} color="#60A5FA" />;
       case 'line':
         return <ChartLine size={24} color="#10B981" />;
       case 'pie':
@@ -63,7 +63,7 @@ export default function DataVisualizationScreen() {
       case 'area':
         return <TrendingUp size={24} color="#A78BFA" />;
       default:
-        return <ChartBarBig size={24} color="#60A5FA" />;
+        return <ChartBar size={24} color="#60A5FA" />;
     }
   };
 
@@ -221,7 +221,7 @@ export default function DataVisualizationScreen() {
 
           <View style={styles.insightCard}>
             <View style={styles.insightIcon}>
-              <ChartBarBig size={20} color="#F59E0B" />
+              <ChartBar size={20} color="#F59E0B" />
             </View>
             <View style={styles.insightContent}>
               <Text style={styles.insightTitle}>Top Traffic Source</Text>

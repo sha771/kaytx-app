@@ -31,7 +31,7 @@ npx expo start --web
 
 ## Recording Session 1: Main Demo (30-45 minutes)
 
-### Shot 3: Home Dashboard (Recording: ~5 min)
+### Shot 9: Home Dashboard/Command Center (Recording: ~5 min)
 
 **ACTION SCRIPT:**
 
@@ -65,7 +65,7 @@ npx expo start --web
 
 ---
 
-### Shot 4: AI Workforce (Recording: ~10 min)
+### Shot 2: AI Workforce (Recording: ~10 min)
 
 **Take 1 - C-Suite:**
 
@@ -178,7 +178,29 @@ npx expo start --web
 
 ---
 
-### Shot 9: Unified Inbox (Recording: ~5 min)
+### Shot 0: HOOK (Recording: ~2 min)
+
+**ACTION SCRIPT:**
+
+1. Start recording (black screen)
+2. **Create notification cascade** (3 seconds):
+   - Show rapid notification sounds visually
+   - Email, WhatsApp, Slack, SMS icons flashing
+   - 99+ badge counters flying upward
+3. **Freeze frame** (1 second):
+   - Hold on chaotic inbox visualization
+4. **Text slam** (1 second):
+   - "What if you never missed a message again?"
+5. **Quick flash transition** (0.5s):
+   - Cut to pristine Unified Inbox interface
+6. Stop recording
+
+**Verbal cue:**
+> "Shot 0 complete. Hook sequence."
+
+---
+
+### Shot 1: Unified Inbox (Recording: ~5 min)
 
 **ACTION SCRIPT:**
 
@@ -197,11 +219,11 @@ npx expo start --web
 9. Stop recording
 
 **Verbal cue:**
-> "Shot 9 complete. Unified Inbox."
+> "Shot 1 complete. Unified Inbox."
 
 ---
 
-### Shot 10: Social Media Management (Recording: ~5 min)
+### Shot 4: Social Media Management (Recording: ~5 min)
 
 **ACTION SCRIPT:**
 
@@ -223,11 +245,11 @@ npx expo start --web
 8. Stop recording
 
 **Verbal cue:**
-> "Shot 10 complete. Social Media Management."
+> "Shot 4 complete. Social Media Management."
 
 ---
 
-### Shot 11: Social CRM (Recording: ~5 min)
+### Shot 5: Social CRM (Recording: ~5 min)
 
 **ACTION SCRIPT:**
 
@@ -245,11 +267,11 @@ npx expo start --web
 8. Stop recording
 
 **Verbal cue:**
-> "Shot 11 complete. Social CRM."
+> "Shot 5 complete. Social CRM."
 
 ---
 
-### Shot 12: Team Collaboration (Recording: ~5 min)
+### Shot 6: Team Collaboration (Recording: ~5 min)
 
 **ACTION SCRIPT:**
 
@@ -270,7 +292,7 @@ npx expo start --web
 9. Stop recording
 
 **Verbal cue:**
-> "Shot 12 complete. Team Collaboration."
+> "Shot 6 complete. Team Collaboration."
 
 ---
 

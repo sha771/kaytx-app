@@ -309,7 +309,7 @@ export default function LeadGenerationScreen() {
       <View style={styles.chartCard}>
         <Text style={styles.chartTitle}>Lead Generation Trend</Text>
         <View style={styles.chartPlaceholder}>
-          <ChartBarBig size={48} color="#007AFF" />
+          <ChartBar size={48} color="#007AFF" />
           <Text style={styles.chartText}>Interactive chart visualization</Text>
         </View>
       </View>
@@ -362,7 +362,7 @@ export default function LeadGenerationScreen() {
           style={[styles.tabButton, activeTab === 'analytics' && styles.activeTabButton]}
           onPress={() => setActiveTab('analytics')}
         >
-          <ChartBarBig size={20} color={activeTab === 'analytics' ? '#007AFF' : '#666'} />
+          <ChartBar size={20} color={activeTab === 'analytics' ? '#007AFF' : '#666'} />
           <Text style={[styles.tabButtonText, activeTab === 'analytics' && styles.activeTabButtonText]}>
             Analytics
           </Text>

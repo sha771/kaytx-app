@@ -228,7 +228,7 @@ export default function SalesManagementScreen() {
               <Text style={styles.actionText}>Schedule Call</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.actionButton}>
-              <ChartBarBig size={24} color="#059669" />
+              <ChartBar size={24} color="#059669" />
               <Text style={styles.actionText}>View Reports</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.actionButton}>

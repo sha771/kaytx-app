@@ -188,7 +188,7 @@ export default function PredictiveInsightsPage() {
           <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>Accuracy</Text>
         </View>
         <View style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-          <ChartBarBig size={20} color={theme.colors.primary} />
+          <ChartBar size={20} color={theme.colors.primary} />
           <Text style={[styles.statValue, { color: theme.colors.text }]}>{(modelStats.predictionsMade / 1000).toFixed(1)}k</Text>
           <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>Predictions</Text>
         </View>
@@ -433,3 +433,4 @@ const styles = StyleSheet.create({
   },
   actionButtonText: { color: '#fff', fontSize: 14, fontWeight: '600' },
 });
+

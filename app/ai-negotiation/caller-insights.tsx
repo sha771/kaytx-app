@@ -109,7 +109,7 @@ export default function CallerInsightsScreen() {
             >
               {['all', 'positive', 'neutral', 'negative'].map((Filter) => (
                 <TouchableOpacity
-                  key={Filter}
+                  key={Funnel}
                   style={[
                     styles.filterChip,
                     filterType === Filter && styles.filterChipActive,

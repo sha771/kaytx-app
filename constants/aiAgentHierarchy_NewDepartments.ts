@@ -36,7 +36,6 @@ import {
   // Real Estate Icons
   Building,
   House,
-  Truck,
   MapPin,
 
   // Insurance Icons
@@ -64,7 +63,7 @@ import {
   Zap,
 
   // Transportation Icons
-  Truck as Truck as TruckIcon,
+  Truck as TruckIcon,
   Anchor,
   Plane as PlaneIcon,
   TrainFront,
@@ -3560,7 +3559,7 @@ export const transportationLogisticsAgents: AIEmployeeProfile[] = [
     level: 'vp_director',
     department: 'transportation_logistics',
     description: 'Manages transportation operations, fleet management, and carrier relations. Oversees freight and shipping.',
-    icon: Truck,
+    icon: TruckIcon,
     color: '#0EA5E9',
     orgChart: {
       id: 'vp-transportation',
@@ -3658,7 +3657,7 @@ export const transportationLogisticsAgents: AIEmployeeProfile[] = [
     level: 'manager',
     department: 'transportation_logistics',
     description: 'Manages fleet operations, vehicle maintenance, and driver compliance. Oversees fuel management and telematics.',
-    icon: Truck,
+    icon: TruckIcon,
     color: '#0EA5E9',
     orgChart: {
       id: 'fleet-manager',
@@ -3852,7 +3851,7 @@ export const transportationLogisticsAgents: AIEmployeeProfile[] = [
     level: 'team_lead',
     department: 'transportation_logistics',
     description: 'Leads shipping operations, order fulfillment, and carrier coordination. Manages shipping documentation and compliance.',
-    icon: Truck,
+    icon: TruckIcon,
     color: '#0EA5E9',
     orgChart: {
       id: 'shipping-lead',

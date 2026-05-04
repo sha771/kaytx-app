@@ -151,70 +151,70 @@ export default function NotificationScreen() {
   const unreadCount = recentNotifications.filter(n => !n.read).length;
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <View style={[styles.header, { borderBottomColor: theme.colors.border }]}>
+    <SafeAreaView style= [styles.container, { backgroundColor: theme.colors.background }]}>
+      <View style= [styles.header, { borderBottomColor: theme.colors.border }]}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
           <ArrowLeft size={24} color={theme.colors.text} />
         </TouchableOpacity>
-        <Text style={[styles.title, { color: theme.colors.text }]}>Notifications</Text>
+        <Text style= [styles.title, { color: theme.colors.text }]}>Notifications</Text>
         <TouchableOpacity style={styles.settingsButton}>
           <Settings size={24} color={theme.colors.primary} />
         </TouchableOpacity>
       </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+        <View style= [styles.card, { backgroundColor: theme.colors.cardBackground }]}>
           <View style={styles.cardHeader}>
             <Bell size={24} color={theme.colors.primary} />
-            <Text style={[styles.cardTitle, { color: theme.colors.text }]}>Notification Center</Text>
+            <Text style= [styles.cardTitle, { color: theme.colors.text }]}>Notification Center</Text>
           </View>
-          <Text style={[styles.cardDescription, { color: theme.colors.secondaryText }]}>
+          <Text style= [styles.cardDescription, { color: theme.colors.secondaryText }]}>
             Manage your notification preferences and stay updated
           </Text>
         </View>
 
         <View style={styles.statsGrid}>
-          <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
+          <View style= [styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
             <Bell size={20} color={theme.colors.primary} />
-            <Text style={[styles.statValue, { color: theme.colors.text }]}>
+            <Text style= [styles.statValue, { color: theme.colors.text }]}>
               {recentNotifications.length}
             </Text>
-            <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>
+            <Text style= [styles.statLabel, { color: theme.colors.secondaryText }]}>
               Total
             </Text>
           </View>
-          <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
+          <View style= [styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
             <Mail size={20} color={theme.colors.error} />
-            <Text style={[styles.statValue, { color: theme.colors.text }]}>
+            <Text style= [styles.statValue, { color: theme.colors.text }]}>
               {unreadCount}
             </Text>
-            <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>
+            <Text style= [styles.statLabel, { color: theme.colors.secondaryText }]}>
               Unread
             </Text>
           </View>
-          <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
+          <View style= [styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
             <Settings size={20} color={theme.colors.success} />
-            <Text style={[styles.statValue, { color: theme.colors.text }]}>
+            <Text style= [styles.statValue, { color: theme.colors.text }]}>
               {notificationCategories.filter(cat => cat.enabled).length}
             </Text>
-            <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>
+            <Text style= [styles.statLabel, { color: theme.colors.secondaryText }]}>
               Active
             </Text>
           </View>
         </View>
 
-        <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Global Settings</Text>
+        <View style= [styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+          <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>Global Settings</Text>
           
           <View style={styles.globalSettings}>
-            <View style={[styles.settingItem, { borderColor: theme.colors.border }]}>
+            <View style= [styles.settingItem, { borderColor: theme.colors.border }]}>
               <View style={styles.settingInfo}>
                 <Bell size={20} color={theme.colors.primary} />
                 <View style={styles.settingDetails}>
-                  <Text style={[styles.settingTitle, { color: theme.colors.text }]}>
+                  <Text style= [styles.settingTitle, { color: theme.colors.text }]}>
                     Push Notifications
                   </Text>
-                  <Text style={[styles.settingDescription, { color: theme.colors.secondaryText }]}>
+                  <Text style= [styles.settingDescription, { color: theme.colors.secondaryText }]}>
                     Receive notifications on your device
                   </Text>
                 </View>
@@ -227,14 +227,14 @@ export default function NotificationScreen() {
               />
             </View>
 
-            <View style={[styles.settingItem, { borderColor: theme.colors.border }]}>
+            <View style= [styles.settingItem, { borderColor: theme.colors.border }]}>
               <View style={styles.settingInfo}>
                 <Mail size={20} color={theme.colors.primary} />
                 <View style={styles.settingDetails}>
-                  <Text style={[styles.settingTitle, { color: theme.colors.text }]}>
+                  <Text style= [styles.settingTitle, { color: theme.colors.text }]}>
                     Email Notifications
                   </Text>
-                  <Text style={[styles.settingDescription, { color: theme.colors.secondaryText }]}>
+                  <Text style= [styles.settingDescription, { color: theme.colors.secondaryText }]}>
                     Receive notifications via email
                   </Text>
                 </View>
@@ -247,14 +247,14 @@ export default function NotificationScreen() {
               />
             </View>
 
-            <View style={[styles.settingItem, { borderColor: theme.colors.border }]}>
+            <View style= [styles.settingItem, { borderColor: theme.colors.border }]}>
               <View style={styles.settingInfo}>
                 <MessageSquare size={20} color={theme.colors.primary} />
                 <View style={styles.settingDetails}>
-                  <Text style={[styles.settingTitle, { color: theme.colors.text }]}>
+                  <Text style= [styles.settingTitle, { color: theme.colors.text }]}>
                     SMS Notifications
                   </Text>
-                  <Text style={[styles.settingDescription, { color: theme.colors.secondaryText }]}>
+                  <Text style= [styles.settingDescription, { color: theme.colors.secondaryText }]}>
                     Receive important alerts via SMS
                   </Text>
                 </View>
@@ -267,7 +267,7 @@ export default function NotificationScreen() {
               />
             </View>
 
-            <View style={[styles.settingItem, { borderColor: theme.colors.border }]}>
+            <View style= [styles.settingItem, { borderColor: theme.colors.border }]}>
               <View style={styles.settingInfo}>
                 {soundEnabled ? (
                   <Volume2 size={20} color={theme.colors.primary} />
@@ -275,10 +275,10 @@ export default function NotificationScreen() {
                   <VolumeX size={20} color={theme.colors.primary} />
                 )}
                 <View style={styles.settingDetails}>
-                  <Text style={[styles.settingTitle, { color: theme.colors.text }]}>
+                  <Text style= [styles.settingTitle, { color: theme.colors.text }]}>
                     Sound & Vibration
                   </Text>
-                  <Text style={[styles.settingDescription, { color: theme.colors.secondaryText }]}>
+                  <Text style= [styles.settingDescription, { color: theme.colors.secondaryText }]}>
                     Play sounds for notifications
                   </Text>
                 </View>
@@ -293,22 +293,22 @@ export default function NotificationScreen() {
           </View>
         </View>
 
-        <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Notification Categories</Text>
+        <View style= [styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+          <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>Notification Categories</Text>
           
           <View style={styles.categoriesList}>
             {notificationCategories.map((category) => {
               const IconComponent = category.icon;
               return (
-                <View key={category.id} style={[styles.categoryCard, { borderColor: theme.colors.border }]}>
+                <View key={category.id} style= [styles.categoryCard, { borderColor: theme.colors.border }]}>
                   <View style={styles.categoryHeader}>
                     <View style={styles.categoryInfo}>
                       <IconComponent size={20} color={theme.colors.primary} />
                       <View style={styles.categoryDetails}>
-                        <Text style={[styles.categoryTitle, { color: theme.colors.text }]}>
+                        <Text style= [styles.categoryTitle, { color: theme.colors.text }]}>
                           {category.title}
                         </Text>
-                        <Text style={[styles.categoryDescription, { color: theme.colors.secondaryText }]}>
+                        <Text style= [styles.categoryDescription, { color: theme.colors.secondaryText }]}>
                           {category.description}
                         </Text>
                       </View>
@@ -324,7 +324,7 @@ export default function NotificationScreen() {
                   {category.enabled && (
                     <View style={styles.categorySettings}>
                       <View style={styles.settingRow}>
-                        <Text style={[styles.settingLabel, { color: theme.colors.secondaryText }]}>
+                        <Text style= [styles.settingLabel, { color: theme.colors.secondaryText }]}>
                           Push
                         </Text>
                         <Switch
@@ -336,7 +336,7 @@ export default function NotificationScreen() {
                         />
                       </View>
                       <View style={styles.settingRow}>
-                        <Text style={[styles.settingLabel, { color: theme.colors.secondaryText }]}>
+                        <Text style= [styles.settingLabel, { color: theme.colors.secondaryText }]}>
                           Email
                         </Text>
                         <Switch
@@ -348,7 +348,7 @@ export default function NotificationScreen() {
                         />
                       </View>
                       <View style={styles.settingRow}>
-                        <Text style={[styles.settingLabel, { color: theme.colors.secondaryText }]}>
+                        <Text style= [styles.settingLabel, { color: theme.colors.secondaryText }]}>
                           Sound
                         </Text>
                         <Switch
@@ -367,14 +367,14 @@ export default function NotificationScreen() {
           </View>
         </View>
 
-        <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Recent Notifications</Text>
+        <View style= [styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+          <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>Recent Notifications</Text>
           
           <View style={styles.notificationsList}>
             {recentNotifications.map((notification) => (
               <View 
                 key={notification.id} 
-                style={[
+                style= [
                   styles.notificationCard, 
                   { 
                     borderColor: theme.colors.border,
@@ -386,27 +386,27 @@ export default function NotificationScreen() {
                   <View style={styles.notificationInfo}>
                     {getTypeIcon(notification.type)}
                     <View style={styles.notificationDetails}>
-                      <Text style={[styles.notificationTitle, { color: theme.colors.text }]}>
+                      <Text style= [styles.notificationTitle, { color: theme.colors.text }]}>
                         {notification.title}
                       </Text>
-                      <Text style={[styles.notificationDescription, { color: theme.colors.secondaryText }]}>
+                      <Text style= [styles.notificationDescription, { color: theme.colors.secondaryText }]}>
                         {notification.description}
                       </Text>
                     </View>
                   </View>
                   <View style={styles.notificationMeta}>
                     <View 
-                      style={[
+                      style= [
                         styles.priorityDot, 
                         { backgroundColor: getPriorityColor(notification.priority) }
                       ]} 
                     />
                     {!notification.read && (
-                      <View style={[styles.unreadDot, { backgroundColor: theme.colors.primary }]} />
+                      <View style= [styles.unreadDot, { backgroundColor: theme.colors.primary }]} />
                     )}
                   </View>
                 </View>
-                <Text style={[styles.notificationTime, { color: theme.colors.secondaryText }]}>
+                <Text style= [styles.notificationTime, { color: theme.colors.secondaryText }]}>
                   {getTimeAgo(notification.timestamp)}
                 </Text>
               </View>
@@ -629,3 +629,4 @@ const styles = StyleSheet.create({
     marginLeft: 28,
   },
 });
+

@@ -652,7 +652,7 @@ export default function NegotiationConfigScreen() {
           ]}
           onPress={() => setActiveTab('analytics')}
         >
-          <ChartBarBig
+          <ChartBar
             size={20}
             color={activeTab === 'analytics' ? theme.colors.primary : theme.colors.secondaryText}
           />

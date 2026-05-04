@@ -241,16 +241,16 @@ export default function AutomationsScreen() {
   };
 
   const renderAutomationCard = ({ item }: { item: Automation }) => (
-    <View style={[styles.automationCard, { backgroundColor: theme.colors.cardBackground }]}>
+    <View style={[styles.automationCard, { backgroundColor: theme.colors.cardBackground }]} >
       <View style={styles.automationHeader}>
         <View style={styles.automationInfo}>
           <View style={styles.automationTitleRow}>
-            <Text style={[styles.automationName, { color: theme.colors.text }]}>
+            <Text style={[styles.automationName, { color: theme.colors.text }]} >
               {item.name}
             </Text>
             {getStatusIcon(item.status)}
           </View>
-          <Text style={[styles.automationDescription, { color: theme.colors.secondaryText }]}>
+          <Text style={[styles.automationDescription, { color: theme.colors.secondaryText }]} >
             {item.description}
           </Text>
         </View>
@@ -815,3 +815,5 @@ const styles = StyleSheet.create({
     padding: 6,
   },
 });
+
+

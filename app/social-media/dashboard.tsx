@@ -1,4 +1,4 @@
-﻿ 
+ 
 import React, { useState } from 'react';
 import {
   View,
@@ -233,7 +233,7 @@ export default function SocialMediaDashboard() {
       id: 'analytics',
       title: 'View Analytics',
       subtitle: 'Detailed performance metrics',
-      icon: ChartBar2,
+      icon: ChartBar,
       color: '#FF9500',
       route: '/social-media/analytics',
     },

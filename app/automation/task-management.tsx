@@ -167,7 +167,7 @@ export default function TaskManagementScreen() {
           <View style={styles.filterTabs}>
             {['all', 'pending', 'in-progress', 'completed'].map((Filter) => (
               <TouchableOpacity
-                key={Filter}
+                key={Funnel}
                 style={[styles.filterTab, selectedFilter === Filter && styles.activeFilterTab]}
                 onPress={() => setSelectedFilter(Filter as any)}
               >

@@ -68,26 +68,26 @@ export default function AccountingAgentsScreen() {
   const renderAgentCard = (agent: AIAgent, index: number) => (
     <Animated.View
       entering={FadeInUp.delay(index * 50)}
-      style={[styles.agentCard, { backgroundColor: colors.card, borderColor: colors.border }]}
+      style= [styles.agentCard, { backgroundColor: colors.card, borderColor: colors.border }]}
     >
       <View style={styles.agentHeader}>
-        <View style={[styles.iconContainer, { backgroundColor: agent.color + '15' }]}>
+        <View style= [styles.iconContainer, { backgroundColor: agent.color + '15' }]}>
           <agent.icon size={28} color={agent.color} />
         </View>
         <View style={styles.agentInfo}>
-          <Text style={[styles.agentName, { color: colors.text }]}>{agent.name}</Text>
-          <Text style={[styles.agentTitle, { color: colors.text + '80' }]} numberOfLines={2}>
+          <Text style= [styles.agentName, { color: colors.text }]}>{agent.name}</Text>
+          <Text style= [styles.agentTitle, { color: colors.text + '80' }]} numberOfLines={2}>
             {agent.title}
           </Text>
         </View>
-        <View style={[styles.statusBadge, { 
+        <View style= [styles.statusBadge, { 
           backgroundColor: agent.status === 'active' ? '#10B981' : '#F59E0B' 
         }]}>
           <Text style={styles.statusText}>{agent.status}</Text>
         </View>
       </View>
 
-      <Text style={[styles.description, { color: colors.text + '70' }]} numberOfLines={2}>
+      <Text style= [styles.description, { color: colors.text + '70' }]} numberOfLines={2}>
         {agent.description}
       </Text>
 
@@ -96,7 +96,7 @@ export default function AccountingAgentsScreen() {
         {agent.configuration?.model && (
           <View style={styles.configBadge}>
             <Brain size={14} color="#10B981" />
-            <Text style={[styles.configText, { color: colors.text }]}>
+            <Text style= [styles.configText, { color: colors.text }]}>
               {agent.configuration.model.primary}
             </Text>
           </View>
@@ -104,7 +104,7 @@ export default function AccountingAgentsScreen() {
         {agent.configuration?.voice.enabled && (
           <View style={styles.configBadge}>
             <Mic size={14} color="#10B981" />
-            <Text style={[styles.configText, { color: colors.text }]}>
+            <Text style= [styles.configText, { color: colors.text }]}>
               {agent.configuration.voice.gender}
             </Text>
           </View>
@@ -112,7 +112,7 @@ export default function AccountingAgentsScreen() {
         {agent.configuration?.personality && (
           <View style={styles.configBadge}>
             <User size={14} color="#10B981" />
-            <Text style={[styles.configText, { color: colors.text }]}>
+            <Text style= [styles.configText, { color: colors.text }]}>
               {agent.configuration.personality.age}
             </Text>
           </View>
@@ -120,7 +120,7 @@ export default function AccountingAgentsScreen() {
         {agent.configuration?.training.enabled && (
           <View style={styles.configBadge}>
             <Zap size={14} color="#10B981" />
-            <Text style={[styles.configText, { color: colors.text }]}>
+            <Text style= [styles.configText, { color: colors.text }]}>
               Training
             </Text>
           </View>
@@ -130,7 +130,7 @@ export default function AccountingAgentsScreen() {
       {/* Action Buttons */}
       <View style={styles.actionRow}>
         <TouchableOpacity
-          style={[styles.actionButton, { backgroundColor: '#10B981' }]}
+          style= [styles.actionButton, { backgroundColor: '#10B981' }]}
           onPress={() => handleConfigureAgent(agent.id)}
         >
           <Settings size={16} color="#fff" />
@@ -138,26 +138,26 @@ export default function AccountingAgentsScreen() {
         </TouchableOpacity>
         
         <TouchableOpacity
-          style={[styles.actionButtonOutline, { borderColor: colors.border }]}
+          style= [styles.actionButtonOutline, { borderColor: colors.border }]}
           onPress={() => handleDataUpload(agent.id)}
         >
           <Database size={16} color={colors.text} />
-          <Text style={[styles.actionButtonTextOutline, { color: colors.text }]}>Data</Text>
+          <Text style= [styles.actionButtonTextOutline, { color: colors.text }]}>Data</Text>
         </TouchableOpacity>
       </View>
 
       {/* Capabilities */}
       <View style={styles.capabilitiesContainer}>
-        <Text style={[styles.capabilitiesTitle, { color: colors.text + '60' }]}>Capabilities</Text>
+        <Text style= [styles.capabilitiesTitle, { color: colors.text + '60' }]}>Capabilities</Text>
         <View style={styles.capabilitiesRow}>
           {agent.capabilities.slice(0, 4).map((cap, idx) => (
-            <View key={idx} style={[styles.capabilityBadge, { backgroundColor: colors.border + '30' }]}>
-              <Text style={[styles.capabilityText, { color: colors.text + '80' }]}>{cap}</Text>
+            <View key={idx} style= [styles.capabilityBadge, { backgroundColor: colors.border + '30' }]}>
+              <Text style= [styles.capabilityText, { color: colors.text + '80' }]}>{cap}</Text>
             </View>
           ))}
           {agent.capabilities.length > 4 && (
-            <View style={[styles.capabilityBadge, { backgroundColor: colors.border + '30' }]}>
-              <Text style={[styles.capabilityText, { color: colors.text + '80' }]}>
+            <View style= [styles.capabilityBadge, { backgroundColor: colors.border + '30' }]}>
+              <Text style= [styles.capabilityText, { color: colors.text + '80' }]}>
                 +{agent.capabilities.length - 4}
               </Text>
             </View>
@@ -168,16 +168,16 @@ export default function AccountingAgentsScreen() {
   );
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView style= [styles.container, { backgroundColor: colors.background }]}>
       {/* Header */}
-      <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
+      <View style= [styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
         <View style={styles.headerTop}>
           <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
             <ChevronLeft size={24} color={colors.text} />
           </TouchableOpacity>
           <View style={styles.headerTitleContainer}>
             <Landmark size={24} color="#10B981" />
-            <Text style={[styles.headerTitle, { color: colors.text }]}>Accounting & Finance AI</Text>
+            <Text style= [styles.headerTitle, { color: colors.text }]}>Accounting & Finance AI</Text>
           </View>
           <TouchableOpacity onPress={() => setShowFilters(!showFilters)} style={styles.filterButton}>
             <ListFilter size={20} color={colors.text} />
@@ -186,18 +186,18 @@ export default function AccountingAgentsScreen() {
 
         {/* Main Agent Card */}
         {mainAgent && (
-          <Animated.View entering={FadeInRight} style={[styles.mainAgentCard, { backgroundColor: '#10B98115' }]}>
+          <Animated.View entering={FadeInRight} style= [styles.mainAgentCard, { backgroundColor: '#10B98115' }]}>
             <View style={styles.mainAgentInfo}>
               <mainAgent.icon size={32} color="#10B981" />
               <View style={styles.mainAgentText}>
-                <Text style={[styles.mainAgentName, { color: colors.text }]}>{mainAgent.name}</Text>
-                <Text style={[styles.mainAgentDesc, { color: colors.text + '80' }]} numberOfLines={1}>
+                <Text style= [styles.mainAgentName, { color: colors.text }]}>{mainAgent.name}</Text>
+                <Text style= [styles.mainAgentDesc, { color: colors.text + '80' }]} numberOfLines={1}>
                   {mainAgent.description}
                 </Text>
               </View>
             </View>
             <TouchableOpacity
-              style={[styles.mainAgentButton, { backgroundColor: '#10B981' }]}
+              style= [styles.mainAgentButton, { backgroundColor: '#10B981' }]}
               onPress={() => handleConfigureAgent(mainAgent.id)}
             >
               <Text style={styles.mainAgentButtonText}>Manage</Text>
@@ -207,33 +207,33 @@ export default function AccountingAgentsScreen() {
 
         {/* Stats */}
         <View style={styles.statsContainer}>
-          <Animated.View entering={FadeInRight.delay(100)} style={[styles.statBadge, { backgroundColor: colors.border + '30' }]}>
+          <Animated.View entering={FadeInRight.delay(100)} style= [styles.statBadge, { backgroundColor: colors.border + '30' }]}>
             <User size={16} color={colors.text} />
-            <Text style={[styles.statValue, { color: colors.text }]}>{stats.total}</Text>
-            <Text style={[styles.statLabel, { color: colors.text + '60' }]}>Agents</Text>
+            <Text style= [styles.statValue, { color: colors.text }]}>{stats.total}</Text>
+            <Text style= [styles.statLabel, { color: colors.text + '60' }]}>Agents</Text>
           </Animated.View>
-          <Animated.View entering={FadeInRight.delay(150)} style={[styles.statBadge, { backgroundColor: '#10B98115' }]}>
+          <Animated.View entering={FadeInRight.delay(150)} style= [styles.statBadge, { backgroundColor: '#10B98115' }]}>
             <Zap size={16} color="#10B981" />
-            <Text style={[styles.statValue, { color: '#10B981' }]}>{stats.active}</Text>
-            <Text style={[styles.statLabel, { color: colors.text + '60' }]}>Active</Text>
+            <Text style= [styles.statValue, { color: '#10B981' }]}>{stats.active}</Text>
+            <Text style= [styles.statLabel, { color: colors.text + '60' }]}>Active</Text>
           </Animated.View>
-          <Animated.View entering={FadeInRight.delay(200)} style={[styles.statBadge, { backgroundColor: '#3B82F615' }]}>
+          <Animated.View entering={FadeInRight.delay(200)} style= [styles.statBadge, { backgroundColor: '#3B82F615' }]}>
             <Mic size={16} color="#3B82F6" />
-            <Text style={[styles.statValue, { color: '#3B82F6' }]}>{stats.withVoice}</Text>
-            <Text style={[styles.statLabel, { color: colors.text + '60' }]}>Voice</Text>
+            <Text style= [styles.statValue, { color: '#3B82F6' }]}>{stats.withVoice}</Text>
+            <Text style= [styles.statLabel, { color: colors.text + '60' }]}>Voice</Text>
           </Animated.View>
-          <Animated.View entering={FadeInRight.delay(250)} style={[styles.statBadge, { backgroundColor: '#8B5CF615' }]}>
+          <Animated.View entering={FadeInRight.delay(250)} style= [styles.statBadge, { backgroundColor: '#8B5CF615' }]}>
             <TrendingUp size={16} color="#8B5CF6" />
-            <Text style={[styles.statValue, { color: '#8B5CF6' }]}>{stats.withTraining}</Text>
-            <Text style={[styles.statLabel, { color: colors.text + '60' }]}>Training</Text>
+            <Text style= [styles.statValue, { color: '#8B5CF6' }]}>{stats.withTraining}</Text>
+            <Text style= [styles.statLabel, { color: colors.text + '60' }]}>Training</Text>
           </Animated.View>
         </View>
 
         {/* Search */}
-        <View style={[styles.searchContainer, { backgroundColor: colors.border + '30' }]}>
+        <View style= [styles.searchContainer, { backgroundColor: colors.border + '30' }]}>
           <Search size={18} color={colors.text + '60'} />
           <TextInput
-            style={[styles.searchInput, { color: colors.text }]}
+            style= [styles.searchInput, { color: colors.text }]}
             placeholder="Search accounting agents..."
             placeholderTextColor={colors.text + '40'}
             value={searchQuery}
@@ -251,7 +251,7 @@ export default function AccountingAgentsScreen() {
         ListEmptyComponent={
           <View style={styles.emptyState}>
             <Landmark size={48} color={colors.text + '20'} />
-            <Text style={[styles.emptyTitle, { color: colors.text }]}>No agents found</Text>
+            <Text style= [styles.emptyTitle, { color: colors.text }]}>No agents found</Text>
           </View>
         }
       />
@@ -492,3 +492,4 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
 });
+

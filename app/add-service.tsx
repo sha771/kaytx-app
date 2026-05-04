@@ -104,36 +104,36 @@ export default function AddServiceScreen() {
 
     return (
       <View style={styles.formContainer}>
-        <View style={[styles.serviceIconLarge, { backgroundColor: selectedService.color }]}>
+        <View style= [styles.serviceIconLarge, { backgroundColor: selectedService.color }]}>
           {React.createElement(selectedService.icon, { size: 32, color: 'white' })}
         </View>
-        <Text style={[styles.formTitle, { color: theme.colors.text }]}>
+        <Text style= [styles.formTitle, { color: theme.colors.text }]}>
           Connect {selectedService.name}
         </Text>
 
-        <View style={[styles.modeSelector, { backgroundColor: theme.colors.cardBackground }]}>
+        <View style= [styles.modeSelector, { backgroundColor: theme.colors.cardBackground }]}>
           <TouchableOpacity
-            style={[styles.modeButton, connectionMode === 'api' && { backgroundColor: theme.colors.primary }]}
+            style= [styles.modeButton, connectionMode === 'api' && { backgroundColor: theme.colors.primary }]}
             onPress={() => setConnectionMode('api')}
           >
-            <Text style={[styles.modeButtonText, { color: connectionMode === 'api' ? 'white' : theme.colors.text }]}>API Key</Text>
+            <Text style= [styles.modeButtonText, { color: connectionMode === 'api' ? 'white' : theme.colors.text }]}>API Key</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.modeButton, connectionMode === 'credentials' && { backgroundColor: theme.colors.primary }]}
+            style= [styles.modeButton, connectionMode === 'credentials' && { backgroundColor: theme.colors.primary }]}
             onPress={() => setConnectionMode('credentials')}
           >
-            <Text style={[styles.modeButtonText, { color: connectionMode === 'credentials' ? 'white' : theme.colors.text }]}>Login</Text>
+            <Text style= [styles.modeButtonText, { color: connectionMode === 'credentials' ? 'white' : theme.colors.text }]}>Login</Text>
           </TouchableOpacity>
         </View>
 
         {connectionMode === 'api' ? (
           <>
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: theme.colors.text }]}>API Key / Token</Text>
+              <Text style= [styles.label, { color: theme.colors.text }]}>API Key / Token</Text>
               <View style={styles.inputWrapper}>
                 <ShieldCheck size={20} color={theme.colors.secondaryText} style={styles.inputIcon} />
                 <TextInput
-                  style={[styles.input, { backgroundColor: theme.colors.cardBackground, color: theme.colors.text, borderColor: theme.colors.border }]}
+                  style= [styles.input, { backgroundColor: theme.colors.cardBackground, color: theme.colors.text, borderColor: theme.colors.border }]}
                   placeholder="sk_live_..."
                   placeholderTextColor={theme.colors.secondaryText}
                   value={apiKey}
@@ -144,11 +144,11 @@ export default function AddServiceScreen() {
             </View>
 
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: theme.colors.text }]}>Instance ID (Optional)</Text>
+              <Text style= [styles.label, { color: theme.colors.text }]}>Instance ID (Optional)</Text>
               <View style={styles.inputWrapper}>
                 <Globe size={20} color={theme.colors.secondaryText} style={styles.inputIcon} />
                 <TextInput
-                  style={[styles.input, { backgroundColor: theme.colors.cardBackground, color: theme.colors.text, borderColor: theme.colors.border }]}
+                  style= [styles.input, { backgroundColor: theme.colors.cardBackground, color: theme.colors.text, borderColor: theme.colors.border }]}
                   placeholder="Cloud ID"
                   placeholderTextColor={theme.colors.secondaryText}
                   value={instanceId}
@@ -160,11 +160,11 @@ export default function AddServiceScreen() {
         ) : (
           <>
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: theme.colors.text }]}>Email Address</Text>
+              <Text style= [styles.label, { color: theme.colors.text }]}>Email Address</Text>
               <View style={styles.inputWrapper}>
                 <Mail size={20} color={theme.colors.secondaryText} style={styles.inputIcon} />
                 <TextInput
-                  style={[styles.input, { backgroundColor: theme.colors.cardBackground, color: theme.colors.text, borderColor: theme.colors.border }]}
+                  style= [styles.input, { backgroundColor: theme.colors.cardBackground, color: theme.colors.text, borderColor: theme.colors.border }]}
                   placeholder="account@email.com"
                   placeholderTextColor={theme.colors.secondaryText}
                   value={email}
@@ -176,11 +176,11 @@ export default function AddServiceScreen() {
             </View>
 
             <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: theme.colors.text }]}>Password</Text>
+              <Text style= [styles.label, { color: theme.colors.text }]}>Password</Text>
               <View style={styles.inputWrapper}>
                 <Lock size={20} color={theme.colors.secondaryText} style={styles.inputIcon} />
                 <TextInput
-                  style={[styles.input, { backgroundColor: theme.colors.cardBackground, color: theme.colors.text, borderColor: theme.colors.border }]}
+                  style= [styles.input, { backgroundColor: theme.colors.cardBackground, color: theme.colors.text, borderColor: theme.colors.border }]}
                   placeholder="••••••••"
                   placeholderTextColor={theme.colors.secondaryText}
                   value={password}
@@ -193,7 +193,7 @@ export default function AddServiceScreen() {
         )}
 
         <TouchableOpacity
-          style={[styles.submitButton, { backgroundColor: theme.colors.primary, opacity: isConnecting ? 0.7 : 1 }]}
+          style= [styles.submitButton, { backgroundColor: theme.colors.primary, opacity: isConnecting ? 0.7 : 1 }]}
           onPress={handleConnect}
           disabled={isConnecting}
         >
@@ -209,7 +209,7 @@ export default function AddServiceScreen() {
           onPress={() => setSelectedService(null)}
           disabled={isConnecting}
         >
-          <Text style={[styles.cancelButtonText, { color: theme.colors.secondaryText }]}>Back to List</Text>
+          <Text style= [styles.cancelButtonText, { color: theme.colors.secondaryText }]}>Back to List</Text>
         </TouchableOpacity>
       </View>
     );
@@ -222,9 +222,9 @@ export default function AddServiceScreen() {
       visible={true}
       onRequestClose={() => router.back()}
     >
-      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-        <View style={[styles.header, { borderBottomColor: theme.colors.border }]}>
-          <Text style={[styles.title, { color: theme.colors.text }]}>
+      <SafeAreaView style= [styles.container, { backgroundColor: theme.colors.background }]}>
+        <View style= [styles.header, { borderBottomColor: theme.colors.border }]}>
+          <Text style= [styles.title, { color: theme.colors.text }]}>
             {selectedService ? 'Connection Details' : 'Add Service'}
           </Text>
           <TouchableOpacity
@@ -240,7 +240,7 @@ export default function AddServiceScreen() {
             <View style={styles.searchContainer}>
               <Search size={18} color={theme.colors.secondaryText} />
               <TextInput
-                style={[styles.searchInput, { color: theme.colors.text }]}
+                style= [styles.searchInput, { color: theme.colors.text }]}
                 placeholder="Search services..."
                 placeholderTextColor={theme.colors.secondaryText}
                 value={searchQuery}
@@ -258,7 +258,7 @@ export default function AddServiceScreen() {
                   return (
                     <TouchableOpacity
                       key={service.id}
-                      style={[
+                      style= [
                         styles.serviceCard,
                         { backgroundColor: theme.colors.cardBackground },
                         isConnected && styles.connectedCard,
@@ -273,28 +273,28 @@ export default function AddServiceScreen() {
                       }}
                       disabled={isConnected}
                     >
-                      <View style={[styles.serviceIcon, { backgroundColor: service.color }]}>
+                      <View style= [styles.serviceIcon, { backgroundColor: service.color }]}>
                         <Icon size={24} color="white" />
                       </View>
 
                       <View style={styles.serviceTitleRow}>
-                        <Text style={[styles.serviceName, { color: theme.colors.text }]}>
+                        <Text style= [styles.serviceName, { color: theme.colors.text }]}>
                           {service.name}
                         </Text>
                         {isPremium && !isEnterprise && <Lock size={12} color={theme.colors.secondaryText} style={{ marginLeft: 4 }} />}
                       </View>
 
-                      <Text style={[styles.serviceDescription, { color: theme.colors.secondaryText }]}>
+                      <Text style= [styles.serviceDescription, { color: theme.colors.secondaryText }]}>
                         {service.description}
                       </Text>
 
                       {isConnected ? (
-                        <View style={[styles.connectedBadge, { backgroundColor: theme.colors.success }]}>
+                        <View style= [styles.connectedBadge, { backgroundColor: theme.colors.success }]}>
                           <Check size={14} color="white" />
                           <Text style={styles.connectedText}>Connected</Text>
                         </View>
                       ) : (
-                        <View style={[styles.connectButton, { backgroundColor: theme.colors.primary }]}>
+                        <View style= [styles.connectButton, { backgroundColor: theme.colors.primary }]}>
                           <Text style={styles.connectButtonText}>Connect</Text>
                         </View>
                       )}
@@ -488,3 +488,4 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 });
+

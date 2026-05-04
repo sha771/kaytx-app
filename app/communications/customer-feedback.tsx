@@ -163,9 +163,9 @@ export default function CustomerFeedbackScreen() {
         </View>
 
         <View style={styles.filterContainer}>
-          {['all', 'positive', 'neutral', 'negative'].map(filter => (
+          {['all', 'positive', 'neutral', 'negative'].map(Filter => (
             <TouchableOpacity
-              key={Filter}
+              key={Funnel}
               style={[styles.filterButton, selectedFilter === Filter && styles.activeFilter]}
               onPress={() => setSelectedFilter(Filter as any)}
             >
@@ -187,7 +187,7 @@ export default function CustomerFeedbackScreen() {
           <Text style={styles.sectionTitle}>Quick Actions</Text>
           <View style={styles.quickActions}>
             <TouchableOpacity style={styles.quickAction}>
-              <ChartBarBig size={24} color="#007AFF" />
+              <ChartBar size={24} color="#007AFF" />
               <Text style={styles.quickActionText}>Analytics</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.quickAction}>

@@ -263,7 +263,7 @@ export default function ReceptionistCallScriptsScreen() {
             <View style={styles.complianceRow}>
               {(['all', 'approved', 'review'] as const).map(filter => (
                 <TouchableOpacity
-                  key={Filter}
+                  key={Funnel}
                   style={[styles.complianceChip, complianceFilter === Filter && styles.complianceChipActive]}
                   onPress={() => handleComplianceChange(Filter)}
                 >

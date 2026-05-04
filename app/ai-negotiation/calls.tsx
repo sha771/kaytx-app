@@ -290,7 +290,7 @@ export default function CallsScreen() {
         >
           {(['all', 'voice', 'whatsapp', 'sms'] as const).map(filter => (
             <TouchableOpacity
-              key={Filter}
+              key={Funnel}
               style={[styles.channelFilterChip, channelFilter === Filter && { backgroundColor: theme.colors.primary }]}
               onPress={() => setChannelFilter(Filter)}
             >

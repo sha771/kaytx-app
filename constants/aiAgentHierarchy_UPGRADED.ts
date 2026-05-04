@@ -123,7 +123,7 @@ export interface TokenOptimizationConfig {
   };
 }
 
-export const TOKEN_OPTIMIZATION: TokenOptimizationConfig = {
+const TOKEN_OPTIMIZATION_CONFIG: TokenOptimizationConfig = {
   smartRouting: {
     enabled: true,
     classifierTokens: 100,
@@ -153,6 +153,7 @@ export const TOKEN_OPTIMIZATION: TokenOptimizationConfig = {
   },
 };
 
+
 // ============================================
 // COST COMPARISON
 // ============================================
@@ -165,7 +166,7 @@ export interface CostComparison {
   accuracy: string;
 }
 
-export const COST_COMPARISON: CostComparison[] = [
+const COST_COMPARISON_DATA: CostComparison[] = [
   {
     scenario: 'Single Agent',
     tokensPerRequest: 4000,
@@ -211,7 +212,7 @@ export interface IntelligenceLayerComponent {
   exampleOutput: string;
 }
 
-export const INTELLIGENCE_LAYER: IntelligenceLayerComponent[] = [
+const INTELLIGENCE_LAYER_DATA: IntelligenceLayerComponent[] = [
   {
     id: 'predictive-engine',
     name: 'Predictive Engine',
@@ -278,7 +279,7 @@ export interface CommandCenterComponent {
   reportsTo: string;
 }
 
-export const COMMAND_CENTER: CommandCenterComponent[] = [
+const COMMAND_CENTER_DATA: CommandCenterComponent[] = [
   {
     id: 'cdoo',
     acronym: 'CDOO',
@@ -372,7 +373,7 @@ export interface LayerBridgeConfig {
   functions: string[];
 }
 
-export const LAYER_BRIDGE: LayerBridgeConfig = {
+const LAYER_BRIDGE_DATA: LayerBridgeConfig = {
   id: 'layer-bridge',
   name: 'Layer Bridge',
   title: '🌉 LAYER BRIDGE - Digital Interface',
@@ -2339,9 +2340,6 @@ export const specialists: AIEmployeeProfile[] = [
     a2aEndpoints: ['/consult/security-engineer', '/security/engineering'],
     route: '/ai-agent/specialist/security-engineer',
     apiEndpoint: '/api/agents/specialist/security-engineer',
-    a2aEndpoints: ['/consult/security-engineer', '/security/engineering'],
-    route: '/ai-agent/specialist/security-engineer',
-    apiEndpoint: '/api/agents/specialist/security-engineer',
     status: 'active',
     isPremium: false,
     dangerLevel: 'critical',
@@ -2443,34 +2441,9 @@ export const AI_WORKFORCE_UPGRADED_STATS = {
 // EXPORTS
 // ============================================
 
-export {
-  TOKEN_OPTIMIZATION,
-  COST_COMPARISON,
-  INTELLIGENCE_LAYER,
-  COMMAND_CENTER,
-  LAYER_BRIDGE,
-  cSuiteExecutives,
-  vpDirectors,
-  managers,
-  teamLeads,
-  specialists,
-  completeAIWorkforce,
-  AGENT_WORKFORCE_TOTALS,
-  AI_WORKFORCE_UPGRADED_STATS,
-};
-
-export default {
-  cSuiteExecutives,
-  vpDirectors,
-  managers,
-  teamLeads,
-  specialists,
-  completeAIWorkforce,
-  TOKEN_OPTIMIZATION,
-  COST_COMPARISON,
-  INTELLIGENCE_LAYER,
-  COMMAND_CENTER,
-  LAYER_BRIDGE,
-  AGENT_WORKFORCE_TOTALS,
-  AI_WORKFORCE_UPGRADED_STATS,
-};
+// Aliased exports for renamed constants
+export { TOKEN_OPTIMIZATION_CONFIG as TOKEN_OPTIMIZATION };
+export { COST_COMPARISON_DATA as COST_COMPARISON };
+export { INTELLIGENCE_LAYER_DATA as INTELLIGENCE_LAYER };
+export { COMMAND_CENTER_DATA as COMMAND_CENTER };
+export { LAYER_BRIDGE_DATA as LAYER_BRIDGE };

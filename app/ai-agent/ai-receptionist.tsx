@@ -90,7 +90,7 @@ export default function AIReceptionistScreen() {
         <View style={[styles.section, { backgroundColor: theme.colors.cardBackground }]}>
           <View style={styles.sectionHeader}>
             <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Live Call Stream</Text>
-            <ChartBarBig size={18} color={theme.colors.primary} />
+            <ChartBar size={18} color={theme.colors.primary} />
           </View>
           {activities.map((call: any) => (
             <View key={call.id} style={styles.callRow}>

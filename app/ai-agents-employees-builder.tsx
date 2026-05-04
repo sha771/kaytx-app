@@ -77,7 +77,7 @@ import {
   Share2,
   Calculator,
   CircleAlert,
-  ChartBarBig,
+  ChartBar,
 } from 'lucide-react-native';
 
 // Types
@@ -287,14 +287,14 @@ export default function AIAgentsEmployeesBuilder() {
         return (
           <TouchableOpacity
             key={tab.id}
-            style={[styles.tab, isActive && styles.tabActive]}
+            style= [styles.tab, isActive && styles.tabActive]}
             onPress={() => {
               setActiveTab(tab.id);
               setCurrentStep(1);
             }}
           >
             <Icon size={24} color={isActive ? '#fff' : '#64748b'} />
-            <Text style={[styles.tabLabel, isActive && styles.tabLabelActive]}>
+            <Text style= [styles.tabLabel, isActive && styles.tabLabelActive]}>
               {tab.label}
             </Text>
           </TouchableOpacity>
@@ -332,15 +332,15 @@ export default function AIAgentsEmployeesBuilder() {
           <View style={styles.templatesGrid}>
             {/* AI-Powered Prompt Builder */}
             <TouchableOpacity
-              style={[styles.templateCard, styles.templateCardFeatured]}
+              style= [styles.templateCard, styles.templateCardFeatured]}
               onPress={() => {
                 setPromptBuilderMode(true);
                 setCurrentStep(2);
               }}
             >
               <Brain size={32} color="#fff" />
-              <Text style={[styles.templateName, styles.templateNameFeatured]}>✨ AI-Powered Creation</Text>
-              <Text style={[styles.templateDesc, styles.templateDescFeatured]}>Just describe what you need - AI builds it for you!</Text>
+              <Text style= [styles.templateName, styles.templateNameFeatured]}>✨ AI-Powered Creation</Text>
+              <Text style= [styles.templateDesc, styles.templateDescFeatured]}>Just describe what you need - AI builds it for you!</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -400,15 +400,15 @@ export default function AIAgentsEmployeesBuilder() {
           <View style={styles.templatesGrid}>
             {/* AI-Powered Prompt Builder */}
             <TouchableOpacity
-              style={[styles.templateCard, styles.templateCardFeatured]}
+              style= [styles.templateCard, styles.templateCardFeatured]}
               onPress={() => {
                 setPromptBuilderMode(true);
                 setCurrentStep(2);
               }}
             >
               <Brain size={32} color="#fff" />
-              <Text style={[styles.templateName, styles.templateNameFeatured]}>✨ AI-Powered Creation</Text>
-              <Text style={[styles.templateDesc, styles.templateDescFeatured]}>Just describe what you need - AI builds it for you!</Text>
+              <Text style= [styles.templateName, styles.templateNameFeatured]}>✨ AI-Powered Creation</Text>
+              <Text style= [styles.templateDesc, styles.templateDescFeatured]}>Just describe what you need - AI builds it for you!</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -425,7 +425,7 @@ export default function AIAgentsEmployeesBuilder() {
             
             {EMPLOYEE_TEMPLATES.map((template) => {
               const Icon = template.icon === 'Code' ? Code :
-                          template.icon === 'ChartBarBig' ? ChartBarBig :
+                          template.icon === 'ChartBar' ? ChartBar :
                           template.icon === 'Megaphone' ? Megaphone :
                           template.icon === 'Headphones' ? Headphones :
                           template.icon === 'Users' ? Users :
@@ -473,33 +473,33 @@ export default function AIAgentsEmployeesBuilder() {
         {/* Mode Selection */}
         <View style={styles.departmentModeContainer}>
           <TouchableOpacity
-            style={[styles.departmentModeCard, departmentMode === 'existing' && styles.departmentModeCardActive]}
+            style= [styles.departmentModeCard, departmentMode === 'existing' && styles.departmentModeCardActive]}
             onPress={() => setDepartmentMode('existing')}
           >
             <Building2 size={28} color={departmentMode === 'existing' ? '#6366f1' : '#64748b'} />
-            <Text style={[styles.departmentModeTitle, departmentMode === 'existing' && styles.departmentModeTitleActive]}>
+            <Text style= [styles.departmentModeTitle, departmentMode === 'existing' && styles.departmentModeTitleActive]}>
               Use Existing
             </Text>
             <Text style={styles.departmentModeDesc}>21 default departments</Text>
           </TouchableOpacity>
           
           <TouchableOpacity
-            style={[styles.departmentModeCard, departmentMode === 'custom' && styles.departmentModeCardActive]}
+            style= [styles.departmentModeCard, departmentMode === 'custom' && styles.departmentModeCardActive]}
             onPress={() => setDepartmentMode('custom')}
           >
             <Sparkles size={28} color={departmentMode === 'custom' ? '#6366f1' : '#64748b'} />
-            <Text style={[styles.departmentModeTitle, departmentMode === 'custom' && styles.departmentModeTitleActive]}>
+            <Text style= [styles.departmentModeTitle, departmentMode === 'custom' && styles.departmentModeTitleActive]}>
               Create Custom
             </Text>
             <Text style={styles.departmentModeDesc}>Build from scratch</Text>
           </TouchableOpacity>
           
           <TouchableOpacity
-            style={[styles.departmentModeCard, departmentMode === 'template' && styles.departmentModeCardActive]}
+            style= [styles.departmentModeCard, departmentMode === 'template' && styles.departmentModeCardActive]}
             onPress={() => setDepartmentMode('template')}
           >
             <Layers size={28} color={departmentMode === 'template' ? '#6366f1' : '#64748b'} />
-            <Text style={[styles.departmentModeTitle, departmentMode === 'template' && styles.departmentModeTitleActive]}>
+            <Text style= [styles.departmentModeTitle, departmentMode === 'template' && styles.departmentModeTitleActive]}>
               Use Template
             </Text>
             <Text style={styles.departmentModeDesc}>Specialized presets</Text>
@@ -516,7 +516,7 @@ export default function AIAgentsEmployeesBuilder() {
                 return (
                   <TouchableOpacity
                     key={dept.id}
-                    style={[styles.existingDeptCard, isSelected && styles.existingDeptCardSelected]}
+                    style= [styles.existingDeptCard, isSelected && styles.existingDeptCardSelected]}
                     onPress={() => {
                       setDepartmentData({
                         ...departmentData,
@@ -529,7 +529,7 @@ export default function AIAgentsEmployeesBuilder() {
                       handleNext();
                     }}
                   >
-                    <Text style={[styles.existingDeptName, isSelected && styles.existingDeptNameSelected]}>
+                    <Text style= [styles.existingDeptName, isSelected && styles.existingDeptNameSelected]}>
                       {dept.name}
                     </Text>
                     <Text style={styles.existingDeptCategory}>{dept.category}</Text>
@@ -1035,7 +1035,7 @@ export default function AIAgentsEmployeesBuilder() {
             />
             
             <TouchableOpacity
-              style={[styles.generateButton, (!aiPrompt.trim() || isGenerating) && styles.generateButtonDisabled]}
+              style= [styles.generateButton, (!aiPrompt.trim() || isGenerating) && styles.generateButtonDisabled]}
               onPress={handleGenerateFromPrompt}
               disabled={!aiPrompt.trim() || isGenerating}
             >
@@ -1087,7 +1087,7 @@ export default function AIAgentsEmployeesBuilder() {
                 <View style={styles.performanceRow}>
                   <View style={styles.performanceItem}>
                     <Text style={styles.performanceLabel}>Performance Score</Text>
-                    <Text style={[styles.performanceValue, { color: aiGeneratedConfig.performanceScore > 80 ? '#10b981' : aiGeneratedConfig.performanceScore > 60 ? '#f59e0b' : '#ef4444' }]}>
+                    <Text style= [styles.performanceValue, { color: aiGeneratedConfig.performanceScore > 80 ? '#10b981' : aiGeneratedConfig.performanceScore > 60 ? '#f59e0b' : '#ef4444' }]}>
                       {aiGeneratedConfig.performanceScore}%
                     </Text>
                   </View>
@@ -1181,7 +1181,7 @@ export default function AIAgentsEmployeesBuilder() {
 
               {/* Compliance */}
               {aiGeneratedConfig.compliance.length > 0 && (
-                <View style={[styles.generatedSection, styles.complianceSection]}>
+                <View style= [styles.generatedSection, styles.complianceSection]}>
                   <Text style={styles.generatedLabel}>⚠️ Compliance Requirements</Text>
                   <View style={styles.complianceList}>
                     {aiGeneratedConfig.compliance.map((item: string) => (
@@ -1219,9 +1219,9 @@ export default function AIAgentsEmployeesBuilder() {
                 <View style={styles.riskSection}>
                   <Text style={styles.riskTitle}>⚠️ Risk Assessment</Text>
                   {aiGeneratedConfig.risks.map((risk: any, idx: number) => (
-                    <View key={idx} style={[styles.riskItem, risk.level === 'high' ? styles.riskHigh : risk.level === 'medium' ? styles.riskMedium : styles.riskLow]}>
+                    <View key={idx} style= [styles.riskItem, risk.level === 'high' ? styles.riskHigh : risk.level === 'medium' ? styles.riskMedium : styles.riskLow]}>
                       <CircleAlert size={16} color={risk.level === 'high' ? '#ef4444' : risk.level === 'medium' ? '#f59e0b' : '#10b981'} />
-                      <Text style={[styles.riskText, { color: risk.level === 'high' ? '#ef4444' : risk.level === 'medium' ? '#f59e0b' : '#10b981' }]}>
+                      <Text style= [styles.riskText, { color: risk.level === 'high' ? '#ef4444' : risk.level === 'medium' ? '#f59e0b' : '#10b981' }]}>
                         {risk.description}
                       </Text>
                     </View>
@@ -1277,11 +1277,11 @@ export default function AIAgentsEmployeesBuilder() {
               return (
                 <TouchableOpacity
                   key={type.id}
-                  style={[styles.optionCard, isSelected && styles.optionCardSelected]}
+                  style= [styles.optionCard, isSelected && styles.optionCardSelected]}
                   onPress={() => setAgentData({ ...agentData, agentType: type.id })}
                 >
                   <Icon size={24} color={isSelected ? '#6366f1' : '#64748b'} />
-                  <Text style={[styles.optionTitle, isSelected && styles.optionTitleSelected]}>
+                  <Text style= [styles.optionTitle, isSelected && styles.optionTitleSelected]}>
                     {type.name}
                   </Text>
                   <Text style={styles.optionDesc}>{type.description}</Text>
@@ -1312,7 +1312,7 @@ export default function AIAgentsEmployeesBuilder() {
           
           {/* Name */}
           <View style={styles.row}>
-            <View style={[styles.inputGroup, styles.halfWidth]}>
+            <View style= [styles.inputGroup, styles.halfWidth]}>
               <Text style={styles.label}>First Name</Text>
               <TextInput
                 style={styles.input}
@@ -1321,7 +1321,7 @@ export default function AIAgentsEmployeesBuilder() {
                 onChangeText={(text) => setEmployeeData({ ...employeeData, firstName: text })}
               />
             </View>
-            <View style={[styles.inputGroup, styles.halfWidth]}>
+            <View style= [styles.inputGroup, styles.halfWidth]}>
               <Text style={styles.label}>Last Name</Text>
               <TextInput
                 style={styles.input}
@@ -1352,10 +1352,10 @@ export default function AIAgentsEmployeesBuilder() {
               return (
                 <TouchableOpacity
                   key={level.id}
-                  style={[styles.levelCard, isSelected && styles.levelCardSelected]}
+                  style= [styles.levelCard, isSelected && styles.levelCardSelected]}
                   onPress={() => setEmployeeData({ ...employeeData, level: level.id })}
                 >
-                  <Text style={[styles.levelLabel, isSelected && styles.levelLabelSelected]}>
+                  <Text style= [styles.levelLabel, isSelected && styles.levelLabelSelected]}>
                     {level.label}
                   </Text>
                   <Text style={styles.levelDesc}>{level.description}</Text>
@@ -1372,10 +1372,10 @@ export default function AIAgentsEmployeesBuilder() {
               return (
                 <TouchableOpacity
                   key={type.id}
-                  style={[styles.employmentCard, isSelected && styles.employmentCardSelected]}
+                  style= [styles.employmentCard, isSelected && styles.employmentCardSelected]}
                   onPress={() => setEmployeeData({ ...employeeData, employmentType: type.id })}
                 >
-                  <Text style={[styles.employmentLabel, isSelected && styles.employmentLabelSelected]}>
+                  <Text style= [styles.employmentLabel, isSelected && styles.employmentLabelSelected]}>
                     {type.label}
                   </Text>
                 </TouchableOpacity>
@@ -1414,11 +1414,11 @@ export default function AIAgentsEmployeesBuilder() {
             return (
               <TouchableOpacity
                 key={cat.id}
-                style={[styles.categoryCard, isSelected && styles.categoryCardSelected]}
+                style= [styles.categoryCard, isSelected && styles.categoryCardSelected]}
                 onPress={() => setDepartmentData({ ...departmentData, category: cat.id as any })}
               >
                 <Icon size={24} color={isSelected ? '#6366f1' : '#64748b'} />
-                <Text style={[styles.categoryLabel, isSelected && styles.categoryLabelSelected]}>
+                <Text style= [styles.categoryLabel, isSelected && styles.categoryLabelSelected]}>
                   {cat.name}
                 </Text>
                 <Text style={styles.categoryDesc}>{cat.description}</Text>
@@ -1432,7 +1432,7 @@ export default function AIAgentsEmployeesBuilder() {
         {departmentData.category && DEPARTMENT_FUNCTION_TEMPLATES[departmentData.category]?.map((func) => (
           <TouchableOpacity
             key={func.id}
-            style={[
+            style= [
               styles.functionItem,
               departmentData.functions?.some(f => f.id === func.id) && styles.functionItemSelected
             ]}
@@ -1480,7 +1480,7 @@ export default function AIAgentsEmployeesBuilder() {
               return (
                 <TouchableOpacity
                   key={skill.id}
-                  style={[styles.skillChip, isSelected && styles.skillChipSelected]}
+                  style= [styles.skillChip, isSelected && styles.skillChipSelected]}
                   onPress={() => {
                     const current = agentData.skills || [];
                     const updated = isSelected
@@ -1489,7 +1489,7 @@ export default function AIAgentsEmployeesBuilder() {
                     setAgentData({ ...agentData, skills: updated });
                   }}
                 >
-                  <Text style={[styles.skillText, isSelected && styles.skillTextSelected]}>
+                  <Text style= [styles.skillText, isSelected && styles.skillTextSelected]}>
                     {skill.name}
                   </Text>
                 </TouchableOpacity>
@@ -1546,7 +1546,7 @@ export default function AIAgentsEmployeesBuilder() {
               return (
                 <TouchableOpacity
                   key={skill.id}
-                  style={[styles.skillChip, isSelected && styles.skillChipSelected]}
+                  style= [styles.skillChip, isSelected && styles.skillChipSelected]}
                   onPress={() => {
                     const current = employeeData.skills || [];
                     const updated = isSelected
@@ -1555,7 +1555,7 @@ export default function AIAgentsEmployeesBuilder() {
                     setEmployeeData({ ...employeeData, skills: updated });
                   }}
                 >
-                  <Text style={[styles.skillText, isSelected && styles.skillTextSelected]}>
+                  <Text style= [styles.skillText, isSelected && styles.skillTextSelected]}>
                     {skill.name}
                   </Text>
                 </TouchableOpacity>
@@ -1571,7 +1571,7 @@ export default function AIAgentsEmployeesBuilder() {
             </Text>
             <View style={styles.balanceBar}>
               <View 
-                style={[styles.balanceFill, { width: `${employeeData.aiWorkloadBalance || 0}%` }]} 
+                style= [styles.balanceFill, { width: `${employeeData.aiWorkloadBalance || 0}%` }]} 
               />
             </View>
             <View style={styles.balanceButtons}>
@@ -1855,7 +1855,7 @@ export default function AIAgentsEmployeesBuilder() {
                     <Text style={styles.costLabel}>Intelligence Features</Text>
                     <Text style={styles.costValue}>${cost.intelligenceCost.toFixed(2)}</Text>
                   </View>
-                  <View style={[styles.costRow, styles.costRowTotal]}>
+                  <View style= [styles.costRow, styles.costRowTotal]}>
                     <Text style={styles.costLabelTotal}>Total Monthly</Text>
                     <Text style={styles.costValueTotal}>{cost.monthlyCostFormatted}</Text>
                   </View>
@@ -1889,9 +1889,9 @@ export default function AIAgentsEmployeesBuilder() {
                   </View>
                   <View style={styles.costRow}>
                     <Text style={styles.costLabel}>Productivity Boost</Text>
-                    <Text style={[styles.costValue, styles.costPositive]}>{cost.productivityBoost}</Text>
+                    <Text style= [styles.costValue, styles.costPositive]}>{cost.productivityBoost}</Text>
                   </View>
-                  <View style={[styles.costRow, styles.costRowTotal]}>
+                  <View style= [styles.costRow, styles.costRowTotal]}>
                     <Text style={styles.costLabelTotal}>Annual Cost (with benefits)</Text>
                     <Text style={styles.costValueTotal}>{cost.costFormatted}</Text>
                   </View>
@@ -1941,7 +1941,7 @@ export default function AIAgentsEmployeesBuilder() {
       {/* Progress */}
       <View style={styles.progressContainer}>
         <View style={styles.progressBar}>
-          <View style={[styles.progressFill, { width: `${(currentStep / totalSteps) * 100}%` }]} />
+          <View style= [styles.progressFill, { width: `${(currentStep / totalSteps) * 100}%` }]} />
         </View>
         <Text style={styles.progressText}>Step {currentStep} of {totalSteps}</Text>
       </View>
@@ -1957,11 +1957,11 @@ export default function AIAgentsEmployeesBuilder() {
       {/* Footer */}
       <View style={styles.footer}>
         <TouchableOpacity
-          style={[styles.footerButton, styles.footerButtonSecondary, currentStep === 1 && styles.footerButtonDisabled]}
+          style= [styles.footerButton, styles.footerButtonSecondary, currentStep === 1 && styles.footerButtonDisabled]}
           onPress={handleBack}
           disabled={currentStep === 1}
         >
-          <Text style={[styles.footerButtonText, styles.footerButtonTextSecondary]}>Back</Text>
+          <Text style= [styles.footerButtonText, styles.footerButtonTextSecondary]}>Back</Text>
         </TouchableOpacity>
         
         {currentStep < totalSteps ? (
@@ -1970,7 +1970,7 @@ export default function AIAgentsEmployeesBuilder() {
             <ChevronRight size={20} color="#fff" />
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity style={[styles.footerButton, styles.footerButtonSave]} onPress={handleSave}>
+          <TouchableOpacity style= [styles.footerButton, styles.footerButtonSave]} onPress={handleSave}>
             <Save size={20} color="#fff" />
             <Text style={styles.footerButtonText}>Save</Text>
           </TouchableOpacity>
@@ -3059,3 +3059,4 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+

@@ -674,7 +674,7 @@ export default function MonitoringScreen() {
                 <Text style={[styles.logStreamStat, { color: theme.colors.secondaryText }]}>96% logs indexed • 14 traces correlated</Text>
                 <View style={styles.streamFooter}>
                   <View style={[styles.streamInsight, { backgroundColor: theme.colors.background }]}>
-                    <ChartBarBig size={14} color={theme.colors.text} />
+                    <ChartBar size={14} color={theme.colors.text} />
                     <Text style={[styles.streamInsightText, { color: theme.colors.text }]}>p99 412ms</Text>
                   </View>
                   <View style={[styles.streamInsight, { backgroundColor: theme.colors.background }]}>
@@ -810,7 +810,7 @@ export default function MonitoringScreen() {
             <View style={styles.logFilters}>
               {(['all', 'prod', 'staging', 'dev'] as const).map((Filter) => (
                 <TouchableOpacity
-                  key={Filter}
+                  key={Funnel}
                   style={[styles.logFilterChip, logFilter === Filter && { backgroundColor: theme.colors.primary }]}
                   onPress={() => setLogFilter(Filter)}
                 >

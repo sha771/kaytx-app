@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Users, Activity, Star, UserPlus, CircleCheckBig, Clock, Target, ArrowRight, ChartBar, MessageSquare, Calendar, Shield, GraduationCap, Heart, Award } from 'lucide-react-native';
+import { Users, Activity, Star, UserPlus, CircleCheckBig, Clock, Target, ArrowRight, ChartBar, MessageSquare, Calendar, Shield, GraduationCap, Heart, Award, ChartBar } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { useRouter } from 'expo-router';
 
@@ -64,7 +64,7 @@ export default function HRDepartment() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#9C27B012' }]}><act.icon size={24} color="#9C27B0" /><Text style={[styles.actionText, { color: '#9C27B0' }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:ChartBar},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#9C27B012' }]}><act.icon size={24} color="#9C27B0" /><Text style={[styles.actionText, { color: '#9C27B0' }]}>{act.label}</Text></TouchableOpacity>))}
         </View>
       </View>
     
@@ -98,3 +98,4 @@ const styles = StyleSheet.create({
   actionButton:{flex:1,minWidth:'45%',alignItems:'center',padding:16,borderRadius:12},
   actionText:{fontSize:13,fontWeight:'600',marginTop:8}
 });
+

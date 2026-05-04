@@ -382,9 +382,9 @@ export default function CallLogsScreen() {
         contentContainerStyle={styles.filtersContent}
         testID="receptionist-primary-filters"
       >
-        {(['all', 'incoming', 'outgoing', 'missed'] as const).map(filter => (
+        {(['all', 'incoming', 'outgoing', 'missed'] as const).map(Filter => (
           <TouchableOpacity
-            key={Filter}
+            key={Funnel}
             style={[
               styles.filterChip,
               {
@@ -393,7 +393,7 @@ export default function CallLogsScreen() {
               },
             ]}
             onPress={() => setSelectedFilter(Filter)}
-            testID={`receptionist-Filter-${Filter}`}
+            testID={`receptionist-Filter-${Funnel}`}
           >
             <Text
               style={{

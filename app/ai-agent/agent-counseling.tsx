@@ -263,40 +263,40 @@ export default function AgentCounselingScreen() {
     return (
       <TouchableOpacity
         key={session.id}
-        style={[styles.sessionCard, { backgroundColor: theme.colors.cardBackground }]}
+        style= [styles.sessionCard, { backgroundColor: theme.colors.cardBackground }]}
         onPress={() => {
           // Navigate to session detail
           router.push(`/ai-agent/counseling/${session.id}`);
         }}
       >
         <View style={styles.sessionHeader}>
-          <View style={[styles.relationshipBadge, { backgroundColor: theme.colors.background }]}>
-            <Text style={[styles.relationshipText, { color: theme.colors.secondaryText }]}>
+          <View style= [styles.relationshipBadge, { backgroundColor: theme.colors.background }]}>
+            <Text style= [styles.relationshipText, { color: theme.colors.secondaryText }]}>
               {getRelationshipLabel(relationship)}
             </Text>
           </View>
-          <View style={[styles.statusBadge, { backgroundColor: getStatusColor(session.status) + '20' }]}>
-            <Text style={[styles.statusText, { color: getStatusColor(session.status) }]}>
+          <View style= [styles.statusBadge, { backgroundColor: getStatusColor(session.status) + '20' }]}>
+            <Text style= [styles.statusText, { color: getStatusColor(session.status) }]}>
               {session.status.replace('_', ' ')}
             </Text>
           </View>
         </View>
         
-        <Text style={[styles.sessionTopic, { color: theme.colors.text }]} numberOfLines={1}>
+        <Text style= [styles.sessionTopic, { color: theme.colors.text }]} numberOfLines={1}>
           {latestRequest?.topic || 'Untitled Session'}
         </Text>
         
         <View style={styles.sessionParticipants}>
           <View style={styles.participantRow}>
             <User size={14} color={theme.colors.secondaryText} />
-            <Text style={[styles.participantText, { color: theme.colors.secondaryText }]}>
+            <Text style= [styles.participantText, { color: theme.colors.secondaryText }]}>
               From: {session.initiator.agentName}
             </Text>
           </View>
           {session.participants.length > 0 && (
             <View style={styles.participantRow}>
               <MessageCircle size={14} color={theme.colors.secondaryText} />
-              <Text style={[styles.participantText, { color: theme.colors.secondaryText }]}>
+              <Text style= [styles.participantText, { color: theme.colors.secondaryText }]}>
                 To: {session.participants.map(p => p.agentName).join(', ')}
               </Text>
             </View>
@@ -306,7 +306,7 @@ export default function AgentCounselingScreen() {
         <View style={styles.sessionFooter}>
           <View style={styles.timeRow}>
             <Clock size={12} color={theme.colors.secondaryText} />
-            <Text style={[styles.timeText, { color: theme.colors.secondaryText }]}>
+            <Text style= [styles.timeText, { color: theme.colors.secondaryText }]}>
               {new Date(session.createdAt).toLocaleDateString()}
             </Text>
           </View>
@@ -323,25 +323,25 @@ export default function AgentCounselingScreen() {
       transparent={true}
       onRequestClose={() => setShowNewSessionModal(false)}
     >
-      <View style={[styles.modalOverlay, { backgroundColor: 'rgba(0,0,0,0.7)' }]}>
-        <View style={[styles.modalContent, { backgroundColor: theme.colors.background }]}>
+      <View style= [styles.modalOverlay, { backgroundColor: 'rgba(0,0,0,0.7)' }]}>
+        <View style= [styles.modalContent, { backgroundColor: theme.colors.background }]}>
           <View style={styles.modalHeader}>
-            <Text style={[styles.modalTitle, { color: theme.colors.text }]}>
+            <Text style= [styles.modalTitle, { color: theme.colors.text }]}>
               New Counseling Session
             </Text>
             <TouchableOpacity onPress={() => setShowNewSessionModal(false)}>
-              <Text style={[styles.closeButton, { color: theme.colors.primary }]}>Close</Text>
+              <Text style= [styles.closeButton, { color: theme.colors.primary }]}>Close</Text>
             </TouchableOpacity>
           </View>
           
           <ScrollView style={styles.modalBody} showsVerticalScrollIndicator={false}>
             {/* Step 1: Select Mode */}
-            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Counseling Mode</Text>
+            <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>Counseling Mode</Text>
             <View style={styles.modeGrid}>
               {availableModes.map(mode => (
                 <TouchableOpacity
                   key={mode.id}
-                  style={[
+                  style= [
                     styles.modeButton,
                     { 
                       backgroundColor: selectedMode === mode.id 
@@ -361,7 +361,7 @@ export default function AgentCounselingScreen() {
                     color={selectedMode === mode.id ? '#fff' : theme.colors.text} 
                   />
                   <Text 
-                    style={[
+                    style= [
                       styles.modeLabel, 
                       { color: selectedMode === mode.id ? '#fff' : theme.colors.text }
                     ]}
@@ -375,14 +375,14 @@ export default function AgentCounselingScreen() {
             {/* Step 2: Select Target Agent */}
             {targetAgents.length > 0 && (
               <>
-                <Text style={[styles.sectionTitle, { color: theme.colors.text, marginTop: 20 }]}>
+                <Text style= [styles.sectionTitle, { color: theme.colors.text, marginTop: 20 }]}>
                   Select Target Agent
                 </Text>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.agentScroll}>
                   {targetAgents.map(targetAgent => (
                     <TouchableOpacity
                       key={targetAgent.id}
-                      style={[
+                      style= [
                         styles.agentButton,
                         { 
                           backgroundColor: selectedTargetAgent === targetAgent.id 
@@ -399,7 +399,7 @@ export default function AgentCounselingScreen() {
                         </Text>
                       </View>
                       <Text 
-                        style={[
+                        style= [
                           styles.agentName, 
                           { color: selectedTargetAgent === targetAgent.id ? '#fff' : theme.colors.text }
                         ]}
@@ -408,7 +408,7 @@ export default function AgentCounselingScreen() {
                         {targetAgent.name}
                       </Text>
                       <Text 
-                        style={[
+                        style= [
                           styles.agentRole, 
                           { color: selectedTargetAgent === targetAgent.id ? 'rgba(255,255,255,0.7)' : theme.colors.secondaryText }
                         ]}
@@ -422,14 +422,14 @@ export default function AgentCounselingScreen() {
             )}
             
             {/* Step 3: Select Counseling Type */}
-            <Text style={[styles.sectionTitle, { color: theme.colors.text, marginTop: 20 }]}>
+            <Text style= [styles.sectionTitle, { color: theme.colors.text, marginTop: 20 }]}>
               Counseling Type
             </Text>
             <View style={styles.typeGrid}>
               {availableCounselingTypes.map(type => (
                 <TouchableOpacity
                   key={type.id}
-                  style={[
+                  style= [
                     styles.typeButton,
                     { 
                       backgroundColor: selectedCounselingType === type.id 
@@ -443,10 +443,10 @@ export default function AgentCounselingScreen() {
                   onPress={() => setSelectedCounselingType(type.id)}
                 >
                   <type.icon size={20} color={type.color} />
-                  <Text style={[styles.typeLabel, { color: theme.colors.text }]}>
+                  <Text style= [styles.typeLabel, { color: theme.colors.text }]}>
                     {type.label}
                   </Text>
-                  <Text style={[styles.typeDescription, { color: theme.colors.secondaryText }]}>
+                  <Text style= [styles.typeDescription, { color: theme.colors.secondaryText }]}>
                     {type.description}
                   </Text>
                 </TouchableOpacity>
@@ -454,11 +454,11 @@ export default function AgentCounselingScreen() {
             </View>
             
             {/* Step 4: Topic and Details */}
-            <Text style={[styles.sectionTitle, { color: theme.colors.text, marginTop: 20 }]}>
+            <Text style= [styles.sectionTitle, { color: theme.colors.text, marginTop: 20 }]}>
               Session Details
             </Text>
             <TextInput
-              style={[styles.input, { 
+              style= [styles.input, { 
                 backgroundColor: theme.colors.cardBackground,
                 color: theme.colors.text,
                 borderColor: theme.colors.border,
@@ -469,7 +469,7 @@ export default function AgentCounselingScreen() {
               onChangeText={setTopic}
             />
             <TextInput
-              style={[styles.textArea, { 
+              style= [styles.textArea, { 
                 backgroundColor: theme.colors.cardBackground,
                 color: theme.colors.text,
                 borderColor: theme.colors.border,
@@ -484,14 +484,14 @@ export default function AgentCounselingScreen() {
             />
             
             {/* Priority */}
-            <Text style={[styles.sectionTitle, { color: theme.colors.text, marginTop: 20 }]}>
+            <Text style= [styles.sectionTitle, { color: theme.colors.text, marginTop: 20 }]}>
               Priority
             </Text>
             <View style={styles.priorityRow}>
               {(['low', 'medium', 'high', 'critical'] as const).map(p => (
                 <TouchableOpacity
                   key={p}
-                  style={[
+                  style= [
                     styles.priorityButton,
                     { 
                       backgroundColor: priority === p 
@@ -502,7 +502,7 @@ export default function AgentCounselingScreen() {
                   onPress={() => setPriority(p)}
                 >
                   <Text 
-                    style={[
+                    style= [
                       styles.priorityText, 
                       { color: priority === p ? '#fff' : theme.colors.text }
                     ]}
@@ -515,7 +515,7 @@ export default function AgentCounselingScreen() {
             
             {/* Submit Button */}
             <TouchableOpacity
-              style={[
+              style= [
                 styles.submitButton,
                 { 
                   backgroundColor: theme.colors.primary,
@@ -542,16 +542,16 @@ export default function AgentCounselingScreen() {
 
   if (!agent) {
     return (
-      <View style={[styles.container, { backgroundColor: theme.colors.background, paddingTop: insets.top }]}>
+      <View style= [styles.container, { backgroundColor: theme.colors.background, paddingTop: insets.top }]}>
         <Text style={{ color: theme.colors.text }}>Agent not found</Text>
       </View>
     );
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <View style= [styles.container, { backgroundColor: theme.colors.background }]}>
       {/* Header */}
-      <LinearGradient colors={['#0f172a', '#1e293b']} style={[styles.header, { paddingTop: insets.top + 10 }]}>
+      <LinearGradient colors= ['#0f172a', '#1e293b']} style= [styles.header, { paddingTop: insets.top + 10 }]}>
         <View style={styles.navBar}>
           <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
             <ArrowLeft size={24} color="#fff" />
@@ -564,7 +564,7 @@ export default function AgentCounselingScreen() {
         
         {/* Agent Info Card */}
         <View style={styles.agentInfoCard}>
-          <View style={[styles.agentAvatar, { backgroundColor: employee?.color || '#007AFF' }]}>
+          <View style= [styles.agentAvatar, { backgroundColor: employee?.color || '#007AFF' }]}>
             <Text style={styles.agentInitialLarge}>{agent.name.charAt(0)}</Text>
           </View>
           <View style={styles.agentInfo}>
@@ -592,20 +592,20 @@ export default function AgentCounselingScreen() {
         {/* Tabs */}
         <View style={styles.tabBar}>
           <TouchableOpacity
-            style={[styles.tab, activeTab === 'sessions' && styles.tabActive]}
+            style= [styles.tab, activeTab === 'sessions' && styles.tabActive]}
             onPress={() => setActiveTab('sessions')}
           >
             <MessageCircle size={16} color={activeTab === 'sessions' ? '#fff' : 'rgba(255,255,255,0.6)'} />
-            <Text style={[styles.tabText, activeTab === 'sessions' && styles.tabTextActive]}>
+            <Text style= [styles.tabText, activeTab === 'sessions' && styles.tabTextActive]}>
               Sessions ({sessions.length})
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.tab, activeTab === 'new' && styles.tabActive]}
+            style= [styles.tab, activeTab === 'new' && styles.tabActive]}
             onPress={() => setShowNewSessionModal(true)}
           >
             <Zap size={16} color="#fff" />
-            <Text style={[styles.tabText, styles.tabTextActive]}>New Session</Text>
+            <Text style= [styles.tabText, styles.tabTextActive]}>New Session</Text>
           </TouchableOpacity>
         </View>
       </LinearGradient>
@@ -613,30 +613,30 @@ export default function AgentCounselingScreen() {
       {/* Content */}
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {error && (
-          <View style={[styles.errorBanner, { backgroundColor: '#FF3B3020' }]}>
+          <View style= [styles.errorBanner, { backgroundColor: '#FF3B3020' }]}>
             <TriangleAlert size={16} color="#FF3B30" />
-            <Text style={[styles.errorText, { color: '#FF3B30' }]}>{error}</Text>
+            <Text style= [styles.errorText, { color: '#FF3B30' }]}>{error}</Text>
           </View>
         )}
         
         {loading ? (
           <View style={styles.loadingContainer}>
             <ActivityIndicator size="large" color={theme.colors.primary} />
-            <Text style={[styles.loadingText, { color: theme.colors.secondaryText }]}>
+            <Text style= [styles.loadingText, { color: theme.colors.secondaryText }]}>
               Loading counseling sessions...
             </Text>
           </View>
         ) : sessions.length === 0 ? (
           <View style={styles.emptyState}>
             <Brain size={48} color={theme.colors.border} />
-            <Text style={[styles.emptyTitle, { color: theme.colors.text }]}>
+            <Text style= [styles.emptyTitle, { color: theme.colors.text }]}>
               No Counseling Sessions Yet
             </Text>
-            <Text style={[styles.emptySubtitle, { color: theme.colors.secondaryText }]}>
+            <Text style= [styles.emptySubtitle, { color: theme.colors.secondaryText }]}>
               Start a new session to counsel with other agents
             </Text>
             <TouchableOpacity
-              style={[styles.emptyButton, { backgroundColor: theme.colors.primary }]}
+              style= [styles.emptyButton, { backgroundColor: theme.colors.primary }]}
               onPress={() => setShowNewSessionModal(true)}
             >
               <Zap size={18} color="#fff" />
@@ -882,3 +882,4 @@ const styles = StyleSheet.create({
   },
   submitButtonText: { color: '#fff', fontSize: 15, fontWeight: '700' },
 });
+

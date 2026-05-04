@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { ChartBar, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { ChartBar, ChartBar, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
@@ -13,7 +13,7 @@ export default function AgentPage() {
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#33691E20' }]}><ChartBarBig size={48} color="#33691E" /></View>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#33691E20' }]}><ChartBar size={48} color="#33691E" /></View>
         <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Property Analyst</Text>
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Property Analytics</Text>
         <View style={styles.badgesRow}>

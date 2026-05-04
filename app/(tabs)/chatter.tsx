@@ -679,8 +679,8 @@ export default function ChatterScreen() {
         style={[
           styles.channelItem,
           {
-            backgroundColor: isSelected 
-              ? theme.colors.primary + '20' 
+            backgroundColor: isSelected
+              ? theme.colors.primary + '20'
               : 'transparent',
           },
         ]}
@@ -2062,3 +2062,4 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
+

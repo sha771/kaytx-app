@@ -23,6 +23,7 @@ import {
   Database,
   Gauge,
   UserPlus,
+  User,
   Monitor as MonitorIcon,
   Scale,
   Code,

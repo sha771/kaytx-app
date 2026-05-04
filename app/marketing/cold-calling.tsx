@@ -1,4 +1,4 @@
-﻿ 
+ 
 import React, { useState } from 'react';
 import {
   View,
@@ -167,7 +167,7 @@ export default function ColdCallingScreen() {
               </TouchableOpacity>
             )}
             <TouchableOpacity style={styles.secondaryButton}>
-              <ChartBarBig size={16} color="#007AFF" />
+              <ChartBar size={16} color="#007AFF" />
               <Text style={styles.secondaryButtonText}>View Analytics</Text>
             </TouchableOpacity>
           </View>
@@ -205,7 +205,7 @@ export default function ColdCallingScreen() {
           <View style={styles.scriptSection}>
             <Text style={styles.scriptLabel}>Objection Handling:</Text>
             {script.objectionHandling.map((objection, index) => (
-              <Text key={index} style={styles.scriptText}>• {objection}</Text>
+              <Text key={index} style={styles.scriptText}>� {objection}</Text>
             ))}
           </View>
 
@@ -439,7 +439,7 @@ export default function ColdCallingScreen() {
           style={[styles.tab, activeTab === 'analytics' && styles.activeTab]}
           onPress={() => setActiveTab('analytics')}
         >
-          <ChartBarBig size={20} color={activeTab === 'analytics' ? '#007AFF' : '#8E8E93'} />
+          <ChartBar size={20} color={activeTab === 'analytics' ? '#007AFF' : '#8E8E93'} />
           <Text style={[styles.tabText, activeTab === 'analytics' && styles.activeTabText]}>
             Analytics
           </Text>

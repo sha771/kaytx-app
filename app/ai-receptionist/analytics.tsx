@@ -406,13 +406,13 @@ export default function ReceptionistAnalyticsScreen() {
           <View style={styles.logFilterRow}>
             {(['all', 'errors', 'security'] as const).map(filter => (
               <TouchableOpacity
-                key={Filter}
+                key={Funnel}
                 style={[
                   styles.logFilterButton,
                   { backgroundColor: logFilter === Filter ? theme.colors.primary : theme.colors.cardBackground },
                 ]}
                 onPress={() => setLogFilter(Filter)}
-                testID={`receptionist-analytics-log-Filter-${Filter}`}
+                testID={`receptionist-analytics-log-Filter-${Funnel}`}
               >
                 <Text
                   style={[

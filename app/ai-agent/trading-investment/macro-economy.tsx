@@ -1,4 +1,4 @@
-﻿
+
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Globe, TrendingUp, TrendingDown, Activity, ChartBar, TriangleAlert, DollarSign } from 'lucide-react-native';
@@ -17,9 +17,9 @@ const macroIndicators = [
 ];
 
 const geopoliticalRisks = [
-  { region: 'Middle East', risk: 'Oil Supply Disruption', severity: 'High', impact: 'Energy Prices ↑', color: '#FF3B30' },
+  { region: 'Middle East', risk: 'Oil Supply Disruption', severity: 'High', impact: 'Energy Prices ?', color: '#FF3B30' },
   { region: 'Asia-Pacific', risk: 'Taiwan Strait Tensions', severity: 'Medium', impact: 'Tech Supply Chain', color: '#FF9500' },
-  { region: 'Europe', risk: 'Russia-Ukraine Conflict', severity: 'High', impact: 'European Growth ↓', color: '#FF3B30' },
+  { region: 'Europe', risk: 'Russia-Ukraine Conflict', severity: 'High', impact: 'European Growth ?', color: '#FF3B30' },
   { region: 'Americas', risk: 'US Election Uncertainty', severity: 'Medium', impact: 'USD Volatility', color: '#FF9500' },
 ];
 

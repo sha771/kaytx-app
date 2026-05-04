@@ -70,7 +70,7 @@ export default function SocialMediaScreen() {
               <Text style={styles.actionText}>Schedule</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.actionButton}>
-              <ChartBarBig size={24} color="#6366F1" />
+              <ChartBar size={24} color="#6366F1" />
               <Text style={styles.actionText}>Analytics</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.actionButton}>

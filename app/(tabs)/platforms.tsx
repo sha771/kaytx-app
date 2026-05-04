@@ -305,27 +305,27 @@ export default function PlatformsScreen() {
 
   return (
     <>
-      <View style={[styles.enterpriseHero, { paddingTop: insets.top + 20, backgroundColor: theme.colors.cardBackground }]}>
+      <View style= [styles.enterpriseHero, { paddingTop: insets.top + 20, backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.statsOverview}>
           <View style={styles.overviewItem}>
-            <Text style={[styles.overviewValue, { color: theme.colors.text }]}>$128.5k</Text>
-            <Text style={[styles.overviewLabel, { color: theme.colors.secondaryText }]}>Total Revenue Flow</Text>
+            <Text style= [styles.overviewValue, { color: theme.colors.text }]}>$128.5k</Text>
+            <Text style= [styles.overviewLabel, { color: theme.colors.secondaryText }]}>Total Revenue Flow</Text>
           </View>
           <View style={styles.overviewDivider} />
           <View style={styles.overviewItem}>
-            <Text style={[styles.overviewValue, { color: theme.colors.text }]}>892k</Text>
-            <Text style={[styles.overviewLabel, { color: theme.colors.secondaryText }]}>Autonomous Actions</Text>
+            <Text style= [styles.overviewValue, { color: theme.colors.text }]}>892k</Text>
+            <Text style= [styles.overviewLabel, { color: theme.colors.secondaryText }]}>Autonomous Actions</Text>
           </View>
           <View style={styles.overviewDivider} />
           <View style={styles.overviewItem}>
-            <Text style={[styles.overviewValue, { color: '#34C759' }]}>99.99%</Text>
-            <Text style={[styles.overviewLabel, { color: theme.colors.secondaryText }]}>Sync Reliability</Text>
+            <Text style= [styles.overviewValue, { color: '#34C759' }]}>99.99%</Text>
+            <Text style= [styles.overviewLabel, { color: theme.colors.secondaryText }]}>Sync Reliability</Text>
           </View>
         </View>
 
-        <View style={[styles.syncStatusBar, { backgroundColor: theme.colors.background }]}>
+        <View style= [styles.syncStatusBar, { backgroundColor: theme.colors.background }]}>
           <View style={styles.syncPulse} />
-          <Text style={[styles.syncText, { color: theme.colors.text }]}>Unified Cloud Bridge: ACTIVE</Text>
+          <Text style= [styles.syncText, { color: theme.colors.text }]}>Unified Cloud Bridge: ACTIVE</Text>
           <View style={styles.latencyBadge}>
             <Activity size={10} color="#34C759" />
             <Text style={styles.latencyText}>8ms Global Latency</Text>
@@ -333,41 +333,41 @@ export default function PlatformsScreen() {
         </View>
       </View>
 
-      <View style={[styles.header, { backgroundColor: theme.colors.background }]}>
+      <View style= [styles.header, { backgroundColor: theme.colors.background }]}>
         <View>
-          <Text style={[styles.title, { color: theme.colors.text }]}>Omnichannel Control</Text>
-          <Text style={[styles.subtitle, { color: theme.colors.secondaryText }]}>
+          <Text style= [styles.title, { color: theme.colors.text }]}>Omnichannel Control</Text>
+          <Text style= [styles.subtitle, { color: theme.colors.secondaryText }]}>
             Managing {connectedPlatformList.length} active channels across the enterprise.
           </Text>
         </View>
-        <TouchableOpacity style={[styles.addButton, { backgroundColor: theme.colors.primary }]} onPress={() => router.push('/add-service')}>
+        <TouchableOpacity style= [styles.addButton, { backgroundColor: theme.colors.primary }]} onPress={() => router.push('/add-service')}>
           <Plus size={24} color="#fff" />
         </TouchableOpacity>
       </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        <View style={[styles.enterpriseBanner, { backgroundColor: theme.colors.primary + '10', borderColor: theme.colors.primary + '30' }]}>
+        <View style= [styles.enterpriseBanner, { backgroundColor: theme.colors.primary + '10', borderColor: theme.colors.primary + '30' }]}>
           <Shield size={20} color={theme.colors.primary} />
           <View style={styles.enterpriseBannerContent}>
-            <Text style={[styles.enterpriseBannerTitle, { color: theme.colors.text }]}>End-to-End Encryption</Text>
-            <Text style={[styles.enterpriseBannerText, { color: theme.colors.secondaryText }]}>
+            <Text style= [styles.enterpriseBannerTitle, { color: theme.colors.text }]}>End-to-End Encryption</Text>
+            <Text style= [styles.enterpriseBannerText, { color: theme.colors.secondaryText }]}>
               All platform connections utilize hardware-level HSM modules for key storage.
             </Text>
           </View>
         </View>
 
         <View style={styles.searchContainer}>
-          <View style={[styles.searchBar, { backgroundColor: theme.colors.cardBackground }]}>
+          <View style= [styles.searchBar, { backgroundColor: theme.colors.cardBackground }]}>
             <Search size={20} color={theme.colors.secondaryText} />
             <TextInput
-              style={[styles.searchInput, { color: theme.colors.text }]}
+              style= [styles.searchInput, { color: theme.colors.text }]}
               placeholder="Search platforms, features, or protocols..."
               placeholderTextColor={theme.colors.secondaryText}
               value={searchQuery}
               onChangeText={setSearchQuery}
             />
           </View>
-          <TouchableOpacity style={[styles.filterButton, { backgroundColor: theme.colors.cardBackground }]}>
+          <TouchableOpacity style= [styles.filterButton, { backgroundColor: theme.colors.cardBackground }]}>
             <ListFilter size={20} color={theme.colors.text} />
           </TouchableOpacity>
         </View>
@@ -377,7 +377,7 @@ export default function PlatformsScreen() {
           {['all', 'messaging', 'social', 'business', 'email', 'voice'].map((category) => (
             <TouchableOpacity
               key={category}
-              style={[
+              style= [
                 styles.categoryChip,
                 {
                   backgroundColor: selectedCategory === category ? theme.colors.primary : theme.colors.cardBackground,
@@ -386,7 +386,7 @@ export default function PlatformsScreen() {
               onPress={() => setSelectedCategory(category)}
             >
               <Text
-                style={[
+                style= [
                   styles.categoryText,
                   {
                     color: selectedCategory === category ? 'white' : theme.colors.text,
@@ -399,34 +399,34 @@ export default function PlatformsScreen() {
           ))}
         </ScrollView>
 
-        <View style={[styles.statsOverview, { backgroundColor: theme.colors.cardBackground }]}>
+        <View style= [styles.statsOverview, { backgroundColor: theme.colors.cardBackground }]}>
           <View style={styles.overviewItem}>
             <Activity size={20} color={theme.colors.primary} />
-            <Text style={[styles.overviewValue, { color: theme.colors.text }]}>{connectedPlatformList.length}</Text>
-            <Text style={[styles.overviewLabel, { color: theme.colors.secondaryText }]}>Connected</Text>
+            <Text style= [styles.overviewValue, { color: theme.colors.text }]}>{connectedPlatformList.length}</Text>
+            <Text style= [styles.overviewLabel, { color: theme.colors.secondaryText }]}>Connected</Text>
           </View>
           <View style={styles.overviewItem}>
             <Smartphone size={20} color="#34C759" />
-            <Text style={[styles.overviewValue, { color: theme.colors.text }]}>
+            <Text style= [styles.overviewValue, { color: theme.colors.text }]}>
               {connectedPlatformList.filter((p) => p.connectionMethod === 'on-device').length}
             </Text>
-            <Text style={[styles.overviewLabel, { color: theme.colors.secondaryText }]}>On-device</Text>
+            <Text style= [styles.overviewLabel, { color: theme.colors.secondaryText }]}>On-device</Text>
           </View>
           <View style={styles.overviewItem}>
             <Cloud size={20} color="#FF9500" />
-            <Text style={[styles.overviewValue, { color: theme.colors.text }]}>
+            <Text style= [styles.overviewValue, { color: theme.colors.text }]}>
               {connectedPlatformList.filter((p) => p.connectionMethod === 'cloud').length}
             </Text>
-            <Text style={[styles.overviewLabel, { color: theme.colors.secondaryText }]}>Cloud</Text>
+            <Text style= [styles.overviewLabel, { color: theme.colors.secondaryText }]}>Cloud</Text>
           </View>
         </View>
 
         {filteredConnected.length > 0 && (
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
-              <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Connected Platforms</Text>
+              <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>Connected Platforms</Text>
               <View style={styles.badge}>
-                <Text style={[styles.badgeText, { color: theme.colors.primary }]}>{filteredConnected.length}</Text>
+                <Text style= [styles.badgeText, { color: theme.colors.primary }]}>{filteredConnected.length}</Text>
               </View>
             </View>
             <FlatList
@@ -454,9 +454,9 @@ export default function PlatformsScreen() {
         {filteredAvailable.length > 0 && (
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
-              <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Available Platforms</Text>
+              <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>Available Platforms</Text>
               <View style={styles.badge}>
-                <Text style={[styles.badgeText, { color: theme.colors.primary }]}>{filteredAvailable.length}</Text>
+                <Text style= [styles.badgeText, { color: theme.colors.primary }]}>{filteredAvailable.length}</Text>
               </View>
             </View>
             <FlatList
@@ -481,12 +481,12 @@ export default function PlatformsScreen() {
           </View>
         )}
 
-        <View style={[styles.guideCard, { backgroundColor: theme.colors.cardBackground }]}>
+        <View style= [styles.guideCard, { backgroundColor: theme.colors.cardBackground }]}>
           <View style={styles.guideHeader}>
             <Info size={24} color={theme.colors.primary} />
-            <Text style={[styles.guideTitle, { color: theme.colors.text }]}>Connection Methods</Text>
+            <Text style= [styles.guideTitle, { color: theme.colors.text }]}>Connection Methods</Text>
           </View>
-          <Text style={[styles.guideText, { color: theme.colors.secondaryText }]}>
+          <Text style= [styles.guideText, { color: theme.colors.secondaryText }]}>
             <Text style={{ fontWeight: '600' }}>Enterprise On-device:</Text> Most secure. Messages go directly from your device to
             the platform&apos;s servers with enterprise-grade encryption and compliance.{'\n\n'}
             <Text style={{ fontWeight: '600' }}>Enterprise Cloud:</Text> Messages are relayed through our encrypted enterprise servers with
@@ -856,3 +856,4 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
 });
+

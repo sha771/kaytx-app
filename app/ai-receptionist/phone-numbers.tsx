@@ -482,9 +482,9 @@ export default function PhoneNumbersScreen() {
         </View>
 
         <View style={styles.filterContainer}>
-          {(['all', 'active', 'inactive'] as const).map(filter => (
+          {(['all', 'active', 'inactive'] as const).map(Filter => (
             <TouchableOpacity
-              key={Filter}
+              key={Funnel}
               style={[
                 styles.filterButton,
                 selectedFilter === Filter && { backgroundColor: theme.colors.primary },

@@ -225,7 +225,7 @@ export default function ProjectManagementScreen() {
           </View>
           
           <View style={styles.statCard}>
-            <ChartBarBig size={24} color="#8B5CF6" />
+            <ChartBar size={24} color="#8B5CF6" />
             <Text style={styles.statNumber}>68%</Text>
             <Text style={styles.statLabel}>Completion Rate</Text>
           </View>

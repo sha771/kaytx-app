@@ -305,7 +305,7 @@ export default function AgentFeedbackScreen() {
           </View>
         </View>
         <TouchableOpacity>
-          <ChartBarBig size={24} color={colors.text} />
+          <ChartBar size={24} color={colors.text} />
         </TouchableOpacity>
       </View>
 
@@ -672,3 +672,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+

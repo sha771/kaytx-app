@@ -46,10 +46,10 @@ export default function GlobalActivityLogScreen() {
     const criticalAlerts = activities.filter(a => a.status === 'warning' || a.status === 'error').length;
 
     return (
-        <View style={[styles.container, { backgroundColor: '#09090b' }]}>
+        <View style= [styles.container, { backgroundColor: '#09090b' }]}>
             <Stack.Screen options={{ headerShown: false }} />
 
-            <View style={[styles.header, { paddingTop: insets.top + 10 }]}>
+            <View style= [styles.header, { paddingTop: insets.top + 10 }]}>
                 <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
                     <ArrowLeft size={24} color="#fff" />
                 </TouchableOpacity>
@@ -60,12 +60,12 @@ export default function GlobalActivityLogScreen() {
             </View>
 
             <View style={styles.statsRow}>
-                <LinearGradient colors={['rgba(52, 199, 89, 0.2)', 'rgba(52, 199, 89, 0.05)']} style={styles.statCard}>
-                    <Text style={[styles.statVal, { color: '#34C759' }]}>{completedToday.toLocaleString()}</Text>
+                <LinearGradient colors= ['rgba(52, 199, 89, 0.2)', 'rgba(52, 199, 89, 0.05)']} style={styles.statCard}>
+                    <Text style= [styles.statVal, { color: '#34C759' }]}>{completedToday.toLocaleString()}</Text>
                     <Text style={styles.statLab}>Completed Today</Text>
                 </LinearGradient>
-                <LinearGradient colors={['rgba(255, 59, 48, 0.2)', 'rgba(255, 59, 48, 0.05)']} style={styles.statCard}>
-                    <Text style={[styles.statVal, { color: '#FF3B30' }]}>{criticalAlerts.toLocaleString()}</Text>
+                <LinearGradient colors= ['rgba(255, 59, 48, 0.2)', 'rgba(255, 59, 48, 0.05)']} style={styles.statCard}>
+                    <Text style= [styles.statVal, { color: '#FF3B30' }]}>{criticalAlerts.toLocaleString()}</Text>
                     <Text style={styles.statLab}>Critical Alerts</Text>
                 </LinearGradient>
             </View>
@@ -74,10 +74,10 @@ export default function GlobalActivityLogScreen() {
                 {categoryOptions.map(cat => (
                     <TouchableOpacity
                         key={cat}
-                        style={[styles.filterChip, filter === cat && styles.activeChip]}
+                        style= [styles.filterChip, filter === cat && styles.activeChip]}
                         onPress={() => setFilter(cat)}
                     >
-                        <Text style={[styles.chipText, filter === cat && { color: '#000' }]}>{cat}</Text>
+                        <Text style= [styles.chipText, filter === cat && { color: '#000' }]}>{cat}</Text>
                     </TouchableOpacity>
                 ))}
             </View>
@@ -88,7 +88,7 @@ export default function GlobalActivityLogScreen() {
                 contentContainerStyle={{ padding: 20 }}
                 renderItem={({ item }) => (
                     <View style={styles.logRow}>
-                        <View style={[styles.iconBox, { backgroundColor: item.status === 'success' ? 'rgba(52, 199, 89, 0.1)' : 'rgba(255, 189, 46, 0.1)' }]}>
+                        <View style= [styles.iconBox, { backgroundColor: item.status === 'success' ? 'rgba(52, 199, 89, 0.1)' : 'rgba(255, 189, 46, 0.1)' }]}>
                             {item.status === 'success' ? <CircleCheck size={16} color="#34C759" /> : <TriangleAlert size={16} color="#FFBD2E" />}
                         </View>
                         <View style={styles.logInfo}>
@@ -124,3 +124,4 @@ const styles = StyleSheet.create({
     logDetail: { color: '#666', fontSize: 11 },
     logTime: { color: '#444', fontSize: 11, fontWeight: '600' }
 });
+

@@ -529,38 +529,38 @@ export default function AgentActivationScreen() {
     return (
       <TouchableOpacity 
         key={subAgent.id} 
-        style={[styles.subAgentCard, { backgroundColor: theme.colors.background }]}
+        style= [styles.subAgentCard, { backgroundColor: theme.colors.background }]}
         activeOpacity={0.7}
       >
         <View style={styles.subAgentLeft}>
-          <View style={[styles.subAgentIcon, { backgroundColor: `${mainAgent.color}15` }]}>
+          <View style= [styles.subAgentIcon, { backgroundColor: `${mainAgent.color}15` }]}>
             <subAgent.icon size={18} color={mainAgent.color} />
           </View>
           <View style={styles.subAgentInfo}>
             <View style={styles.subAgentNameRow}>
-              <Text style={[styles.subAgentName, { color: theme.colors.text }]} numberOfLines={1}>{subAgent.name}</Text>
-              <View style={[styles.tierBadge, { backgroundColor: `${getTierColor(subAgent.tier)}15` }]}>
+              <Text style= [styles.subAgentName, { color: theme.colors.text }]} numberOfLines={1}>{subAgent.name}</Text>
+              <View style= [styles.tierBadge, { backgroundColor: `${getTierColor(subAgent.tier)}15` }]}>
                 <TierIcon size={8} color={getTierColor(subAgent.tier)} />
-                <Text style={[styles.tierText, { color: getTierColor(subAgent.tier) }]}>{subAgent.tier}</Text>
+                <Text style= [styles.tierText, { color: getTierColor(subAgent.tier) }]}>{subAgent.tier}</Text>
               </View>
             </View>
-            <Text style={[styles.subAgentDesc, { color: theme.colors.secondaryText }]} numberOfLines={1}>
+            <Text style= [styles.subAgentDesc, { color: theme.colors.secondaryText }]} numberOfLines={1}>
               {subAgent.description}
             </Text>
             <View style={styles.subAgentMeta}>
-              <View style={[styles.statusDot, { backgroundColor: getStatusColor(subAgent.status) }]} />
-              <Text style={[styles.subAgentStatus, { color: getStatusColor(subAgent.status) }]}>
+              <View style= [styles.statusDot, { backgroundColor: getStatusColor(subAgent.status) }]} />
+              <Text style= [styles.subAgentStatus, { color: getStatusColor(subAgent.status) }]}>
                 {subAgent.status}
               </Text>
-              <Text style={[styles.subAgentStat, { color: theme.colors.secondaryText }]}>
+              <Text style= [styles.subAgentStat, { color: theme.colors.secondaryText }]}>
                 • {subAgent.successRate}% • {subAgent.efficiency}% eff
               </Text>
             </View>
             <View style={styles.progressBarContainer}>
-              <View style={[styles.progressBarBg, { backgroundColor: 'rgba(0,0,0,0.08)' }]}>
-                <View style={[styles.progressBarFill, { width: `${subAgent.learningProgress}%`, backgroundColor: mainAgent.color }]} />
+              <View style= [styles.progressBarBg, { backgroundColor: 'rgba(0,0,0,0.08)' }]}>
+                <View style= [styles.progressBarFill, { width: `${subAgent.learningProgress}%`, backgroundColor: mainAgent.color }]} />
               </View>
-              <Text style={[styles.progressText, { color: theme.colors.secondaryText }]}>{subAgent.learningProgress}%</Text>
+              <Text style= [styles.progressText, { color: theme.colors.secondaryText }]}>{subAgent.learningProgress}%</Text>
             </View>
           </View>
         </View>
@@ -581,40 +581,40 @@ export default function AgentActivationScreen() {
     const StatusIcon = getStatusIcon(agent.status);
     
     return (
-      <View key={agent.id} style={[styles.mainAgentContainer, { backgroundColor: theme.colors.cardBackground }]}>
+      <View key={agent.id} style= [styles.mainAgentContainer, { backgroundColor: theme.colors.cardBackground }]}>
         <TouchableOpacity 
           style={styles.mainAgentHeader}
           onPress={() => toggleExpanded(agent.id)}
           activeOpacity={0.7}
         >
-          <View style={[styles.mainAgentIcon, { backgroundColor: `${agent.color}20` }]}>
+          <View style= [styles.mainAgentIcon, { backgroundColor: `${agent.color}20` }]}>
             <agent.icon size={24} color={agent.color} />
           </View>
           <View style={styles.mainAgentInfo}>
             <View style={styles.mainAgentTitleRow}>
-              <Text style={[styles.mainAgentName, { color: theme.colors.text }]} numberOfLines={1}>
+              <Text style= [styles.mainAgentName, { color: theme.colors.text }]} numberOfLines={1}>
                 {agent.name}
               </Text>
             </View>
-            <Text style={[styles.mainAgentArea, { color: theme.colors.secondaryText }]} numberOfLines={1}>
+            <Text style= [styles.mainAgentArea, { color: theme.colors.secondaryText }]} numberOfLines={1}>
               {agent.mainArea}
             </Text>
             <View style={styles.mainAgentStats}>
-              <View style={[styles.statusBadge, { backgroundColor: `${getStatusColor(agent.status)}20` }]}>
+              <View style= [styles.statusBadge, { backgroundColor: `${getStatusColor(agent.status)}20` }]}>
                 <StatusIcon size={10} color={getStatusColor(agent.status)} />
-                <Text style={[styles.statusBadgeText, { color: getStatusColor(agent.status) }]}>{agent.status}</Text>
+                <Text style= [styles.statusBadgeText, { color: getStatusColor(agent.status) }]}>{agent.status}</Text>
               </View>
-              <Text style={[styles.mainAgentStatText, { color: theme.colors.secondaryText }]}>
+              <Text style= [styles.mainAgentStatText, { color: theme.colors.secondaryText }]}>
                 {activeSubAgents}/{agent.subAgents.length} active
               </Text>
-              <Text style={[styles.mainAgentStatText, { color: theme.colors.secondaryText }]}>•</Text>
-              <Text style={[styles.mainAgentStatText, { color: theme.colors.secondaryText }]}>
+              <Text style= [styles.mainAgentStatText, { color: theme.colors.secondaryText }]}>•</Text>
+              <Text style= [styles.mainAgentStatText, { color: theme.colors.secondaryText }]}>
                 {agent.avgSuccessRate}%
               </Text>
             </View>
             <View style={styles.modelInfo}>
               <CircuitBoard size={10} color={theme.colors.secondaryText} />
-              <Text style={[styles.modelText, { color: theme.colors.secondaryText }]}>{agent.aiModel} v{agent.version}</Text>
+              <Text style= [styles.modelText, { color: theme.colors.secondaryText }]}>{agent.aiModel} v{agent.version}</Text>
             </View>
           </View>
           <View style={styles.mainAgentActions}>
@@ -634,21 +634,21 @@ export default function AgentActivationScreen() {
         
         {isExpanded && (
           <View style={styles.subAgentsContainer}>
-            <View style={[styles.subAgentsDivider, { backgroundColor: `${agent.color}30` }]} />
+            <View style= [styles.subAgentsDivider, { backgroundColor: `${agent.color}30` }]} />
             <View style={styles.bulkSubActions}>
               <TouchableOpacity 
-                style={[styles.bulkSubButton, { backgroundColor: `${agent.color}15` }]}
+                style= [styles.bulkSubButton, { backgroundColor: `${agent.color}15` }]}
                 onPress={() => activateAllSubAgents(agent.id)}
               >
                 <SquareCheck size={14} color={agent.color} />
-                <Text style={[styles.bulkSubText, { color: agent.color }]}>Activate All</Text>
+                <Text style= [styles.bulkSubText, { color: agent.color }]}>Activate All</Text>
               </TouchableOpacity>
               <TouchableOpacity 
-                style={[styles.bulkSubButton, { backgroundColor: 'rgba(142, 142, 147, 0.15)' }]}
+                style= [styles.bulkSubButton, { backgroundColor: 'rgba(142, 142, 147, 0.15)' }]}
                 onPress={() => deactivateAllSubAgents(agent.id)}
               >
                 <Square size={14} color="#8E8E93" />
-                <Text style={[styles.bulkSubText, { color: '#8E8E93' }]}>Deactivate All</Text>
+                <Text style= [styles.bulkSubText, { color: '#8E8E93' }]}>Deactivate All</Text>
               </TouchableOpacity>
             </View>
             {agent.subAgents.map(subAgent => renderSubAgent(agent, subAgent))}
@@ -661,15 +661,15 @@ export default function AgentActivationScreen() {
   const renderCoreCapability = (cap: CoreCapability) => (
     <View 
       key={cap.id}
-      style={[styles.coreCapCard, { backgroundColor: theme.colors.cardBackground }]}
+      style= [styles.coreCapCard, { backgroundColor: theme.colors.cardBackground }]}
     >
       <View style={styles.coreCapHeader}>
-        <View style={[styles.coreCapIcon, { backgroundColor: `${getCategoryColor(cap.category)}20` }]}>
+        <View style= [styles.coreCapIcon, { backgroundColor: `${getCategoryColor(cap.category)}20` }]}>
           <cap.icon size={18} color={getCategoryColor(cap.category)} />
         </View>
         <View style={styles.coreCapBadges}>
-          <View style={[styles.impactBadge, { backgroundColor: `${getImpactColor(cap.impact)}15` }]}>
-            <Text style={[styles.impactText, { color: getImpactColor(cap.impact) }]}>{cap.impact}</Text>
+          <View style= [styles.impactBadge, { backgroundColor: `${getImpactColor(cap.impact)}15` }]}>
+            <Text style= [styles.impactText, { color: getImpactColor(cap.impact) }]}>{cap.impact}</Text>
           </View>
         </View>
         <Switch
@@ -679,113 +679,113 @@ export default function AgentActivationScreen() {
           thumbColor={cap.enabled ? getCategoryColor(cap.category) : '#fff'}
         />
       </View>
-      <Text style={[styles.coreCapName, { color: theme.colors.text }]}>{cap.name}</Text>
-      <Text style={[styles.coreCapDesc, { color: theme.colors.secondaryText }]} numberOfLines={2}>
+      <Text style= [styles.coreCapName, { color: theme.colors.text }]}>{cap.name}</Text>
+      <Text style= [styles.coreCapDesc, { color: theme.colors.secondaryText }]} numberOfLines={2}>
         {cap.description}
       </Text>
       <View style={styles.coreCapFooter}>
-        <View style={[styles.categoryTag, { backgroundColor: `${getCategoryColor(cap.category)}15` }]}>
-          <Text style={[styles.categoryTagText, { color: getCategoryColor(cap.category) }]}>{cap.category}</Text>
+        <View style= [styles.categoryTag, { backgroundColor: `${getCategoryColor(cap.category)}15` }]}>
+          <Text style= [styles.categoryTagText, { color: getCategoryColor(cap.category) }]}>{cap.category}</Text>
         </View>
         <View style={styles.performanceBar}>
-          <View style={[styles.performanceBarBg, { backgroundColor: 'rgba(0,0,0,0.08)' }]}>
-            <View style={[styles.performanceBarFill, { width: `${cap.performance}%`, backgroundColor: getCategoryColor(cap.category) }]} />
+          <View style= [styles.performanceBarBg, { backgroundColor: 'rgba(0,0,0,0.08)' }]}>
+            <View style= [styles.performanceBarFill, { width: `${cap.performance}%`, backgroundColor: getCategoryColor(cap.category) }]} />
           </View>
-          <Text style={[styles.performanceText, { color: theme.colors.secondaryText }]}>{cap.performance}%</Text>
+          <Text style= [styles.performanceText, { color: theme.colors.secondaryText }]}>{cap.performance}%</Text>
         </View>
       </View>
     </View>
   );
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <View style={[styles.header, { paddingTop: insets.top + 10 }]}>
+    <View style= [styles.container, { backgroundColor: theme.colors.background }]}>
+      <View style= [styles.header, { paddingTop: insets.top + 10 }]}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
           <ArrowLeft size={24} color={theme.colors.text} />
         </TouchableOpacity>
         <View style={styles.headerCenter}>
-          <Text style={[styles.title, { color: theme.colors.text }]}>Agent Activation Center</Text>
-          <Text style={[styles.subtitle, { color: theme.colors.secondaryText }]}>
+          <Text style= [styles.title, { color: theme.colors.text }]}>Agent Activation Center</Text>
+          <Text style= [styles.subtitle, { color: theme.colors.secondaryText }]}>
             Manage AI workforce & capabilities
           </Text>
         </View>
         <TouchableOpacity 
-          style={[styles.powerButton, { backgroundColor: showBulkActions ? '#FF3B3020' : theme.colors.cardBackground }]}
+          style= [styles.powerButton, { backgroundColor: showBulkActions ? '#FF3B3020' : theme.colors.cardBackground }]}
           onPress={() => setShowBulkActions(!showBulkActions)}
         >
           <Power size={20} color={showBulkActions ? '#FF3B30' : theme.colors.primary} />
         </TouchableOpacity>
       </View>
 
-      <View style={[styles.statsBar, { backgroundColor: theme.colors.cardBackground }]}>
+      <View style= [styles.statsBar, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.statItem}>
-          <Animated.View style={[styles.statIconBg, { backgroundColor: '#34C75920', transform: [{ scale: pulseAnim }] }]}>
+          <Animated.View style= [styles.statIconBg, { backgroundColor: '#34C75920', transform: [{ scale: pulseAnim }] }]}>
             <User size={16} color="#34C759" />
           </Animated.View>
-          <Text style={[styles.statValue, { color: theme.colors.text }]}>{stats.activeMainAgents}/{stats.totalMainAgents}</Text>
-          <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Main Agents</Text>
+          <Text style= [styles.statValue, { color: theme.colors.text }]}>{stats.activeMainAgents}/{stats.totalMainAgents}</Text>
+          <Text style= [styles.statLabel, { color: theme.colors.secondaryText }]}>Main Agents</Text>
         </View>
         <View style={styles.statDivider} />
         <View style={styles.statItem}>
-          <View style={[styles.statIconBg, { backgroundColor: '#007AFF20' }]}>
+          <View style= [styles.statIconBg, { backgroundColor: '#007AFF20' }]}>
             <Users size={16} color="#007AFF" />
           </View>
-          <Text style={[styles.statValue, { color: theme.colors.text }]}>{stats.activeSubAgents}/{stats.totalSubAgents}</Text>
-          <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Sub-Agents</Text>
+          <Text style= [styles.statValue, { color: theme.colors.text }]}>{stats.activeSubAgents}/{stats.totalSubAgents}</Text>
+          <Text style= [styles.statLabel, { color: theme.colors.secondaryText }]}>Sub-Agents</Text>
         </View>
         <View style={styles.statDivider} />
         <View style={styles.statItem}>
-          <View style={[styles.statIconBg, { backgroundColor: '#FF950020' }]}>
+          <View style= [styles.statIconBg, { backgroundColor: '#FF950020' }]}>
             <TrendingUp size={16} color="#FF9500" />
           </View>
-          <Text style={[styles.statValue, { color: theme.colors.text }]}>{stats.avgSuccessRate}%</Text>
-          <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Success</Text>
+          <Text style= [styles.statValue, { color: theme.colors.text }]}>{stats.avgSuccessRate}%</Text>
+          <Text style= [styles.statLabel, { color: theme.colors.secondaryText }]}>Success</Text>
         </View>
         <View style={styles.statDivider} />
         <View style={styles.statItem}>
-          <View style={[styles.statIconBg, { backgroundColor: '#AF52DE20' }]}>
+          <View style= [styles.statIconBg, { backgroundColor: '#AF52DE20' }]}>
             <Brain size={16} color="#AF52DE" />
           </View>
-          <Text style={[styles.statValue, { color: theme.colors.text }]}>{stats.coreEnabled}/{coreCapabilities.length}</Text>
-          <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Core AI</Text>
+          <Text style= [styles.statValue, { color: theme.colors.text }]}>{stats.coreEnabled}/{coreCapabilities.length}</Text>
+          <Text style= [styles.statLabel, { color: theme.colors.secondaryText }]}>Core AI</Text>
         </View>
       </View>
 
       {showBulkActions && (
-        <View style={[styles.bulkActionsBar, { backgroundColor: theme.colors.cardBackground }]}>
+        <View style= [styles.bulkActionsBar, { backgroundColor: theme.colors.cardBackground }]}>
           <TouchableOpacity 
-            style={[styles.bulkActionButton, { backgroundColor: '#34C75920' }]}
+            style= [styles.bulkActionButton, { backgroundColor: '#34C75920' }]}
             onPress={activateAllAgents}
           >
             <Rocket size={18} color="#34C759" />
-            <Text style={[styles.bulkActionText, { color: '#34C759' }]}>Activate All</Text>
+            <Text style= [styles.bulkActionText, { color: '#34C759' }]}>Activate All</Text>
           </TouchableOpacity>
           <TouchableOpacity 
-            style={[styles.bulkActionButton, { backgroundColor: '#FF3B3020' }]}
+            style= [styles.bulkActionButton, { backgroundColor: '#FF3B3020' }]}
             onPress={deactivateAllAgents}
           >
             <ToggleLeft size={18} color="#FF3B30" />
-            <Text style={[styles.bulkActionText, { color: '#FF3B30' }]}>Deactivate All</Text>
+            <Text style= [styles.bulkActionText, { color: '#FF3B30' }]}>Deactivate All</Text>
           </TouchableOpacity>
         </View>
       )}
 
       <View style={styles.viewToggle}>
         <TouchableOpacity
-          style={[styles.viewTab, selectedView === 'agents' && { backgroundColor: theme.colors.primary }]}
+          style= [styles.viewTab, selectedView === 'agents' && { backgroundColor: theme.colors.primary }]}
           onPress={() => setSelectedView('agents')}
         >
           <User size={16} color={selectedView === 'agents' ? '#fff' : theme.colors.secondaryText} />
-          <Text style={[styles.viewTabText, { color: selectedView === 'agents' ? '#fff' : theme.colors.secondaryText }]}>
+          <Text style= [styles.viewTabText, { color: selectedView === 'agents' ? '#fff' : theme.colors.secondaryText }]}>
             AI Agents
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.viewTab, selectedView === 'core' && { backgroundColor: theme.colors.primary }]}
+          style= [styles.viewTab, selectedView === 'core' && { backgroundColor: theme.colors.primary }]}
           onPress={() => setSelectedView('core')}
         >
           <CircuitBoard size={16} color={selectedView === 'core' ? '#fff' : theme.colors.secondaryText} />
-          <Text style={[styles.viewTabText, { color: selectedView === 'core' ? '#fff' : theme.colors.secondaryText }]}>
+          <Text style= [styles.viewTabText, { color: selectedView === 'core' ? '#fff' : theme.colors.secondaryText }]}>
             Core Intelligence
           </Text>
         </TouchableOpacity>
@@ -793,10 +793,10 @@ export default function AgentActivationScreen() {
 
       {selectedView === 'agents' && (
         <>
-          <View style={[styles.searchContainer, { backgroundColor: theme.colors.cardBackground }]}>
+          <View style= [styles.searchContainer, { backgroundColor: theme.colors.cardBackground }]}>
             <Search size={18} color={theme.colors.secondaryText} />
             <TextInput
-              style={[styles.searchInput, { color: theme.colors.text }]}
+              style= [styles.searchInput, { color: theme.colors.text }]}
               placeholder="Search agents..."
               placeholderTextColor={theme.colors.secondaryText}
               value={searchQuery}
@@ -813,13 +813,13 @@ export default function AgentActivationScreen() {
             {(['all', 'active', 'inactive', 'training'] as const).map((status) => (
               <TouchableOpacity
                 key={status}
-                style={[
+                style= [
                   styles.filterTab,
                   filterStatus === status && { backgroundColor: theme.colors.primary },
                 ]}
                 onPress={() => setFilterStatus(status)}
               >
-                <Text style={[
+                <Text style= [
                   styles.filterTabText,
                   { color: filterStatus === status ? '#fff' : theme.colors.secondaryText }
                 ]}>
@@ -839,10 +839,10 @@ export default function AgentActivationScreen() {
         {selectedView === 'agents' ? (
           <>
             <View style={styles.sectionHeader}>
-              <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
+              <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>
                 Main Agents & Sub-Agents
               </Text>
-              <Text style={[styles.sectionCount, { color: theme.colors.primary }]}>{filteredAgents.length}</Text>
+              <Text style= [styles.sectionCount, { color: theme.colors.primary }]}>{filteredAgents.length}</Text>
             </View>
             
             {filteredAgents.map(renderMainAgent)}
@@ -850,12 +850,12 @@ export default function AgentActivationScreen() {
         ) : (
           <>
             <View style={styles.sectionHeader}>
-              <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
+              <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>
                 Core Intelligence Layer
               </Text>
-              <Text style={[styles.sectionCount, { color: theme.colors.primary }]}>{stats.coreEnabled} active</Text>
+              <Text style= [styles.sectionCount, { color: theme.colors.primary }]}>{stats.coreEnabled} active</Text>
             </View>
-            <Text style={[styles.sectionDesc, { color: theme.colors.secondaryText }]}>
+            <Text style= [styles.sectionDesc, { color: theme.colors.secondaryText }]}>
               Universal capabilities that enhance all agents&apos; performance
             </Text>
             
@@ -863,12 +863,12 @@ export default function AgentActivationScreen() {
               {coreCapabilities.map(renderCoreCapability)}
             </View>
 
-            <View style={[styles.infoCard, { backgroundColor: theme.colors.cardBackground }]}>
+            <View style= [styles.infoCard, { backgroundColor: theme.colors.cardBackground }]}>
               <View style={styles.infoHeader}>
                 <Brain size={24} color={theme.colors.primary} />
-                <Text style={[styles.infoTitle, { color: theme.colors.text }]}>Unified Intelligence</Text>
+                <Text style= [styles.infoTitle, { color: theme.colors.text }]}>Unified Intelligence</Text>
               </View>
-              <Text style={[styles.infoText, { color: theme.colors.secondaryText }]}>
+              <Text style= [styles.infoText, { color: theme.colors.secondaryText }]}>
                 The Core Intelligence Layer enables all agents to share knowledge, remember customer interactions, 
                 learn from outcomes, and provide personalized experiences across departments. Each capability 
                 builds on the others to create a cohesive AI workforce.
@@ -1331,3 +1331,4 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
 });
+

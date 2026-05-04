@@ -1,7 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { TrendingUp, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBar, MessageSquare, Calendar, Shield, ChartPie, Lightbulb, Globe, Sparkles, DollarSign } from 'lucide-react-native';
+import { 
+  TrendingUp, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, 
+  ChartBar, MessageSquare, Calendar, Shield, ChartPie, Lightbulb, Globe, Sparkles, 
+  DollarSign, Target as TargetIcon, Trophy, Zap
+} from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { useRouter } from 'expo-router';
 
@@ -52,10 +56,40 @@ export default function PerformanceDepartment() {
           </TouchableOpacity>
         ))}
       </View>
+      {/* Performance Tools - New Features */}
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Performance Tools</Text>
+        <View style={styles.toolsGrid}>
+          <TouchableOpacity 
+            onPress={() => router.push('/ai-agent/performance/kpi-dashboard')}
+            style={[styles.toolCard, { backgroundColor: '#10B98115' }]}
+          >
+            <View style={[styles.toolIcon, { backgroundColor: '#10B981' }]}>
+              <TargetIcon size={24} color="#fff" />
+            </View>
+            <Text style={[styles.toolName, { color: theme.colors.text }]}>KPI Dashboard</Text>
+            <Text style={[styles.toolDesc, { color: theme.colors.textSecondary }]}>
+              Track key metrics
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            onPress={() => router.push('/ai-agent/performance/benchmarking')}
+            style={[styles.toolCard, { backgroundColor: '#3B82F615' }]}
+          >
+            <View style={[styles.toolIcon, { backgroundColor: '#3B82F6' }]}>
+              <Trophy size={24} color="#fff" />
+            </View>
+            <Text style={[styles.toolName, { color: theme.colors.text }]}>Benchmarking</Text>
+            <Text style={[styles.toolDesc, { color: theme.colors.textSecondary }]}>
+              Compare performance
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#1B5E2012' }]}><act.icon size={24} color="#1B5E20" /><Text style={[styles.actionText, { color: '#1B5E20' }]}>{act.label}</Text></TouchableOpacity>))}
+          [{label:'View Reports',icon:ChartBar},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#1B5E2012' }]}><act.icon size={24} color="#1B5E20" /><Text style={[styles.actionText, { color: '#1B5E20' }]}>{act.label}</Text></TouchableOpacity>))}
         </View>
       </View>
       <AgentFeatures agentId="performance-index" agentName="Performance & Analytics Department" />
@@ -86,5 +120,11 @@ const styles = StyleSheet.create({
   agentDesc:{fontSize:12,marginTop:2},
   actionsGrid:{flexDirection:'row',flexWrap:'wrap',gap:12},
   actionButton:{flex:1,minWidth:'45%',alignItems:'center',padding:16,borderRadius:12},
-  actionText:{fontSize:13,fontWeight:'600',marginTop:8}
+  actionText:{fontSize:13,fontWeight:'600',marginTop:8},
+  toolsGrid:{flexDirection:'row',gap:12},
+  toolCard:{flex:1,alignItems:'center',padding:16,borderRadius:12},
+  toolIcon:{width:50,height:50,borderRadius:12,alignItems:'center',justifyContent:'center',marginBottom:10},
+  toolName:{fontSize:14,fontWeight:'600',marginBottom:4},
+  toolDesc:{fontSize:12}
 });
+

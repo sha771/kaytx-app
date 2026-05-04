@@ -1,4 +1,4 @@
-ï»¿ 
+ 
 import React, { useMemo, useState, useEffect } from 'react';
 import {
   View,
@@ -302,7 +302,7 @@ export default function AITrainingScreen() {
                   <View>
                     <Text style={[styles.datasetLabel, { color: theme.colors.text }]}>{dataset.label}</Text>
                     <Text style={[styles.datasetMeta, { color: theme.colors.secondaryText }]}>
-                      {dataset.records} records Â· {dataset.trainedOn}
+                      {dataset.records} records · {dataset.trainedOn}
                     </Text>
                   </View>
                   <View
@@ -436,7 +436,7 @@ export default function AITrainingScreen() {
           <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>AI Lab Runs</Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.labScroll}>
             {[
-              { id: 'load', title: 'Load testing', detail: '1k concurrent calls Â· 99.98% success', icon: Activity },
+              { id: 'load', title: 'Load testing', detail: '1k concurrent calls · 99.98% success', icon: Activity },
               { id: 'accuracy', title: 'Accuracy audit', detail: 'Intent drift < 0.8%', icon: Brain },
               { id: 'playbook', title: 'Playbook tuning', detail: '12 flows auto-improved', icon: Sparkles },
             ].map(lab => {

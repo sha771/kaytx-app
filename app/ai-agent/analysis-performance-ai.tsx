@@ -551,7 +551,7 @@ export default function AnalysisPerformanceAIScreen() {
                 <Text style={[styles.quickStatLabel, { color: theme.colors.secondaryText }]}>Insights</Text>
               </View>
               <View style={[styles.quickStatItem, { backgroundColor: theme.colors.background }]}>
-                <ChartBarBig size={14} color="#007AFF" />
+                <ChartBar size={14} color="#007AFF" />
                 <Text style={[styles.quickStatValue, { color: theme.colors.text }]}>{agent.reportsCreated}</Text>
                 <Text style={[styles.quickStatLabel, { color: theme.colors.secondaryText }]}>Reports</Text>
               </View>
@@ -639,7 +639,7 @@ export default function AnalysisPerformanceAIScreen() {
                 <Text style={[styles.actionButtonText, { color: ACCENT_COLOR }]}>Configure</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#007AFF15' }]}>
-                <ChartBarBig size={16} color="#007AFF" />
+                <ChartBar size={16} color="#007AFF" />
                 <Text style={[styles.actionButtonText, { color: '#007AFF' }]}>Analytics</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#34C75915' }]}>

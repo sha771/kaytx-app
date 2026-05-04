@@ -1,4 +1,4 @@
-ï»¿ 
+ 
 import React, { useState } from 'react';
 import {
   View,
@@ -125,9 +125,9 @@ Best,
 I wanted to share a quick case study. [Company Name] was facing similar challenges with [Pain Point].
 
 After implementing our solution:
-â€¢ 300% increase in ROI
-â€¢ 40% reduction in costs
-â€¢ 50% faster time-to-market
+• 300% increase in ROI
+• 40% reduction in costs
+• 50% faster time-to-market
 
 Would you like to see how we can achieve similar results for [Company]?
 
@@ -210,7 +210,7 @@ Best regards,
               </TouchableOpacity>
             ) : null}
             <TouchableOpacity style={styles.secondaryButton}>
-              <ChartBarBig size={16} color="#007AFF" />
+              <ChartBar size={16} color="#007AFF" />
               <Text style={styles.secondaryButtonText}>View Details</Text>
             </TouchableOpacity>
           </View>
@@ -578,7 +578,7 @@ Best regards,
           style={[styles.tab, activeTab === 'analytics' && styles.activeTab]}
           onPress={() => setActiveTab('analytics')}
         >
-          <ChartBarBig size={20} color={activeTab === 'analytics' ? '#007AFF' : '#8E8E93'} />
+          <ChartBar size={20} color={activeTab === 'analytics' ? '#007AFF' : '#8E8E93'} />
           <Text style={[styles.tabText, activeTab === 'analytics' && styles.activeTabText]}>
             Analytics
           </Text>

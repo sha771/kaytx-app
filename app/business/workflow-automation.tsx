@@ -118,7 +118,7 @@ export default function WorkflowAutomationScreen() {
           <Text style={styles.statLabel}>Success Rate</Text>
         </View>
         <View style={styles.statCard}>
-          <ChartBarBig size={18} color="#60A5FA" />
+          <ChartBar size={18} color="#60A5FA" />
           <Text style={styles.statValue}>{workflows.length}</Text>
           <Text style={styles.statLabel}>Workflows</Text>
         </View>
@@ -187,7 +187,7 @@ export default function WorkflowAutomationScreen() {
               </View>
               <View style={styles.workflowActions}>
                 <TouchableOpacity style={styles.actionButton}>
-                  <ChartBarBig size={16} color="#60A5FA" />
+                  <ChartBar size={16} color="#60A5FA" />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.actionButton}>
                   <PenLine size={16} color="#F59E0B" />

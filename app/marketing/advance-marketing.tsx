@@ -226,7 +226,7 @@ export default function AdvanceMarketingScreen() {
       <View style={[styles.chartCard, { backgroundColor: theme.colors.cardBackground }]}>
         <Text style={[styles.cardTitle, { color: theme.colors.text }]}>Performance Trends</Text>
         <View style={styles.chartPlaceholder}>
-          <ChartBarBig size={48} color={theme.colors.secondaryText} />
+          <ChartBar size={48} color={theme.colors.secondaryText} />
           <Text style={[styles.chartText, { color: theme.colors.secondaryText }]}>Chart visualization would go here</Text>
         </View>
       </View>

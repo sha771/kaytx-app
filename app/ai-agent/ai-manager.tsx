@@ -1,4 +1,4 @@
-﻿import React, { useMemo, useRef, useEffect } from 'react';
+import React, { useMemo, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, Animated, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Shield, TriangleAlert, Zap, Layers, Activity, Users, Target, Lock } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';

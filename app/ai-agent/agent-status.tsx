@@ -541,12 +541,12 @@ export default function AgentStatusScreen() {
       <View style={styles.filterRow}>
         {(['all', 'main', 'sub'] as const).map((Filter) => (
           <TouchableOpacity
-            key={Filter}
+            key={Funnel}
             style={[styles.filterBtn, selectedFilter === Filter && { backgroundColor: theme.colors.primary }]}
             onPress={() => setSelectedFilter(Filter)}
           >
             <Text style={[styles.filterText, { color: selectedFilter === Filter ? '#fff' : theme.colors.secondaryText }]}>
-              {filter === 'all' ? 'All' : filter === 'main' ? 'Main' : 'Sub'}
+              {Filter === 'all' ? 'All' : Filter === 'main' ? 'Main' : 'Sub'}
             </Text>
           </TouchableOpacity>
         ))}

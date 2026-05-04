@@ -10,9 +10,37 @@ import {
   Crown, ChartBar, Activity, Shield, Zap, Briefcase, TrendingUp, House,
   Landmark, Factory, Truck, HeartPulse, Brain, Database, Megaphone,
   ShoppingCart, Headphones, Scale, Wrench, Lock, GraduationCap,
-  Settings, Server,
+  Settings, Server, Link2, Layers, Share2, Target, Globe, Anchor,
+  Plane, TrainFront, MapPin, Video, Stethoscope, Gavel, Flag, ScrollText,
+  Building, CreditCard, Wallet, DollarSign, TrendingDown, Coins, Banknote,
+  FileCheck, TriangleAlert, Siren, ShieldAlert, FingerprintPattern, ScanEye,
+  Bot, Sparkles, Lightbulb, FileText, BookOpen, PenTool, Palette, Award,
+  Medal, Star, Trophy, Pin, Bell, Info, LifeBuoy, Clock, Calendar,
+  Gauge, Microscope, Telescope, SearchCheck, BadgeCheck, FileBadge,
+  FileChartColumn, Boxes, Package, FolderCog, Workflow, Terminal,
+  Clipboard, ClipboardList, ClipboardCheck, SquareCheck, CircleCheck,
+  Receipt, Calculator, ChartLine, ChartPie, PiggyBank, Handshake,
+  UserCheck, UserPlus, UserCog, UsersRound, Mail, MessageSquare,
+  Ticket, Gift, Heart, Share, Inbox, Send, Hash, Radio, Phone,
+  Cpu, HardDrive, Code, Rocket, Sun, Moon, Menu, Plus, Minus,
+  ListFilter as FilterIcon,
 } from 'lucide-react-native';
-import { cSuiteExecutives, vpDirectors, managers, teamLeads, specialists, AIEmployeeProfile } from '@/constants/aiAgentHierarchyIndex';
+import {
+  completeAIWorkforce,
+  cSuiteExecutives,
+  vpDirectors,
+  managers,
+  teamLeads,
+  specialists,
+  allNewDepartmentStaff,
+  type AIEmployeeProfile
+} from '@/constants/aiAgentHierarchyIndex_UPGRADED';
+import {
+  HIERARCHY_TIERS,
+  INTELLIGENCE_LAYER,
+  COMMAND_CENTER,
+  LAYER_BRIDGE
+} from '@/constants/aiAgentHierarchyIndex_UPGRADED';
 import Animated, { FadeIn, FadeInUp, useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 
 const { width: SW, height: SH } = Dimensions.get('window');
@@ -23,27 +51,61 @@ interface TNode {
   expanded: boolean; x: number; y: number; width: number;
 }
 
-const ALL = [...cSuiteExecutives, ...vpDirectors, ...managers, ...teamLeads, ...specialists];
+// Complete AI Workforce - 600+ Agents
+const ALL = completeAIWorkforce;
 const MAP = new Map<string, AIEmployeeProfile>();
 ALL.forEach(a => MAP.set(a.id, a));
 
+// Extended Department Colors (21 Departments)
 const DC: Record<string, string> = {
-  executive:'#FFD700', finance:'#2E7D32', technology:'#1565C0', marketing:'#E91E63',
-  sales:'#FFA000', customer_experience:'#00BCD4', operations:'#607D8B',
-  human_resources:'#9C27B0', legal_compliance:'#3F51B5', data_intelligence:'#AF52DE',
-  product:'#FF5722', security:'#F44336', research:'#009688', administrative:'#795548',
-  trading_investments:'#10B981', real_estate_property:'#8D6E63', insurance_risk:'#FF7043',
-  healthcare_medical:'#EC407A', manufacturing_production:'#5C6BC0',
-  transportation_logistics:'#26A69A', government_public:'#78909C',
-  customer_insights_analytics:'#42A5F5',
+  executive:'#FFD700',                    // Gold
+  finance:'#2E7D32',                    // Green
+  technology:'#1565C0',                 // Blue
+  marketing:'#E91E63',                  // Pink
+  sales:'#FFA000',                      // Amber
+  customer_experience:'#00BCD4',         // Cyan
+  operations:'#607D8B',                 // Blue Grey
+  human_resources:'#9C27B0',             // Purple
+  legal_compliance:'#3F51B5',            // Indigo
+  data_intelligence:'#AF52DE',           // Purple
+  product:'#FF5722',                     // Deep Orange
+  security:'#F44336',                    // Red
+  research:'#009688',                   // Teal
+  administrative:'#795548',             // Brown
+  trading_investments:'#10B981',          // Emerald
+  real_estate_property:'#8D6E63',        // Brown
+  insurance_risk:'#FF7043',               // Deep Orange
+  healthcare_medical:'#EC407A',           // Pink
+  manufacturing_production:'#5C6BC0',     // Indigo
+  transportation_logistics:'#26A69A',    // Teal
+  government_public:'#78909C',            // Blue Grey
+  customer_insights_analytics:'#42A5F5', // Light Blue
+};
+
+// Hierarchy Level Colors
+const LEVEL_COLORS: Record<string, string> = {
+  c_level: '#FF6B6B',      // Red
+  vp_director: '#4ECDC4',  // Teal
+  manager: '#45B7D1',      // Blue
+  team_lead: '#96CEB4',    // Green
+  specialist: '#FFEAA7',  // Yellow
+};
+
+// Agent Type Indicators
+const TYPE_ICONS: Record<string, any> = {
+  executive: Crown,
+  vp_director: Star,
+  manager: Users,
+  team_lead: Target,
+  specialist: Bot,
 };
 
 function buildTree(rootId: string, ex: Set<string>): TNode | null {
   const build = (id: string): TNode | null => {
     const d = MAP.get(id); if (!d) return null;
     const ch: TNode[] = [];
-    if (ex.has(id) && d.orgChart?.directReports) {
-      d.orgChart.directReports.forEach(cid => { const c = build(cid); if (c) ch.push(c); });
+    if (ex.has(id) && d.directReports && d.directReports.length > 0) {
+      d.directReports.forEach(cid => { const c = build(cid); if (c) ch.push(c); });
     }
     return { id, data: d, children: ch, expanded: ex.has(id), x:0, y:0, width:0 };
   };
@@ -70,27 +132,71 @@ function pos(n: TNode | null, sx: number, lv = 0): void {
 function flat(n: TNode | null): TNode[] { return n ? [n, ...n.children.flatMap(flat)] : []; }
 function abbrev(t: string): string { return t.length <= 14 ? t : t.substring(0,13)+'…'; }
 
-interface ExtraConn { from: TNode; to: TNode; }
-function getExtraConns(nodes: TNode[]): { esc: ExtraConn[]; peer: ExtraConn[] } {
+// Enhanced Connection Types
+interface ExtraConn { from: TNode; to: TNode; type: 'escalation' | 'peer' | 'cross_dept' | 'a2a' | 'consult'; }
+
+function getExtraConns(nodes: TNode[]): {
+  esc: ExtraConn[];
+  peer: ExtraConn[];
+  crossDept: ExtraConn[];
+  a2a: ExtraConn[];
+  consult: ExtraConn[];
+} {
   const map = new Map<string, TNode>();
   nodes.forEach(n => map.set(n.id, n));
   const esc: ExtraConn[] = [];
   const peer: ExtraConn[] = [];
+  const crossDept: ExtraConn[] = [];
+  const a2a: ExtraConn[] = [];
+  const consult: ExtraConn[] = [];
+
   nodes.forEach(n => {
-    if (n.data.canEscalateTo) {
-      n.data.canEscalateTo.forEach(tid => {
-        const t = map.get(tid);
-        if (t && t.id !== n.id) esc.push({ from: n, to: t });
+    // Escalation links (based on reportsTo relationship)
+    if (n.data.reportsTo) {
+      const t = map.get(n.data.reportsTo);
+      if (t && t.id !== n.id) esc.push({ from: n, to: t, type: 'escalation' });
+    }
+
+    // Peer links (C-Level only)
+    if (n.data.peerPositions && n.data.peerPositions.length > 0 && n.data.level === 'c_level') {
+      n.data.peerPositions.forEach(pid => {
+        const p = map.get(pid);
+        if (p && p.id > n.id) peer.push({ from: n, to: p, type: 'peer' });
       });
     }
-    if (n.data.orgChart?.peerPositions && n.data.level === 'c_level') {
-      n.data.orgChart.peerPositions.forEach(pid => {
-        const p = map.get(pid);
-        if (p && p.id > n.id) peer.push({ from: n, to: p });
+
+    // Cross-department links (same level, different department)
+    if (n.data.level === 'vp_director' || n.data.level === 'manager') {
+      nodes.forEach(other => {
+        if (other.id !== n.id &&
+            other.data.level === n.data.level &&
+            other.data.department !== n.data.department &&
+            other.id > n.id) {
+          crossDept.push({ from: n, to: other, type: 'cross_dept' });
+        }
+      });
+    }
+
+    // A2A endpoint links
+    if (n.data.a2aEndpoints && n.data.a2aEndpoints.length > 0) {
+      // Connect to CEO for main agents
+      const ceo = map.get('ceo');
+      if (ceo && n.id !== 'ceo' && n.data.level === 'c_level') {
+        a2a.push({ from: n, to: ceo, type: 'a2a' });
+      }
+    }
+
+    // Consultation links (based on A2A endpoints)
+    if (n.data.a2aEndpoints && n.data.a2aEndpoints.length > 0) {
+      nodes.forEach(other => {
+        if (other.id !== n.id && other.data.reportsTo === n.data.id) {
+          consult.push({ from: n, to: other, type: 'consult' });
+        }
       });
     }
   });
-  return { esc, peer };
+
+  return { esc, peer, crossDept, a2a, consult };
 }
 
 export default function MindMapScreen() {
@@ -112,19 +218,23 @@ export default function MindMapScreen() {
 
   const tree = useMemo(() => buildTree('ceo', exIds), [exIds]);
 
-  const { cw, ch, nodes, esc, peer } = useMemo(() => {
-    if (!tree) return { cw: SW, ch: SH, nodes: [] as TNode[], esc: [] as ExtraConn[], peer: [] as ExtraConn[] };
+  const { cw, ch, nodes, esc, peer, crossDept, a2a, consult } = useMemo(() => {
+    if (!tree) return {
+      cw: SW, ch: SH, nodes: [] as TNode[],
+      esc: [] as ExtraConn[], peer: [] as ExtraConn[],
+      crossDept: [] as ExtraConn[], a2a: [] as ExtraConn[],
+      consult: [] as ExtraConn[]
+    };
     comp(tree); pos(tree, LP);
     const nds = flat(tree);
-    const { esc, peer } = getExtraConns(nds);
+    const { esc, peer, crossDept, a2a, consult } = getExtraConns(nds);
     let mx = 0, my = 0;
     nds.forEach(n => { mx = Math.max(mx, n.x + NW); my = Math.max(my, n.y + NH); });
     return {
       cw: Math.max(mx + LP, SW * 1.2) * zoom,
       ch: Math.max(my + TP + 100, SH * 1.2) * zoom,
       nodes: nds,
-      esc,
-      peer,
+      esc, peer, crossDept, a2a, consult,
     };
   }, [tree, zoom]);
 
@@ -178,15 +288,20 @@ export default function MindMapScreen() {
       <View style={st.statsRow}>
         <View style={[st.pill, { backgroundColor: card }]}><Users size={14} color={colors.primary} /><Text style={[st.pillT, { color: fg }]}>{ALL.length} Agents</Text></View>
         <View style={[st.pill, { backgroundColor: card }]}><GitBranch size={14} color={colors.success} /><Text style={[st.pillT, { color: fg }]}>{nodes.length} Visible</Text></View>
+        <View style={[st.pill, { backgroundColor: card }]}><Layers size={14} color={colors.warning} /><Text style={[st.pillT, { color: fg }]}>21 Depts</Text></View>
         <TouchableOpacity onPress={() => setZoom(Math.max(0.35, zoom - 0.15))} style={[st.zBtn, { backgroundColor: card }]}><ZoomOut size={16} color={fg} /></TouchableOpacity>
         <TouchableOpacity onPress={() => setZoom(Math.min(2.2, zoom + 0.15))} style={[st.zBtn, { backgroundColor: card }]}><ZoomIn size={16} color={fg} /></TouchableOpacity>
       </View>
 
-      <View style={[st.legend, { borderBottomColor: line }]}>
+      {/* Enhanced Legend with All Connection Types */}
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={[st.legend, { borderBottomColor: line }]}>
         <View style={st.li}><View style={[st.ld, { backgroundColor: '#88888888' }]} /><Text style={[st.lt, { color: colors.secondaryText }]}>Reports</Text></View>
         <View style={st.li}><View style={[st.ld, { backgroundColor: '#FF9500' }]} /><Text style={[st.lt, { color: colors.secondaryText }]}>Escalation</Text></View>
         <View style={st.li}><View style={[st.ld, { backgroundColor: '#0A84FF' }]} /><Text style={[st.lt, { color: colors.secondaryText }]}>Peer</Text></View>
-      </View>
+        <View style={st.li}><View style={[st.ld, { backgroundColor: '#10B981' }]} /><Text style={[st.lt, { color: colors.secondaryText }]}>Cross-Dept</Text></View>
+        <View style={st.li}><View style={[st.ld, { backgroundColor: '#8B5CF6' }]} /><Text style={[st.lt, { color: colors.secondaryText }]}>A2A</Text></View>
+        <View style={st.li}><View style={[st.ld, { backgroundColor: '#EC4899' }]} /><Text style={[st.lt, { color: colors.secondaryText }]}>Consult</Text></View>
+      </ScrollView>
 
       <ScrollView horizontal showsHorizontalScrollIndicator>
         <View style={{ width: cw }}>
@@ -205,15 +320,39 @@ export default function MindMapScreen() {
                 {esc.map((c, i) => (
                   <Path key={`esc-${i}`}
                     d={`M${c.from.x+NW/2},${c.from.y+NH/2} L${c.to.x-NW/2},${c.to.y+NH/2}`}
-                    stroke="#FF9500" strokeWidth={1} fill="none" strokeDasharray="4,4" opacity={0.6}
+                    stroke="#FF9500" strokeWidth={1.5} fill="none" strokeDasharray="4,4" opacity={0.7}
                   />
                 ))}
 
-                {/* Peer Links */}
+                {/* Peer Links (C-Suite) */}
                 {peer.map((c, i) => (
                   <Path key={`peer-${i}`}
                     d={`M${c.from.x+NW/2},${c.from.y+NH/2} L${c.to.x-NW/2},${c.to.y+NH/2}`}
-                    stroke="#0A84FF" strokeWidth={1} fill="none" strokeDasharray="2,4" opacity={0.4}
+                    stroke="#0A84FF" strokeWidth={1.5} fill="none" strokeDasharray="2,4" opacity={0.5}
+                  />
+                ))}
+
+                {/* Cross-Department Links */}
+                {crossDept.map((c, i) => (
+                  <Path key={`cross-${i}`}
+                    d={`M${c.from.x+NW/2},${c.from.y+NH/2} L${c.to.x-NW/2},${c.to.y+NH/2}`}
+                    stroke="#10B981" strokeWidth={1} fill="none" strokeDasharray="3,6" opacity={0.4}
+                  />
+                ))}
+
+                {/* A2A Endpoint Links */}
+                {a2a.map((c, i) => (
+                  <Path key={`a2a-${i}`}
+                    d={`M${c.from.x+NW/2},${c.from.y+NH/2} L${c.to.x-NW/2},${c.to.y+NH/2}`}
+                    stroke="#8B5CF6" strokeWidth={1.5} fill="none" strokeDasharray="5,3" opacity={0.5}
+                  />
+                ))}
+
+                {/* Consultation Links */}
+                {consult.map((c, i) => (
+                  <Path key={`consult-${i}`}
+                    d={`M${c.from.x+NW/2},${c.from.y+NH/2} L${c.to.x-NW/2},${c.to.y+NH/2}`}
+                    stroke="#EC4899" strokeWidth={1} fill="none" strokeDasharray="2,2" opacity={0.5}
                   />
                 ))}
 
@@ -222,7 +361,7 @@ export default function MindMapScreen() {
                   const isS = n.id === selId;
                   const isH = mids.has(n.id);
                   const col = DC[n.data.department] || colors.primary;
-                  const hasCh = n.data.orgChart?.directReports?.some(cid => MAP.has(cid)) ?? false;
+                  const hasCh = n.data.directReports && n.data.directReports.length > 0 && n.data.directReports.some(cid => MAP.has(cid));
                   const nx = n.x - NW/2, ny = n.y;
                   return (
                     <G key={n.id}>
@@ -249,7 +388,7 @@ export default function MindMapScreen() {
         </View>
       </ScrollView>
 
-      {/* Detail Panel */}
+      {/* Enhanced Detail Panel */}
       {selNode && (
         <View style={[st.panel, { backgroundColor: card, borderTopColor: line }]}>
           <View style={st.pHead}>
@@ -259,11 +398,78 @@ export default function MindMapScreen() {
           </View>
           <Text style={[st.pTitle, { color: colors.secondaryText }]}>{selNode.title}</Text>
           <Text style={[st.pDesc, { color: colors.secondaryText }]} numberOfLines={2}>{selNode.description}</Text>
+
+          {/* Hierarchy & Level Info */}
           <View style={st.pRow}>
-            <View style={[st.pPill, { backgroundColor: isD ? '#2C2C2E' : '#E5E5EA' }]}><Text style={[st.pPillT, { color: fg }]}>{selNode.level.replace('_',' ')}</Text></View>
-            <View style={[st.pPill, { backgroundColor: isD ? '#2C2C2E' : '#E5E5EA' }]}><Text style={[st.pPillT, { color: fg }]}>{selNode.department.replace(/_/g,' ')}</Text></View>
-            <View style={[st.pPill, { backgroundColor: isD ? '#2C2C2E' : '#E5E5EA' }]}><Text style={[st.pPillT, { color: colors.success }]}>{selNode.aiCost}</Text></View>
+            <View style={[st.pPill, { backgroundColor: LEVEL_COLORS[selNode.level] || colors.primary + '44' }]}>
+              <Text style={[st.pPillT, { color: fg }]}>{selNode.level.replace(/_/g,' ').toUpperCase()}</Text>
+            </View>
+            <View style={[st.pPill, { backgroundColor: isD ? '#2C2C2E' : '#E5E5EA' }]}>
+              <Text style={[st.pPillT, { color: fg }]}>{selNode.department.replace(/_/g,' ')}</Text>
+            </View>
           </View>
+
+          {/* Cost Info */}
+          <View style={st.pRow}>
+            <View style={[st.pPill, { backgroundColor: isD ? '#2C2C2E' : '#E5E5EA' }]}>
+              <DollarSign size={10} color={colors.success} />
+              <Text style={[st.pPillT, { color: colors.success }]}>{selNode.aiCost}</Text>
+            </View>
+            <View style={[st.pPill, { backgroundColor: isD ? '#2C2C2E' : '#E5E5EA' }]}>
+              <TrendingUp size={10} color={colors.success} />
+              <Text style={[st.pPillT, { color: colors.success }]}>{selNode.efficiency}</Text>
+            </View>
+            {selNode.dangerLevel && (
+              <View style={[st.pPill, { backgroundColor: selNode.dangerLevel === 'critical' ? '#FF444433' : selNode.dangerLevel === 'high' ? '#FF880033' : '#88888833' }]}>
+                <ShieldAlert size={10} color={selNode.dangerLevel === 'critical' ? '#FF4444' : selNode.dangerLevel === 'high' ? '#FF8800' : '#888888'} />
+                <Text style={[st.pPillT, { color: selNode.dangerLevel === 'critical' ? '#FF4444' : selNode.dangerLevel === 'high' ? '#FF8800' : '#888888' }]}>{selNode.dangerLevel}</Text>
+              </View>
+            )}
+          </View>
+
+          {/* Links & Connections */}
+          <View style={st.pRow}>
+            {selNode.reportsTo && (
+              <View style={[st.pPill, { backgroundColor: '#FF950022' }]}>
+                <Link2 size={10} color="#FF9500" />
+                <Text style={[st.pPillT, { color: '#FF9500' }]}>Reports to: {selNode.reportsTo}</Text>
+              </View>
+            )}
+            {selNode.directReports && selNode.directReports.length > 0 && (
+              <View style={[st.pPill, { backgroundColor: '#0A84FF22' }]}>
+                <Users size={10} color="#0A84FF" />
+                <Text style={[st.pPillT, { color: '#0A84FF' }]}>{selNode.directReports.length} Reports</Text>
+              </View>
+            )}
+          </View>
+
+          {/* A2A Endpoints & Agent Types */}
+          {selNode.a2aEndpoints && selNode.a2aEndpoints.length > 0 && (
+            <View style={st.pRow}>
+              <View style={[st.pPill, { backgroundColor: '#8B5CF622' }]}>
+                <Share2 size={10} color="#8B5CF6" />
+                <Text style={[st.pPillT, { color: '#8B5CF6' }]}>{selNode.a2aEndpoints.length} A2A</Text>
+              </View>
+              {selNode.agentTypes && selNode.agentTypes.length > 0 && (
+                <View style={[st.pPill, { backgroundColor: isD ? '#2C2C2E' : '#E5E5EA' }]}>
+                  <Bot size={10} color={colors.primary} />
+                  <Text style={[st.pPillT, { color: fg }]}>{selNode.agentTypes.join(', ')}</Text>
+                </View>
+              )}
+            </View>
+          )}
+
+          {/* Route */}
+          {selNode.route && (
+            <TouchableOpacity
+              style={[st.routeBtn, { backgroundColor: colors.primary + '22' }]}
+              onPress={() => router.push(selNode.route as any)}
+            >
+              <Globe size={12} color={colors.primary} />
+              <Text style={[st.routeBtnText, { color: colors.primary }]}>Open Agent Page</Text>
+              <ChevronRight size={12} color={colors.primary} />
+            </TouchableOpacity>
+          )}
         </View>
       )}
     </View>
@@ -282,10 +488,10 @@ const st = StyleSheet.create({
   pill: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 10, paddingVertical: 5, borderRadius: 16 },
   pillT: { fontSize: 12, fontWeight: '600' },
   zBtn: { padding: 6, borderRadius: 8 },
-  legend: { flexDirection: 'row', alignItems: 'center', gap: 16, paddingHorizontal: 12, paddingBottom: 6, borderBottomWidth: 1 },
+  legend: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 12, paddingVertical: 6, borderBottomWidth: 1 },
   li: { flexDirection: 'row', alignItems: 'center', gap: 4 },
-  ld: { width: 10, height: 3, borderRadius: 2 },
-  lt: { fontSize: 11 },
+  ld: { width: 12, height: 3, borderRadius: 2 },
+  lt: { fontSize: 10 },
   panel: { position: 'absolute', bottom: 0, left: 0, right: 0, paddingHorizontal: 16, paddingTop: 12, paddingBottom: 24, borderTopWidth: 1 },
   pHead: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 4 },
   pDot: { width: 10, height: 10, borderRadius: 5 },
@@ -293,10 +499,12 @@ const st = StyleSheet.create({
   pClose: { padding: 4 },
   pTitle: { fontSize: 13, marginBottom: 4 },
   pDesc: { fontSize: 12, lineHeight: 18, marginBottom: 8 },
-  pRow: { flexDirection: 'row', gap: 6, flexWrap: 'wrap' },
-  pPill: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 12 },
-  pPillT: { fontSize: 11, fontWeight: '600' },
+  pRow: { flexDirection: 'row', gap: 6, flexWrap: 'wrap', marginBottom: 6 },
+  pPill: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 12 },
+  pPillT: { fontSize: 10, fontWeight: '600' },
   deptChip: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 10, paddingVertical: 5, borderRadius: 12, borderWidth: 1 },
   deptDot: { width: 6, height: 6, borderRadius: 3 },
   deptChipT: { fontSize: 11, fontWeight: '600' },
+  routeBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, paddingHorizontal: 12, paddingVertical: 8, borderRadius: 8, marginTop: 8 },
+  routeBtnText: { fontSize: 12, fontWeight: '600' },
 });

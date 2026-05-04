@@ -45,7 +45,7 @@ export default function AiAssistantDepartment() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#6200EA12' }]}><act.icon size={24} color="#6200EA" /><Text style={[styles.actionText, { color: '#6200EA' }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:ChartBar},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#6200EA12' }]}><act.icon size={24} color="#6200EA" /><Text style={[styles.actionText, { color: '#6200EA' }]}>{act.label}</Text></TouchableOpacity>))}
         </View>
       </View>
       <AgentFeatures agentId="ai-assistant-index" agentName="AI Assistant Department" />
@@ -78,3 +78,5 @@ const styles = StyleSheet.create({
   actionButton:{flex:1,minWidth:'45%',alignItems:'center',padding:16,borderRadius:12},
   actionText:{fontSize:13,fontWeight:'600',marginTop:8}
 });
+
+

@@ -1,4 +1,4 @@
-﻿ 
+ 
 import React, { useState, useMemo } from 'react';
 import {
   View,
@@ -105,7 +105,7 @@ export default function CallQueueScreen() {
             </View>
 
             <View style={[styles.statCard, { backgroundColor: '#F59E0B' }]}>
-              <ChartBarBig size={24} color="#fff" />
+              <ChartBar size={24} color="#fff" />
               <Text style={styles.statValue}>{formatTime(stats.longestWait)}</Text>
               <Text style={styles.statLabel}>Longest Wait</Text>
             </View>

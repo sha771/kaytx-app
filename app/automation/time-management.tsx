@@ -1,4 +1,4 @@
-﻿ 
+ 
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -122,7 +122,7 @@ export default function TimeManagement() {
     <View style={styles.tabContent}>
       <View style={styles.statsGrid}>
         <View style={styles.statCard}>
-          <ChartBarBig size={24} color="#4ecdc4" />
+          <ChartBar size={24} color="#4ecdc4" />
           <Text style={styles.statValue}>8.5h</Text>
           <Text style={styles.statLabel}>Today</Text>
         </View>
@@ -188,7 +188,7 @@ export default function TimeManagement() {
           style={[styles.tab, activeTab === 'analytics' && styles.activeTab]}
           onPress={() => setActiveTab('analytics')}
         >
-          <ChartBarBig size={20} color={activeTab === 'analytics' ? '#4ecdc4' : '#666'} />
+          <ChartBar size={20} color={activeTab === 'analytics' ? '#4ecdc4' : '#666'} />
           <Text style={[styles.tabText, activeTab === 'analytics' && styles.activeTabText]}>Analytics</Text>
         </TouchableOpacity>
       </View>

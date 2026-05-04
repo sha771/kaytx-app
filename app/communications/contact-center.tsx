@@ -153,7 +153,7 @@ export default function ContactCenterScreen() {
                 <View style={styles.filterTabs}>
                   {['all', 'customer', 'lead', 'partner'].map((Filter) => (
                     <TouchableOpacity
-                      key={Filter}
+                      key={Funnel}
                       style={[styles.filterTab, selectedFilter === Filter && styles.activeFilterTab]}
                       onPress={() => setSelectedFilter(Filter as any)}
                     >

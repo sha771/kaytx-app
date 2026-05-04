@@ -124,7 +124,7 @@ export default function CallerInsightsScreen() {
               >
                 {['all', 'positive', 'neutral', 'negative'].map((Filter) => (
                   <TouchableOpacity
-                    key={Filter}
+                    key={Funnel}
                     style={[
                       styles.filterChip,
                       { backgroundColor: theme.colors.cardBackground },

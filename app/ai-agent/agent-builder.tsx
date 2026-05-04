@@ -81,21 +81,21 @@ export default function AgentBuilderScreen() {
       case 1:
         return (
           <View>
-            <Text style={[styles.stepTitle, { color: colors.text }]}>Basic Information</Text>
-            <Text style={[styles.stepDesc, { color: colors.text + '60' }]}>Let{"'"}s start with the basics for your new AI agent.</Text>
+            <Text style= [styles.stepTitle, { color: colors.text }]}>Basic Information</Text>
+            <Text style= [styles.stepDesc, { color: colors.text + '60' }]}>Let{"'"}s start with the basics for your new AI agent.</Text>
             
-            <Text style={[styles.inputLabel, { color: colors.text + '60' }]}>Agent Name</Text>
+            <Text style= [styles.inputLabel, { color: colors.text + '60' }]}>Agent Name</Text>
             <TextInput
-              style={[styles.input, { color: colors.text, backgroundColor: colors.border + '30' }]}
+              style= [styles.input, { color: colors.text, backgroundColor: colors.border + '30' }]}
               value={agentConfig.name}
               onChangeText={(v) => setAgentConfig({ ...agentConfig, name: v })}
               placeholder="e.g., AI Customer Support Specialist"
               placeholderTextColor={colors.text + '40'}
             />
 
-            <Text style={[styles.inputLabel, { color: colors.text + '60' }]}>Description</Text>
+            <Text style= [styles.inputLabel, { color: colors.text + '60' }]}>Description</Text>
             <TextInput
-              style={[styles.textArea, { color: colors.text, backgroundColor: colors.border + '30' }]}
+              style= [styles.textArea, { color: colors.text, backgroundColor: colors.border + '30' }]}
               value={agentConfig.description}
               onChangeText={(v) => setAgentConfig({ ...agentConfig, description: v })}
               placeholder="What does this agent do?"
@@ -104,16 +104,16 @@ export default function AgentBuilderScreen() {
               numberOfLines={3}
             />
 
-            <Text style={[styles.inputLabel, { color: colors.text + '60' }]}>Category</Text>
+            <Text style= [styles.inputLabel, { color: colors.text + '60' }]}>Category</Text>
             <View style={styles.categoryGrid}>
               {agentCategories.map(cat => (
                 <TouchableOpacity
                   key={cat.id}
-                  style={[styles.categoryChip, agentConfig.category === cat.id && { backgroundColor: cat.color, borderColor: cat.color }]}
+                  style= [styles.categoryChip, agentConfig.category === cat.id && { backgroundColor: cat.color, borderColor: cat.color }]}
                   onPress={() => setAgentConfig({ ...agentConfig, category: cat.id })}
                 >
                   <cat.icon size={16} color={agentConfig.category === cat.id ? '#fff' : colors.text} />
-                  <Text style={[styles.categoryText, { color: agentConfig.category === cat.id ? '#fff' : colors.text }]}>
+                  <Text style= [styles.categoryText, { color: agentConfig.category === cat.id ? '#fff' : colors.text }]}>
                     {cat.label.split(' ')[0]}
                   </Text>
                 </TouchableOpacity>
@@ -125,10 +125,10 @@ export default function AgentBuilderScreen() {
       case 2:
         return (
           <View>
-            <Text style={[styles.stepTitle, { color: colors.text }]}>Appearance</Text>
-            <Text style={[styles.stepDesc, { color: colors.text + '60' }]}>Choose how your agent will look.</Text>
+            <Text style= [styles.stepTitle, { color: colors.text }]}>Appearance</Text>
+            <Text style= [styles.stepDesc, { color: colors.text + '60' }]}>Choose how your agent will look.</Text>
 
-            <Text style={[styles.inputLabel, { color: colors.text + '60' }]}>Icon</Text>
+            <Text style= [styles.inputLabel, { color: colors.text + '60' }]}>Icon</Text>
             <View style={styles.iconGrid}>
               {icons.map(iconName => {
                 const IconComponent = { Brain, MessageSquare, Target, Zap, Globe, User, Sparkles }[iconName] || User;
@@ -136,7 +136,7 @@ export default function AgentBuilderScreen() {
                 return (
                   <TouchableOpacity
                     key={iconName}
-                    style={[styles.iconChip, isSelected && { backgroundColor: agentConfig.color, borderColor: agentConfig.color }]}
+                    style= [styles.iconChip, isSelected && { backgroundColor: agentConfig.color, borderColor: agentConfig.color }]}
                     onPress={() => setAgentConfig({ ...agentConfig, icon: iconName })}
                   >
                     <IconComponent size={24} color={isSelected ? '#fff' : colors.text} />
@@ -145,12 +145,12 @@ export default function AgentBuilderScreen() {
               })}
             </View>
 
-            <Text style={[styles.inputLabel, { color: colors.text + '60' }]}>Color Theme</Text>
+            <Text style= [styles.inputLabel, { color: colors.text + '60' }]}>Color Theme</Text>
             <View style={styles.colorGrid}>
               {colorOptions.map(color => (
                 <TouchableOpacity
                   key={color}
-                  style={[styles.colorChip, { backgroundColor: color }, agentConfig.color === color && styles.colorSelected]}
+                  style= [styles.colorChip, { backgroundColor: color }, agentConfig.color === color && styles.colorSelected]}
                   onPress={() => setAgentConfig({ ...agentConfig, color })}
                 >
                   {agentConfig.color === color && <Check size={16} color="#fff" />}
@@ -163,19 +163,19 @@ export default function AgentBuilderScreen() {
       case 3:
         return (
           <View>
-            <Text style={[styles.stepTitle, { color: colors.text }]}>Configuration</Text>
-            <Text style={[styles.stepDesc, { color: colors.text + '60' }]}>Set up your agent{"'"}s AI model and behavior.</Text>
+            <Text style= [styles.stepTitle, { color: colors.text }]}>Configuration</Text>
+            <Text style= [styles.stepDesc, { color: colors.text + '60' }]}>Set up your agent{"'"}s AI model and behavior.</Text>
 
-            <Text style={[styles.inputLabel, { color: colors.text + '60' }]}>AI Model</Text>
+            <Text style= [styles.inputLabel, { color: colors.text + '60' }]}>AI Model</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.modelScroll}>
               {models.map(model => (
                 <TouchableOpacity
                   key={model}
-                  style={[styles.modelChip, agentConfig.model === model && { backgroundColor: colors.primary }]}
+                  style= [styles.modelChip, agentConfig.model === model && { backgroundColor: colors.primary }]}
                   onPress={() => setAgentConfig({ ...agentConfig, model })}
                 >
                   <Brain size={16} color={agentConfig.model === model ? '#fff' : colors.text} />
-                  <Text style={[styles.modelText, { color: agentConfig.model === model ? '#fff' : colors.text }]}>
+                  <Text style= [styles.modelText, { color: agentConfig.model === model ? '#fff' : colors.text }]}>
                     {model}
                   </Text>
                 </TouchableOpacity>
@@ -186,7 +186,7 @@ export default function AgentBuilderScreen() {
               <View style={styles.toggleRow}>
                 <View style={styles.toggleInfo}>
                   <Mic size={20} color={colors.text} />
-                  <Text style={[styles.toggleLabel, { color: colors.text }]}>Enable Voice</Text>
+                  <Text style= [styles.toggleLabel, { color: colors.text }]}>Enable Voice</Text>
                 </View>
                 <Switch
                   value={agentConfig.voiceEnabled}
@@ -199,15 +199,15 @@ export default function AgentBuilderScreen() {
               {agentConfig.voiceEnabled && (
                 <View style={styles.voiceOptions}>
                   <View style={styles.voiceRow}>
-                    <Text style={[styles.voiceLabel, { color: colors.text + '60' }]}>Gender</Text>
+                    <Text style= [styles.voiceLabel, { color: colors.text + '60' }]}>Gender</Text>
                     <View style={styles.voiceChips}>
                       {['male', 'female', 'neutral'].map(g => (
                         <TouchableOpacity
                           key={g}
-                          style={[styles.voiceChip, agentConfig.voiceGender === g && { backgroundColor: colors.primary }]}
+                          style= [styles.voiceChip, agentConfig.voiceGender === g && { backgroundColor: colors.primary }]}
                           onPress={() => setAgentConfig({ ...agentConfig, voiceGender: g })}
                         >
-                          <Text style={[styles.voiceChipText, { color: agentConfig.voiceGender === g ? '#fff' : colors.text }]}>
+                          <Text style= [styles.voiceChipText, { color: agentConfig.voiceGender === g ? '#fff' : colors.text }]}>
                             {g}
                           </Text>
                         </TouchableOpacity>
@@ -216,15 +216,15 @@ export default function AgentBuilderScreen() {
                   </View>
 
                   <View style={styles.voiceRow}>
-                    <Text style={[styles.voiceLabel, { color: colors.text + '60' }]}>Style</Text>
+                    <Text style= [styles.voiceLabel, { color: colors.text + '60' }]}>Style</Text>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                       {voiceStyles.map(style => (
                         <TouchableOpacity
                           key={style}
-                          style={[styles.voiceChip, agentConfig.voiceStyle === style && { backgroundColor: colors.primary }]}
+                          style= [styles.voiceChip, agentConfig.voiceStyle === style && { backgroundColor: colors.primary }]}
                           onPress={() => setAgentConfig({ ...agentConfig, voiceStyle: style })}
                         >
-                          <Text style={[styles.voiceChipText, { color: agentConfig.voiceStyle === style ? '#fff' : colors.text }]}>
+                          <Text style= [styles.voiceChipText, { color: agentConfig.voiceStyle === style ? '#fff' : colors.text }]}>
                             {style}
                           </Text>
                         </TouchableOpacity>
@@ -235,31 +235,31 @@ export default function AgentBuilderScreen() {
               )}
             </View>
 
-            <Text style={[styles.inputLabel, { color: colors.text + '60' }]}>Language</Text>
+            <Text style= [styles.inputLabel, { color: colors.text + '60' }]}>Language</Text>
             <View style={styles.languageGrid}>
               {languages.map(lang => (
                 <TouchableOpacity
                   key={lang}
-                  style={[styles.languageChip, agentConfig.language === lang && { backgroundColor: colors.primary }]}
+                  style= [styles.languageChip, agentConfig.language === lang && { backgroundColor: colors.primary }]}
                   onPress={() => setAgentConfig({ ...agentConfig, language: lang })}
                 >
                   <Globe size={14} color={agentConfig.language === lang ? '#fff' : colors.text} />
-                  <Text style={[styles.languageText, { color: agentConfig.language === lang ? '#fff' : colors.text }]}>
+                  <Text style= [styles.languageText, { color: agentConfig.language === lang ? '#fff' : colors.text }]}>
                     {lang}
                   </Text>
                 </TouchableOpacity>
               ))}
             </View>
 
-            <Text style={[styles.inputLabel, { color: colors.text + '60' }]}>Personality</Text>
+            <Text style= [styles.inputLabel, { color: colors.text + '60' }]}>Personality</Text>
             <View style={styles.personalityGrid}>
               {personalities.map(p => (
                 <TouchableOpacity
                   key={p}
-                  style={[styles.personalityChip, agentConfig.personality === p && { backgroundColor: colors.primary }]}
+                  style= [styles.personalityChip, agentConfig.personality === p && { backgroundColor: colors.primary }]}
                   onPress={() => setAgentConfig({ ...agentConfig, personality: p })}
                 >
-                  <Text style={[styles.personalityText, { color: agentConfig.personality === p ? '#fff' : colors.text }]}>
+                  <Text style= [styles.personalityText, { color: agentConfig.personality === p ? '#fff' : colors.text }]}>
                     {p}
                   </Text>
                 </TouchableOpacity>
@@ -271,28 +271,28 @@ export default function AgentBuilderScreen() {
       case 4:
         return (
           <View>
-            <Text style={[styles.stepTitle, { color: colors.text }]}>Capabilities & Training</Text>
-            <Text style={[styles.stepDesc, { color: colors.text + '60' }]}>Define what your agent can do.</Text>
+            <Text style= [styles.stepTitle, { color: colors.text }]}>Capabilities & Training</Text>
+            <Text style= [styles.stepDesc, { color: colors.text + '60' }]}>Define what your agent can do.</Text>
 
-            <Text style={[styles.inputLabel, { color: colors.text + '60' }]}>Add Capabilities</Text>
+            <Text style= [styles.inputLabel, { color: colors.text + '60' }]}>Add Capabilities</Text>
             <View style={styles.capabilityInput}>
               <TextInput
-                style={[styles.capabilityTextInput, { color: colors.text, backgroundColor: colors.border + '30' }]}
+                style= [styles.capabilityTextInput, { color: colors.text, backgroundColor: colors.border + '30' }]}
                 value={newCapability}
                 onChangeText={setNewCapability}
                 placeholder="e.g., Process invoices"
                 placeholderTextColor={colors.text + '40'}
               />
-              <TouchableOpacity style={[styles.addCapButton, { backgroundColor: colors.primary }]} onPress={addCapability}>
+              <TouchableOpacity style= [styles.addCapButton, { backgroundColor: colors.primary }]} onPress={addCapability}>
                 <Plus size={20} color="#fff" />
               </TouchableOpacity>
             </View>
 
             <View style={styles.capabilitiesList}>
               {agentConfig.capabilities.map(cap => (
-                <View key={cap} style={[styles.capabilityChip, { backgroundColor: colors.primary + '15' }]}>
+                <View key={cap} style= [styles.capabilityChip, { backgroundColor: colors.primary + '15' }]}>
                   <Zap size={14} color={colors.primary} />
-                  <Text style={[styles.capabilityText, { color: colors.primary }]}>{cap}</Text>
+                  <Text style= [styles.capabilityText, { color: colors.primary }]}>{cap}</Text>
                   <TouchableOpacity onPress={() => removeCapability(cap)}>
                     <X size={14} color={colors.primary} />
                   </TouchableOpacity>
@@ -304,7 +304,7 @@ export default function AgentBuilderScreen() {
               <View style={styles.toggleRow}>
                 <View style={styles.toggleInfo}>
                   <Brain size={20} color={colors.text} />
-                  <Text style={[styles.toggleLabel, { color: colors.text }]}>Enable Training Mode</Text>
+                  <Text style= [styles.toggleLabel, { color: colors.text }]}>Enable Training Mode</Text>
                 </View>
                 <Switch
                   value={agentConfig.trainingEnabled}
@@ -317,7 +317,7 @@ export default function AgentBuilderScreen() {
               <View style={styles.toggleRow}>
                 <View style={styles.toggleInfo}>
                   <Upload size={20} color={colors.text} />
-                  <Text style={[styles.toggleLabel, { color: colors.text }]}>Allow Data Upload</Text>
+                  <Text style= [styles.toggleLabel, { color: colors.text }]}>Allow Data Upload</Text>
                 </View>
                 <Switch
                   value={agentConfig.dataUploadEnabled}
@@ -329,23 +329,23 @@ export default function AgentBuilderScreen() {
             </View>
 
             {/* Summary */}
-            <View style={[styles.summaryCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-              <Text style={[styles.summaryTitle, { color: colors.text + '60' }]}>AGENT PREVIEW</Text>
+            <View style= [styles.summaryCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+              <Text style= [styles.summaryTitle, { color: colors.text + '60' }]}>AGENT PREVIEW</Text>
               <View style={styles.summaryRow}>
-                <Text style={[styles.summaryLabel, { color: colors.text + '60' }]}>Name</Text>
-                <Text style={[styles.summaryValue, { color: colors.text }]}>{agentConfig.name || 'Unnamed Agent'}</Text>
+                <Text style= [styles.summaryLabel, { color: colors.text + '60' }]}>Name</Text>
+                <Text style= [styles.summaryValue, { color: colors.text }]}>{agentConfig.name || 'Unnamed Agent'}</Text>
               </View>
               <View style={styles.summaryRow}>
-                <Text style={[styles.summaryLabel, { color: colors.text + '60' }]}>Category</Text>
-                <Text style={[styles.summaryValue, { color: colors.text }]}>{agentConfig.category || 'Uncategorized'}</Text>
+                <Text style= [styles.summaryLabel, { color: colors.text + '60' }]}>Category</Text>
+                <Text style= [styles.summaryValue, { color: colors.text }]}>{agentConfig.category || 'Uncategorized'}</Text>
               </View>
               <View style={styles.summaryRow}>
-                <Text style={[styles.summaryLabel, { color: colors.text + '60' }]}>Model</Text>
-                <Text style={[styles.summaryValue, { color: colors.text }]}>{agentConfig.model}</Text>
+                <Text style= [styles.summaryLabel, { color: colors.text + '60' }]}>Model</Text>
+                <Text style= [styles.summaryValue, { color: colors.text }]}>{agentConfig.model}</Text>
               </View>
               <View style={styles.summaryRow}>
-                <Text style={[styles.summaryLabel, { color: colors.text + '60' }]}>Voice</Text>
-                <Text style={[styles.summaryValue, { color: colors.text }]}>{agentConfig.voiceEnabled ? 'Enabled' : 'Disabled'}</Text>
+                <Text style= [styles.summaryLabel, { color: colors.text + '60' }]}>Voice</Text>
+                <Text style= [styles.summaryValue, { color: colors.text }]}>{agentConfig.voiceEnabled ? 'Enabled' : 'Disabled'}</Text>
               </View>
             </View>
           </View>
@@ -357,15 +357,15 @@ export default function AgentBuilderScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
+    <SafeAreaView style= [styles.container, { backgroundColor: colors.background }]}>
+      <View style= [styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
         <View style={styles.headerTop}>
           <TouchableOpacity onPress={() => router.back()}>
             <ChevronLeft size={24} color={colors.text} />
           </TouchableOpacity>
           <View style={styles.headerTitle}>
             <Wand size={22} color={colors.primary} />
-            <Text style={[styles.titleText, { color: colors.text }]}>Agent Builder</Text>
+            <Text style= [styles.titleText, { color: colors.text }]}>Agent Builder</Text>
           </View>
           <View style={{ width: 24 }} />
         </View>
@@ -374,10 +374,10 @@ export default function AgentBuilderScreen() {
         <View style={styles.progressContainer}>
           <View style={styles.progressRow}>
             {Array.from({ length: totalSteps }).map((_, i) => (
-              <View key={i} style={[styles.progressStep, i + 1 <= step && { backgroundColor: colors.primary }]} />
+              <View key={i} style= [styles.progressStep, i + 1 <= step && { backgroundColor: colors.primary }]} />
             ))}
           </View>
-          <Text style={[styles.progressText, { color: colors.text + '60' }]}>Step {step} of {totalSteps}</Text>
+          <Text style= [styles.progressText, { color: colors.text + '60' }]}>Step {step} of {totalSteps}</Text>
         </View>
       </View>
 
@@ -388,14 +388,14 @@ export default function AgentBuilderScreen() {
       </ScrollView>
 
       {/* Footer */}
-      <View style={[styles.footer, { backgroundColor: colors.card, borderTopColor: colors.border }]}>
+      <View style= [styles.footer, { backgroundColor: colors.card, borderTopColor: colors.border }]}>
         {step > 1 && (
-          <TouchableOpacity style={[styles.backBtn, { borderColor: colors.border }]} onPress={() => setStep(step - 1)}>
-            <Text style={[styles.backText, { color: colors.text }]}>Back</Text>
+          <TouchableOpacity style= [styles.backBtn, { borderColor: colors.border }]} onPress={() => setStep(step - 1)}>
+            <Text style= [styles.backText, { color: colors.text }]}>Back</Text>
           </TouchableOpacity>
         )}
         <TouchableOpacity 
-          style={[styles.nextBtn, { backgroundColor: colors.primary }]} 
+          style= [styles.nextBtn, { backgroundColor: colors.primary }]} 
           onPress={() => step < totalSteps ? setStep(step + 1) : router.push('/ai-agent')}
         >
           <Text style={styles.nextText}>{step === totalSteps ? 'Create Agent' : 'Next'}</Text>
@@ -466,3 +466,4 @@ const styles = StyleSheet.create({
   nextBtn: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, paddingVertical: 14, borderRadius: 12 },
   nextText: { color: '#fff', fontSize: 16, fontWeight: '600' },
 });
+

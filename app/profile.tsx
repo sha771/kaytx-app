@@ -32,16 +32,16 @@ export default function ProfileScreen() {
         visible={true}
         onRequestClose={() => router.back()}
       >
-        <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-          <View style={[styles.header, { borderBottomColor: theme.colors.border }]}>
-            <Text style={[styles.title, { color: theme.colors.text }]}>Profile</Text>
+        <SafeAreaView style= [styles.container, { backgroundColor: theme.colors.background }]}>
+          <View style= [styles.header, { borderBottomColor: theme.colors.border }]}>
+            <Text style= [styles.title, { color: theme.colors.text }]}>Profile</Text>
             <TouchableOpacity style={styles.closeButton} onPress={() => router.back()}>
               <X size={24} color={theme.colors.text} />
             </TouchableOpacity>
           </View>
           <View style={styles.loadingContainer}>
             <ActivityIndicator size="large" color={theme.colors.primary} />
-            <Text style={[styles.loadingText, { color: theme.colors.text }]}>Loading profile...</Text>
+            <Text style= [styles.loadingText, { color: theme.colors.text }]}>Loading profile...</Text>
           </View>
         </SafeAreaView>
       </Modal>
@@ -57,19 +57,19 @@ export default function ProfileScreen() {
         visible={true}
         onRequestClose={() => router.back()}
       >
-        <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-          <View style={[styles.header, { borderBottomColor: theme.colors.border }]}>
-            <Text style={[styles.title, { color: theme.colors.text }]}>Profile</Text>
+        <SafeAreaView style= [styles.container, { backgroundColor: theme.colors.background }]}>
+          <View style= [styles.header, { borderBottomColor: theme.colors.border }]}>
+            <Text style= [styles.title, { color: theme.colors.text }]}>Profile</Text>
             <TouchableOpacity style={styles.closeButton} onPress={() => router.back()}>
               <X size={24} color={theme.colors.text} />
             </TouchableOpacity>
           </View>
           <View style={styles.errorContainer}>
-            <Text style={[styles.errorText, { color: theme.colors.text }]}>
+            <Text style= [styles.errorText, { color: theme.colors.text }]}>
               {error || 'Failed to load profile'}
             </Text>
             <TouchableOpacity 
-              style={[styles.retryButton, { backgroundColor: theme.colors.primary }]} 
+              style= [styles.retryButton, { backgroundColor: theme.colors.primary }]} 
               onPress={refetch}
             >
               <Text style={styles.retryButtonText}>Retry</Text>
@@ -102,9 +102,9 @@ export default function ProfileScreen() {
       visible={true}
       onRequestClose={() => router.back()}
     >
-      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-        <View style={[styles.header, { borderBottomColor: theme.colors.border }]}>
-          <Text style={[styles.title, { color: theme.colors.text }]}>Profile</Text>
+      <SafeAreaView style= [styles.container, { backgroundColor: theme.colors.background }]}>
+        <View style= [styles.header, { borderBottomColor: theme.colors.border }]}>
+          <Text style= [styles.title, { color: theme.colors.text }]}>Profile</Text>
           <TouchableOpacity style={styles.closeButton} onPress={() => router.back()}>
             <X size={24} color={theme.colors.text} />
           </TouchableOpacity>
@@ -114,52 +114,52 @@ export default function ProfileScreen() {
           <View style={styles.profileHeader}>
             <View style={styles.avatarContainer}>
               <Image source={{ uri: profileData.avatar }} style={styles.avatar} />
-              <TouchableOpacity style={[styles.editAvatarButton, { backgroundColor: theme.colors.primary }]}>
+              <TouchableOpacity style= [styles.editAvatarButton, { backgroundColor: theme.colors.primary }]}>
                 <Camera size={18} color="white" />
               </TouchableOpacity>
             </View>
             
-            <Text style={[styles.name, { color: theme.colors.text }]}>{profileData.name}</Text>
-            <Text style={[styles.username, { color: theme.colors.secondaryText }]}>{profileData.username}</Text>
+            <Text style= [styles.name, { color: theme.colors.text }]}>{profileData.name}</Text>
+            <Text style= [styles.username, { color: theme.colors.secondaryText }]}>{profileData.username}</Text>
             
-            <Text style={[styles.bio, { color: theme.colors.text }]}>{profileData.bio}</Text>
+            <Text style= [styles.bio, { color: theme.colors.text }]}>{profileData.bio}</Text>
           </View>
 
-          <View style={[styles.infoSection, { backgroundColor: theme.colors.cardBackground }]}>
+          <View style= [styles.infoSection, { backgroundColor: theme.colors.cardBackground }]}>
             <View style={styles.infoItem}>
               <Mail size={20} color={theme.colors.secondaryText} />
               <View style={styles.infoContent}>
-                <Text style={[styles.infoLabel, { color: theme.colors.secondaryText }]}>Email</Text>
-                <Text style={[styles.infoValue, { color: theme.colors.text }]}>{profileData.email}</Text>
+                <Text style= [styles.infoLabel, { color: theme.colors.secondaryText }]}>Email</Text>
+                <Text style= [styles.infoValue, { color: theme.colors.text }]}>{profileData.email}</Text>
               </View>
             </View>
             
-            <View style={[styles.infoItem, styles.infoItemBorder, { borderTopColor: theme.colors.border }]}>
+            <View style= [styles.infoItem, styles.infoItemBorder, { borderTopColor: theme.colors.border }]}>
               <Phone size={20} color={theme.colors.secondaryText} />
               <View style={styles.infoContent}>
-                <Text style={[styles.infoLabel, { color: theme.colors.secondaryText }]}>Phone</Text>
-                <Text style={[styles.infoValue, { color: theme.colors.text }]}>{profileData.phone}</Text>
+                <Text style= [styles.infoLabel, { color: theme.colors.secondaryText }]}>Phone</Text>
+                <Text style= [styles.infoValue, { color: theme.colors.text }]}>{profileData.phone}</Text>
               </View>
             </View>
             
-            <View style={[styles.infoItem, styles.infoItemBorder, { borderTopColor: theme.colors.border }]}>
+            <View style= [styles.infoItem, styles.infoItemBorder, { borderTopColor: theme.colors.border }]}>
               <MapPin size={20} color={theme.colors.secondaryText} />
               <View style={styles.infoContent}>
-                <Text style={[styles.infoLabel, { color: theme.colors.secondaryText }]}>Location</Text>
-                <Text style={[styles.infoValue, { color: theme.colors.text }]}>{profileData.location}</Text>
+                <Text style= [styles.infoLabel, { color: theme.colors.secondaryText }]}>Location</Text>
+                <Text style= [styles.infoValue, { color: theme.colors.text }]}>{profileData.location}</Text>
               </View>
             </View>
             
-            <View style={[styles.infoItem, styles.infoItemBorder, { borderTopColor: theme.colors.border }]}>
+            <View style= [styles.infoItem, styles.infoItemBorder, { borderTopColor: theme.colors.border }]}>
               <Calendar size={20} color={theme.colors.secondaryText} />
               <View style={styles.infoContent}>
-                <Text style={[styles.infoLabel, { color: theme.colors.secondaryText }]}>Joined</Text>
-                <Text style={[styles.infoValue, { color: theme.colors.text }]}>{profileData.joinDate}</Text>
+                <Text style= [styles.infoLabel, { color: theme.colors.secondaryText }]}>Joined</Text>
+                <Text style= [styles.infoValue, { color: theme.colors.text }]}>{profileData.joinDate}</Text>
               </View>
             </View>
           </View>
 
-          <TouchableOpacity style={[styles.editButton, { backgroundColor: theme.colors.primary }]}>
+          <TouchableOpacity style= [styles.editButton, { backgroundColor: theme.colors.primary }]}>
             <Text style={styles.editButtonText}>Edit Profile</Text>
           </TouchableOpacity>
         </ScrollView>
@@ -295,3 +295,4 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
+

@@ -241,7 +241,7 @@ export default function EmailMarketingScreen() {
                 </View>
                 <View style={styles.campaignActions}>
                   <TouchableOpacity style={styles.actionButton}>
-                    <ChartBarBig size={16} color="#6B7280" />
+                    <ChartBar size={16} color="#6B7280" />
                     <Text style={styles.actionText}>Analytics</Text>
                   </TouchableOpacity>
                   {campaign.status === 'draft' && (

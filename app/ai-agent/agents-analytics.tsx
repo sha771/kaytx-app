@@ -92,7 +92,7 @@ export default function AIAgentsAnalyticsScreen() {
             <ChevronLeft size={24} color={colors.text} />
           </TouchableOpacity>
           <View style={styles.headerTitleContainer}>
-            <ChartBarBig size={22} color={colors.primary} />
+            <ChartBar size={22} color={colors.primary} />
             <Text style={[styles.headerTitle, { color: colors.text }]}>AI Agents Analytics</Text>
           </View>
           <View style={{ width: 40 }} />

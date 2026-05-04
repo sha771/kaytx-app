@@ -338,9 +338,9 @@ export default function CallLogsScreen() {
         <View style={styles.filtersRow}
           testID="call-status-filters"
         >
-          {(['all', 'answered', 'missed', 'won', 'lost'] as const).map(filter => (
+          {(['all', 'answered', 'missed', 'won', 'lost'] as const).map(Filter => (
             <TouchableOpacity
-              key={Filter}
+              key={Funnel}
               style={[styles.filterChip, selectedFilter === Filter && { backgroundColor: theme.colors.primary }, selectedFilter !== Filter && { backgroundColor: theme.colors.cardBackground }]}
               onPress={() => setSelectedFilter(Filter)}
             >

@@ -157,7 +157,7 @@ export const getAgentsWithConsultingCapability = (): AIAgent[] => {
 export const getPrivacyAgentsByGate = (gate: 'input' | 'agent' | 'output'): AIAgent[] => {
   const gateMap: Record<string, string[]> = {
     input: ['privacy-data-classifier','privacy-purpose-validator','privacy-access-controller'],
-    agent: ['privacy-data-masker','privacy-context-Filter','privacy-permission-enforcer'],
+    agent: ['privacy-data-masker','privacy-context-filter','privacy-permission-enforcer'],
     output: ['privacy-output-sanitizer','privacy-compliance-checker','privacy-audit-logger'],
   };
   return privacyAgents.filter(agent => gateMap[gate]?.includes(agent.id));

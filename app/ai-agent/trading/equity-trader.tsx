@@ -13,7 +13,7 @@ export default function AgentPage() {
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#0277BD20' }]}><ChartBarBig size={48} color="#0277BD" /></View>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#0277BD20' }]}><ChartBar size={48} color="#0277BD" /></View>
         <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Equity Trader</Text>
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Equities Trading</Text>
         <View style={styles.badgesRow}>

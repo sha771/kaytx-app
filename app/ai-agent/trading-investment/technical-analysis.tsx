@@ -1,7 +1,7 @@
-﻿
+
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { ChartBar, TrendingUp, TrendingDown, Activity, Zap, ChartBar } from 'lucide-react-native';
+import { ChartBar, TrendingUp, TrendingDown, Activity, Zap } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
@@ -71,7 +71,7 @@ export default function TechnicalAnalysisScreen() {
             </View>
             <View style={styles.sigCenter}>
               <Text style={[styles.sigPattern, { color: theme.colors.text }]}>{sig.pattern}</Text>
-              <Text style={[styles.sigMeta, { color: theme.colors.secondaryText }]}>TF: {sig.tf} · Entry: {sig.entry}</Text>
+              <Text style={[styles.sigMeta, { color: theme.colors.secondaryText }]}>TF: {sig.tf} � Entry: {sig.entry}</Text>
             </View>
             <View style={[styles.strengthBadge, {
               backgroundColor: sig.strength === 'Very Strong' || sig.strength === 'Strong' ? '#00C85320' : '#FF950020'
@@ -101,7 +101,7 @@ export default function TechnicalAnalysisScreen() {
   );
 
   const customTabs = [
-    { id: 'charts', label: 'Charts', icon: ChartBar2, component: chartsTab },
+    { id: 'charts', label: 'Charts', icon: ChartBar, component: chartsTab },
     { id: 'signals', label: 'Signals', icon: ChartBar, component: <View /> },
   ];
 

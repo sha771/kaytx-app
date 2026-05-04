@@ -306,7 +306,7 @@ export default function SMSTextScreen() {
           <View style={styles.filterChips}>
             {(['all', 'unread', 'sent'] as const).map((Filter) => (
               <TouchableOpacity
-                key={Filter}
+                key={Funnel}
                 style={[
                   styles.filterChip,
                   { backgroundColor: theme.colors.cardBackground },

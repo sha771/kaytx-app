@@ -1,4 +1,4 @@
-﻿ 
+ 
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -31,9 +31,9 @@ export default function TaskAssignment() {
     { id: '3', title: 'Testing Phase', assignee: 'Mike Johnson', status: 'completed', priority: 'low', dueDate: '2024-01-18' },
   ]);
   const [teamMembers] = useState<TeamMember[]>([
-    { id: '1', name: 'John Doe', role: 'Designer', avatar: '👨‍💻', tasksCompleted: 15, efficiency: 92 },
-    { id: '2', name: 'Jane Smith', role: 'Developer', avatar: '👩‍💻', tasksCompleted: 23, efficiency: 88 },
-    { id: '3', name: 'Mike Johnson', role: 'QA Engineer', avatar: '👨‍🔬', tasksCompleted: 18, efficiency: 95 },
+    { id: '1', name: 'John Doe', role: 'Designer', avatar: '?????', tasksCompleted: 15, efficiency: 92 },
+    { id: '2', name: 'Jane Smith', role: 'Developer', avatar: '?????', tasksCompleted: 23, efficiency: 88 },
+    { id: '3', name: 'Mike Johnson', role: 'QA Engineer', avatar: '?????', tasksCompleted: 18, efficiency: 95 },
   ]);
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
@@ -154,7 +154,7 @@ export default function TaskAssignment() {
           <Text style={styles.statCardLabel}>Team Members</Text>
         </View>
         <View style={styles.statCard}>
-          <ChartBarBig size={24} color="#f39c12" />
+          <ChartBar size={24} color="#f39c12" />
           <Text style={styles.statCardValue}>92%</Text>
           <Text style={styles.statCardLabel}>Completion Rate</Text>
         </View>
@@ -214,7 +214,7 @@ export default function TaskAssignment() {
           style={[styles.tab, activeTab === 'analytics' && styles.activeTab]}
           onPress={() => setActiveTab('analytics')}
         >
-          <ChartBarBig size={20} color={activeTab === 'analytics' ? '#4ecdc4' : '#666'} />
+          <ChartBar size={20} color={activeTab === 'analytics' ? '#4ecdc4' : '#666'} />
           <Text style={[styles.tabText, activeTab === 'analytics' && styles.activeTabText]}>Analytics</Text>
         </TouchableOpacity>
       </View>

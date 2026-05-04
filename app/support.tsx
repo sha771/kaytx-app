@@ -1,4 +1,4 @@
-﻿ 
+ 
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -44,7 +44,7 @@ export default function SupportScreen() {
     {
       id: 'getting-started',
       title: 'Getting Started',
-      icon: '🚀',
+      icon: '??',
       questions: [
         'How do I create my first campaign?',
         'Setting up your account',
@@ -55,7 +55,7 @@ export default function SupportScreen() {
     {
       id: 'automation',
       title: 'Automation & Workflows',
-      icon: '⚡',
+      icon: '?',
       questions: [
         'Creating your first workflow',
         'Setting up triggers and actions',
@@ -66,7 +66,7 @@ export default function SupportScreen() {
     {
       id: 'analytics',
       title: 'Analytics & Reporting',
-      icon: '📊',
+      icon: '??',
       questions: [
         'Understanding your analytics dashboard',
         'Exporting reports',
@@ -77,7 +77,7 @@ export default function SupportScreen() {
     {
       id: 'billing',
       title: 'Billing & Subscriptions',
-      icon: '💳',
+      icon: '??',
       questions: [
         'Changing your subscription plan',
         'Understanding billing cycles',
@@ -250,7 +250,7 @@ export default function SupportScreen() {
                 <View style={styles.questionsList}>
                   {category.questions.slice(0, 2).map((question, index) => (
                     <Text key={index} style={[styles.questionText, { color: theme.colors.secondaryText }]}>
-                      • {question}
+                       {question}
                     </Text>
                   ))}
                   {category.questions.length > 2 && (
@@ -602,3 +602,4 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
+

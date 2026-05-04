@@ -60,7 +60,7 @@ export const privacyDataMasker = createPrivacyAgent(
 export const privacyContextFilter = createPrivacyAgent(
   'privacy-context-filter','AI Context Filter','Context Filtering Agent',
   'Filters data based on agent role and task. Enforces need-to-know principle.',
-  Filter,'#00BFA5',
+  ListFilter,'#00BFA5',
   ['Role-based filtering','Task-relevance scoring','Department boundaries','Remove irrelevant fields','Context-aware access'],
   'medium',
   { savingsPerMonth: '$25,000', tasksAutomatedDaily: 12000, responseTime: '<25ms', accuracyRate: '98.5%' },

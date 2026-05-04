@@ -227,7 +227,7 @@ export default function ModelManagementScreen() {
             </Text>
           </View>
           <View style={styles.quickStat}>
-            <ChartBarBig size={14} color={colors.icon} />
+            <ChartBar size={14} color={colors.icon} />
             <Text style={[styles.quickStatValue, { color: colors.text }]}>
               {model.usage.toLocaleString()}
             </Text>
@@ -953,3 +953,4 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
+

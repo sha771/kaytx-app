@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
@@ -68,7 +68,7 @@ export default function SocialAnalytics() {
     { id: 'engagement', title: 'Engagement', value: '324K', change: '+18.2%', isPositive: true, icon: Heart, color: '#FF2D55' },
     { id: 'followers', title: 'Total Followers', value: '562K', change: '+12.4%', isPositive: true, icon: Users, color: '#34C759' },
     { id: 'posts', title: 'Posts Published', value: '156', change: '+8.1%', isPositive: true, icon: Share2, color: '#AF52DE' },
-    { id: 'impressions', title: 'Impressions', value: '8.7M', change: '+32.1%', isPositive: true, icon: ChartBar2, color: '#FF9500' },
+    { id: 'impressions', title: 'Impressions', value: '8.7M', change: '+32.1%', isPositive: true, icon: ChartBar, color: '#FF9500' },
     { id: 'clicks', title: 'Link Clicks', value: '45.2K', change: '-2.3%', isPositive: false, icon: Target, color: '#5AC8FA' },
   ];
 
@@ -81,7 +81,7 @@ export default function SocialAnalytics() {
   ];
 
   const topPosts: TopPost[] = [
-    { id: '1', platform: 'Instagram', platformIcon: Instagram, platformColor: '#E4405F', content: 'Our biggest product launch yet! 🚀 Thank you for 1M...', likes: '45.2K', comments: '3.2K', shares: '8.4K', reach: '890K' },
+    { id: '1', platform: 'Instagram', platformIcon: Instagram, platformColor: '#E4405F', content: 'Our biggest product launch yet! ?? Thank you for 1M...', likes: '45.2K', comments: '3.2K', shares: '8.4K', reach: '890K' },
     { id: '2', platform: 'LinkedIn', platformIcon: Linkedin, platformColor: '#0A66C2', content: 'Excited to announce our partnership with industry leaders...', likes: '12.4K', comments: '1.8K', shares: '4.2K', reach: '320K' },
     { id: '3', platform: 'Twitter', platformIcon: Twitter, platformColor: '#1DA1F2', content: 'Thread: 10 lessons we learned building a $10M business...', likes: '28.1K', comments: '2.1K', shares: '12.3K', reach: '1.2M' },
     { id: '4', platform: 'YouTube', platformIcon: Youtube, platformColor: '#FF0000', content: 'How We Grew Our Startup to 1M Users in 6 Months', likes: '18.7K', comments: '4.5K', shares: '2.8K', reach: '450K' },

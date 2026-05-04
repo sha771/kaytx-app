@@ -89,7 +89,7 @@ export default function VideoInterviewSurveyScreen() {
           <Text style={styles.actionText}>Schedule</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.actionButton}>
-          <ChartBarBig size={16} color="#007AFF" />
+          <ChartBar size={16} color="#007AFF" />
           <Text style={styles.actionText}>Analytics</Text>
         </TouchableOpacity>
       </View>
@@ -133,7 +133,7 @@ export default function VideoInterviewSurveyScreen() {
             style={[styles.tab, activeTab === 'survey' && styles.activeTab]}
             onPress={() => setActiveTab('survey')}
           >
-            <ChartBarBig size={20} color={activeTab === 'survey' ? '#fff' : '#666'} />
+            <ChartBar size={20} color={activeTab === 'survey' ? '#fff' : '#666'} />
             <Text style={[styles.tabText, activeTab === 'survey' && styles.activeTabText]}>
               Video Surveys
             </Text>
@@ -167,7 +167,7 @@ export default function VideoInterviewSurveyScreen() {
               <Text style={styles.quickActionText}>Schedule</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.quickAction}>
-              <ChartBarBig size={24} color="#FF9500" />
+              <ChartBar size={24} color="#FF9500" />
               <Text style={styles.quickActionText}>Reports</Text>
             </TouchableOpacity>
           </View>

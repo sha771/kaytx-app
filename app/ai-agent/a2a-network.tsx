@@ -152,14 +152,14 @@ const A2ANetworkScreen = () => {
   const renderTopology = () => (
     <View style={styles.section}>
       {/* Network Overview Card */}
-      <View style={[styles.infoCard, { backgroundColor: colors.card }]}>
+      <View style= [styles.infoCard, { backgroundColor: colors.card }]}>
         <View style={styles.hubHeader}>
-          <View style={[styles.hubIcon, { backgroundColor: `${colors.primary}15` }]}>
+          <View style= [styles.hubIcon, { backgroundColor: `${colors.primary}15` }]}>
             <Icons.Network size={32} color={colors.primary} />
           </View>
           <View style={styles.hubInfo}>
-            <Text style={[styles.hubTitle, { color: colors.text }]}>A2A Communication Mesh</Text>
-            <Text style={[styles.hubSubtitle, { color: colors.textSecondary }]}>
+            <Text style= [styles.hubTitle, { color: colors.text }]}>A2A Communication Mesh</Text>
+            <Text style= [styles.hubSubtitle, { color: colors.textSecondary }]}>
               {networkStats.totalConnections} connections • {networkStats.activeAgents} active agents
             </Text>
           </View>
@@ -167,51 +167,51 @@ const A2ANetworkScreen = () => {
         
         <View style={styles.connectionStats}>
           <View style={styles.connectionStat}>
-            <View style={[styles.connectionStatIcon, { backgroundColor: '#F4433615' }]}>
+            <View style= [styles.connectionStatIcon, { backgroundColor: '#F4433615' }]}>
               <Icons.ArrowUp size={16} color="#F44336" />
             </View>
-            <Text style={[styles.connectionStatValue, { color: colors.text }]}>
+            <Text style= [styles.connectionStatValue, { color: colors.text }]}>
               {networkStats.escalationPaths}
             </Text>
-            <Text style={[styles.connectionStatLabel, { color: colors.textSecondary }]}>Escalations</Text>
+            <Text style= [styles.connectionStatLabel, { color: colors.textSecondary }]}>Escalations</Text>
           </View>
           
           <View style={styles.connectionStat}>
-            <View style={[styles.connectionStatIcon, { backgroundColor: '#2196F315' }]}>
+            <View style= [styles.connectionStatIcon, { backgroundColor: '#2196F315' }]}>
               <Icons.Users size={16} color="#2196F3" />
             </View>
-            <Text style={[styles.connectionStatValue, { color: colors.text }]}>
+            <Text style= [styles.connectionStatValue, { color: colors.text }]}>
               {networkStats.peerConnections}
             </Text>
-            <Text style={[styles.connectionStatLabel, { color: colors.textSecondary }]}>Peer</Text>
+            <Text style= [styles.connectionStatLabel, { color: colors.textSecondary }]}>Peer</Text>
           </View>
           
           <View style={styles.connectionStat}>
-            <View style={[styles.connectionStatIcon, { backgroundColor: '#4CAF5015' }]}>
+            <View style= [styles.connectionStatIcon, { backgroundColor: '#4CAF5015' }]}>
               <Icons.MessageSquare size={16} color="#4CAF50" />
             </View>
-            <Text style={[styles.connectionStatValue, { color: colors.text }]}>
+            <Text style= [styles.connectionStatValue, { color: colors.text }]}>
               {networkStats.consultationPaths}
             </Text>
-            <Text style={[styles.connectionStatLabel, { color: colors.textSecondary }]}>Consult</Text>
+            <Text style= [styles.connectionStatLabel, { color: colors.textSecondary }]}>Consult</Text>
           </View>
         </View>
 
-        <View style={[styles.networkHealth, { backgroundColor: '#4CAF5015' }]}>
+        <View style= [styles.networkHealth, { backgroundColor: '#4CAF5015' }]}>
           <Icons.Activity size={16} color="#4CAF50" />
-          <Text style={[styles.networkHealthText, { color: '#4CAF50' }]}>
+          <Text style= [styles.networkHealthText, { color: '#4CAF50' }]}>
             Network Health: Excellent (99.9% uptime)
           </Text>
         </View>
       </View>
 
       {/* Agent Network Grid */}
-      <Text style={[styles.sectionTitle, { color: colors.text }]}>Communication Nodes</Text>
+      <Text style= [styles.sectionTitle, { color: colors.text }]}>Communication Nodes</Text>
       <View style={styles.nodeGrid}>
         {(searchQuery ? filteredAgents : allAgents.slice(0, 12)).map((agent) => (
           <TouchableOpacity 
             key={agent.id} 
-            style={[styles.nodeCard, { backgroundColor: colors.card }]}
+            style= [styles.nodeCard, { backgroundColor: colors.card }]}
             onPress={() => {
               setSelectedAgent(agent);
               router.push({
@@ -220,30 +220,30 @@ const A2ANetworkScreen = () => {
               });
             }}
           >
-            <View style={[styles.nodeIcon, { backgroundColor: `${agent.color}15` }]}>
+            <View style= [styles.nodeIcon, { backgroundColor: `${agent.color}15` }]}>
               <Icons.User size={20} color={agent.color} />
             </View>
-            <Text style={[styles.nodeName, { color: colors.text }]} numberOfLines={1}>
+            <Text style= [styles.nodeName, { color: colors.text }]} numberOfLines={1}>
               {agent.name}
             </Text>
-            <Text style={[styles.nodeLevel, { color: colors.textSecondary }]} numberOfLines={1}>
+            <Text style= [styles.nodeLevel, { color: colors.textSecondary }]} numberOfLines={1}>
               {agent.level.replace('_', ' ')}
             </Text>
             
             {/* Connection indicators */}
             <View style={styles.nodeConnections}>
               {agent.canEscalateTo && agent.canEscalateTo.length > 0 && (
-                <View style={[styles.nodeBadge, { backgroundColor: '#F4433615' }]}>
+                <View style= [styles.nodeBadge, { backgroundColor: '#F4433615' }]}>
                   <Icons.ArrowUp size={10} color="#F44336" />
-                  <Text style={[styles.nodeBadgeText, { color: '#F44336' }]}>
+                  <Text style= [styles.nodeBadgeText, { color: '#F44336' }]}>
                     {agent.canEscalateTo.length}
                   </Text>
                 </View>
               )}
               {agent.orgChart?.directReports && agent.orgChart.directReports.length > 0 && (
-                <View style={[styles.nodeBadge, { backgroundColor: '#2196F315' }]}>
+                <View style= [styles.nodeBadge, { backgroundColor: '#2196F315' }]}>
                   <Icons.ArrowDown size={10} color="#2196F3" />
-                  <Text style={[styles.nodeBadgeText, { color: '#2196F3' }]}>
+                  <Text style= [styles.nodeBadgeText, { color: '#2196F3' }]}>
                     {agent.orgChart.directReports.length}
                   </Text>
                 </View>
@@ -251,10 +251,10 @@ const A2ANetworkScreen = () => {
             </View>
 
             <View style={styles.nodeStatus}>
-              <View style={[styles.statusDot, { backgroundColor: 
+              <View style= [styles.statusDot, { backgroundColor: 
                 agent.status === 'active' ? '#4CAF50' : '#FFC107' 
               }]} />
-              <Text style={[styles.statusText, { color: colors.textSecondary }]}>
+              <Text style= [styles.statusText, { color: colors.textSecondary }]}>
                 {agent.status}
               </Text>
             </View>
@@ -265,8 +265,8 @@ const A2ANetworkScreen = () => {
       {filteredAgents.length === 0 && searchQuery && (
         <View style={styles.emptyState}>
           <Icons.Search size={48} color={colors.textSecondary} />
-          <Text style={[styles.emptyTitle, { color: colors.text }]}>No agents found</Text>
-          <Text style={[styles.emptySubtitle, { color: colors.textSecondary }]}>
+          <Text style= [styles.emptyTitle, { color: colors.text }]}>No agents found</Text>
+          <Text style= [styles.emptySubtitle, { color: colors.textSecondary }]}>
             Try adjusting your search query
           </Text>
         </View>
@@ -276,12 +276,12 @@ const A2ANetworkScreen = () => {
 
   const renderLogs = () => (
     <View style={styles.section}>
-      <Text style={[styles.sectionTitle, { color: colors.text }]}>Real-time A2A Communication</Text>
+      <Text style= [styles.sectionTitle, { color: colors.text }]}>Real-time A2A Communication</Text>
       
       {/* Live Activity Indicator */}
-      <View style={[styles.liveIndicator, { backgroundColor: '#4CAF5015' }]}>
+      <View style= [styles.liveIndicator, { backgroundColor: '#4CAF5015' }]}>
         <View style={styles.pulseDot} />
-        <Text style={[styles.liveText, { color: '#4CAF50' }]}>Live • 127 messages/hour</Text>
+        <Text style= [styles.liveText, { color: '#4CAF50' }]}>Live • 127 messages/hour</Text>
       </View>
 
       {[
@@ -342,48 +342,48 @@ const A2ANetworkScreen = () => {
         };
 
         return (
-          <View key={i} style={[styles.logItem, { backgroundColor: colors.card }]}>
+          <View key={i} style= [styles.logItem, { backgroundColor: colors.card }]}>
             <View style={styles.logHeader}>
               <View style={styles.logConnection}>
                 <View style={styles.logAgent}>
-                  <View style={[styles.logAgentIcon, { backgroundColor: `${typeColors[log.type]}15` }]}>
+                  <View style= [styles.logAgentIcon, { backgroundColor: `${typeColors[log.type]}15` }]}>
                     <Icons.User size={14} color={typeColors[log.type]} />
                   </View>
-                  <Text style={[styles.logAgentName, { color: colors.text }]} numberOfLines={1}>
+                  <Text style= [styles.logAgentName, { color: colors.text }]} numberOfLines={1}>
                     {log.from}
                   </Text>
                 </View>
                 
                 <View style={styles.logArrow}>
-                  <View style={[styles.logArrowLine, { backgroundColor: typeColors[log.type] }]} />
+                  <View style= [styles.logArrowLine, { backgroundColor: typeColors[log.type] }]} />
                   <Icons.ChevronRight size={14} color={typeColors[log.type]} />
                 </View>
                 
                 <View style={styles.logAgent}>
-                  <View style={[styles.logAgentIcon, { backgroundColor: '#9C27B015' }]}>
+                  <View style= [styles.logAgentIcon, { backgroundColor: '#9C27B015' }]}>
                     <Icons.User size={14} color="#9C27B0" />
                   </View>
-                  <Text style={[styles.logAgentName, { color: colors.text }]} numberOfLines={1}>
+                  <Text style= [styles.logAgentName, { color: colors.text }]} numberOfLines={1}>
                     {log.to}
                   </Text>
                 </View>
               </View>
-              <Text style={[styles.logTime, { color: colors.textSecondary }]}>{log.time}</Text>
+              <Text style= [styles.logTime, { color: colors.textSecondary }]}>{log.time}</Text>
             </View>
             
-            <Text style={[styles.logMessage, { color: colors.text }]} numberOfLines={1}>
+            <Text style= [styles.logMessage, { color: colors.text }]} numberOfLines={1}>
               {log.message}
             </Text>
             
             <View style={styles.logFooter}>
-              <View style={[styles.logTypeBadge, { backgroundColor: `${typeColors[log.type]}15` }]}>
-                <Text style={[styles.logTypeText, { color: typeColors[log.type] }]}>
+              <View style= [styles.logTypeBadge, { backgroundColor: `${typeColors[log.type]}15` }]}>
+                <Text style= [styles.logTypeText, { color: typeColors[log.type] }]}>
                   {log.type}
                 </Text>
               </View>
               <View style={styles.logStatus}>
                 <Icons.CheckCircle size={14} color={log.status === 'Success' ? '#4CAF50' : '#FFC107'} />
-                <Text style={[styles.logStatusText, { 
+                <Text style= [styles.logStatusText, { 
                   color: log.status === 'Success' ? '#4CAF50' : '#FFC107' 
                 }]}>
                   {log.status}
@@ -398,7 +398,7 @@ const A2ANetworkScreen = () => {
 
   const renderProtocols = () => (
     <View style={styles.section}>
-      <Text style={[styles.sectionTitle, { color: colors.text }]}>A2A Communication Protocols</Text>
+      <Text style= [styles.sectionTitle, { color: colors.text }]}>A2A Communication Protocols</Text>
       
       {[
         {
@@ -430,14 +430,14 @@ const A2ANetworkScreen = () => {
           color: '#9C27B0',
         },
       ].map((protocol, i) => (
-        <View key={i} style={[styles.protocolCard, { backgroundColor: colors.card }]}>
-          <View style={[styles.protocolHeader, { backgroundColor: `${protocol.color}10` }]}>
-            <View style={[styles.protocolIcon, { backgroundColor: `${protocol.color}20` }]}>
+        <View key={i} style= [styles.protocolCard, { backgroundColor: colors.card }]}>
+          <View style= [styles.protocolHeader, { backgroundColor: `${protocol.color}10` }]}>
+            <View style= [styles.protocolIcon, { backgroundColor: `${protocol.color}20` }]}>
               <protocol.icon size={24} color={protocol.color} />
             </View>
             <View style={styles.protocolInfo}>
-              <Text style={[styles.protocolName, { color: colors.text }]}>{protocol.name}</Text>
-              <Text style={[styles.protocolDesc, { color: colors.textSecondary }]}>
+              <Text style= [styles.protocolName, { color: colors.text }]}>{protocol.name}</Text>
+              <Text style= [styles.protocolDesc, { color: colors.textSecondary }]}>
                 {protocol.description}
               </Text>
             </View>
@@ -446,7 +446,7 @@ const A2ANetworkScreen = () => {
             {protocol.rules.map((rule, j) => (
               <View key={j} style={styles.protocolRule}>
                 <Icons.CheckCircle size={14} color={protocol.color} />
-                <Text style={[styles.protocolRuleText, { color: colors.text }]}>{rule}</Text>
+                <Text style= [styles.protocolRuleText, { color: colors.text }]}>{rule}</Text>
               </View>
             ))}
           </View>
@@ -456,10 +456,10 @@ const A2ANetworkScreen = () => {
   );
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <View style= [styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
-        colors={[colors.primary, '#5856D6']}
-        style={[styles.header, { paddingTop: insets.top + 20 }]}
+        colors= [colors.primary, '#5856D6']}
+        style= [styles.header, { paddingTop: insets.top + 20 }]}
       >
         <View style={styles.headerTop}>
           <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
@@ -474,7 +474,7 @@ const A2ANetworkScreen = () => {
           </TouchableOpacity>
         </View>
 
-        <View style={[styles.searchBar, { backgroundColor: 'rgba(255,255,255,0.15)' }]}>
+        <View style= [styles.searchBar, { backgroundColor: 'rgba(255,255,255,0.15)' }]}>
           <Icons.Search size={20} color="#FFF" />
           <TextInput
             style={styles.searchInput}
@@ -493,11 +493,11 @@ const A2ANetworkScreen = () => {
           ].map((tab) => (
             <TouchableOpacity
               key={tab.id}
-              style={[styles.tab, activeTab === tab.id && styles.tabActive]}
+              style= [styles.tab, activeTab === tab.id && styles.tabActive]}
               onPress={() => setActiveTab(tab.id as any)}
             >
               <tab.icon size={16} color={activeTab === tab.id ? '#FFF' : 'rgba(255,255,255,0.7)'} />
-              <Text style={[styles.tabText, activeTab === tab.id && styles.tabTextActive]}>
+              <Text style= [styles.tabText, activeTab === tab.id && styles.tabTextActive]}>
                 {tab.label}
               </Text>
             </TouchableOpacity>
@@ -879,3 +879,4 @@ const styles = StyleSheet.create({
 });
 
 export default A2ANetworkScreen;
+

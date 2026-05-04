@@ -121,7 +121,7 @@ export default function CallCenterScreen() {
           </View>
           
           <View style={styles.statCard}>
-            <ChartBarBig size={24} color="#8B5CF6" />
+            <ChartBar size={24} color="#8B5CF6" />
             <Text style={styles.statNumber}>72</Text>
             <Text style={styles.statLabel}>Calls Today</Text>
           </View>
@@ -172,7 +172,7 @@ export default function CallCenterScreen() {
                 </TouchableOpacity>
                 
                 <TouchableOpacity style={styles.actionButton}>
-                  <ChartBarBig size={16} color="#10B981" />
+                  <ChartBar size={16} color="#10B981" />
                   <Text style={styles.actionText}>Stats</Text>
                 </TouchableOpacity>
                 
@@ -200,7 +200,7 @@ export default function CallCenterScreen() {
             </TouchableOpacity>
             
             <TouchableOpacity style={styles.actionCard}>
-              <ChartBarBig size={24} color="#F59E0B" />
+              <ChartBar size={24} color="#F59E0B" />
               <Text style={styles.actionCardText}>View Reports</Text>
             </TouchableOpacity>
             

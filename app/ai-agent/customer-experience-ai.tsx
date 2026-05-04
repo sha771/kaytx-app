@@ -617,7 +617,7 @@ export default function CustomerExperienceAIScreen() {
                 <Text style={[styles.actionButtonText, { color: ACCENT_COLOR }]}>Configure</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#34C75915' }]}>
-                <ChartBarBig size={16} color="#34C759" />
+                <ChartBar size={16} color="#34C759" />
                 <Text style={[styles.actionButtonText, { color: '#34C759' }]}>Analytics</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#FF950015' }]}>
@@ -831,3 +831,4 @@ const styles = StyleSheet.create({
   actionButton: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: 10, borderRadius: 10, gap: 6 },
   actionButtonText: { fontSize: 12, fontWeight: '600' },
 });
+

@@ -567,7 +567,7 @@ const KAYT_AI_WORKFORCE_SYSTEM = () => {
         >
           {(['all', 'active', 'standby', 'main', 'sub'] as FilterType[]).map((Filter) => (
             <TouchableOpacity
-              key={Filter}
+              key={Funnel}
               style={[
                 styles.filterChip,
                 { backgroundColor: filterType === Filter ? '#007AFF' : colors.card },

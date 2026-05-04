@@ -135,7 +135,7 @@ export default function AgentScreen() {
 
         <View style={[styles.section, { backgroundColor: colors.card }]}>
           <View style={styles.sectionHeader}>
-            <ChartBarBig size={18} color={ACCENT} />
+            <ChartBar size={18} color={ACCENT} />
             <Text style={[styles.sectionTitle, { color: colors.text }]}>Performance</Text>
           </View>
           {PERFORMANCE_BARS.map((bar, i) => (
@@ -196,3 +196,4 @@ const styles = StyleSheet.create({
   barBg: { height: 7, borderRadius: 4, overflow: 'hidden' },
   barFill: { height: '100%', borderRadius: 4 },
 });
+

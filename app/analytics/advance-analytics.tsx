@@ -265,7 +265,7 @@ export default function AdvanceAnalyticsScreen() {
 
         <View style={styles.analyticFooter}>
           <TouchableOpacity style={[styles.viewReportButton, { backgroundColor: theme.colors.primary }]}>
-            <ChartBarBig size={14} color="white" />
+            <ChartBar size={14} color="white" />
             <Text style={styles.viewReportText}>View Full Report</Text>
           </TouchableOpacity>
         </View>

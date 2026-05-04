@@ -233,7 +233,7 @@ export default function EmailMarketingHubScreen() {
               
               <View style={styles.campaignActions}>
                 <TouchableOpacity style={styles.actionButton}>
-                  <ChartBarBig size={16} color="#3B82F6" />
+                  <ChartBar size={16} color="#3B82F6" />
                   <Text style={styles.actionText}>Analytics</Text>
                 </TouchableOpacity>
                 
@@ -288,7 +288,7 @@ export default function EmailMarketingHubScreen() {
             </TouchableOpacity>
             
             <TouchableOpacity style={styles.actionCard}>
-              <ChartBarBig size={24} color="#F59E0B" />
+              <ChartBar size={24} color="#F59E0B" />
               <Text style={styles.actionCardText}>View Analytics</Text>
             </TouchableOpacity>
             

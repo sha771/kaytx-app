@@ -1,4 +1,4 @@
-﻿ 
+ 
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -53,7 +53,7 @@ export default function AIDataAnalyticsScreen() {
           id: 'connections',
           title: 'Active Connections',
           value: `${(analytics.totalTasks ?? 0).toLocaleString()}`,
-          change: `Revenue ${analytics.revenueImpact ?? '—'}`,
+          change: `Revenue ${analytics.revenueImpact ?? '�'}`,
           trend: (analytics.totalTasks ?? 0) > 0 ? 'stable' : 'down',
           category: 'Data',
         },
@@ -170,7 +170,7 @@ export default function AIDataAnalyticsScreen() {
             style={[styles.tab, activeTab === 'insights' && styles.activeTab]}
             onPress={() => setActiveTab('insights')}
           >
-            <ChartBarBig size={20} color={activeTab === 'insights' ? '#fff' : '#666'} />
+            <ChartBar size={20} color={activeTab === 'insights' ? '#fff' : '#666'} />
             <Text style={[styles.tabText, activeTab === 'insights' && styles.activeTabText]}>
               Insights
             </Text>
@@ -218,7 +218,7 @@ export default function AIDataAnalyticsScreen() {
               <Text style={styles.quickActionText}>Train Model</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.quickAction}>
-              <ChartBarBig size={24} color="#34C759" />
+              <ChartBar size={24} color="#34C759" />
               <Text style={styles.quickActionText}>Generate Report</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.quickAction}>
