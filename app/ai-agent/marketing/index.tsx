@@ -1,71 +1,98 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Megaphone, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBar, MessageSquare, Calendar, Shield, TrendingUp, Palette, Mail, Share2, ChartBar } from 'lucide-react-native';
+import { Megaphone, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, TrendingUp, Search, Share2, Mail, Zap, Briefcase, Palette, Globe, FileText, DollarSign, BarChart3 } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { useRouter } from 'expo-router';
 
-const DEPARTMENT_AGENTS = [
-  { id: 'cmo', name: 'CMO', description: 'CMO AI Agent', icon: Megaphone, color: '#E91E63' },
-  { id: 'marketing-ads', name: 'Marketing Ads', description: 'Marketing Ads AI Agent', icon: Megaphone, color: '#E91E63' },
-  { id: 'marketing-analytics', name: 'Marketing Analytics', description: 'Marketing Analytics AI Agent', icon: Megaphone, color: '#E91E63' },
-  { id: 'marketing-brand', name: 'Marketing Brand', description: 'Marketing Brand AI Agent', icon: Megaphone, color: '#E91E63' },
-  { id: 'marketing-content', name: 'Marketing Content', description: 'Marketing Content AI Agent', icon: Megaphone, color: '#E91E63' },
-  { id: 'marketing-email', name: 'Marketing Email', description: 'Marketing Email AI Agent', icon: Megaphone, color: '#E91E63' },
-  { id: 'marketing-growth', name: 'Marketing Growth', description: 'Marketing Growth AI Agent', icon: Megaphone, color: '#E91E63' },
-  { id: 'marketing-manager', name: 'Marketing Manager', description: 'Marketing Manager AI Agent', icon: Megaphone, color: '#E91E63' },
-  { id: 'marketing-seo', name: 'Marketing SEO', description: 'Marketing SEO AI Agent', icon: Megaphone, color: '#E91E63' },
-  { id: 'marketing-social', name: 'Marketing Social', description: 'Marketing Social AI Agent', icon: Megaphone, color: '#E91E63' },
-  { id: 'vp-brand', name: 'VP Brand', description: 'VP Brand AI Agent', icon: Megaphone, color: '#E91E63' },
-  { id: 'vp-content', name: 'VP Content', description: 'VP Content AI Agent', icon: Megaphone, color: '#E91E63' },
-  { id: 'vp-digital', name: 'VP Digital', description: 'VP Digital AI Agent', icon: Megaphone, color: '#E91E63' },
-  { id: 'vp-growth', name: 'VP Growth', description: 'VP Growth AI Agent', icon: Megaphone, color: '#E91E63' },
-  { id: 'vp-marketing', name: 'VP Marketing', description: 'VP Marketing AI Agent', icon: Megaphone, color: '#E91E63' }
-];;
+const HIERARCHY = {
+  cSuite: [
+    { id: 'cmo', name: 'AI Chief Marketing Officer', icon: Megaphone, color: '#C62828', subCount: 3, subs: ['Marketing Strategy Analyst','Budget Allocator','Campaign ROI Evaluator'] },
+  ],
+  vp: [
+    { id: 'vp-marketing', name: 'AI VP Marketing', icon: Megaphone, color: '#D81B60', subCount: 3, subs: ['Channel Planner','Marketing Calendar Manager','Campaign Coordinator'] },
+    { id: 'vp-brand', name: 'AI VP Brand', icon: Palette, color: '#F43F5E', subCount: 3, subs: ['Brand Perception Monitor','Brand Guidelines Enforcer','Visual Identity Auditor'] },
+    { id: 'vp-growth', name: 'AI VP Growth', icon: TrendingUp, color: '#FF6D00', subCount: 3, subs: ['Experiment Designer','Funnel Analyzer','A/B Test Coordinator'] },
+    { id: 'vp-content', name: 'AI VP Content', icon: FileText, color: '#6A1B9A', subCount: 3, subs: ['Editorial Calendar Planner','Content Quality Reviewer','Repurposing Strategist'] },
+    { id: 'vp-digital', name: 'AI VP Digital', icon: Globe, color: '#0097A7', subCount: 3, subs: ['Digital Channel Optimizer','Web Performance Tracker','Conversion Analyst'] },
+  ],
+  manager: [
+    { id: 'marketing-manager', name: 'AI Marketing Manager', icon: Megaphone, color: '#E65100', subCount: 3, subs: ['Task Assigner','Deadline Tracker','Marketing Spend Monitor'] },
+  ],
+  specialist: [
+    { id: 'ai-content-marketing-agent', name: 'AI Content Marketing Agent', icon: FileText, color: '#6A1B9A', subCount: 3, subs: ['Blog Writer','Copy Editor','Content Distributor'] },
+    { id: 'ai-seo-specialist-agent', name: 'AI SEO Specialist', icon: Search, color: '#2E7D32', subCount: 3, subs: ['Keyword Researcher','On-page Optimizer','Backlink Analyzer'] },
+    { id: 'ai-social-media-manager-agent', name: 'AI Social Media Manager', icon: Share2, color: '#1DA1F2', subCount: 3, subs: ['Post Scheduler','Engagement Responder','Trend Monitor'] },
+    { id: 'ai-email-marketing-agent', name: 'AI Email Marketing Agent', icon: Mail, color: '#0D47A1', subCount: 3, subs: ['List Segmenter','Template Designer','Deliverability Monitor'] },
+    { id: 'ai-ad-campaign-manager-agent', name: 'AI Ad Campaign Manager', icon: Target, color: '#FF6D00', subCount: 3, subs: ['Bid Optimizer','Creative Tester','Audience Targeter'] },
+    { id: 'ai-marketing-analytics-agent', name: 'AI Marketing Analytics Agent', icon: ChartBarBig, color: '#5856D6', subCount: 3, subs: ['Attribution Modeler','KPI Dashboard Builder','Insight Summarizer'] },
+    { id: 'ai-brand-manager', name: 'AI Brand Manager', icon: Briefcase, color: '#F43F5E', subCount: 3, subs: ['Competitor Brand Tracker','Brand Health Surveyor','Messaging Aligner'] },
+    { id: 'ai-growth-hacker', name: 'AI Growth Hacker', icon: Zap, color: '#34C759', subCount: 3, subs: ['Viral Loop Designer','Referral Program Builder','Acquisition Channel Tester'] },
+  ],
+};
 
 export default function MarketingDepartment() {
   const { theme } = useTheme();
   const router = useRouter();
+
+  const renderGroup = (agents: any[], title: string) => (
+    <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+      <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>{title}</Text>
+      {agents.map((agent: any) => {
+        const AgentIcon = agent.icon;
+        return (
+          <TouchableOpacity key={agent.id} onPress={() => router.push('/ai-agent/marketing/' + agent.id)} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+            <View style={[styles.agentIcon, { backgroundColor: agent.color + '20' }]}><AgentIcon size={28} color={agent.color} /></View>
+            <View style={styles.agentInfo}>
+              <Text style={[styles.agentName, { color: theme.colors.text }]}>{agent.name}</Text>
+              <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>{agent.subCount} Sub-Agents: {agent.subs.join(', ')}</Text>
+            </View>
+            <ArrowRight size={20} color={theme.colors.textSecondary} />
+          </TouchableOpacity>
+        );
+      })}
+    </View>
+  );
+
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
         <View style={[styles.heroIconWrap, { backgroundColor: '#E91E6320' }]}><Megaphone size={48} color="#E91E63" /></View>
         <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Marketing & Growth</Text>
-        <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>AI Agents for Growth Engine</Text>
+        <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>AI Agents & Employees — Enterprise Workforce</Text>
         <View style={styles.badgesRow}>
           <View style={[styles.badge, { backgroundColor: '#34C75922' }]}><Activity size={12} color="#34C759" /><Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text></View>
           <View style={[styles.badge, { backgroundColor: '#E91E6322' }]}><Star size={12} color="#E91E63" /><Text style={[styles.badgeText, { color: '#E91E63' }]}>Department</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#FF950022' }]}><Users size={12} color="#FF9500" /><Text style={[styles.badgeText, { color: '#FF9500' }]}>{DEPARTMENT_AGENTS.length} Agents</Text></View>
+          <View style={[styles.badge, { backgroundColor: '#FF950022' }]}><Users size={12} color="#FF9500" /><Text style={[styles.badgeText, { color: '#FF9500' }]}>15 Agents</Text></View>
         </View>
       </View>
       <View style={styles.statsContainer}>
-        {[{label:'Agents',value:DEPARTMENT_AGENTS.length.toString(),icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Campaigns',value:'100+',icon:Clock,color:'#FF9500'},{label:'Reach',value:'1M+',icon:Target,color:'#E91E63'}].map((stat,i)=>(<View key={i} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><stat.icon size={22} color={stat.color} /><Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text><Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text></View>))}
+        {[{label:'Main Agents',value:'15',icon:CircleCheckBig,color:'#34C759'},{label:'Sub-Agents',value:'45',icon:Users,color:'#007AFF'},{label:'Uptime',value:'99.9%',icon:Clock,color:'#FF9500'},{label:'Efficiency',value:'20x',icon:Target,color:'#E91E63'}].map((stat,i)=>(<View key={i} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><stat.icon size={22} color={stat.color} /><Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text><Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text></View>))}
       </View>
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Overview</Text>
-        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>The Marketing & Growth department drives brand awareness and customer acquisition through AI-powered content creation, social media management, and growth strategies. Our agents maximize marketing ROI.</Text>
+        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>The Marketing & Growth department operates through a structured hierarchy of AI agents — from C-Suite leadership down to specialist workers. Each agent manages dedicated sub-agents for granular task execution, ensuring enterprise-grade performance at every level.</Text>
       </View>
+      {renderGroup(HIERARCHY.cSuite, 'C-Suite Leadership')}
+      {renderGroup(HIERARCHY.vp, 'VP Level')}
+      {renderGroup(HIERARCHY.manager, 'Manager Level')}
+      {renderGroup(HIERARCHY.specialist, 'Specialist Level')}
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Department Agents</Text>
-        {DEPARTMENT_AGENTS.map((agent) => (
-          <TouchableOpacity key={agent.id} onPress={()=>router.push('/ai-agent/marketing/'+agent.id)} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
-            <View style={[styles.agentIcon, { backgroundColor: agent.color + '20' }]}><agent.icon size={28} color={agent.color} /></View>
-            <View style={styles.agentInfo}>
-              <Text style={[styles.agentName, { color: theme.colors.text }]}>{agent.name}</Text>
-              <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>{agent.description}</Text>
-            </View>
-            <ArrowRight size={20} color={theme.colors.textSecondary} />
-          </TouchableOpacity>
-        ))}
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents Hub</Text>
+        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>45 helper and sub-agent AI workers supporting the main agents.</Text>
+        <TouchableOpacity onPress={() => router.push('/ai-agent/marketing/sub-agents')} style={[styles.subAgentButton, { backgroundColor: '#E91E6315' }]}>
+          <Megaphone size={20} color="#E91E63" />
+          <Text style={[styles.subAgentButtonText, { color: '#E91E63' }]}>View All 45 Sub-Agents</Text>
+          <ArrowRight size={18} color="#E91E63" />
+        </TouchableOpacity>
       </View>
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBar},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#E91E6312' }]}><act.icon size={24} color="#E91E63" /><Text style={[styles.actionText, { color: '#E91E63' }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#E91E6312' }]}><act.icon size={24} color="#E91E63" /><Text style={[styles.actionText, { color: '#E91E63' }]}>{act.label}</Text></TouchableOpacity>))}
         </View>
       </View>
-    <AgentFeatures agentId="marketing-index" agentName="Marketing Department" />
-
+      <AgentFeatures agentId="marketing-index" agentName="Marketing & Growth Department" />
     </ScrollView>
   );
 }
@@ -91,8 +118,9 @@ const styles = StyleSheet.create({
   agentInfo:{flex:1,marginLeft:12},
   agentName:{fontSize:16,fontWeight:'600'},
   agentDesc:{fontSize:12,marginTop:2},
+  subAgentButton:{flexDirection:'row',alignItems:'center',padding:16,borderRadius:12,marginTop:12,gap:10},
+  subAgentButtonText:{fontSize:15,fontWeight:'600',flex:1},
   actionsGrid:{flexDirection:'row',flexWrap:'wrap',gap:12},
   actionButton:{flex:1,minWidth:'45%',alignItems:'center',padding:16,borderRadius:12},
   actionText:{fontSize:13,fontWeight:'600',marginTop:8}
 });
-

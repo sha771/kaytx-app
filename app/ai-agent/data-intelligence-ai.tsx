@@ -12,7 +12,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   ArrowLeft,
-  ChartBar,
+  ChartBarBig,
   ChartLine,
   DollarSign,
   Users,
@@ -85,7 +85,7 @@ const initialSubAgents: SubAgent[] = [
     id: 'di-1',
     name: 'AI Data Analyst',
     description: 'Analyzes data with advanced statistical methods',
-    icon: ChartBar,
+    icon: ChartBarBig,
     enabled: true,
     status: 'active',
     tasksCompleted: 2340,
@@ -608,7 +608,7 @@ export default function DataIntelligenceAIScreen() {
                 <Text style={[styles.actionButtonText, { color: ACCENT_COLOR }]}>Configure</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#007AFF15' }]}>
-                <ChartBar size={16} color="#007AFF" />
+                <ChartBarBig size={16} color="#007AFF" />
                 <Text style={[styles.actionButtonText, { color: '#007AFF' }]}>Analytics</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#34C75915' }]}>
@@ -649,7 +649,7 @@ export default function DataIntelligenceAIScreen() {
         <View style={styles.mainAgentCard}>
           <View style={styles.mainAgentHeader}>
             <View style={styles.mainAgentIcon}>
-              <ChartBar size={28} color="#fff" />
+              <ChartBarBig size={28} color="#fff" />
               {mainAgentEnabled && (
                 <Animated.View style={[styles.mainLiveIndicator, { transform: [{ scale: pulseAnim }] }]}>
                   <View style={styles.mainLiveIndicatorInner} />

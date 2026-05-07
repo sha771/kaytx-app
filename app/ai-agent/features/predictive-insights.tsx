@@ -13,7 +13,7 @@ import {
   Sparkles,
   RefreshCw,
   Target,
-  ChartBar,
+  ChartBarBig,
   Zap,
   CircleCheckBig,
   Clock
@@ -188,7 +188,7 @@ export default function PredictiveInsightsPage() {
           <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>Accuracy</Text>
         </View>
         <View style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-          <ChartBar size={20} color={theme.colors.primary} />
+          <ChartBarBig size={20} color={theme.colors.primary} />
           <Text style={[styles.statValue, { color: theme.colors.text }]}>{(modelStats.predictionsMade / 1000).toFixed(1)}k</Text>
           <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>Predictions</Text>
         </View>

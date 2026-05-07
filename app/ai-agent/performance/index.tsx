@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { useTheme } from '@/providers/ThemeProvider';
 import { 
   TrendingUp, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, 
-  ChartBar, MessageSquare, Calendar, Shield, ChartPie, Lightbulb, Globe, Sparkles, 
+  ChartBarBig, MessageSquare, Calendar, Shield, ChartPie, Lightbulb, Globe, Sparkles, 
   DollarSign, Target as TargetIcon, Trophy, Zap
 } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
@@ -89,7 +89,12 @@ export default function PerformanceDepartment() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          [{label:'View Reports',icon:ChartBar},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#1B5E2012' }]}><act.icon size={24} color="#1B5E20" /><Text style={[styles.actionText, { color: '#1B5E20' }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(
+            <TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#1B5E2012' }]}>
+              <act.icon size={24} color="#1B5E20" />
+              <Text style={[styles.actionText, { color: '#1B5E20' }]}>{act.label}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
       </View>
       <AgentFeatures agentId="performance-index" agentName="Performance & Analytics Department" />

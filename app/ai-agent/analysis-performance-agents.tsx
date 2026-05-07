@@ -21,7 +21,7 @@ import {
   TrendingUp,
   Timer,
   Target,
-  ChartBar,
+  ChartBarBig,
   ChartLine,
   ChartPie,
 } from 'lucide-react-native';

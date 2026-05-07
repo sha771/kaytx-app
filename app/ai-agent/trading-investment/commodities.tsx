@@ -1,7 +1,7 @@
 
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { ChartBar, TrendingUp, TrendingDown, Activity, Globe, Zap } from 'lucide-react-native';
+import { ChartBarBig, TrendingUp, TrendingDown, Activity, Globe, Zap } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
@@ -18,7 +18,7 @@ const commodityPrices = [
 ];
 
 const supplyEvents = [
-  { event: 'OPEC+ meeting – potential cut', impact: 'Bullish Oil', date: 'Apr 15', priority: 'High', color: '#00C853' },
+  { event: 'OPEC+ meeting ï¿½ potential cut', impact: 'Bullish Oil', date: 'Apr 15', priority: 'High', color: '#00C853' },
   { event: 'US Wheat crop report', impact: 'Bearish Wheat', date: 'Apr 12', priority: 'Medium', color: '#FF9500' },
   { event: 'China copper demand data', impact: 'Bullish Copper', date: 'Apr 18', priority: 'High', color: '#00C853' },
   { event: 'CFTC COT Report release', impact: 'Mixed Signals', date: 'Apr 19', priority: 'Low', color: '#007AFF' },
@@ -32,7 +32,7 @@ export default function CommoditiesScreen() {
     <ScrollView style={styles.tabContent} showsVerticalScrollIndicator={false}>
       <View style={styles.metricsGrid}>
         <LinearGradient colors={['#FF6D00', '#e65100']} style={styles.metricCard}>
-          <ChartBar size={20} color="#fff" />
+          <ChartBarBig size={20} color="#fff" />
           <Text style={styles.metricValue}>7</Text>
           <Text style={styles.metricLabel}>Markets Traded</Text>
         </LinearGradient>
@@ -106,7 +106,7 @@ export default function CommoditiesScreen() {
   );
 
   const customTabs = [
-    { id: 'commodities', label: 'Markets', icon: ChartBar, component: commoditiesTab },
+    { id: 'commodities', label: 'Markets', icon: ChartBarBig, component: commoditiesTab },
     { id: 'analytics', label: 'Analytics', icon: Activity, component: <View /> },
   ];
 

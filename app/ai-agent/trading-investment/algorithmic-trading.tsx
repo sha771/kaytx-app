@@ -1,7 +1,7 @@
 
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Zap, Activity, ChartBar, TrendingUp, TrendingDown, Clock } from 'lucide-react-native';
+import { Zap, Activity, ChartBarBig, TrendingUp, TrendingDown, Clock } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
@@ -45,7 +45,7 @@ export default function AlgorithmicTradingScreen() {
           <Text style={styles.metricLabel}>Win Rate</Text>
         </LinearGradient>
         <LinearGradient colors={['#00C853', '#009624']} style={styles.metricCard}>
-          <ChartBar size={20} color="#fff" />
+          <ChartBarBig size={20} color="#fff" />
           <Text style={styles.metricValue}>$18K</Text>
           <Text style={styles.metricLabel}>Monthly Alpha</Text>
         </LinearGradient>
@@ -64,8 +64,8 @@ export default function AlgorithmicTradingScreen() {
               </Text>
             </View>
             <View style={styles.tradeInfo}>
-              <Text style={[styles.tradeAsset, { color: theme.colors.text }]}>{trade.asset} × {trade.qty}</Text>
-              <Text style={[styles.tradeMeta, { color: theme.colors.secondaryText }]}>{trade.price} · {trade.time}</Text>
+              <Text style={[styles.tradeAsset, { color: theme.colors.text }]}>{trade.asset} ï¿½ {trade.qty}</Text>
+              <Text style={[styles.tradeMeta, { color: theme.colors.secondaryText }]}>{trade.price} ï¿½ {trade.time}</Text>
             </View>
             <Text style={[styles.tradePnl, { color: trade.pnl.startsWith('+') ? '#00C853' : '#FF3B30' }]}>
               {trade.pnl}
@@ -99,7 +99,7 @@ export default function AlgorithmicTradingScreen() {
 
   const customTabs = [
     { id: 'orders', label: 'Orders', icon: Zap, component: ordersTab },
-    { id: 'strategies', label: 'Strategies', icon: ChartBar, component: <View /> },
+    { id: 'strategies', label: 'Strategies', icon: ChartBarBig, component: <View /> },
   ];
 
   return <AgentShell agent={agent} customTabs={customTabs} />;

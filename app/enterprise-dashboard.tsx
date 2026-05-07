@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack, router } from 'expo-router';
-import { Building2, Users, ChartBar, Settings, Shield, Zap, FileText, Lock, Server, GitBranch, Network, Globe, ArrowLeft } from 'lucide-react-native';
+import { Building2, Users, ChartBarBig, Settings, Shield, Zap, FileText, Lock, Server, GitBranch, Network, Globe, ArrowLeft } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { trpc } from '@/lib/trpc';
 
@@ -154,14 +154,14 @@ export default function EnterpriseDashboardScreen() {
   const getMetricIcon = (iconType: string) => {
     switch (iconType) {
       case 'users': return <Users size={24} color="#007AFF" />;
-      case 'analytics': return <ChartBar size={24} color="#34C759" />;
+      case 'analytics': return <ChartBarBig size={24} color="#34C759" />;
       case 'security': return <Shield size={24} color="#FF9500" />;
       case 'api': return <Zap size={24} color="#FF3B30" />;
       case 'lock': return <Lock size={24} color="#AF52DE" />;
       case 'server': return <Server size={24} color="#5AC8FA" />;
       case 'cicd': return <GitBranch size={24} color="#FF2D55" />;
       case 'network': return <Network size={24} color="#32ADE6" />;
-      default: return <ChartBar size={24} color="#8E8E93" />;
+      default: return <ChartBarBig size={24} color="#8E8E93" />;
     }
   };
 
@@ -211,7 +211,7 @@ export default function EnterpriseDashboardScreen() {
 
       <View style={styles.metricContent}>
         <Text style={styles.metricValue}>{metric.value}</Text>
-        <Text style= [styles.metricChange, { color: getTrendColor(metric.trend) }]}>
+        <Text style={[styles.metricChange, { color: getTrendColor(metric.trend) }]}>
           {metric.change}
         </Text>
       </View>
@@ -223,7 +223,7 @@ export default function EnterpriseDashboardScreen() {
       style={styles.actionCard}
       onPress={() => handleActionPress(action.id)}
     >
-      <View style= [styles.actionIcon, { backgroundColor: `${action.color}20` }]}>
+      <View style={[styles.actionIcon, { backgroundColor: `${action.color}20` }]}>
         {getMetricIcon(action.icon)}
       </View>
       <View style={styles.actionContent}>
@@ -236,10 +236,10 @@ export default function EnterpriseDashboardScreen() {
   // Handle loading state
   if (isLoading) {
     return (
-      <SafeAreaView style= [styles.container, { backgroundColor: theme.colors.background }]}>
+      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={theme.colors.primary} />
-          <Text style= [styles.loadingText, { color: theme.colors.text }]}>Loading dashboard...</Text>
+          <Text style={[styles.loadingText, { color: theme.colors.text }]}>Loading dashboard...</Text>
         </View>
       </SafeAreaView>
     );
@@ -248,13 +248,13 @@ export default function EnterpriseDashboardScreen() {
   // Handle error state
   if (error) {
     return (
-      <SafeAreaView style= [styles.container, { backgroundColor: theme.colors.background }]}>
+      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
         <View style={styles.errorContainer}>
-          <Text style= [styles.errorText, { color: theme.colors.text }]}>
+          <Text style={[styles.errorText, { color: theme.colors.text }]}>
             Failed to load dashboard data
           </Text>
           <TouchableOpacity 
-            style= [styles.retryButton, { backgroundColor: theme.colors.primary }]} 
+            style={[styles.retryButton, { backgroundColor: theme.colors.primary }]} 
             onPress={refetch}
           >
             <Text style={styles.retryButtonText}>Retry</Text>
@@ -274,36 +274,36 @@ export default function EnterpriseDashboardScreen() {
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Premium Enterprise Header */}
-        <View style= [styles.premiumHeader, { paddingTop: 20, backgroundColor: theme.colors.cardBackground }]}>
+        <View style={[styles.premiumHeader, { paddingTop: 20, backgroundColor: theme.colors.cardBackground }]}>
           <View style={styles.headerTop}>
             <TouchableOpacity onPress={() => router.back()}>
               <ArrowLeft size={24} color={theme.colors.text} />
             </TouchableOpacity>
-            <Text style= [styles.premiumTitle, { color: theme.colors.text }]}>Enterprise Core</Text>
+            <Text style={[styles.premiumTitle, { color: theme.colors.text }]}>Enterprise Core</Text>
             <TouchableOpacity style={styles.settingsButton}>
               <Settings size={20} color={theme.colors.text} />
             </TouchableOpacity>
           </View>
           <View style={styles.headerMetrics}>
             <View style={styles.hMetric}>
-              <Text style= [styles.hMetricVal, { color: theme.colors.text }]}>$2.4M</Text>
-              <Text style= [styles.hMetricLab, { color: theme.colors.secondaryText }]}>Total MRR</Text>
+              <Text style={[styles.hMetricVal, { color: theme.colors.text }]}>$2.4M</Text>
+              <Text style={[styles.hMetricLab, { color: theme.colors.secondaryText }]}>Total MRR</Text>
             </View>
             <View style={styles.hMetricDivider} />
             <View style={styles.hMetric}>
-              <Text style= [styles.hMetricVal, { color: '#34C759' }]}>99.9%</Text>
-              <Text style= [styles.hMetricLab, { color: theme.colors.secondaryText }]}>Core Uptime</Text>
+              <Text style={[styles.hMetricVal, { color: '#34C759' }]}>99.9%</Text>
+              <Text style={[styles.hMetricLab, { color: theme.colors.secondaryText }]}>Core Uptime</Text>
             </View>
             <View style={styles.hMetricDivider} />
             <View style={styles.hMetric}>
-              <Text style= [styles.hMetricVal, { color: theme.colors.primary }]}>Active</Text>
-              <Text style= [styles.hMetricLab, { color: theme.colors.secondaryText }]}>Security</Text>
+              <Text style={[styles.hMetricVal, { color: theme.colors.primary }]}>Active</Text>
+              <Text style={[styles.hMetricLab, { color: theme.colors.secondaryText }]}>Security</Text>
             </View>
           </View>
         </View>
 
         <View style={styles.section}>
-          <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>Key Metrics</Text>
+          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Metrics</Text>
           <View style={styles.metricsGrid}>
             {metrics.map(metric => (
               <MetricCard key={metric.id} metric={metric} />
@@ -312,25 +312,25 @@ export default function EnterpriseDashboardScreen() {
         </View>
 
         <View style={styles.section}>
-          <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>System Status</Text>
-          <View style= [styles.statusContainer, { backgroundColor: theme.colors.cardBackground, borderColor: theme.colors.border }]}>
+          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>System Status</Text>
+          <View style={[styles.statusContainer, { backgroundColor: theme.colors.cardBackground, borderColor: theme.colors.border }]}>
             <View style={styles.statusItem}>
-              <View style= [styles.statusIndicator, { backgroundColor: '#34C759' }]} />
-              <Text style= [styles.statusText, { color: theme.colors.text }]}>All Systems Operational</Text>
+              <View style={[styles.statusIndicator, { backgroundColor: '#34C759' }]} />
+              <Text style={[styles.statusText, { color: theme.colors.text }]}>All Systems Operational</Text>
             </View>
             <View style={styles.statusItem}>
-              <View style= [styles.statusIndicator, { backgroundColor: '#FF9500' }]} />
-              <Text style= [styles.statusText, { color: theme.colors.text }]}>2 Scheduled Maintenance</Text>
+              <View style={[styles.statusIndicator, { backgroundColor: '#FF9500' }]} />
+              <Text style={[styles.statusText, { color: theme.colors.text }]}>2 Scheduled Maintenance</Text>
             </View>
             <View style={styles.statusItem}>
-              <View style= [styles.statusIndicator, { backgroundColor: theme.colors.primary }]} />
-              <Text style= [styles.statusText, { color: theme.colors.text }]}>API Rate Limit: 85%</Text>
+              <View style={[styles.statusIndicator, { backgroundColor: theme.colors.primary }]} />
+              <Text style={[styles.statusText, { color: theme.colors.text }]}>API Rate Limit: 85%</Text>
             </View>
           </View>
         </View>
 
         <View style={styles.section}>
-          <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
+          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
           <View style={styles.actionsGrid}>
             {actions.map(action => (
               <ActionCard key={action.id} action={action} />
@@ -339,35 +339,35 @@ export default function EnterpriseDashboardScreen() {
         </View>
 
         <View style={styles.section}>
-          <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>Recent Activity</Text>
-          <View style= [styles.activityContainer, { backgroundColor: theme.colors.cardBackground, borderColor: theme.colors.border }]}>
+          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Recent Activity</Text>
+          <View style={[styles.activityContainer, { backgroundColor: theme.colors.cardBackground, borderColor: theme.colors.border }]}>
             <View style={styles.activityItem}>
-              <View style= [styles.activityIcon, { backgroundColor: theme.colors.background }]}>
+              <View style={[styles.activityIcon, { backgroundColor: theme.colors.background }]}>
                 <Users size={16} color={theme.colors.primary} />
               </View>
               <View style={styles.activityContent}>
-                <Text style= [styles.activityTitle, { color: theme.colors.text }]}>New user registration spike</Text>
-                <Text style= [styles.activityTime, { color: theme.colors.secondaryText }]}>2 hours ago</Text>
+                <Text style={[styles.activityTitle, { color: theme.colors.text }]}>New user registration spike</Text>
+                <Text style={[styles.activityTime, { color: theme.colors.secondaryText }]}>2 hours ago</Text>
               </View>
             </View>
 
             <View style={styles.activityItem}>
-              <View style= [styles.activityIcon, { backgroundColor: theme.colors.background }]}>
+              <View style={[styles.activityIcon, { backgroundColor: theme.colors.background }]}>
                 <Shield size={16} color="#34C759" />
               </View>
               <View style={styles.activityContent}>
-                <Text style= [styles.activityTitle, { color: theme.colors.text }]}>Security scan completed</Text>
-                <Text style= [styles.activityTime, { color: theme.colors.secondaryText }]}>4 hours ago</Text>
+                <Text style={[styles.activityTitle, { color: theme.colors.text }]}>Security scan completed</Text>
+                <Text style={[styles.activityTime, { color: theme.colors.secondaryText }]}>4 hours ago</Text>
               </View>
             </View>
 
             <View style={styles.activityItem}>
-              <View style= [styles.activityIcon, { backgroundColor: theme.colors.background }]}>
-                <ChartBar size={16} color="#FF9500" />
+              <View style={[styles.activityIcon, { backgroundColor: theme.colors.background }]}>
+                <ChartBarBig size={16} color="#FF9500" />
               </View>
               <View style={styles.activityContent}>
-                <Text style= [styles.activityTitle, { color: theme.colors.text }]}>Monthly report generated</Text>
-                <Text style= [styles.activityTime, { color: theme.colors.secondaryText }]}>6 hours ago</Text>
+                <Text style={[styles.activityTitle, { color: theme.colors.text }]}>Monthly report generated</Text>
+                <Text style={[styles.activityTime, { color: theme.colors.secondaryText }]}>6 hours ago</Text>
               </View>
             </View>
           </View>

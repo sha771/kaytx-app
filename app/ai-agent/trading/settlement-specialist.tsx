@@ -1,34 +1,372 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { CircleCheckBig, Activity, Star, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { useRouter } from 'expo-router';
+import { ClipboardCheck, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap, Users, MessageSquare, Calendar, ChartBarBig, TrendingUp, AlertTriangle, FileText, ChevronRight, Shield, DollarSign, ArrowRightLeft, Key } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
-export default function AgentPage() {
+const SUB_AGENTS = [
+  {
+    "id": "trade-reconciler",
+    "name": "Trade Reconciler",
+    "icon": "ClipboardCheck",
+    "desc": "Multi-system trade matching and break resolution automation"
+  },
+  {
+    "id": "clearing-coordinator",
+    "name": "Clearing Coordinator",
+    "icon": "ArrowRightLeft",
+    "desc": "CCP registration, clearing member coordination, and margin management"
+  },
+  {
+    "id": "fail-manager",
+    "name": "Fail Manager",
+    "icon": "AlertTriangle",
+    "desc": "Settlement fail detection, escalation, and resolution workflow management"
+  }
+];
+
+const QUICK_ACTIONS = [
+  {
+    "label": "Reconciliation",
+    "icon": "ClipboardCheck"
+  },
+  {
+    "label": "Fail Queue",
+    "icon": "AlertTriangle"
+  },
+  {
+    "label": "Clearing Status",
+    "icon": "ArrowRightLeft"
+  },
+  {
+    "label": "Settlement Log",
+    "icon": "FileText"
+  }
+];
+
+const METRICS = [
+  {
+    "label": "STP Rate",
+    "value": "98.6%",
+    "change": "+0.3%",
+    "trend": "up"
+  },
+  {
+    "label": "Settlement Rate",
+    "value": "99.6%",
+    "change": "+0.1%",
+    "trend": "up"
+  },
+  {
+    "label": "Avg Settlement",
+    "value": "T+0.8",
+    "change": "-0.1",
+    "trend": "up"
+  },
+  {
+    "label": "Fails Resolved",
+    "value": "100%",
+    "change": "0%",
+    "trend": "up"
+  }
+];
+
+export default function SettlementSpecialistPage() {
   const { theme } = useTheme();
-  const stats = [{label:'Tasks',value:'2,346',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.2s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.1%',icon:Target,color:'#0277BD'}];
-  const capabilities = ['Trade Settlement','Clearing','Reconciliation','Corporate Actions','Fail Management','Regulatory Reporting'];
-  const responsibilities = ['Trade settlement processing & monitoring','Clearing & settlement coordination','Position reconciliation & break resolution','Corporate action processing','Settlement fail management','Post-trade regulatory reporting'];
-  const activities = [{time:'3 min ago',text:'Settled 2,400 trades T+1',icon: CircleCheckBig},{time:'6 min ago',text:'Resolved 15 reconciliation breaks',icon:Clock},{time:'9 min ago',text:'Processed dividend payments',icon:Zap}];
+  const router = useRouter();
+
+  const stats = [
+    {
+        label: 'Settlements',
+        value: '18,400',
+        icon: 'CircleCheckBig',
+        color: '#34C759'
+    },
+    {
+        label: 'STP Rate',
+        value: '98.6%',
+        icon: 'Activity',
+        color: '#007AFF'
+    },
+    {
+        label: 'Fails',
+        value: '0.4%',
+        icon: 'AlertTriangle',
+        color: '#FF9500'
+    },
+    {
+        label: 'T+1 Compliant',
+        value: '100%',
+        icon: 'Shield',
+        color: '#AF52DE'
+    }
+];
+
+  const capabilities = ["Trade Reconciliation","Clearing Coordination","Fail Management","Settlement Optimization","T+1 Processing","Corporate Actions","Margin Settlement","Collateral Management","CCP Interface","Custodian Coordination","Cash Management","Exception Handling"];
+
+  const responsibilities = ["Reconcile trade records across front-office, back-office, and custodian systems","Coordinate clearing and settlement with CCPs and clearing members","Manage settlement fails and exception resolution workflows","Optimize settlement processing for T+1 compliance","Process corporate actions including dividends, splits, and mergers","Manage margin settlement and collateral movements","Interface with central counterparties for trade registration","Coordinate with custodians for asset and cash movements","Produce settlement status reports and exception dashboards"];
+
+  const activities = [
+    {
+        time: '1 min ago',
+        text: 'Reconciled 4,200 equity trades for T+1',
+        icon: 'ClipboardCheck'
+    },
+    {
+        time: '5 min ago',
+        text: 'Resolved 3 settlement fails from yesterday',
+        icon: 'AlertTriangle'
+    },
+    {
+        time: '12 min ago',
+        text: 'Processed corporate action for AAPL dividend',
+        icon: 'DollarSign'
+    },
+    {
+        time: '28 min ago',
+        text: 'Coordinated margin call settlement with CCP',
+        icon: 'Shield'
+    },
+    {
+        time: '1 hr ago',
+        text: 'Published daily settlement status report',
+        icon: 'FileText'
+    }
+];
+
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      {/* Hero */}
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#0277BD20' }]}><CircleCheckBig size={48} color="#0277BD" /></View>
-        <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Settlement Specialist</Text>
-        <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Post-Trade Operations</Text>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#78909C20' }]}>
+          <ClipboardCheck size={48} color="#78909C" />
+        </View>
+        <Text style={[styles.heroTitle, { color: theme.colors.text }]}>{a.t}</Text>
+        <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>{a.sub}</Text>
         <View style={styles.badgesRow}>
-          <View style={[styles.badge, { backgroundColor: '#34C75922' }]}><Activity size={12} color="#34C759" /><Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#0277BD22' }]}><Star size={12} color="#0277BD" /><Text style={[styles.badgeText, { color: '#0277BD' }]}>Specialist</Text></View>
+          <View style={[styles.badge, { backgroundColor: '#34C75922' }]}>
+            <Activity size={12} color="#34C759" />
+            <Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text>
+          </View>
+          <View style={[styles.badge, { backgroundColor: '#78909C22' }]}>
+            <Star size={12} color="#78909C" />
+            <Text style={[styles.badgeText, { color: '#78909C' }]}>Specialist</Text>
+          </View>
+          <View style={[styles.badge, { backgroundColor: '#FF950022' }]}>
+            <Users size={12} color="#FF9500" />
+            <Text style={[styles.badgeText, { color: '#FF9500' }]}>3 Sub-Agents</Text>
+          </View>
+          <View style={[styles.badge, { backgroundColor: '#AF52DE22' }]}>
+            <Shield size={12} color="#AF52DE" />
+            <Text style={[styles.badgeText, { color: '#AF52DE' }]}>Trading Dept</Text>
+          </View>
         </View>
       </View>
-      <View style={styles.statsContainer}>{stats.map((stat,i)=>(<View key={i} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><stat.icon size={22} color={stat.color} /><Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text><Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text></View>))}</View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Overview</Text><Text style={[styles.description, { color: theme.colors.textSecondary }]}>The Settlement Specialist AI executes specialized tasks, automates workflows, and delivers consistent high-quality performance within the Trading & Investment department.</Text></View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Capabilities</Text><View style={styles.tagsContainer}>{capabilities.map((cap,i)=>(<View key={i} style={[styles.tag, { backgroundColor: '#0277BD18' }]}><Text style={[styles.tagText, { color: '#0277BD' }]}>{cap}</Text></View>))}</View></View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Responsibilities</Text>{responsibilities.map((item,i)=>(<View key={i} style={styles.responsibilityRow}><ArrowRight size={14} color="#0277BD" /><Text style={[styles.responsibilityText, { color: theme.colors.textSecondary }]}>{item}</Text></View>))}</View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Recent Activity</Text>{activities.map((act,i)=>(<View key={i} style={styles.activityRow}><View style={[styles.activityIcon, { backgroundColor: '#0277BD15' }]}><act.icon size={14} color="#0277BD" /></View><View style={styles.activityContent}><Text style={[styles.activityText, { color: theme.colors.text }]}>{act.text}</Text><Text style={[styles.activityTime, { color: theme.colors.textSecondary }]}>{act.time}</Text></View></View>))}</View>
-      <AgentFeatures agentId="settlement-specialist" agentName="Settlement Specialist" />
+
+      {/* Stats */}
+      <View style={styles.statsContainer}>
+        {stats.map((stat, i) => (
+          <View key={i} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+            <stat.icon size={22} color={stat.color} />
+            <Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text>
+            <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text>
+          </View>
+        ))}
+      </View>
+
+      {/* Overview */}
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Overview</Text>
+        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>
+          The AI Settlement Specialist provides enterprise-level capabilities within the Trading & Investments department, driving operational excellence and strategic decision-making across all assigned domains. This agent orchestrates sub-agents for specialized execution and reporting.
+        </Text>
+      </View>
+
+      {/* Capabilities */}
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Enterprise Capabilities</Text>
+        <View style={styles.tagsContainer}>
+          {capabilities.map((cap, i) => (
+            <View key={i} style={[styles.tag, { backgroundColor: '#78909C18' }]}>
+              <Text style={[styles.tagText, { color: '#78909C' }]}>{cap}</Text>
+            </View>
+          ))}
+        </View>
+      </View>
+
+      {/* Key Responsibilities */}
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Responsibilities</Text>
+        {responsibilities.map((item, i) => (
+          <View key={i} style={styles.responsibilityRow}>
+            <ArrowRight size={14} color="#78909C" />
+            <Text style={[styles.responsibilityText, { color: theme.colors.textSecondary }]}>{item}</Text>
+          </View>
+        ))}
+      </View>
+
+      {/* Sub-Agents Hierarchy */}
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents Hierarchy</Text>
+        <Text style={[styles.description, { color: theme.colors.textSecondary, marginBottom: 12 }]}>
+          Direct reports and specialized sub-agents that execute functions under Settlement Specialist direction.
+        </Text>
+        <TouchableOpacity
+          key="trade-reconciler"
+          onPress={() => router.push('/ai-agent/trading/sub-agents/trade-reconciler')}
+          style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}
+        >
+          <View style={[styles.agentIcon, { backgroundColor: '#78909C20' }]}>
+            <ClipboardCheck size={28} color="#78909C" />
+          </View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>{s.n}</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>{s.d}</Text>
+          </View>
+          <ChevronRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          key="clearing-coordinator"
+          onPress={() => router.push('/ai-agent/trading/sub-agents/clearing-coordinator')}
+          style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}
+        >
+          <View style={[styles.agentIcon, { backgroundColor: '#78909C20' }]}>
+            <ArrowRightLeft size={28} color="#78909C" />
+          </View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>{s.n}</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>{s.d}</Text>
+          </View>
+          <ChevronRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          key="fail-manager"
+          onPress={() => router.push('/ai-agent/trading/sub-agents/fail-manager')}
+          style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}
+        >
+          <View style={[styles.agentIcon, { backgroundColor: '#78909C20' }]}>
+            <AlertTriangle size={28} color="#78909C" />
+          </View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>{s.n}</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>{s.d}</Text>
+          </View>
+          <ChevronRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+      </View>
+
+      {/* Performance Metrics */}
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Performance Metrics</Text>
+        <View style={styles.metricsGrid}>
+          <View key="STP Rate" style={[styles.metricCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+              <Text style={[styles.metricValue, { color: theme.colors.text }]}>{m.v}</Text>
+              <Text style={[styles.metricLabel, { color: theme.colors.textSecondary }]}>{m.l}</Text>
+              <View style={styles.metricTrend}>
+                <TrendingUp size={12} color="#34C759" />
+                <Text style={{ fontSize: 11, color: '#34C759', fontWeight: '600' }}>+0.3%</Text>
+              </View>
+            </View>
+          <View key="Settlement Rate" style={[styles.metricCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+              <Text style={[styles.metricValue, { color: theme.colors.text }]}>{m.v}</Text>
+              <Text style={[styles.metricLabel, { color: theme.colors.textSecondary }]}>{m.l}</Text>
+              <View style={styles.metricTrend}>
+                <TrendingUp size={12} color="#34C759" />
+                <Text style={{ fontSize: 11, color: '#34C759', fontWeight: '600' }}>+0.1%</Text>
+              </View>
+            </View>
+          <View key="Avg Settlement" style={[styles.metricCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+              <Text style={[styles.metricValue, { color: theme.colors.text }]}>{m.v}</Text>
+              <Text style={[styles.metricLabel, { color: theme.colors.textSecondary }]}>{m.l}</Text>
+              <View style={styles.metricTrend}>
+                <TrendingUp size={12} color="#34C759" />
+                <Text style={{ fontSize: 11, color: '#34C759', fontWeight: '600' }}>-0.1</Text>
+              </View>
+            </View>
+          <View key="Fails Resolved" style={[styles.metricCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+              <Text style={[styles.metricValue, { color: theme.colors.text }]}>{m.v}</Text>
+              <Text style={[styles.metricLabel, { color: theme.colors.textSecondary }]}>{m.l}</Text>
+              <View style={styles.metricTrend}>
+                <TrendingUp size={12} color="#34C759" />
+                <Text style={{ fontSize: 11, color: '#34C759', fontWeight: '600' }}>0%</Text>
+              </View>
+            </View>
+        </View>
+      </View>
+
+      {/* Recent Activity */}
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Recent Activity</Text>
+        {activities.map((act, i) => (
+          <View key={i} style={styles.activityRow}>
+            <View style={[styles.activityIcon, { backgroundColor: '#78909C15' }]}>
+              <act.icon size={14} color="#78909C" />
+            </View>
+            <View style={styles.activityContent}>
+              <Text style={[styles.activityText, { color: theme.colors.text }]}>{act.text}</Text>
+              <Text style={[styles.activityTime, { color: theme.colors.textSecondary }]}>{act.time}</Text>
+            </View>
+          </View>
+        ))}
+      </View>
+
+      {/* Quick Actions */}
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
+        <View style={styles.actionsGrid}>
+          {QUICK_ACTIONS.map((action, i) => (
+            <TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#78909C12' }]}>
+              <action.icon size={24} color="#78909C" />
+              <Text style={[styles.actionText, { color: '#78909C' }]}>{action.label}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
+
+      <AgentFeatures agentId="settlement-specialist" agentName="AI Settlement Specialist" />
+      <View style={{ height: 40 }} />
     </ScrollView>
   );
 }
 
-const styles = StyleSheet.create({container:{flex:1},hero:{alignItems:'center',paddingVertical:32,paddingHorizontal:20,borderBottomWidth:1},heroIconWrap:{width:88,height:88,borderRadius:44,justifyContent:'center',alignItems:'center',marginBottom:16},heroTitle:{fontSize:26,fontWeight:'bold'},heroSubtitle:{fontSize:15,marginTop:4,fontWeight:'500'},badgesRow:{flexDirection:'row',gap:10,marginTop:16},badge:{flexDirection:'row',alignItems:'center',paddingHorizontal:10,paddingVertical:5,borderRadius:20,gap:4},badgeText:{fontSize:12,fontWeight:'600'},statsContainer:{flexDirection:'row',flexWrap:'wrap',padding:16,gap:12},statCard:{flex:1,minWidth:'22%',alignItems:'center',padding:14,borderRadius:12},statValue:{fontSize:18,fontWeight:'bold',marginTop:8},statLabel:{fontSize:11,marginTop:4},section:{marginHorizontal:16,marginBottom:16,padding:20,borderRadius:16},sectionTitle:{fontSize:18,fontWeight:'700',marginBottom:14},description:{fontSize:14,lineHeight:22},tagsContainer:{flexDirection:'row',flexWrap:'wrap',gap:8},tag:{paddingHorizontal:12,paddingVertical:6,borderRadius:20},tagText:{fontSize:12,fontWeight:'600'},responsibilityRow:{flexDirection:'row',alignItems:'center',marginBottom:10,gap:8},responsibilityText:{fontSize:14,flex:1,lineHeight:20},activityRow:{flexDirection:'row',alignItems:'center',marginBottom:12,gap:12},activityIcon:{width:32,height:32,borderRadius:16,justifyContent:'center',alignItems:'center'},activityContent:{flex:1},activityText:{fontSize:14,fontWeight:'500'},activityTime:{fontSize:12,marginTop:2}});
+const styles = StyleSheet.create({
+  container: { flex: 1 },
+  hero: { alignItems: 'center', paddingVertical: 32, paddingHorizontal: 20, borderBottomWidth: 1 },
+  heroIconWrap: { width: 88, height: 88, borderRadius: 44, justifyContent: 'center', alignItems: 'center', marginBottom: 16 },
+  heroTitle: { fontSize: 26, fontWeight: 'bold' },
+  heroSubtitle: { fontSize: 15, marginTop: 4, fontWeight: '500' },
+  badgesRow: { flexDirection: 'row', gap: 10, marginTop: 16, flexWrap: 'wrap', justifyContent: 'center' },
+  badge: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 20, gap: 4 },
+  badgeText: { fontSize: 12, fontWeight: '600' },
+  statsContainer: { flexDirection: 'row', flexWrap: 'wrap', padding: 16, gap: 12 },
+  statCard: { flex: 1, minWidth: '22%', alignItems: 'center', padding: 14, borderRadius: 12 },
+  statValue: { fontSize: 18, fontWeight: 'bold', marginTop: 8 },
+  statLabel: { fontSize: 11, marginTop: 4 },
+  section: { marginHorizontal: 16, marginBottom: 16, padding: 20, borderRadius: 16 },
+  sectionTitle: { fontSize: 18, fontWeight: '700', marginBottom: 14 },
+  description: { fontSize: 14, lineHeight: 22 },
+  tagsContainer: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  tag: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 20 },
+  tagText: { fontSize: 12, fontWeight: '600' },
+  responsibilityRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 10, gap: 8 },
+  responsibilityText: { fontSize: 14, flex: 1, lineHeight: 20 },
+  agentCard: { flexDirection: 'row', alignItems: 'center', padding: 16, borderRadius: 12, marginBottom: 12 },
+  agentIcon: { width: 48, height: 48, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
+  agentInfo: { flex: 1, marginLeft: 12 },
+  agentName: { fontSize: 16, fontWeight: '600' },
+  agentDesc: { fontSize: 12, marginTop: 2 },
+  metricsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
+  metricCard: { flex: 1, minWidth: '45%', alignItems: 'center', padding: 16, borderRadius: 12 },
+  metricValue: { fontSize: 20, fontWeight: 'bold' },
+  metricLabel: { fontSize: 12, marginTop: 4 },
+  metricTrend: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 6 },
+  activityRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 12, gap: 12 },
+  activityIcon: { width: 32, height: 32, borderRadius: 16, justifyContent: 'center', alignItems: 'center' },
+  activityContent: { flex: 1 },
+  activityText: { fontSize: 14, fontWeight: '500' },
+  activityTime: { fontSize: 12, marginTop: 2 },
+  actionsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
+  actionButton: { flex: 1, minWidth: '45%', alignItems: 'center', padding: 16, borderRadius: 12 },
+  actionText: { fontSize: 13, fontWeight: '600', marginTop: 8 },
+});

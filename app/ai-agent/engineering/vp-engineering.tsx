@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Cpu, Activity, CircleCheckBig, Clock, Target, ChartBar, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, SquareCode, GitBranch, Layers } from 'lucide-react-native';
+import { Cpu, Activity, CircleCheckBig, Clock, Target, ChartBarBig, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, SquareCode, GitBranch, Layers } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function VPEngineeringPage() {
@@ -33,13 +33,13 @@ export default function VPEngineeringPage() {
   const activities = [
     { time: '1 min ago', text: 'Approved critical production deployment', icon: GitBranch },
     { time: '10 min ago', text: 'Reviewed architecture proposal for new service', icon: Layers },
-    { time: '35 min ago', text: 'Updated SLO dashboards for Q3', icon: ChartBar },
+    { time: '35 min ago', text: 'Updated SLO dashboards for Q3', icon: ChartBarBig },
     { time: '2 hours ago', text: 'Mentored 3 engineers on design patterns', icon: SquareCode },
     { time: '4 hours ago', text: 'Launched infrastructure cost optimization', icon: Zap },
   ];
 
   const quickActions = [
-    { label: 'View Reports', icon: ChartBar },
+    { label: 'View Reports', icon: ChartBarBig },
     { label: 'Team Chat', icon: MessageSquare },
     { label: 'Schedule', icon: Calendar },
     { label: 'Settings', icon: Shield },

@@ -1,110 +1,96 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Settings, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBar, MessageSquare, Calendar, Shield, Workflow, CircleCheck, Clipboard, TrendingUp } from 'lucide-react-native';
+import { Settings, Briefcase, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, TrendingUp, Gauge, Truck, ShieldCheck, Building2, ListTodo, Zap, Workflow } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { useRouter } from 'expo-router';
 
-const DEPARTMENT_AGENTS = [
-  { id: 'admin-manager', name: 'Admin Manager', description: 'Admin Manager AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'ai-document-controller', name: 'AI Document Controller', description: 'AI Document Controller AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'ai-executive-assistant', name: 'AI Executive Assistant', description: 'AI Executive Assistant AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'ai-facilities-coordinator', name: 'AI Facilities Coordinator', description: 'AI Facilities Coordinator AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'ai-office-manager', name: 'AI Office Manager', description: 'AI Office Manager AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'ai-operations-manager', name: 'AI Operations Manager', description: 'AI Operations Manager AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'ai-process-optimization', name: 'AI Process Optimization', description: 'AI Process Optimization AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'ai-quality-assurance', name: 'AI Quality Assurance', description: 'AI Quality Assurance AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'ai-resource-planner', name: 'AI Resource Planner', description: 'AI Resource Planner AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'ai-task-coordinator', name: 'AI Task Coordinator', description: 'AI Task Coordinator AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'ai-travel-coordinator', name: 'AI Travel Coordinator', description: 'AI Travel Coordinator AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'ai-workflow-automation', name: 'AI Workflow Automation', description: 'AI Workflow Automation AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'cao-admin', name: 'CAO - Chief Admin Officer', description: 'CAO - Chief Admin Officer AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'clo-logistics', name: 'CLO - Logistics', description: 'CLO - Logistics AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'compliance-monitoring', name: 'AI Compliance Monitoring Agent', description: 'AI Compliance Monitoring Agent AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'coo', name: 'COO', description: 'COO AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'customs-specialist', name: 'Customs Specialist', description: 'Customs Specialist AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'demand-planner', name: 'Demand Planner', description: 'Demand Planner AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'dispatcher', name: 'Dispatcher', description: 'Dispatcher AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'distribution-manager', name: 'Distribution Manager', description: 'Distribution Manager AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'fleet-coordinator', name: 'Fleet Coordinator', description: 'Fleet Coordinator AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'fleet-manager', name: 'Fleet Manager', description: 'Fleet Manager AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'freight-broker', name: 'Freight Broker', description: 'Freight Broker AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'fulfillment-specialist', name: 'Fulfillment Specialist', description: 'Fulfillment Specialist AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'inventory-specialist', name: 'Inventory Specialist', description: 'Inventory Specialist AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'last-mile-coordinator', name: 'Last Mile Coordinator', description: 'Last Mile Coordinator AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'logistics-manager', name: 'Logistics Manager', description: 'Logistics Manager AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'operations-manager', name: 'AI Operations Manager', description: 'AI Operations Manager AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'ops-manager', name: 'Ops Manager', description: 'Ops Manager AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'process-optimization', name: 'AI Process Optimization Agent', description: 'AI Process Optimization Agent AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'procurement-buyer', name: 'Procurement Buyer', description: 'Procurement Buyer AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'procurement-manager', name: 'Procurement Manager', description: 'Procurement Manager AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'quality-control', name: 'AI Quality Control Agent', description: 'AI Quality Control Agent AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'resource-planner', name: 'AI Resource Planner', description: 'AI Resource Planner AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'route-optimizer', name: 'Route Optimizer', description: 'Route Optimizer AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'shipping-coordinator', name: 'Shipping Coordinator', description: 'Shipping Coordinator AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'supplier-relations', name: 'Supplier Relations', description: 'Supplier Relations AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'task-coordinator', name: 'AI Task Coordinator', description: 'AI Task Coordinator AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'tracking-specialist', name: 'Tracking Specialist', description: 'Tracking Specialist AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'vendor-management', name: 'AI Vendor Management Agent', description: 'AI Vendor Management Agent AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'vp-admin-ops', name: 'VP Admin Operations', description: 'VP Admin Operations AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'vp-facilities-admin', name: 'VP Facilities & Admin', description: 'VP Facilities & Admin AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'vp-facilities', name: 'VP Facilities', description: 'VP Facilities AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'vp-logistics-ops', name: 'VP Logistics Operations', description: 'VP Logistics Operations AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'vp-operations', name: 'VP Operations', description: 'VP Operations AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'vp-project-management', name: 'VP Project Management', description: 'VP Project Management AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'vp-quality', name: 'VP Quality', description: 'VP Quality AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'vp-supply-chain-ops', name: 'VP Supply Chain Operations', description: 'VP Supply Chain Operations AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'vp-supply-chain', name: 'VP Supply Chain', description: 'VP Supply Chain AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'vp-transportation', name: 'VP Transportation', description: 'VP Transportation AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'warehouse-lead', name: 'Warehouse Lead', description: 'Warehouse Lead AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'warehouse-manager', name: 'Warehouse Manager', description: 'Warehouse Manager AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'warehouse-operator', name: 'Warehouse Operator', description: 'Warehouse Operator AI Agent', icon: Settings, color: '#4E342E' },
-  { id: 'workflow-automation', name: 'AI Workflow Automation Agent', description: 'AI Workflow Automation Agent AI Agent', icon: Settings, color: '#4E342E' }
-];;
+const HIERARCHY = {
+  cSuite: [
+    { id: 'coo', name: 'AI Chief Operating Officer', icon: Briefcase, color: '#4E342E', subCount: 3, subs: ['Operational Efficiency Analyst','Cross-dept Coordinator','Strategic Initiative Tracker'] },
+  ],
+  vp: [
+    { id: 'vp-operations', name: 'AI VP Operations', icon: Settings, color: '#5D4037', subCount: 3, subs: ['Process Auditor','SLA Monitor','Capacity Planner'] },
+    { id: 'vp-supply-chain', name: 'AI VP Supply Chain', icon: Truck, color: '#33691E', subCount: 3, subs: ['Supplier Risk Assessor','Inventory Optimizer','Logistics Cost Analyzer'] },
+    { id: 'vp-quality', name: 'AI VP Quality', icon: ShieldCheck, color: '#1B5E20', subCount: 3, subs: ['Quality Standards Enforcer','Defect Pattern Analyzer','Compliance Tracker'] },
+    { id: 'vp-facilities', name: 'AI VP Facilities', icon: Building2, color: '#455A64', subCount: 3, subs: ['Space Utilization Analyst','Maintenance Scheduler','Energy Efficiency Monitor'] },
+    { id: 'vp-project-management', name: 'AI VP Project Management', icon: Briefcase, color: '#283593', subCount: 3, subs: ['Milestone Tracker','Resource Allocator','Risk Identifier'] },
+  ],
+  manager: [
+    { id: 'ai-operations-manager', name: 'AI Operations Manager', icon: Settings, color: '#4E342E', subCount: 3, subs: ['Daily Operations Coordinator','Escalation Handler','Performance Reporter'] },
+    { id: 'ai-operations-manager-sub', name: 'AI Operations Manager (Sub)', icon: Settings, color: '#5D4037', subCount: 3, subs: ['Workflow Monitor','Bottleneck Detector','Efficiency Reporter'] },
+  ],
+  specialist: [
+    { id: 'ai-workflow-automation', name: 'AI Workflow Automation Agent', icon: Workflow, color: '#0097A7', subCount: 3, subs: ['Process Mapper','Automation Rule Builder','Exception Handler'] },
+    { id: 'ai-task-coordinator', name: 'AI Task Coordinator', icon: ListTodo, color: '#455A64', subCount: 3, subs: ['Task Prioritizer','Deadline Enforcer','Dependency Tracker'] },
+    { id: 'ai-process-optimization', name: 'AI Process Optimization Agent', icon: TrendingUp, color: '#2E7D32', subCount: 3, subs: ['Lean Analyst','Waste Identifier','Improvement Recommender'] },
+    { id: 'ai-resource-planner', name: 'AI Resource Planner', icon: Users, color: '#5D4037', subCount: 3, subs: ['Demand Forecaster','Allocation Optimizer','Utilization Tracker'] },
+    { id: 'ai-quality-assurance', name: 'AI Quality Assurance Agent', icon: ShieldCheck, color: '#1B5E20', subCount: 3, subs: ['Test Case Generator','Defect Logger','Regression Tracker'] },
+  ],
+};
 
 export default function OperationsDepartment() {
   const { theme } = useTheme();
   const router = useRouter();
+
+  const renderGroup = (agents: any[], title: string) => (
+    <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+      <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>{title}</Text>
+      {agents.map((agent: any) => {
+        const AgentIcon = agent.icon;
+        return (
+          <TouchableOpacity key={agent.id} onPress={() => router.push('/ai-agent/operations/' + agent.id)} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+            <View style={[styles.agentIcon, { backgroundColor: agent.color + '20' }]}><AgentIcon size={28} color={agent.color} /></View>
+            <View style={styles.agentInfo}>
+              <Text style={[styles.agentName, { color: theme.colors.text }]}>{agent.name}</Text>
+              <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>{agent.subCount} Sub-Agents: {agent.subs.join(', ')}</Text>
+            </View>
+            <ArrowRight size={20} color={theme.colors.textSecondary} />
+          </TouchableOpacity>
+        );
+      })}
+    </View>
+  );
+
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
         <View style={[styles.heroIconWrap, { backgroundColor: '#607D8B20' }]}><Settings size={48} color="#607D8B" /></View>
         <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Operations & Management</Text>
-        <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>AI Agents for Operational Excellence</Text>
+        <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>AI Agents & Employees — Enterprise Workforce</Text>
         <View style={styles.badgesRow}>
           <View style={[styles.badge, { backgroundColor: '#34C75922' }]}><Activity size={12} color="#34C759" /><Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text></View>
           <View style={[styles.badge, { backgroundColor: '#607D8B22' }]}><Star size={12} color="#607D8B" /><Text style={[styles.badgeText, { color: '#607D8B' }]}>Department</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#FF950022' }]}><Users size={12} color="#FF9500" /><Text style={[styles.badgeText, { color: '#FF9500' }]}>{DEPARTMENT_AGENTS.length} Agents</Text></View>
+          <View style={[styles.badge, { backgroundColor: '#FF950022' }]}><Users size={12} color="#FF9500" /><Text style={[styles.badgeText, { color: '#FF9500' }]}>13 Agents</Text></View>
         </View>
       </View>
       <View style={styles.statsContainer}>
-        {[{label:'Agents',value:DEPARTMENT_AGENTS.length.toString(),icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Efficiency',value:'+40%',icon:Clock,color:'#FF9500'},{label:'Quality',value:'99.5%',icon:Target,color:'#607D8B'}].map((stat,i)=>(<View key={i} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><stat.icon size={22} color={stat.color} /><Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text><Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text></View>))}
+        {[{label:'Main Agents',value:'13',icon:CircleCheckBig,color:'#34C759'},{label:'Sub-Agents',value:'39',icon:Users,color:'#007AFF'},{label:'Uptime',value:'99.9%',icon:Clock,color:'#FF9500'},{label:'Efficiency',value:'20x',icon:Target,color:'#607D8B'}].map((stat,i)=>(<View key={i} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><stat.icon size={22} color={stat.color} /><Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text><Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text></View>))}
       </View>
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Overview</Text>
-        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>The Operations & Management department ensures business efficiency through AI-powered process optimization, quality control, and workflow automation. Our agents streamline operations and improve productivity.</Text>
+        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>The Operations & Management department operates through a structured hierarchy of AI agents — from C-Suite leadership down to specialist workers. Each agent manages dedicated sub-agents for granular task execution, ensuring enterprise-grade performance at every level.</Text>
       </View>
+      {renderGroup(HIERARCHY.cSuite, 'C-Suite Leadership')}
+      {renderGroup(HIERARCHY.vp, 'VP Level')}
+      {renderGroup(HIERARCHY.manager, 'Manager Level')}
+      {renderGroup(HIERARCHY.specialist, 'Specialist Level')}
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Department Agents</Text>
-        {DEPARTMENT_AGENTS.map((agent) => (
-          <TouchableOpacity key={agent.id} onPress={()=>router.push('/ai-agent/operations/'+agent.id)} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
-            <View style={[styles.agentIcon, { backgroundColor: agent.color + '20' }]}><agent.icon size={28} color={agent.color} /></View>
-            <View style={styles.agentInfo}>
-              <Text style={[styles.agentName, { color: theme.colors.text }]}>{agent.name}</Text>
-              <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>{agent.description}</Text>
-            </View>
-            <ArrowRight size={20} color={theme.colors.textSecondary} />
-          </TouchableOpacity>
-        ))}
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents Hub</Text>
+        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>39 helper and sub-agent AI workers supporting the main agents.</Text>
+        <TouchableOpacity onPress={() => router.push('/ai-agent/operations/sub-agents')} style={[styles.subAgentButton, { backgroundColor: '#607D8B15' }]}>
+          <Settings size={20} color="#607D8B" />
+          <Text style={[styles.subAgentButtonText, { color: '#607D8B' }]}>View All 39 Sub-Agents</Text>
+          <ArrowRight size={18} color="#607D8B" />
+        </TouchableOpacity>
       </View>
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          [{label:'View Reports',icon:ChartBar},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#607D8B12' }]}><act.icon size={24} color="#607D8B" /><Text style={[styles.actionText, { color: '#607D8B' }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#607D8B12' }]}><act.icon size={24} color="#607D8B" /><Text style={[styles.actionText, { color: '#607D8B' }]}>{act.label}</Text></TouchableOpacity>))}
         </View>
       </View>
-    <AgentFeatures agentId="operations-index" agentName="Operations Department" />
-
+      <AgentFeatures agentId="operations-index" agentName="Operations & Management Department" />
     </ScrollView>
   );
 }
@@ -130,8 +116,9 @@ const styles = StyleSheet.create({
   agentInfo:{flex:1,marginLeft:12},
   agentName:{fontSize:16,fontWeight:'600'},
   agentDesc:{fontSize:12,marginTop:2},
+  subAgentButton:{flexDirection:'row',alignItems:'center',padding:16,borderRadius:12,marginTop:12,gap:10},
+  subAgentButtonText:{fontSize:15,fontWeight:'600',flex:1},
   actionsGrid:{flexDirection:'row',flexWrap:'wrap',gap:12},
   actionButton:{flex:1,minWidth:'45%',alignItems:'center',padding:16,borderRadius:12},
   actionText:{fontSize:13,fontWeight:'600',marginTop:8}
 });
-

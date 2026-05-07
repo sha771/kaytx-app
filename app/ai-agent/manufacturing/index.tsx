@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Factory, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBar, MessageSquare, Calendar, Shield, TrendingUp, HardHat, Package, Zap, Truck, Wrench, Search, TriangleAlert, Link, Award, ChartBar } from 'lucide-react-native';
+import { Factory, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, TrendingUp, HardHat, Package, Zap, Truck, Wrench, Search, TriangleAlert, Link, Award } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { useRouter } from 'expo-router';
 
@@ -60,9 +60,20 @@ export default function ManufacturingDepartment() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBar},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#BF360C12' }]}><act.icon size={24} color="#BF360C" /><Text style={[styles.actionText, { color: '#BF360C' }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#BF360C12' }]}><act.icon size={24} color="#BF360C" /><Text style={[styles.actionText, { color: '#BF360C' }]}>{act.label}</Text></TouchableOpacity>))}
         </View>
       </View>
+      
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
+        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>42 helper and sub-agent AI workers supporting the main agents.</Text>
+        <TouchableOpacity onPress={() => router.push('/ai-agent/manufacturing/sub-agents')} style={[styles.subAgentButton, { backgroundColor: '#6366F115' }]}>
+          <Factory size={20} color="#6366F1" />
+          <Text style={[styles.subAgentButtonText, { color: '#6366F1' }]}>View All 42 Sub-Agents</Text>
+          <ArrowRight size={18} color="#6366F1" />
+        </TouchableOpacity>
+      </View>
+
       <AgentFeatures agentId="manufacturing-index" agentName="Manufacturing Department" />
     </ScrollView>
   );

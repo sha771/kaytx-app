@@ -24,7 +24,7 @@ import {
   BookOpen,
   Shield,
   MessageSquare,
-  ChartBar,
+  ChartBarBig,
   CircleAlert,
   Users,
   Mic,

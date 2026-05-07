@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Box, Activity, CircleCheckBig, Clock, Target, ChartBar, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, Rocket, Lightbulb, LayoutDashboard, Layers } from 'lucide-react-native';
+import { Box, Activity, CircleCheckBig, Clock, Target, ChartBarBig, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, Rocket, Lightbulb, LayoutDashboard, Layers, Map, ListFilter, Compass } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
+import { useRouter } from 'expo-router';
 
 export default function VPProductPage() {
   const { theme } = useTheme();
+  const router = useRouter();
 
   const stats = [
     { label: 'Shipped', value: '892', icon: CircleCheckBig, color: '#34C759' },
@@ -39,7 +41,7 @@ export default function VPProductPage() {
   ];
 
   const quickActions = [
-    { label: 'View Reports', icon: ChartBar },
+    { label: 'View Reports', icon: ChartBarBig },
     { label: 'Team Chat', icon: MessageSquare },
     { label: 'Schedule', icon: Calendar },
     { label: 'Settings', icon: Shield },
@@ -51,7 +53,7 @@ export default function VPProductPage() {
         <View style={[styles.heroIconWrap, { backgroundColor: theme.colors.primary + '25' }]}>
           <Box size={48} color={theme.colors.primary} />
         </View>
-        <Text style={[styles.heroTitle, { color: theme.colors.text }]}>VP Product</Text>
+        <Text style={[styles.heroTitle, { color: theme.colors.text }]}>AI VP Product</Text>
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Product Management Department</Text>
         <View style={styles.badgesRow}>
           <View style={[styles.badge, { backgroundColor: '#34C75922' }]}>
@@ -123,6 +125,36 @@ export default function VPProductPage() {
       </View>
 
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>A2A Endpoints</Text>
+        {['/consult/vp-product', '/product/roadmap', '/product/features', '/product/market-alignment'].map((endpoint, index) => (
+          <View key={index} style={styles.endpointRow}>
+            <Zap size={14} color="#8B5CF6" />
+            <Text style={[styles.endpointText, { color: theme.colors.textSecondary }]}>{endpoint}</Text>
+          </View>
+        ))}
+      </View>
+
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
+        {[
+          {n:'AI Product Roadmap Planner',i:Map,r:'/ai-agent/product/sub-agents/product-roadmap-planner',c:'#FF6D00'},
+          {n:'AI Feature Prioritizer',i:ListFilter,r:'/ai-agent/product/sub-agents/feature-prioritizer',c:'#007AFF'},
+          {n:'AI Market Alignment Checker',i:Compass,r:'/ai-agent/product/sub-agents/market-alignment-checker',c:'#FF9500'}
+        ].map((sa,i)=>{
+          const IconComponent = sa.i;
+          return (
+          <TouchableOpacity key={i} onPress={()=>router.push(sa.r as any)} style={[styles.parentCard,{backgroundColor:theme.colors.background||'#F2F2F7',marginTop:i>0?8:0}]}>
+            <IconComponent size={24} color={sa.c}/>
+            <View style={styles.parentInfo}>
+              <Text style={[styles.parentName,{color:theme.colors.text}]}>{sa.n}</Text>
+              <Text style={[styles.parentDesc,{color:theme.colors.textSecondary}]}>Sub-Agent</Text>
+            </View>
+            <ArrowRight size={20} color={theme.colors.textSecondary}/>
+          </TouchableOpacity>
+        )})}
+      </View>
+
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
           {quickActions.map((action, index) => (
@@ -133,7 +165,7 @@ export default function VPProductPage() {
           ))}
         </View>
       </View>
-    <AgentFeatures agentId="vp-product" agentName="VP Product" />
+    <AgentFeatures agentId="vp-product" agentName="AI VP Product" />
 
     </ScrollView>
   );
@@ -168,4 +200,10 @@ const styles = StyleSheet.create({
   actionsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
   actionButton: { flex: 1, minWidth: '45%', alignItems: 'center', padding: 16, borderRadius: 12 },
   actionText: { fontSize: 13, fontWeight: '600', marginTop: 8 },
+  endpointRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 8, gap: 8 },
+  endpointText: { fontSize: 13, fontFamily: 'monospace' },
+  parentCard: { flexDirection: 'row', alignItems: 'center', padding: 16, borderRadius: 12, gap: 12 },
+  parentInfo: { flex: 1 },
+  parentName: { fontSize: 16, fontWeight: '600' },
+  parentDesc: { fontSize: 12, marginTop: 2 },
 });

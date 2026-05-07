@@ -119,12 +119,12 @@ export default function ArchiveScreen() {
   }, 0);
 
   return (
-    <SafeAreaView style= [styles.container, { backgroundColor: theme.colors.background }]}>
-      <View style= [styles.header, { borderBottomColor: theme.colors.border }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <View style={[styles.header, { borderBottomColor: theme.colors.border }]}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
           <ArrowLeft size={24} color={theme.colors.text} />
         </TouchableOpacity>
-        <Text style= [styles.title, { color: theme.colors.text }]}>Archive</Text>
+        <Text style={[styles.title, { color: theme.colors.text }]}>Archive</Text>
         <View style={styles.headerActions}>
           <TouchableOpacity style={styles.headerButton}>
             <Upload size={20} color={theme.colors.primary} />
@@ -136,52 +136,52 @@ export default function ArchiveScreen() {
       </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        <View style= [styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+        <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
           <View style={styles.cardHeader}>
             <Archive size={24} color={theme.colors.primary} />
-            <Text style= [styles.cardTitle, { color: theme.colors.text }]}>Archive Storage</Text>
+            <Text style={[styles.cardTitle, { color: theme.colors.text }]}>Archive Storage</Text>
           </View>
-          <Text style= [styles.cardDescription, { color: theme.colors.secondaryText }]}>
+          <Text style={[styles.cardDescription, { color: theme.colors.secondaryText }]}>
             Manage your archived files and documents
           </Text>
         </View>
 
         <View style={styles.statsGrid}>
-          <View style= [styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
+          <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
             <Archive size={20} color={theme.colors.primary} />
-            <Text style= [styles.statValue, { color: theme.colors.text }]}>
+            <Text style={[styles.statValue, { color: theme.colors.text }]}>
               {archivedItems.length}
             </Text>
-            <Text style= [styles.statLabel, { color: theme.colors.secondaryText }]}>
+            <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>
               Total Items
             </Text>
           </View>
-          <View style= [styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
+          <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
             <Download size={20} color={theme.colors.success} />
-            <Text style= [styles.statValue, { color: theme.colors.text }]}>
+            <Text style={[styles.statValue, { color: theme.colors.text }]}>
               {totalSize.toFixed(1)} MB
             </Text>
-            <Text style= [styles.statLabel, { color: theme.colors.secondaryText }]}>
+            <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>
               Total Size
             </Text>
           </View>
-          <View style= [styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
+          <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
             <Star size={20} color={theme.colors.warning} />
-            <Text style= [styles.statValue, { color: theme.colors.text }]}>
+            <Text style={[styles.statValue, { color: theme.colors.text }]}>
               {archivedItems.filter(item => item.starred).length}
             </Text>
-            <Text style= [styles.statLabel, { color: theme.colors.secondaryText }]}>
+            <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>
               Starred
             </Text>
           </View>
         </View>
 
-        <View style= [styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+        <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
           <View style={styles.searchContainer}>
-            <View style= [styles.searchInput, { borderColor: theme.colors.border }]}>
+            <View style={[styles.searchInput, { borderColor: theme.colors.border }]}>
               <Search size={20} color={theme.colors.secondaryText} />
               <TextInput
-                style= [styles.input, { color: theme.colors.text }]}
+                style={[styles.input, { color: theme.colors.text }]}
                 placeholder="Search archived items..."
                 placeholderTextColor={theme.colors.secondaryText}
                 value={searchQuery}
@@ -195,7 +195,7 @@ export default function ArchiveScreen() {
               {filters.map((Filter) => (
                 <TouchableOpacity
                   key={Funnel}
-                  style= [
+                  style={[
                     styles.filterButton,
                     {
                       backgroundColor: selectedFilter === Filter ? theme.colors.primary : 'transparent',
@@ -205,7 +205,7 @@ export default function ArchiveScreen() {
                   onPress={() => setSelectedFilter(Filter)}
                 >
                   <Text
-                    style= [
+                    style={[
                       styles.filterButtonText,
                       {
                         color: selectedFilter === Filter ? '#FFFFFF' : theme.colors.text,
@@ -221,19 +221,19 @@ export default function ArchiveScreen() {
         </View>
 
         {selectedItems.length > 0 && (
-          <View style= [styles.actionBar, { backgroundColor: theme.colors.cardBackground }]}>
-            <Text style= [styles.selectedCount, { color: theme.colors.text }]}>
+          <View style={[styles.actionBar, { backgroundColor: theme.colors.cardBackground }]}>
+            <Text style={[styles.selectedCount, { color: theme.colors.text }]}>
               {selectedItems.length} selected
             </Text>
             <View style={styles.actionButtons}>
               <TouchableOpacity 
-                style= [styles.actionButton, { backgroundColor: theme.colors.success }]}
+                style={[styles.actionButton, { backgroundColor: theme.colors.success }]}
               >
                 <Download size={16} color="#FFFFFF" />
                 <Text style={styles.actionButtonText}>Download</Text>
               </TouchableOpacity>
               <TouchableOpacity 
-                style= [styles.actionButton, { backgroundColor: theme.colors.error }]}
+                style={[styles.actionButton, { backgroundColor: theme.colors.error }]}
               >
                 <Trash2 size={16} color="#FFFFFF" />
                 <Text style={styles.actionButtonText}>Delete</Text>
@@ -242,8 +242,8 @@ export default function ArchiveScreen() {
           </View>
         )}
 
-        <View style= [styles.card, { backgroundColor: theme.colors.cardBackground }]}>
-          <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>
+        <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
             Archived Items ({filteredItems.length})
           </Text>
           
@@ -251,7 +251,7 @@ export default function ArchiveScreen() {
             {filteredItems.map((item) => (
               <TouchableOpacity
                 key={item.id}
-                style= [
+                style={[
                   styles.itemCard,
                   {
                     borderColor: selectedItems.includes(item.id) ? theme.colors.primary : theme.colors.border,
@@ -264,10 +264,10 @@ export default function ArchiveScreen() {
                   <View style={styles.itemInfo}>
                     <Text style={styles.typeIcon}>{getTypeIcon(item.type)}</Text>
                     <View style={styles.itemDetails}>
-                      <Text style= [styles.itemName, { color: theme.colors.text }]}>
+                      <Text style={[styles.itemName, { color: theme.colors.text }]}>
                         {item.name}
                       </Text>
-                      <Text style= [styles.itemCategory, { color: theme.colors.secondaryText }]}>
+                      <Text style={[styles.itemCategory, { color: theme.colors.secondaryText }]}>
                         {item.category} • {item.size}
                       </Text>
                     </View>
@@ -288,11 +288,11 @@ export default function ArchiveScreen() {
                   <View style={styles.itemDates}>
                     <View style={styles.dateItem}>
                       <Calendar size={14} color={theme.colors.secondaryText} />
-                      <Text style= [styles.dateText, { color: theme.colors.secondaryText }]}>
+                      <Text style={[styles.dateText, { color: theme.colors.secondaryText }]}>
                         Archived: {new Date(item.dateArchived).toLocaleDateString()}
                       </Text>
                     </View>
-                    <Text style= [styles.dateText, { color: theme.colors.secondaryText }]}>
+                    <Text style={[styles.dateText, { color: theme.colors.secondaryText }]}>
                       Original: {new Date(item.originalDate).toLocaleDateString()}
                     </Text>
                   </View>
@@ -302,7 +302,7 @@ export default function ArchiveScreen() {
                   {item.tags.map((tag, index) => (
                     <View 
                       key={index} 
-                      style= [styles.tag, { backgroundColor: getTypeColor(item.type) }]}
+                      style={[styles.tag, { backgroundColor: getTypeColor(item.type) }]}
                     >
                       <Text style={styles.tagText}>{tag}</Text>
                     </View>
@@ -313,26 +313,26 @@ export default function ArchiveScreen() {
           </View>
         </View>
 
-        <View style= [styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+        <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
           <View style={styles.cardHeader}>
             <ListFilter size={24} color={theme.colors.primary} />
-            <Text style= [styles.cardTitle, { color: theme.colors.text }]}>Archive Tips</Text>
+            <Text style={[styles.cardTitle, { color: theme.colors.text }]}>Archive Tips</Text>
           </View>
           
           <View style={styles.tipsList}>
-            <Text style= [styles.tipText, { color: theme.colors.text }]}>
+            <Text style={[styles.tipText, { color: theme.colors.text }]}>
               • Use tags to organize and find archived items quickly
             </Text>
-            <Text style= [styles.tipText, { color: theme.colors.text }]}>
+            <Text style={[styles.tipText, { color: theme.colors.text }]}>
               • Star important items for easy access later
             </Text>
-            <Text style= [styles.tipText, { color: theme.colors.text }]}>
+            <Text style={[styles.tipText, { color: theme.colors.text }]}>
               • Regularly clean up old archived items to save space
             </Text>
-            <Text style= [styles.tipText, { color: theme.colors.text }]}>
+            <Text style={[styles.tipText, { color: theme.colors.text }]}>
               • Download important files before deleting from archive
             </Text>
-            <Text style= [styles.tipText, { color: theme.colors.text }]}>
+            <Text style={[styles.tipText, { color: theme.colors.text }]}>
               • Use search to quickly locate specific archived content
             </Text>
           </View>

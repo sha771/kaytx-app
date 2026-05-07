@@ -9,7 +9,7 @@ import {
   Award, 
   Clock,
   Zap,
-  ChartBar,
+  ChartBarBig,
   Calendar,
   ChevronDown,
   Share2,

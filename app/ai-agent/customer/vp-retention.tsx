@@ -6,7 +6,7 @@ import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = {[{label:'Tasks',value:'2086',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.3s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.0%',icon:Target,color:'#E65100'}];
+  const stats = [{label:'Tasks',value:'2086',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.3s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'98.0%',icon:Target,color:'#E65100'}];
   const capabilities = ['Customer Support','Issue Resolution','Feedback Analysis','Retention Strategy','Experience Optimization','Communication Management'];
   const responsibilities = ['Customer inquiry resolution & support','Feedback collection & analysis','Retention program management','Customer experience optimization','Support ticket management & escalation','Communication strategy & execution'];
   const activities = [{time:'3 min ago',text:'Resolved 28 customer escalations',icon: CircleCheckBig},{time:'6 min ago',text:'Updated satisfaction survey results',icon:Clock},{time:'9 min ago',text:'Launched new retention campaign',icon:Zap}];

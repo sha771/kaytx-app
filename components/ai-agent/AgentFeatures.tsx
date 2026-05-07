@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useRouter } from 'expo-router';
 import { 
-  ChartBar, 
+  ChartBarBig, 
   FileText, 
   SquareCheck, 
   TrendingUp, 
@@ -22,7 +22,7 @@ const features = [
   { 
     id: 'insights-analysis', 
     label: 'Insights & Analysis', 
-    icon: ChartBar,
+    icon: ChartBarBig,
     description: 'Performance analytics'
   },
   { 

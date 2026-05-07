@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Link, Zap, Settings, ChartBar, Plus, CircleCheck, CircleAlert } from 'lucide-react-native';
+import { Link, Zap, Settings, ChartBarBig, Plus, CircleCheck, CircleAlert } from 'lucide-react-native';
 
 interface Integration {
   id: string;
@@ -130,7 +130,7 @@ export default function Integrations() {
             <Text style={styles.statLabel}>Active</Text>
           </View>
           <View style={styles.statItem}>
-            <ChartBar size={20} color="#f39c12" />
+            <ChartBarBig size={20} color="#f39c12" />
             <Text style={styles.statValue}>{integrations.length}</Text>
             <Text style={styles.statLabel}>Total</Text>
           </View>

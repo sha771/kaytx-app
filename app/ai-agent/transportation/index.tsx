@@ -1,13 +1,32 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Truck, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBar, MessageSquare, Calendar, Shield, TrendingUp } from 'lucide-react-native';
+import { Truck, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, TrendingUp, Briefcase, Settings, Package, MapPin, Route, Zap, Layers, Eye, DollarSign, Map, Gauge, Wrench, LayoutGrid } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { useRouter } from 'expo-router';
 
 const DEPARTMENT_AGENTS = [
-  { id: 'vp-transportation', name: 'VP Transportation', description: 'VP Transportation AI Agent', icon: Truck, color: '#6D4C41' }
-];;
+  { id: 'clo-logistics', name: 'AI Chief Logistics Officer', description: 'C-Suite logistics strategy & network design', icon: Briefcase, color: '#26A69A' },
+  { id: 'vp-transportation', name: 'AI VP Transportation', description: 'Fleet strategy & route network leadership', icon: Truck, color: '#26A69A' },
+  { id: 'vp-logistics-operations', name: 'AI VP Logistics Operations', description: 'Hub operations & throughput management', icon: Settings, color: '#26A69A' },
+  { id: 'fleet-manager', name: 'AI Fleet Manager', description: 'Vehicle scheduling & maintenance planning', icon: Truck, color: '#26A69A' },
+  { id: 'warehouse-manager', name: 'AI Warehouse Manager', description: 'Slot optimization & labor scheduling', icon: Package, color: '#26A69A' },
+  { id: 'distribution-manager', name: 'AI Distribution Manager', description: 'Zone planning & carrier allocation', icon: MapPin, color: '#26A69A' },
+  { id: 'ai-route-optimizer', name: 'AI Route Optimizer', description: 'Traffic prediction & multi-stop planning', icon: Route, color: '#26A69A' },
+  { id: 'ai-fleet-coordinator', name: 'AI Fleet Coordinator', description: 'Dispatch optimization & vehicle tracking', icon: Zap, color: '#26A69A' },
+  { id: 'ai-warehouse-operator', name: 'AI Warehouse Operator', description: 'Put-away & pick-pack coordination', icon: Package, color: '#26A69A' },
+  { id: 'ai-dispatcher', name: 'AI Dispatcher', description: 'Load matching & driver communication', icon: Layers, color: '#26A69A' },
+  { id: 'ai-tracking-specialist', name: 'AI Tracking Specialist', description: 'Shipment monitoring & ETA prediction', icon: Eye, color: '#26A69A' },
+  { id: 'ai-last-mile-coordinator', name: 'AI Last Mile Coordinator', description: 'Delivery window & POD management', icon: MapPin, color: '#26A69A' },
+  { id: 'ai-freight-broker', name: 'AI Freight Broker', description: 'Rate negotiation & carrier qualification', icon: DollarSign, color: '#26A69A' },
+  { id: 'ai-customs-specialist', name: 'AI Customs Specialist', description: 'Duty calculation & compliance checking', icon: Shield, color: '#26A69A' },
+];
+
+const HIERARCHY_LEVELS = [
+  { title: 'C-Suite & VP Level (236-238)', agents: DEPARTMENT_AGENTS.slice(0, 3) },
+  { title: 'Manager Level (239-241)', agents: DEPARTMENT_AGENTS.slice(3, 6) },
+  { title: 'Specialist Level (242-249)', agents: DEPARTMENT_AGENTS.slice(6) },
+];
 
 export default function TransportationDepartment() {
   const { theme } = useTheme();
@@ -47,9 +66,25 @@ export default function TransportationDepartment() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          [{label:'View Reports',icon:ChartBar},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#6D4C4112' }]}><act.icon size={24} color="#6D4C41" /><Text style={[styles.actionText, { color: '#6D4C41' }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(
+            <TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#6D4C4112' }]}>
+              <act.icon size={24} color="#6D4C41" />
+              <Text style={[styles.actionText, { color: '#6D4C41' }]}>{act.label}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
       </View>
+      
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
+        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>42 helper and sub-agent AI workers supporting the main agents.</Text>
+        <TouchableOpacity onPress={() => router.push('/ai-agent/transportation/sub-agents')} style={[styles.subAgentButton, { backgroundColor: '#0EA5E915' }]}>
+          <Truck size={20} color="#0EA5E9" />
+          <Text style={[styles.subAgentButtonText, { color: '#0EA5E9' }]}>View All 42 Sub-Agents</Text>
+          <ArrowRight size={18} color="#0EA5E9" />
+        </TouchableOpacity>
+      </View>
+
       <AgentFeatures agentId="transportation-index" agentName="Transportation Department" />
     </ScrollView>
   );
@@ -78,6 +113,8 @@ const styles = StyleSheet.create({
   agentDesc:{fontSize:12,marginTop:2},
   actionsGrid:{flexDirection:'row',flexWrap:'wrap',gap:12},
   actionButton:{flex:1,minWidth:'45%',alignItems:'center',padding:16,borderRadius:12},
-  actionText:{fontSize:13,fontWeight:'600',marginTop:8}
+  actionText:{fontSize:13,fontWeight:'600',marginTop:8},
+  subAgentButton:{flexDirection:'row',alignItems:'center',padding:16,borderRadius:12,marginTop:12,gap:12},
+  subAgentButtonText:{fontSize:15,fontWeight:'600',flex:1}
 });
 

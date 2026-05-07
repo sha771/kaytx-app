@@ -16,7 +16,7 @@ import {
   Send,
   Users,
   MessageSquare,
-  ChartBar,
+  ChartBarBig,
   Calendar,
   Plus,
   ListFilter,

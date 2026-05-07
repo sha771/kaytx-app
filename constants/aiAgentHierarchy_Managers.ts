@@ -31,7 +31,7 @@ import {
   Banknote,
   CreditCard,
   DollarSign,
-  ChartBar,
+  ChartBarBig,
   ChartPie,
   ChartLine,
   
@@ -162,7 +162,7 @@ export const managers: AIEmployeeProfile[] = [
     level: 'manager',
     department: 'finance',
     description: 'Manages financial planning processes, budget coordination, and financial analysis operations.',
-    icon: ChartBar,
+    icon: ChartBarBig,
     color: '#4CAF50',
     orgChart: {
       id: 'finance-manager',
@@ -1280,7 +1280,7 @@ export const managers: AIEmployeeProfile[] = [
     level: 'manager',
     department: 'data_intelligence',
     description: 'Manages business analytics teams, insights delivery, and data-driven decision support.',
-    icon: ChartBar,
+    icon: ChartBarBig,
     color: '#5E35B1',
     orgChart: {
       id: 'analytics-manager',

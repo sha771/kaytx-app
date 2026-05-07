@@ -23,7 +23,7 @@ import {
     Globe,
     Phone,
     MessageSquare,
-    ChartBar,
+    ChartBarBig,
     Lock,
 } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -297,7 +297,7 @@ export default function AirlineIndustryScreen() {
                             </Text>
                         </View>
                         <View style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}>
-                            <ChartBar size={24} color="#00B894" />
+                            <ChartBarBig size={24} color="#00B894" />
                             <Text style={[styles.benefitTitle, { color: theme.colors.text }]}>Real-time Analytics</Text>
                             <Text style={[styles.benefitDescription, { color: theme.colors.secondaryText }]}>
                                 Track performance, identify trends, optimize operations

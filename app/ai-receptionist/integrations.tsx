@@ -25,7 +25,7 @@ import {
   MessageCircle,
   Video,
   Mail,
-  ChartBar,
+  ChartBarBig,
   Users,
   Database,
   Lock,
@@ -68,7 +68,7 @@ export default function IntegrationsScreen() {
       crm: Database,
       calendar: Calendar,
       communication: MessageCircle,
-      analytics: ChartBar,
+      analytics: ChartBarBig,
       productivity: Zap,
     } as Record<string, React.ComponentType<any>>;
     return icons[category] || Zap;
@@ -84,7 +84,7 @@ export default function IntegrationsScreen() {
           headerShadowVisible: false,
         }}
       />
-      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} edges={['bottom']}>
+      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} ={['bottom']}>
         <View style={[styles.header, { backgroundColor: theme.colors.background, borderBottomColor: theme.colors.border }]}>
           <View style={styles.statsRow}>
             <View style={[styles.statBox, { backgroundColor: theme.colors.cardBackground }]}>

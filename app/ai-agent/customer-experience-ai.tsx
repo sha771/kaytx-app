@@ -36,7 +36,7 @@ import {
   Clock,
   Activity,
   Settings,
-  ChartBar,
+  ChartBarBig,
   Zap,
   Radio,
   Eye,
@@ -617,7 +617,7 @@ export default function CustomerExperienceAIScreen() {
                 <Text style={[styles.actionButtonText, { color: ACCENT_COLOR }]}>Configure</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#34C75915' }]}>
-                <ChartBar size={16} color="#34C759" />
+                <ChartBarBig size={16} color="#34C759" />
                 <Text style={[styles.actionButtonText, { color: '#34C759' }]}>Analytics</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#FF950015' }]}>

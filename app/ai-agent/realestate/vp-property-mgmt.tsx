@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Building2, Activity, CircleCheckBig, Clock, Target, ChartBar, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star } from 'lucide-react-native';
+import { Building2, Activity, CircleCheckBig, Clock, Target, ChartBarBig, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function VPPropertyMgmtPage() {
@@ -31,7 +31,7 @@ export default function VPPropertyMgmtPage() {
     { time: '6 hours ago', text: 'Negotiated 3 vendor service contracts' },
   ];
   const quickActions = [
-    { label: 'View Reports', icon: ChartBar },
+    { label: 'View Reports', icon: ChartBarBig },
     { label: 'Team Chat', icon: MessageSquare },
     { label: 'Schedule', icon: Calendar },
     { label: 'Settings', icon: Shield },

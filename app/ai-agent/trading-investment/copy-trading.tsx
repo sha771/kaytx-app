@@ -1,7 +1,7 @@
 
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Users, TrendingUp, TrendingDown, Activity, ChartBar, Star, Shield } from 'lucide-react-native';
+import { Users, TrendingUp, TrendingDown, Activity, ChartBarBig, Star, Shield } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
@@ -118,7 +118,7 @@ export default function CopyTradingScreen() {
 
   const customTabs = [
     { id: 'copy', label: 'Copy Trading', icon: Users, component: copyTab },
-    { id: 'analytics', label: 'Analytics', icon: ChartBar, component: <View /> },
+    { id: 'analytics', label: 'Analytics', icon: ChartBarBig, component: <View /> },
   ];
 
   return <AgentShell agent={agent} customTabs={customTabs} />;

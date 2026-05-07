@@ -9,7 +9,7 @@ import {
 } from './aiAgentHierarchy';
 import {
   Settings, Zap, GitBranch, Shield, Truck, Award,
-  ChartBar, TrendingUp, ChartLine, Brain, Activity, TriangleAlert,
+  ChartBarBig, TrendingUp, ChartLine, Brain, Activity, TriangleAlert,
   Eye, Gauge, Cpu, Sparkles, Crown, MessagesSquare,
   Target, Megaphone, ChartPie, Globe,
   SquareCheck, Box, Lightbulb,
@@ -569,7 +569,7 @@ export const dataIntelligenceSubAgents: AIAgent[] = [
     name: 'AI Data Analyst',
     title: 'Business Intelligence Analyst',
     description: 'Analyzes business data, creates reports, and provides actionable insights for decision-making.',
-    icon: ChartBar,
+    icon: ChartBarBig,
     color: '#007AFF',
     type: 'subagent',
     category: 'data_intelligence',

@@ -17,7 +17,7 @@ import {
   Clock,
   CircleCheck,
   CircleAlert,
-  ChartBar,
+  ChartBarBig,
   ChartPie,
   Calendar,
   ListFilter,
@@ -149,7 +149,7 @@ export default function ConversationAnalyticsScreen() {
           style={[styles.tab, activeTab === 'overview' && { backgroundColor: colors.tint }]}
           onPress={() => setActiveTab('overview')}
         >
-          <ChartBar size={16} color={activeTab === 'overview' ? 'white' : colors.icon} />
+          <ChartBarBig size={16} color={activeTab === 'overview' ? 'white' : colors.icon} />
           <Text style={[styles.tabText, { color: activeTab === 'overview' ? 'white' : colors.text }]}>
             Overview
           </Text>

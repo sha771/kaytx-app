@@ -31,7 +31,7 @@ import {
   CircleCheck,
   TrendingUp,
   Settings,
-  ChartBar,
+  ChartBarBig,
   Zap,
   Users,
   Globe,
@@ -637,7 +637,7 @@ export default function MarketingGrowthAIScreen() {
                 <Text style={[styles.actionButtonText, { color: ACCENT_COLOR }]}>Configure</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#007AFF15' }]}>
-                <ChartBar size={16} color="#007AFF" />
+                <ChartBarBig size={16} color="#007AFF" />
                 <Text style={[styles.actionButtonText, { color: '#007AFF' }]}>Analytics</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#34C75915' }]}>

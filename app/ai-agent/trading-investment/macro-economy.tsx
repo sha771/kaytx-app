@@ -1,7 +1,7 @@
 
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Globe, TrendingUp, TrendingDown, Activity, ChartBar, TriangleAlert, DollarSign } from 'lucide-react-native';
+import { Globe, TrendingUp, TrendingDown, Activity, ChartBarBig, TriangleAlert, DollarSign } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
@@ -128,7 +128,7 @@ export default function MacroEconomyScreen() {
 
   const customTabs = [
     { id: 'macro', label: 'Macro', icon: Globe, component: macroTab },
-    { id: 'scenarios', label: 'Scenarios', icon: ChartBar, component: <View /> },
+    { id: 'scenarios', label: 'Scenarios', icon: ChartBarBig, component: <View /> },
   ];
 
   return <AgentShell agent={agent} customTabs={customTabs} />;

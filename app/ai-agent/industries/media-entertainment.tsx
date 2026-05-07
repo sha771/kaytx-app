@@ -4,7 +4,7 @@ import { Stack, router } from 'expo-router';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { trpc } from '@/lib/trpc';
-import { Tv, ArrowLeft, Phone, Users, MessageSquare, CreditCard, TrendingUp, Clock, Star, Zap, Shield, Globe, ChartBar, Heart, Play, Lock } from 'lucide-react-native';
+import { Tv, ArrowLeft, Phone, Users, MessageSquare, CreditCard, TrendingUp, Clock, Star, Zap, Shield, Globe, ChartBarBig, Heart, Play, Lock } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const { width } = Dimensions.get('window');
@@ -64,7 +64,7 @@ export default function MediaEntertainmentScreen() {
                 <View style={styles.section}>
                     <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Benefits</Text>
                     <View style={styles.benefitsGrid}>
-                        {[{ icon: Zap, color: '#FF6B6B', title: 'Viral Event Ready', desc: 'Handle 100x engagement spikes' }, { icon: Globe, color: '#4ECDC4', title: 'Omnichannel', desc: 'Engage on all social platforms' }, { icon: Shield, color: '#6C5CE7', title: 'Content Safety', desc: 'AI-powered moderation' }, { icon: ChartBar, color: '#00B894', title: 'Fan Analytics', desc: 'Deep engagement insights' }].map((b, i) => { const I = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><I size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
+                        {[{ icon: Zap, color: '#FF6B6B', title: 'Viral Event Ready', desc: 'Handle 100x engagement spikes' }, { icon: Globe, color: '#4ECDC4', title: 'Omnichannel', desc: 'Engage on all social platforms' }, { icon: Shield, color: '#6C5CE7', title: 'Content Safety', desc: 'AI-powered moderation' }, { icon: ChartBarBig, color: '#00B894', title: 'Fan Analytics', desc: 'Deep engagement insights' }].map((b, i) => { const I = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><I size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
                     </View>
                 </View>
 

@@ -1,6 +1,6 @@
 import {
   Activity,
-  ChartBar,
+  ChartBarBig,
   Bell,
   Brain,
   Calendar,
@@ -133,7 +133,7 @@ export const aiReceptionistPlaybook: AssistantPlaybook = {
       status: 'live',
       description: 'Heat maps, personas, and intent funnels for every inbound cohort.',
       route: '/ai-receptionist/caller-insights',
-      icon: ChartBar,
+      icon: ChartBarBig,
       metrics: [
         { label: 'Persona Accuracy', value: '88%' },
         { label: 'Top Topics', value: 'Pricing • Support • Billing' },
@@ -339,7 +339,7 @@ export const aiNegotiationPlaybook: AssistantPlaybook = {
       status: 'live',
       description: 'Funnel analytics, pricing impact, and AI scenario modeling.',
       route: '/ai-negotiation/analytics',
-      icon: ChartBar,
+      icon: ChartBarBig,
       metrics: [
         { label: 'ARR Delta', value: '+$1.3M' },
         { label: 'Discount Drift', value: '-2.1%' },

@@ -25,7 +25,7 @@ import {
   DollarSign,
   Users,
   Megaphone,
-  ChartBar,
+  ChartBarBig,
   ListFilter,
   ChevronRight,
 } from 'lucide-react-native';

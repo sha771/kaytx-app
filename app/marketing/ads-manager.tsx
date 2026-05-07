@@ -24,7 +24,7 @@ import {
   ArrowLeft,
   Plus,
   ListFilter,
-  ChartBar,
+  ChartBarBig,
   Activity,
   Zap,
   Clock,
@@ -320,7 +320,7 @@ export default function AdsManagerScreen() {
             {item.startDate} - {item.endDate}
           </Text>
           <TouchableOpacity style={[styles.viewDetailsButton, { backgroundColor: theme.colors.primary }]}>
-            <ChartBar size={14} color="white" />
+            <ChartBarBig size={14} color="white" />
             <Text style={styles.viewDetailsText}>View Details</Text>
           </TouchableOpacity>
         </View>

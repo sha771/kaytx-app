@@ -6,7 +6,7 @@ import { aiEmployees } from '@/constants/aiEmployees';
 import { trpc } from '@/lib/trpc';
 import {
     Signal,
-    ArrowLeft, Phone, Wifi, Smartphone, CreditCard, TrendingUp, Clock, Star, Zap, Shield, Globe, ChartBar, Headphones, Users, Radio, Activity, Lock } from 'lucide-react-native';
+    ArrowLeft, Phone, Wifi, Smartphone, CreditCard, TrendingUp, Clock, Star, Zap, Shield, Globe, ChartBarBig, Headphones, Users, Radio, Activity, Lock } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const { width } = Dimensions.get('window');
@@ -99,7 +99,7 @@ export default function TelecommunicationsIndustryScreen() {
                 <View style={styles.section}>
                     <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Benefits</Text>
                     <View style={styles.benefitsGrid}>
-                        {[{ icon: Zap, color: '#FF6B6B', title: 'Outage Surge Ready', desc: 'Handle 20x call volume during outages' }, { icon: Globe, color: '#4ECDC4', title: 'Omnichannel', desc: 'Phone, chat, SMS, and social media' }, { icon: Shield, color: '#6C5CE7', title: 'PCI & SOC2', desc: 'Secure payment compliance' }, { icon: ChartBar, color: '#00B894', title: 'Predictive Analytics', desc: 'Identify churn risk proactively' }].map((b: { icon: any; color: string; title: string; desc: string }, i: number) => { const Icon = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><Icon size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
+                        {[{ icon: Zap, color: '#FF6B6B', title: 'Outage Surge Ready', desc: 'Handle 20x call volume during outages' }, { icon: Globe, color: '#4ECDC4', title: 'Omnichannel', desc: 'Phone, chat, SMS, and social media' }, { icon: Shield, color: '#6C5CE7', title: 'PCI & SOC2', desc: 'Secure payment compliance' }, { icon: ChartBarBig, color: '#00B894', title: 'Predictive Analytics', desc: 'Identify churn risk proactively' }].map((b: { icon: any; color: string; title: string; desc: string }, i: number) => { const Icon = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><Icon size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
                     </View>
                 </View>
 

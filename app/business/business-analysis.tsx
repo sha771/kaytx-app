@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { ChartBar, TrendingUp, Users, DollarSign, Target, Calendar, Search, ListFilter, Download, RefreshCw, CircleAlert, CircleCheck, Clock, ArrowUpRight, ArrowDownRight, Minus } from 'lucide-react-native';
+import { ChartBarBig, TrendingUp, Users, DollarSign, Target, Calendar, Search, ListFilter, Download, RefreshCw, CircleAlert, CircleCheck, Clock, ArrowUpRight, ArrowDownRight, Minus } from 'lucide-react-native';
 
 interface BusinessMetric {
   id: string;
@@ -91,9 +91,9 @@ export default function BusinessAnalysisScreen() {
     switch (type) {
       case 'revenue': return <DollarSign size={20} color="#34C759" />;
       case 'customers': return <Users size={20} color="#007AFF" />;
-      case 'performance': return <ChartBar size={20} color="#FF9500" />;
+      case 'performance': return <ChartBarBig size={20} color="#FF9500" />;
       case 'market': return <Target size={20} color="#FF3B30" />;
-      default: return <ChartBar size={20} color="#8E8E93" />;
+      default: return <ChartBarBig size={20} color="#8E8E93" />;
     }
   };
 
@@ -147,7 +147,7 @@ export default function BusinessAnalysisScreen() {
       
       <View style={styles.reportActions}>
         <TouchableOpacity style={styles.actionButton}>
-          <ChartBar size={16} color="#007AFF" />
+          <ChartBarBig size={16} color="#007AFF" />
           <Text style={styles.actionText}>View</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.actionButton}>
@@ -171,7 +171,7 @@ export default function BusinessAnalysisScreen() {
       <ScrollView style={styles.content}>
         <View style={styles.header}>
           <View style={styles.titleSection}>
-            <ChartBar size={28} color="#007AFF" />
+            <ChartBarBig size={28} color="#007AFF" />
             <View>
               <Text style={styles.title}>Business Analysis</Text>
               <Text style={styles.subtitle}>Comprehensive business insights</Text>
@@ -202,7 +202,7 @@ export default function BusinessAnalysisScreen() {
             style={[styles.tab, activeTab === 'metrics' && styles.activeTab]}
             onPress={() => setActiveTab('metrics')}
           >
-            <ChartBar size={20} color={activeTab === 'metrics' ? '#fff' : '#666'} />
+            <ChartBarBig size={20} color={activeTab === 'metrics' ? '#fff' : '#666'} />
             <Text style={[styles.tabText, activeTab === 'metrics' && styles.activeTabText]}>
               Key Metrics
             </Text>
@@ -245,7 +245,7 @@ export default function BusinessAnalysisScreen() {
           <Text style={styles.sectionTitle}>Quick Actions</Text>
           <View style={styles.quickActions}>
             <TouchableOpacity style={styles.quickAction}>
-              <ChartBar size={24} color="#007AFF" />
+              <ChartBarBig size={24} color="#007AFF" />
               <Text style={styles.quickActionText}>Dashboard</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.quickAction}>

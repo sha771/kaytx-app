@@ -26,7 +26,7 @@ import {
   Server,
   Shield,
   ChevronRight,
-  ChartBar,
+  ChartBarBig,
   Download,
   RotateCcw,
   TriangleAlert,
@@ -227,7 +227,7 @@ export default function ModelManagementScreen() {
             </Text>
           </View>
           <View style={styles.quickStat}>
-            <ChartBar size={14} color={colors.icon} />
+            <ChartBarBig size={14} color={colors.icon} />
             <Text style={[styles.quickStatValue, { color: colors.text }]}>
               {model.usage.toLocaleString()}
             </Text>

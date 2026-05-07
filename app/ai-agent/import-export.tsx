@@ -28,7 +28,7 @@ import {
   ExternalLink,
   FileText,
   GitBranch,
-  ChartBar,
+  ChartBarBig,
   Settings,
   Users,
   User,
@@ -153,7 +153,7 @@ const TYPE_ICONS = {
   agent: GitBranch,
   knowledge: Database,
   settings: Settings,
-  analytics: ChartBar,
+  analytics: ChartBarBig,
 };
 
 const FORMAT_ICONS = {

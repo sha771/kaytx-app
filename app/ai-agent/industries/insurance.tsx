@@ -6,7 +6,7 @@ import { aiEmployees } from '@/constants/aiEmployees';
 import { trpc } from '@/lib/trpc';
 import {
     Shield,
-    ArrowLeft, FileText, Phone, Heart, DollarSign, TrendingUp, Clock, Star, Zap, Globe, ChartBar, Users, TriangleAlert, RefreshCw, Lock } from 'lucide-react-native';
+    ArrowLeft, FileText, Phone, Heart, DollarSign, TrendingUp, Clock, Star, Zap, Globe, ChartBarBig, Users, TriangleAlert, RefreshCw, Lock } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const { width } = Dimensions.get('window');
@@ -109,7 +109,7 @@ export default function InsuranceIndustryScreen() {
                 <View style={styles.section}>
                     <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Benefits</Text>
                     <View style={styles.benefitsGrid}>
-                        {[{ icon: Zap, color: '#FF6B6B', title: 'Faster Claims', desc: 'Reduce claims processing by 65%' }, { icon: Globe, color: '#4ECDC4', title: '24/7 Support', desc: 'Round-the-clock policyholder support' }, { icon: Shield, color: '#6C5CE7', title: 'Fraud Prevention', desc: '99.2% fraud detection accuracy' }, { icon: ChartBar, color: '#00B894', title: 'Retention Analytics', desc: 'Predict and prevent policy churn' }].map((b, i) => { const I = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><I size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
+                        {[{ icon: Zap, color: '#FF6B6B', title: 'Faster Claims', desc: 'Reduce claims processing by 65%' }, { icon: Globe, color: '#4ECDC4', title: '24/7 Support', desc: 'Round-the-clock policyholder support' }, { icon: Shield, color: '#6C5CE7', title: 'Fraud Prevention', desc: '99.2% fraud detection accuracy' }, { icon: ChartBarBig, color: '#00B894', title: 'Retention Analytics', desc: 'Predict and prevent policy churn' }].map((b, i) => { const I = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><I size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
                     </View>
                 </View>
 

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { MessageCircle, Star, TrendingUp, Users, ChartBar, Heart } from 'lucide-react-native';
+import { MessageCircle, Star, TrendingUp, Users, ChartBarBig, Heart } from 'lucide-react-native';
 
 interface Feedback {
   id: string;
@@ -187,7 +187,7 @@ export default function CustomerFeedbackScreen() {
           <Text style={styles.sectionTitle}>Quick Actions</Text>
           <View style={styles.quickActions}>
             <TouchableOpacity style={styles.quickAction}>
-              <ChartBar size={24} color="#007AFF" />
+              <ChartBarBig size={24} color="#007AFF" />
               <Text style={styles.quickActionText}>Analytics</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.quickAction}>

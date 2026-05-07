@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Activity, ChartBar, ChartBar, CircleCheck, Zap, ChevronLeft } from 'lucide-react-native';
+import { Activity, ChartBarBig, CircleCheck, Zap, ChevronLeft } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
@@ -130,7 +130,7 @@ export default function AgentScreen() {
 
         <View style={[styles.section, { backgroundColor: colors.card }]}>
           <View style={styles.sectionHeader}>
-            <ChartBar size={18} color={ACCENT} />
+            <ChartBarBig size={18} color={ACCENT} />
             <Text style={[styles.sectionTitle, { color: colors.text }]}>Performance</Text>
           </View>
           {[

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { MessageCircle, Heart, Share2, Send, Image, Video, Calendar, ChartBar, Users, Settings } from 'lucide-react-native';
+import { MessageCircle, Heart, Share2, Send, Image, Video, Calendar, ChartBarBig, Users, Settings } from 'lucide-react-native';
 
 const platforms = [
   { id: 1, name: 'Facebook', color: '#1877F2', posts: 45, followers: '12.5K', engagement: '4.2%' },
@@ -70,7 +70,7 @@ export default function SocialMediaScreen() {
               <Text style={styles.actionText}>Schedule</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.actionButton}>
-              <ChartBar size={24} color="#6366F1" />
+              <ChartBarBig size={24} color="#6366F1" />
               <Text style={styles.actionText}>Analytics</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.actionButton}>

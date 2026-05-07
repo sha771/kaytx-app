@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { DollarSign, Activity, CircleCheckBig, Clock, Target, ChartBar, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, ChartPie, Landmark } from 'lucide-react-native';
+import { DollarSign, Activity, CircleCheckBig, Clock, Target, ChartBarBig, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, ChartPie, Landmark } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function VPFinancePage() {
@@ -33,13 +33,13 @@ export default function VPFinancePage() {
   const activities = [
     { time: '1 min ago', text: 'Completed month-end financial close', icon: Landmark },
     { time: '15 min ago', text: 'Approved Q3 budget reallocation', icon: DollarSign },
-    { time: '40 min ago', text: 'Published cash flow forecast update', icon: ChartBar },
+    { time: '40 min ago', text: 'Published cash flow forecast update', icon: ChartBarBig },
     { time: '2 hours ago', text: 'Reviewed audit findings with team', icon: Shield },
     { time: '5 hours ago', text: 'Updated investor presentation deck', icon: ChartPie },
   ];
 
   const quickActions = [
-    { label: 'View Reports', icon: ChartBar },
+    { label: 'View Reports', icon: ChartBarBig },
     { label: 'Team Chat', icon: MessageSquare },
     { label: 'Schedule', icon: Calendar },
     { label: 'Settings', icon: Shield },

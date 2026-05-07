@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Briefcase, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBar, MessageSquare, Calendar, Shield, TrendingUp, Zap, GitBranch, ChartBar } from 'lucide-react-native';
+import { Briefcase, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, TrendingUp, Zap, GitBranch } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { useRouter } from 'expo-router';
 
@@ -71,7 +71,7 @@ export default function ExecutiveDepartment() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBar},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#4A148C12' }]}><act.icon size={24} color="#4A148C" /><Text style={[styles.actionText, { color: '#4A148C' }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#4A148C12' }]}><act.icon size={24} color="#4A148C" /><Text style={[styles.actionText, { color: '#4A148C' }]}>{act.label}</Text></TouchableOpacity>))}
         </View>
       </View>
       <AgentFeatures agentId="executive-index" agentName="Executive Department" />

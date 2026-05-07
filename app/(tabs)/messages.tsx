@@ -132,7 +132,7 @@ export default function MessagesScreen() {
 
     return (
       <TouchableOpacity
-        style= [
+        style={[
           styles.conversationItem,
           isActive && { backgroundColor: theme.colors.activeBackground },
         ]}
@@ -144,7 +144,7 @@ export default function MessagesScreen() {
       >
         <View style={styles.avatarContainer}>
           <Image source={{ uri: item.avatar }} style={styles.avatar} />
-          <View style= [styles.serviceIndicator, { backgroundColor: serviceColor }]}>
+          <View style={[styles.serviceIndicator, { backgroundColor: serviceColor }]}>
             <ServiceIcon size={10} color="white" />
           </View>
           {item.isOnline && <View style={styles.onlineIndicator} />}
@@ -152,17 +152,17 @@ export default function MessagesScreen() {
         
         <View style={styles.conversationContent}>
           <View style={styles.conversationHeader}>
-            <Text style= [styles.conversationName, { color: theme.colors.text }]} numberOfLines={1}>
+            <Text style={[styles.conversationName, { color: theme.colors.text }]} numberOfLines={1}>
               {item.name}
             </Text>
-            <Text style= [styles.timestamp, { color: theme.colors.secondaryText }]}>
+            <Text style={[styles.timestamp, { color: theme.colors.secondaryText }]}>
               {item.timestamp}
             </Text>
           </View>
           
           <View style={styles.conversationPreview}>
             <Text
-              style= [
+              style={[
                 styles.lastMessage,
                 { color: theme.colors.secondaryText },
                 item.unreadCount > 0 && { color: theme.colors.text, fontWeight: '600' },
@@ -172,7 +172,7 @@ export default function MessagesScreen() {
               {sanitization.text(item.lastMessage)}
             </Text>
             {item.unreadCount > 0 && (
-              <View style= [styles.unreadBadge, { backgroundColor: theme.colors.primary }]}>
+              <View style={[styles.unreadBadge, { backgroundColor: theme.colors.primary }]}>
                 <Text style={styles.unreadCount}>{item.unreadCount}</Text>
               </View>
             )}
@@ -192,24 +192,24 @@ export default function MessagesScreen() {
     const showAvatar = !isOwn && (index === 0 || messages[index - 1]?.isOwn !== msg.isOwn);
 
     return (
-      <View key={msg.id} style= [styles.messageRow, isOwn && styles.ownMessageRow]}>
+      <View key={msg.id} style={[styles.messageRow, isOwn && styles.ownMessageRow]}>
         {!isOwn && showAvatar && (
           <Image source={{ uri: activeConversation?.avatar }} style={styles.messageAvatar} />
         )}
         {!isOwn && !showAvatar && <View style={styles.messageAvatarSpace} />}
         
         <View
-          style= [
+          style={[
             styles.messageBubble,
             isOwn ? styles.ownMessage : styles.otherMessage,
             { backgroundColor: isOwn ? theme.colors.primary : theme.colors.messageBackground },
           ]}
         >
-          <Text style= [styles.messageText, { color: isOwn ? 'white' : theme.colors.text }]}>
+          <Text style={[styles.messageText, { color: isOwn ? 'white' : theme.colors.text }]}>
             {sanitization.text(msg.text)}
           </Text>
           <View style={styles.messageFooter}>
-            <Text style= [styles.messageTime, { color: isOwn ? 'rgba(255,255,255,0.7)' : theme.colors.secondaryText }]}>
+            <Text style={[styles.messageTime, { color: isOwn ? 'rgba(255,255,255,0.7)' : theme.colors.secondaryText }]}>
               {msg.timestamp}
             </Text>
             {isOwn && (
@@ -228,14 +228,14 @@ export default function MessagesScreen() {
   };
 
   return (
-    <SafeAreaView style= [styles.container, { backgroundColor: theme.colors.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={styles.mainContainer}>
         {/* Sidebar */}
         {showSidebar && (
-          <View style= [styles.sidebar, { backgroundColor: theme.colors.sidebarBackground }]}>
+          <View style={[styles.sidebar, { backgroundColor: theme.colors.sidebarBackground }]}>
             {/* Real-time Status Banner */}
             {showRealTimeIndicator && (
-              <View style= [styles.realTimeStatus, { 
+              <View style={[styles.realTimeStatus, { 
                 backgroundColor: isRealTimeConnected ? '#E8F5E9' : '#FFF3E0' 
               }]}>
                 <View style={styles.realTimeLeft}>
@@ -244,7 +244,7 @@ export default function MessagesScreen() {
                   ) : (
                     <Activity size={16} color="#FF9800" />
                   )}
-                  <Text style= [styles.realTimeText, { 
+                  <Text style={[styles.realTimeText, { 
                     color: isRealTimeConnected ? '#2E7D32' : '#F57C00' 
                   }]}>
                     {isRealTimeConnected ? 'Real-time Connected' : 'Reconnecting...'}
@@ -268,7 +268,7 @@ export default function MessagesScreen() {
             )}
 
             {/* Sidebar Header */}
-            <View style= [styles.sidebarHeader, { borderBottomColor: theme.colors.border }]}>
+            <View style={[styles.sidebarHeader, { borderBottomColor: theme.colors.border }]}>
               <View style={styles.sidebarTitleContainer}>
                 <TouchableOpacity
                   style={styles.menuButton}
@@ -276,7 +276,7 @@ export default function MessagesScreen() {
                 >
                   <Menu size={20} color={theme.colors.text} />
                 </TouchableOpacity>
-                <Text style= [styles.appTitle, { color: theme.colors.text }]}>Messages</Text>
+                <Text style={[styles.appTitle, { color: theme.colors.text }]}>Messages</Text>
               </View>
               <View style={styles.headerActions}>
                 <TouchableOpacity
@@ -289,7 +289,7 @@ export default function MessagesScreen() {
                   <Plus size={20} color={theme.colors.text} />
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style= [styles.headerButton, !isRealTimeConnected && styles.reconnectButton]}
+                  style={[styles.headerButton, !isRealTimeConnected && styles.reconnectButton]}
                   onPress={reconnectRealTime}
                 >
                   <RefreshCw size={20} color={!isRealTimeConnected ? '#FF9800' : theme.colors.text} />
@@ -307,7 +307,7 @@ export default function MessagesScreen() {
             <View style={styles.searchContainer}>
               <Search size={18} color={theme.colors.secondaryText} />
               <TextInput
-                style= [styles.searchInput, { color: theme.colors.text }]}
+                style={[styles.searchInput, { color: theme.colors.text }]}
                 placeholder="Search conversations..."
                 placeholderTextColor={theme.colors.secondaryText}
                 value={searchQuery}
@@ -323,7 +323,7 @@ export default function MessagesScreen() {
               contentContainerStyle={styles.filterContent}
             >
               <TouchableOpacity
-                style= [
+                style={[
                   styles.filterChip,
                   activeFilter === 'all' && styles.filterChipActive,
                   activeFilter === 'all' && { backgroundColor: theme.colors.primary },
@@ -331,7 +331,7 @@ export default function MessagesScreen() {
                 onPress={() => setActiveFilter('all')}
               >
                 <ListFilter size={14} color={activeFilter === 'all' ? '#FFF' : theme.colors.secondaryText} />
-                <Text style= [
+                <Text style={[
                   styles.filterChipText,
                   { color: activeFilter === 'all' ? '#FFF' : theme.colors.text },
                 ]}>
@@ -340,61 +340,61 @@ export default function MessagesScreen() {
               </TouchableOpacity>
 
               <TouchableOpacity
-                style= [styles.advancedFilterChip, { backgroundColor: '#3B82F615', borderColor: '#3B82F6' }]}
+                style={[styles.advancedFilterChip, { backgroundColor: '#3B82F615', borderColor: '#3B82F6' }]}
                 onPress={() => setShowUniversalSearch(true)}
               >
                 <View style={styles.filterChipContent}>
                   <Globe size={16} color="#3B82F6" />
                   <View style={styles.filterChipTextContainer}>
-                    <Text style= [styles.filterChipTitle, { color: '#3B82F6' }]}>
+                    <Text style={[styles.filterChipTitle, { color: '#3B82F6' }]}>
                       Universal Search
                     </Text>
-                    <Text style= [styles.filterChipSubtitle, { color: theme.colors.secondaryText }]}>
+                    <Text style={[styles.filterChipSubtitle, { color: theme.colors.secondaryText }]}>
                       Cross-platform
                     </Text>
                   </View>
                 </View>
-                <View style= [styles.filterChipBadge, { backgroundColor: '#3B82F6' }]}>
+                <View style={[styles.filterChipBadge, { backgroundColor: '#3B82F6' }]}>
                   <Sparkles size={10} color="#FFF" />
                 </View>
               </TouchableOpacity>
 
               <TouchableOpacity
-                style= [styles.advancedFilterChip, { backgroundColor: '#F59E0B15', borderColor: '#F59E0B' }]}
+                style={[styles.advancedFilterChip, { backgroundColor: '#F59E0B15', borderColor: '#F59E0B' }]}
                 onPress={() => setShowPriorityMessaging(true)}
               >
                 <View style={styles.filterChipContent}>
                   <Crown size={16} color="#F59E0B" />
                   <View style={styles.filterChipTextContainer}>
-                    <Text style= [styles.filterChipTitle, { color: '#F59E0B' }]}>
+                    <Text style={[styles.filterChipTitle, { color: '#F59E0B' }]}>
                       Priority
                     </Text>
-                    <Text style= [styles.filterChipSubtitle, { color: theme.colors.secondaryText }]}>
+                    <Text style={[styles.filterChipSubtitle, { color: theme.colors.secondaryText }]}>
                       VIP & Urgent
                     </Text>
                   </View>
                 </View>
-                <View style= [styles.filterChipBadge, { backgroundColor: '#F59E0B' }]}>
+                <View style={[styles.filterChipBadge, { backgroundColor: '#F59E0B' }]}>
                   <Zap size={10} color="#FFF" />
                 </View>
               </TouchableOpacity>
 
               <TouchableOpacity
-                style= [styles.advancedFilterChip, { backgroundColor: '#10B98115', borderColor: '#10B981' }]}
+                style={[styles.advancedFilterChip, { backgroundColor: '#10B98115', borderColor: '#10B981' }]}
                 onPress={() => setShowDailyBriefing(true)}
               >
                 <View style={styles.filterChipContent}>
                   <Newspaper size={16} color="#10B981" />
                   <View style={styles.filterChipTextContainer}>
-                    <Text style= [styles.filterChipTitle, { color: '#10B981' }]}>
+                    <Text style={[styles.filterChipTitle, { color: '#10B981' }]}>
                       Daily Briefing
                     </Text>
-                    <Text style= [styles.filterChipSubtitle, { color: theme.colors.secondaryText }]}>
+                    <Text style={[styles.filterChipSubtitle, { color: theme.colors.secondaryText }]}>
                       AI Summary
                     </Text>
                   </View>
                 </View>
-                <View style= [styles.filterChipBadge, { backgroundColor: '#10B981' }]}>
+                <View style={[styles.filterChipBadge, { backgroundColor: '#10B981' }]}>
                   <ChevronRight size={10} color="#FFF" />
                 </View>
               </TouchableOpacity>
@@ -429,11 +429,11 @@ export default function MessagesScreen() {
         )}
 
         {/* Chat Area */}
-        <View style= [styles.chatArea, { backgroundColor: theme.colors.chatBackground }]}>
+        <View style={[styles.chatArea, { backgroundColor: theme.colors.chatBackground }]}>
           {activeConversation ? (
             <>
               {/* Chat Header */}
-              <View style= [styles.chatHeader, { borderBottomColor: theme.colors.border }]}>
+              <View style={[styles.chatHeader, { borderBottomColor: theme.colors.border }]}>
                 <TouchableOpacity
                   style={styles.backButton}
                   onPress={() => setShowSidebar(true)}
@@ -447,10 +447,10 @@ export default function MessagesScreen() {
                 >
                   <Image source={{ uri: activeConversation.avatar }} style={styles.chatAvatar} />
                   <View>
-                    <Text style= [styles.chatName, { color: theme.colors.text }]}>
+                    <Text style={[styles.chatName, { color: theme.colors.text }]}>
                       {activeConversation.name}
                     </Text>
-                    <Text style= [styles.chatStatus, { color: theme.colors.secondaryText }]}>
+                    <Text style={[styles.chatStatus, { color: theme.colors.secondaryText }]}>
                       {activeConversation.isOnline ? 'Active now' : 'Offline'}
                     </Text>
                   </View>
@@ -484,13 +484,13 @@ export default function MessagesScreen() {
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 keyboardVerticalOffset={0}
               >
-                <View style= [styles.inputContainer, { borderTopColor: theme.colors.border }]}>
+                <View style={[styles.inputContainer, { borderTopColor: theme.colors.border }]}>
                   <TouchableOpacity style={styles.attachButton}>
                     <Paperclip size={20} color={theme.colors.secondaryText} />
                   </TouchableOpacity>
                   
                   <TextInput
-                    style= [styles.messageInput, { color: theme.colors.text }]}
+                    style={[styles.messageInput, { color: theme.colors.text }]}
                     placeholder="Type a message..."
                     placeholderTextColor={theme.colors.secondaryText}
                     value={message}
@@ -504,7 +504,7 @@ export default function MessagesScreen() {
                   </TouchableOpacity>
                   
                   <TouchableOpacity
-                    style= [styles.sendButton, { backgroundColor: theme.colors.primary }]}
+                    style={[styles.sendButton, { backgroundColor: theme.colors.primary }]}
                     onPress={handleSendMessage}
                     disabled={!message.trim()}
                     accessibilityRole="button"
@@ -519,10 +519,10 @@ export default function MessagesScreen() {
             </>
           ) : (
             <View style={styles.emptyState}>
-              <Text style= [styles.emptyStateTitle, { color: theme.colors.text }]}>
+              <Text style={[styles.emptyStateTitle, { color: theme.colors.text }]}>
                 Select a conversation
               </Text>
-              <Text style= [styles.emptyStateText, { color: theme.colors.secondaryText }]}>
+              <Text style={[styles.emptyStateText, { color: theme.colors.secondaryText }]}>
                 Choose a conversation from the sidebar to start messaging
               </Text>
             </View>

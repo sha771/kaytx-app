@@ -95,7 +95,7 @@ export default function TemplatesScreen() {
           ),
         }}
       />
-      <SafeAreaView style={styles.container} edges={['bottom']}>
+      <SafeAreaView style={styles.container} ={['bottom']}>
         <View style={styles.topSection}>
           <View style={styles.searchBar}>
             <Search size={18} color="#8E8E93" />

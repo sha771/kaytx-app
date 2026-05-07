@@ -4,7 +4,7 @@ import { Stack, router } from 'expo-router';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { trpc } from '@/lib/trpc';
-import { Monitor, ArrowLeft, Phone, Key, FileText, Headphones, TrendingUp, Clock, Star, Zap, Shield, Globe, ChartBar, Users, Server, Lock } from 'lucide-react-native';
+import { Monitor, ArrowLeft, Phone, Key, FileText, Headphones, TrendingUp, Clock, Star, Zap, Shield, Globe, ChartBarBig, Users, Server, Lock } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const { width } = Dimensions.get('window');
@@ -65,7 +65,7 @@ export default function ITTechnologyScreen() {
                 <View style={styles.section}>
                     <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Benefits</Text>
                     <View style={styles.benefitsGrid}>
-                        {[{ icon: Zap, color: '#FF6B6B', title: 'Instant Resolution', desc: 'Resolve 90% of issues automatically' }, { icon: Globe, color: '#4ECDC4', title: '24/7 Support', desc: 'Always-on IT helpdesk' }, { icon: Shield, color: '#6C5CE7', title: 'Security First', desc: 'SOC2 & HIPAA compliant' }, { icon: ChartBar, color: '#00B894', title: 'ITIL Aligned', desc: 'Best practice workflows' }].map((b, i) => { const I = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><I size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
+                        {[{ icon: Zap, color: '#FF6B6B', title: 'Instant Resolution', desc: 'Resolve 90% of issues automatically' }, { icon: Globe, color: '#4ECDC4', title: '24/7 Support', desc: 'Always-on IT helpdesk' }, { icon: Shield, color: '#6C5CE7', title: 'Security First', desc: 'SOC2 & HIPAA compliant' }, { icon: ChartBarBig, color: '#00B894', title: 'ITIL Aligned', desc: 'Best practice workflows' }].map((b, i) => { const I = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><I size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
                     </View>
                 </View>
 

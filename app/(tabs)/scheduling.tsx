@@ -29,7 +29,7 @@ import {
   Phone,
   CircleCheck,
   X,
-  ChartBar,
+  ChartBarBig,
   TrendingUp,
   Activity,
 } from 'lucide-react-native';
@@ -289,11 +289,11 @@ export default function SchedulingScreen() {
   const renderQuickSchedule = ({ item }: { item: QuickSchedule }) => {
     const IconComponent = item.icon;
     return (
-      <TouchableOpacity style= [styles.quickScheduleCard, { backgroundColor: theme.colors.cardBackground }]}>
-        <View style= [styles.quickScheduleIcon, { backgroundColor: `${item.color}20` }]}>
+      <TouchableOpacity style={[styles.quickScheduleCard, { backgroundColor: theme.colors.cardBackground }]}>
+        <View style={[styles.quickScheduleIcon, { backgroundColor: `${item.color}20` }]}>
           <IconComponent size={20} color={item.color} />
         </View>
-        <Text style= [styles.quickScheduleTitle, { color: theme.colors.text }]}>
+        <Text style={[styles.quickScheduleTitle, { color: theme.colors.text }]}>
           {item.title}
         </Text>
       </TouchableOpacity>
@@ -301,26 +301,26 @@ export default function SchedulingScreen() {
   };
 
   const renderScheduledMessage = ({ item }: { item: ScheduledMessage }) => (
-    <View style= [styles.messageCard, { backgroundColor: theme.colors.cardBackground }]}>
+    <View style={[styles.messageCard, { backgroundColor: theme.colors.cardBackground }]}>
       <View style={styles.messageHeader}>
         <View style={styles.messageInfo}>
           <View style={styles.titleRow}>
-            <Text style= [styles.messageTitle, { color: theme.colors.text }]} numberOfLines={1}>
+            <Text style={[styles.messageTitle, { color: theme.colors.text }]} numberOfLines={1}>
               {item.title}
             </Text>
-            <View style= [styles.priorityBadge, { backgroundColor: getPriorityColor(item.priority) + '20' }]}>
-              <Text style= [styles.priorityText, { color: getPriorityColor(item.priority) }]}>
+            <View style={[styles.priorityBadge, { backgroundColor: getPriorityColor(item.priority) + '20' }]}>
+              <Text style={[styles.priorityText, { color: getPriorityColor(item.priority) }]}>
                 {item.priority}
               </Text>
             </View>
           </View>
-          <Text style= [styles.messagePreview, { color: theme.colors.secondaryText }]} numberOfLines={2}>
+          <Text style={[styles.messagePreview, { color: theme.colors.secondaryText }]} numberOfLines={2}>
             {item.message}
           </Text>
         </View>
         <View style={styles.cardActions}>
-          <View style= [styles.statusBadge, { backgroundColor: `${getStatusColor(item.status)}20` }]}>
-            <Text style= [styles.statusText, { color: getStatusColor(item.status) }]}>
+          <View style={[styles.statusBadge, { backgroundColor: `${getStatusColor(item.status)}20` }]}>
+            <Text style={[styles.statusText, { color: getStatusColor(item.status) }]}>
               {getStatusText(item.status)}
             </Text>
           </View>
@@ -338,26 +338,26 @@ export default function SchedulingScreen() {
       <View style={styles.messageDetails}>
         <View style={styles.detailItem}>
           <Clock size={14} color={theme.colors.secondaryText} />
-          <Text style= [styles.detailText, { color: theme.colors.secondaryText }]}>
+          <Text style={[styles.detailText, { color: theme.colors.secondaryText }]}>
             {item.scheduledTime}
           </Text>
         </View>
         <View style={styles.detailItem}>
           <Users size={14} color={theme.colors.secondaryText} />
-          <Text style= [styles.detailText, { color: theme.colors.secondaryText }]}>
+          <Text style={[styles.detailText, { color: theme.colors.secondaryText }]}>
             {item.recipients.length} recipients
           </Text>
         </View>
         <View style={styles.detailItem}>
           <MessageSquare size={14} color={theme.colors.secondaryText} />
-          <Text style= [styles.detailText, { color: theme.colors.secondaryText }]}>
+          <Text style={[styles.detailText, { color: theme.colors.secondaryText }]}>
             {item.platform}
           </Text>
         </View>
         {item.recurring && (
           <View style={styles.detailItem}>
             <Repeat size={14} color={theme.colors.primary} />
-            <Text style= [styles.detailText, { color: theme.colors.primary }]}>
+            <Text style={[styles.detailText, { color: theme.colors.primary }]}>
               {item.recurringType}
             </Text>
           </View>
@@ -365,7 +365,7 @@ export default function SchedulingScreen() {
       </View>
 
       <View style={styles.messageFooter}>
-        <Text style= [styles.createdAt, { color: theme.colors.secondaryText }]}>
+        <Text style={[styles.createdAt, { color: theme.colors.secondaryText }]}>
           Created {item.createdAt}
         </Text>
       </View>
@@ -376,23 +376,23 @@ export default function SchedulingScreen() {
     const TypeIcon = getMeetingTypeIcon(item.type);
     
     return (
-      <View style= [styles.messageCard, { backgroundColor: theme.colors.cardBackground }]}>
+      <View style={[styles.messageCard, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.messageHeader}>
           <View style={styles.messageInfo}>
             <View style={styles.titleRow}>
               <View style={styles.meetingTitleContainer}>
                 <TypeIcon size={16} color={theme.colors.primary} />
-                <Text style= [styles.messageTitle, { color: theme.colors.text }]}>
+                <Text style={[styles.messageTitle, { color: theme.colors.text }]}>
                   {item.title}
                 </Text>
               </View>
-              <View style= [styles.statusBadge, { backgroundColor: getStatusColor(item.status) + '20' }]}>
-                <Text style= [styles.statusText, { color: getStatusColor(item.status) }]}>
+              <View style={[styles.statusBadge, { backgroundColor: getStatusColor(item.status) + '20' }]}>
+                <Text style={[styles.statusText, { color: getStatusColor(item.status) }]}>
                   {item.status}
                 </Text>
               </View>
             </View>
-            <Text style= [styles.messagePreview, { color: theme.colors.secondaryText }]} numberOfLines={2}>
+            <Text style={[styles.messagePreview, { color: theme.colors.secondaryText }]} numberOfLines={2}>
               {item.description}
             </Text>
           </View>
@@ -409,20 +409,20 @@ export default function SchedulingScreen() {
         <View style={styles.messageDetails}>
           <View style={styles.detailItem}>
             <Clock size={14} color={theme.colors.secondaryText} />
-            <Text style= [styles.detailText, { color: theme.colors.secondaryText }]}>
+            <Text style={[styles.detailText, { color: theme.colors.secondaryText }]}>
               {item.startTime} - {item.endTime}
             </Text>
           </View>
           <View style={styles.detailItem}>
             <Users size={14} color={theme.colors.secondaryText} />
-            <Text style= [styles.detailText, { color: theme.colors.secondaryText }]}>
+            <Text style={[styles.detailText, { color: theme.colors.secondaryText }]}>
               {item.attendees.length} attendees
             </Text>
           </View>
           {item.location && (
             <View style={styles.detailItem}>
               <MapPin size={14} color={theme.colors.secondaryText} />
-              <Text style= [styles.detailText, { color: theme.colors.secondaryText }]}>
+              <Text style={[styles.detailText, { color: theme.colors.secondaryText }]}>
                 {item.location}
               </Text>
             </View>
@@ -433,7 +433,7 @@ export default function SchedulingScreen() {
   };
 
   const renderReminder = ({ item }: { item: Reminder }) => (
-    <View style= [styles.messageCard, { backgroundColor: theme.colors.cardBackground }]}>
+    <View style={[styles.messageCard, { backgroundColor: theme.colors.cardBackground }]}>
       <View style={styles.messageHeader}>
         <View style={styles.messageInfo}>
           <View style={styles.titleRow}>
@@ -442,10 +442,10 @@ export default function SchedulingScreen() {
                 {item.completed ? (
                   <CircleCheck size={20} color="#34C759" />
                 ) : (
-                  <View style= [styles.uncheckedCircle, { borderColor: theme.colors.border }]} />
+                  <View style={[styles.uncheckedCircle, { borderColor: theme.colors.border }]} />
                 )}
               </TouchableOpacity>
-              <Text style= [
+              <Text style={[
                 styles.messageTitle, 
                 { 
                   color: item.completed ? theme.colors.secondaryText : theme.colors.text,
@@ -455,13 +455,13 @@ export default function SchedulingScreen() {
                 {item.title}
               </Text>
             </View>
-            <View style= [styles.priorityBadge, { backgroundColor: getPriorityColor(item.priority) + '20' }]}>
-              <Text style= [styles.priorityText, { color: getPriorityColor(item.priority) }]}>
+            <View style={[styles.priorityBadge, { backgroundColor: getPriorityColor(item.priority) + '20' }]}>
+              <Text style={[styles.priorityText, { color: getPriorityColor(item.priority) }]}>
                 {item.priority}
               </Text>
             </View>
           </View>
-          <Text style= [styles.messagePreview, { color: theme.colors.secondaryText }]} numberOfLines={2}>
+          <Text style={[styles.messagePreview, { color: theme.colors.secondaryText }]} numberOfLines={2}>
             {item.description}
           </Text>
         </View>
@@ -478,12 +478,12 @@ export default function SchedulingScreen() {
       <View style={styles.messageDetails}>
         <View style={styles.detailItem}>
           <Clock size={14} color={theme.colors.secondaryText} />
-          <Text style= [styles.detailText, { color: theme.colors.secondaryText }]}>
+          <Text style={[styles.detailText, { color: theme.colors.secondaryText }]}>
             Due: {item.dueTime}
           </Text>
         </View>
         <View style={styles.categoryTag}>
-          <Text style= [styles.categoryText, { color: theme.colors.primary }]}>
+          <Text style={[styles.categoryText, { color: theme.colors.primary }]}>
             {item.category}
           </Text>
         </View>
@@ -493,14 +493,14 @@ export default function SchedulingScreen() {
 
   const renderFilterButton = (filter: typeof selectedFilter, label: string) => (
     <TouchableOpacity
-      style= [
+      style={[
         styles.filterButton,
         selectedFilter === filter && { backgroundColor: theme.colors.primary },
       ]}
       onPress={() => setSelectedFilter(filter)}
     >
       <Text
-        style= [
+        style={[
           styles.filterButtonText,
           {
             color: selectedFilter === filter ? 'white' : theme.colors.secondaryText,
@@ -516,14 +516,14 @@ export default function SchedulingScreen() {
   const sentCount = scheduledMessages.filter(m => m.status === 'sent').length;
 
   return (
-    <View style= [styles.container, { backgroundColor: theme.colors.background }]}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       {/* Header */}
-      <View style= [styles.header, { backgroundColor: theme.colors.background }]}>
+      <View style={[styles.header, { backgroundColor: theme.colors.background }]}>
         <View>
-          <Text style= [styles.title, { color: theme.colors.text }]}>
+          <Text style={[styles.title, { color: theme.colors.text }]}>
             Scheduling
           </Text>
-          <Text style= [styles.subtitle, { color: theme.colors.secondaryText }]}>
+          <Text style={[styles.subtitle, { color: theme.colors.secondaryText }]}>
             Schedule and manage your messages
           </Text>
         </View>
@@ -532,10 +532,10 @@ export default function SchedulingScreen() {
             style={styles.headerButton}
             onPress={() => setShowAnalytics(true)}
           >
-            <ChartBar size={20} color={theme.colors.text} />
+            <ChartBarBig size={20} color={theme.colors.text} />
           </TouchableOpacity>
           <TouchableOpacity
-            style= [styles.addButton, { backgroundColor: theme.colors.primary }]}
+            style={[styles.addButton, { backgroundColor: theme.colors.primary }]}
             onPress={() => setShowCreateModal(true)}
           >
             <Plus size={20} color="white" />
@@ -548,7 +548,7 @@ export default function SchedulingScreen() {
         {(['messages', 'meetings', 'reminders'] as const).map((tab) => (
           <TouchableOpacity
             key={tab}
-            style= [
+            style={[
               styles.tab,
               {
                 backgroundColor: activeTab === tab ? theme.colors.primary : 'transparent',
@@ -557,7 +557,7 @@ export default function SchedulingScreen() {
             onPress={() => setActiveTab(tab)}
           >
             <Text
-              style= [
+              style={[
                 styles.tabText,
                 {
                   color: activeTab === tab ? 'white' : theme.colors.text,
@@ -574,27 +574,27 @@ export default function SchedulingScreen() {
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Stats */}
         <View style={styles.statsContainer}>
-          <View style= [styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
-            <Text style= [styles.statValue, { color: theme.colors.text }]}>
+          <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
+            <Text style={[styles.statValue, { color: theme.colors.text }]}>
               {scheduledCount}
             </Text>
-            <Text style= [styles.statLabel, { color: theme.colors.secondaryText }]}>
+            <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>
               Scheduled
             </Text>
           </View>
-          <View style= [styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
-            <Text style= [styles.statValue, { color: theme.colors.text }]}>
+          <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
+            <Text style={[styles.statValue, { color: theme.colors.text }]}>
               {sentCount}
             </Text>
-            <Text style= [styles.statLabel, { color: theme.colors.secondaryText }]}>
+            <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>
               Sent Today
             </Text>
           </View>
-          <View style= [styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
-            <Text style= [styles.statValue, { color: theme.colors.text }]}>
+          <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
+            <Text style={[styles.statValue, { color: theme.colors.text }]}>
               98%
             </Text>
-            <Text style= [styles.statLabel, { color: theme.colors.secondaryText }]}>
+            <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>
               Success Rate
             </Text>
           </View>
@@ -602,7 +602,7 @@ export default function SchedulingScreen() {
 
         {/* Quick Schedule */}
         <View style={styles.section}>
-          <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>
+          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
             Quick Schedule
           </Text>
           <FlatList
@@ -620,7 +620,7 @@ export default function SchedulingScreen() {
           <View style={styles.searchContainer}>
             <Search size={18} color={theme.colors.secondaryText} />
             <TextInput
-              style= [styles.searchInput, { color: theme.colors.text }]}
+              style={[styles.searchInput, { color: theme.colors.text }]}
               placeholder="Search scheduled messages..."
               placeholderTextColor={theme.colors.secondaryText}
               value={searchQuery}
@@ -638,7 +638,7 @@ export default function SchedulingScreen() {
         {/* Content based on active tab */}
         {activeTab === 'messages' && (
           <View style={styles.section}>
-            <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>
+            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
               Scheduled Messages
             </Text>
             <FlatList
@@ -650,10 +650,10 @@ export default function SchedulingScreen() {
               ListEmptyComponent={
                 <View style={styles.emptyState}>
                   <Send size={48} color={theme.colors.secondaryText} />
-                  <Text style= [styles.emptyStateTitle, { color: theme.colors.text }]}>
+                  <Text style={[styles.emptyStateTitle, { color: theme.colors.text }]}>
                     No messages found
                   </Text>
-                  <Text style= [styles.emptyStateText, { color: theme.colors.secondaryText }]}>
+                  <Text style={[styles.emptyStateText, { color: theme.colors.secondaryText }]}>
                     Try adjusting your search or filters
                   </Text>
                 </View>
@@ -664,7 +664,7 @@ export default function SchedulingScreen() {
 
         {activeTab === 'meetings' && (
           <View style={styles.section}>
-            <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>
+            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
               Upcoming Meetings
             </Text>
             <FlatList
@@ -676,10 +676,10 @@ export default function SchedulingScreen() {
               ListEmptyComponent={
                 <View style={styles.emptyState}>
                   <Calendar size={48} color={theme.colors.secondaryText} />
-                  <Text style= [styles.emptyStateTitle, { color: theme.colors.text }]}>
+                  <Text style={[styles.emptyStateTitle, { color: theme.colors.text }]}>
                     No meetings scheduled
                   </Text>
-                  <Text style= [styles.emptyStateText, { color: theme.colors.secondaryText }]}>
+                  <Text style={[styles.emptyStateText, { color: theme.colors.secondaryText }]}>
                     Schedule your first meeting
                   </Text>
                 </View>
@@ -690,7 +690,7 @@ export default function SchedulingScreen() {
 
         {activeTab === 'reminders' && (
           <View style={styles.section}>
-            <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>
+            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
               Your Reminders
             </Text>
             <FlatList
@@ -702,10 +702,10 @@ export default function SchedulingScreen() {
               ListEmptyComponent={
                 <View style={styles.emptyState}>
                   <Bell size={48} color={theme.colors.secondaryText} />
-                  <Text style= [styles.emptyStateTitle, { color: theme.colors.text }]}>
+                  <Text style={[styles.emptyStateTitle, { color: theme.colors.text }]}>
                     No reminders set
                   </Text>
-                  <Text style= [styles.emptyStateText, { color: theme.colors.secondaryText }]}>
+                  <Text style={[styles.emptyStateText, { color: theme.colors.secondaryText }]}>
                     Create your first reminder
                   </Text>
                 </View>
@@ -723,9 +723,9 @@ export default function SchedulingScreen() {
         animationType="slide"
         presentationStyle="pageSheet"
       >
-        <View style= [styles.modalContainer, { backgroundColor: theme.colors.background }]}>
+        <View style={[styles.modalContainer, { backgroundColor: theme.colors.background }]}>
           <View style={styles.modalHeader}>
-            <Text style= [styles.modalTitle, { color: theme.colors.text }]}>
+            <Text style={[styles.modalTitle, { color: theme.colors.text }]}>
               Create New {activeTab.slice(0, -1)}
             </Text>
             <TouchableOpacity
@@ -737,7 +737,7 @@ export default function SchedulingScreen() {
           </View>
           
           <ScrollView style={styles.modalContent}>
-            <Text style= [styles.comingSoonText, { color: theme.colors.secondaryText }]}>
+            <Text style={[styles.comingSoonText, { color: theme.colors.secondaryText }]}>
               Create {activeTab} form coming soon!
             </Text>
           </ScrollView>
@@ -750,9 +750,9 @@ export default function SchedulingScreen() {
         animationType="slide"
         presentationStyle="pageSheet"
       >
-        <View style= [styles.modalContainer, { backgroundColor: theme.colors.background }]}>
+        <View style={[styles.modalContainer, { backgroundColor: theme.colors.background }]}>
           <View style={styles.modalHeader}>
-            <Text style= [styles.modalTitle, { color: theme.colors.text }]}>
+            <Text style={[styles.modalTitle, { color: theme.colors.text }]}>
               Scheduling Analytics
             </Text>
             <TouchableOpacity
@@ -765,33 +765,33 @@ export default function SchedulingScreen() {
           
           <ScrollView style={styles.modalContent}>
             <View style={styles.analyticsSection}>
-              <Text style= [styles.analyticsTitle, { color: theme.colors.text }]}>
+              <Text style={[styles.analyticsTitle, { color: theme.colors.text }]}>
                 Performance Overview
               </Text>
               
               <View style={styles.analyticsGrid}>
-                <View style= [styles.analyticsCard, { backgroundColor: theme.colors.cardBackground }]}>
+                <View style={[styles.analyticsCard, { backgroundColor: theme.colors.cardBackground }]}>
                   <TrendingUp size={24} color="#34C759" />
-                  <Text style= [styles.analyticsValue, { color: theme.colors.text }]}>98%</Text>
-                  <Text style= [styles.analyticsLabel, { color: theme.colors.secondaryText }]}>Success Rate</Text>
+                  <Text style={[styles.analyticsValue, { color: theme.colors.text }]}>98%</Text>
+                  <Text style={[styles.analyticsLabel, { color: theme.colors.secondaryText }]}>Success Rate</Text>
                 </View>
                 
-                <View style= [styles.analyticsCard, { backgroundColor: theme.colors.cardBackground }]}>
+                <View style={[styles.analyticsCard, { backgroundColor: theme.colors.cardBackground }]}>
                   <Activity size={24} color="#007AFF" />
-                  <Text style= [styles.analyticsValue, { color: theme.colors.text }]}>247</Text>
-                  <Text style= [styles.analyticsLabel, { color: theme.colors.secondaryText }]}>Total Sent</Text>
+                  <Text style={[styles.analyticsValue, { color: theme.colors.text }]}>247</Text>
+                  <Text style={[styles.analyticsLabel, { color: theme.colors.secondaryText }]}>Total Sent</Text>
                 </View>
                 
-                <View style= [styles.analyticsCard, { backgroundColor: theme.colors.cardBackground }]}>
+                <View style={[styles.analyticsCard, { backgroundColor: theme.colors.cardBackground }]}>
                   <Clock size={24} color="#FF9500" />
-                  <Text style= [styles.analyticsValue, { color: theme.colors.text }]}>12</Text>
-                  <Text style= [styles.analyticsLabel, { color: theme.colors.secondaryText }]}>Pending</Text>
+                  <Text style={[styles.analyticsValue, { color: theme.colors.text }]}>12</Text>
+                  <Text style={[styles.analyticsLabel, { color: theme.colors.secondaryText }]}>Pending</Text>
                 </View>
                 
-                <View style= [styles.analyticsCard, { backgroundColor: theme.colors.cardBackground }]}>
+                <View style={[styles.analyticsCard, { backgroundColor: theme.colors.cardBackground }]}>
                   <Users size={24} color="#AF52DE" />
-                  <Text style= [styles.analyticsValue, { color: theme.colors.text }]}>1.2K</Text>
-                  <Text style= [styles.analyticsLabel, { color: theme.colors.secondaryText }]}>Recipients</Text>
+                  <Text style={[styles.analyticsValue, { color: theme.colors.text }]}>1.2K</Text>
+                  <Text style={[styles.analyticsLabel, { color: theme.colors.secondaryText }]}>Recipients</Text>
                 </View>
               </View>
             </View>

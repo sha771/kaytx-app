@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from
 import { useTheme } from '@/providers/ThemeProvider';
 import { 
   Funnel, Users, MousePointer, ShoppingCart, CheckCircle, 
-  ChevronRight, Funnel, ArrowDown, TrendingUp, AlertCircle
+  ChevronRight, ArrowDown, TrendingUp, AlertCircle
 } from 'lucide-react-native';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 

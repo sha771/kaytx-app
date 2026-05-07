@@ -1,7 +1,7 @@
 
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { ChartBar, TrendingUp, TrendingDown, Activity, Zap } from 'lucide-react-native';
+import { ChartBarBig, TrendingUp, TrendingDown, Activity, Zap } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
@@ -32,7 +32,7 @@ export default function TechnicalAnalysisScreen() {
     <ScrollView style={styles.tabContent} showsVerticalScrollIndicator={false}>
       <View style={styles.metricsGrid}>
         <LinearGradient colors={['#64FFDA', '#00BFA5']} style={styles.metricCard}>
-          <ChartBar size={20} color="#fff" />
+          <ChartBarBig size={20} color="#fff" />
           <Text style={styles.metricValue}>200+</Text>
           <Text style={styles.metricLabel}>Indicators</Text>
         </LinearGradient>
@@ -71,7 +71,7 @@ export default function TechnicalAnalysisScreen() {
             </View>
             <View style={styles.sigCenter}>
               <Text style={[styles.sigPattern, { color: theme.colors.text }]}>{sig.pattern}</Text>
-              <Text style={[styles.sigMeta, { color: theme.colors.secondaryText }]}>TF: {sig.tf} · Entry: {sig.entry}</Text>
+              <Text style={[styles.sigMeta, { color: theme.colors.secondaryText }]}>TF: {sig.tf} ï¿½ Entry: {sig.entry}</Text>
             </View>
             <View style={[styles.strengthBadge, {
               backgroundColor: sig.strength === 'Very Strong' || sig.strength === 'Strong' ? '#00C85320' : '#FF950020'
@@ -101,8 +101,8 @@ export default function TechnicalAnalysisScreen() {
   );
 
   const customTabs = [
-    { id: 'charts', label: 'Charts', icon: ChartBar, component: chartsTab },
-    { id: 'signals', label: 'Signals', icon: ChartBar, component: <View /> },
+    { id: 'charts', label: 'Charts', icon: ChartBarBig, component: chartsTab },
+    { id: 'signals', label: 'Signals', icon: ChartBarBig, component: <View /> },
   ];
 
   return <AgentShell agent={agent} customTabs={customTabs} />;

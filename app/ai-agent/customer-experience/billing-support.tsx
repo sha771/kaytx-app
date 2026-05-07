@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Activity, ChartBar, CircleCheck, Zap, ChevronLeft } from 'lucide-react-native';
+import { Activity, ChartBarBig, CircleCheck, Zap, ChevronLeft, ArrowRight, Users, CreditCard, FileText, Scale } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
@@ -10,54 +10,61 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 const ACCENT = '#007AFF';
 const AGENT_NAME = 'AI Billing Support';
-const AGENT_TITLE = 'Financial Support AI';
-const AGENT_DESC = 'Handles all billing queries, processes refunds, and explains complex invoices to customers clearly.';
+const AGENT_TITLE = 'Financial Operations & Billing AI';
+const AGENT_DESC = 'Processes payments, explains complex invoices, and resolves billing disputes with full audit trails. Ensures accurate financial transactions, compliance, and customer satisfaction across all billing touchpoints.';
 const PARENT_NAME = 'Customer Experience AI';
 
 const METRICS = [
-  { label: 'Tasks Today', value: '345', color: ACCENT },
-  { label: 'Success Rate', value: '96%', color: '#00C853' },
-  { label: 'Avg Speed', value: '0.5s', color: '#007AFF' },
-  { label: 'Accuracy', value: '97.2%', color: '#5856D6' },
+  { label: 'Tasks Today', value: '2.1k', color: ACCENT },
+  { label: 'Success Rate', value: '97.8%', color: '#00C853' },
+  { label: 'Avg Speed', value: '0.4s', color: '#007AFF' },
+  { label: 'Dispute Win', value: '92%', color: '#5856D6' },
 ];
 
 const RECENT_TASKS = [
-    {
-        "action": "Explained pro-rated invoice charge",
-        "time": "2m ago"
-    },
-    {
-        "action": "Processed $45 refund request",
-        "time": "15m ago"
-    },
-    {
-        "action": "Updated payment method for Sub-12",
-        "time": "25m ago"
-    },
-    {
-        "action": "Sent dunning notice for failed payment",
-        "time": "1h ago"
-    },
-    {
-        "action": "Resolved subscription tier dispute",
-        "time": "2h ago"
-    }
+  { action: 'Processed $2,450 enterprise payment for Acme Corp', time: '1m ago' },
+  { action: 'Explained pro-rated invoice charge to customer #7821', time: '5m ago' },
+  { action: 'Resolved subscription tier dispute — issued $89 credit', time: '12m ago' },
+  { action: 'Updated payment method for 15 subscriptions', time: '25m ago' },
+  { action: 'Sent dunning notice for 3 failed payments', time: '45m ago' },
+  { action: 'Generated monthly billing reconciliation report', time: '1h ago' },
+  { action: 'Auto-categorized 120 invoice line items', time: '2h ago' },
 ];
 
 const CAPABILITIES = [
-    "Invoice Explanation",
-    "Refund Processing",
-    "Payment Updates",
-    "Dunning Management",
-    "Subscription Upgrades",
-    "Dispute Resolution"
+  'Payment Processing & Reconciliation',
+  'Invoice Generation & Explanation',
+  'Dispute Resolution & Mediation',
+  'Refund & Credit Management',
+  'Dunning & Collection Automation',
+  'Subscription Tier Management',
+  'Tax Calculation & Compliance',
+  'Multi-Currency Support',
+  'Audit Trail & Financial Logging',
+  'Revenue Recognition Automation',
 ];
 
 const PERFORMANCE_BARS = [
-  { label: 'Task Completion Rate', value: 96, color: '#00C853' },
-  { label: 'Quality Score', value: 94, color: ACCENT },
-  { label: 'Speed Efficiency', value: 98, color: '#007AFF' },
-  { label: 'Learning Progress', value: 88, color: '#5856D6' },
+  { label: 'Payment Accuracy', value: 99, color: '#00C853' },
+  { label: 'Dispute Resolution', value: 92, color: ACCENT },
+  { label: 'Invoice Clarity Score', value: 95, color: '#007AFF' },
+  { label: 'Processing Speed', value: 97, color: '#5856D6' },
+  { label: 'Compliance Rate', value: 100, color: '#FF9500' },
+];
+
+const SUB_AGENTS = [
+  { id: 'payment-processor', name: 'AI Payment Processor', desc: 'Processes payments, reconciles transactions, and manages multi-currency billing operations', icon: CreditCard, route: '/ai-agent/customer/sub-agents/payment-processor' },
+  { id: 'invoice-explainer', name: 'AI Invoice Explainer', desc: 'Generates, explains, and breaks down complex invoices with line-item clarity for customers', icon: FileText, route: '/ai-agent/customer/sub-agents/invoice-explainer' },
+  { id: 'dispute-resolver', name: 'AI Dispute Resolver', desc: 'Mediates billing disputes, issues credits, and ensures fair resolution with full audit trails', icon: Scale, route: '/ai-agent/customer/sub-agents/dispute-resolver' },
+];
+
+const A2A_ENDPOINTS = [
+  '/consult/ai-billing-support',
+  '/billing/process-payment',
+  '/billing/explain-invoice',
+  '/billing/resolve-dispute',
+  '/billing/issue-refund',
+  '/billing/reconcile',
 ];
 
 export default function AgentScreen() {
@@ -88,7 +95,7 @@ export default function AgentScreen() {
           <Text style={styles.heroDesc}>{AGENT_DESC}</Text>
           <View style={styles.statusRow}>
             <View style={styles.onlineDot} />
-            <Text style={styles.statusText}>Online · Active</Text>
+            <Text style={styles.statusText}>Online · Active · 3 Sub-Agents</Text>
           </View>
         </LinearGradient>
 
@@ -98,6 +105,28 @@ export default function AgentScreen() {
               <Text style={[styles.metricValue, { color: m.color }]}>{m.value}</Text>
               <Text style={[styles.metricLabel, { color: colors.text + '70' }]}>{m.label}</Text>
             </View>
+          ))}
+        </View>
+
+        <View style={[styles.section, { backgroundColor: colors.card }]}>
+          <View style={styles.sectionHeader}>
+            <Users size={18} color={ACCENT} />
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>Sub-Agents</Text>
+            <View style={styles.countBadge}>
+              <Text style={styles.countText}>3</Text>
+            </View>
+          </View>
+          {SUB_AGENTS.map((sub, i) => (
+            <TouchableOpacity key={sub.id} onPress={() => router.push(sub.route)} style={[styles.subAgentCard, { backgroundColor: colors.background, borderBottomColor: colors.border }]}>
+              <View style={[styles.subAgentIcon, { backgroundColor: ACCENT + '18' }]}>
+                <sub.icon size={22} color={ACCENT} />
+              </View>
+              <View style={styles.subAgentInfo}>
+                <Text style={[styles.subAgentName, { color: colors.text }]}>{sub.name}</Text>
+                <Text style={[styles.subAgentDesc, { color: colors.text + '70' }]}>{sub.desc}</Text>
+              </View>
+              <ArrowRight size={18} color={colors.text + '50'} />
+            </TouchableOpacity>
           ))}
         </View>
 
@@ -135,7 +164,7 @@ export default function AgentScreen() {
 
         <View style={[styles.section, { backgroundColor: colors.card }]}>
           <View style={styles.sectionHeader}>
-            <ChartBar size={18} color={ACCENT} />
+            <ChartBarBig size={18} color={ACCENT} />
             <Text style={[styles.sectionTitle, { color: colors.text }]}>Performance</Text>
           </View>
           {PERFORMANCE_BARS.map((bar, i) => (
@@ -147,6 +176,19 @@ export default function AgentScreen() {
               <View style={[styles.barBg, { backgroundColor: colors.border }]}>
                 <View style={[styles.barFill, { width: bar.value + '%', backgroundColor: bar.color }]} />
               </View>
+            </View>
+          ))}
+        </View>
+
+        <View style={[styles.section, { backgroundColor: colors.card }]}>
+          <View style={styles.sectionHeader}>
+            <Zap size={18} color={ACCENT} />
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>A2A Endpoints</Text>
+          </View>
+          {A2A_ENDPOINTS.map((ep, i) => (
+            <View key={i} style={styles.endpointRow}>
+              <View style={styles.endpointDot} />
+              <Text style={[styles.endpointText, { color: colors.text + '80' }]}>{ep}</Text>
             </View>
           ))}
         </View>
@@ -181,6 +223,13 @@ const styles = StyleSheet.create({
   section: { marginHorizontal: 16, marginBottom: 14, padding: 18, borderRadius: 20 },
   sectionHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 16 },
   sectionTitle: { flex: 1, fontSize: 16, fontWeight: '700' },
+  countBadge: { backgroundColor: '#007AFF22', paddingHorizontal: 10, paddingVertical: 3, borderRadius: 12 },
+  countText: { fontSize: 12, fontWeight: '700', color: '#007AFF' },
+  subAgentCard: { flexDirection: 'row', alignItems: 'center', paddingVertical: 14, paddingHorizontal: 12, borderRadius: 14, marginBottom: 8, borderBottomWidth: 1 },
+  subAgentIcon: { width: 44, height: 44, borderRadius: 12, justifyContent: 'center', alignItems: 'center', marginRight: 12 },
+  subAgentInfo: { flex: 1 },
+  subAgentName: { fontSize: 15, fontWeight: '600', marginBottom: 3 },
+  subAgentDesc: { fontSize: 12, lineHeight: 16 },
   liveBadge: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: '#FF3B3018', paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8 },
   liveDot: { width: 6, height: 6, borderRadius: 3, backgroundColor: '#FF3B30' },
   liveText: { fontSize: 10, color: '#FF3B30', fontWeight: '700' },
@@ -195,5 +244,8 @@ const styles = StyleSheet.create({
   barPct: { fontSize: 13, fontWeight: '700' },
   barBg: { height: 7, borderRadius: 4, overflow: 'hidden' },
   barFill: { height: '100%', borderRadius: 4 },
+  endpointRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 8, gap: 8 },
+  endpointDot: { width: 6, height: 6, borderRadius: 3, backgroundColor: '#007AFF' },
+  endpointText: { fontSize: 13, fontFamily: 'monospace' },
 });
 

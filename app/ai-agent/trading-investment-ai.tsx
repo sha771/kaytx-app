@@ -2,7 +2,7 @@
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import {
-  TrendingUp, TrendingDown, ChartBar, Shield, Globe,
+  TrendingUp, TrendingDown, ChartBarBig, Shield, Globe,
   Zap, Brain, ArrowRight, Activity, DollarSign, Coins, Clock,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
@@ -158,7 +158,7 @@ export default function TradingInvestmentAIScreen() {
 
   const customTabs = [
     { id: 'overview', label: 'Overview', icon: Activity, component: overviewTab },
-    { id: 'analytics', label: 'Analytics', icon: ChartBar, component: analyticsTab },
+    { id: 'analytics', label: 'Analytics', icon: ChartBarBig, component: analyticsTab },
   ];
 
   return <AgentShell agent={agent} customTabs={customTabs} />;

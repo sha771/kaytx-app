@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
-import { ChartBar, Brain, Clock, CircleCheckBig, TriangleAlert } from 'lucide-react-native';
+import { ChartBarBig, Brain, Clock, CircleCheckBig, TriangleAlert } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useAIAssistant } from '@/providers/AIAssistantProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
@@ -317,7 +317,7 @@ export default function DynamicAgentScreen() {
         <View style={styles.tabContent}>
             <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
                 <View style={styles.cardHeader}>
-                    <ChartBar size={20} color={agent.color} />
+                    <ChartBarBig size={20} color={agent.color} />
                     <Text style={[styles.cardTitle, { color: theme.colors.text }]}>Performance & analytics</Text>
                 </View>
 
@@ -399,7 +399,7 @@ export default function DynamicAgentScreen() {
 
     const customTabs = [
         { id: 'overview', label: 'Overview', icon: Brain, component: renderWhatItDoesTab },
-        { id: 'performance', label: 'Performance', icon: ChartBar, component: renderPerformanceTab },
+        { id: 'performance', label: 'Performance', icon: ChartBarBig, component: renderPerformanceTab },
         { id: 'history-local', label: 'History', icon: Clock, component: renderHistoryTab },
         { id: 'counseling', label: 'Counseling', icon: Brain, component: renderCounselingTab },
     ];

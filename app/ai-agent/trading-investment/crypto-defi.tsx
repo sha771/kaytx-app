@@ -1,7 +1,7 @@
 
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Coins, TrendingUp, TrendingDown, Activity, ChartBar, Zap, Globe } from 'lucide-react-native';
+import { Coins, TrendingUp, TrendingDown, Activity, ChartBarBig, Zap, Globe } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
@@ -113,7 +113,7 @@ export default function CryptoDefiScreen() {
 
   const customTabs = [
     { id: 'crypto', label: 'Crypto', icon: Coins, component: cryptoTab },
-    { id: 'defi', label: 'DeFi', icon: ChartBar, component: <View /> },
+    { id: 'defi', label: 'DeFi', icon: ChartBarBig, component: <View /> },
   ];
 
   return <AgentShell agent={agent} customTabs={customTabs} />;

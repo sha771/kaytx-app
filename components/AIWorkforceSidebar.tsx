@@ -19,12 +19,68 @@ import {
     Sparkles as SparklesIcon,
     TriangleAlert,
     Activity as ActivityIcon,
+    GitBranch,
+    Headphones,
+    Target,
+    Megaphone,
+    Settings,
+    DollarSign,
+    Code,
+    UserCheck,
+    Scale,
+    Database,
+    Box,
+    Shield,
+    FlaskConical,
+    Clipboard,
+    TrendingUp,
+    Building,
+    ShieldCheck,
+    HeartPulse,
+    Factory,
+    Truck,
+    Landmark,
+    Link,
+    Brain,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useAIAssistant } from '@/providers/AIAssistantProvider';
 import { aiEmployees, aiEmployeeCategories, AIEmployee } from '@/constants/aiEmployees';
 import { router } from 'expo-router';
 import { trpc } from '@/lib/trpc';
+import { 
+  completeAIWorkforce, 
+  departments, 
+  workforceSummary,
+  type MainAgent,
+  type SubAgent 
+} from '@/constants/completeAIWorkforce_1108';
+
+// All 22 Departments - 1108 Total Agents (from completeAIWorkforce_1108.ts)
+const departmentCategories = [
+  { id: 'customer-experience', label: 'Customer Experience', color: '#00BCD4', count: 56 },
+  { id: 'sales-revenue', label: 'Sales & Revenue', color: '#FFA000', count: 56 },
+  { id: 'marketing-growth', label: 'Marketing & Growth', color: '#E91E63', count: 60 },
+  { id: 'operations-management', label: 'Operations & Management', color: '#607D8B', count: 52 },
+  { id: 'finance-accounting', label: 'Finance & Accounting', color: '#2E7D32', count: 52 },
+  { id: 'technology-engineering', label: 'Technology & Engineering', color: '#1565C0', count: 64 },
+  { id: 'human-resources', label: 'Human Resources', color: '#9C27B0', count: 44 },
+  { id: 'legal-compliance', label: 'Legal & Compliance', color: '#3F51B5', count: 40 },
+  { id: 'data-intelligence', label: 'Data & Intelligence', color: '#AF52DE', count: 52 },
+  { id: 'product-management', label: 'Product Management', color: '#FF5722', count: 40 },
+  { id: 'security-risk', label: 'Security & Risk', color: '#F44336', count: 48 },
+  { id: 'research-development', label: 'Research & Development', color: '#009688', count: 36 },
+  { id: 'administrative', label: 'Administrative', color: '#795548', count: 36 },
+  { id: 'trading-investments', label: 'Trading & Investments', color: '#10B981', count: 72 },
+  { id: 'real-estate-property', label: 'Real Estate & Property', color: '#8D6E63', count: 56 },
+  { id: 'insurance-risk', label: 'Insurance & Risk', color: '#FF7043', count: 64 },
+  { id: 'healthcare-medical', label: 'Healthcare & Medical', color: '#EC407A', count: 56 },
+  { id: 'manufacturing-production', label: 'Manufacturing & Production', color: '#5C6BC0', count: 56 },
+  { id: 'transportation-logistics', label: 'Transportation & Logistics', color: '#26A69A', count: 56 },
+  { id: 'government-public-sector', label: 'Government & Public Sector', color: '#78909C', count: 48 },
+  { id: 'supply-chain-logistics', label: 'Supply Chain & Logistics', color: '#42A5F5', count: 40 },
+  { id: 'ai-management-governance', label: 'AI Management & Governance', color: '#7C4DFF', count: 24 },
+];
 
 interface AIWorkforceSidebarProps {
     isVisible: boolean;
@@ -37,6 +93,7 @@ export const AIWorkforceSidebar: React.FC<AIWorkforceSidebarProps> = ({ isVisibl
     const { theme } = useTheme();
     const { activeAgents, toggleAgent } = useAIAssistant();
     const [selectedCategory, setSelectedCategory] = useState('all');
+    const [showAllDepartments, setShowAllDepartments] = useState(false);
     const [searchQuery] = useState('');
     const [toggleError, setToggleError] = useState<string | null>(null);
     const sidebarAnim = useRef(new Animated.Value(-width)).current;
@@ -59,9 +116,14 @@ export const AIWorkforceSidebar: React.FC<AIWorkforceSidebarProps> = ({ isVisibl
     const filteredEmployees = aiEmployees.filter(emp => {
         const matchesSearch = emp.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
             emp.description.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesCategory = selectedCategory === 'all' || emp.type === selectedCategory || emp.category === selectedCategory;
+        const matchesCategory = selectedCategory === 'all' || 
+            emp.type === selectedCategory || 
+            emp.category === selectedCategory;
         return matchesSearch && matchesCategory;
     });
+
+    // Get total agent count from all departments (1108)
+    const totalAgentCount = 1108;
 
     const handleEmployeePress = (employee: AIEmployee) => {
         onClose();
@@ -70,9 +132,7 @@ export const AIWorkforceSidebar: React.FC<AIWorkforceSidebarProps> = ({ isVisibl
 
     const handleToggle = async (employee: AIEmployee, next: boolean) => {
         setToggleError(null);
-
         toggleAgent(employee.id);
-
         try {
             await toggleAgentMutation.mutateAsync({
                 agentId: employee.id,
@@ -129,6 +189,18 @@ export const AIWorkforceSidebar: React.FC<AIWorkforceSidebarProps> = ({ isVisibl
                             </View>
                         )}
 
+                        {/* Mind Map Button */}
+                        <TouchableOpacity
+                            style={[styles.mindMapButton, { backgroundColor: theme.colors.primary + '15', borderColor: theme.colors.primary + '30' }]}
+                            onPress={() => {
+                                onClose();
+                                router.push('/ai-agent/mind-map' as any);
+                            }}
+                        >
+                            <GitBranch size={16} color={theme.colors.primary} />
+                            <Text style={[styles.mindMapButtonText, { color: theme.colors.primary }]}>View Workforce Map</Text>
+                        </TouchableOpacity>
+
                         {/* Infrastructure Stats Bar */}
                         <View style={[styles.statsBar, { backgroundColor: theme.colors.cardBackground }]}>
                             <View style={styles.statItem}>
@@ -156,43 +228,54 @@ export const AIWorkforceSidebar: React.FC<AIWorkforceSidebarProps> = ({ isVisibl
                             </View>
                         </View>
 
-                        {/* Category Filter Chips */}
-                        <View>
-                            <ScrollView
-                                horizontal
-                                showsHorizontalScrollIndicator={false}
-                                style={styles.categoryScroll}
-                                contentContainerStyle={styles.categoryContainer}
+                        {/* All 22 Departments - 1108 Agents */}
+                        <View style={[styles.departmentSection, { backgroundColor: theme.colors.cardBackground }]}>
+                            <TouchableOpacity 
+                                style={styles.departmentHeader}
+                                onPress={() => setShowAllDepartments(!showAllDepartments)}
                             >
-                                {aiEmployeeCategories.map((cat) => {
-                                    const CatIcon = cat.icon;
-                                    const isSelected = selectedCategory === cat.id;
-                                    return (
-                                        <TouchableOpacity
-                                            key={cat.id}
-                                            style={[
-                                                styles.categoryChip,
-                                                {
-                                                    backgroundColor: isSelected ? theme.colors.primary : theme.colors.cardBackground,
-                                                    borderWidth: isSelected ? 0 : 1,
-                                                    borderColor: theme.colors.border,
-                                                },
-                                            ]}
-                                            onPress={() => setSelectedCategory(cat.id)}
-                                        >
-                                            <CatIcon size={12} color={isSelected ? '#FFF' : theme.colors.secondaryText} />
-                                            <Text
+                                <View style={styles.departmentHeaderLeft}>
+                                    <Brain size={16} color={theme.colors.primary} />
+                                    <Text style={[styles.departmentTitle, { color: theme.colors.text }]}>
+                                        22 Departments
+                                    </Text>
+                                </View>
+                                <Text style={[styles.departmentCount, { color: theme.colors.primary }]}>
+                                    {totalAgentCount} Agents
+                                </Text>
+                            </TouchableOpacity>
+                            
+                            {showAllDepartments && (
+                                <View style={styles.departmentGrid}>
+                                    {departmentCategories.map((dept) => {
+                                        const isSelected = selectedCategory === dept.id;
+                                        return (
+                                            <TouchableOpacity
+                                                key={dept.id}
                                                 style={[
-                                                    styles.categoryChipText,
-                                                    { color: isSelected ? '#FFF' : theme.colors.secondaryText },
+                                                    styles.departmentChip,
+                                                    { backgroundColor: isSelected ? dept.color + '20' : 'transparent' },
                                                 ]}
+                                                onPress={() => setSelectedCategory(isSelected ? 'all' : dept.id)}
                                             >
-                                                {cat.label}
-                                            </Text>
-                                        </TouchableOpacity>
-                                    );
-                                })}
-                            </ScrollView>
+                                                <View style={[styles.departmentDot, { backgroundColor: dept.color }]} />
+                                                <Text 
+                                                    style={[
+                                                        styles.departmentLabel, 
+                                                        { color: isSelected ? dept.color : theme.colors.secondaryText }
+                                                    ]}
+                                                    numberOfLines={1}
+                                                >
+                                                    {dept.label}
+                                                </Text>
+                                                <Text style={[styles.departmentChipCount, { color: theme.colors.secondaryText }]}>
+                                                    {dept.count}
+                                                </Text>
+                                            </TouchableOpacity>
+                                        );
+                                    })}
+                                </View>
+                            )}
                         </View>
 
                         {/* Employee/Agent List */}
@@ -388,6 +471,22 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: '700',
     },
+    mindMapButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 8,
+        marginHorizontal: 12,
+        marginTop: 8,
+        paddingVertical: 10,
+        paddingHorizontal: 16,
+        borderRadius: 10,
+        borderWidth: 1,
+    },
+    mindMapButtonText: {
+        fontSize: 13,
+        fontWeight: '700',
+    },
     statsBar: {
         flexDirection: 'row',
         justifyContent: 'space-around',
@@ -411,6 +510,62 @@ const styles = StyleSheet.create({
     statDivider: {
         width: 1,
         height: 30,
+    },
+    departmentSection: {
+        marginHorizontal: 12,
+        marginTop: 8,
+        borderRadius: 12,
+        overflow: 'hidden',
+    },
+    departmentHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 12,
+        paddingVertical: 10,
+    },
+    departmentHeaderLeft: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+    },
+    departmentTitle: {
+        fontSize: 13,
+        fontWeight: '700',
+    },
+    departmentCount: {
+        fontSize: 12,
+        fontWeight: '600',
+    },
+    departmentGrid: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        paddingHorizontal: 8,
+        paddingBottom: 8,
+        gap: 6,
+    },
+    departmentChip: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        borderRadius: 16,
+        minWidth: '45%',
+    },
+    departmentDot: {
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+    },
+    departmentLabel: {
+        fontSize: 11,
+        fontWeight: '600',
+        flex: 1,
+    },
+    departmentChipCount: {
+        fontSize: 10,
+        fontWeight: '700',
     },
     categoryScroll: {
         maxHeight: 48,

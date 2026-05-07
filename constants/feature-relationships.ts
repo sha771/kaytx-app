@@ -9,7 +9,7 @@ import {
   Bot,
   MessageSquare,
   Calendar,
-  ChartBar,
+  ChartBarBig,
   Users,
   Mail,
   Phone,
@@ -536,7 +536,7 @@ export const FEATURE_RELATIONSHIPS: Record<string, FeatureRelationship> = {
     id: 'business-analysis',
     title: 'Business Analysis',
     description: 'Business intelligence',
-    icon: ChartBar,
+    icon: ChartBarBig,
     color: '#EC4899',
     route: '/business/business-analysis',
     relatedFeatures: [
@@ -721,7 +721,7 @@ export const FEATURE_RELATIONSHIPS: Record<string, FeatureRelationship> = {
     id: 'analytics-performance',
     title: 'Analytics & Performance',
     description: 'Performance analytics',
-    icon: ChartBar,
+    icon: ChartBarBig,
     color: '#10B981',
     route: '/analytics/analytics-performance',
     relatedFeatures: [
@@ -751,7 +751,7 @@ export const FEATURE_RELATIONSHIPS: Record<string, FeatureRelationship> = {
     id: 'data-visualization',
     title: 'Data Visualization',
     description: 'Visual data representation',
-    icon: ChartBar,
+    icon: ChartBarBig,
     color: '#EC4899',
     route: '/analytics/data-visualization',
     relatedFeatures: [
@@ -912,7 +912,7 @@ export const FEATURE_RELATIONSHIPS: Record<string, FeatureRelationship> = {
     id: 'enterprise-dashboard',
     title: 'Enterprise Dashboard',
     description: 'Enterprise overview',
-    icon: ChartBar,
+    icon: ChartBarBig,
     color: '#EC4899',
     route: '/enterprise-dashboard',
     relatedFeatures: [

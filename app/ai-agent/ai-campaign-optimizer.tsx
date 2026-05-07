@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, Animated, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { Zap, Target, TrendingUp, ChartBar, Lock } from 'lucide-react-native';
+import { Zap, Target, TrendingUp, ChartBarBig, Lock } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { EnterpriseAgentShell } from '@/components/ai-agent/EnterpriseAgentShell';

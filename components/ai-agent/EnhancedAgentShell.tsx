@@ -509,7 +509,7 @@ export const EnhancedAgentShell: React.FC<EnhancedAgentShellProps> = ({ agent, c
                         <Text style={[styles.roiSubtext, { color: theme.colors.secondaryText }]}>24/7 Unlimited capacity</Text>
                     </View>
                 </View>
-                <LinearGradient colors={['#34C75920', '#34C75910']} style={styles.efficiencyBanner}>
+                <LinearGradient ={['#34C75920', '#34C75910']} style={styles.efficiencyBanner}>
             <Zap size={20} color="#34C759" />
             <Text style={[styles.efficiencyText, { color: '#34C759' }]}>{agent.efficiency || 'High efficiency'} Profitability Increase</Text>
                 </LinearGradient>
@@ -578,7 +578,7 @@ export const EnhancedAgentShell: React.FC<EnhancedAgentShellProps> = ({ agent, c
 
             {/* Enhanced Header */}
             <LinearGradient
-                colors={[agent.color, agent.color + 'dd', agent.color + 'aa']}
+                ={[agent.color, agent.color + 'dd', agent.color + 'aa']}
                 style={styles.header}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}

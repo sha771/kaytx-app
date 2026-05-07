@@ -82,32 +82,32 @@ export default function CommandCenterPage() {
   const isWide = width > 800;
 
   return (
-    <ScrollView style= [styles.container, { backgroundColor: colors.card }]}>
+    <ScrollView style={[styles.container, { backgroundColor: colors.card }]}>
       <View style={styles.header}>
-        <Text style= [styles.title, { color: colors.text }]}>Command Center</Text>
-        <Text style= [styles.subtitle, { color: colors.text }]}>Centralized decision management and orchestration.</Text>
+        <Text style={[styles.title, { color: colors.text }]}>Command Center</Text>
+        <Text style={[styles.subtitle, { color: colors.text }]}>Centralized decision management and orchestration.</Text>
       </View>
 
-      <View style= [styles.cardsRow, isWide ? { flexDirection: 'row' } : { flexDirection: 'column' }]}>
+      <View style={[styles.cardsRow, isWide ? { flexDirection: 'row' } : { flexDirection: 'column' }]}>
         {ROLES.map(r => {
           const Icon = r.icon as any;
           return (
-            <View key={r.id} style= [styles.roleCard, { borderColor: r.color, backgroundColor: colors.background }]}>
+            <View key={r.id} style={[styles.roleCard, { borderColor: r.color, backgroundColor: colors.background }]}>
               <View style={styles.roleTop}>
-                <View style= [styles.badge, { backgroundColor: r.color }]}>
+                <View style={[styles.badge, { backgroundColor: r.color }]}>
                   <Icon color="#fff" />
                 </View>
                 <View style={styles.roleMeta}>
-                  <Text style= [styles.roleTitle, { color: colors.text }]}>{r.title}</Text>
-                  <Text style= [styles.roleCode, { color: r.color }]}>{r.code}</Text>
+                  <Text style={[styles.roleTitle, { color: colors.text }]}>{r.title}</Text>
+                  <Text style={[styles.roleCode, { color: r.color }]}>{r.code}</Text>
                 </View>
               </View>
-              <Text style= [styles.roleDesc, { color: colors.text }]}>{r.description}</Text>
+              <Text style={[styles.roleDesc, { color: colors.text }]}>{r.description}</Text>
               <TouchableOpacity
                 accessibilityLabel={`Activate ${r.code}`}
-                style= [styles.activateBtn, activeRole === r.id ? { borderColor: r.color } : {}]}
+                style={[styles.activateBtn, activeRole === r.id ? { borderColor: r.color } : {}]}
                 onPress={() => onActivate(r.id)}>
-                <Text style= [styles.activateText, { color: activeRole === r.id ? r.color : colors.text }]}>
+                <Text style={[styles.activateText, { color: activeRole === r.id ? r.color : colors.text }]}>
                   {activeRole === r.id ? 'Active' : 'Activate'}
                 </Text>
               </TouchableOpacity>
@@ -117,21 +117,21 @@ export default function CommandCenterPage() {
       </View>
 
       <View style={styles.section}>
-        <Text style= [styles.sectionTitle, { color: colors.text }]}>Decision Queue</Text>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>Decision Queue</Text>
         {queue.map(item => (
-          <View key={item.id} style= [styles.queueItem, { borderColor: '#2d2d2d' }]}>
+          <View key={item.id} style={[styles.queueItem, { borderColor: '#2d2d2d' }]}>
             <View style={{ flex: 1 }}>
-              <Text style= [styles.queueTitle, { color: colors.text }]}>{item.title}</Text>
-              <Text style= [styles.queueMeta, { color: colors.text }]}>Assigned Role: {item.role.toUpperCase()}</Text>
+              <Text style={[styles.queueTitle, { color: colors.text }]}>{item.title}</Text>
+              <Text style={[styles.queueMeta, { color: colors.text }]}>Assigned Role: {item.role.toUpperCase()}</Text>
             </View>
             <View style={styles.queueActions}>
-              <TouchableOpacity onPress={() => handleAction(item.id, 'approve')} style= [styles.actionBtn, { backgroundColor: '#10B981' }]}>
+              <TouchableOpacity onPress={() => handleAction(item.id, 'approve')} style={[styles.actionBtn, { backgroundColor: '#10B981' }]}>
                 <Text style={styles.actionText}>Approve</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => handleAction(item.id, 'reject')} style= [styles.actionBtn, { backgroundColor: '#EF4444' }]}>
+              <TouchableOpacity onPress={() => handleAction(item.id, 'reject')} style={[styles.actionBtn, { backgroundColor: '#EF4444' }]}>
                 <Text style={styles.actionText}>Reject</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => handleAction(item.id, 'escalate')} style= [styles.actionBtn, { backgroundColor: '#0EA5E9' }]}>
+              <TouchableOpacity onPress={() => handleAction(item.id, 'escalate')} style={[styles.actionBtn, { backgroundColor: '#0EA5E9' }]}>
                 <Text style={styles.actionText}>Escalate</Text>
               </TouchableOpacity>
             </View>
@@ -141,22 +141,22 @@ export default function CommandCenterPage() {
       </View>
 
       <View style={styles.section}>
-        <Text style= [styles.sectionTitle, { color: colors.text }]}>Hierarchy Flow</Text>
-        <View style= [styles.flowContainer, isWide ? { flexDirection: 'row' } : { flexDirection: 'column' }]}>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>Hierarchy Flow</Text>
+        <View style={[styles.flowContainer, isWide ? { flexDirection: 'row' } : { flexDirection: 'column' }]}>
           <View style={styles.flowNode}>
-            <Text style= [styles.flowText, { color: '#D4AF37' }]}>CDOO</Text>
+            <Text style={[styles.flowText, { color: '#D4AF37' }]}>CDOO</Text>
           </View>
           <View style={styles.flowArrow}><Text style={{ color: colors.text }}>→</Text></View>
           <View style={styles.flowNode}>
-            <Text style= [styles.flowText, { color: '#0EA5E9' }]}>DDO</Text>
+            <Text style={[styles.flowText, { color: '#0EA5E9' }]}>DDO</Text>
           </View>
           <View style={styles.flowArrow}><Text style={{ color: colors.text }}>→</Text></View>
           <View style={styles.flowNode}>
-            <Text style= [styles.flowText, { color: '#34C759' }]}>WOL</Text>
+            <Text style={[styles.flowText, { color: '#34C759' }]}>WOL</Text>
           </View>
           <View style={styles.flowArrow}><Text style={{ color: colors.text }}>+</Text></View>
           <View style={styles.flowNode}>
-            <Text style= [styles.flowText, { color: '#8B5CF6' }]}>AOD</Text>
+            <Text style={[styles.flowText, { color: '#8B5CF6' }]}>AOD</Text>
           </View>
         </View>
         <Text style={{ color: colors.text, marginTop: 8 }}>Chain: CDOO → DDO → (WOL + AOD) → (Employees + AI Agents)</Text>

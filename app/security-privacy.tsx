@@ -116,78 +116,78 @@ export default function SecurityPrivacyScreen() {
   };
 
   return (
-    <SafeAreaView style= [styles.container, { backgroundColor: theme.colors.background }]}>
-      <View style= [styles.header, { borderBottomColor: theme.colors.border }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <View style={[styles.header, { borderBottomColor: theme.colors.border }]}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
           <ArrowLeft size={24} color={theme.colors.text} />
         </TouchableOpacity>
-        <Text style= [styles.title, { color: theme.colors.text }]}>Security & Privacy</Text>
+        <Text style={[styles.title, { color: theme.colors.text }]}>Security & Privacy</Text>
         <View style={styles.placeholder} />
       </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        <View style= [styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+        <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
           <View style={styles.cardHeader}>
             <Shield size={24} color={theme.colors.primary} />
-            <Text style= [styles.cardTitle, { color: theme.colors.text }]}>Security Overview</Text>
+            <Text style={[styles.cardTitle, { color: theme.colors.text }]}>Security Overview</Text>
           </View>
-          <Text style= [styles.cardDescription, { color: theme.colors.secondaryText }]}>
+          <Text style={[styles.cardDescription, { color: theme.colors.secondaryText }]}>
             Manage your account security settings and privacy preferences
           </Text>
         </View>
 
         <View style={styles.statsGrid}>
-          <View style= [styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
+          <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
             <CircleCheck size={20} color={theme.colors.success} />
-            <Text style= [styles.statValue, { color: theme.colors.text }]}>
+            <Text style={[styles.statValue, { color: theme.colors.text }]}>
               {securityFeatures.filter(f => f.enabled).length}
             </Text>
-            <Text style= [styles.statLabel, { color: theme.colors.secondaryText }]}>
+            <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>
               Active Features
             </Text>
           </View>
-          <View style= [styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
+          <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
             <TriangleAlert size={20} color={theme.colors.warning} />
-            <Text style= [styles.statValue, { color: theme.colors.text }]}>
+            <Text style={[styles.statValue, { color: theme.colors.text }]}>
               {recentActivity.filter(a => a.status === 'failed').length}
             </Text>
-            <Text style= [styles.statLabel, { color: theme.colors.secondaryText }]}>
+            <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>
               Failed Attempts
             </Text>
           </View>
-          <View style= [styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
+          <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
             <Eye size={20} color={theme.colors.primary} />
-            <Text style= [styles.statValue, { color: theme.colors.text }]}>
+            <Text style={[styles.statValue, { color: theme.colors.text }]}>
               {recentActivity.length}
             </Text>
-            <Text style= [styles.statLabel, { color: theme.colors.secondaryText }]}>
+            <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>
               Recent Activities
             </Text>
           </View>
         </View>
 
-        <View style= [styles.card, { backgroundColor: theme.colors.cardBackground }]}>
-          <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>Security Features</Text>
+        <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Security Features</Text>
           
           <View style={styles.featuresList}>
             {securityFeatures.map((feature) => {
               const IconComponent = feature.icon;
               return (
-                <View key={feature.id} style= [styles.featureCard, { borderColor: theme.colors.border }]}>
+                <View key={feature.id} style={[styles.featureCard, { borderColor: theme.colors.border }]}>
                   <View style={styles.featureInfo}>
                     <View style={styles.featureHeader}>
                       <IconComponent size={20} color={theme.colors.primary} />
-                      <Text style= [styles.featureTitle, { color: theme.colors.text }]}>
+                      <Text style={[styles.featureTitle, { color: theme.colors.text }]}>
                         {feature.title}
                       </Text>
                       <View 
-                        style= [
+                        style={[
                           styles.statusDot, 
                           { backgroundColor: getStatusColor(feature.status) }
                         ]} 
                       />
                     </View>
-                    <Text style= [styles.featureDescription, { color: theme.colors.secondaryText }]}>
+                    <Text style={[styles.featureDescription, { color: theme.colors.secondaryText }]}>
                       {feature.description}
                     </Text>
                   </View>
@@ -203,19 +203,19 @@ export default function SecurityPrivacyScreen() {
           </View>
         </View>
 
-        <View style= [styles.card, { backgroundColor: theme.colors.cardBackground }]}>
-          <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>Recent Activity</Text>
+        <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Recent Activity</Text>
           
           <View style={styles.activityList}>
             {recentActivity.map((activity) => (
-              <View key={activity.id} style= [styles.activityCard, { borderColor: theme.colors.border }]}>
+              <View key={activity.id} style={[styles.activityCard, { borderColor: theme.colors.border }]}>
                 <View style={styles.activityInfo}>
                   <View style={styles.activityHeader}>
-                    <Text style= [styles.activityAction, { color: theme.colors.text }]}>
+                    <Text style={[styles.activityAction, { color: theme.colors.text }]}>
                       {activity.action}
                     </Text>
                     <View 
-                      style= [
+                      style={[
                         styles.activityStatus, 
                         { backgroundColor: getStatusColor(activity.status) }
                       ]}
@@ -225,10 +225,10 @@ export default function SecurityPrivacyScreen() {
                       </Text>
                     </View>
                   </View>
-                  <Text style= [styles.activityDevice, { color: theme.colors.secondaryText }]}>
+                  <Text style={[styles.activityDevice, { color: theme.colors.secondaryText }]}>
                     {activity.device} • {activity.location}
                   </Text>
-                  <Text style= [styles.activityTime, { color: theme.colors.secondaryText }]}>
+                  <Text style={[styles.activityTime, { color: theme.colors.secondaryText }]}>
                     {new Date(activity.timestamp).toLocaleString()}
                   </Text>
                 </View>
@@ -237,13 +237,13 @@ export default function SecurityPrivacyScreen() {
           </View>
         </View>
 
-        <View style= [styles.card, { backgroundColor: theme.colors.cardBackground }]}>
-          <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>Privacy Settings</Text>
+        <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Privacy Settings</Text>
           
           <View style={styles.privacyList}>
             {privacySettings.map((setting) => (
-              <View key={setting.id} style= [styles.privacyCard, { borderColor: theme.colors.border }]}>
-                <Text style= [styles.privacyTitle, { color: theme.colors.text }]}>
+              <View key={setting.id} style={[styles.privacyCard, { borderColor: theme.colors.border }]}>
+                <Text style={[styles.privacyTitle, { color: theme.colors.text }]}>
                   {setting.title}
                 </Text>
                 <Switch
@@ -257,36 +257,36 @@ export default function SecurityPrivacyScreen() {
           </View>
         </View>
 
-        <View style= [styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+        <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
           <View style={styles.cardHeader}>
             <Lock size={24} color={theme.colors.primary} />
-            <Text style= [styles.cardTitle, { color: theme.colors.text }]}>Security Actions</Text>
+            <Text style={[styles.cardTitle, { color: theme.colors.text }]}>Security Actions</Text>
           </View>
           
           <View style={styles.actionsList}>
             <TouchableOpacity 
-              style= [styles.actionButton, { backgroundColor: theme.colors.primary }]}
+              style={[styles.actionButton, { backgroundColor: theme.colors.primary }]}
             >
               <Key size={20} color="#FFFFFF" />
               <Text style={styles.actionButtonText}>Change Password</Text>
             </TouchableOpacity>
             
             <TouchableOpacity 
-              style= [styles.actionButton, { backgroundColor: theme.colors.warning }]}
+              style={[styles.actionButton, { backgroundColor: theme.colors.warning }]}
             >
               <Shield size={20} color="#FFFFFF" />
               <Text style={styles.actionButtonText}>Setup 2FA</Text>
             </TouchableOpacity>
             
             <TouchableOpacity 
-              style= [styles.actionButton, { backgroundColor: theme.colors.success }]}
+              style={[styles.actionButton, { backgroundColor: theme.colors.success }]}
             >
               <Eye size={20} color="#FFFFFF" />
               <Text style={styles.actionButtonText}>Download Data</Text>
             </TouchableOpacity>
             
             <TouchableOpacity 
-              style= [styles.actionButton, { backgroundColor: theme.colors.error }]}
+              style={[styles.actionButton, { backgroundColor: theme.colors.error }]}
             >
               <TriangleAlert size={20} color="#FFFFFF" />
               <Text style={styles.actionButtonText}>Delete Account</Text>
@@ -294,26 +294,26 @@ export default function SecurityPrivacyScreen() {
           </View>
         </View>
 
-        <View style= [styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+        <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
           <View style={styles.cardHeader}>
             <EyeOff size={24} color={theme.colors.primary} />
-            <Text style= [styles.cardTitle, { color: theme.colors.text }]}>Privacy Tips</Text>
+            <Text style={[styles.cardTitle, { color: theme.colors.text }]}>Privacy Tips</Text>
           </View>
           
           <View style={styles.tipsList}>
-            <Text style= [styles.tipText, { color: theme.colors.text }]}>
+            <Text style={[styles.tipText, { color: theme.colors.text }]}>
               • Use strong, unique passwords for all your accounts
             </Text>
-            <Text style= [styles.tipText, { color: theme.colors.text }]}>
+            <Text style={[styles.tipText, { color: theme.colors.text }]}>
               • Enable two-factor authentication whenever possible
             </Text>
-            <Text style= [styles.tipText, { color: theme.colors.text }]}>
+            <Text style={[styles.tipText, { color: theme.colors.text }]}>
               • Regularly review and update your privacy settings
             </Text>
-            <Text style= [styles.tipText, { color: theme.colors.text }]}>
+            <Text style={[styles.tipText, { color: theme.colors.text }]}>
               • Be cautious about sharing personal information online
             </Text>
-            <Text style= [styles.tipText, { color: theme.colors.text }]}>
+            <Text style={[styles.tipText, { color: theme.colors.text }]}>
               • Keep your apps and devices updated with latest security patches
             </Text>
           </View>

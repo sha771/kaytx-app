@@ -1,7 +1,7 @@
 
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { ChartPie, TrendingUp, Shield, ChartBar, DollarSign, Activity } from 'lucide-react-native';
+import { ChartPie, TrendingUp, Shield, ChartBarBig, DollarSign, Activity } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
@@ -87,7 +87,7 @@ export default function PortfolioManagerScreen() {
 
   const customTabs = [
     { id: 'portfolio', label: 'Portfolio', icon: ChartPie, component: portfolioTab },
-    { id: 'analytics', label: 'Analytics', icon: ChartBar, component: <View /> },
+    { id: 'analytics', label: 'Analytics', icon: ChartBarBig, component: <View /> },
   ];
 
   return <AgentShell agent={agent} customTabs={customTabs} />;

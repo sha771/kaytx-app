@@ -6,7 +6,7 @@
 import type { AIEmployee } from './aiEmployeesEnhanced';
 import { enhanceAllAIAgents } from './utils/agent-capability-enhancer';
 import {
-  Settings, Zap, MessagesSquare, Target, Megaphone, Crown, Shield, ChartBar,
+  Settings, Zap, MessagesSquare, Target, Megaphone, Crown, Shield, ChartBarBig,
 } from 'lucide-react-native';
 import {
   allPrivacyAgents,
@@ -85,7 +85,7 @@ export const agentCategories = [
   { id: 'data-intelligence', label: 'Data & Intelligence AI', icon: Zap, color: '#AF52DE' },
   { id: 'analysis-insights-performance', label: 'Analysis, Insights & Performance AI', icon: Crown, color: '#FFD700' },
   { id: 'privacy-security', label: 'Privacy & Security AI', icon: Shield, color: '#FF5252' },
-  { id: 'customer-insights-analytics', label: 'Customer Insights & Analytics AI', icon: ChartBar, color: '#6366F1' },
+  { id: 'customer-insights-analytics', label: 'Customer Insights & Analytics AI', icon: ChartBarBig, color: '#6366F1' },
 ];
 
 // ============================================

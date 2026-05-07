@@ -34,7 +34,7 @@ import {
   Scale,
   
   // Department Icons
-  ChartBar,
+  ChartBarBig,
   ChartPie,
   ChartLine,
   Activity,
@@ -1298,7 +1298,7 @@ export const cSuiteExecutives: AIEmployeeProfile[] = [
     level: 'c_level',
     department: 'customer_insights_analytics',
     description: 'Leads customer insights and analytics strategy, driving data-driven decision making through deep customer understanding, behavioral analysis, predictive intelligence, and personalization across the organization.',
-    icon: ChartBar,
+    icon: ChartBarBig,
     color: '#6366F1',
     orgChart: {
       id: 'ccio',
@@ -1367,7 +1367,7 @@ export const vpDirectors: AIEmployeeProfile[] = [
     level: 'vp_director',
     department: 'finance',
     description: 'Leads financial planning, analysis, and strategic forecasting. Supports CFO in financial strategy execution.',
-    icon: ChartBar,
+    icon: ChartBarBig,
     color: '#4CAF50',
     orgChart: {
       id: 'vp-finance',

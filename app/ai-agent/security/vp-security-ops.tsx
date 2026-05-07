@@ -1,71 +1,73 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Shield, Activity, CircleCheckBig, Clock, Target, ChartBar, MessageSquare, Calendar, ShieldCheck, ArrowRight, Users, Zap, Star, Lock, Eye, TriangleAlert } from 'lucide-react-native';
+import { Shield, Activity, Star, Users, CircleCheckBig, Clock, ArrowRight, Zap, ChevronRight, TrendingUp, BarChart3, MessageSquare, Calendar, Settings, AlertTriangle, Target, Briefcase, FileText } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
+import { useRouter } from 'expo-router';
 
 export default function VPSecurityOpsPage() {
   const { theme } = useTheme();
+  const router = useRouter();
 
   const stats = [
-    { label: 'Threats Blocked', value: '45,231', icon: CircleCheckBig, color: '#34C759' },
-    { label: 'Uptime', value: '99.99%', icon: Activity, color: '#007AFF' },
+    { label: 'Threats Mitigated', value: '12,450', icon: CircleCheckBig, color: '#34C759' },
+    { label: 'Uptime', value: '99.8%', icon: Activity, color: '#007AFF' },
     { label: 'Response', value: '0.3s', icon: Clock, color: '#FF9500' },
-    { label: 'Accuracy', value: '99.8%', icon: Target, color: '#AF52DE' },
+    { label: 'Accuracy', value: '99.8%', icon: Zap, color: '#C62828' },
   ];
 
-  const capabilities = [
-    'Threat Detection', 'Incident Response', 'SIEM', 'Vulnerability Mgmt',
-    'Penetration Testing', 'Compliance', 'SOC Operations', 'Forensics'
-  ];
+  const capabilities = ['Security Operations Management', 'SOC Team Leadership', 'Incident Response Coordination', 'Threat Mitigation', 'Security Monitoring', 'Alert Management', 'Team Performance', 'Operational Excellence'];
 
   const responsibilities = [
-    'Security Operations Strategy & Roadmap',
-    'Real-time Threat Detection & Monitoring',
-    'Incident Response & Forensic Analysis',
-    'SIEM Architecture & Log Management',
-    'Vulnerability Management & Patching',
-    'Penetration Testing & Red Team',
-    'Security Compliance & Audit Readiness',
-    'SOC Team Leadership & 24/7 Operations'
+    'Lead security operations center (SOC) team and activities',
+    'Coordinate incident response across all security teams',
+    'Manage threat mitigation strategies and execution',
+    'Oversee 24/7 security monitoring and alert management',
+    'Drive operational excellence in security operations',
+    'Manage team performance and skill development',
+    'Coordinate with other security leaders on strategy',
+    'Report security posture to CISO and leadership'
   ];
 
   const activities = [
-    { time: '1 min ago', text: 'Blocked 847 malicious login attempts', icon: Lock },
-    { time: '8 min ago', text: 'Updated threat intelligence feed', icon: Eye },
-    { time: '25 min ago', text: 'Completed vulnerability scan cycle', icon: ShieldCheck },
-    { time: '1 hour ago', text: 'Escalated 3 critical incidents to IR team', icon: TriangleAlert },
-    { time: '3 hours ago', text: 'Published monthly security posture report', icon: Zap },
+    { time: '3 min ago', text: 'Mitigated DDoS attack on production systems', icon: Shield },
+    { time: '20 min ago', text: 'Coordinated incident response for 3 alerts', icon: AlertTriangle },
+    { time: '1 hour ago', text: 'Reviewed SOC team shift schedules', icon: Users },
+    { time: '3 hours ago', text: 'Updated threat mitigation playbooks', icon: FileText },
   ];
 
-  const quickActions = [
-    { label: 'View Reports', icon: ChartBar },
-    { label: 'Team Chat', icon: MessageSquare },
-    { label: 'Schedule', icon: Calendar },
-    { label: 'Settings', icon: ShieldCheck },
+  const subAgents = [
+    { name: 'AI SOC Workflow Optimizer', route: '/ai-agent/security/sub-agents/soc-workflow-optimizer', desc: 'SOC workflow optimization & efficiency', icon: Zap },
+    { name: 'AI Alert Prioritizer', route: '/ai-agent/security/sub-agents/alert-prioritizer', desc: 'Alert prioritization & triage', icon: Target },
+    { name: 'AI Incident Escalation Manager', route: '/ai-agent/security/sub-agents/incident-escalation-manager', desc: 'Incident escalation & routing', icon: ArrowRight },
+  ];
+
+  const a2aEndpoints = [
+    { method: 'GET', endpoint: '/api/v1/security/vp/ops/status', description: 'Get operations status' },
+    { method: 'POST', endpoint: '/api/v1/security/vp/ops/mitigate', description: 'Mitigate threat' },
+    { method: 'GET', endpoint: '/api/v1/security/vp/ops/alerts', description: 'Get active alerts' },
+    { method: 'POST', endpoint: '/api/v1/security/vp/ops/respond', description: 'Coordinate response' },
+  ];
+
+  const performanceMetrics = [
+    { label: 'Threats Mitigated', value: '12,450', trend: '+28%' },
+    { label: 'Response Time', value: '0.3s', trend: '-45%' },
+    { label: 'Team Efficiency', value: '94%', trend: '+15%' },
+    { label: 'Alert Coverage', value: '99.8%', trend: '+3%' },
   ];
 
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <View style={[styles.hero, { backgroundColor: theme.colors.primary + '18' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: theme.colors.primary + '25' }]}>
-          <Shield size={48} color={theme.colors.primary} />
+      <View style={[styles.hero, { backgroundColor: '#C6282818', borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#C6282825' }]}>
+          <Shield size={56} color="#C62828" />
         </View>
-        <Text style={[styles.heroTitle, { color: theme.colors.text }]}>VP Security Operations</Text>
+        <Text style={[styles.heroTitle, { color: theme.colors.text }]}>AI VP Security Operations</Text>
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Security & Risk Department</Text>
         <View style={styles.badgesRow}>
-          <View style={[styles.badge, { backgroundColor: '#34C75922' }]}>
-            <Activity size={12} color="#34C759" />
-            <Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text>
-          </View>
-          <View style={[styles.badge, { backgroundColor: theme.colors.primary + '22' }]}>
-            <Star size={12} color={theme.colors.primary} />
-            <Text style={[styles.badgeText, { color: theme.colors.primary }]}>VP Level</Text>
-          </View>
-          <View style={[styles.badge, { backgroundColor: '#FF950022' }]}>
-            <Users size={12} color="#FF9500" />
-            <Text style={[styles.badgeText, { color: '#FF9500' }]}>5+ Reports</Text>
-          </View>
+          <View style={[styles.badge, { backgroundColor: '#34C75922' }]}><Activity size={12} color="#34C759" /><Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text></View>
+          <View style={[styles.badge, { backgroundColor: '#C6282822' }]}><Star size={12} color="#C62828" /><Text style={[styles.badgeText, { color: '#C62828' }]}>VP Level</Text></View>
+          <View style={[styles.badge, { backgroundColor: '#FF950022' }]}><Users size={12} color="#FF9500" /><Text style={[styles.badgeText, { color: '#FF9500' }]}>{subAgents.length} Sub-Agents</Text></View>
         </View>
       </View>
 
@@ -79,19 +81,36 @@ export default function VPSecurityOpsPage() {
         ))}
       </View>
 
+      {/* Performance Metrics */}
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Performance Metrics</Text>
+        <View style={styles.metricsGrid}>
+          {performanceMetrics.map((metric, index) => (
+            <View key={index} style={[styles.metricCard, { backgroundColor: '#C6282810' }]}>
+              <Text style={[styles.metricValue, { color: theme.colors.text }]}>{metric.value}</Text>
+              <Text style={[styles.metricLabel, { color: theme.colors.textSecondary }]}>{metric.label}</Text>
+              <View style={[styles.trendBadge, { backgroundColor: metric.trend.startsWith('+') ? '#34C75920' : '#EF444420' }]}>
+                <TrendingUp size={10} color={metric.trend.startsWith('+') ? '#34C759' : '#EF4444'} />
+                <Text style={[styles.trendText, { color: metric.trend.startsWith('+') ? '#34C759' : '#EF4444' }]}>{metric.trend}</Text>
+              </View>
+            </View>
+          ))}
+        </View>
+      </View>
+
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Overview</Text>
         <Text style={[styles.description, { color: theme.colors.textSecondary }]}>
-          The VP Security Operations AI oversees threat detection, incident response, and SOC operations. This agent ensures continuous security monitoring, rapid threat containment, and enterprise-wide protection against cyber threats.
+          The AI VP Security Operations leads the Security Operations Center (SOC), managing threat mitigation, incident response coordination, and team performance. It oversees 3 specialized sub-agents for comprehensive security operations coverage.
         </Text>
       </View>
 
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Capabilities</Text>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Core Capabilities</Text>
         <View style={styles.tagsContainer}>
           {capabilities.map((cap, index) => (
-            <View key={index} style={[styles.tag, { backgroundColor: theme.colors.primary + '18' }]}>
-              <Text style={[styles.tagText, { color: theme.colors.primary }]}>{cap}</Text>
+            <View key={index} style={[styles.tag, { backgroundColor: '#C6282818' }]}>
+              <Text style={[styles.tagText, { color: '#C62828' }]}>{cap}</Text>
             </View>
           ))}
         </View>
@@ -101,18 +120,36 @@ export default function VPSecurityOpsPage() {
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Responsibilities</Text>
         {responsibilities.map((item, index) => (
           <View key={index} style={styles.responsibilityRow}>
-            <ArrowRight size={14} color={theme.colors.primary} />
+            <ArrowRight size={14} color="#C62828" />
             <Text style={[styles.responsibilityText, { color: theme.colors.textSecondary }]}>{item}</Text>
           </View>
         ))}
       </View>
 
+      {/* A2A Endpoints */}
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>A2A API Endpoints</Text>
+        <Text style={[styles.sectionSubtitle, { color: theme.colors.textSecondary }]}>Agent-to-Agent communication interfaces</Text>
+        {a2aEndpoints.map((api, index) => (
+          <View key={index} style={styles.endpointRow}>
+            <View style={[styles.methodBadge, { backgroundColor: api.method === 'GET' ? '#007AFF20' : '#34C75920' }]}>
+              <Text style={[styles.methodText, { color: api.method === 'GET' ? '#007AFF' : '#34C759' }]}>{api.method}</Text>
+            </View>
+            <View style={styles.endpointInfo}>
+              <Text style={[styles.endpointPath, { color: theme.colors.text }]}>{api.endpoint}</Text>
+              <Text style={[styles.endpointDesc, { color: theme.colors.textSecondary }]}>{api.description}</Text>
+            </View>
+          </View>
+        ))}
+      </View>
+
+      {/* Recent Activity */}
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Recent Activity</Text>
         {activities.map((act, index) => (
           <View key={index} style={styles.activityRow}>
-            <View style={[styles.activityIcon, { backgroundColor: theme.colors.primary + '15' }]}>
-              <act.icon size={14} color={theme.colors.primary} />
+            <View style={[styles.activityIcon, { backgroundColor: '#C6282815' }]}>
+              <act.icon size={14} color="#C62828" />
             </View>
             <View style={styles.activityContent}>
               <Text style={[styles.activityText, { color: theme.colors.text }]}>{act.text}</Text>
@@ -122,38 +159,68 @@ export default function VPSecurityOpsPage() {
         ))}
       </View>
 
+      {/* Sub-Agents */}
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
+        {subAgents.map((s, i) => (
+          <TouchableOpacity key={i} style={styles.subCard} onPress={() => router.push(s.route as any)}>
+            <View style={[styles.subIcon, { backgroundColor: '#C6282815' }]}>
+              <s.icon size={20} color="#C62828" />
+            </View>
+            <View style={styles.subInfo}>
+              <Text style={[styles.subName, { color: theme.colors.text }]}>{s.name}</Text>
+              <Text style={[styles.subDesc, { color: theme.colors.textSecondary }]}>{s.desc}</Text>
+            </View>
+            <ChevronRight size={20} color="#C62828" />
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      {/* Quick Actions */}
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {quickActions.map((action, index) => (
-            <TouchableOpacity key={index} style={[styles.actionButton, { backgroundColor: theme.colors.primary + '12' }]}>
-              <action.icon size={24} color={theme.colors.primary} />
-              <Text style={[styles.actionText, { color: theme.colors.primary }]}>{action.label}</Text>
-            </TouchableOpacity>
-          ))}
+          <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#C6282812' }]} onPress={() => router.push('/ai-agent/security')}>
+            <Shield size={20} color="#C62828" />
+            <Text style={[styles.actionText, { color: '#C62828' }]}>Security</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#C6282812' }]} onPress={() => router.push('/ai-agent/collaboration')}>
+            <MessageSquare size={20} color="#C62828" />
+            <Text style={[styles.actionText, { color: '#C62828' }]}>Team Chat</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#C6282812' }]} onPress={() => router.push('/ai-agent/scheduling')}>
+            <Calendar size={20} color="#C62828" />
+            <Text style={[styles.actionText, { color: '#C62828' }]}>Schedule</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#C6282812' }]} onPress={() => router.push('/ai-agent/settings')}>
+            <Settings size={20} color="#C62828" />
+            <Text style={[styles.actionText, { color: '#C62828' }]}>Settings</Text>
+          </TouchableOpacity>
         </View>
       </View>
 
-      <AgentFeatures agentId="vp-security-ops" agentName="VP Security Operations" />
+      <AgentFeatures agentId="vp-security-ops" agentName="AI VP Security Operations" />
+      <View style={{ height: 40 }} />
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  hero: { alignItems: 'center', paddingVertical: 32, paddingHorizontal: 20, borderBottomWidth: 1, borderBottomColor: '#E5E5EA' },
-  heroIconWrap: { width: 88, height: 88, borderRadius: 44, justifyContent: 'center', alignItems: 'center', marginBottom: 16 },
-  heroTitle: { fontSize: 26, fontWeight: 'bold' },
-  heroSubtitle: { fontSize: 15, marginTop: 4, fontWeight: '500' },
-  badgesRow: { flexDirection: 'row', marginTop: 16, gap: 8 },
-  badge: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 20, gap: 4 },
+  hero: { alignItems: 'center', paddingVertical: 36, paddingHorizontal: 20, borderBottomWidth: 1 },
+  heroIconWrap: { width: 100, height: 100, borderRadius: 50, justifyContent: 'center', alignItems: 'center', marginBottom: 16 },
+  heroTitle: { fontSize: 22, fontWeight: 'bold', textAlign: 'center' },
+  heroSubtitle: { fontSize: 15, marginTop: 6, fontWeight: '500' },
+  badgesRow: { flexDirection: 'row', gap: 10, marginTop: 16, flexWrap: 'wrap', justifyContent: 'center' },
+  badge: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 20, gap: 5 },
   badgeText: { fontSize: 12, fontWeight: '600' },
   statsContainer: { flexDirection: 'row', flexWrap: 'wrap', padding: 16, gap: 12 },
   statCard: { flex: 1, minWidth: '22%', alignItems: 'center', padding: 14, borderRadius: 12 },
-  statValue: { fontSize: 18, fontWeight: 'bold', marginTop: 8 },
-  statLabel: { fontSize: 11, marginTop: 4 },
+  statValue: { fontSize: 14, fontWeight: 'bold', marginTop: 8 },
+  statLabel: { fontSize: 11, marginTop: 4, textAlign: 'center' },
   section: { marginHorizontal: 16, marginBottom: 16, padding: 20, borderRadius: 16 },
   sectionTitle: { fontSize: 18, fontWeight: '700', marginBottom: 14 },
+  sectionSubtitle: { fontSize: 13, color: '#666', marginBottom: 12 },
   description: { fontSize: 14, lineHeight: 22 },
   tagsContainer: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   tag: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 20 },
@@ -166,6 +233,23 @@ const styles = StyleSheet.create({
   activityText: { fontSize: 14, fontWeight: '500' },
   activityTime: { fontSize: 12, marginTop: 2 },
   actionsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
-  actionButton: { flex: 1, minWidth: '45%', alignItems: 'center', padding: 16, borderRadius: 12 },
-  actionText: { fontSize: 13, fontWeight: '600', marginTop: 8 },
+  actionButton: { flex: 1, minWidth: '45%', alignItems: 'center', padding: 14, borderRadius: 12 },
+  actionText: { fontSize: 12, fontWeight: '600', marginTop: 6 },
+  metricsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
+  metricCard: { flex: 1, minWidth: '45%', padding: 14, borderRadius: 12, alignItems: 'center' },
+  metricValue: { fontSize: 18, fontWeight: 'bold' },
+  metricLabel: { fontSize: 11, marginTop: 4, textAlign: 'center' },
+  trendBadge: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 8, paddingVertical: 4, borderRadius: 12, marginTop: 8, gap: 4 },
+  trendText: { fontSize: 11, fontWeight: '600' },
+  endpointRow: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: 12, gap: 12 },
+  methodBadge: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 6 },
+  methodText: { fontSize: 11, fontWeight: '700', fontFamily: 'monospace' },
+  endpointInfo: { flex: 1 },
+  endpointPath: { fontSize: 13, fontFamily: 'monospace', fontWeight: '500' },
+  endpointDesc: { fontSize: 12, marginTop: 2 },
+  subCard: { flexDirection: 'row', alignItems: 'center', padding: 12, backgroundColor: '#F2F2F7', borderRadius: 10, marginBottom: 8 },
+  subIcon: { width: 40, height: 40, borderRadius: 20, justifyContent: 'center', alignItems: 'center', marginRight: 12 },
+  subInfo: { flex: 1 },
+  subName: { fontSize: 14, fontWeight: '600', marginBottom: 2 },
+  subDesc: { fontSize: 12 },
 });

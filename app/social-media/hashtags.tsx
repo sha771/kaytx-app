@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Hash, TrendingUp, Search, Plus, Copy, Star, ChartBar, Eye } from 'lucide-react-native';
+import { Hash, TrendingUp, Search, Plus, Copy, Star, ChartBarBig, Eye } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 
 interface HashtagData {
@@ -165,7 +165,7 @@ export default function HashtagManager() {
                 </View>
                 <View style={[styles.statDivider, { backgroundColor: theme.colors.border }]} />
                 <View style={styles.hashtagStat}>
-                  <ChartBar size={14} color={theme.colors.secondaryText} />
+                  <ChartBarBig size={14} color={theme.colors.secondaryText} />
                   <Text style={[styles.statValue, { color: theme.colors.text }]}>{hashtag.engagement}</Text>
                   <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Engagement</Text>
                 </View>

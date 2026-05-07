@@ -25,7 +25,7 @@ import {
   DollarSign,
   Users,
   Briefcase,
-  ChartBar,
+  ChartBarBig,
   ListFilter,
   ChevronRight,
   Award,

@@ -41,7 +41,7 @@ import {
   ArrowDownRight,
   Database,
   Zap,
-  ChartBar,
+  ChartBarBig,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
@@ -358,7 +358,7 @@ const mockHistory: HistoryItem[] = [
       ],
       resolution: 'Report delivered, follow-up scheduled for anomalies',
     },
-    icon: ChartBar,
+    icon: ChartBarBig,
     color: '#AF52DE',
     confidence: 99,
     tokensUsed: 1200,
@@ -597,49 +597,49 @@ export default function AgentHistoryScreen() {
     
     return (
       <TouchableOpacity 
-        style= [styles.historyCard, { backgroundColor: theme.colors.cardBackground }]}
+        style={[styles.historyCard, { backgroundColor: theme.colors.cardBackground }]}
         onPress={() => setExpandedItem(isExpanded ? null : item.id)}
         activeOpacity={0.7}
       >
         <View style={styles.historyHeader}>
-          <View style= [styles.historyIcon, { backgroundColor: `${item.color}20` }]}>
+          <View style={[styles.historyIcon, { backgroundColor: `${item.color}20` }]}>
             <item.icon size={20} color={item.color} />
           </View>
           <View style={styles.historyInfo}>
             <View style={styles.historyTitleRow}>
-              <Text style= [styles.historyAgent, { color: theme.colors.text }]} numberOfLines={1}>
+              <Text style={[styles.historyAgent, { color: theme.colors.text }]} numberOfLines={1}>
                 {item.agentName}
               </Text>
               {item.starred && (
                 <Bookmark size={12} color="#FF9500" fill="#FF9500" />
               )}
-              <View style= [styles.statusBadge, { backgroundColor: `${getStatusColor(item.status)}20` }]}>
+              <View style={[styles.statusBadge, { backgroundColor: `${getStatusColor(item.status)}20` }]}>
                 <StatusIcon size={10} color={getStatusColor(item.status)} />
-                <Text style= [styles.statusText, { color: getStatusColor(item.status) }]}>
+                <Text style={[styles.statusText, { color: getStatusColor(item.status) }]}>
                   {item.status}
                 </Text>
               </View>
             </View>
-            <Text style= [styles.historyAction, { color: theme.colors.text }]}>{item.action}</Text>
-            <Text style= [styles.historyDesc, { color: theme.colors.secondaryText }]} numberOfLines={2}>
+            <Text style={[styles.historyAction, { color: theme.colors.text }]}>{item.action}</Text>
+            <Text style={[styles.historyDesc, { color: theme.colors.secondaryText }]} numberOfLines={2}>
               {item.description}
             </Text>
             <View style={styles.historyMeta}>
-              <View style= [styles.categoryBadge, { backgroundColor: `${categoryColors[item.category]}15` }]}>
-                <Text style= [styles.categoryText, { color: categoryColors[item.category] }]}>
+              <View style={[styles.categoryBadge, { backgroundColor: `${categoryColors[item.category]}15` }]}>
+                <Text style={[styles.categoryText, { color: categoryColors[item.category] }]}>
                   {item.category}
                 </Text>
               </View>
               <View style={styles.timeMeta}>
                 <Clock size={10} color={theme.colors.secondaryText} />
-                <Text style= [styles.timeText, { color: theme.colors.secondaryText }]}>{item.timestamp}</Text>
+                <Text style={[styles.timeText, { color: theme.colors.secondaryText }]}>{item.timestamp}</Text>
               </View>
-              <Text style= [styles.durationText, { color: theme.colors.secondaryText }]}>
+              <Text style={[styles.durationText, { color: theme.colors.secondaryText }]}>
                 {item.duration}
               </Text>
               <View style={styles.confidenceMeta}>
                 <Brain size={10} color={theme.colors.secondaryText} />
-                <Text style= [styles.confidenceText, { color: item.confidence > 90 ? '#34C759' : item.confidence > 70 ? '#FF9500' : '#FF3B30' }]}>
+                <Text style={[styles.confidenceText, { color: item.confidence > 90 ? '#34C759' : item.confidence > 70 ? '#FF9500' : '#FF3B30' }]}>
                   {item.confidence}%
                 </Text>
               </View>
@@ -653,35 +653,35 @@ export default function AgentHistoryScreen() {
         </View>
         
         {isExpanded && (
-          <View style= [styles.expandedDetails, { borderTopColor: theme.colors.border }]}>
+          <View style={[styles.expandedDetails, { borderTopColor: theme.colors.border }]}>
             {item.parentAgent && (
               <View style={styles.detailRow}>
-                <Text style= [styles.detailLabel, { color: theme.colors.secondaryText }]}>Parent Agent</Text>
-                <Text style= [styles.detailValue, { color: theme.colors.text }]}>{item.parentAgent}</Text>
+                <Text style={[styles.detailLabel, { color: theme.colors.secondaryText }]}>Parent Agent</Text>
+                <Text style={[styles.detailValue, { color: theme.colors.text }]}>{item.parentAgent}</Text>
               </View>
             )}
             {item.details.input && (
               <View style={styles.detailRow}>
-                <Text style= [styles.detailLabel, { color: theme.colors.secondaryText }]}>Input</Text>
-                <Text style= [styles.detailValue, { color: theme.colors.text }]}>{item.details.input}</Text>
+                <Text style={[styles.detailLabel, { color: theme.colors.secondaryText }]}>Input</Text>
+                <Text style={[styles.detailValue, { color: theme.colors.text }]}>{item.details.input}</Text>
               </View>
             )}
             {item.details.output && (
               <View style={styles.detailRow}>
-                <Text style= [styles.detailLabel, { color: theme.colors.secondaryText }]}>Output</Text>
-                <Text style= [styles.detailValue, { color: theme.colors.text }]}>{item.details.output}</Text>
+                <Text style={[styles.detailLabel, { color: theme.colors.secondaryText }]}>Output</Text>
+                <Text style={[styles.detailValue, { color: theme.colors.text }]}>{item.details.output}</Text>
               </View>
             )}
             {item.details.context && (
               <View style={styles.detailRow}>
-                <Text style= [styles.detailLabel, { color: theme.colors.secondaryText }]}>Context</Text>
-                <Text style= [styles.detailValue, { color: theme.colors.text }]}>{item.details.context}</Text>
+                <Text style={[styles.detailLabel, { color: theme.colors.secondaryText }]}>Context</Text>
+                <Text style={[styles.detailValue, { color: theme.colors.text }]}>{item.details.context}</Text>
               </View>
             )}
             {item.details.resolution && (
-              <View style= [styles.resolutionBox, { backgroundColor: `${item.color}10` }]}>
+              <View style={[styles.resolutionBox, { backgroundColor: `${item.color}10` }]}>
                 <CircleCheck size={14} color={item.color} />
-                <Text style= [styles.resolutionText, { color: theme.colors.text }]}>{item.details.resolution}</Text>
+                <Text style={[styles.resolutionText, { color: theme.colors.text }]}>{item.details.resolution}</Text>
               </View>
             )}
             {item.details.metrics && (
@@ -689,10 +689,10 @@ export default function AgentHistoryScreen() {
                 {item.details.metrics.map((metric, index) => {
                   const TrendIcon = getTrendIcon(metric.trend);
                   return (
-                    <View key={index} style= [styles.metricBadge, { backgroundColor: `${item.color}15` }]}>
-                      <Text style= [styles.metricLabel, { color: theme.colors.secondaryText }]}>{metric.label}</Text>
+                    <View key={index} style={[styles.metricBadge, { backgroundColor: `${item.color}15` }]}>
+                      <Text style={[styles.metricLabel, { color: theme.colors.secondaryText }]}>{metric.label}</Text>
                       <View style={styles.metricValueRow}>
-                        <Text style= [styles.metricValue, { color: item.color }]}>{metric.value}</Text>
+                        <Text style={[styles.metricValue, { color: item.color }]}>{metric.value}</Text>
                         {TrendIcon && <TrendIcon size={12} color={metric.trend === 'up' ? '#34C759' : '#FF3B30'} />}
                       </View>
                     </View>
@@ -703,32 +703,32 @@ export default function AgentHistoryScreen() {
             <View style={styles.techDetails}>
               <View style={styles.techItem}>
                 <Database size={12} color={theme.colors.secondaryText} />
-                <Text style= [styles.techText, { color: theme.colors.secondaryText }]}>{item.model} v{item.version}</Text>
+                <Text style={[styles.techText, { color: theme.colors.secondaryText }]}>{item.model} v{item.version}</Text>
               </View>
               <View style={styles.techItem}>
                 <Zap size={12} color={theme.colors.secondaryText} />
-                <Text style= [styles.techText, { color: theme.colors.secondaryText }]}>{item.tokensUsed.toLocaleString()} tokens</Text>
+                <Text style={[styles.techText, { color: theme.colors.secondaryText }]}>{item.tokensUsed.toLocaleString()} tokens</Text>
               </View>
             </View>
             <View style={styles.tagsRow}>
               {item.tags.map((tag, index) => (
-                <View key={index} style= [styles.tagBadge, { backgroundColor: 'rgba(0,0,0,0.05)' }]}>
-                  <Text style= [styles.tagText, { color: theme.colors.secondaryText }]}>#{tag}</Text>
+                <View key={index} style={[styles.tagBadge, { backgroundColor: 'rgba(0,0,0,0.05)' }]}>
+                  <Text style={[styles.tagText, { color: theme.colors.secondaryText }]}>#{tag}</Text>
                 </View>
               ))}
             </View>
             <View style={styles.actionButtonsRow}>
-              <TouchableOpacity style= [styles.actionButton, { backgroundColor: 'rgba(0,0,0,0.05)' }]}>
+              <TouchableOpacity style={[styles.actionButton, { backgroundColor: 'rgba(0,0,0,0.05)' }]}>
                 <RotateCcw size={14} color={theme.colors.secondaryText} />
-                <Text style= [styles.actionButtonText, { color: theme.colors.secondaryText }]}>Retry</Text>
+                <Text style={[styles.actionButtonText, { color: theme.colors.secondaryText }]}>Retry</Text>
               </TouchableOpacity>
-              <TouchableOpacity style= [styles.actionButton, { backgroundColor: 'rgba(0,0,0,0.05)' }]}>
+              <TouchableOpacity style={[styles.actionButton, { backgroundColor: 'rgba(0,0,0,0.05)' }]}>
                 <Share2 size={14} color={theme.colors.secondaryText} />
-                <Text style= [styles.actionButtonText, { color: theme.colors.secondaryText }]}>Share</Text>
+                <Text style={[styles.actionButtonText, { color: theme.colors.secondaryText }]}>Share</Text>
               </TouchableOpacity>
-              <TouchableOpacity style= [styles.actionButton, { backgroundColor: item.starred ? '#FF950020' : 'rgba(0,0,0,0.05)' }]}>
+              <TouchableOpacity style={[styles.actionButton, { backgroundColor: item.starred ? '#FF950020' : 'rgba(0,0,0,0.05)' }]}>
                 <Bookmark size={14} color={item.starred ? '#FF9500' : theme.colors.secondaryText} fill={item.starred ? '#FF9500' : 'transparent'} />
-                <Text style= [styles.actionButtonText, { color: item.starred ? '#FF9500' : theme.colors.secondaryText }]}>Save</Text>
+                <Text style={[styles.actionButtonText, { color: item.starred ? '#FF9500' : theme.colors.secondaryText }]}>Save</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -738,68 +738,68 @@ export default function AgentHistoryScreen() {
   };
 
   return (
-    <View style= [styles.container, { backgroundColor: theme.colors.background }]}>
-      <View style= [styles.header, { paddingTop: insets.top + 10 }]}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <View style={[styles.header, { paddingTop: insets.top + 10 }]}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
           <ArrowLeft size={24} color={theme.colors.text} />
         </TouchableOpacity>
         <View style={styles.headerCenter}>
-          <Text style= [styles.title, { color: theme.colors.text }]}>Agent History</Text>
-          <Text style= [styles.subtitle, { color: theme.colors.secondaryText }]}>
+          <Text style={[styles.title, { color: theme.colors.text }]}>Agent History</Text>
+          <Text style={[styles.subtitle, { color: theme.colors.secondaryText }]}>
             Activity logs & action timeline
           </Text>
         </View>
         <View style={styles.headerActions}>
           <TouchableOpacity 
-            style= [styles.headerButton, { backgroundColor: theme.colors.cardBackground }]}
+            style={[styles.headerButton, { backgroundColor: theme.colors.cardBackground }]}
             onPress={() => setShowFilters(!showFilters)}
           >
             <ListFilter size={18} color={showFilters ? theme.colors.primary : theme.colors.text} />
           </TouchableOpacity>
-          <TouchableOpacity style= [styles.headerButton, { backgroundColor: theme.colors.cardBackground }]}>
+          <TouchableOpacity style={[styles.headerButton, { backgroundColor: theme.colors.cardBackground }]}>
             <Download size={18} color={theme.colors.text} />
           </TouchableOpacity>
         </View>
       </View>
 
-      <View style= [styles.statsBar, { backgroundColor: theme.colors.cardBackground }]}>
+      <View style={[styles.statsBar, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.statItem}>
           <Animated.View style={{ transform: [{ scale: pulseAnim }] }}>
             <Activity size={16} color="#007AFF" />
           </Animated.View>
-          <Text style= [styles.statValue, { color: theme.colors.text }]}>{stats.total}</Text>
-          <Text style= [styles.statLabel, { color: theme.colors.secondaryText }]}>Total</Text>
+          <Text style={[styles.statValue, { color: theme.colors.text }]}>{stats.total}</Text>
+          <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Total</Text>
         </View>
         <View style={styles.statDivider} />
         <View style={styles.statItem}>
           <CircleCheck size={16} color="#34C759" />
-          <Text style= [styles.statValue, { color: '#34C759' }]}>{stats.success}</Text>
-          <Text style= [styles.statLabel, { color: theme.colors.secondaryText }]}>Success</Text>
+          <Text style={[styles.statValue, { color: '#34C759' }]}>{stats.success}</Text>
+          <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Success</Text>
         </View>
         <View style={styles.statDivider} />
         <View style={styles.statItem}>
           <TriangleAlert size={16} color="#FF9500" />
-          <Text style= [styles.statValue, { color: '#FF9500' }]}>{stats.warnings}</Text>
-          <Text style= [styles.statLabel, { color: theme.colors.secondaryText }]}>Warnings</Text>
+          <Text style={[styles.statValue, { color: '#FF9500' }]}>{stats.warnings}</Text>
+          <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Warnings</Text>
         </View>
         <View style={styles.statDivider} />
         <View style={styles.statItem}>
           <CircleX size={16} color="#FF3B30" />
-          <Text style= [styles.statValue, { color: '#FF3B30' }]}>{stats.failed}</Text>
-          <Text style= [styles.statLabel, { color: theme.colors.secondaryText }]}>Failed</Text>
+          <Text style={[styles.statValue, { color: '#FF3B30' }]}>{stats.failed}</Text>
+          <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Failed</Text>
         </View>
         <View style={styles.statDivider} />
         <View style={styles.statItem}>
           <Brain size={16} color="#AF52DE" />
-          <Text style= [styles.statValue, { color: '#AF52DE' }]}>{stats.avgConfidence}%</Text>
-          <Text style= [styles.statLabel, { color: theme.colors.secondaryText }]}>Confidence</Text>
+          <Text style={[styles.statValue, { color: '#AF52DE' }]}>{stats.avgConfidence}%</Text>
+          <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Confidence</Text>
         </View>
       </View>
 
-      <View style= [styles.searchContainer, { backgroundColor: theme.colors.cardBackground }]}>
+      <View style={[styles.searchContainer, { backgroundColor: theme.colors.cardBackground }]}>
         <Search size={18} color={theme.colors.secondaryText} />
         <TextInput
-          style= [styles.searchInput, { color: theme.colors.text }]}
+          style={[styles.searchInput, { color: theme.colors.text }]}
           placeholder="Search history, agents, tags..."
           placeholderTextColor={theme.colors.secondaryText}
           value={searchQuery}
@@ -813,17 +813,17 @@ export default function AgentHistoryScreen() {
       </View>
 
       {showFilters && (
-        <View style= [styles.filtersPanel, { backgroundColor: theme.colors.cardBackground }]}>
+        <View style={[styles.filtersPanel, { backgroundColor: theme.colors.cardBackground }]}>
           <View style={styles.filterSection}>
-            <Text style= [styles.filterLabel, { color: theme.colors.text }]}>Sort By</Text>
+            <Text style={[styles.filterLabel, { color: theme.colors.text }]}>Sort By</Text>
             <View style={styles.sortOptions}>
               {(['time', 'confidence', 'duration'] as const).map((option) => (
                 <TouchableOpacity
                   key={option}
-                  style= [styles.sortOption, sortBy === option && { backgroundColor: theme.colors.primary }]}
+                  style={[styles.sortOption, sortBy === option && { backgroundColor: theme.colors.primary }]}
                   onPress={() => setSortBy(option)}
                 >
-                  <Text style= [styles.sortOptionText, { color: sortBy === option ? '#fff' : theme.colors.secondaryText }]}>
+                  <Text style={[styles.sortOptionText, { color: sortBy === option ? '#fff' : theme.colors.secondaryText }]}>
                     {option.charAt(0).toUpperCase() + option.slice(1)}
                   </Text>
                 </TouchableOpacity>
@@ -835,7 +835,7 @@ export default function AgentHistoryScreen() {
             onPress={() => setStarredOnly(!starredOnly)}
           >
             <Bookmark size={16} color={starredOnly ? '#FF9500' : theme.colors.secondaryText} fill={starredOnly ? '#FF9500' : 'transparent'} />
-            <Text style= [styles.starredText, { color: starredOnly ? '#FF9500' : theme.colors.secondaryText }]}>Starred Only</Text>
+            <Text style={[styles.starredText, { color: starredOnly ? '#FF9500' : theme.colors.secondaryText }]}>Starred Only</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -849,14 +849,14 @@ export default function AgentHistoryScreen() {
         {categories.map((cat) => (
           <TouchableOpacity
             key={cat}
-            style= [
+            style={[
               styles.filterChip,
               selectedCategory === cat && { backgroundColor: categoryColors[cat] || theme.colors.primary },
               selectedCategory !== cat && { backgroundColor: theme.colors.cardBackground },
             ]}
             onPress={() => setSelectedCategory(cat)}
           >
-            <Text style= [
+            <Text style={[
               styles.filterChipText,
               { color: selectedCategory === cat ? '#fff' : theme.colors.secondaryText }
             ]}>
@@ -870,7 +870,7 @@ export default function AgentHistoryScreen() {
         {statuses.map((status) => (
           <TouchableOpacity
             key={status}
-            style= [
+            style={[
               styles.statusChip,
               selectedStatus === status && { backgroundColor: getStatusColor(status) + '30' },
             ]}
@@ -880,7 +880,7 @@ export default function AgentHistoryScreen() {
               size: 12, 
               color: selectedStatus === status ? getStatusColor(status) : theme.colors.secondaryText 
             })}
-            <Text style= [
+            <Text style={[
               styles.statusChipText,
               { color: selectedStatus === status ? getStatusColor(status) : theme.colors.secondaryText }
             ]}>
@@ -897,15 +897,15 @@ export default function AgentHistoryScreen() {
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
-          <Text style= [styles.resultsCount, { color: theme.colors.secondaryText }]}>
+          <Text style={[styles.resultsCount, { color: theme.colors.secondaryText }]}>
             {filteredHistory.length} results
           </Text>
         }
         ListEmptyComponent={
           <View style={styles.emptyState}>
             <RefreshCw size={48} color={theme.colors.secondaryText} />
-            <Text style= [styles.emptyTitle, { color: theme.colors.text }]}>No history found</Text>
-            <Text style= [styles.emptyDesc, { color: theme.colors.secondaryText }]}>
+            <Text style={[styles.emptyTitle, { color: theme.colors.text }]}>No history found</Text>
+            <Text style={[styles.emptyDesc, { color: theme.colors.secondaryText }]}>
               Try adjusting your filters
             </Text>
           </View>

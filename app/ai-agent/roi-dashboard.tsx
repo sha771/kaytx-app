@@ -19,7 +19,7 @@ import {
   Zap,
   Calendar,
   ChevronDown,
-  ChartBar,
+  ChartBarBig,
   ChartPie,
   Activity,
   Target,

@@ -40,49 +40,49 @@ export default function PrivacyDashboard() {
   const allAgents = getAllPrivacyAgents();
 
   return (
-    <ScrollView style= [styles.container, { backgroundColor: theme.colors.background }]}>
+    <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       {/* Header */}
-      <View style= [styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style= [styles.heroIconWrap, { backgroundColor: '#FF525220' }]}>
+      <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#FF525220' }]}>
           <Shield size={48} color="#FF5252" />
         </View>
-        <Text style= [styles.heroTitle, { color: theme.colors.text }]}>Privacy Layer</Text>
-        <Text style= [styles.heroSubtitle, { color: theme.colors.textSecondary }]}>
+        <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Privacy Layer</Text>
+        <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>
           9 AI Agents | 3 Gates | Real-Time Protection
         </Text>
         <View style={styles.badgesRow}>
-          <View style= [styles.badge, { backgroundColor: '#34C75922' }]}>
+          <View style={[styles.badge, { backgroundColor: '#34C75922' }]}>
             <Activity size={12} color="#34C759" />
-            <Text style= [styles.badgeText, { color: '#34C759' }]}>Active</Text>
+            <Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text>
           </View>
-          <View style= [styles.badge, { backgroundColor: '#FF525222' }]}>
+          <View style={[styles.badge, { backgroundColor: '#FF525222' }]}>
             <Shield size={12} color="#FF5252" />
-            <Text style= [styles.badgeText, { color: '#FF5252' }]}>Critical</Text>
+            <Text style={[styles.badgeText, { color: '#FF5252' }]}>Critical</Text>
           </View>
         </View>
       </View>
 
       {/* Stats */}
       <View style={styles.statsContainer}>
-        <View style= [styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <View style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
           <Shield size={22} color="#FF5252" />
-          <Text style= [styles.statValue, { color: theme.colors.text }]}>{allAgents.length}</Text>
-          <Text style= [styles.statLabel, { color: theme.colors.textSecondary }]}>Privacy Agents</Text>
+          <Text style={[styles.statValue, { color: theme.colors.text }]}>{allAgents.length}</Text>
+          <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>Privacy Agents</Text>
         </View>
-        <View style= [styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <View style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
           <CircleCheckBig size={22} color="#34C759" />
-          <Text style= [styles.statValue, { color: theme.colors.text }]}>3</Text>
-          <Text style= [styles.statLabel, { color: theme.colors.textSecondary }]}>Gates</Text>
+          <Text style={[styles.statValue, { color: theme.colors.text }]}>3</Text>
+          <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>Gates</Text>
         </View>
-        <View style= [styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <View style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
           <Activity size={22} color="#007AFF" />
-          <Text style= [styles.statValue, { color: theme.colors.text }]}>99.9%</Text>
-          <Text style= [styles.statLabel, { color: theme.colors.textSecondary }]}>Uptime</Text>
+          <Text style={[styles.statValue, { color: theme.colors.text }]}>99.9%</Text>
+          <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>Uptime</Text>
         </View>
-        <View style= [styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <View style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
           <TriangleAlert size={22} color="#FF9500" />
-          <Text style= [styles.statValue, { color: theme.colors.text }]}>0</Text>
-          <Text style= [styles.statLabel, { color: theme.colors.textSecondary }]}>Violations</Text>
+          <Text style={[styles.statValue, { color: theme.colors.text }]}>0</Text>
+          <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>Violations</Text>
         </View>
       </View>
 
@@ -90,30 +90,30 @@ export default function PrivacyDashboard() {
       {(['input', 'agent', 'output'] as const).map((gateKey) => {
         const gate = gateConfig[gateKey];
         return (
-          <View key={gateKey} style= [styles.gateSection, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+          <View key={gateKey} style={[styles.gateSection, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
             <View style={styles.gateHeader}>
-              <View style= [styles.gateIconWrap, { backgroundColor: gate.bgColor }]}>
+              <View style={[styles.gateIconWrap, { backgroundColor: gate.bgColor }]}>
                 <ArrowRight size={20} color={gate.color} />
               </View>
               <View style={styles.gateTitleWrap}>
-                <Text style= [styles.gateLabel, { color: gate.color }]}>{gate.label}</Text>
-                <Text style= [styles.gateDesc, { color: theme.colors.textSecondary }]}>{gate.description}</Text>
+                <Text style={[styles.gateLabel, { color: gate.color }]}>{gate.label}</Text>
+                <Text style={[styles.gateDesc, { color: theme.colors.textSecondary }]}>{gate.description}</Text>
               </View>
             </View>
 
             <View style={styles.agentsList}>
               {gate.agents.map((agent) => (
-                <View key={agent.id} style= [styles.agentRow, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-                  <View style= [styles.agentIconWrap, { backgroundColor: gate.bgColor }]}>
+                <View key={agent.id} style={[styles.agentRow, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
+                  <View style={[styles.agentIconWrap, { backgroundColor: gate.bgColor }]}>
                     {React.createElement(agent.icon, { size: 18, color: gate.color })}
                   </View>
                   <View style={styles.agentInfo}>
-                    <Text style= [styles.agentName, { color: theme.colors.text }]}>{agent.name}</Text>
-                    <Text style= [styles.agentRole, { color: theme.colors.textSecondary }]}>{agent.title}</Text>
+                    <Text style={[styles.agentName, { color: theme.colors.text }]}>{agent.name}</Text>
+                    <Text style={[styles.agentRole, { color: theme.colors.textSecondary }]}>{agent.title}</Text>
                   </View>
-                  <View style= [styles.statusBadge, { backgroundColor: '#34C75922' }]}>
+                  <View style={[styles.statusBadge, { backgroundColor: '#34C75922' }]}>
                     <Activity size={10} color="#34C759" />
-                    <Text style= [styles.statusText, { color: '#34C759' }]}>Online</Text>
+                    <Text style={[styles.statusText, { color: '#34C759' }]}>Online</Text>
                   </View>
                 </View>
               ))}
@@ -123,27 +123,27 @@ export default function PrivacyDashboard() {
       })}
 
       {/* Data Flow */}
-      <View style= [styles.flowSection, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>Privacy Flow</Text>
+      <View style={[styles.flowSection, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Privacy Flow</Text>
         <View style={styles.flowDiagram}>
           <View style={styles.flowStep}>
-            <Text style= [styles.flowNode, { backgroundColor: '#448AFF22', color: '#448AFF' }]}>INPUT</Text>
+            <Text style={[styles.flowNode, { backgroundColor: '#448AFF22', color: '#448AFF' }]}>INPUT</Text>
           </View>
           <ArrowRight size={16} color={theme.colors.textSecondary} />
           <View style={styles.flowStep}>
-            <Text style= [styles.flowNode, { backgroundColor: '#448AFF22', color: '#448AFF' }]}>INPUT GATE</Text>
+            <Text style={[styles.flowNode, { backgroundColor: '#448AFF22', color: '#448AFF' }]}>INPUT GATE</Text>
           </View>
           <ArrowRight size={16} color={theme.colors.textSecondary} />
           <View style={styles.flowStep}>
-            <Text style= [styles.flowNode, { backgroundColor: '#00BFA522', color: '#00BFA5' }]}>AGENT GATE</Text>
+            <Text style={[styles.flowNode, { backgroundColor: '#00BFA522', color: '#00BFA5' }]}>AGENT GATE</Text>
           </View>
           <ArrowRight size={16} color={theme.colors.textSecondary} />
           <View style={styles.flowStep}>
-            <Text style= [styles.flowNode, { backgroundColor: '#FF6E4022', color: '#FF6E40' }]}>OUTPUT GATE</Text>
+            <Text style={[styles.flowNode, { backgroundColor: '#FF6E4022', color: '#FF6E40' }]}>OUTPUT GATE</Text>
           </View>
           <ArrowRight size={16} color={theme.colors.textSecondary} />
           <View style={styles.flowStep}>
-            <Text style= [styles.flowNode, { backgroundColor: '#FF6E4022', color: '#FF6E40' }]}>OUTPUT</Text>
+            <Text style={[styles.flowNode, { backgroundColor: '#FF6E4022', color: '#FF6E40' }]}>OUTPUT</Text>
           </View>
         </View>
       </View>

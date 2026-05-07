@@ -24,7 +24,7 @@ import {
   GitBranch,
   Target,
   Sparkles,
-  ChartBar,
+  ChartBarBig,
   Shield,
   ChevronRight,
   Calendar,
@@ -116,7 +116,7 @@ export default function CounselingSessionScreen() {
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case 'performance_counseling': return ChartBar;
+      case 'performance_counseling': return ChartBarBig;
       case 'mentorship': return Sparkles;
       case 'escalation': return Shield;
       case 'advisory': return Brain;
@@ -342,7 +342,7 @@ export default function CounselingSessionScreen() {
                         )}
                         {response.counselingGuidance.performanceImprovement && (
                           <View style={styles.guidanceItem}>
-                            <ChartBar size={14} color="#007AFF" />
+                            <ChartBarBig size={14} color="#007AFF" />
                             <Text style={[styles.guidanceText, { color: theme.colors.text }]}>
                               Performance Plan: {response.counselingGuidance.performanceImprovement.timeline}
                             </Text>
@@ -444,7 +444,7 @@ export default function CounselingSessionScreen() {
                 
                 {latestResponse.counselingGuidance.performanceImprovement && (
                   <View style={styles.guidanceCard}>
-                    <ChartBar size={18} color="#007AFF" />
+                    <ChartBarBig size={18} color="#007AFF" />
                     <View style={styles.guidanceInfo}>
                       <Text style={[styles.guidanceTitle, { color: theme.colors.text }]}>
                         Performance Improvement

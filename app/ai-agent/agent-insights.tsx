@@ -13,7 +13,7 @@ import {
   ArrowLeft,
   TrendingUp,
   TrendingDown,
-  ChartBar,
+  ChartBarBig,
   ChartPie,
   ChartLine,
   Users,
@@ -332,7 +332,7 @@ export default function AgentInsightsScreen() {
           return (
             <View
               key={index}
-              style= [
+              style={[
                 styles.sparklineBar,
                 { 
                   height, 
@@ -351,22 +351,22 @@ export default function AgentInsightsScreen() {
     const trendColor = metric.trend === 'up' ? '#34C759' : metric.trend === 'down' ? '#FF3B30' : '#8E8E93';
     
     return (
-      <View key={metric.id} style= [styles.metricCard, { backgroundColor: theme.colors.cardBackground }]}>
+      <View key={metric.id} style={[styles.metricCard, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.metricHeader}>
-          <View style= [styles.metricIconBg, { backgroundColor: `${metric.color}20` }]}>
+          <View style={[styles.metricIconBg, { backgroundColor: `${metric.color}20` }]}>
             <metric.icon size={16} color={metric.color} />
           </View>
-          <View style= [styles.trendBadge, { backgroundColor: `${trendColor}15` }]}>
+          <View style={[styles.trendBadge, { backgroundColor: `${trendColor}15` }]}>
             <TrendIcon size={10} color={trendColor} />
-            <Text style= [styles.trendText, { color: trendColor }]}>
+            <Text style={[styles.trendText, { color: trendColor }]}>
               {metric.change > 0 ? '+' : ''}{metric.change}%
             </Text>
           </View>
         </View>
-        <Text style= [styles.metricValue, { color: theme.colors.text }]}>{metric.value}</Text>
-        <Text style= [styles.metricTitle, { color: theme.colors.secondaryText }]} numberOfLines={1}>{metric.title}</Text>
+        <Text style={[styles.metricValue, { color: theme.colors.text }]}>{metric.value}</Text>
+        <Text style={[styles.metricTitle, { color: theme.colors.secondaryText }]} numberOfLines={1}>{metric.title}</Text>
         {metric.sparkline && renderSparkline(metric.sparkline, metric.color)}
-        <Text style= [styles.metricChange, { color: theme.colors.secondaryText }]}>{metric.changeLabel}</Text>
+        <Text style={[styles.metricChange, { color: theme.colors.secondaryText }]}>{metric.changeLabel}</Text>
       </View>
     );
   };
@@ -378,44 +378,44 @@ export default function AgentInsightsScreen() {
     return (
       <TouchableOpacity 
         key={insight.id}
-        style= [styles.insightCard, { backgroundColor: theme.colors.cardBackground }]}
+        style={[styles.insightCard, { backgroundColor: theme.colors.cardBackground }]}
         activeOpacity={0.7}
       >
         <View style={styles.insightHeader}>
-          <View style= [styles.insightIconBg, { backgroundColor: `${insightColor}20` }]}>
+          <View style={[styles.insightIconBg, { backgroundColor: `${insightColor}20` }]}>
             <InsightIcon size={18} color={insightColor} />
           </View>
           <View style={styles.insightBadges}>
-            <View style= [styles.impactBadge, { backgroundColor: `${getImpactColor(insight.impact)}20` }]}>
-              <Text style= [styles.impactText, { color: getImpactColor(insight.impact) }]}>
+            <View style={[styles.impactBadge, { backgroundColor: `${getImpactColor(insight.impact)}20` }]}>
+              <Text style={[styles.impactText, { color: getImpactColor(insight.impact) }]}>
                 {insight.impact}
               </Text>
             </View>
             {insight.actionable && (
-              <View style= [styles.actionBadge, { backgroundColor: `${theme.colors.primary}20` }]}>
+              <View style={[styles.actionBadge, { backgroundColor: `${theme.colors.primary}20` }]}>
                 <Zap size={10} color={theme.colors.primary} />
-                <Text style= [styles.actionText, { color: theme.colors.primary }]}>Action</Text>
+                <Text style={[styles.actionText, { color: theme.colors.primary }]}>Action</Text>
               </View>
             )}
           </View>
         </View>
-        <Text style= [styles.insightTitle, { color: theme.colors.text }]}>{insight.title}</Text>
-        <Text style= [styles.insightDesc, { color: theme.colors.secondaryText }]}>{insight.description}</Text>
+        <Text style={[styles.insightTitle, { color: theme.colors.text }]}>{insight.title}</Text>
+        <Text style={[styles.insightDesc, { color: theme.colors.secondaryText }]}>{insight.description}</Text>
         {insight.recommendation && (
-          <View style= [styles.recommendationBox, { backgroundColor: `${insightColor}10` }]}>
+          <View style={[styles.recommendationBox, { backgroundColor: `${insightColor}10` }]}>
             <Lightbulb size={12} color={insightColor} />
-            <Text style= [styles.recommendationText, { color: theme.colors.text }]}>{insight.recommendation}</Text>
+            <Text style={[styles.recommendationText, { color: theme.colors.text }]}>{insight.recommendation}</Text>
           </View>
         )}
         <View style={styles.insightFooter}>
-          <Text style= [styles.insightAgent, { color: theme.colors.secondaryText }]}>{insight.agentName}</Text>
+          <Text style={[styles.insightAgent, { color: theme.colors.secondaryText }]}>{insight.agentName}</Text>
           {insight.metric && (
-            <View style= [styles.metricBadge, { backgroundColor: `${insightColor}15` }]}>
-              <Text style= [styles.metricBadgeText, { color: insightColor }]}>{insight.metric}</Text>
+            <View style={[styles.metricBadge, { backgroundColor: `${insightColor}15` }]}>
+              <Text style={[styles.metricBadgeText, { color: insightColor }]}>{insight.metric}</Text>
             </View>
           )}
         </View>
-        <Text style= [styles.insightTimestamp, { color: theme.colors.secondaryText }]}>{insight.timestamp}</Text>
+        <Text style={[styles.insightTimestamp, { color: theme.colors.secondaryText }]}>{insight.timestamp}</Text>
       </TouchableOpacity>
     );
   };
@@ -424,16 +424,16 @@ export default function AgentInsightsScreen() {
     const TrendIcon = getTrendIcon(data.trend);
     
     return (
-      <View key={data.agentName} style= [styles.perfCard, { backgroundColor: theme.colors.cardBackground }]}>
+      <View key={data.agentName} style={[styles.perfCard, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.perfHeader}>
-          <View style= [styles.perfDot, { backgroundColor: data.color }]} />
-          <Text style= [styles.perfName, { color: theme.colors.text }]} numberOfLines={1}>{data.agentName}</Text>
+          <View style={[styles.perfDot, { backgroundColor: data.color }]} />
+          <Text style={[styles.perfName, { color: theme.colors.text }]} numberOfLines={1}>{data.agentName}</Text>
           <TrendIcon size={14} color={data.trend === 'up' ? '#34C759' : data.trend === 'down' ? '#FF3B30' : '#8E8E93'} />
-          <Text style= [styles.perfRate, { color: data.color }]}>{data.successRate}%</Text>
+          <Text style={[styles.perfRate, { color: data.color }]}>{data.successRate}%</Text>
         </View>
         <View style={styles.perfBarBg}>
           <Animated.View 
-            style= [
+            style={[
               styles.perfBarFill, 
               { 
                 width: progressAnim.interpolate({
@@ -448,31 +448,31 @@ export default function AgentInsightsScreen() {
         <View style={styles.perfMeta}>
           <View style={styles.perfMetaItem}>
             <CircleCheck size={10} color={theme.colors.secondaryText} />
-            <Text style= [styles.perfMetaText, { color: theme.colors.secondaryText }]}>
+            <Text style={[styles.perfMetaText, { color: theme.colors.secondaryText }]}>
               {data.tasksCompleted.toLocaleString()}
             </Text>
           </View>
           <View style={styles.perfMetaItem}>
             <Clock size={10} color={theme.colors.secondaryText} />
-            <Text style= [styles.perfMetaText, { color: theme.colors.secondaryText }]}>
+            <Text style={[styles.perfMetaText, { color: theme.colors.secondaryText }]}>
               {data.avgResponseTime}
             </Text>
           </View>
           <View style={styles.perfMetaItem}>
             <Cpu size={10} color={theme.colors.secondaryText} />
-            <Text style= [styles.perfMetaText, { color: theme.colors.secondaryText }]}>
+            <Text style={[styles.perfMetaText, { color: theme.colors.secondaryText }]}>
               {data.efficiency}%
             </Text>
           </View>
           <View style={styles.perfMetaItem}>
             <DollarSign size={10} color={theme.colors.secondaryText} />
-            <Text style= [styles.perfMetaText, { color: theme.colors.secondaryText }]}>
+            <Text style={[styles.perfMetaText, { color: theme.colors.secondaryText }]}>
               {data.costPerTask}
             </Text>
           </View>
           <View style={styles.perfMetaItem}>
             <Star size={10} color="#FF9500" fill="#FF9500" />
-            <Text style= [styles.perfMetaText, { color: theme.colors.secondaryText }]}>
+            <Text style={[styles.perfMetaText, { color: theme.colors.secondaryText }]}>
               {data.satisfaction}
             </Text>
           </View>
@@ -485,19 +485,19 @@ export default function AgentInsightsScreen() {
     const isPositive = (trend.label === 'Error Rate' || trend.label === 'Cost/Task') ? trend.change < 0 : trend.change > 0;
     
     return (
-      <View key={index} style= [styles.trendCard, { backgroundColor: theme.colors.cardBackground }]}>
-        <Text style= [styles.trendLabel, { color: theme.colors.secondaryText }]}>{trend.label}</Text>
-        <Text style= [styles.trendValue, { color: theme.colors.text }]}>
+      <View key={index} style={[styles.trendCard, { backgroundColor: theme.colors.cardBackground }]}>
+        <Text style={[styles.trendLabel, { color: theme.colors.secondaryText }]}>{trend.label}</Text>
+        <Text style={[styles.trendValue, { color: theme.colors.text }]}>
           {trend.label.includes('Cost') ? `$${trend.current.toFixed(2)}` : trend.current.toFixed(1)}
           {trend.label.includes('%') || trend.label.includes('Confidence') || trend.label.includes('Rate') ? '%' : ''}
         </Text>
-        <View style= [styles.trendChangeBadge, { backgroundColor: isPositive ? '#34C75920' : '#FF3B3020' }]}>
+        <View style={[styles.trendChangeBadge, { backgroundColor: isPositive ? '#34C75920' : '#FF3B3020' }]}>
           {isPositive ? (
             <ArrowUpRight size={10} color="#34C759" />
           ) : (
             <ArrowDownRight size={10} color="#FF3B30" />
           )}
-          <Text style= [styles.trendChangeText, { color: isPositive ? '#34C759' : '#FF3B30' }]}>
+          <Text style={[styles.trendChangeText, { color: isPositive ? '#34C759' : '#FF3B30' }]}>
             {Math.abs(trend.change).toFixed(1)}%
           </Text>
         </View>
@@ -506,18 +506,18 @@ export default function AgentInsightsScreen() {
   };
 
   return (
-    <View style= [styles.container, { backgroundColor: theme.colors.background }]}>
-      <View style= [styles.header, { paddingTop: insets.top + 10 }]}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <View style={[styles.header, { paddingTop: insets.top + 10 }]}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
           <ArrowLeft size={24} color={theme.colors.text} />
         </TouchableOpacity>
         <View style={styles.headerCenter}>
-          <Text style= [styles.title, { color: theme.colors.text }]}>Agent Insights</Text>
-          <Text style= [styles.subtitle, { color: theme.colors.secondaryText }]}>
+          <Text style={[styles.title, { color: theme.colors.text }]}>Agent Insights</Text>
+          <Text style={[styles.subtitle, { color: theme.colors.secondaryText }]}>
             Analytics & Intelligence Dashboard
           </Text>
         </View>
-        <TouchableOpacity style= [styles.filterButton, { backgroundColor: theme.colors.cardBackground }]}>
+        <TouchableOpacity style={[styles.filterButton, { backgroundColor: theme.colors.cardBackground }]}>
           <Calendar size={20} color={theme.colors.primary} />
         </TouchableOpacity>
       </View>
@@ -526,13 +526,13 @@ export default function AgentInsightsScreen() {
         {periods.map((period) => (
           <TouchableOpacity
             key={period}
-            style= [
+            style={[
               styles.periodTab,
               selectedPeriod === period && { backgroundColor: theme.colors.primary },
             ]}
             onPress={() => setSelectedPeriod(period as any)}
           >
-            <Text style= [
+            <Text style={[
               styles.periodText,
               { color: selectedPeriod === period ? '#fff' : theme.colors.secondaryText }
             ]}>
@@ -546,13 +546,13 @@ export default function AgentInsightsScreen() {
         {(['overview', 'performance', 'insights'] as const).map((view) => (
           <TouchableOpacity
             key={view}
-            style= [
+            style={[
               styles.viewTab,
               selectedView === view && { backgroundColor: theme.colors.cardBackground, borderBottomColor: theme.colors.primary, borderBottomWidth: 2 },
             ]}
             onPress={() => setSelectedView(view)}
           >
-            <Text style= [
+            <Text style={[
               styles.viewTabText,
               { color: selectedView === view ? theme.colors.primary : theme.colors.secondaryText }
             ]}>
@@ -565,22 +565,22 @@ export default function AgentInsightsScreen() {
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>
         {selectedView === 'overview' && (
           <>
-            <View style= [styles.scoreCard, { backgroundColor: theme.colors.cardBackground }]}>
+            <View style={[styles.scoreCard, { backgroundColor: theme.colors.cardBackground }]}>
               <View style={styles.scoreHeader}>
-                <Animated.View style= [styles.scoreIconBg, { transform: [{ scale: pulseAnim }] }]}>
+                <Animated.View style={[styles.scoreIconBg, { transform: [{ scale: pulseAnim }] }]}>
                   <Crown size={28} color="#FFD700" />
                 </Animated.View>
                 <View style={styles.scoreInfo}>
-                  <Text style= [styles.scoreLabel, { color: theme.colors.secondaryText }]}>Overall AI Performance Score</Text>
-                  <Text style= [styles.scoreValue, { color: theme.colors.text }]}>{overallScore}%</Text>
+                  <Text style={[styles.scoreLabel, { color: theme.colors.secondaryText }]}>Overall AI Performance Score</Text>
+                  <Text style={[styles.scoreValue, { color: theme.colors.text }]}>{overallScore}%</Text>
                 </View>
-                <View style= [styles.scoreBadge, { backgroundColor: '#34C75920' }]}>
-                  <Text style= [styles.scoreBadgeText, { color: '#34C759' }]}>Excellent</Text>
+                <View style={[styles.scoreBadge, { backgroundColor: '#34C75920' }]}>
+                  <Text style={[styles.scoreBadgeText, { color: '#34C759' }]}>Excellent</Text>
                 </View>
               </View>
               <View style={styles.scoreBarContainer}>
                 <Animated.View 
-                  style= [
+                  style={[
                     styles.scoreBar, 
                     { 
                       width: progressAnim.interpolate({
@@ -594,7 +594,7 @@ export default function AgentInsightsScreen() {
               </View>
             </View>
 
-            <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>Key Metrics</Text>
+            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Metrics</Text>
             <ScrollView 
               horizontal 
               showsHorizontalScrollIndicator={false}
@@ -603,17 +603,17 @@ export default function AgentInsightsScreen() {
               {metricsData.map(renderMetricCard)}
             </ScrollView>
 
-            <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>Weekly Trends</Text>
+            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Weekly Trends</Text>
             <View style={styles.trendsGrid}>
               {trendData.map(renderTrendCard)}
             </View>
 
-            <View style= [styles.summaryCard, { backgroundColor: theme.colors.cardBackground }]}>
+            <View style={[styles.summaryCard, { backgroundColor: theme.colors.cardBackground }]}>
               <View style={styles.summaryHeader}>
                 <Brain size={24} color={theme.colors.primary} />
-                <Text style= [styles.summaryTitle, { color: theme.colors.text }]}>AI Summary</Text>
+                <Text style={[styles.summaryTitle, { color: theme.colors.text }]}>AI Summary</Text>
               </View>
-              <Text style= [styles.summaryText, { color: theme.colors.secondaryText }]}>
+              <Text style={[styles.summaryText, { color: theme.colors.secondaryText }]}>
                 Your AI workforce processed 58,430 tasks this week with a 94.2% success rate. 
                 Customer Experience AI showed the highest improvement (+23%), while the AI Negotiator 
                 needs attention due to declining performance. Three high-impact opportunities and one 
@@ -621,20 +621,20 @@ export default function AgentInsightsScreen() {
               </Text>
               <View style={styles.summaryStats}>
                 <View style={styles.summaryStatItem}>
-                  <Text style= [styles.summaryStatValue, { color: '#34C759' }]}>+12%</Text>
-                  <Text style= [styles.summaryStatLabel, { color: theme.colors.secondaryText }]}>Efficiency</Text>
+                  <Text style={[styles.summaryStatValue, { color: '#34C759' }]}>+12%</Text>
+                  <Text style={[styles.summaryStatLabel, { color: theme.colors.secondaryText }]}>Efficiency</Text>
                 </View>
                 <View style={styles.summaryStatItem}>
-                  <Text style= [styles.summaryStatValue, { color: '#007AFF' }]}>$142K</Text>
-                  <Text style= [styles.summaryStatLabel, { color: theme.colors.secondaryText }]}>Saved</Text>
+                  <Text style={[styles.summaryStatValue, { color: '#007AFF' }]}>$142K</Text>
+                  <Text style={[styles.summaryStatLabel, { color: theme.colors.secondaryText }]}>Saved</Text>
                 </View>
                 <View style={styles.summaryStatItem}>
-                  <Text style= [styles.summaryStatValue, { color: '#FF9500' }]}>4</Text>
-                  <Text style= [styles.summaryStatLabel, { color: theme.colors.secondaryText }]}>Actions</Text>
+                  <Text style={[styles.summaryStatValue, { color: '#FF9500' }]}>4</Text>
+                  <Text style={[styles.summaryStatLabel, { color: theme.colors.secondaryText }]}>Actions</Text>
                 </View>
                 <View style={styles.summaryStatItem}>
-                  <Text style= [styles.summaryStatValue, { color: '#FF3B30' }]}>1</Text>
-                  <Text style= [styles.summaryStatLabel, { color: theme.colors.secondaryText }]}>Critical</Text>
+                  <Text style={[styles.summaryStatValue, { color: '#FF3B30' }]}>1</Text>
+                  <Text style={[styles.summaryStatLabel, { color: theme.colors.secondaryText }]}>Critical</Text>
                 </View>
               </View>
             </View>
@@ -643,7 +643,7 @@ export default function AgentInsightsScreen() {
 
         {selectedView === 'performance' && (
           <>
-            <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>Agent Performance</Text>
+            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Agent Performance</Text>
             <View style={styles.performanceSection}>
               {performanceData.map(renderPerformanceBar)}
             </View>
@@ -653,20 +653,20 @@ export default function AgentInsightsScreen() {
         {selectedView === 'insights' && (
           <>
             <View style={styles.insightsHeader}>
-              <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>AI Insights</Text>
+              <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>AI Insights</Text>
             </View>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.insightFiltersScroll}>
               <View style={styles.insightFilters}>
                 {insightTypes.map((type) => (
                   <TouchableOpacity
                     key={type}
-                    style= [
+                    style={[
                       styles.insightFilterChip,
                       selectedInsightType === type && { backgroundColor: getInsightColor(type) + '30' },
                     ]}
                     onPress={() => setSelectedInsightType(type)}
                   >
-                    <Text style= [
+                    <Text style={[
                       styles.insightFilterText,
                       { color: selectedInsightType === type ? getInsightColor(type) : theme.colors.secondaryText }
                     ]}>

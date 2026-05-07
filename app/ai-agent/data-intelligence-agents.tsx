@@ -10,7 +10,7 @@ import {
 import { useRouter } from 'expo-router';
 import {
   ChevronLeft,
-  ChartBar,
+  ChartBarBig,
   Search,
   Database,
   Brain,
@@ -112,7 +112,7 @@ export default function DataIntelligenceAgentsScreen() {
             <ChevronLeft size={24} color={colors.text} />
           </TouchableOpacity>
           <View style={styles.titleContainer}>
-            <ChartBar size={22} color="#9B59B6" />
+            <ChartBarBig size={22} color="#9B59B6" />
             <Text style={[styles.title, { color: colors.text }]}>Data Intelligence AI</Text>
           </View>
           <View style={{ width: 40 }} />

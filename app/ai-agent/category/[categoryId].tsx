@@ -31,7 +31,7 @@ import {
   ShieldCheck,
   TrendingUp,
   Star,
-  ChartBar,
+  ChartBarBig,
   Network,
   ArrowLeft,
   Settings2,
@@ -947,7 +947,7 @@ const AIAgentCategoryScreen = () => {
                 30-Day Performance Trend
               </Text>
               <View style={styles.chartPlaceholder}>
-                <ChartBar size={48} color={colors.textSecondary} />
+                <ChartBarBig size={48} color={colors.textSecondary} />
                 <Text style={[styles.chartPlaceholderText, { color: colors.textSecondary }]}>
                   Performance chart will be rendered here with real data from the analytics service.
                 </Text>

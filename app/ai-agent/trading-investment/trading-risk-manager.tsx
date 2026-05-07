@@ -1,7 +1,7 @@
 
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Shield, TriangleAlert, Activity, ChartBar, TrendingDown, CircleCheck } from 'lucide-react-native';
+import { Shield, TriangleAlert, Activity, ChartBarBig, TrendingDown, CircleCheck } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
@@ -96,7 +96,7 @@ export default function TradingRiskManagerScreen() {
 
   const customTabs = [
     { id: 'risk', label: 'Risk Monitor', icon: Shield, component: riskTab },
-    { id: 'reports', label: 'Reports', icon: ChartBar, component: <View /> },
+    { id: 'reports', label: 'Reports', icon: ChartBarBig, component: <View /> },
   ];
 
   return <AgentShell agent={agent} customTabs={customTabs} />;

@@ -15,7 +15,7 @@ import {
     Clock,
     SquareCheck,
     CircleAlert,
-    ChartBar,
+    ChartBarBig,
     ChevronRight,
     UserPlus
 } from 'lucide-react-native';

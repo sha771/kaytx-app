@@ -30,7 +30,7 @@ import {
   Star,
   TrendingUp,
   Clock,
-  ChartBar,
+  ChartBarBig,
   Zap,
   Activity,
   Gauge,
@@ -608,7 +608,7 @@ export default function OperationsManagementAIScreen() {
                 <Text style={[styles.actionButtonText, { color: ACCENT_COLOR }]}>Configure</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#007AFF15' }]}>
-                <ChartBar size={16} color="#007AFF" />
+                <ChartBarBig size={16} color="#007AFF" />
                 <Text style={[styles.actionButtonText, { color: '#007AFF' }]}>Analytics</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.actionButton, { backgroundColor: '#34C75915' }]}>

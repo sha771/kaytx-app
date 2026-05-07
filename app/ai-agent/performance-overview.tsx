@@ -20,7 +20,7 @@ import {
   HardDrive,
   Network,
   DollarSign,
-  ChartBar,
+  ChartBarBig,
   ChartPie,
   RefreshCw,
   ListFilter,
@@ -84,7 +84,7 @@ const INFRASTRUCTURE_METRICS: Metric[] = [
 
 const COST_METRICS: Metric[] = [
   { label: 'Today', value: '$1,247', change: '-8% vs yesterday', positive: true, icon: DollarSign, color: '#10B981' },
-  { label: 'This Month', value: '$38.5K', change: '+12% vs last month', positive: false, icon: ChartBar, color: '#3B82F6' },
+  { label: 'This Month', value: '$38.5K', change: '+12% vs last month', positive: false, icon: ChartBarBig, color: '#3B82F6' },
   { label: 'Projected', value: '$46.2K', change: 'On budget', positive: true, icon: ChartPie, color: '#F59E0B' },
   { label: 'Cost per Request', value: '$0.0097', change: '-3% vs last week', positive: true, icon: TrendingUp, color: '#8B5CF6' },
 ];

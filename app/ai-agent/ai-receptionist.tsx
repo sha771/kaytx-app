@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
-import { Phone, Users, Clock, CircleCheck, CircleAlert, ChartBar, Settings, Lock } from 'lucide-react-native';
+import { Phone, Users, Clock, CircleCheck, CircleAlert, ChartBarBig, Settings, Lock } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
@@ -90,7 +90,7 @@ export default function AIReceptionistScreen() {
         <View style={[styles.section, { backgroundColor: theme.colors.cardBackground }]}>
           <View style={styles.sectionHeader}>
             <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Live Call Stream</Text>
-            <ChartBar size={18} color={theme.colors.primary} />
+            <ChartBarBig size={18} color={theme.colors.primary} />
           </View>
           {activities.map((call: any) => (
             <View key={call.id} style={styles.callRow}>
@@ -132,7 +132,7 @@ export default function AIReceptionistScreen() {
   );
 
   const customTabs = [
-    { id: 'dashboard', label: 'Dashboard', icon: ChartBar, component: renderDashboard },
+    { id: 'dashboard', label: 'Dashboard', icon: ChartBarBig, component: renderDashboard },
     { id: 'settings', label: 'Voice Config', icon: Settings, component: <View /> },
   ];
 

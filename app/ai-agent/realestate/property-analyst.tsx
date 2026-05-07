@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { ChartBar, ChartBar, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
+import { ChartBarBig, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
+import SubAgentLinks from '@/components/ai-agent/SubAgentLinks';
 
 export default function AgentPage() {
   const { theme } = useTheme();
@@ -13,7 +14,7 @@ export default function AgentPage() {
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#33691E20' }]}><ChartBar size={48} color="#33691E" /></View>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#33691E20' }]}><ChartBarBig size={48} color="#33691E" /></View>
         <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Property Analyst</Text>
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Property Analytics</Text>
         <View style={styles.badgesRow}>
@@ -26,6 +27,11 @@ export default function AgentPage() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Capabilities</Text><View style={styles.tagsContainer}>{capabilities.map((cap,i)=>(<View key={i} style={[styles.tag, { backgroundColor: '#33691E18' }]}><Text style={[styles.tagText, { color: '#33691E' }]}>{cap}</Text></View>))}</View></View>
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Responsibilities</Text>{responsibilities.map((item,i)=>(<View key={i} style={styles.responsibilityRow}><ArrowRight size={14} color="#33691E" /><Text style={[styles.responsibilityText, { color: theme.colors.textSecondary }]}>{item}</Text></View>))}</View>
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Recent Activity</Text>{activities.map((act,i)=>(<View key={i} style={styles.activityRow}><View style={[styles.activityIcon, { backgroundColor: '#33691E15' }]}><act.icon size={14} color="#33691E" /></View><View style={styles.activityContent}><Text style={[styles.activityText, { color: theme.colors.text }]}>{act.text}</Text><Text style={[styles.activityTime, { color: theme.colors.textSecondary }]}>{act.time}</Text></View></View>))}</View>
+      <SubAgentLinks subAgents={[
+        { id: 'comparable-analyzer', label: 'AI Comparable Analyzer' },
+        { id: 'value-estimator', label: 'AI Value Estimator' },
+        { id: 'market-trend-reporter', label: 'AI Market Trend Reporter' },
+      ]} />
       <AgentFeatures agentId="property-analyst" agentName="Property Analyst" />
     </ScrollView>
   );

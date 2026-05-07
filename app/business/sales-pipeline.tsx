@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { TrendingUp, DollarSign, Target, Users, ChartBar, Calendar, ListFilter } from 'lucide-react-native';
+import { TrendingUp, DollarSign, Target, Users, ChartBarBig, Calendar, ListFilter } from 'lucide-react-native';
 
 interface SalesPipelineStage {
   id: string;
@@ -232,7 +232,7 @@ export default function SalesPipeline() {
           style={[styles.tab, activeTab === 'pipeline' && styles.activeTab]}
           onPress={() => setActiveTab('pipeline')}
         >
-          <ChartBar size={20} color={activeTab === 'pipeline' ? '#4ecdc4' : '#666'} />
+          <ChartBarBig size={20} color={activeTab === 'pipeline' ? '#4ecdc4' : '#666'} />
           <Text style={[styles.tabText, activeTab === 'pipeline' && styles.activeTabText]}>Pipeline</Text>
         </TouchableOpacity>
         <TouchableOpacity 

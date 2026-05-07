@@ -20,7 +20,7 @@ import {
   Users,
   Zap,
   Target,
-  ChartBar,
+  ChartBarBig,
   Send,
   Mic,
   Sparkles,
@@ -444,7 +444,7 @@ export default function AIAssistantScreen() {
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
-          <ChartBar size={20} color={theme.colors.primary} />
+          <ChartBarBig size={20} color={theme.colors.primary} />
           <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
             Productivity Insights
           </Text>

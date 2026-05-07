@@ -219,17 +219,17 @@ export default function EnterpriseAdminScreen() {
     const isPositive = item.change.startsWith('+');
 
     return (
-      <View style= [styles.metricCard, { backgroundColor: theme.colors.cardBackground }]}>
+      <View style={[styles.metricCard, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.metricHeader}>
-          <View style= [styles.metricIcon, { backgroundColor: `${item.color}20` }]}>
+          <View style={[styles.metricIcon, { backgroundColor: `${item.color}20` }]}>
             <IconComponent size={20} color={item.color} />
           </View>
-          <Text style= [styles.metricChange, { color: isPositive ? '#34C759' : '#FF3B30' }]}>
+          <Text style={[styles.metricChange, { color: isPositive ? '#34C759' : '#FF3B30' }]}>
             {item.change}
           </Text>
         </View>
-        <Text style= [styles.metricValue, { color: theme.colors.text }]}>{item.value}</Text>
-        <Text style= [styles.metricTitle, { color: theme.colors.secondaryText }]}>{item.title}</Text>
+        <Text style={[styles.metricValue, { color: theme.colors.text }]}>{item.value}</Text>
+        <Text style={[styles.metricTitle, { color: theme.colors.secondaryText }]}>{item.title}</Text>
       </View>
     );
   };
@@ -239,13 +239,13 @@ export default function EnterpriseAdminScreen() {
     const StatusIcon = getStatusIcon(item.status);
 
     return (
-      <View style= [styles.statusCard, { backgroundColor: theme.colors.cardBackground }]}>
+      <View style={[styles.statusCard, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.statusHeader}>
           <View style={styles.statusInfo}>
-            <Text style= [styles.serviceName, { color: theme.colors.text }]}>{item.service}</Text>
-            <View style= [styles.statusBadge, { backgroundColor: statusColor + '20' }]}>
+            <Text style={[styles.serviceName, { color: theme.colors.text }]}>{item.service}</Text>
+            <View style={[styles.statusBadge, { backgroundColor: statusColor + '20' }]}>
               <StatusIcon size={12} color={statusColor} />
-              <Text style= [styles.statusText, { color: statusColor }]}>
+              <Text style={[styles.statusText, { color: statusColor }]}>
                 {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
               </Text>
             </View>
@@ -254,16 +254,16 @@ export default function EnterpriseAdminScreen() {
 
         <View style={styles.statusMetrics}>
           <View style={styles.statusMetric}>
-            <Text style= [styles.statusMetricLabel, { color: theme.colors.secondaryText }]}>Uptime</Text>
-            <Text style= [styles.statusMetricValue, { color: theme.colors.text }]}>{item.uptime}</Text>
+            <Text style={[styles.statusMetricLabel, { color: theme.colors.secondaryText }]}>Uptime</Text>
+            <Text style={[styles.statusMetricValue, { color: theme.colors.text }]}>{item.uptime}</Text>
           </View>
           <View style={styles.statusMetric}>
-            <Text style= [styles.statusMetricLabel, { color: theme.colors.secondaryText }]}>Response</Text>
-            <Text style= [styles.statusMetricValue, { color: theme.colors.text }]}>{item.responseTime}</Text>
+            <Text style={[styles.statusMetricLabel, { color: theme.colors.secondaryText }]}>Response</Text>
+            <Text style={[styles.statusMetricValue, { color: theme.colors.text }]}>{item.responseTime}</Text>
           </View>
           <View style={styles.statusMetric}>
-            <Text style= [styles.statusMetricLabel, { color: theme.colors.secondaryText }]}>Last Incident</Text>
-            <Text style= [styles.statusMetricValue, { color: theme.colors.text }]}>{item.lastIncident}</Text>
+            <Text style={[styles.statusMetricLabel, { color: theme.colors.secondaryText }]}>Last Incident</Text>
+            <Text style={[styles.statusMetricValue, { color: theme.colors.text }]}>{item.lastIncident}</Text>
           </View>
         </View>
       </View>
@@ -274,24 +274,24 @@ export default function EnterpriseAdminScreen() {
     const typeColor = getActivityTypeColor(item.type);
 
     return (
-      <View style= [styles.activityCard, { backgroundColor: theme.colors.cardBackground }]}>
+      <View style={[styles.activityCard, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.activityHeader}>
           <Image source={{ uri: item.avatar }} style={styles.activityAvatar} />
           <View style={styles.activityInfo}>
-            <Text style= [styles.activityUser, { color: theme.colors.text }]}>{item.user}</Text>
-            <Text style= [styles.activityAction, { color: theme.colors.secondaryText }]}>{item.action}</Text>
+            <Text style={[styles.activityUser, { color: theme.colors.text }]}>{item.user}</Text>
+            <Text style={[styles.activityAction, { color: theme.colors.secondaryText }]}>{item.action}</Text>
             <View style={styles.activityMeta}>
-              <View style= [styles.typeBadge, { backgroundColor: typeColor + '20' }]}>
-                <Text style= [styles.typeText, { color: typeColor }]}>
+              <View style={[styles.typeBadge, { backgroundColor: typeColor + '20' }]}>
+                <Text style={[styles.typeText, { color: typeColor }]}>
                   {item.type.replace('_', ' ').toUpperCase()}
                 </Text>
               </View>
-              <Text style= [styles.departmentText, { color: theme.colors.secondaryText }]}>
+              <Text style={[styles.departmentText, { color: theme.colors.secondaryText }]}>
                 {item.department}
               </Text>
             </View>
           </View>
-          <Text style= [styles.activityTimestamp, { color: theme.colors.secondaryText }]}>
+          <Text style={[styles.activityTimestamp, { color: theme.colors.secondaryText }]}>
             {item.timestamp}
           </Text>
         </View>
@@ -302,11 +302,11 @@ export default function EnterpriseAdminScreen() {
   const renderOverview = () => (
     <ScrollView style={styles.tabContent} showsVerticalScrollIndicator={false}>
       {/* System Controls */}
-      <View style= [styles.controlsSection, { backgroundColor: theme.colors.cardBackground }]}>
+      <View style={[styles.controlsSection, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.controlItem}>
           <View style={styles.controlInfo}>
-            <Text style= [styles.controlTitle, { color: theme.colors.text }]}>Maintenance Mode</Text>
-            <Text style= [styles.controlDescription, { color: theme.colors.secondaryText }]}>
+            <Text style={[styles.controlTitle, { color: theme.colors.text }]}>Maintenance Mode</Text>
+            <Text style={[styles.controlDescription, { color: theme.colors.secondaryText }]}>
               Enable to perform system updates
             </Text>
           </View>
@@ -320,8 +320,8 @@ export default function EnterpriseAdminScreen() {
 
         <View style={styles.controlItem}>
           <View style={styles.controlInfo}>
-            <Text style= [styles.controlTitle, { color: theme.colors.text }]}>Real-time Monitoring</Text>
-            <Text style= [styles.controlDescription, { color: theme.colors.secondaryText }]}>
+            <Text style={[styles.controlTitle, { color: theme.colors.text }]}>Real-time Monitoring</Text>
+            <Text style={[styles.controlDescription, { color: theme.colors.secondaryText }]}>
               Live system performance tracking
             </Text>
           </View>
@@ -336,7 +336,7 @@ export default function EnterpriseAdminScreen() {
 
       {/* Metrics */}
       <View style={styles.section}>
-        <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>Enterprise Overview</Text>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Enterprise Overview</Text>
         <FlatList
           data={enterpriseMetrics}
           renderItem={renderMetric}
@@ -349,7 +349,7 @@ export default function EnterpriseAdminScreen() {
 
       {/* Recent Activity */}
       <View style={styles.section}>
-        <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>Recent Admin Activity</Text>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Recent Admin Activity</Text>
         <FlatList
           data={userActivities}
           renderItem={renderUserActivity}
@@ -364,10 +364,10 @@ export default function EnterpriseAdminScreen() {
   const renderUsers = () => (
     <ScrollView style={styles.tabContent} showsVerticalScrollIndicator={false}>
       <View style={styles.section}>
-        <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>User Management</Text>
-        <View style= [styles.userStatsCard, { backgroundColor: theme.colors.cardBackground }]}>
-          <Text style= [styles.userStatsTitle, { color: theme.colors.text }]}>User Statistics</Text>
-          <Text style= [styles.userStatsDescription, { color: theme.colors.secondaryText }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>User Management</Text>
+        <View style={[styles.userStatsCard, { backgroundColor: theme.colors.cardBackground }]}>
+          <Text style={[styles.userStatsTitle, { color: theme.colors.text }]}>User Statistics</Text>
+          <Text style={[styles.userStatsDescription, { color: theme.colors.secondaryText }]}>
             2,847 total users across 15 departments with 94% active in the last 30 days.
           </Text>
         </View>
@@ -378,7 +378,7 @@ export default function EnterpriseAdminScreen() {
   const renderSystem = () => (
     <ScrollView style={styles.tabContent} showsVerticalScrollIndicator={false}>
       <View style={styles.section}>
-        <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>System Status</Text>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>System Status</Text>
         <FlatList
           data={systemStatuses}
           renderItem={renderSystemStatus}
@@ -393,10 +393,10 @@ export default function EnterpriseAdminScreen() {
   const renderSecurity = () => (
     <ScrollView style={styles.tabContent} showsVerticalScrollIndicator={false}>
       <View style={styles.section}>
-        <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>Security Overview</Text>
-        <View style= [styles.securityCard, { backgroundColor: theme.colors.cardBackground }]}>
-          <Text style= [styles.securityTitle, { color: theme.colors.text }]}>Security Score: 98/100</Text>
-          <Text style= [styles.securityDescription, { color: theme.colors.secondaryText }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Security Overview</Text>
+        <View style={[styles.securityCard, { backgroundColor: theme.colors.cardBackground }]}>
+          <Text style={[styles.securityTitle, { color: theme.colors.text }]}>Security Score: 98/100</Text>
+          <Text style={[styles.securityDescription, { color: theme.colors.secondaryText }]}>
             All security protocols are active. No threats detected in the last 30 days.
           </Text>
         </View>
@@ -405,32 +405,32 @@ export default function EnterpriseAdminScreen() {
   );
 
   return (
-    <View style= [styles.container, { backgroundColor: theme.colors.background }]}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       {/* Premium Enterprise Admin Header */}
-      <View style= [styles.premiumHeader, { paddingTop: insets.top + 20, backgroundColor: theme.colors.cardBackground }]}>
+      <View style={[styles.premiumHeader, { paddingTop: insets.top + 20, backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.headerTop}>
           <TouchableOpacity onPress={() => router.back()}>
             <ArrowLeft size={24} color={theme.colors.text} />
           </TouchableOpacity>
-          <Text style= [styles.premiumTitle, { color: theme.colors.text }]}>Admin Command</Text>
-          <TouchableOpacity style= [styles.plusBtn, { backgroundColor: theme.colors.primary }]}>
+          <Text style={[styles.premiumTitle, { color: theme.colors.text }]}>Admin Command</Text>
+          <TouchableOpacity style={[styles.plusBtn, { backgroundColor: theme.colors.primary }]}>
             <Bell size={20} color="#fff" />
           </TouchableOpacity>
         </View>
         <View style={styles.headerMetrics}>
           <View style={styles.hMetric}>
-            <Text style= [styles.hMetricVal, { color: theme.colors.text }]}>2,847</Text>
-            <Text style= [styles.hMetricLab, { color: theme.colors.secondaryText }]}>Total Nodes</Text>
+            <Text style={[styles.hMetricVal, { color: theme.colors.text }]}>2,847</Text>
+            <Text style={[styles.hMetricLab, { color: theme.colors.secondaryText }]}>Total Nodes</Text>
           </View>
           <View style={styles.hMetricDivider} />
           <View style={styles.hMetric}>
-            <Text style= [styles.hMetricVal, { color: '#34C759' }]}>99.9%</Text>
-            <Text style= [styles.hMetricLab, { color: theme.colors.secondaryText }]}>Uptime Sync</Text>
+            <Text style={[styles.hMetricVal, { color: '#34C759' }]}>99.9%</Text>
+            <Text style={[styles.hMetricLab, { color: theme.colors.secondaryText }]}>Uptime Sync</Text>
           </View>
           <View style={styles.hMetricDivider} />
           <View style={styles.hMetric}>
-            <Text style= [styles.hMetricVal, { color: theme.colors.primary }]}>98/100</Text>
-            <Text style= [styles.hMetricLab, { color: theme.colors.secondaryText }]}>Security</Text>
+            <Text style={[styles.hMetricVal, { color: theme.colors.primary }]}>98/100</Text>
+            <Text style={[styles.hMetricLab, { color: theme.colors.secondaryText }]}>Security</Text>
           </View>
         </View>
       </View>
@@ -440,14 +440,14 @@ export default function EnterpriseAdminScreen() {
         {(['overview', 'users', 'system', 'security'] as const).map((tab) => (
           <TouchableOpacity
             key={tab}
-            style= [
+            style={[
               styles.tab,
               selectedTab === tab && { backgroundColor: theme.colors.primary },
             ]}
             onPress={() => setSelectedTab(tab)}
           >
             <Text
-              style= [
+              style={[
                 styles.tabText,
                 {
                   color: selectedTab === tab ? 'white' : theme.colors.secondaryText,

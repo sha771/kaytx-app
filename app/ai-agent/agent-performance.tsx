@@ -20,7 +20,7 @@ import {
   Crown,
   Star,
   Award,
-  ChartBar,
+  ChartBarBig,
   Headphones,
   Megaphone,
   Settings,
@@ -114,7 +114,7 @@ const categoryPerformance: CategoryPerformance[] = [
   { category: 'Sales', color: '#34C759', icon: TrendingUp, avgSuccess: 89, avgEfficiency: 91, totalTasks: 8950, topAgent: 'AI Pricing Strategist' },
   { category: 'Marketing', color: '#FF9500', icon: Megaphone, avgSuccess: 91, avgEfficiency: 93, totalTasks: 12340, topAgent: 'AI CMO' },
   { category: 'Operations', color: '#5856D6', icon: Settings, avgSuccess: 96, avgEfficiency: 98, totalTasks: 6780, topAgent: 'AI Compliance' },
-  { category: 'Data', color: '#FF2D55', icon: ChartBar, avgSuccess: 93, avgEfficiency: 94, totalTasks: 9450, topAgent: 'AI Fraud Detection' },
+  { category: 'Data', color: '#FF2D55', icon: ChartBarBig, avgSuccess: 93, avgEfficiency: 94, totalTasks: 9450, topAgent: 'AI Fraud Detection' },
   { category: 'Analysis', color: '#AF52DE', icon: Brain, avgSuccess: 95, avgEfficiency: 97, totalTasks: 7890, topAgent: 'AI Strategy Advisor' },
 ];
 

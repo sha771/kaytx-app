@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { DollarSign, Activity, Star, Users, CircleCheckBig, Clock, Target, Zap, ArrowRight, ChartBar, MessageSquare, Calendar, Shield, ChartBar } from 'lucide-react-native';
+import { DollarSign, Activity, Star, Users, CircleCheckBig, Clock, Target, Zap, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function CFOAnalystPage() {
@@ -78,7 +78,7 @@ export default function CFOAnalystPage() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBar},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((action,index)=>(
+          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((action,index)=>(
             <TouchableOpacity key={index} style={[styles.actionButton, { backgroundColor: theme.colors.primary + '12' }]}>
               <action.icon size={24} color={theme.colors.primary} />
               <Text style={[styles.actionText, { color: theme.colors.primary }]}>{action.label}</Text>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Activity, ChartBar, CircleCheck, Zap, ChevronLeft } from 'lucide-react-native';
+import { Activity, ChartBarBig, CircleCheck, Zap, ChevronLeft, ArrowRight, Users, Star, Gift, TrendingUp } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
@@ -9,55 +9,62 @@ import { Colors } from '@/constants/Colors';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const ACCENT = '#AF52DE';
-const AGENT_NAME = 'AI Loyalty Program';
-const AGENT_TITLE = 'Customer Engagement AI';
-const AGENT_DESC = 'Manages reward points, triggers milestone celebrations, and drives repeat purchases through engagement.';
+const AGENT_NAME = 'AI Loyalty & Engagement';
+const AGENT_TITLE = 'Customer Engagement & Rewards AI';
+const AGENT_DESC = 'Orchestrates loyalty programs, calculates reward points, recommends personalized rewards, and tracks customer engagement across all touchpoints to maximize retention and lifetime value.';
 const PARENT_NAME = 'Customer Experience AI';
 
 const METRICS = [
-  { label: 'Tasks Today', value: '450', color: ACCENT },
-  { label: 'Success Rate', value: '95%', color: '#00C853' },
-  { label: 'Avg Speed', value: '0.8s', color: '#007AFF' },
-  { label: 'Accuracy', value: '96.3%', color: '#5856D6' },
+  { label: 'Tasks Today', value: '1.8k', color: ACCENT },
+  { label: 'Success Rate', value: '97.2%', color: '#00C853' },
+  { label: 'Avg Speed', value: '0.3s', color: '#007AFF' },
+  { label: 'Retention Lift', value: '+34%', color: '#5856D6' },
 ];
 
 const RECENT_TASKS = [
-    {
-        "action": "Awarded 500 points for referral",
-        "time": "8m ago"
-    },
-    {
-        "action": "Sent VIP tier upgrade email",
-        "time": "30m ago"
-    },
-    {
-        "action": "Reminded customer of expiring points",
-        "time": "1h ago"
-    },
-    {
-        "action": "Customized birthday offer",
-        "time": "3h ago"
-    },
-    {
-        "action": "Analyzed loyalty program ROI",
-        "time": "1d ago"
-    }
+  { action: 'Awarded 500 bonus points for referral conversion', time: '2m ago' },
+  { action: 'Triggered VIP tier upgrade for customer #4521', time: '8m ago' },
+  { action: 'Sent personalized reward recommendation to 120 users', time: '15m ago' },
+  { action: 'Recalculated engagement scores for Q4 cohort', time: '30m ago' },
+  { action: 'Identified 23 at-risk loyalty members for win-back', time: '1h ago' },
+  { action: 'Generated loyalty program ROI report', time: '2h ago' },
+  { action: 'Auto-matched 89 customers to premium reward tiers', time: '3h ago' },
 ];
 
 const CAPABILITIES = [
-    "Points Management",
-    "Milestone Triggers",
-    "VIP Tiering",
-    "Referral Tracking",
-    "Program ROI Analytics",
-    "Personalized Rewards"
+  'Points Calculation & Management',
+  'Reward Personalization',
+  'Engagement Scoring',
+  'VIP Tier Management',
+  'Milestone & Celebration Triggers',
+  'Referral Tracking & Bonuses',
+  'Churn Risk Detection',
+  'Program ROI Analytics',
+  'Cross-Channel Engagement Tracking',
+  'Win-Back Campaign Orchestration',
 ];
 
 const PERFORMANCE_BARS = [
-  { label: 'Task Completion Rate', value: 96, color: '#00C853' },
-  { label: 'Quality Score', value: 94, color: ACCENT },
-  { label: 'Speed Efficiency', value: 98, color: '#007AFF' },
-  { label: 'Learning Progress', value: 88, color: '#5856D6' },
+  { label: 'Task Completion Rate', value: 97, color: '#00C853' },
+  { label: 'Reward Accuracy', value: 95, color: ACCENT },
+  { label: 'Engagement Prediction', value: 93, color: '#007AFF' },
+  { label: 'Customer Satisfaction', value: 96, color: '#5856D6' },
+  { label: 'Retention Impact', value: 91, color: '#FF9500' },
+];
+
+const SUB_AGENTS = [
+  { id: 'points-calculator', name: 'AI Points Calculator', desc: 'Calculates, tracks & manages loyalty point balances, earning rules, and redemption logic', icon: Star, route: '/ai-agent/customer/sub-agents/points-calculator' },
+  { id: 'reward-recommender', name: 'AI Reward Recommender', desc: 'Recommends personalized rewards based on customer behavior, tier, and preferences', icon: Gift, route: '/ai-agent/customer/sub-agents/reward-recommender' },
+  { id: 'engagement-tracker', name: 'AI Engagement Tracker', desc: 'Monitors real-time engagement metrics, scores, and cross-channel interaction patterns', icon: TrendingUp, route: '/ai-agent/customer/sub-agents/engagement-tracker' },
+];
+
+const A2A_ENDPOINTS = [
+  '/consult/ai-loyalty-engagement',
+  '/loyalty/calculate-points',
+  '/loyalty/recommend-rewards',
+  '/loyalty/track-engagement',
+  '/loyalty/analyze-retention',
+  '/loyalty/trigger-milestone',
 ];
 
 export default function AgentScreen() {
@@ -88,7 +95,7 @@ export default function AgentScreen() {
           <Text style={styles.heroDesc}>{AGENT_DESC}</Text>
           <View style={styles.statusRow}>
             <View style={styles.onlineDot} />
-            <Text style={styles.statusText}>Online · Active</Text>
+            <Text style={styles.statusText}>Online · Active · 3 Sub-Agents</Text>
           </View>
         </LinearGradient>
 
@@ -98,6 +105,28 @@ export default function AgentScreen() {
               <Text style={[styles.metricValue, { color: m.color }]}>{m.value}</Text>
               <Text style={[styles.metricLabel, { color: colors.text + '70' }]}>{m.label}</Text>
             </View>
+          ))}
+        </View>
+
+        <View style={[styles.section, { backgroundColor: colors.card }]}>
+          <View style={styles.sectionHeader}>
+            <Users size={18} color={ACCENT} />
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>Sub-Agents</Text>
+            <View style={styles.countBadge}>
+              <Text style={styles.countText}>3</Text>
+            </View>
+          </View>
+          {SUB_AGENTS.map((sub, i) => (
+            <TouchableOpacity key={sub.id} onPress={() => router.push(sub.route)} style={[styles.subAgentCard, { backgroundColor: colors.background, borderBottomColor: colors.border }]}>
+              <View style={[styles.subAgentIcon, { backgroundColor: ACCENT + '18' }]}>
+                <sub.icon size={22} color={ACCENT} />
+              </View>
+              <View style={styles.subAgentInfo}>
+                <Text style={[styles.subAgentName, { color: colors.text }]}>{sub.name}</Text>
+                <Text style={[styles.subAgentDesc, { color: colors.text + '70' }]}>{sub.desc}</Text>
+              </View>
+              <ArrowRight size={18} color={colors.text + '50'} />
+            </TouchableOpacity>
           ))}
         </View>
 
@@ -135,7 +164,7 @@ export default function AgentScreen() {
 
         <View style={[styles.section, { backgroundColor: colors.card }]}>
           <View style={styles.sectionHeader}>
-            <ChartBar size={18} color={ACCENT} />
+            <ChartBarBig size={18} color={ACCENT} />
             <Text style={[styles.sectionTitle, { color: colors.text }]}>Performance</Text>
           </View>
           {PERFORMANCE_BARS.map((bar, i) => (
@@ -147,6 +176,19 @@ export default function AgentScreen() {
               <View style={[styles.barBg, { backgroundColor: colors.border }]}>
                 <View style={[styles.barFill, { width: bar.value + '%', backgroundColor: bar.color }]} />
               </View>
+            </View>
+          ))}
+        </View>
+
+        <View style={[styles.section, { backgroundColor: colors.card }]}>
+          <View style={styles.sectionHeader}>
+            <Zap size={18} color={ACCENT} />
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>A2A Endpoints</Text>
+          </View>
+          {A2A_ENDPOINTS.map((ep, i) => (
+            <View key={i} style={styles.endpointRow}>
+              <View style={styles.endpointDot} />
+              <Text style={[styles.endpointText, { color: colors.text + '80' }]}>{ep}</Text>
             </View>
           ))}
         </View>
@@ -181,6 +223,13 @@ const styles = StyleSheet.create({
   section: { marginHorizontal: 16, marginBottom: 14, padding: 18, borderRadius: 20 },
   sectionHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 16 },
   sectionTitle: { flex: 1, fontSize: 16, fontWeight: '700' },
+  countBadge: { backgroundColor: '#AF52DE22', paddingHorizontal: 10, paddingVertical: 3, borderRadius: 12 },
+  countText: { fontSize: 12, fontWeight: '700', color: '#AF52DE' },
+  subAgentCard: { flexDirection: 'row', alignItems: 'center', paddingVertical: 14, paddingHorizontal: 12, borderRadius: 14, marginBottom: 8, borderBottomWidth: 1 },
+  subAgentIcon: { width: 44, height: 44, borderRadius: 12, justifyContent: 'center', alignItems: 'center', marginRight: 12 },
+  subAgentInfo: { flex: 1 },
+  subAgentName: { fontSize: 15, fontWeight: '600', marginBottom: 3 },
+  subAgentDesc: { fontSize: 12, lineHeight: 16 },
   liveBadge: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: '#FF3B3018', paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8 },
   liveDot: { width: 6, height: 6, borderRadius: 3, backgroundColor: '#FF3B30' },
   liveText: { fontSize: 10, color: '#FF3B30', fontWeight: '700' },
@@ -195,5 +244,8 @@ const styles = StyleSheet.create({
   barPct: { fontSize: 13, fontWeight: '700' },
   barBg: { height: 7, borderRadius: 4, overflow: 'hidden' },
   barFill: { height: '100%', borderRadius: 4 },
+  endpointRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 8, gap: 8 },
+  endpointDot: { width: 6, height: 6, borderRadius: 3, backgroundColor: '#AF52DE' },
+  endpointText: { fontSize: 13, fontFamily: 'monospace' },
 });
 

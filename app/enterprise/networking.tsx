@@ -25,7 +25,7 @@ import {
   Zap,
   Eye,
   Settings,
-  ChartBar,
+  ChartBarBig,
   Radar,
   GlobeLock,
   ShieldCheck,
@@ -261,7 +261,7 @@ export default function NetworkingScreen() {
           <TouchableOpacity style={[styles.actionButton, { backgroundColor: theme.colors.background }]}
             testID={`service-analytics-${item.id}`}
           >
-            <ChartBar size={16} color={theme.colors.text} />
+            <ChartBarBig size={16} color={theme.colors.text} />
             <Text style={[styles.actionButtonText, { color: theme.colors.text }]}>Analytics</Text>
           </TouchableOpacity>
         </View>
@@ -518,11 +518,11 @@ export default function NetworkingScreen() {
               <View style={[styles.monitoringCard, { backgroundColor: theme.colors.cardBackground }]}
                 testID="traffic-analytics-card"
               >
-                <ChartBar size={32} color={theme.colors.primary} />
+                <ChartBarBig size={32} color={theme.colors.primary} />
                 <Text style={[styles.monitoringTitle, { color: theme.colors.text }]}>Traffic Analytics</Text>
                 <Text style={[styles.monitoringDescription, { color: theme.colors.secondaryText }]}>Real-time visibility into logs, metrics, traces, and user journeys.</Text>
                 <TouchableOpacity style={[styles.monitoringButton, { backgroundColor: theme.colors.primary }]}>
-                  <ChartBar size={16} color="#FFFFFF" />
+                  <ChartBarBig size={16} color="#FFFFFF" />
                   <Text style={styles.monitoringButtonText}>Open Observability</Text>
                 </TouchableOpacity>
               </View>

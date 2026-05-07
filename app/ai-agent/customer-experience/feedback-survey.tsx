@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Activity, ChartBar, CircleCheck, Zap, ChevronLeft } from 'lucide-react-native';
+import { Activity, ChartBarBig, CircleCheck, Zap, ChevronLeft, ArrowRight, Users, ClipboardList, BarChart3, FileText } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
@@ -10,54 +10,61 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 const ACCENT = '#5856D6';
 const AGENT_NAME = 'AI Feedback & Survey';
-const AGENT_TITLE = 'Voice of Customer AI';
-const AGENT_DESC = 'Triggers contextual surveys, categorizes open-text feedback, and identifies product friction points.';
+const AGENT_TITLE = 'Voice of Customer Intelligence AI';
+const AGENT_DESC = 'Designs contextual surveys, analyzes open-text responses with NLP, extracts actionable insights, and identifies product friction points to drive continuous improvement across the customer journey.';
 const PARENT_NAME = 'Customer Experience AI';
 
 const METRICS = [
-  { label: 'Tasks Today', value: '1.2k', color: ACCENT },
-  { label: 'Success Rate', value: '98%', color: '#00C853' },
+  { label: 'Surveys Today', value: '2.4k', color: ACCENT },
+  { label: 'Response Rate', value: '94%', color: '#00C853' },
   { label: 'Avg Speed', value: '0.2s', color: '#007AFF' },
-  { label: 'Accuracy', value: '98.8%', color: '#5856D6' },
+  { label: 'Insight Accuracy', value: '98.8%', color: '#5856D6' },
 ];
 
 const RECENT_TASKS = [
-    {
-        "action": "Categorized 50 NPS comments",
-        "time": "10m ago"
-    },
-    {
-        "action": "Triggered post-resolution CSAT survey",
-        "time": "12m ago"
-    },
-    {
-        "action": "Identified trending UX complaint",
-        "time": "45m ago"
-    },
-    {
-        "action": "Aggregated weekly feature requests",
-        "time": "2h ago"
-    },
-    {
-        "action": "Flagged 5 at-risk promoters",
-        "time": "4h ago"
-    }
+  { action: 'Categorized 50 NPS comments into 6 sentiment clusters', time: '2m ago' },
+  { action: 'Triggered post-resolution CSAT survey for ticket #8821', time: '10m ago' },
+  { action: 'Identified trending UX complaint in checkout flow', time: '25m ago' },
+  { action: 'Auto-designed quarterly product feedback survey', time: '45m ago' },
+  { action: 'Aggregated weekly feature requests from 3 channels', time: '1h ago' },
+  { action: 'Flagged 5 at-risk promoters for immediate outreach', time: '2h ago' },
+  { action: 'Generated executive insight report for Q4 feedback', time: '4h ago' },
 ];
 
 const CAPABILITIES = [
-    "Survey Triggering",
-    "NLP Categorization",
-    "Trend Analysis",
-    "CSAT/NPS Tracking",
-    "Churn Risk Detection",
-    "Insight Extraction"
+  'Contextual Survey Design',
+  'NLP Response Categorization',
+  'Sentiment Trend Analysis',
+  'CSAT/NPS Tracking & Benchmarking',
+  'Churn Risk Detection from Feedback',
+  'Actionable Insight Extraction',
+  'Multi-Channel Survey Distribution',
+  'Real-Time Response Dashboard',
+  'Automated Follow-Up Triggers',
+  'Executive Reporting & Dashboards',
 ];
 
 const PERFORMANCE_BARS = [
-  { label: 'Task Completion Rate', value: 96, color: '#00C853' },
-  { label: 'Quality Score', value: 94, color: ACCENT },
-  { label: 'Speed Efficiency', value: 98, color: '#007AFF' },
-  { label: 'Learning Progress', value: 88, color: '#5856D6' },
+  { label: 'Survey Completion Rate', value: 94, color: '#00C853' },
+  { label: 'Categorization Accuracy', value: 97, color: ACCENT },
+  { label: 'Insight Relevance', value: 92, color: '#007AFF' },
+  { label: 'Response Speed', value: 98, color: '#5856D6' },
+  { label: 'Actionability Score', value: 89, color: '#FF9500' },
+];
+
+const SUB_AGENTS = [
+  { id: 'survey-designer', name: 'AI Survey Designer', desc: 'Designs contextual, high-response-rate surveys with smart question logic and branching', icon: ClipboardList, route: '/ai-agent/customer/sub-agents/survey-designer' },
+  { id: 'response-analyzer', name: 'AI Response Analyzer', desc: 'Analyzes open-text responses with NLP, categorizes sentiment, and identifies patterns', icon: BarChart3, route: '/ai-agent/customer/sub-agents/response-analyzer' },
+  { id: 'insight-reporter', name: 'AI Insight Reporter', desc: 'Generates executive-level insight reports, dashboards, and actionable recommendations', icon: FileText, route: '/ai-agent/customer/sub-agents/insight-reporter' },
+];
+
+const A2A_ENDPOINTS = [
+  '/consult/ai-feedback-survey',
+  '/feedback/design-survey',
+  '/feedback/analyze-responses',
+  '/feedback/generate-insights',
+  '/feedback/track-nps',
+  '/feedback/detect-churn-risk',
 ];
 
 export default function AgentScreen() {
@@ -88,7 +95,7 @@ export default function AgentScreen() {
           <Text style={styles.heroDesc}>{AGENT_DESC}</Text>
           <View style={styles.statusRow}>
             <View style={styles.onlineDot} />
-            <Text style={styles.statusText}>Online · Active</Text>
+            <Text style={styles.statusText}>Online · Active · 3 Sub-Agents</Text>
           </View>
         </LinearGradient>
 
@@ -98,6 +105,28 @@ export default function AgentScreen() {
               <Text style={[styles.metricValue, { color: m.color }]}>{m.value}</Text>
               <Text style={[styles.metricLabel, { color: colors.text + '70' }]}>{m.label}</Text>
             </View>
+          ))}
+        </View>
+
+        <View style={[styles.section, { backgroundColor: colors.card }]}>
+          <View style={styles.sectionHeader}>
+            <Users size={18} color={ACCENT} />
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>Sub-Agents</Text>
+            <View style={styles.countBadge}>
+              <Text style={styles.countText}>3</Text>
+            </View>
+          </View>
+          {SUB_AGENTS.map((sub, i) => (
+            <TouchableOpacity key={sub.id} onPress={() => router.push(sub.route)} style={[styles.subAgentCard, { backgroundColor: colors.background, borderBottomColor: colors.border }]}>
+              <View style={[styles.subAgentIcon, { backgroundColor: ACCENT + '18' }]}>
+                <sub.icon size={22} color={ACCENT} />
+              </View>
+              <View style={styles.subAgentInfo}>
+                <Text style={[styles.subAgentName, { color: colors.text }]}>{sub.name}</Text>
+                <Text style={[styles.subAgentDesc, { color: colors.text + '70' }]}>{sub.desc}</Text>
+              </View>
+              <ArrowRight size={18} color={colors.text + '50'} />
+            </TouchableOpacity>
           ))}
         </View>
 
@@ -135,7 +164,7 @@ export default function AgentScreen() {
 
         <View style={[styles.section, { backgroundColor: colors.card }]}>
           <View style={styles.sectionHeader}>
-            <ChartBar size={18} color={ACCENT} />
+            <ChartBarBig size={18} color={ACCENT} />
             <Text style={[styles.sectionTitle, { color: colors.text }]}>Performance</Text>
           </View>
           {PERFORMANCE_BARS.map((bar, i) => (
@@ -147,6 +176,19 @@ export default function AgentScreen() {
               <View style={[styles.barBg, { backgroundColor: colors.border }]}>
                 <View style={[styles.barFill, { width: bar.value + '%', backgroundColor: bar.color }]} />
               </View>
+            </View>
+          ))}
+        </View>
+
+        <View style={[styles.section, { backgroundColor: colors.card }]}>
+          <View style={styles.sectionHeader}>
+            <Zap size={18} color={ACCENT} />
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>A2A Endpoints</Text>
+          </View>
+          {A2A_ENDPOINTS.map((ep, i) => (
+            <View key={i} style={styles.endpointRow}>
+              <View style={styles.endpointDot} />
+              <Text style={[styles.endpointText, { color: colors.text + '80' }]}>{ep}</Text>
             </View>
           ))}
         </View>
@@ -181,6 +223,13 @@ const styles = StyleSheet.create({
   section: { marginHorizontal: 16, marginBottom: 14, padding: 18, borderRadius: 20 },
   sectionHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 16 },
   sectionTitle: { flex: 1, fontSize: 16, fontWeight: '700' },
+  countBadge: { backgroundColor: '#5856D622', paddingHorizontal: 10, paddingVertical: 3, borderRadius: 12 },
+  countText: { fontSize: 12, fontWeight: '700', color: '#5856D6' },
+  subAgentCard: { flexDirection: 'row', alignItems: 'center', paddingVertical: 14, paddingHorizontal: 12, borderRadius: 14, marginBottom: 8, borderBottomWidth: 1 },
+  subAgentIcon: { width: 44, height: 44, borderRadius: 12, justifyContent: 'center', alignItems: 'center', marginRight: 12 },
+  subAgentInfo: { flex: 1 },
+  subAgentName: { fontSize: 15, fontWeight: '600', marginBottom: 3 },
+  subAgentDesc: { fontSize: 12, lineHeight: 16 },
   liveBadge: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: '#FF3B3018', paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8 },
   liveDot: { width: 6, height: 6, borderRadius: 3, backgroundColor: '#FF3B30' },
   liveText: { fontSize: 10, color: '#FF3B30', fontWeight: '700' },
@@ -195,5 +244,8 @@ const styles = StyleSheet.create({
   barPct: { fontSize: 13, fontWeight: '700' },
   barBg: { height: 7, borderRadius: 4, overflow: 'hidden' },
   barFill: { height: '100%', borderRadius: 4 },
+  endpointRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 8, gap: 8 },
+  endpointDot: { width: 6, height: 6, borderRadius: 3, backgroundColor: '#5856D6' },
+  endpointText: { fontSize: 13, fontFamily: 'monospace' },
 });
 

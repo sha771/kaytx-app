@@ -1,7 +1,7 @@
 
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Clock, TrendingUp, TrendingDown, Activity, ChartBar, Globe, Calendar } from 'lucide-react-native';
+import { Clock, TrendingUp, TrendingDown, Activity, ChartBarBig, Globe, Calendar } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';

@@ -13,7 +13,7 @@ import {
   ListFilter, 
   Search, 
   Plus,
-  ChartBar,
+  ChartBarBig,
   Calendar,
   DollarSign,
   CircleCheck,
@@ -309,7 +309,7 @@ export default function LeadGenerationScreen() {
       <View style={styles.chartCard}>
         <Text style={styles.chartTitle}>Lead Generation Trend</Text>
         <View style={styles.chartPlaceholder}>
-          <ChartBar size={48} color="#007AFF" />
+          <ChartBarBig size={48} color="#007AFF" />
           <Text style={styles.chartText}>Interactive chart visualization</Text>
         </View>
       </View>
@@ -362,7 +362,7 @@ export default function LeadGenerationScreen() {
           style={[styles.tabButton, activeTab === 'analytics' && styles.activeTabButton]}
           onPress={() => setActiveTab('analytics')}
         >
-          <ChartBar size={20} color={activeTab === 'analytics' ? '#007AFF' : '#666'} />
+          <ChartBarBig size={20} color={activeTab === 'analytics' ? '#007AFF' : '#666'} />
           <Text style={[styles.tabButtonText, activeTab === 'analytics' && styles.activeTabButtonText]}>
             Analytics
           </Text>

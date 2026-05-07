@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Stack } from 'expo-router';
-import { ChartBar, TrendingUp, ChartPie, ChartLine, Download, Share2, Calendar } from 'lucide-react-native';
+import { ChartBarBig, TrendingUp, ChartPie, ChartLine, Download, Share2, Calendar } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface ChartData {
@@ -55,7 +55,7 @@ export default function DataVisualizationScreen() {
   const getChartIcon = (type: ChartData['type']) => {
     switch (type) {
       case 'bar':
-        return <ChartBar size={24} color="#60A5FA" />;
+        return <ChartBarBig size={24} color="#60A5FA" />;
       case 'line':
         return <ChartLine size={24} color="#10B981" />;
       case 'pie':
@@ -63,7 +63,7 @@ export default function DataVisualizationScreen() {
       case 'area':
         return <TrendingUp size={24} color="#A78BFA" />;
       default:
-        return <ChartBar size={24} color="#60A5FA" />;
+        return <ChartBarBig size={24} color="#60A5FA" />;
     }
   };
 
@@ -80,7 +80,7 @@ export default function DataVisualizationScreen() {
             <View
               key={index}
               style={[
-                styles.miniChartBar,
+                styles.miniChartBarBig,
                 {
                   height,
                   backgroundColor: type === 'line' ? '#10B981' : type === 'bar' ? '#60A5FA' : type === 'pie' ? '#F59E0B' : '#A78BFA',
@@ -221,7 +221,7 @@ export default function DataVisualizationScreen() {
 
           <View style={styles.insightCard}>
             <View style={styles.insightIcon}>
-              <ChartBar size={20} color="#F59E0B" />
+              <ChartBarBig size={20} color="#F59E0B" />
             </View>
             <View style={styles.insightContent}>
               <Text style={styles.insightTitle}>Top Traffic Source</Text>
@@ -373,7 +373,7 @@ const styles = StyleSheet.create({
     gap: 4,
     marginBottom: 16,
   },
-  miniChartBar: {
+  miniChartBarBig: {
     flex: 1,
     borderRadius: 2,
   },

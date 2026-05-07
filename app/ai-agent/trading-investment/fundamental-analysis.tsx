@@ -1,7 +1,7 @@
 
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { FileText, TrendingUp, ChartBar, DollarSign, Activity, Search } from 'lucide-react-native';
+import { FileText, TrendingUp, ChartBarBig, DollarSign, Activity, Search } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
@@ -100,7 +100,7 @@ export default function FundamentalAnalysisScreen() {
 
   const customTabs = [
     { id: 'research', label: 'Research', icon: FileText, component: researchTab },
-    { id: 'valuation', label: 'Valuation', icon: ChartBar, component: <View /> },
+    { id: 'valuation', label: 'Valuation', icon: ChartBarBig, component: <View /> },
   ];
 
   return <AgentShell agent={agent} customTabs={customTabs} />;

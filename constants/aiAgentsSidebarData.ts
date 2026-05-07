@@ -9,7 +9,8 @@ import {
   Factory, Landmark, House, Package,
   MessageSquare, Clock, Hash, Radio, Video, Inbox, Send, Eye, Palette, Image as ImageIcon,
   ListFilter, MapPin, Sun, Moon, Bell, ChevronRight, X, Menu, Plus, Minus,
-  Calendar, Smile, CircleCheck as SquareCheck, ChartBar, Workflow, Terminal,
+  Calendar, Smile, CircleCheck as SquareCheck, ChartBarBig, Workflow, Terminal, BookOpen, BarChart3,
+  Gauge, PieChart, RefreshCw, CalendarClock, RotateCcw, GitBranch,
 } from 'lucide-react-native';
 
 export const aiAgentsSidebarSections = [
@@ -138,7 +139,7 @@ export const aiAgentsSidebarSections = [
           { id: '2-mkt-social', title: 'Social Media Manager', icon: Share2 },
           { id: '2-mkt-email', title: 'Email Marketing Agent', icon: Mail },
           { id: '2-mkt-ads', title: 'Ad Campaign Manager', icon: Target },
-          { id: '2-mkt-analytics', title: 'Marketing Analytics Agent', icon: ChartBar },
+          { id: '2-mkt-analytics', title: 'Marketing Analytics Agent', icon: ChartBarBig },
           { id: '2-mkt-brand', title: 'Brand Manager', icon: Star },
           { id: '2-mkt-growth', title: 'Growth Hacker', icon: Zap },
         ]
@@ -229,7 +230,7 @@ export const aiAgentsSidebarSections = [
         title: 'Sub-Agents (5)',
         icon: Bot,
         items: [
-          { id: '2-fin-analyst', title: 'Financial Analyst', icon: ChartBar },
+          { id: '2-fin-analyst', title: 'Financial Analyst', icon: ChartBarBig },
           { id: '2-budget-mgr', title: 'Budget Manager', icon: Calculator },
           { id: '2-tax-specialist', title: 'Tax Specialist', icon: FileText },
           { id: '2-audit-mgr', title: 'Audit Manager', icon: SquareCheck },
@@ -272,16 +273,30 @@ export const aiAgentsSidebarSections = [
         ]
       },
       {
-        id: '2-tech-sub',
-        title: 'Sub-Agents (6+)',
+        id: '2-tech-new',
+        title: 'New AI Engineering Agents (15)',
         icon: Bot,
         items: [
-          { id: '2-frontend-dev', title: 'Frontend Developer', icon: Monitor },
-          { id: '2-backend-dev', title: 'Backend Developer', icon: Code },
-          { id: '2-sre-engineer', title: 'SRE Engineer', icon: HardDrive },
-          { id: '2-qa-automation', title: 'QA Automation Engineer', icon: SquareCheck },
-          { id: '2-data-engineer', title: 'Data Engineer', icon: Database },
-          { id: '2-security-engineer', title: 'Security Engineer', icon: Shield },
+          { id: '2-ai-backend-dev', title: 'AI Backend Developer', icon: Code },
+          { id: '2-ai-api-endpoint-dev', title: 'AI API Endpoint Developer', icon: Code },
+          { id: '2-ai-data-validator', title: 'AI Data Validator', icon: CircleCheck },
+          { id: '2-ai-service-integrator', title: 'AI Service Integrator', icon: Zap },
+          { id: '2-ai-sre-engineer', title: 'AI SRE Engineer', icon: Activity },
+          { id: '2-ai-alert-tuner', title: 'AI Alert Tuner', icon: Bell },
+          { id: '2-ai-runbook-author', title: 'AI Runbook Author', icon: FileText },
+          { id: '2-ai-capacity-monitor', title: 'AI Capacity Monitor', icon: HardDrive },
+          { id: '2-ai-qa-automation', title: 'AI QA Automation Engineer', icon: CircleCheck },
+          { id: '2-ai-test-framework', title: 'AI Test Framework Maintainer', icon: Settings },
+          { id: '2-ai-e2e-writer', title: 'AI E2E Test Writer', icon: Clipboard },
+          { id: '2-ai-flaky-detector', title: 'AI Flaky Test Detector', icon: TriangleAlert },
+          { id: '2-ai-data-engineer', title: 'AI Data Engineer', icon: Database },
+          { id: '2-ai-pipeline-builder', title: 'AI Pipeline Builder', icon: Workflow },
+          { id: '2-ai-data-quality', title: 'AI Data Quality Checker', icon: ShieldCheck },
+          { id: '2-ai-schema-migration', title: 'AI Schema Migration Planner', icon: Layers },
+          { id: '2-ai-security-engineer', title: 'AI Security Engineer', icon: Shield },
+          { id: '2-ai-patch-tracker', title: 'AI Security Patch Tracker', icon: ShieldCheck },
+          { id: '2-ai-pen-test-writer', title: 'AI Pen-test Script Writer', icon: Terminal },
+          { id: '2-ai-access-policy', title: 'AI Access Policy Implementer', icon: Lock },
         ]
       },
       {
@@ -317,14 +332,26 @@ export const aiAgentsSidebarSections = [
         ]
       },
       {
-        id: '2-hr-sub',
-        title: 'Sub-Agents (4+)',
+        id: '2-hr-new',
+        title: 'New AI HR Agents (16)',
         icon: Bot,
         items: [
-          { id: '2-ai-recruiter', title: 'AI Recruiter', icon: UserPlus },
-          { id: '2-hr-ops-spec', title: 'HR Operations Specialist', icon: Settings },
-          { id: '2-learning-spec', title: 'Learning Specialist', icon: GraduationCap },
-          { id: '2-comp-analyst', title: 'Compensation Analyst', icon: DollarSign },
+          { id: '2-ai-chro', title: 'AI Chief Human Resources Officer', icon: Users },
+          { id: '2-ai-hr-strategy', title: 'AI HR Strategy Advisor', icon: Lightbulb },
+          { id: '2-ai-workforce-planner', title: 'AI Workforce Planner', icon: Users },
+          { id: '2-ai-culture-health', title: 'AI Culture Health Monitor', icon: Heart },
+          { id: '2-ai-vp-talent', title: 'AI VP Talent', icon: UserPlus },
+          { id: '2-ai-talent-pipeline', title: 'AI Talent Pipeline Analyst', icon: Users },
+          { id: '2-ai-employer-brand', title: 'AI Employer Brand Strategist', icon: Megaphone },
+          { id: '2-ai-hiring-forecast', title: 'AI Hiring Forecast Planner', icon: ChartBarBig },
+          { id: '2-ai-vp-hr-ops', title: 'AI VP HR Operations', icon: Settings },
+          { id: '2-ai-hr-automator', title: 'AI HR Process Automator', icon: Zap },
+          { id: '2-ai-hr-compliance', title: 'AI HR Compliance Tracker', icon: Scale },
+          { id: '2-ai-employee-data', title: 'AI Employee Data Manager', icon: Database },
+          { id: '2-ai-vp-learning', title: 'AI VP Learning', icon: GraduationCap },
+          { id: '2-ai-curriculum', title: 'AI L&D Curriculum Designer', icon: BookOpen },
+          { id: '2-ai-skill-gap', title: 'AI Skill Gap Analyzer', icon: BarChart3 },
+          { id: '2-ai-training-eval', title: 'AI Training Effectiveness Evaluator', icon: ChartBarBig },
         ]
       },
       {
@@ -395,10 +422,10 @@ export const aiAgentsSidebarSections = [
           { id: '2-cdao-dept', title: 'CDAO - Chief Data & AI Officer', icon: Database },
           { id: '2-vp-data-science', title: 'VP Data Science', icon: Brain },
           { id: '2-vp-data-eng', title: 'VP Data Engineering', icon: Database },
-          { id: '2-vp-analytics', title: 'VP Analytics', icon: ChartBar },
+          { id: '2-vp-analytics', title: 'VP Analytics', icon: ChartBarBig },
           { id: '2-vp-bi', title: 'VP Business Intelligence', icon: ChartPie },
           { id: '2-data-mgr', title: 'Data Manager', icon: Database },
-          { id: '2-analytics-mgr', title: 'Analytics Manager', icon: ChartBar },
+          { id: '2-analytics-mgr', title: 'Analytics Manager', icon: ChartBarBig },
         ]
       },
       {
@@ -407,11 +434,11 @@ export const aiAgentsSidebarSections = [
         icon: Bot,
         items: [
           { id: '2-data-scientist', title: 'Data Scientist', icon: Brain },
-          { id: '2-data-analyst', title: 'Data Analyst', icon: ChartBar },
+          { id: '2-data-analyst', title: 'Data Analyst', icon: ChartBarBig },
           { id: '2-bi-developer', title: 'BI Developer', icon: ChartPie },
           { id: '2-ml-engineer', title: 'ML Engineer', icon: Cpu },
           { id: '2-data-steward', title: 'Data Steward', icon: Database },
-          { id: '2-analytics-spec', title: 'Analytics Specialist', icon: ChartBar },
+          { id: '2-analytics-spec', title: 'Analytics Specialist', icon: ChartBarBig },
         ]
       },
       {
@@ -450,7 +477,7 @@ export const aiAgentsSidebarSections = [
         icon: Bot,
         items: [
           { id: '2-ai-product-mgr', title: 'AI Product Manager', icon: Lightbulb },
-          { id: '2-ai-product-analyst', title: 'AI Product Analyst', icon: ChartBar },
+          { id: '2-ai-product-analyst', title: 'AI Product Analyst', icon: ChartBarBig },
           { id: '2-ai-ux-researcher', title: 'AI UX Researcher', icon: Search },
           { id: '2-ai-product-marketer', title: 'AI Product Marketer', icon: Megaphone },
           { id: '2-ai-release-mgr', title: 'AI Release Manager', icon: Rocket },
@@ -621,7 +648,7 @@ export const aiAgentsSidebarSections = [
           { id: '2-equity-trader', title: 'Equity Trader', icon: TrendingUp },
           { id: '2-forex-trader', title: 'Forex Trader', icon: Globe },
           { id: '2-crypto-trader', title: 'Crypto Trader', icon: Zap },
-          { id: '2-derivatives-spec', title: 'Derivatives Specialist', icon: ChartBar },
+          { id: '2-derivatives-spec', title: 'Derivatives Specialist', icon: ChartBarBig },
           { id: '2-portfolio-analyst', title: 'Portfolio Analyst', icon: ChartPie },
           { id: '2-risk-analyst-trading', title: 'Trading Risk Analyst', icon: ShieldAlert },
           { id: '2-compliance-trading', title: 'Trading Compliance', icon: Shield },
@@ -668,7 +695,7 @@ export const aiAgentsSidebarSections = [
         title: 'Sub-Agents (8+)',
         icon: Bot,
         items: [
-          { id: '2-property-analyst', title: 'Property Analyst', icon: ChartBar },
+          { id: '2-property-analyst', title: 'Property Analyst', icon: ChartBarBig },
           { id: '2-lease-admin', title: 'Lease Administrator', icon: FileText },
           { id: '2-tenant-relations', title: 'Tenant Relations Specialist', icon: Users },
           { id: '2-maintenance-coord', title: 'Maintenance Coordinator', icon: Settings },
@@ -690,40 +717,207 @@ export const aiAgentsSidebarSections = [
       },
     ]
   },
-  // Section 19: Insurance & Risk (19+ agents)
+  // Section 19: Insurance & Risk (64 agents)
   {
     id: '2-section-dept16',
-    title: '19: Insurance & Risk (19+)',
+    title: '19: Insurance & Risk (64)',
     icon: Shield,
     subSections: [
       {
-        id: '2-ins-main',
-        title: 'Main Agents (7)',
-        icon: Shield,
+        id: '2-ins-vp-exec',
+        title: 'VP & Executive (4)',
+        icon: ShieldAlert,
         items: [
           { id: '2-cro-dept', title: 'CRO - Chief Risk Officer', icon: ShieldAlert },
           { id: '2-vp-underwriting', title: 'VP Underwriting', icon: ShieldCheck },
           { id: '2-vp-claims', title: 'VP Claims', icon: FileText },
           { id: '2-vp-risk-assessment', title: 'VP Risk Assessment', icon: ShieldAlert },
+        ]
+      },
+      {
+        id: '2-ins-managers',
+        title: 'Managers (3)',
+        icon: Shield,
+        items: [
           { id: '2-underwriting-mgr', title: 'Underwriting Manager', icon: Shield },
           { id: '2-claims-mgr', title: 'Claims Manager', icon: FileText },
           { id: '2-policy-mgr', title: 'Policy Manager', icon: FileCheck },
         ]
       },
       {
-        id: '2-ins-sub',
-        title: 'Sub-Agents (9+)',
+        id: '2-ins-specialists',
+        title: 'Specialists (9)',
         icon: Bot,
         items: [
           { id: '2-underwriter', title: 'Underwriter', icon: Shield },
           { id: '2-claims-adjuster', title: 'Claims Adjuster', icon: FileText },
           { id: '2-fraud-detector', title: 'Fraud Detection Agent', icon: TriangleAlert },
           { id: '2-actuary-analyst', title: 'Actuary Analyst', icon: Calculator },
-          { id: '2-risk-modeler', title: 'Risk Modeler', icon: ChartBar },
+          { id: '2-risk-modeler', title: 'Risk Modeler', icon: ChartBarBig },
           { id: '2-policy-admin', title: 'Policy Administrator', icon: FileCheck },
           { id: '2-customer-risk-analyst', title: 'Customer Risk Analyst', icon: Users },
           { id: '2-catastrophe-modeler', title: 'Catastrophe Modeler', icon: TriangleAlert },
           { id: '2-reinsurance-spec', title: 'Reinsurance Specialist', icon: ShieldCheck },
+        ]
+      },
+      {
+        id: '2-ins-cro-sub',
+        title: 'CRO Sub-Agents (3)',
+        icon: Bot,
+        items: [
+          { id: '2-enterprise-risk-strategy-advisor', title: 'Enterprise Risk Strategy Advisor', icon: Shield },
+          { id: '2-risk-appetite-definer', title: 'Risk Appetite Definer', icon: Gauge },
+          { id: '2-board-risk-reporter', title: 'Board Risk Reporter', icon: FileText },
+        ]
+      },
+      {
+        id: '2-ins-vp-uw-sub',
+        title: 'VP Underwriting Sub-Agents (3)',
+        icon: Bot,
+        items: [
+          { id: '2-uw-guidelines-enforcer', title: 'Underwriting Guidelines Enforcer', icon: BookOpen },
+          { id: '2-portfolio-mix-manager', title: 'Portfolio Mix Manager', icon: PieChart },
+          { id: '2-pricing-strategy-advisor', title: 'Pricing Strategy Advisor', icon: DollarSign },
+        ]
+      },
+      {
+        id: '2-ins-vp-claims-sub',
+        title: 'VP Claims Sub-Agents (3)',
+        icon: Bot,
+        items: [
+          { id: '2-claims-process-optimizer', title: 'Claims Process Optimizer', icon: Zap },
+          { id: '2-settlement-auth-mgr', title: 'Settlement Authority Manager', icon: Scale },
+          { id: '2-litigation-coordinator', title: 'Litigation Coordinator', icon: Scale },
+        ]
+      },
+      {
+        id: '2-ins-vp-risk-sub',
+        title: 'VP Risk Assessment Sub-Agents (3)',
+        icon: Bot,
+        items: [
+          { id: '2-risk-model-overseer', title: 'Risk Model Overseer', icon: Brain },
+          { id: '2-assessment-stds-enforcer', title: 'Assessment Standards Enforcer', icon: SquareCheck },
+          { id: '2-emerging-risk-spotter', title: 'Emerging Risk Spotter', icon: Eye },
+        ]
+      },
+      {
+        id: '2-ins-uw-mgr-sub',
+        title: 'Underwriting Mgr Sub-Agents (3)',
+        icon: Bot,
+        items: [
+          { id: '2-workflow-prioritizer', title: 'Workflow Prioritizer', icon: ClipboardList },
+          { id: '2-quality-reviewer', title: 'Quality Reviewer', icon: SquareCheck },
+          { id: '2-exception-approver', title: 'Exception Approver', icon: ShieldCheck },
+        ]
+      },
+      {
+        id: '2-ins-claims-mgr-sub',
+        title: 'Claims Mgr Sub-Agents (3)',
+        icon: Bot,
+        items: [
+          { id: '2-claims-assigner', title: 'Claims Assigner', icon: UserPlus },
+          { id: '2-reserve-reviewer', title: 'Reserve Reviewer', icon: DollarSign },
+          { id: '2-fraud-flag-coordinator', title: 'Fraud Flag Coordinator', icon: TriangleAlert },
+        ]
+      },
+      {
+        id: '2-ins-policy-mgr-sub',
+        title: 'Policy Mgr Sub-Agents (3)',
+        icon: Bot,
+        items: [
+          { id: '2-policy-lifecycle-mgr', title: 'Policy Lifecycle Manager', icon: RefreshCw },
+          { id: '2-renewal-tracker', title: 'Renewal Tracker', icon: CalendarClock },
+          { id: '2-endorsement-processor', title: 'Endorsement Processor', icon: FileText },
+        ]
+      },
+      {
+        id: '2-ins-underwriter-sub',
+        title: 'Underwriter Sub-Agents (3)',
+        icon: Bot,
+        items: [
+          { id: '2-risk-evaluator', title: 'Risk Evaluator', icon: Search },
+          { id: '2-premium-calculator', title: 'Premium Calculator', icon: Calculator },
+          { id: '2-coverage-analyzer', title: 'Coverage Analyzer', icon: Eye },
+        ]
+      },
+      {
+        id: '2-ins-claims-adj-sub',
+        title: 'Claims Adjuster Sub-Agents (3)',
+        icon: Bot,
+        items: [
+          { id: '2-damage-assessor', title: 'Damage Assessor', icon: ClipboardList },
+          { id: '2-liability-determiner', title: 'Liability Determiner', icon: Scale },
+          { id: '2-settlement-negotiator', title: 'Settlement Negotiator', icon: Handshake },
+        ]
+      },
+      {
+        id: '2-ins-fraud-sub',
+        title: 'Fraud Detection Sub-Agents (3)',
+        icon: Bot,
+        items: [
+          { id: '2-pattern-detector', title: 'Pattern Detector', icon: Search },
+          { id: '2-anomaly-scorer', title: 'Anomaly Scorer', icon: Activity },
+          { id: '2-investigation-coord', title: 'Investigation Coordinator', icon: Eye },
+        ]
+      },
+      {
+        id: '2-ins-actuary-sub',
+        title: 'Actuary Analyst Sub-Agents (3)',
+        icon: Bot,
+        items: [
+          { id: '2-loss-dev-tracker', title: 'Loss Development Tracker', icon: TrendingUp },
+          { id: '2-freq-sev-modeler', title: 'Frequency/Severity Modeler', icon: BarChart3 },
+          { id: '2-rate-filing-preparer', title: 'Rate Filing Preparer', icon: FileText },
+        ]
+      },
+      {
+        id: '2-ins-risk-modeler-sub',
+        title: 'Risk Modeler Sub-Agents (3)',
+        icon: Bot,
+        items: [
+          { id: '2-scenario-builder', title: 'Scenario Builder', icon: GitBranch },
+          { id: '2-correlation-analyst', title: 'Correlation Analyst', icon: BarChart3 },
+          { id: '2-capital-req-calc', title: 'Capital Requirement Calculator', icon: Landmark },
+        ]
+      },
+      {
+        id: '2-ins-policy-admin-sub',
+        title: 'Policy Admin Sub-Agents (3)',
+        icon: Bot,
+        items: [
+          { id: '2-policy-issuer', title: 'Policy Issuer', icon: FileText },
+          { id: '2-document-generator', title: 'Document Generator', icon: FileText },
+          { id: '2-compliance-checker', title: 'Compliance Checker', icon: ShieldCheck },
+        ]
+      },
+      {
+        id: '2-ins-cust-risk-sub',
+        title: 'Customer Risk Sub-Agents (3)',
+        icon: Bot,
+        items: [
+          { id: '2-risk-profiler', title: 'Risk Profiler', icon: UserCheck },
+          { id: '2-behavioral-scorer', title: 'Behavioral Scorer', icon: Brain },
+          { id: '2-segmentation-analyst', title: 'Segmentation Analyst', icon: PieChart },
+        ]
+      },
+      {
+        id: '2-ins-cat-modeler-sub',
+        title: 'Catastrophe Modeler Sub-Agents (3)',
+        icon: Bot,
+        items: [
+          { id: '2-event-simulator', title: 'Event Simulator', icon: Zap },
+          { id: '2-exposure-aggregator', title: 'Exposure Aggregator', icon: Globe },
+          { id: '2-loss-estimator', title: 'Loss Estimator', icon: Calculator },
+        ]
+      },
+      {
+        id: '2-ins-reins-sub',
+        title: 'Reinsurance Sub-Agents (3)',
+        icon: Bot,
+        items: [
+          { id: '2-treaty-negotiator', title: 'Treaty Negotiator', icon: Handshake },
+          { id: '2-ceding-calculator', title: 'Ceding Calculator', icon: DollarSign },
+          { id: '2-recoveries-tracker', title: 'Recoveries Tracker', icon: RotateCcw },
         ]
       },
       {
@@ -900,7 +1094,7 @@ export const aiAgentsSidebarSections = [
         title: 'Sub-Agents (6+)',
         icon: Bot,
         items: [
-          { id: '2-policy-analyst', title: 'Policy Analyst', icon: ChartBar },
+          { id: '2-policy-analyst', title: 'Policy Analyst', icon: ChartBarBig },
           { id: '2-regulatory-spec', title: 'Regulatory Specialist', icon: Shield },
           { id: '2-public-affairs', title: 'Public Affairs Specialist', icon: Megaphone },
           { id: '2-grants-spec', title: 'Grants Specialist', icon: FileText },
@@ -944,7 +1138,7 @@ export const aiAgentsSidebarSections = [
         items: [
           { id: '2-procurement-buyer', title: 'Procurement Buyer', icon: DollarSign },
           { id: '2-inventory-spec', title: 'Inventory Specialist', icon: Package },
-          { id: '2-demand-planner', title: 'Demand Planner', icon: ChartBar },
+          { id: '2-demand-planner', title: 'Demand Planner', icon: ChartBarBig },
           { id: '2-supplier-relations', title: 'Supplier Relations', icon: Handshake },
           { id: '2-shipping-coord', title: 'Shipping Coordinator', icon: Truck },
           { id: '2-fulfillment-spec', title: 'Fulfillment Specialist', icon: CircleCheck },

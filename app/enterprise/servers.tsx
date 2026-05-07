@@ -26,7 +26,7 @@ import {
   Play,
   Pause,
   RotateCcw,
-  ChartBar,
+  ChartBarBig,
   Globe,
   Gauge,
   Layers,
@@ -648,13 +648,13 @@ export default function ServersScreen() {
               <View style={[styles.monitoringCard, { backgroundColor: theme.colors.cardBackground }]}
                 testID="monitoring-health-card"
               >
-                <ChartBar size={32} color={theme.colors.primary} />
+                <ChartBarBig size={32} color={theme.colors.primary} />
                 <Text style={[styles.monitoringTitle, { color: theme.colors.text }]}>System Health Map</Text>
                 <Text style={[styles.monitoringDescription, { color: theme.colors.secondaryText }]}>
                   AI anomaly detection, error tracking, and uptime SLA insights.
                 </Text>
                 <TouchableOpacity style={[styles.monitoringButton, { backgroundColor: theme.colors.primary }]}>
-                  <ChartBar size={16} color="#FFFFFF" />
+                  <ChartBarBig size={16} color="#FFFFFF" />
                   <Text style={styles.monitoringButtonText}>View Detailed Metrics</Text>
                 </TouchableOpacity>
               </View>

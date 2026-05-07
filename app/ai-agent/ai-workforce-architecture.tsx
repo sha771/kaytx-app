@@ -578,7 +578,7 @@ const AIWorkforceArchitectureDashboard = () => {
       <Text style={[styles.sectionTitle, { color: colors.text }]}>Consulting Styles</Text>
       <View style={styles.consultingStyles}>
         {[
-          { style: 'analytical', count: 28, color: '#2196F3', icon: Icons.ChartBar },
+          { style: 'analytical', count: 28, color: '#2196F3', icon: Icons.ChartBarBig },
           { style: 'directive', count: 24, color: '#F44336', icon: Icons.Target },
           { style: 'collaborative', count: 32, color: '#4CAF50', icon: Icons.Users },
           { style: 'supportive', count: 22, color: '#9C27B0', icon: Icons.Heart },

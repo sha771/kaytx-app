@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Shield, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBar, MessageSquare, Calendar, TrendingUp, ShieldCheck, Key, TriangleAlert, Crosshair, Eye, LayoutDashboard, Monitor, Scale, ChartBar } from 'lucide-react-native';
+import { Shield, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, TrendingUp, ShieldCheck, Key, TriangleAlert, Crosshair, Eye, LayoutDashboard, Monitor, Scale } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { useRouter } from 'expo-router';
 
@@ -58,9 +58,20 @@ export default function SecurityDepartment() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBar},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#581C8412' }]}><act.icon size={24} color="#581C84" /><Text style={[styles.actionText, { color: '#581C84' }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#581C8412' }]}><act.icon size={24} color="#581C84" /><Text style={[styles.actionText, { color: '#581C84' }]}>{act.label}</Text></TouchableOpacity>))}
         </View>
       </View>
+      
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
+        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>36 helper and sub-agent AI workers supporting the main agents.</Text>
+        <TouchableOpacity onPress={() => router.push('/ai-agent/security/sub-agents')} style={[styles.subAgentButton, { backgroundColor: '#F4433615' }]}>
+          <Shield size={20} color="#F44336" />
+          <Text style={[styles.subAgentButtonText, { color: '#F44336' }]}>View All 36 Sub-Agents</Text>
+          <ArrowRight size={18} color="#F44336" />
+        </TouchableOpacity>
+      </View>
+
       <AgentFeatures agentId="security-index" agentName="Security & Risk Department" />
     </ScrollView>
   );

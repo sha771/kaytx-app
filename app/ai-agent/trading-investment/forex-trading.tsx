@@ -1,7 +1,7 @@
 
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Globe, TrendingUp, TrendingDown, Activity, ChartBar, Zap } from 'lucide-react-native';
+import { Globe, TrendingUp, TrendingDown, Activity, ChartBarBig, Zap } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
@@ -104,7 +104,7 @@ export default function ForexTradingScreen() {
 
   const customTabs = [
     { id: 'forex', label: 'FX Rates', icon: Globe, component: forexTab },
-    { id: 'analysis', label: 'Analysis', icon: ChartBar, component: <View /> },
+    { id: 'analysis', label: 'Analysis', icon: ChartBarBig, component: <View /> },
   ];
 
   return <AgentShell agent={agent} customTabs={customTabs} />;

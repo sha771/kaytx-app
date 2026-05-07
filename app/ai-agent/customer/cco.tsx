@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Crown, Activity, CircleCheckBig, Clock, Target, ChartBar, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, TrendingUp } from 'lucide-react-native';
+import { Crown, Activity, CircleCheckBig, Clock, Target, ChartBarBig, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, TrendingUp } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function CCOPage() {
@@ -32,14 +32,14 @@ export default function CCOPage() {
 
   const activities = [
     { time: '2 min ago', text: 'Completed quarterly CX performance review', icon: CircleCheckBig },
-    { time: '15 min ago', text: 'Updated NPS dashboard with latest results', icon: ChartBar },
+    { time: '15 min ago', text: 'Updated NPS dashboard with latest results', icon: ChartBarBig },
     { time: '1 hour ago', text: 'Approved new customer journey optimization', icon: Zap },
     { time: '3 hours ago', text: 'Resolved escalated enterprise customer issue', icon: Shield },
     { time: '5 hours ago', text: 'Launched retention campaign for Q3', icon: TrendingUp },
   ];
 
   const quickActions = [
-    { label: 'View Reports', icon: ChartBar },
+    { label: 'View Reports', icon: ChartBarBig },
     { label: 'Team Chat', icon: MessageSquare },
     { label: 'Schedule', icon: Calendar },
     { label: 'Settings', icon: Shield },

@@ -1,27 +1,26 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Heart, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBar, MessageSquare, Calendar, Shield, TrendingUp, DollarSign, Stethoscope, ShieldCheck, FileText, CreditCard, Code, Monitor, Building, ChartBar } from 'lucide-react-native';
+import { Heart, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, TrendingUp, DollarSign, Stethoscope, ShieldCheck, FileText, CreditCard, Code, Monitor, Settings, HeartPulse, FolderOpen, GitBranch, HeartHandshake } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { useRouter } from 'expo-router';
 
 const DEPARTMENT_AGENTS = [
-  { id: 'billing-specialist', name: 'Billing Specialist', description: 'Billing Specialist AI Agent', icon: Heart, color: '#B71C1C' },
-  { id: 'care-coordinator', name: 'Care Coordinator', description: 'Care Coordinator AI Agent', icon: Heart, color: '#B71C1C' },
-  { id: 'cmo-healthcare', name: 'CMO Healthcare', description: 'CMO Healthcare AI Agent', icon: Heart, color: '#B71C1C' },
-  { id: 'compliance-healthcare', name: 'Healthcare Compliance', description: 'Healthcare Compliance AI Agent', icon: Heart, color: '#B71C1C' },
-  { id: 'health-records-specialist', name: 'Health Records Specialist', description: 'Health Records Specialist AI Agent', icon: Heart, color: '#B71C1C' },
-  { id: 'medical-billing-manager', name: 'Medical Billing Manager', description: 'Medical Billing Manager AI Agent', icon: Heart, color: '#B71C1C' },
-  { id: 'medical-coder', name: 'Medical Coder', description: 'Medical Coder AI Agent', icon: Heart, color: '#B71C1C' },
-  { id: 'patient-coordinator', name: 'Patient Coordinator', description: 'Patient Coordinator AI Agent', icon: Heart, color: '#B71C1C' },
-  { id: 'patient-services-manager', name: 'Patient Services Manager', description: 'Patient Services Manager AI Agent', icon: Heart, color: '#B71C1C' },
-  { id: 'quality-improvement', name: 'Quality Improvement Specialist', description: 'Quality Improvement Specialist AI Agent', icon: Heart, color: '#B71C1C' },
-  { id: 'scheduling-manager', name: 'Scheduling Manager', description: 'Scheduling Manager AI Agent', icon: Heart, color: '#B71C1C' },
-  { id: 'telehealth-support', name: 'Telehealth Support', description: 'Telehealth Support AI Agent', icon: Heart, color: '#B71C1C' },
-  { id: 'vp-healthcare-operations', name: 'VP Healthcare Operations', description: 'VP Healthcare Operations AI Agent', icon: Heart, color: '#B71C1C' },
-  { id: 'vp-healthcare-ops', name: 'VP Healthcare Operations', description: 'VP Healthcare Operations AI Agent', icon: Heart, color: '#B71C1C' },
-  { id: 'vp-patient-experience', name: 'VP Patient Experience', description: 'VP Patient Experience AI Agent', icon: Heart, color: '#B71C1C' }
-];;
+  { id: 'chief-medical-officer', name: 'AI Chief Medical Officer', description: 'Clinical Strategy & Medical Leadership', icon: Stethoscope, color: '#B71C1C' },
+  { id: 'vp-healthcare-operations', name: 'AI VP Healthcare Operations', description: 'Operational Excellence & Workflow Optimization', icon: Settings, color: '#B71C1C' },
+  { id: 'vp-patient-experience', name: 'AI VP Patient Experience', description: 'Patient Satisfaction & Service Excellence', icon: HeartPulse, color: '#B71C1C' },
+  { id: 'patient-services-manager', name: 'AI Patient Services Manager', description: 'Patient Intake & Service Navigation', icon: Users, color: '#B71C1C' },
+  { id: 'medical-billing-manager', name: 'AI Medical Billing Manager', description: 'Revenue Cycle & Claims Management', icon: DollarSign, color: '#B71C1C' },
+  { id: 'scheduling-manager', name: 'AI Scheduling Manager', description: 'Appointment Optimization & Provider Scheduling', icon: Calendar, color: '#B71C1C' },
+  { id: 'patient-coordinator', name: 'AI Patient Coordinator', description: 'Referrals & Pre-Authorization Management', icon: GitBranch, color: '#B71C1C' },
+  { id: 'medical-coder', name: 'AI Medical Coder', description: 'Code Assignment & Coding Compliance', icon: Code, color: '#B71C1C' },
+  { id: 'billing-specialist', name: 'AI Billing Specialist', description: 'Charge Capture & Payment Processing', icon: CreditCard, color: '#B71C1C' },
+  { id: 'care-coordinator', name: 'AI Care Coordinator', description: 'Care Planning & Outcome Tracking', icon: HeartHandshake, color: '#B71C1C' },
+  { id: 'health-records-specialist', name: 'AI Health Records Specialist', description: 'Record Management & Data Integrity', icon: FolderOpen, color: '#B71C1C' },
+  { id: 'telehealth-support', name: 'AI Telehealth Support', description: 'Virtual Visits & Remote Monitoring', icon: Monitor, color: '#B71C1C' },
+  { id: 'healthcare-compliance', name: 'AI Healthcare Compliance', description: 'Regulatory Tracking & Audit Preparation', icon: ShieldCheck, color: '#B71C1C' },
+  { id: 'quality-improvement-specialist', name: 'AI Quality Improvement Specialist', description: 'Metric Analysis & Benchmark Reporting', icon: TrendingUp, color: '#B71C1C' }
+];
 
 export default function HealthcareDepartment() {
   const { theme } = useTheme();
@@ -61,9 +60,20 @@ export default function HealthcareDepartment() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBar},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#B71C1C12' }]}><act.icon size={24} color="#B71C1C" /><Text style={[styles.actionText, { color: '#B71C1C' }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#B71C1C12' }]}><act.icon size={24} color="#B71C1C" /><Text style={[styles.actionText, { color: '#B71C1C' }]}>{act.label}</Text></TouchableOpacity>))}
         </View>
       </View>
+      
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
+        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>42 helper and sub-agent AI workers supporting the main agents.</Text>
+        <TouchableOpacity onPress={() => router.push('/ai-agent/healthcare/sub-agents')} style={[styles.subAgentButton, { backgroundColor: '#EF444415' }]}>
+          <Heart size={20} color="#EF4444" />
+          <Text style={[styles.subAgentButtonText, { color: '#EF4444' }]}>View All 42 Sub-Agents</Text>
+          <ArrowRight size={18} color="#EF4444" />
+        </TouchableOpacity>
+      </View>
+
       <AgentFeatures agentId="healthcare-index" agentName="Healthcare Department" />
     </ScrollView>
   );
@@ -92,6 +102,8 @@ const styles = StyleSheet.create({
   agentDesc:{fontSize:12,marginTop:2},
   actionsGrid:{flexDirection:'row',flexWrap:'wrap',gap:12},
   actionButton:{flex:1,minWidth:'45%',alignItems:'center',padding:16,borderRadius:12},
-  actionText:{fontSize:13,fontWeight:'600',marginTop:8}
+  actionText:{fontSize:13,fontWeight:'600',marginTop:8},
+  subAgentButton:{flexDirection:'row',alignItems:'center',padding:16,borderRadius:12,gap:12,marginTop:12},
+  subAgentButtonText:{fontSize:15,fontWeight:'600',flex:1}
 });
 

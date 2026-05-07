@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Scale, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBar, MessageSquare, Calendar, Shield, FileText, Search, TriangleAlert, BookOpen, Gavel, ChartBar } from 'lucide-react-native';
+import { Scale, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, FileText, Search, TriangleAlert, BookOpen, Gavel } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { useRouter } from 'expo-router';
 
@@ -72,10 +72,21 @@ export default function LegalDepartment() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBar},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#3F51B512' }]}><act.icon size={24} color="#3F51B5" /><Text style={[styles.actionText, { color: '#3F51B5' }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#3F51B512' }]}><act.icon size={24} color="#3F51B5" /><Text style={[styles.actionText, { color: '#3F51B5' }]}>{act.label}</Text></TouchableOpacity>))}
         </View>
       </View>
-    <AgentFeatures agentId="legal-index" agentName="Legal & Governance Department" />
+    
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
+        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>30 helper and sub-agent AI workers supporting the main agents.</Text>
+        <TouchableOpacity onPress={() => router.push('/ai-agent/legal/sub-agents')} style={[styles.subAgentButton, { backgroundColor: '#3F51B515' }]}>
+          <Scale size={20} color="#3F51B5" />
+          <Text style={[styles.subAgentButtonText, { color: '#3F51B5' }]}>View All 30 Sub-Agents</Text>
+          <ArrowRight size={18} color="#3F51B5" />
+        </TouchableOpacity>
+      </View>
+
+      <AgentFeatures agentId="legal-index" agentName="Legal & Governance Department" />
 
     </ScrollView>
   );

@@ -33,7 +33,7 @@ import {
   CircleCheck,
   CircleAlert,
   Target,
-  ChartBar,
+  ChartBarBig,
   ChartPie,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';

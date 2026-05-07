@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Headphones, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBar, MessageSquare, Calendar, Shield, Heart, MessageCircle, Smile, ChartBar } from 'lucide-react-native';
+import { Headphones, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, Heart, MessageCircle, Smile } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { useRouter } from 'expo-router';
 
@@ -60,10 +60,20 @@ export default function CustomerExperienceIndex() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBar},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: theme.colors.primary + '12' }]}><act.icon size={24} color={theme.colors.primary} /><Text style={[styles.actionText, { color: theme.colors.primary }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: theme.colors.primary + '12' }]}><act.icon size={24} color={theme.colors.primary} /><Text style={[styles.actionText, { color: theme.colors.primary }]}>{act.label}</Text></TouchableOpacity>))}
         </View>
       </View>
     
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
+        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>42 helper and sub-agent AI workers supporting the main agents.</Text>
+        <TouchableOpacity onPress={() => router.push('/ai-agent/customer/sub-agents')} style={[styles.subAgentButton, { backgroundColor: '#06B6D415' }]}>
+          <Headphones size={20} color="#06B6D4" />
+          <Text style={[styles.subAgentButtonText, { color: '#06B6D4' }]}>View All 42 Sub-Agents</Text>
+          <ArrowRight size={18} color="#06B6D4" />
+        </TouchableOpacity>
+      </View>
+
       <AgentFeatures agentId="customer-index" agentName="Index" />
     </ScrollView>
   );
@@ -92,7 +102,9 @@ const styles = StyleSheet.create({
   agentDesc:{fontSize:12,marginTop:2},
   actionsGrid:{flexDirection:'row',flexWrap:'wrap',gap:12},
   actionButton:{flex:1,minWidth:'45%',alignItems:'center',padding:16,borderRadius:12},
-  actionText:{fontSize:13,fontWeight:'600',marginTop:8}
+  actionText:{fontSize:13,fontWeight:'600',marginTop:8},
+  subAgentButton:{flexDirection:'row',alignItems:'center',padding:16,borderRadius:12,gap:10,marginTop:8},
+  subAgentButtonText:{fontSize:15,fontWeight:'600',flex:1}
 });
 
 

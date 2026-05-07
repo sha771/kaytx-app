@@ -58,7 +58,7 @@ import {
   Scale,
   ChevronRight,
   Plus,
-  ChartBar,
+  ChartBarBig,
   ChartPie,
   Activity,
   Globe,
@@ -544,7 +544,7 @@ const AGENT_CATEGORIES = [
   { id: 'sales', name: 'Sales Agents', count: 28, icon: Target, color: '#F59E0B' },
   { id: 'marketing', name: 'Marketing Agents', count: 22, icon: Megaphone, color: '#E91E63' },
   { id: 'technical', name: 'Technical Agents', count: 35, icon: Cpu, color: '#1565C0' },
-  { id: 'analytical', name: 'Analytical Agents', count: 31, icon: ChartBar, color: '#6366F1' },
+  { id: 'analytical', name: 'Analytical Agents', count: 31, icon: ChartBarBig, color: '#6366F1' },
   { id: 'operations', name: 'Operations Agents', count: 24, icon: Settings, color: '#607D8B' },
   { id: 'compliance', name: 'Compliance Agents', count: 14, icon: Shield, color: '#F44336' },
 ];

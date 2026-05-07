@@ -15,7 +15,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   Activity,
   ArrowUpRight,
-  ChartBar,
+  ChartBarBig,
   Bell,
   Bot,
   Brain,
@@ -97,7 +97,6 @@ import {
   SquareCheck,
   Factory,
   Share2 as NetworkIcon,
-  ChartBar,
 } from 'lucide-react-native';
 import { useTheme } from '../../providers/ThemeProvider';
 import { useMessaging } from '../../providers/MessagingProvider';
@@ -325,7 +324,7 @@ const sidebarOptions: SidebarOption[] = [
           {
             id: '2-wf-dashboard',
             title: 'Dashboard & Overview',
-            icon: ChartBar,
+            icon: ChartBarBig,
             items: [
               { id: '2-main', title: '📊 View All Agents Dashboard', icon: Bot },
               { id: '2-agent-reactive', title: '⚡ Reactive Agents (199)', icon: Zap },
@@ -352,7 +351,7 @@ const sidebarOptions: SidebarOption[] = [
               { id: '2-team-sales', title: 'Sales Team - SDRs & AEs', icon: TrendingUp },
               { id: '2-team-support', title: 'Support Team - Tiers 1-3', icon: Headphones },
               { id: '2-team-recruiting', title: 'Recruiting Team', icon: UserPlus },
-              { id: '2-team-analytics', title: 'Analytics Team', icon: ChartBar },
+              { id: '2-team-analytics', title: 'Analytics Team', icon: ChartBarBig },
               { id: '2-team-creative', title: 'Creative Team', icon: Palette },
               { id: '2-team-legal', title: 'Legal Team', icon: Scale },
               { id: '2-team-finance', title: 'Finance Team', icon: Calculator },
@@ -418,11 +417,11 @@ const sidebarOptions: SidebarOption[] = [
   {
     id: '6',
     title: 'Analysis & Performance',
-    icon: ChartBar,
+    icon: ChartBarBig,
     color: '#FF3B30',
     subItems: [
       { id: '6-1', title: 'Reports', icon: FileText },
-      { id: '6-2', title: 'Insights', icon: ChartBar },
+      { id: '6-2', title: 'Insights', icon: ChartBarBig },
       { id: '6-3', title: 'Performance Insights', icon: Activity },
     ],
   },
@@ -546,7 +545,7 @@ export default function HomeScreen() {
     {
       id: '3',
       title: 'Analytics',
-      icon: ChartBar,
+      icon: ChartBarBig,
       color: '#FF9500',
       onPress: () => {},
     },
@@ -613,7 +612,7 @@ export default function HomeScreen() {
       title: 'Revenue',
       value: '$45K',
       change: '+18%',
-      icon: ChartBar,
+      icon: ChartBarBig,
       color: '#32D74B',
     },
   ];
@@ -971,13 +970,13 @@ export default function HomeScreen() {
     if (!IconComponent) return null;
     return (
       <TouchableOpacity
-        style= [styles.quickActionCard, { backgroundColor: theme.colors.cardBackground }]}
+        style={[styles.quickActionCard, { backgroundColor: theme.colors.cardBackground }]}
         onPress={item.onPress}
       >
-        <View style= [styles.quickActionIcon, { backgroundColor: item.color }]}>
+        <View style={[styles.quickActionIcon, { backgroundColor: item.color }]}>
           <IconComponent size={24} color="white" />
         </View>
-        <Text style= [styles.quickActionTitle, { color: theme.colors.text }]}>
+        <Text style={[styles.quickActionTitle, { color: theme.colors.text }]}>
           {item.title}
         </Text>
       </TouchableOpacity>
@@ -990,41 +989,41 @@ export default function HomeScreen() {
     const isPositive = item.change.startsWith('+');
     
     return (
-      <View style= [styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
+      <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.statHeader}>
-          <View style= [styles.statIcon, { backgroundColor: `${item.color}20` }]}>
+          <View style={[styles.statIcon, { backgroundColor: `${item.color}20` }]}>
             {IconComponent && <IconComponent size={20} color={item.color} />}
           </View>
-          <Text style= [styles.statChange, { color: isPositive ? '#34C759' : '#FF3B30' }]}>
+          <Text style={[styles.statChange, { color: isPositive ? '#34C759' : '#FF3B30' }]}>
             {item.change}
           </Text>
         </View>
-        <Text style= [styles.statValue, { color: theme.colors.text }]}>{item.value}</Text>
-        <Text style= [styles.statTitle, { color: theme.colors.secondaryText }]}>{item.title}</Text>
+        <Text style={[styles.statValue, { color: theme.colors.text }]}>{item.value}</Text>
+        <Text style={[styles.statTitle, { color: theme.colors.secondaryText }]}>{item.title}</Text>
       </View>
     );
   };
 
   const renderRecentConversation = ({ item }: { item: any }) => (
     <TouchableOpacity
-      style= [styles.recentConversationItem, { backgroundColor: theme.colors.cardBackground }]}
+      style={[styles.recentConversationItem, { backgroundColor: theme.colors.cardBackground }]}
       onPress={() => router.push('/(tabs)/messages')}
     >
       <Image source={{ uri: item.avatar }} style={styles.recentAvatar} />
       <View style={styles.recentContent}>
-        <Text style= [styles.recentName, { color: theme.colors.text }]} numberOfLines={1}>
+        <Text style={[styles.recentName, { color: theme.colors.text }]} numberOfLines={1}>
           {item.name}
         </Text>
-        <Text style= [styles.recentMessage, { color: theme.colors.secondaryText }]} numberOfLines={1}>
+        <Text style={[styles.recentMessage, { color: theme.colors.secondaryText }]} numberOfLines={1}>
           {item.lastMessage}
         </Text>
       </View>
       <View style={styles.recentMeta}>
-        <Text style= [styles.recentTime, { color: theme.colors.secondaryText }]}>
+        <Text style={[styles.recentTime, { color: theme.colors.secondaryText }]}>
           {item.timestamp}
         </Text>
         {item.unreadCount > 0 && (
-          <View style= [styles.recentBadge, { backgroundColor: theme.colors.primary }]}>
+          <View style={[styles.recentBadge, { backgroundColor: theme.colors.primary }]}>
             <Text style={styles.recentBadgeText}>{item.unreadCount}</Text>
           </View>
         )}
@@ -1033,9 +1032,9 @@ export default function HomeScreen() {
   );
 
   return (
-    <View style= [styles.container, { backgroundColor: theme.colors.background }]}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       {/* Header */}
-      <View style= [styles.header, { backgroundColor: theme.colors.background, paddingTop: insets.top + 10 }]}>
+      <View style={[styles.header, { backgroundColor: theme.colors.background, paddingTop: insets.top + 10 }]}>
         <TouchableOpacity 
           style={styles.menuButton}
           onPress={() => setShowSidebar(true)}
@@ -1043,10 +1042,10 @@ export default function HomeScreen() {
           <Menu size={24} color={theme.colors.text} />
         </TouchableOpacity>
         <View style={styles.headerCenter}>
-          <Text style= [styles.greeting, { color: theme.colors.secondaryText }]}>
+          <Text style={[styles.greeting, { color: theme.colors.secondaryText }]}>
             Good morning
           </Text>
-          <Text style= [styles.title, { color: theme.colors.text }]}>
+          <Text style={[styles.title, { color: theme.colors.text }]}>
             Welcome back
           </Text>
         </View>
@@ -1058,7 +1057,7 @@ export default function HomeScreen() {
             <View style={styles.notificationContainer}>
               <Bell size={20} color={theme.colors.text} />
               {notifications > 0 && (
-                <View style= [styles.notificationBadge, { backgroundColor: theme.colors.primary }]}>
+                <View style={[styles.notificationBadge, { backgroundColor: theme.colors.primary }]}>
                   <Text style={styles.notificationCount}>{notifications}</Text>
                 </View>
               )}
@@ -1072,36 +1071,36 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
       >
         {/* System Status & Key Metrics */}
-        <View style= [styles.statusCard, { backgroundColor: theme.colors.cardBackground }]}>
+        <View style={[styles.statusCard, { backgroundColor: theme.colors.cardBackground }]}>
           <View style={styles.statusHeader}>
             <View style={styles.statusIndicator}>
               {React.createElement(getSystemStatusIcon(), {
                 size: 16,
                 color: getSystemStatusColor(),
               })}
-              <Text style= [styles.statusText, { color: getSystemStatusColor() }]}>
+              <Text style={[styles.statusText, { color: getSystemStatusColor() }]}>
                 System {systemStatus === 'online' ? 'Online' : systemStatus === 'maintenance' ? 'Maintenance' : 'Issues'}
               </Text>
             </View>
-            <Text style= [styles.statusTime, { color: theme.colors.secondaryText }]}>
+            <Text style={[styles.statusTime, { color: theme.colors.secondaryText }]}>
               Last updated: 2 min ago
             </Text>
           </View>
           <View style={styles.statusMetrics}>
             <View style={styles.statusMetricItem}>
               <Activity size={14} color="#34C759" />
-              <Text style= [styles.statusMetricText, { color: theme.colors.secondaryText }]}>Uptime: 99.9%</Text>
+              <Text style={[styles.statusMetricText, { color: theme.colors.secondaryText }]}>Uptime: 99.9%</Text>
             </View>
             <View style={styles.statusMetricItem}>
               <Users size={14} color="#007AFF" />
-              <Text style= [styles.statusMetricText, { color: theme.colors.secondaryText }]}>127 active users</Text>
+              <Text style={[styles.statusMetricText, { color: theme.colors.secondaryText }]}>127 active users</Text>
             </View>
           </View>
         </View>
         {/* Smart Features */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
-            <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>
+            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
               Smart Features
             </Text>
             <TouchableOpacity>
@@ -1115,7 +1114,7 @@ export default function HomeScreen() {
               return (
                 <TouchableOpacity
                   key={feature.id}
-                  style= [
+                  style={[
                     styles.smartFeatureCard,
                     { 
                       backgroundColor: theme.colors.cardBackground,
@@ -1126,22 +1125,22 @@ export default function HomeScreen() {
                   onPress={() => handleSmartFeaturePress(feature)}
                   onLongPress={() => toggleSmartFeature(feature.id)}
                 >
-                  <View style= [styles.smartFeatureIcon, { backgroundColor: `${feature.color}15` }]}>
+                  <View style={[styles.smartFeatureIcon, { backgroundColor: `${feature.color}15` }]}>
                     <FeatureIcon size={22} color={feature.color} />
                   </View>
                   <View style={styles.smartFeatureContent}>
-                    <Text style= [styles.smartFeatureTitle, { color: theme.colors.text }]}>
+                    <Text style={[styles.smartFeatureTitle, { color: theme.colors.text }]}>
                       {feature.title}
                     </Text>
-                    <Text style= [styles.smartFeatureDesc, { color: theme.colors.secondaryText }]} numberOfLines={1}>
+                    <Text style={[styles.smartFeatureDesc, { color: theme.colors.secondaryText }]} numberOfLines={1}>
                       {feature.description}
                     </Text>
                   </View>
-                  <View style= [
+                  <View style={[
                     styles.smartFeatureStatus,
                     { backgroundColor: feature.enabled ? '#34C75920' : '#8E8E9320' }
                   ]}>
-                    <View style= [
+                    <View style={[
                       styles.smartFeatureStatusDot,
                       { backgroundColor: feature.enabled ? '#34C759' : '#8E8E93' }
                     ]} />
@@ -1154,7 +1153,7 @@ export default function HomeScreen() {
 
         {/* Quick Actions */}
         <View style={styles.section}>
-          <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>
+          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
             Quick Actions
           </Text>
           <FlatList
@@ -1170,14 +1169,14 @@ export default function HomeScreen() {
         {/* Stats */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
-            <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>
+            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
               Overview
             </Text>
             <View style={styles.periodSelector}>
               {(['today', 'week', 'month'] as const).map((period) => (
                 <TouchableOpacity
                   key={period}
-                  style= [
+                  style={[
                     styles.periodButton,
                     selectedPeriod === period && {
                       backgroundColor: theme.colors.primary,
@@ -1186,7 +1185,7 @@ export default function HomeScreen() {
                   onPress={() => setSelectedPeriod(period)}
                 >
                   <Text
-                    style= [
+                    style={[
                       styles.periodText,
                       {
                         color: selectedPeriod === period ? 'white' : theme.colors.secondaryText,
@@ -1213,11 +1212,11 @@ export default function HomeScreen() {
         {/* Recent Conversations */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
-            <Text style= [styles.sectionTitle, { color: theme.colors.text }]}>
+            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
               Recent Conversations
             </Text>
             <TouchableOpacity onPress={() => router.push('/(tabs)/messages')}>
-              <Text style= [styles.seeAllText, { color: theme.colors.primary }]}>
+              <Text style={[styles.seeAllText, { color: theme.colors.primary }]}>
                 See All
               </Text>
             </TouchableOpacity>
@@ -1258,9 +1257,9 @@ export default function HomeScreen() {
             style={styles.sidebarBackdrop}
             onPress={() => setShowSidebar(false)}
           />
-          <View style= [styles.sidebar, { backgroundColor: theme.colors.background }]}>
+          <View style={[styles.sidebar, { backgroundColor: theme.colors.background }]}>
             <View style={styles.sidebarHeader}>
-              <Text style= [styles.sidebarTitle, { color: theme.colors.text }]}>
+              <Text style={[styles.sidebarTitle, { color: theme.colors.text }]}>
                 Features & Services
               </Text>
               <TouchableOpacity 
@@ -1279,17 +1278,17 @@ export default function HomeScreen() {
                 return (
                   <View key={option.id}>
                     <TouchableOpacity
-                      style= [styles.sidebarOption, { backgroundColor: theme.colors.cardBackground }]}
+                      style={[styles.sidebarOption, { backgroundColor: theme.colors.cardBackground }]}
                       onPress={() => handleSidebarOptionPress(option)}
                     >
-                      <View style= [styles.sidebarOptionIcon, { backgroundColor: option.color + '20' }]}>
+                      <View style={[styles.sidebarOptionIcon, { backgroundColor: option.color + '20' }]}>
                         <IconComponent size={20} color={option.color} />
                       </View>
-                      <Text style= [styles.sidebarOptionText, { color: theme.colors.text }]}>
+                      <Text style={[styles.sidebarOptionText, { color: theme.colors.text }]}>
                         {option.title}
                       </Text>
                       {option.subItems && option.subItems.length > 0 && (
-                        <View style= [styles.expandIcon, { transform: [{ rotate: isExpanded ? '90deg' : '0deg' }] }]}>
+                        <View style={[styles.expandIcon, { transform: [{ rotate: isExpanded ? '90deg' : '0deg' }] }]}>
                           <ArrowUpRight size={16} color={theme.colors.secondaryText} />
                         </View>
                       )}
@@ -1308,7 +1307,7 @@ export default function HomeScreen() {
                             return (
                               <View key={subItem.id}>
                                 <TouchableOpacity
-                                  style= [styles.subSectionHeader, { backgroundColor: theme.colors.cardBackground }]}
+                                  style={[styles.subSectionHeader, { backgroundColor: theme.colors.cardBackground }]}
                                   onPress={() => {
                                     const newExpanded = new Set(expandedSubSections);
                                     if (newExpanded.has(subItem.id)) {
@@ -1322,10 +1321,10 @@ export default function HomeScreen() {
                                   <View style={styles.subSectionIcon}>
                                     <SubIconComponent size={16} color={theme.colors.primary} />
                                   </View>
-                                  <Text style= [styles.subSectionTitle, { color: theme.colors.text }]}>
+                                  <Text style={[styles.subSectionTitle, { color: theme.colors.text }]}>
                                     {subItem.title}
                                   </Text>
-                                  <View style= [styles.expandIcon, { transform: [{ rotate: isSubSectionExpanded ? '90deg' : '0deg' }] }]}>
+                                  <View style={[styles.expandIcon, { transform: [{ rotate: isSubSectionExpanded ? '90deg' : '0deg' }] }]}>
                                     <ArrowUpRight size={14} color={theme.colors.secondaryText} />
                                   </View>
                                 </TouchableOpacity>
@@ -1340,7 +1339,7 @@ export default function HomeScreen() {
                                       return (
                                         <View key={section.id}>
                                           <TouchableOpacity
-                                            style= [styles.nestedSectionHeader, { backgroundColor: theme.colors.background }]}
+                                            style={[styles.nestedSectionHeader, { backgroundColor: theme.colors.background }]}
                                             onPress={() => {
                                               const newExpanded = new Set(expandedSubSections);
                                               if (newExpanded.has(section.id)) {
@@ -1354,10 +1353,10 @@ export default function HomeScreen() {
                                             <View style={styles.nestedSectionIcon}>
                                               <SectionIcon size={14} color={theme.colors.secondaryText} />
                                             </View>
-                                            <Text style= [styles.nestedSectionTitle, { color: theme.colors.secondaryText }]}>
+                                            <Text style={[styles.nestedSectionTitle, { color: theme.colors.secondaryText }]}>
                                               {section.title}
                                             </Text>
-                                            <View style= [styles.expandIconSmall, { transform: [{ rotate: isSectionExpanded ? '90deg' : '0deg' }] }]}>
+                                            <View style={[styles.expandIconSmall, { transform: [{ rotate: isSectionExpanded ? '90deg' : '0deg' }] }]}>
                                               <ArrowUpRight size={12} color={theme.colors.secondaryText} />
                                             </View>
                                           </TouchableOpacity>
@@ -1370,13 +1369,13 @@ export default function HomeScreen() {
                                                 return (
                                                   <TouchableOpacity
                                                     key={item.id}
-                                                    style= [styles.nestedItem, { backgroundColor: theme.colors.background }]}
+                                                    style={[styles.nestedItem, { backgroundColor: theme.colors.background }]}
                                                     onPress={() => handleSubItemPress(item)}
                                                   >
                                                     <View style={styles.nestedItemIcon}>
                                                       <ItemIcon size={12} color={theme.colors.secondaryText} />
                                                     </View>
-                                                    <Text style= [styles.nestedItemText, { color: theme.colors.secondaryText }]}>
+                                                    <Text style={[styles.nestedItemText, { color: theme.colors.secondaryText }]}>
                                                       {item.title}
                                                     </Text>
                                                   </TouchableOpacity>
@@ -1398,12 +1397,12 @@ export default function HomeScreen() {
                             return (
                               <View
                                 key={subItem.id}
-                                style= [styles.subItemHeader, { backgroundColor: theme.colors.cardBackground }]}
+                                style={[styles.subItemHeader, { backgroundColor: theme.colors.cardBackground }]}
                               >
                                 <View style={styles.subItemIcon}>
                                   <SubIconComponent size={14} color={theme.colors.primary} />
                                 </View>
-                                <Text style= [styles.subItemHeaderText, { color: theme.colors.primary }]}>
+                                <Text style={[styles.subItemHeaderText, { color: theme.colors.primary }]}>
                                   {subItem.title}
                                 </Text>
                               </View>
@@ -1412,13 +1411,13 @@ export default function HomeScreen() {
                           return (
                             <TouchableOpacity
                               key={subItem.id}
-                              style= [styles.subItem, { backgroundColor: theme.colors.background }]}
+                              style={[styles.subItem, { backgroundColor: theme.colors.background }]}
                               onPress={() => handleSubItemPress(subItem)}
                             >
                               <View style={styles.subItemIcon}>
                                 <SubIconComponent size={16} color={theme.colors.secondaryText} />
                               </View>
-                              <Text style= [styles.subItemText, { color: theme.colors.secondaryText }]}>
+                              <Text style={[styles.subItemText, { color: theme.colors.secondaryText }]}>
                                 {subItem.title}
                               </Text>
                             </TouchableOpacity>

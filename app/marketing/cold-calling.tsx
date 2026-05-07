@@ -11,7 +11,7 @@ import {
   Platform,
 } from 'react-native';
 import { Stack } from 'expo-router';
-import { Phone, Users, Clock, TrendingUp, Settings, Play, Pause, ChartBar, FileText, Calendar } from 'lucide-react-native';
+import { Phone, Users, Clock, TrendingUp, Settings, Play, Pause, ChartBarBig, FileText, Calendar } from 'lucide-react-native';
 
 type CallStatus = 'idle' | 'calling' | 'paused' | 'completed';
 type CallOutcome = 'answered' | 'voicemail' | 'no-answer' | 'busy' | 'interested' | 'not-interested';
@@ -167,7 +167,7 @@ export default function ColdCallingScreen() {
               </TouchableOpacity>
             )}
             <TouchableOpacity style={styles.secondaryButton}>
-              <ChartBar size={16} color="#007AFF" />
+              <ChartBarBig size={16} color="#007AFF" />
               <Text style={styles.secondaryButtonText}>View Analytics</Text>
             </TouchableOpacity>
           </View>
@@ -205,7 +205,7 @@ export default function ColdCallingScreen() {
           <View style={styles.scriptSection}>
             <Text style={styles.scriptLabel}>Objection Handling:</Text>
             {script.objectionHandling.map((objection, index) => (
-              <Text key={index} style={styles.scriptText}>• {objection}</Text>
+              <Text key={index} style={styles.scriptText}>ï¿½ {objection}</Text>
             ))}
           </View>
 
@@ -439,7 +439,7 @@ export default function ColdCallingScreen() {
           style={[styles.tab, activeTab === 'analytics' && styles.activeTab]}
           onPress={() => setActiveTab('analytics')}
         >
-          <ChartBar size={20} color={activeTab === 'analytics' ? '#007AFF' : '#8E8E93'} />
+          <ChartBarBig size={20} color={activeTab === 'analytics' ? '#007AFF' : '#8E8E93'} />
           <Text style={[styles.tabText, activeTab === 'analytics' && styles.activeTabText]}>
             Analytics
           </Text>

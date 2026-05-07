@@ -6,7 +6,7 @@ import { aiEmployees } from '@/constants/aiEmployees';
 import { trpc } from '@/lib/trpc';
 import {
     ShoppingBag,
-    ArrowLeft, Package, RefreshCw, MessageSquare, TrendingUp, Clock, Zap, Globe, ChartBar, Users, Truck, Lock, CircleCheck, ChevronRight } from 'lucide-react-native';
+    ArrowLeft, Package, RefreshCw, MessageSquare, TrendingUp, Clock, Zap, Globe, ChartBarBig, Users, Truck, Lock, CircleCheck, ChevronRight } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const { width } = Dimensions.get('window');
@@ -127,7 +127,7 @@ export default function RetailScreen() {
                 <View style={styles.section}>
                     <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Benefits</Text>
                     <View style={styles.benefitsGrid}>
-                        {[{ icon: Zap, color: '#FF6B6B', title: 'Peak Season Ready', desc: 'Handle 10x order volume' }, { icon: Globe, color: '#4ECDC4', title: 'Omnichannel', desc: 'Web, mobile, social, and in-store' }, { icon: Truck, color: '#6C5CE7', title: 'Delivery Updates', desc: 'Real-time tracking integration' }, { icon: ChartBar, color: '#00B894', title: 'Conversion AI', desc: 'Boost sales with AI upselling' }].map((b, i) => { const I = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><I size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
+                        {[{ icon: Zap, color: '#FF6B6B', title: 'Peak Season Ready', desc: 'Handle 10x order volume' }, { icon: Globe, color: '#4ECDC4', title: 'Omnichannel', desc: 'Web, mobile, social, and in-store' }, { icon: Truck, color: '#6C5CE7', title: 'Delivery Updates', desc: 'Real-time tracking integration' }, { icon: ChartBarBig, color: '#00B894', title: 'Conversion AI', desc: 'Boost sales with AI upselling' }].map((b, i) => { const I = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><I size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
                     </View>
                 </View>
 

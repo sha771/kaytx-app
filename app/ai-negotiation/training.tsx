@@ -24,7 +24,7 @@ import {
   CircleAlert,
   Clock,
   Award,
-  ChartBar,
+  ChartBarBig,
   Pencil,
   Plus,
   Trash2,
@@ -176,7 +176,7 @@ export default function AITrainingScreen() {
               </Text>
             </View>
             <View style={styles.statItem}>
-              <ChartBar size={14} color={theme.colors.secondaryText} />
+              <ChartBarBig size={14} color={theme.colors.secondaryText} />
               <Text style={[styles.statText, { color: theme.colors.secondaryText }]}>
                 {strategy.timesUsed} times used
               </Text>

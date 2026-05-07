@@ -23,7 +23,7 @@ import {
   Search,
   ListFilter,
   TrendingUp,
-  ChartBar,
+  ChartBarBig,
   Users,
   Target,
   Calendar,
@@ -418,7 +418,7 @@ export default function SmartTaskAutomationScreen() {
         </TouchableOpacity>
         
         <TouchableOpacity style={styles.quickAction}>
-          <ChartBar size={20} color={theme.colors.primary} />
+          <ChartBarBig size={20} color={theme.colors.primary} />
           <Text style={[styles.quickActionText, { color: theme.colors.primary }]}>Export Analytics</Text>
         </TouchableOpacity>
       </View>

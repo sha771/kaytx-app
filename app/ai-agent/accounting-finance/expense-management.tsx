@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Activity, ChartBar, TrendingUp, Clock, Zap, Target } from 'lucide-react-native';
+import { Activity, ChartBarBig, TrendingUp, Clock, Zap, Target } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -64,7 +64,7 @@ export default function AiExpenseAgentScreen() {
   );
 
   const customTabs = [
-    { id: 'dashboard', label: 'Dashboard', icon: ChartBar, component: dashboardTab },
+    { id: 'dashboard', label: 'Dashboard', icon: ChartBarBig, component: dashboardTab },
   ];
 
   return <AgentShell agent={agent} customTabs={customTabs} />;

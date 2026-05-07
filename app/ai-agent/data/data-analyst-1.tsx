@@ -6,7 +6,7 @@ import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function AgentPage() {
   const { theme } = useTheme();
-  const stats = {[{label:'Tasks',value:'4002',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.9s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.2%',icon:Target,color:'#1A237E'}];
+  const stats = [{label:'Tasks',value:'4002',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.9s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.2%',icon:Target,color:'#1A237E'}];
   const capabilities = ['Data Analytics','Business Intelligence','Statistical Modeling','Data Governance','ML Engineering','Visualization & Reporting'];
   const responsibilities = ['Data pipeline development & maintenance','Business intelligence dashboard creation','Statistical model development & validation','Data quality & governance enforcement','ML model training & deployment','Analytics reporting & visualization'];
   const activities = [{time:'3 min ago',text:'Built 5 new analytics dashboards',icon: CircleCheckBig},{time:'6 min ago',text:'Validated data pipeline integrity',icon:Clock},{time:'9 min ago',text:'Deployed ML model for churn prediction',icon:Zap}];

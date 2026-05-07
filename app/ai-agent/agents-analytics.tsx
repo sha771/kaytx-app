@@ -10,7 +10,7 @@ import {
 import { useRouter } from 'expo-router';
 import {
   ChevronLeft,
-  ChartBar,
+  ChartBarBig,
   TrendingUp,
   TrendingDown,
   Activity,
@@ -92,7 +92,7 @@ export default function AIAgentsAnalyticsScreen() {
             <ChevronLeft size={24} color={colors.text} />
           </TouchableOpacity>
           <View style={styles.headerTitleContainer}>
-            <ChartBar size={22} color={colors.primary} />
+            <ChartBarBig size={22} color={colors.primary} />
             <Text style={[styles.headerTitle, { color: colors.text }]}>AI Agents Analytics</Text>
           </View>
           <View style={{ width: 40 }} />

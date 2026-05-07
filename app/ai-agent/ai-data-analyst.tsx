@@ -1,7 +1,7 @@
  
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { ChartBar, Database } from 'lucide-react-native';
+import { ChartBarBig, Database } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
 import { EnterpriseAgentShell } from '@/components/ai-agent/EnterpriseAgentShell';
@@ -65,7 +65,7 @@ export default function AIDataAnalystScreen() {
     );
 
     const customTabs = [
-        { id: 'dashboards', label: 'Dashboards', icon: ChartBar, component: renderDashTab }
+        { id: 'dashboards', label: 'Dashboards', icon: ChartBarBig, component: renderDashTab }
     ];
 
     return <EnterpriseAgentShell agent={agent} customTabs={customTabs} />;

@@ -1,13 +1,22 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Link, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBar, MessageSquare, Calendar, Shield, TrendingUp, User } from 'lucide-react-native';
+import { Link, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, TrendingUp, User, Package, ShoppingCart, Truck, Warehouse, ClipboardList, BarChart3, Handshake, Ship, PackageCheck } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { useRouter } from 'expo-router';
 
 const DEPARTMENT_AGENTS = [
-  { id: 'vp-supply-chain-ops', name: 'VP Supply Chain Operations', description: 'VP Supply Chain Operations AI Agent', icon: User, color: '#581C84' }
-];;
+  { id: 'vp-supply-chain-ops', name: 'AI VP Supply Chain Operations', description: 'Strategic oversight of entire supply chain network', icon: User, color: '#581C84', route: '/ai-agent/supply-chain/vp-supply-chain-ops', count: 3 },
+  { id: 'procurement-manager', name: 'AI Procurement Manager', description: 'Manage sourcing, contracts, and supplier evaluation', icon: ShoppingCart, color: '#0EA5E9', route: '/ai-agent/supply-chain/procurement-manager', count: 3 },
+  { id: 'logistics-manager', name: 'AI Logistics Manager', description: 'Coordinate transportation and service level monitoring', icon: Truck, color: '#F59E0B', route: '/ai-agent/supply-chain/logistics-manager', count: 3 },
+  { id: 'warehouse-lead', name: 'AI Warehouse Lead', description: 'Oversee warehouse operations, layout, and safety', icon: Warehouse, color: '#10B981', route: '/ai-agent/supply-chain/warehouse-lead', count: 3 },
+  { id: 'procurement-buyer', name: 'AI Procurement Buyer', description: 'Handle RFQs, bid analysis, and order placement', icon: ClipboardList, color: '#8B5CF6', route: '/ai-agent/supply-chain/procurement-buyer', count: 3 },
+  { id: 'inventory-specialist', name: 'AI Inventory Specialist', description: 'Optimize stock levels and track obsolescence', icon: BarChart3, color: '#EC4899', route: '/ai-agent/supply-chain/inventory-specialist', count: 3 },
+  { id: 'demand-planner', name: 'AI Demand Planner', description: 'Forecast demand and adjust for seasonality', icon: TrendingUp, color: '#06B6D4', route: '/ai-agent/supply-chain/ai-demand-planner', count: 3 },
+  { id: 'supplier-relations', name: 'AI Supplier Relations', description: 'Manage supplier performance and relationships', icon: Handshake, color: '#F97316', route: '/ai-agent/supply-chain/ai-supplier-relations', count: 3 },
+  { id: 'shipping-coordinator', name: 'AI Shipping Coordinator', description: 'Book carriers and track shipments', icon: Ship, color: '#84CC16', route: '/ai-agent/supply-chain/ai-shipping-coordinator', count: 3 },
+  { id: 'fulfillment-specialist', name: 'AI Fulfillment Specialist', description: 'Process orders and optimize packaging', icon: PackageCheck, color: '#6366F1', route: '/ai-agent/supply-chain/ai-fulfillment-specialist', count: 3 },
+];
 
 export default function SupplyChainDepartment() {
   const { theme } = useTheme();
@@ -25,7 +34,7 @@ export default function SupplyChainDepartment() {
         </View>
       </View>
       <View style={styles.statsContainer}>
-        {[{label:'Agents',value:DEPARTMENT_AGENTS.length.toString(),icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Clock,color:'#007AFF'},{label:'Accuracy',value:'99.8%',icon:Target,color:'#FF9500'},{label:'Processed',value:'10K+',icon:TrendingUp,color:'#5D4037'}].map((stat,i)=>(<View key={i} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><stat.icon size={22} color={stat.color} /><Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text><Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text></View>))}
+        {[{label:'Main Agents',value:DEPARTMENT_AGENTS.length.toString(),icon: CircleCheckBig,color:'#34C759'},{label:'Sub-Agents',value:'30',icon:Users,color:'#007AFF'},{label:'Uptime',value:'99.9%',icon:Clock,color:'#FF9500'},{label:'Processed',value:'500K+',icon:TrendingUp,color:'#5D4037'}].map((stat,i)=>(<View key={i} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><stat.icon size={22} color={stat.color} /><Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text><Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text></View>))}
       </View>
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Overview</Text>
@@ -47,9 +56,25 @@ export default function SupplyChainDepartment() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          [{label:'View Reports',icon:ChartBar},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#5D403712' }]}><act.icon size={24} color="#5D4037" /><Text style={[styles.actionText, { color: '#5D4037' }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(
+            <TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#5D403712' }]}>
+              <act.icon size={24} color="#5D4037" />
+              <Text style={[styles.actionText, { color: '#5D4037' }]}>{act.label}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
       </View>
+      
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
+        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>30 helper and sub-agent AI workers supporting the main agents.</Text>
+        <TouchableOpacity onPress={() => router.push('/ai-agent/supply-chain/sub-agents')} style={[styles.subAgentButton, { backgroundColor: '#0EA5E915' }]}>
+          <Package size={20} color="#0EA5E9" />
+          <Text style={[styles.subAgentButtonText, { color: '#0EA5E9' }]}>View All 30 Sub-Agents</Text>
+          <ArrowRight size={18} color="#0EA5E9" />
+        </TouchableOpacity>
+      </View>
+
       <AgentFeatures agentId="supply-chain-index" agentName="Supply Chain Department" />
     </ScrollView>
   );
@@ -78,6 +103,8 @@ const styles = StyleSheet.create({
   agentDesc:{fontSize:12,marginTop:2},
   actionsGrid:{flexDirection:'row',flexWrap:'wrap',gap:12},
   actionButton:{flex:1,minWidth:'45%',alignItems:'center',padding:16,borderRadius:12},
-  actionText:{fontSize:13,fontWeight:'600',marginTop:8}
+  actionText:{fontSize:13,fontWeight:'600',marginTop:8},
+  subAgentButton:{flexDirection:'row',alignItems:'center',padding:16,borderRadius:12,marginTop:12,gap:12},
+  subAgentButtonText:{fontSize:15,fontWeight:'600',flex:1}
 });
 

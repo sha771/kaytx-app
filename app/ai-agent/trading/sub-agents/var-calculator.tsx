@@ -1,0 +1,75 @@
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { useTheme } from '@/providers/ThemeProvider';
+import { useRouter } from 'expo-router';
+import { Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap, Users, MessageSquare, Calendar, ChartBarBig, TrendingUp, AlertTriangle, FileText, ChevronRight, Shield, Calculator, BarChart3, ShieldAlert, Key } from 'lucide-react-native';
+import AgentFeatures from '@/components/ai-agent/AgentFeatures';
+
+const METRICS = [{"label":"Backtest Pass","value":"99.2%","change":"+0.4%","trend":"up"},{"label":"Calc Speed","value":"0.4ms","change":"-0.1ms","trend":"up"},{"label":"Model Count","value":"6","change":"+1","trend":"up"},{"label":"CVaR Ratio","value":"1.4","change":"-0.02","trend":"up"}];
+
+export default function VarCalculatorPage() {
+  const { theme } = useTheme();
+  const router = useRouter();
+  const stats = [{label:'VaR Models',value:'6',icon:Calculator,color:'#34C759'},{label:'Calculations',value:'24,000',icon:Activity,color:'#007AFF'},{label:'Backtest Pass',value:'99.2%',icon:CircleCheckBig,color:'#FF9500'},{label:'Speed',value:'0.4ms',icon:Clock,color:'#AF52DE'}];
+  const capabilities = ["Historical VaR","Parametric VaR","Monte Carlo VaR","Conditional VaR","Component VaR","Marginal VaR","Incremental VaR","Backtesting"];
+  const responsibilities = ["Calculate VaR using historical, parametric, and Monte Carlo methods","Compute Conditional VaR (Expected Shortfall) metrics","Decompose portfolio VaR into component and marginal contributions","Run VaR backtesting and exception analysis","Produce intraday VaR updates and trend reports","Validate VaR model assumptions and parameter choices"];
+  const activities = [{time:'1 min ago',text:'Calculated Monte Carlo VaR with 100K paths',icon:Calculator},{time:'4 min ago',text:'Updated parametric VaR with new cov matrix',icon:Activity},{time:'12 min ago',text:'Decomposed portfolio VaR by risk factor',icon:BarChart3},{time:'28 min ago',text:'Ran VaR backtest exception analysis',icon:Target},{time:'1 hr ago',text:'Published intraday VaR trend report',icon:FileText}];
+
+  return (
+    <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
+        <TouchableOpacity onPress={() => router.push('/ai-agent/trading/trading-risk-manager')} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
+          <ShieldAlert size={16} color="#C62828" />
+          <Text style={{ fontSize: 13, color: '#C62828', marginLeft: 6, fontWeight: '600' }}>← AI Trading Risk Manager</Text>
+        </TouchableOpacity>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#C6282820' }]}>
+          <Calculator size={48} color="#C62828" />
+        </View>
+        <Text style={[styles.heroTitle, { color: theme.colors.text }]}>AI VaR Calculator</Text>
+        <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Historical, Parametric & Monte Carlo VaR</Text>
+        <View style={styles.badgesRow}>
+          <View style={[styles.badge, { backgroundColor: '#34C75922' }]}><Activity size={12} color="#34C759" /><Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text></View>
+          <View style={[styles.badge, { backgroundColor: '#C6282822' }]}><Star size={12} color="#C62828" /><Text style={[styles.badgeText, { color: '#C62828' }]}>Sub-Agent</Text></View>
+          <View style={[styles.badge, { backgroundColor: '#FF950022' }]}><Users size={12} color="#FF9500" /><Text style={[styles.badgeText, { color: '#FF9500' }]}>Trading Dept</Text></View>
+          <View style={[styles.badge, { backgroundColor: '#AF52DE22' }]}><Shield size={12} color="#AF52DE" /><Text style={[styles.badgeText, { color: '#AF52DE' }]}>Enterprise</Text></View>
+        </View>
+      </View>
+      <View style={styles.statsContainer}>
+        {stats.map((s,i)=>(<View key={i} style={[styles.statCard,{backgroundColor:theme.colors.card||'#F2F2F7'}]}><s.icon size={22} color={s.color}/><Text style={[styles.statValue,{color:theme.colors.text}]}>{s.value}</Text><Text style={[styles.statLabel,{color:theme.colors.textSecondary}]}>{s.label}</Text></View>))}
+      </View>
+      <View style={[styles.section,{backgroundColor:theme.colors.card||'#F2F2F7'}]}>
+        <Text style={[styles.sectionTitle,{color:theme.colors.text}]}>Overview</Text>
+        <Text style={[styles.description,{color:theme.colors.textSecondary}]}>The AI VaR Calculator operates as a specialized sub-agent under AI Trading Risk Manager, delivering enterprise-grade capabilities in historical, parametric & monte carlo var within the Trading & Investments department.</Text>
+      </View>
+      <View style={[styles.section,{backgroundColor:theme.colors.card||'#F2F2F7'}]}>
+        <Text style={[styles.sectionTitle,{color:theme.colors.text}]}>Enterprise Capabilities</Text>
+        <View style={styles.tagsContainer}>{capabilities.map((c,i)=>(<View key={i} style={[styles.tag,{backgroundColor:'#C6282818'}]}><Text style={[styles.tagText,{color:'#C62828'}]}>{c}</Text></View>))}</View>
+      </View>
+      <View style={[styles.section,{backgroundColor:theme.colors.card||'#F2F2F7'}]}>
+        <Text style={[styles.sectionTitle,{color:theme.colors.text}]}>Key Responsibilities</Text>
+        {responsibilities.map((r,i)=>(<View key={i} style={styles.responsibilityRow}><ArrowRight size={14} color="#C62828"/><Text style={[styles.responsibilityText,{color:theme.colors.textSecondary}]}>{r}</Text></View>))}
+      </View>
+      <View style={[styles.section,{backgroundColor:theme.colors.card||'#F2F2F7'}]}>
+        <Text style={[styles.sectionTitle,{color:theme.colors.text}]}>Performance Metrics</Text>
+        <View style={styles.metricsGrid}>{METRICS.map((m,i)=>(<View key={i} style={[styles.metricCard,{backgroundColor:theme.colors.background||'#F2F2F7'}]}><Text style={[styles.metricValue,{color:theme.colors.text}]}>{m.value}</Text><Text style={[styles.metricLabel,{color:theme.colors.textSecondary}]}>{m.label}</Text><View style={styles.metricTrend}><TrendingUp size={12} color="#34C759"/><Text style={{fontSize:11,color:'#34C759',fontWeight:'600'}}>{m.change}</Text></View></View>))}</View>
+      </View>
+      <View style={[styles.section,{backgroundColor:theme.colors.card||'#F2F2F7'}]}>
+        <Text style={[styles.sectionTitle,{color:theme.colors.text}]}>Recent Activity</Text>
+        {activities.map((a,i)=>(<View key={i} style={styles.activityRow}><View style={[styles.activityIcon,{backgroundColor:'#C6282815'}]}><a.icon size={14} color="#C62828"/></View><View style={styles.activityContent}><Text style={[styles.activityText,{color:theme.colors.text}]}>{a.text}</Text><Text style={[styles.activityTime,{color:theme.colors.textSecondary}]}>{a.time}</Text></View></View>))}
+      </View>
+      <View style={[styles.section,{backgroundColor:theme.colors.card||'#F2F2F7'}]}>
+        <Text style={[styles.sectionTitle,{color:theme.colors.text}]}>Parent Agent</Text>
+        <TouchableOpacity onPress={()=>router.push('/ai-agent/trading/trading-risk-manager')} style={[styles.agentCard,{backgroundColor:theme.colors.background||'#F2F2F7'}]}>
+          <View style={[styles.agentIcon,{backgroundColor:'#C6282820'}]}><ShieldAlert size={28} color="#C62828"/></View>
+          <View style={styles.agentInfo}><Text style={[styles.agentName,{color:theme.colors.text}]}>{d.pt}</Text><Text style={[styles.agentDesc,{color:theme.colors.textSecondary}]}>Parent Agent</Text></View>
+          <ChevronRight size={20} color={theme.colors.textSecondary}/>
+        </TouchableOpacity>
+      </View>
+      <AgentFeatures agentId="var-calculator" agentName="AI VaR Calculator"/>
+      <View style={{height:40}}/>
+    </ScrollView>
+  );
+}
+const styles = StyleSheet.create({
+  container:{flex:1},hero:{alignItems:'center',paddingVertical:32,paddingHorizontal:20,borderBottomWidth:1},heroIconWrap:{width:88,height:88,borderRadius:44,justifyContent:'center',alignItems:'center',marginBottom:16},heroTitle:{fontSize:26,fontWeight:'bold'},heroSubtitle:{fontSize:15,marginTop:4,fontWeight:'500'},badgesRow:{flexDirection:'row',gap:10,marginTop:16,flexWrap:'wrap',justifyContent:'center'},badge:{flexDirection:'row',alignItems:'center',paddingHorizontal:10,paddingVertical:5,borderRadius:20,gap:4},badgeText:{fontSize:12,fontWeight:'600'},statsContainer:{flexDirection:'row',flexWrap:'wrap',padding:16,gap:12},statCard:{flex:1,minWidth:'22%',alignItems:'center',padding:14,borderRadius:12},statValue:{fontSize:18,fontWeight:'bold',marginTop:8},statLabel:{fontSize:11,marginTop:4},section:{marginHorizontal:16,marginBottom:16,padding:20,borderRadius:16},sectionTitle:{fontSize:18,fontWeight:'700',marginBottom:14},description:{fontSize:14,lineHeight:22},tagsContainer:{flexDirection:'row',flexWrap:'wrap',gap:8},tag:{paddingHorizontal:12,paddingVertical:6,borderRadius:20},tagText:{fontSize:12,fontWeight:'600'},responsibilityRow:{flexDirection:'row',alignItems:'center',marginBottom:10,gap:8},responsibilityText:{fontSize:14,flex:1,lineHeight:20},metricsGrid:{flexDirection:'row',flexWrap:'wrap',gap:12},metricCard:{flex:1,minWidth:'45%',alignItems:'center',padding:16,borderRadius:12},metricValue:{fontSize:20,fontWeight:'bold'},metricLabel:{fontSize:12,marginTop:4},metricTrend:{flexDirection:'row',alignItems:'center',gap:4,marginTop:6},activityRow:{flexDirection:'row',alignItems:'center',marginBottom:12,gap:12},activityIcon:{width:32,height:32,borderRadius:16,justifyContent:'center',alignItems:'center'},activityContent:{flex:1},activityText:{fontSize:14,fontWeight:'500'},activityTime:{fontSize:12,marginTop:2},agentCard:{flexDirection:'row',alignItems:'center',padding:16,borderRadius:12,marginBottom:12},agentIcon:{width:48,height:48,borderRadius:12,alignItems:'center',justifyContent:'center'},agentInfo:{flex:1,marginLeft:12},agentName:{fontSize:16,fontWeight:'600'},agentDesc:{fontSize:12,marginTop:2},
+});

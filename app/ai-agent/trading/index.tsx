@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { TrendingUp, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBar, MessageSquare, Calendar, Shield, Zap, Briefcase, ShieldCheck, Bitcoin, Leaf, DollarSign, Globe, ChartPie, Calculator, TriangleAlert, Monitor } from 'lucide-react-native';
+import { TrendingUp, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, Zap, Briefcase, ShieldCheck, Bitcoin, Leaf, DollarSign, Globe, ChartPie, Calculator, TriangleAlert, Monitor } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { useRouter } from 'expo-router';
 
@@ -24,7 +24,7 @@ const DEPARTMENT_AGENTS = [
   { id: 'trading-desk-manager', name: 'Trading Desk Manager', description: 'Trading Desk Manager AI Agent', icon: TrendingUp, color: '#0277BD' },
   { id: 'vp-investments', name: 'VP Investments', description: 'VP Investments AI Agent', icon: TrendingUp, color: '#0277BD' },
   { id: 'vp-trading', name: 'VP Trading', description: 'VP Trading AI Agent', icon: TrendingUp, color: '#0277BD' }
-];;
+];
 
 export default function TradingDepartment() {
   const { theme } = useTheme();
@@ -64,9 +64,20 @@ export default function TradingDepartment() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          [{label:'View Reports',icon:ChartBar},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#0277BD12' }]}><act.icon size={24} color="#0277BD" /><Text style={[styles.actionText, { color: '#0277BD' }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#0277BD12' }]}><act.icon size={24} color="#0277BD" /><Text style={[styles.actionText, { color: '#0277BD' }]}>{act.label}</Text></TouchableOpacity>))}
         </View>
       </View>
+      
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
+        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>54 helper and sub-agent AI workers supporting the main agents.</Text>
+        <TouchableOpacity onPress={() => router.push('/ai-agent/trading/sub-agents')} style={[styles.subAgentButton, { backgroundColor: '#10B98115' }]}>
+          <TrendingUp size={20} color="#10B981" />
+          <Text style={[styles.subAgentButtonText, { color: '#10B981' }]}>View All 54 Sub-Agents</Text>
+          <ArrowRight size={18} color="#10B981" />
+        </TouchableOpacity>
+      </View>
+
       <AgentFeatures agentId="trading-index" agentName="Trading & Investment Department" />
     </ScrollView>
   );

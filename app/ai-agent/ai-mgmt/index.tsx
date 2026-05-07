@@ -1,13 +1,18 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Cpu, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBar, MessageSquare, Calendar, Shield, TrendingUp, Zap } from 'lucide-react-native';
+import { Cpu, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, TrendingUp, Zap, Briefcase, Settings, Bot, Workflow } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { useRouter } from 'expo-router';
 
 const DEPARTMENT_AGENTS = [
-  { id: 'vp-automation', name: 'VP Automation', description: 'VP Automation AI Agent', icon: Cpu, color: '#7B1FA2' }
-];;
+  { id: 'cao-automation', name: 'AI Chief Automation Officer', description: 'C-Level automation strategy leader', icon: Briefcase, color: '#8B5CF6', route: '/ai-agent/ai-mgmt/cao-automation', count: 3 },
+  { id: 'vp-automation', name: 'AI VP Automation', description: 'VP-level automation pipeline manager', icon: Zap, color: '#7B1FA2', route: '/ai-agent/ai-mgmt/vp-automation', count: 3 },
+  { id: 'vp-process-excellence', name: 'AI VP Process Excellence', description: 'VP-level process mining & maturity', icon: Target, color: '#6366F1', route: '/ai-agent/ai-mgmt/vp-process-excellence', count: 3 },
+  { id: 'ai-automation-ops-director', name: 'AI Automation Ops Director', description: 'Automation operations lead', icon: Settings, color: '#EC4899', route: '/ai-agent/ai-mgmt/ai-automation-ops-director', count: 3 },
+  { id: 'ai-rpa-manager', name: 'AI RPA Manager', description: 'RPA bot deployment & license manager', icon: Bot, color: '#14B8A6', route: '/ai-agent/ai-mgmt/ai-rpa-manager', count: 3 },
+  { id: 'ai-workflow-specialist', name: 'AI Workflow Specialist', description: 'Workflow design & integration builder', icon: Workflow, color: '#F59E0B', route: '/ai-agent/ai-mgmt/ai-workflow-specialist', count: 3 },
+];
 
 export default function AiMgmtDepartment() {
   const { theme } = useTheme();
@@ -47,9 +52,20 @@ export default function AiMgmtDepartment() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBar},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#7B1FA212' }]}><act.icon size={24} color="#7B1FA2" /><Text style={[styles.actionText, { color: '#7B1FA2' }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#7B1FA212' }]}><act.icon size={24} color="#7B1FA2" /><Text style={[styles.actionText, { color: '#7B1FA2' }]}>{act.label}</Text></TouchableOpacity>))}
         </View>
       </View>
+      
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
+        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>18 helper and sub-agent AI workers supporting the main agents.</Text>
+        <TouchableOpacity onPress={() => router.push('/ai-agent/ai-mgmt/sub-agents')} style={[styles.subAgentButton, { backgroundColor: '#8B5CF615' }]}>
+          <Bot size={20} color="#8B5CF6" />
+          <Text style={[styles.subAgentButtonText, { color: '#8B5CF6' }]}>View All 18 Sub-Agents</Text>
+          <ArrowRight size={18} color="#8B5CF6" />
+        </TouchableOpacity>
+      </View>
+
       <AgentFeatures agentId="ai-mgmt-index" agentName="AI Management Department" />
     </ScrollView>
   );

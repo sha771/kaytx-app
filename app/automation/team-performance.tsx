@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Users, TrendingUp, Award, Target, Calendar, ChartBar, Clock } from 'lucide-react-native';
+import { Users, TrendingUp, Award, Target, Calendar, ChartBarBig, Clock } from 'lucide-react-native';
 
 interface TeamMember {
   id: string;
@@ -219,7 +219,7 @@ export default function TeamPerformance() {
           style={[styles.tab, activeTab === 'overview' && styles.activeTab]}
           onPress={() => setActiveTab('overview')}
         >
-          <ChartBar size={20} color={activeTab === 'overview' ? '#4ecdc4' : '#666'} />
+          <ChartBarBig size={20} color={activeTab === 'overview' ? '#4ecdc4' : '#666'} />
           <Text style={[styles.tabText, activeTab === 'overview' && styles.activeTabText]}>Overview</Text>
         </TouchableOpacity>
         <TouchableOpacity 

@@ -19,7 +19,7 @@ import {
   Plus,
   Search,
   ListFilter,
-  ChartBar,
+  ChartBarBig,
   Clock,
   CircleCheck,
   TriangleAlert,

@@ -1,10 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Landmark, Activity, CircleCheckBig, Clock, Target, ChartBar, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, ChartBar } from 'lucide-react-native';
+import { Landmark, Activity, CircleCheckBig, Clock, Target, ChartBarBig, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, FileText, Search, Handshake } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
+import { useRouter } from 'expo-router';
+
+const SUB_AGENTS = [
+  { id: 'public-sector-strategy-advisor', name: 'AI Public Sector Strategy Advisor', description: 'Strategic planning for public sector', icon: Target, color: '#78909C', route: '/ai-agent/government/sub-agents/public-sector-strategy-advisor' },
+  { id: 'legislative-tracker', name: 'AI Legislative Tracker', description: 'Track legislative activities', icon: FileText, color: '#78909C', route: '/ai-agent/government/sub-agents/legislative-tracker' },
+  { id: 'policy-researcher', name: 'AI Policy Researcher', description: 'Research policy matters', icon: Search, color: '#78909C', route: '/ai-agent/government/sub-agents/policy-researcher' },
+  { id: 'government-relations-liaison', name: 'AI Government Relations Liaison', description: 'Manage government relations', icon: Handshake, color: '#78909C', route: '/ai-agent/government/sub-agents/government-relations-liaison' },
+];
 
 export default function VPPublicPolicyPage() {
+  const router = useRouter();
   const { theme } = useTheme();
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
@@ -77,13 +86,27 @@ export default function VPPublicPolicyPage() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBar},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((action,index)=>(
+          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((action,index)=>(
             <TouchableOpacity key={index} style={[styles.actionButton, { backgroundColor: theme.colors.primary + '12' }]}>
               <action.icon size={24} color={theme.colors.primary} />
               <Text style={[styles.actionText, { color: theme.colors.primary }]}>{action.label}</Text>
             </TouchableOpacity>
           ))}
         </View>
+      </View>
+
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
+        {SUB_AGENTS.map((subAgent) => (
+          <TouchableOpacity key={subAgent.id} onPress={() => router.push(subAgent.route)} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+            <View style={[styles.agentIcon, { backgroundColor: subAgent.color + '20' }]}><subAgent.icon size={28} color={subAgent.color} /></View>
+            <View style={styles.agentInfo}>
+              <Text style={[styles.agentName, { color: theme.colors.text }]}>{subAgent.name}</Text>
+              <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>{subAgent.description}</Text>
+            </View>
+            <ArrowRight size={20} color={theme.colors.textSecondary} />
+          </TouchableOpacity>
+        ))}
       </View>
     
       <AgentFeatures agentId="vp-public-policy" agentName="VP Public Policy" />
@@ -120,5 +143,10 @@ const styles = StyleSheet.create({
   actionsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
   actionButton: { flex: 1, minWidth: '45%', alignItems: 'center', padding: 16, borderRadius: 12 },
   actionText: { fontSize: 13, fontWeight: '600', marginTop: 8 },
+  agentCard: { flexDirection: 'row', alignItems: 'center', padding: 16, borderRadius: 12, marginBottom: 12 },
+  agentIcon: { width: 48, height: 48, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
+  agentInfo: { flex: 1, marginLeft: 12 },
+  agentName: { fontSize: 16, fontWeight: '600' },
+  agentDesc: { fontSize: 12, marginTop: 2 },
 });
 

@@ -17,7 +17,7 @@ import {
   Settings,
   Brain,
   Upload,
-  ChartBar,
+  ChartBarBig,
   Users,
   MessageSquare,
   RefreshCw,
@@ -136,7 +136,7 @@ export default function AIAgentsCommandCenterScreen() {
     {
       id: 'analytics',
       label: 'Analytics Dashboard',
-      icon: ChartBar,
+      icon: ChartBarBig,
       color: '#3B82F6',
       route: '/ai-agent/analytics',
       badge: 'Live',

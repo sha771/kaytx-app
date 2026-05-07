@@ -1,4 +1,4 @@
-#!/bin/bash
+ #!/bin/bash
 # Automated PostgreSQL Backup Script
 # Run via cron: 0 2 * * * /scripts/backup-postgres.sh
 

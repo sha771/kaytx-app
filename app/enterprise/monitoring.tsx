@@ -28,7 +28,7 @@ import {
   Bell,
   Settings,
   Zap,
-  ChartBar,
+  ChartBarBig,
   RefreshCw,
   Shield,
   History,
@@ -674,7 +674,7 @@ export default function MonitoringScreen() {
                 <Text style={[styles.logStreamStat, { color: theme.colors.secondaryText }]}>96% logs indexed • 14 traces correlated</Text>
                 <View style={styles.streamFooter}>
                   <View style={[styles.streamInsight, { backgroundColor: theme.colors.background }]}>
-                    <ChartBar size={14} color={theme.colors.text} />
+                    <ChartBarBig size={14} color={theme.colors.text} />
                     <Text style={[styles.streamInsightText, { color: theme.colors.text }]}>p99 412ms</Text>
                   </View>
                   <View style={[styles.streamInsight, { backgroundColor: theme.colors.background }]}>

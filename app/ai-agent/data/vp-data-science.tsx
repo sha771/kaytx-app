@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Database, Activity, CircleCheckBig, Clock, Target, ChartBar, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, BrainCircuit, ChartLine, Sparkles } from 'lucide-react-native';
+import { Database, Activity, CircleCheckBig, Clock, Target, ChartBarBig, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, BrainCircuit, ChartLine, Sparkles, FlaskConical, CheckCircle, BookOpen } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
+import { useRouter } from 'expo-router';
 
 export default function VPDataSciencePage() {
   const { theme } = useTheme();
+  const router = useRouter();
 
   const stats = [
     { label: 'Models Built', value: '1,847', icon: CircleCheckBig, color: '#34C759' },
@@ -39,10 +41,16 @@ export default function VPDataSciencePage() {
   ];
 
   const quickActions = [
-    { label: 'View Reports', icon: ChartBar },
+    { label: 'View Reports', icon: ChartBarBig },
     { label: 'Team Chat', icon: MessageSquare },
     { label: 'Schedule', icon: Calendar },
     { label: 'Settings', icon: Shield },
+  ];
+
+  const subAgents = [
+    {name:'AI Research Direction Setter',route:'/ai-agent/data/sub-agents/research-direction-setter',icon:FlaskConical},
+    {name:'AI Model Validation Overseer',route:'/ai-agent/data/sub-agents/model-validation-overseer',icon:CheckCircle},
+    {name:'AI Publication Coordinator',route:'/ai-agent/data/sub-agents/publication-coordinator',icon:BookOpen},
   ];
 
   return (
@@ -123,6 +131,20 @@ export default function VPDataSciencePage() {
       </View>
 
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
+        {subAgents.map((sub, index) => (
+          <TouchableOpacity key={index} onPress={() => router.push(sub.route as any)} style={[styles.parentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+            <sub.icon size={24} color={theme.colors.primary} />
+            <View style={styles.parentInfo}>
+              <Text style={[styles.parentName, { color: theme.colors.text }]}>{sub.name}</Text>
+              <Text style={[styles.parentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+            </View>
+            <ArrowRight size={20} color={theme.colors.textSecondary} />
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
           {quickActions.map((action, index) => (
@@ -168,4 +190,8 @@ const styles = StyleSheet.create({
   actionsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
   actionButton: { flex: 1, minWidth: '45%', alignItems: 'center', padding: 16, borderRadius: 12 },
   actionText: { fontSize: 13, fontWeight: '600', marginTop: 8 },
+  parentCard: { flexDirection: 'row', alignItems: 'center', padding: 16, borderRadius: 12, gap: 12, marginBottom: 8 },
+  parentInfo: { flex: 1 },
+  parentName: { fontSize: 16, fontWeight: '600' },
+  parentDesc: { fontSize: 12, marginTop: 2 },
 });

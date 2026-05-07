@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Users, Activity, Star, UserPlus, CircleCheckBig, Clock, Target, ArrowRight, ChartBar, MessageSquare, Calendar, Shield, GraduationCap, Heart, Award, ChartBar } from 'lucide-react-native';
+import { Users, Activity, Star, UserPlus, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, GraduationCap, Heart, Award } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { useRouter } from 'expo-router';
 
@@ -64,10 +64,21 @@ export default function HRDepartment() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBar},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#9C27B012' }]}><act.icon size={24} color="#9C27B0" /><Text style={[styles.actionText, { color: '#9C27B0' }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#9C27B012' }]}><act.icon size={24} color="#9C27B0" /><Text style={[styles.actionText, { color: '#9C27B0' }]}>{act.label}</Text></TouchableOpacity>))}
         </View>
       </View>
     
+      
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
+        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>33 helper and sub-agent AI workers supporting the main agents.</Text>
+        <TouchableOpacity onPress={() => router.push('/ai-agent/hr/sub-agents')} style={[styles.subAgentButton, { backgroundColor: '#9C27B015' }]}>
+          <Users size={20} color="#9C27B0" />
+          <Text style={[styles.subAgentButtonText, { color: '#9C27B0' }]}>View All 33 Sub-Agents</Text>
+          <ArrowRight size={18} color="#9C27B0" />
+        </TouchableOpacity>
+      </View>
+
       <AgentFeatures agentId="hr-index" agentName="Index" />
     </ScrollView>
   );

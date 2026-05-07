@@ -20,7 +20,7 @@ import {
   Target,
   Clock,
   Zap,
-  ChartBar,
+  ChartBarBig,
   Settings,
   Plus,
   Trash2,
@@ -281,7 +281,7 @@ export default function PerformanceMonitoringScreen() {
 function X({ size, color }: { size: number; color: string }) {
   return (
     <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ color, fontSize: size * 0.7, fontWeight: 'bold' }}>×</Text>
+      <Text style={{ color, fontSize: size * 0.7, fontWeight: 'bold' }}>ï¿½</Text>
     </View>
   );
 }

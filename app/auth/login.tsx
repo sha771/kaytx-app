@@ -44,7 +44,7 @@ export default function LoginScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} edges={['top', 'bottom']}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} ={['top', 'bottom']}>
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <Text style={[styles.title, { color: theme.colors.text }]}>Welcome Back</Text>

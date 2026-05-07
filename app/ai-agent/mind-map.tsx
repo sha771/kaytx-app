@@ -7,7 +7,7 @@ import { router } from 'expo-router';
 import {
   ArrowLeft, ZoomIn, ZoomOut, Search, X, GitBranch, Users,
   RotateCcw, Eye, EyeOff, ListFilter, ChevronRight, SlidersHorizontal,
-  Crown, ChartBar, Activity, Shield, Zap, Briefcase, TrendingUp, House,
+  Crown, ChartBarBig, Activity, Shield, Zap, Briefcase, TrendingUp, House,
   Landmark, Factory, Truck, HeartPulse, Brain, Database, Megaphone,
   ShoppingCart, Headphones, Scale, Wrench, Lock, GraduationCap,
   Settings, Server, Link2, Layers, Share2, Target, Globe, Anchor,
@@ -41,6 +41,13 @@ import {
   COMMAND_CENTER,
   LAYER_BRIDGE
 } from '@/constants/aiAgentHierarchyIndex_UPGRADED';
+import {
+  departments,
+  allCustomerExperienceAgents,
+  workforceSummary,
+  type MainAgent,
+  type SubAgent
+} from '@/constants/completeAIWorkforce_1108';
 import Animated, { FadeIn, FadeInUp, useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 
 const { width: SW, height: SH } = Dimensions.get('window');
@@ -56,7 +63,7 @@ const ALL = completeAIWorkforce;
 const MAP = new Map<string, AIEmployeeProfile>();
 ALL.forEach(a => MAP.set(a.id, a));
 
-// Extended Department Colors (21 Departments)
+// Enhanced Department Colors (22 Departments with 1108 Agents)
 const DC: Record<string, string> = {
   executive:'#FFD700',                    // Gold
   finance:'#2E7D32',                    // Green
@@ -80,6 +87,34 @@ const DC: Record<string, string> = {
   transportation_logistics:'#26A69A',    // Teal
   government_public:'#78909C',            // Blue Grey
   customer_insights_analytics:'#42A5F5', // Light Blue
+  supply_chain:'#42A5F5',                // Light Blue
+  ai_governance:'#7C4DFF',               // Deep Purple
+};
+
+// Department ID mapping for 22 departments
+const DEPT_MAP: Record<number, string> = {
+  1: 'customer_experience',
+  2: 'sales_revenue',
+  3: 'marketing_growth',
+  4: 'operations_management',
+  5: 'finance_accounting',
+  6: 'technology_engineering',
+  7: 'human_resources',
+  8: 'legal_compliance',
+  9: 'data_intelligence',
+  10: 'product_management',
+  11: 'security_risk',
+  12: 'research_development',
+  13: 'administrative',
+  14: 'trading_investments',
+  15: 'real_estate_property',
+  16: 'insurance_risk',
+  17: 'healthcare_medical',
+  18: 'manufacturing_production',
+  19: 'transportation_logistics',
+  20: 'government_public',
+  21: 'supply_chain',
+  22: 'ai_governance',
 };
 
 // Hierarchy Level Colors
@@ -254,11 +289,19 @@ export default function MindMapScreen() {
   const card = isD ? '#1C1C1E' : '#F2F2F7';
   const line = isD ? '#333333' : '#E5E5EA';
 
+  // Stats for 1108 agents
+  const stats1108 = useMemo(() => ({
+    totalAgents: workforceSummary.totalAgents,
+    mainAgents: workforceSummary.totalMainAgents,
+    subAgents: workforceSummary.totalSubAgents,
+    departments: departments.length,
+  }), []);
+
   return (
     <View style={[st.container, { backgroundColor: bg, paddingTop: ins.top }]}>
       <View style={[st.header, { borderBottomColor: line }]}>
         <TouchableOpacity onPress={() => router.back()} style={st.hBtn}><ArrowLeft size={22} color={colors.primary} /></TouchableOpacity>
-        <View style={st.hCenter}><GitBranch size={18} color={colors.primary} /><Text style={[st.hTitle, { color: fg }]}>AI Mind Map</Text></View>
+        <View style={st.hCenter}><GitBranch size={18} color={colors.primary} /><Text style={[st.hTitle, { color: fg }]}>AI Workforce Map</Text></View>
         <TouchableOpacity onPress={() => setShowS(!showS)} style={st.hBtn}><Search size={20} color={fg} /></TouchableOpacity>
       </View>
 
@@ -270,25 +313,30 @@ export default function MindMapScreen() {
         </View>
       )}
 
-      {/* Department Filter Chips */}
+      {/* Department Filter Chips - 22 Departments */}
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ paddingHorizontal: 8, paddingVertical: 4 }}>
         <View style={{ flexDirection: 'row', gap: 6 }}>
-          {Object.entries(DC).map(([dept, color]) => {
-            const count = ALL.filter(a => a.department === dept).length;
-            return (
-              <TouchableOpacity key={dept} style={[st.deptChip, { backgroundColor: color + '22', borderColor: color + '44' }]}>
-                <View style={[st.deptDot, { backgroundColor: color }]} />
-                <Text style={[st.deptChipT, { color }]}>{dept.replace(/_/g,' ')} ({count})</Text>
-              </TouchableOpacity>
-            );
-          })}
+          {departments.map((dept) => (
+            <TouchableOpacity 
+              key={dept.id} 
+              style={[st.deptChip, { backgroundColor: dept.color + '22', borderColor: dept.color + '44' }]}
+              onPress={() => router.push(`/ai-agent/${DEPT_MAP[dept.id]}`)}
+            >
+              <View style={[st.deptDot, { backgroundColor: dept.color }]} />
+              <Text style={[st.deptChipT, { color: dept.color }]}>
+                {dept.shortName} ({dept.total})
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
       </ScrollView>
 
       <View style={st.statsRow}>
-        <View style={[st.pill, { backgroundColor: card }]}><Users size={14} color={colors.primary} /><Text style={[st.pillT, { color: fg }]}>{ALL.length} Agents</Text></View>
+        <View style={[st.pill, { backgroundColor: card }]}><Users size={14} color={colors.primary} /><Text style={[st.pillT, { color: fg }]}>{stats1108.totalAgents} Agents</Text></View>
+        <View style={[st.pill, { backgroundColor: card }]}><Crown size={14} color={colors.success} /><Text style={[st.pillT, { color: fg }]}>{stats1108.mainAgents} Main</Text></View>
+        <View style={[st.pill, { backgroundColor: card }]}><Bot size={14} color={colors.warning} /><Text style={[st.pillT, { color: fg }]}>{stats1108.subAgents} Sub</Text></View>
+        <View style={[st.pill, { backgroundColor: card }]}><Layers size={14} color={colors.info || '#0A84FF'} /><Text style={[st.pillT, { color: fg }]}>{stats1108.departments} Depts</Text></View>
         <View style={[st.pill, { backgroundColor: card }]}><GitBranch size={14} color={colors.success} /><Text style={[st.pillT, { color: fg }]}>{nodes.length} Visible</Text></View>
-        <View style={[st.pill, { backgroundColor: card }]}><Layers size={14} color={colors.warning} /><Text style={[st.pillT, { color: fg }]}>21 Depts</Text></View>
         <TouchableOpacity onPress={() => setZoom(Math.max(0.35, zoom - 0.15))} style={[st.zBtn, { backgroundColor: card }]}><ZoomOut size={16} color={fg} /></TouchableOpacity>
         <TouchableOpacity onPress={() => setZoom(Math.min(2.2, zoom + 0.15))} style={[st.zBtn, { backgroundColor: card }]}><ZoomIn size={16} color={fg} /></TouchableOpacity>
       </View>

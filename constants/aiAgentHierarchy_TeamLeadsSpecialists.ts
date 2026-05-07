@@ -73,7 +73,7 @@ import {
   
   // Data Icons
   Database,
-  ChartBar,
+  ChartBarBig,
   Brain,
   FileChartColumn,
   

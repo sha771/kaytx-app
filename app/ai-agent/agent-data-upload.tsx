@@ -365,10 +365,10 @@ export default function AgentDataUploadScreen() {
 
   if (loading) {
     return (
-      <SafeAreaView style= [styles.container, { backgroundColor: colors.background }]}>
+      <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={colors.primary} />
-          <Text style= [styles.loadingText, { color: colors.text }]}>Loading documents...</Text>
+          <Text style={[styles.loadingText, { color: colors.text }]}>Loading documents...</Text>
         </View>
       </SafeAreaView>
     );
@@ -376,12 +376,12 @@ export default function AgentDataUploadScreen() {
 
   if (!agent) {
     return (
-      <SafeAreaView style= [styles.container, { backgroundColor: colors.background }]}>
+      <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.errorContainer}>
           <TriangleAlert size={48} color={colors.error} />
-          <Text style= [styles.errorText, { color: colors.text }]}>Agent not found</Text>
+          <Text style={[styles.errorText, { color: colors.text }]}>Agent not found</Text>
           <TouchableOpacity
-            style= [styles.button, { backgroundColor: colors.primary }]}
+            style={[styles.button, { backgroundColor: colors.primary }]}
             onPress={() => router.back()}
           >
             <Text style={styles.buttonText}>Go Back</Text>
@@ -395,29 +395,29 @@ export default function AgentDataUploadScreen() {
   const isUploadEnabled = dataConfig?.enabled ?? false;
 
   return (
-    <SafeAreaView style= [styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       {/* Header */}
-      <View style= [styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
+      <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
         <View style={styles.headerTop}>
           <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
             <ChevronLeft size={24} color={colors.text} />
           </TouchableOpacity>
           <View style={styles.headerTitleContainer}>
             <Database size={24} color={colors.primary} />
-            <Text style= [styles.headerTitle, { color: colors.text }]}>Training Documents</Text>
+            <Text style={[styles.headerTitle, { color: colors.text }]}>Training Documents</Text>
           </View>
           <View style={styles.headerRight}>
             {selectedFiles.size > 0 ? (
               <TouchableOpacity
                 onPress={handleBatchDelete}
-                style= [styles.iconButton, { backgroundColor: colors.error + '15' }]}
+                style={[styles.iconButton, { backgroundColor: colors.error + '15' }]}
               >
                 <Trash2 size={20} color={colors.error} />
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
                 onPress={() => setShowFilterModal(true)}
-                style= [styles.iconButton, { backgroundColor: colors.border + '30' }]}
+                style={[styles.iconButton, { backgroundColor: colors.border + '30' }]}
               >
                 <ListFilter size={20} color={colors.text} />
               </TouchableOpacity>
@@ -427,33 +427,33 @@ export default function AgentDataUploadScreen() {
 
         {/* Stats Cards */}
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.statsScroll}>
-          <Animated.View entering={FadeInRight.delay(100)} style= [styles.statCard, { backgroundColor: colors.primary + '15' }]}>
+          <Animated.View entering={FadeInRight.delay(100)} style={[styles.statCard, { backgroundColor: colors.primary + '15' }]}>
             <Cloud size={20} color={colors.primary} />
-            <Text style= [styles.statValue, { color: colors.primary }]}>{stats.total}</Text>
-            <Text style= [styles.statLabel, { color: colors.text + '80' }]}>Total</Text>
+            <Text style={[styles.statValue, { color: colors.primary }]}>{stats.total}</Text>
+            <Text style={[styles.statLabel, { color: colors.text + '80' }]}>Total</Text>
           </Animated.View>
-          <Animated.View entering={FadeInRight.delay(150)} style= [styles.statCard, { backgroundColor: '#34C75915' }]}>
+          <Animated.View entering={FadeInRight.delay(150)} style={[styles.statCard, { backgroundColor: '#34C75915' }]}>
             <CircleCheck size={20} color="#34C759" />
-            <Text style= [styles.statValue, { color: '#34C759' }]}>{stats.uploaded}</Text>
-            <Text style= [styles.statLabel, { color: colors.text + '80' }]}>Processed</Text>
+            <Text style={[styles.statValue, { color: '#34C759' }]}>{stats.uploaded}</Text>
+            <Text style={[styles.statLabel, { color: colors.text + '80' }]}>Processed</Text>
           </Animated.View>
-          <Animated.View entering={FadeInRight.delay(200)} style= [styles.statCard, { backgroundColor: '#007AFF15' }]}>
+          <Animated.View entering={FadeInRight.delay(200)} style={[styles.statCard, { backgroundColor: '#007AFF15' }]}>
             <LoaderCircle size={20} color="#007AFF" />
-            <Text style= [styles.statValue, { color: '#007AFF' }]}>{stats.processing}</Text>
-            <Text style= [styles.statLabel, { color: colors.text + '80' }]}>Processing</Text>
+            <Text style={[styles.statValue, { color: '#007AFF' }]}>{stats.processing}</Text>
+            <Text style={[styles.statLabel, { color: colors.text + '80' }]}>Processing</Text>
           </Animated.View>
-          <Animated.View entering={FadeInRight.delay(250)} style= [styles.statCard, { backgroundColor: colors.text + '10' }]}>
+          <Animated.View entering={FadeInRight.delay(250)} style={[styles.statCard, { backgroundColor: colors.text + '10' }]}>
             <Database size={20} color={colors.text} />
-            <Text style= [styles.statValue, { color: colors.text }]}>{formatFileSize(stats.totalSize)}</Text>
-            <Text style= [styles.statLabel, { color: colors.text + '80' }]}>Storage Used</Text>
+            <Text style={[styles.statValue, { color: colors.text }]}>{formatFileSize(stats.totalSize)}</Text>
+            <Text style={[styles.statLabel, { color: colors.text + '80' }]}>Storage Used</Text>
           </Animated.View>
         </ScrollView>
 
         {/* Search Bar */}
-        <View style= [styles.searchContainer, { backgroundColor: colors.border + '30' }]}>
+        <View style={[styles.searchContainer, { backgroundColor: colors.border + '30' }]}>
           <Search size={18} color={colors.text + '60'} />
           <TextInput
-            style= [styles.searchInput, { color: colors.text }]}
+            style={[styles.searchInput, { color: colors.text }]}
             placeholder="Search documents..."
             placeholderTextColor={colors.text + '40'}
             value={searchQuery}
@@ -475,12 +475,12 @@ export default function AgentDataUploadScreen() {
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
             <Database size={64} color={colors.text + '20'} />
-            <Text style= [styles.emptyTitle, { color: colors.text }]}>No Documents Yet</Text>
-            <Text style= [styles.emptySubtitle, { color: colors.text + '60' }]}>
+            <Text style={[styles.emptyTitle, { color: colors.text }]}>No Documents Yet</Text>
+            <Text style={[styles.emptySubtitle, { color: colors.text + '60' }]}>
               Upload documents to train your AI agent
             </Text>
             {!isUploadEnabled && (
-              <Text style= [styles.emptyWarning, { color: colors.warning }]}>
+              <Text style={[styles.emptyWarning, { color: colors.warning }]}>
                 Data upload is disabled for this agent. Enable it in configuration.
               </Text>
             )}
@@ -489,7 +489,7 @@ export default function AgentDataUploadScreen() {
         renderItem={({ item }) => (
           <Animated.View entering={FadeInUp}>
             <TouchableOpacity
-              style= [
+              style={[
                 styles.fileCard,
                 {
                   backgroundColor: colors.card,
@@ -502,7 +502,7 @@ export default function AgentDataUploadScreen() {
             >
               {/* File Icon */}
               <View
-                style= [
+                style={[
                   styles.fileIconContainer,
                   { backgroundColor: (fileTypeColors[item.type] || colors.primary) + '20' },
                 ]}
@@ -512,23 +512,23 @@ export default function AgentDataUploadScreen() {
 
               {/* File Info */}
               <View style={styles.fileInfo}>
-                <Text style= [styles.fileName, { color: colors.text }]} numberOfLines={1}>
+                <Text style={[styles.fileName, { color: colors.text }]} numberOfLines={1}>
                   {item.name}
                 </Text>
                 <View style={styles.fileMeta}>
-                  <Text style= [styles.fileSize, { color: colors.text + '60' }]}>
+                  <Text style={[styles.fileSize, { color: colors.text + '60' }]}>
                     {formatFileSize(item.size)}
                   </Text>
-                  <Text style= [styles.fileDot, { color: colors.text + '40' }]}>•</Text>
-                  <Text style= [styles.fileDate, { color: colors.text + '60' }]}>
+                  <Text style={[styles.fileDot, { color: colors.text + '40' }]}>•</Text>
+                  <Text style={[styles.fileDate, { color: colors.text + '60' }]}>
                     {formatDate(item.uploadedAt)}
                   </Text>
                 </View>
                 {item.tags.length > 0 && (
                   <View style={styles.fileTags}>
                     {item.tags.map((tag, index) => (
-                      <View key={index} style= [styles.tag, { backgroundColor: colors.primary + '15' }]}>
-                        <Text style= [styles.tagText, { color: colors.primary }]}>{tag}</Text>
+                      <View key={index} style={[styles.tag, { backgroundColor: colors.primary + '15' }]}>
+                        <Text style={[styles.tagText, { color: colors.primary }]}>{tag}</Text>
                       </View>
                     ))}
                   </View>
@@ -539,21 +539,21 @@ export default function AgentDataUploadScreen() {
               <View style={styles.fileStatus}>
                 {item.status === 'uploading' || item.status === 'processing' ? (
                   <View style={styles.progressContainer}>
-                    <View style= [styles.progressBar, { backgroundColor: colors.border }]}>
+                    <View style={[styles.progressBar, { backgroundColor: colors.border }]}>
                       <View
-                        style= [
+                        style={[
                           styles.progressFill,
                           { backgroundColor: colors.primary, width: `${item.progress}%` },
                         ]}
                       />
                     </View>
-                    <Text style= [styles.progressText, { color: colors.primary }]}>{item.progress}%</Text>
+                    <Text style={[styles.progressText, { color: colors.primary }]}>{item.progress}%</Text>
                   </View>
                 ) : (
                   <>
                     {getStatusIcon(item.status)}
                     <Text
-                      style= [
+                      style={[
                         styles.statusText,
                         {
                           color:
@@ -573,7 +573,7 @@ export default function AgentDataUploadScreen() {
 
               {/* Actions */}
               {selectedFiles.has(item.id) ? (
-                <View style= [styles.checkbox, { backgroundColor: colors.primary }]}>
+                <View style={[styles.checkbox, { backgroundColor: colors.primary }]}>
                   <Check size={16} color="#fff" />
                 </View>
               ) : (
@@ -581,14 +581,14 @@ export default function AgentDataUploadScreen() {
                   {item.status === 'failed' && (
                     <TouchableOpacity
                       onPress={() => handleRetry(item.id)}
-                      style= [styles.actionButton, { backgroundColor: colors.primary + '15' }]}
+                      style={[styles.actionButton, { backgroundColor: colors.primary + '15' }]}
                     >
                       <RefreshCw size={16} color={colors.primary} />
                     </TouchableOpacity>
                   )}
                   <TouchableOpacity
                     onPress={() => handleDelete(item.id)}
-                    style= [styles.actionButton, { backgroundColor: colors.error + '15' }]}
+                    style={[styles.actionButton, { backgroundColor: colors.error + '15' }]}
                   >
                     <Trash2 size={16} color={colors.error} />
                   </TouchableOpacity>
@@ -601,15 +601,15 @@ export default function AgentDataUploadScreen() {
 
       {/* Upload Button */}
       {isUploadEnabled && (
-        <View style= [styles.footer, { backgroundColor: colors.card, borderTopColor: colors.border }]}>
+        <View style={[styles.footer, { backgroundColor: colors.card, borderTopColor: colors.border }]}>
           <TouchableOpacity
-            style= [styles.uploadButton, { backgroundColor: colors.primary }]}
+            style={[styles.uploadButton, { backgroundColor: colors.primary }]}
             onPress={() => setShowUploadModal(true)}
           >
             <Upload size={20} color="#fff" />
             <Text style={styles.uploadButtonText}>Upload Documents</Text>
           </TouchableOpacity>
-          <Text style= [styles.uploadHint, { color: colors.text + '60' }]}>
+          <Text style={[styles.uploadHint, { color: colors.text + '60' }]}>
             Max {dataConfig?.maxFileSize}MB per file • {dataConfig?.maxTotalStorage}GB total
           </Text>
         </View>
@@ -619,8 +619,8 @@ export default function AgentDataUploadScreen() {
       <Modal visible={showUploadModal} animationType="slide" transparent>
         <View style={styles.modalOverlay}>
           <BlurView intensity={50} style={styles.modalContent}>
-            <View style= [styles.modalHeader, { backgroundColor: colors.card }]}>
-              <Text style= [styles.modalTitle, { color: colors.text }]}>Upload Documents</Text>
+            <View style={[styles.modalHeader, { backgroundColor: colors.card }]}>
+              <Text style={[styles.modalTitle, { color: colors.text }]}>Upload Documents</Text>
               <TouchableOpacity onPress={() => setShowUploadModal(false)}>
                 <X size={24} color={colors.text} />
               </TouchableOpacity>
@@ -629,9 +629,9 @@ export default function AgentDataUploadScreen() {
             <ScrollView style={styles.modalBody}>
               {/* Tag Input */}
               <View style={styles.inputGroup}>
-                <Text style= [styles.inputLabel, { color: colors.text }]}>Tags (optional)</Text>
+                <Text style={[styles.inputLabel, { color: colors.text }]}>Tags (optional)</Text>
                 <TextInput
-                  style= [styles.textInput, { backgroundColor: colors.border + '30', color: colors.text, borderColor: colors.border }]}
+                  style={[styles.textInput, { backgroundColor: colors.border + '30', color: colors.text, borderColor: colors.border }]}
                   value={uploadTag}
                   onChangeText={setUploadTag}
                   placeholder="Add a tag for these documents"
@@ -641,15 +641,15 @@ export default function AgentDataUploadScreen() {
 
               {/* File Types Info */}
               <View style={styles.infoBox}>
-                <Text style= [styles.infoTitle, { color: colors.text }]}>Supported Formats</Text>
-                <Text style= [styles.infoText, { color: colors.text + '60' }]}>
+                <Text style={[styles.infoTitle, { color: colors.text }]}>Supported Formats</Text>
+                <Text style={[styles.infoText, { color: colors.text + '60' }]}>
                   {dataConfig?.allowedFormats.map(ext => `.${ext}`).join(', ')}
                 </Text>
               </View>
 
               {/* Upload Area */}
               <TouchableOpacity
-                style= [styles.uploadArea, { borderColor: colors.primary, backgroundColor: colors.primary + '05' }]}
+                style={[styles.uploadArea, { borderColor: colors.primary, backgroundColor: colors.primary + '05' }]}
                 onPress={() => {
                   // Simulate file selection
                   const mockFiles = [
@@ -660,15 +660,15 @@ export default function AgentDataUploadScreen() {
                 }}
               >
                 <Upload size={48} color={colors.primary} />
-                <Text style= [styles.uploadAreaTitle, { color: colors.text }]}>
+                <Text style={[styles.uploadAreaTitle, { color: colors.text }]}>
                   Tap to Select Files
                 </Text>
-                <Text style= [styles.uploadAreaSubtitle, { color: colors.text + '60' }]}>
+                <Text style={[styles.uploadAreaSubtitle, { color: colors.text + '60' }]}>
                   or drag and drop files here
                 </Text>
               </TouchableOpacity>
 
-              <Text style= [styles.supportedFormats, { color: colors.text + '40' }]}>
+              <Text style={[styles.supportedFormats, { color: colors.text + '40' }]}>
                 Maximum file size: {dataConfig?.maxFileSize}MB
               </Text>
             </ScrollView>
@@ -680,8 +680,8 @@ export default function AgentDataUploadScreen() {
       <Modal visible={showFilterModal} animationType="fade" transparent>
         <View style={styles.modalOverlay}>
           <BlurView intensity={50} style={styles.filterModalContent}>
-            <View style= [styles.modalHeader, { backgroundColor: colors.card }]}>
-              <Text style= [styles.modalTitle, { color: colors.text }]}>Filter Documents</Text>
+            <View style={[styles.modalHeader, { backgroundColor: colors.card }]}>
+              <Text style={[styles.modalTitle, { color: colors.text }]}>Filter Documents</Text>
               <TouchableOpacity onPress={() => setShowFilterModal(false)}>
                 <X size={24} color={colors.text} />
               </TouchableOpacity>
@@ -689,20 +689,20 @@ export default function AgentDataUploadScreen() {
 
             <View style={styles.filterOptions}>
               <TouchableOpacity
-                style= [
+                style={[
                   styles.filterOption,
                   statusFilter === 'all' && { backgroundColor: colors.primary + '15' },
                 ]}
                 onPress={() => setStatusFilter('all')}
               >
-                <Text style= [styles.filterOptionText, { color: colors.text }]}>All Documents</Text>
+                <Text style={[styles.filterOptionText, { color: colors.text }]}>All Documents</Text>
                 {statusFilter === 'all' && <Check size={20} color={colors.primary} />}
               </TouchableOpacity>
 
               {(['completed', 'processing', 'uploading', 'failed'] as const).map((status) => (
                 <TouchableOpacity
                   key={status}
-                  style= [
+                  style={[
                     styles.filterOption,
                     statusFilter === status && { backgroundColor: colors.primary + '15' },
                   ]}
@@ -710,7 +710,7 @@ export default function AgentDataUploadScreen() {
                 >
                   <View style={styles.filterOptionContent}>
                     {getStatusIcon(status)}
-                    <Text style= [styles.filterOptionText, { color: colors.text }]}>
+                    <Text style={[styles.filterOptionText, { color: colors.text }]}>
                       {getStatusText(status)}
                     </Text>
                   </View>

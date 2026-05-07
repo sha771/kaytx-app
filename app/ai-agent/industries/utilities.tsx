@@ -6,7 +6,7 @@ import { aiEmployees } from '@/constants/aiEmployees';
 import { trpc } from '@/lib/trpc';
 import {
     Zap,
-    ArrowLeft, TriangleAlert, CreditCard, House, TrendingUp, Clock, Shield, Globe, ChartBar, Wrench, Activity, Lock, CircleCheck, ChevronRight
+    ArrowLeft, TriangleAlert, CreditCard, House, TrendingUp, Clock, Shield, Globe, ChartBarBig, Wrench, Activity, Lock, CircleCheck, ChevronRight
 } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -125,7 +125,7 @@ export default function UtilitiesIndustryScreen() {
                 <View style={styles.section}>
                     <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Benefits</Text>
                     <View style={styles.benefitsGrid}>
-                        {[{ icon: Zap, color: '#FF6B6B', title: 'Storm Surge Ready', desc: 'Handle 50x call volume during emergencies' }, { icon: Globe, color: '#4ECDC4', title: '24/7 Availability', desc: 'Round-the-clock customer support' }, { icon: Shield, color: '#6C5CE7', title: 'PCI Compliant', desc: 'Secure payment processing' }, { icon: ChartBar, color: '#00B894', title: 'Predictive Ops', desc: 'AI-powered demand forecasting' }].map((b, i) => { const I = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><I size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
+                        {[{ icon: Zap, color: '#FF6B6B', title: 'Storm Surge Ready', desc: 'Handle 50x call volume during emergencies' }, { icon: Globe, color: '#4ECDC4', title: '24/7 Availability', desc: 'Round-the-clock customer support' }, { icon: Shield, color: '#6C5CE7', title: 'PCI Compliant', desc: 'Secure payment processing' }, { icon: ChartBarBig, color: '#00B894', title: 'Predictive Ops', desc: 'AI-powered demand forecasting' }].map((b, i) => { const I = b.icon; return <View key={i} style={[styles.benefitCard, { backgroundColor: theme.colors.cardBackground }]}><I size={24} color={b.color} /><Text style={[styles.benefitTitle, { color: theme.colors.text }]}>{b.title}</Text><Text style={[styles.benefitDesc, { color: theme.colors.secondaryText }]}>{b.desc}</Text></View>; })}
                     </View>
                 </View>
 

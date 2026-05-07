@@ -248,7 +248,7 @@ export default function CostManagementScreen() {
             <View style={styles.modalHeader}>
               <Text style={[styles.modalTitle, { color: colors.text }]}>Edit Budget</Text>
               <TouchableOpacity onPress={() => setShowBudgetEditor(false)}>
-                <Text style={{ fontSize: 24, color: colors.text }}>×</Text>
+                <Text style={{ fontSize: 24, color: colors.text }}>ï¿½</Text>
               </TouchableOpacity>
             </View>
             <ScrollView style={styles.modalContent}>

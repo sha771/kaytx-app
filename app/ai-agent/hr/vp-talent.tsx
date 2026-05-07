@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Users, Activity, CircleCheckBig, Clock, Target, ChartBar, MessageSquare, Calendar, Shield, ArrowRight, Star, Zap, Briefcase, GraduationCap, Heart } from 'lucide-react-native';
+import { Users, Activity, CircleCheckBig, Clock, Target, ChartBarBig, MessageSquare, Calendar, Shield, ArrowRight, Star, Zap, Briefcase, GraduationCap, Heart } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 export default function VPTalentPage() {
@@ -33,13 +33,13 @@ export default function VPTalentPage() {
   const activities = [
     { time: '3 min ago', text: 'Matched 23 candidates to open roles', icon: Briefcase },
     { time: '20 min ago', text: 'Published updated employer brand playbook', icon: Heart },
-    { time: '1 hour ago', text: 'Completed diversity hiring dashboard', icon: ChartBar },
+    { time: '1 hour ago', text: 'Completed diversity hiring dashboard', icon: ChartBarBig },
     { time: '3 hours ago', text: 'Coached hiring managers on bias reduction', icon: GraduationCap },
     { time: '6 hours ago', text: 'Launched campus recruitment campaign', icon: Zap },
   ];
 
   const quickActions = [
-    { label: 'View Reports', icon: ChartBar },
+    { label: 'View Reports', icon: ChartBarBig },
     { label: 'Team Chat', icon: MessageSquare },
     { label: 'Schedule', icon: Calendar },
     { label: 'Settings', icon: Shield },

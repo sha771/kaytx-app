@@ -4,7 +4,7 @@ import { useTheme } from '@/providers/ThemeProvider';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { 
   ChevronLeft, 
-  ChartBar, 
+  ChartBarBig, 
   TrendingUp, 
   ChartPie, 
   Activity, 
@@ -58,7 +58,7 @@ export default function InsightsAnalysisPage() {
   ];
 
   const analysisCategories = [
-    { name: 'Workflow Efficiency', score: 92, icon: ChartBar },
+    { name: 'Workflow Efficiency', score: 92, icon: ChartBarBig },
     { name: 'Decision Accuracy', score: 88, icon: Target },
     { name: 'User Satisfaction', score: 95, icon: ChartPie },
     { name: 'Learning Progress', score: 78, icon: Lightbulb },
@@ -151,7 +151,7 @@ export default function InsightsAnalysisPage() {
 
       {/* Action Button */}
       <TouchableOpacity style={[styles.fullReportBtn, { backgroundColor: theme.colors.primary }]}>
-        <ChartBar size={20} color="#fff" />
+        <ChartBarBig size={20} color="#fff" />
         <Text style={styles.fullReportText}>Generate Full Report</Text>
       </TouchableOpacity>
     

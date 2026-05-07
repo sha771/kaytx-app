@@ -20,7 +20,7 @@ import {
   Users,
   CircleCheck,
   Activity,
-  ChartBar,
+  ChartBarBig,
   CircleAlert,
   PhoneCall,
   Award,
@@ -321,7 +321,7 @@ export default function AINegotiationDashboard() {
     { id: '1', title: 'Start Call', icon: Phone, route: '/ai-negotiation/calls', color: '#007AFF' },
     { id: '2', title: 'View Deals', icon: Target, route: '/ai-negotiation/deals', color: '#34C759' },
     { id: '3', title: 'CRM', icon: Users, route: '/ai-negotiation/crm', color: '#FF9500' },
-    { id: '4', title: 'Analytics', icon: ChartBar, route: '/ai-negotiation/analytics', color: '#AF52DE' },
+    { id: '4', title: 'Analytics', icon: ChartBarBig, route: '/ai-negotiation/analytics', color: '#AF52DE' },
     { id: '5', title: 'Scripts', icon: FileText, route: '/ai-negotiation/scripts', color: '#FF2D92' },
     { id: '6', title: 'Training', icon: Play, route: '/ai-negotiation/training', color: '#5856D6' },
   ];

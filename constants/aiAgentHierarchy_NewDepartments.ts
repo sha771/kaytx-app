@@ -23,7 +23,7 @@ import {
   // TrendingUp & Investment Icons
   TrendingUp,
   DollarSign,
-  ChartBar,
+  ChartBarBig,
   ChartLine,
   ChartPie,
   Activity,
@@ -166,7 +166,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
     level: 'vp_director',
     department: 'trading_investments',
     description: 'Manages trading desk operations, execution strategies, and order flow optimization. Oversees all trading activities across asset classes.',
-    icon: ChartBar,
+    icon: ChartBarBig,
     color: '#10B981',
     orgChart: {
       id: 'vp-trading',
@@ -749,7 +749,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
     level: 'specialist',
     department: 'trading_investments',
     description: 'Trades options flow, implied volatility, and spread strategies. Specializes in earnings volatility plays and hedging.',
-    icon: ChartBar,
+    icon: ChartBarBig,
     color: '#10B981',
     orgChart: {
       id: 'options-trader',

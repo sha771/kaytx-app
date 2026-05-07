@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Target, Activity, Star, Users, CircleCheckBig, Clock, ArrowRight, ChartBar, MessageSquare, Calendar, Shield, Phone, TrendingUp, Handshake, Award, ChartBar } from 'lucide-react-native';
+import { Target, Activity, Star, Users, CircleCheckBig, Clock, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, Phone, TrendingUp, Handshake, Award } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { useRouter } from 'expo-router';
 
@@ -60,10 +60,21 @@ export default function SalesDepartment() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBar},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#F59E0B12' }]}><act.icon size={24} color="#F59E0B" /><Text style={[styles.actionText, { color: '#F59E0B' }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#F59E0B12' }]}><act.icon size={24} color="#F59E0B" /><Text style={[styles.actionText, { color: '#F59E0B' }]}>{act.label}</Text></TouchableOpacity>))}
         </View>
       </View>
-    <AgentFeatures agentId="sales-index" agentName="Sales Department" />
+    
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
+        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>42 helper and sub-agent AI workers supporting the main agents.</Text>
+        <TouchableOpacity onPress={() => router.push('/ai-agent/sales/sub-agents')} style={[styles.subAgentButton, { backgroundColor: '#FF950015' }]}>
+          <TrendingUp size={20} color="#FF9500" />
+          <Text style={[styles.subAgentButtonText, { color: '#FF9500' }]}>View All 42 Sub-Agents</Text>
+          <ArrowRight size={18} color="#FF9500" />
+        </TouchableOpacity>
+      </View>
+
+      <AgentFeatures agentId="sales-index" agentName="Sales Department" />
 
     </ScrollView>
   );
