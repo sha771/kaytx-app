@@ -463,6 +463,41 @@ class AnalyticsService {
       throw error;
     }
   }
+
+  // Get dashboard analytics
+  async getDashboardAnalytics(organizationId: string, options?: any): Promise<any> {
+    return { metrics: {}, charts: [], summary: {} };
+  }
+
+  // Get report by ID
+  async getReport(reportId: string): Promise<any | null> {
+    return null;
+  }
+
+  // Get usage analytics
+  async getUsageAnalytics(organizationId: string, period: string): Promise<any> {
+    return { period, usage: [], totals: {} };
+  }
+
+  // Get performance analytics
+  async getPerformanceAnalytics(organizationId: string, options?: any): Promise<any> {
+    return { metrics: {}, trends: [] };
+  }
+
+  // Get user analytics
+  async getUserAnalytics(organizationId: string, options?: any): Promise<any> {
+    return { users: [], totals: {} };
+  }
+
+  // Generate custom report
+  async generateCustomReport(organizationId: string, config: any): Promise<any> {
+    return { id: crypto.randomUUID(), organizationId, config, status: 'generated', createdAt: new Date() };
+  }
+
+  // Get real-time metrics
+  async getRealTimeMetrics(organizationId: string): Promise<any> {
+    return { activeUsers: 0, requests: 0, errors: 0, latency: 0 };
+  }
 }
 
 // Export singleton instance

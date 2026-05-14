@@ -38,7 +38,7 @@ export default function MarketCycleAnalystPage() {
   const forecasts = [
     {sector:'Office',year1:3.5,year2:4.2,year3:5.1,year5:6.2,probability:72},
     {sector:'Industrial',year1:6.5,year2:4.2,year3:3.1,year5:4.5,probability:58},
-    {sector:'Retail',year1:2.1,year3.5,year3:4.2,year5:5.5,probability:65},
+    {sector:'Retail',year1:2.1,year2:3.5,year3:4.2,year5:5.5,probability:65},
     {sector:'Multifamily',year1:4.5,year2:4.8,year3:5.2,year5:5.8,probability:78}
   ];
 

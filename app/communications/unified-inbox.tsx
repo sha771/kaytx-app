@@ -223,7 +223,10 @@ export default function UnifiedInboxScreen() {
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
           <ArrowLeft size={24} color={theme.colors.text} />
         </TouchableOpacity>
-        <Text style={[styles.title, { color: theme.colors.text }]}>Unified Inbox</Text>
+        <View style={styles.headerTitleContainer}>
+          <Text style={[styles.title, { color: theme.colors.text }]}>Unified Inbox</Text>
+          <Text style={[styles.platformsCount, { color: theme.colors.secondaryText }]}>Platforms: 60 (Email, SMS, WhatsApp, Instagram, Twitter, FB)</Text>
+        </View>
         <View style={styles.headerActions}>
           <TouchableOpacity style={styles.headerButton}>
             <ListFilter size={20} color={theme.colors.text} />
@@ -253,7 +256,7 @@ export default function UnifiedInboxScreen() {
         <View style={styles.filters}>
           {(['all', 'unread', 'starred', 'high'] as const).map((Filter) => (
             <TouchableOpacity
-              key={Funnel}
+              key={Filter}
               style={[
                 styles.filterChip,
                 selectedFilter === Filter && { backgroundColor: theme.colors.primary },
@@ -351,10 +354,16 @@ const styles = StyleSheet.create({
     padding: 8,
     marginRight: 16,
   },
+  headerTitleContainer: {
+    flex: 1,
+  },
   title: {
     fontSize: 24,
     fontWeight: '700',
-    flex: 1,
+  },
+  platformsCount: {
+    fontSize: 12,
+    marginTop: 2,
   },
   headerActions: {
     flexDirection: 'row',

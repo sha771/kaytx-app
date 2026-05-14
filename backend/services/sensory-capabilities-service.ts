@@ -17,7 +17,7 @@ export type VisionCapability =
   | 'facial_recognition' 
   | 'document_analysis'
   | 'chart_analysis'
-  | 'ui_analysis;
+  | 'ui_analysis';
 
 export type HearingCapability = 
   | 'speech_recognition' 

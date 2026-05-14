@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import { Activity, Star, CircleCheckBig, Target, ArrowRight, Zap, Users, MessageSquare, Calendar, ChartBarBig, TrendingUp, AlertTriangle, FileText, ChevronRight, Route } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
-export default function routeNetworkDesignerPage() {
+export default function RouteNetworkDesignerPage() {
   const { theme } = useTheme();
   const router = useRouter();
 

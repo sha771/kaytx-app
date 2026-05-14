@@ -6,7 +6,7 @@ import {
   Shield, Activity, CircleCheckBig, Clock, Target, ChartBarBig, MessageSquare, 
   Calendar, ShieldCheck, ArrowRight, Users, Zap, Star, Lock, Eye, TriangleAlert,
   Workflow, Bell, FileText, Settings, Cpu, Globe, Server, Network, Terminal,
-  Radio, AlertOctagon, Siren, Scan, Search, BarChart3, TrendingUp, CheckCircle,
+  Radio, AlertOctagon, AlertTriangle, Scan, Search, BarChart3, TrendingUp, CheckCircle,
   Play, Pause, RotateCw, ChevronRight, Plus, Minus, Filter, Download, Share2
 } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
@@ -74,7 +74,7 @@ export default function VPSecurityOpsEnterprisePage() {
   const metrics = [
     { title: 'Active Alerts', value: '127', change: '+12%', icon: Bell, color: '#FF9500' },
     { title: 'Threats Today', value: '2,847', change: '+5%', icon: TriangleAlert, color: '#FF3B30' },
-    { title: 'Incidents', value: '3', change: '-50%', icon: Siren, color: '#C62828' },
+    { title: 'Incidents', value: '3', change: '-50%', icon: AlertTriangle, color: '#C62828' },
     { title: 'SLA Compliance', value: '98.5%', change: '+2%', icon: CheckCircle, color: '#34C759' },
   ];
 
@@ -107,7 +107,7 @@ export default function VPSecurityOpsEnterprisePage() {
 
   const capabilities = [
     { name: 'Threat Detection', icon: Scan, enabled: true },
-    { name: 'Incident Response', icon: Siren, enabled: true },
+    { name: 'Incident Response', icon: AlertTriangle, enabled: true },
     { name: 'SIEM Integration', icon: Server, enabled: true },
     { name: 'Vulnerability Mgmt', icon: ShieldCheck, enabled: true },
     { name: 'Penetration Testing', icon: Target, enabled: true },

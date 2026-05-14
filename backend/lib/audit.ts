@@ -1687,6 +1687,10 @@ export const AuditActions = {
   GDPR_OBJECTION_REQUEST: 'gdpr.objection_request',
   CONSENT_GRANTED: 'consent.granted',
   CONSENT_WITHDRAWN: 'consent.withdrawn',
+  DATA_ACCESS: 'data.access',
+  DATA_EXPORT: 'data.export',
+  DATA_DELETION: 'data.deletion',
+  DATA_MODIFICATION: 'data.modification',
 } as const;
 
 // Export AUDIT_ACTIONS as an alias for AuditActions for backward compatibility

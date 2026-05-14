@@ -75,6 +75,14 @@ export interface TestCoverage {
   untestedFiles: string[];
 }
 
+export interface CleanupPlan {
+  files: UnnecessaryFile[];
+  duplicates: DuplicateService[];
+  incomplete: IncompleteImplementation[];
+  securityIssues: SecurityIssue[];
+  estimatedSavings: number;
+}
+
 export class CodeScanner {
   private projectRoot: string;
   private excludePatterns: string[] = [

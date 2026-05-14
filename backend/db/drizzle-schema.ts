@@ -1,4 +1,7 @@
-import { sql } from 'drizzle-orm';
+import { sql, eq, and, or, desc, asc, ne, gt, gte, lt, lte, like, ilike, inArray } from 'drizzle-orm';
+
+// Re-export drizzle-orm operators for convenience
+export { eq, and, or, desc, asc, ne, gt, gte, lt, lte, like, ilike, inArray };
 import { pgTable, uuid, text, timestamp, boolean, integer, jsonb, varchar, decimal, pgEnum, index, uniqueIndex, serial } from 'drizzle-orm/pg-core';
 
 // Type alias for table parameter in index definitions
@@ -80,7 +83,7 @@ export const consentStatusEnum = pgEnum('consent_status', ['granted', 'withdrawn
 export const consentPurposeEnum = pgEnum('consent_purpose', ['marketing', 'analytics', 'personalization', 'essential', 'third_party_sharing']);
 export const dataBreachSeverityEnum = pgEnum('data_breach_severity', ['low', 'medium', 'high', 'critical']);
 
-export const users: any = pgTable('users', {
+export const users = pgTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
   email: varchar('email', { length: 255 }).notNull().unique(),
   passwordHash: text('password_hash').notNull(),
@@ -120,7 +123,7 @@ export const users: any = pgTable('users', {
   orgIdx: index('org_idx').on(table.organizationId),
 }));
 
-export const organizations: any = pgTable('organizations', {
+export const organizations = pgTable('organizations', {
   id: uuid('id').primaryKey().defaultRandom(),
   name: varchar('name', { length: 255 }).notNull(),
   slug: varchar('slug', { length: 100 }).notNull().unique(),
@@ -161,7 +164,7 @@ export const organizations: any = pgTable('organizations', {
   slugIdx: uniqueIndex('slug_idx').on(table.slug),
 }));
 
-export const invitations: any = pgTable('invitations', {
+export const invitations = pgTable('invitations', {
   id: uuid('id').primaryKey().defaultRandom(),
   organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
   email: varchar('email', { length: 255 }).notNull(),
@@ -175,7 +178,7 @@ export const invitations: any = pgTable('invitations', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
 
-export const organizationMembers: any = pgTable('organization_members', {
+export const organizationMembers = pgTable('organization_members', {
   id: uuid('id').primaryKey().defaultRandom(),
   organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
   userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
@@ -200,6 +203,7 @@ export const sessions = pgTable('sessions', {
   userAgent: text('user_agent'),
   deviceId: varchar('device_id', { length: 255 }),
   lastActivityAt: timestamp('last_activity_at').defaultNow().notNull(),
+  isActive: boolean('is_active').default(true).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 }, (table: TableRef) => ({
   userIdx: index('user_idx').on(table.userId),
@@ -226,6 +230,8 @@ export const subscriptions = pgTable('subscriptions', {
   resumedAt: timestamp('resumed_at'),
   trialEndsAt: timestamp('trial_ends_at'),
   features: jsonb('features').default({}).notNull(),
+  stripeSubscriptionId: varchar('stripe_subscription_id', { length: 255 }),
+  stripeCustomerId: varchar('stripe_customer_id', { length: 255 }),
   metadata: jsonb('metadata').default({}).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
@@ -250,6 +256,7 @@ export const invoices = pgTable('invoices', {
   transactionIdEncrypted: jsonb('transaction_id_encrypted'),
   items: jsonb('items').default([]).notNull(),
   notes: text('notes'),
+  stripeInvoiceId: varchar('stripe_invoice_id', { length: 255 }),
   metadata: jsonb('metadata').default({}).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
@@ -286,6 +293,7 @@ export const auditLogs = pgTable('audit_logs', {
   severity: severityEnum('severity').default('info').notNull(),
   metadata: jsonb('metadata').default({}).notNull(),
   timestamp: timestamp('timestamp').defaultNow().notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
 }, (table: TableRef) => ({
   userIdx: index('audit_user_idx').on(table.userId),
   orgIdx: index('audit_org_idx').on(table.organizationId),
@@ -370,6 +378,7 @@ export const apiKeys = pgTable('api_keys', {
   lastUsedAt: timestamp('last_used_at'),
   usageCount: integer('usage_count').default(0).notNull(),
   status: varchar('status', { length: 50 }).default('active').notNull(),
+  isActive: boolean('is_active').default(true).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 
@@ -448,6 +457,7 @@ export const campaigns = pgTable('campaigns', {
   config: jsonb('config').default({}).notNull(),
   metrics: jsonb('metrics').default({}).notNull(),
   createdBy: uuid('created_by').references(() => users.id),
+  isActive: boolean('is_active').default(true).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
@@ -466,6 +476,7 @@ export const contacts = pgTable('contacts', {
   source: varchar('source', { length: 100 }),
   status: varchar('status', { length: 50 }).default('active').notNull(),
   lastContactedAt: timestamp('last_contacted_at'),
+  isActive: boolean('is_active').default(true).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 }, (table: TableRef) => ({
@@ -561,6 +572,7 @@ export const workflowExecutions = pgTable('workflow_executions', {
   workflowId: uuid('workflow_id').references(() => workflows.id, { onDelete: 'cascade' }).notNull(),
   organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
   status: varchar('status', { length: 50 }).default('running').notNull(),
+  startedAt: timestamp('started_at'),
   startTime: timestamp('start_time').defaultNow().notNull(),
   endTime: timestamp('end_time'),
   input: jsonb('input').notNull(),
@@ -620,6 +632,7 @@ export const aiAgentEvents = pgTable('ai_agent_events', {
   action: text('action').notNull(),
   details: jsonb('details').default({}).notNull(),
   metadata: jsonb('metadata').default({}).notNull(),
+  timestamp: timestamp('timestamp').defaultNow().notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 }, (table: TableRef) => ({
   orgIdx: index('ai_agent_events_org_idx').on(table.organizationId),
@@ -1832,3 +1845,401 @@ export type AgentROIAnalytic = typeof agentROIAnalytics.$inferSelect;
 export type AgentCostSaving = typeof agentCostSavings.$inferSelect;
 export type AgentPerformanceMetric = typeof agentPerformanceMetrics.$inferSelect;
 export type AgentTaskCompletion = typeof agentTaskCompletions.$inferSelect;
+
+// Missing tables referenced by backend code
+export const agentAvailability = pgTable('agent_availability', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  agentId: uuid('agent_id').notNull(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  status: varchar('status', { length: 30 }).default('available').notNull(),
+  availableFrom: timestamp('available_from'),
+  availableUntil: timestamp('available_until'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+export const agentHierarchy = pgTable('agent_hierarchy', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  parentAgentId: uuid('parent_agent_id').notNull(),
+  childAgentId: uuid('child_agent_id').notNull(),
+  teamId: uuid('team_id'),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  relationType: varchar('relation_type', { length: 50 }).default('supervision').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const costTracking = pgTable('cost_tracking', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  agentId: uuid('agent_id'),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  resourceType: varchar('resource_type', { length: 50 }).notNull(),
+  cost: decimal('cost', { precision: 10, scale: 4 }).notNull(),
+  currency: varchar('currency', { length: 3 }).default('USD').notNull(),
+  period: varchar('period', { length: 20 }).notNull(),
+  timestamp: timestamp('timestamp').defaultNow().notNull(),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const systemLogs = pgTable('system_logs', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  level: varchar('level', { length: 20 }).notNull(),
+  service: varchar('service', { length: 100 }).notNull(),
+  message: text('message').notNull(),
+  metadata: jsonb('metadata').default({}).notNull(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const voiceSettings = pgTable('voice_settings', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  agentId: uuid('agent_id'),
+  provider: varchar('provider', { length: 50 }).notNull(),
+  language: varchar('language', { length: 10 }).default('en-US').notNull(),
+  voiceId: varchar('voice_id', { length: 100 }),
+  settings: jsonb('settings').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+export const voiceSessions = pgTable('voice_sessions', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'set null' }),
+  agentId: uuid('agent_id'),
+  status: varchar('status', { length: 30 }).default('active').notNull(),
+  startedAt: timestamp('started_at'),
+  endedAt: timestamp('ended_at'),
+  duration: integer('duration'),
+  recordingUrl: text('recording_url'),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+export const voiceTranscripts = pgTable('voice_transcripts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  sessionId: uuid('session_id').references(() => voiceSessions.id, { onDelete: 'cascade' }).notNull(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  speaker: varchar('speaker', { length: 50 }).notNull(),
+  text: text('text').notNull(),
+  startTime: decimal('start_time', { precision: 10, scale: 3 }),
+  endTime: decimal('end_time', { precision: 10, scale: 3 }),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const agentCollaborations = pgTable('agent_collaborations', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  initiatingAgentId: uuid('initiating_agent_id').notNull(),
+  collaboratingAgentId: uuid('collaborating_agent_id').notNull(),
+  taskType: varchar('task_type', { length: 100 }),
+  status: varchar('status', { length: 30 }).default('active').notNull(),
+  result: jsonb('result'),
+  startedAt: timestamp('started_at'),
+  completedAt: timestamp('completed_at'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+// Missing type exports
+export type AgentRole = string;
+export type VoiceSession = typeof voiceSessions.$inferSelect;
+export type VoiceTranscript = typeof voiceTranscripts.$inferSelect;
+export type AgentCollaboration = typeof agentCollaborations.$inferSelect;
+
+// Agent workflows table (referenced by workflow-builder-service)
+export const agentWorkflows = pgTable('agent_workflows', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  agentId: uuid('agent_id'),
+  name: varchar('name', { length: 255 }).notNull(),
+  description: text('description'),
+  version: varchar('version', { length: 20 }).default('1.0.0').notNull(),
+  status: varchar('status', { length: 30 }).default('draft').notNull(),
+  definition: jsonb('definition').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+// Workflow nodes table
+export const workflowNodes = pgTable('workflow_nodes', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  workflowId: uuid('workflow_id').references(() => workflows.id, { onDelete: 'cascade' }).notNull(),
+  type: varchar('type', { length: 50 }).notNull(),
+  name: varchar('name', { length: 255 }).notNull(),
+  config: jsonb('config').default({}).notNull(),
+  position: jsonb('position').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+// Workflow connections table
+export const workflowConnections = pgTable('workflow_connections', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  workflowId: uuid('workflow_id').references(() => workflows.id, { onDelete: 'cascade' }).notNull(),
+  sourceNodeId: uuid('source_node_id').notNull(),
+  targetNodeId: uuid('target_node_id').notNull(),
+  sourcePort: varchar('source_port', { length: 50 }).default('output'),
+  targetPort: varchar('target_port', { length: 50 }).default('input'),
+  condition: jsonb('condition'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// Workflow variables table
+export const workflowVariables = pgTable('workflow_variables', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  workflowId: uuid('workflow_id').references(() => workflows.id, { onDelete: 'cascade' }).notNull(),
+  name: varchar('name', { length: 255 }).notNull(),
+  type: varchar('type', { length: 50 }).notNull(),
+  defaultValue: jsonb('default_value'),
+  description: text('description'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+// Type aliases for workflow builder service
+export type AgentWorkflow = typeof agentWorkflows.$inferSelect;
+export type WorkflowNode = typeof workflowNodes.$inferSelect;
+export type WorkflowConnection = typeof workflowConnections.$inferSelect;
+export type WorkflowExecution = typeof workflowExecutions.$inferSelect;
+export type WorkflowVariable = typeof workflowVariables.$inferSelect;
+
+// Agent communications table
+export const agent_communications = pgTable('agent_communications', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  fromAgentId: uuid('from_agent_id').notNull(),
+  toAgentId: uuid('to_agent_id').notNull(),
+  messageType: varchar('message_type', { length: 50 }).notNull(),
+  content: jsonb('content').notNull(),
+  status: varchar('status', { length: 30 }).default('sent').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// Account lockouts table
+export const accountLockouts = pgTable('account_lockouts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  lockoutReason: varchar('lockout_reason', { length: 100 }).notNull(),
+  lockedAt: timestamp('locked_at').defaultNow().notNull(),
+  unlockAt: timestamp('unlock_at'),
+  attemptCount: integer('attempt_count').default(0).notNull(),
+  status: varchar('status', { length: 30 }).default('locked').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// Agent alerts table
+export const agentAlerts = pgTable('agent_alerts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  agentId: uuid('agent_id').notNull(),
+  alertType: varchar('alert_type', { length: 50 }).notNull(),
+  severity: varchar('severity', { length: 20 }).notNull(),
+  status: varchar('status', { length: 30 }).default('active').notNull(),
+  message: text('message').notNull(),
+  acknowledged: boolean('acknowledged').default(false).notNull(),
+  startedAt: timestamp('started_at'),
+  resolvedAt: timestamp('resolved_at'),
+  resolvedBy: uuid('resolved_by'),
+  correlationId: uuid('correlation_id'),
+  ruleId: uuid('rule_id'),
+  ruleName: varchar('rule_name', { length: 255 }),
+  threshold: decimal('threshold', { precision: 10, scale: 4 }),
+  thresholdMax: decimal('threshold_max', { precision: 10, scale: 4 }),
+  metricValue: decimal('metric_value', { precision: 10, scale: 4 }),
+  timeWindowStart: timestamp('time_window_start'),
+  timeWindowEnd: timestamp('time_window_end'),
+  timeWindowDays: integer('time_window_days'),
+  autoActions: jsonb('auto_actions').default([]).notNull(),
+  relatedAlerts: jsonb('related_alerts').default([]).notNull(),
+  notificationTemplate: varchar('notification_template', { length: 255 }),
+  resolution: text('resolution'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// Performance thresholds table
+export const performanceThresholds = pgTable('performance_thresholds', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  metricName: varchar('metric_name', { length: 100 }).notNull(),
+  warningThreshold: decimal('warning_threshold', { precision: 10, scale: 2 }),
+  criticalThreshold: decimal('critical_threshold', { precision: 10, scale: 2 }),
+  enabled: boolean('enabled').default(true).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+// Agent sessions table
+export const agentSessions = pgTable('agent_sessions', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  agentId: uuid('agent_id').notNull(),
+  userId: uuid('user_id').references(() => users.id),
+  status: varchar('status', { length: 30 }).default('active').notNull(),
+  startedAt: timestamp('started_at').defaultNow().notNull(),
+  endedAt: timestamp('ended_at'),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// Agent schedules table
+export const agentSchedules = pgTable('agent_schedules', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  agentId: uuid('agent_id').notNull(),
+  name: varchar('name', { length: 255 }).notNull(),
+  cronExpression: varchar('cron_expression', { length: 100 }),
+  status: varchar('status', { length: 30 }).default('active').notNull(),
+  nextExecutionAt: timestamp('next_execution_at'),
+  lastExecutionAt: timestamp('last_execution_at'),
+  config: jsonb('config').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+// Agent time blocks table
+export const agentTimeBlocks = pgTable('agent_time_blocks', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  scheduleId: uuid('schedule_id').references(() => agentSchedules.id, { onDelete: 'cascade' }).notNull(),
+  dayOfWeek: integer('day_of_week').notNull(),
+  startTime: varchar('start_time', { length: 10 }).notNull(),
+  endTime: varchar('end_time', { length: 10 }).notNull(),
+  isAvailable: boolean('is_available').default(true).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// Agent permissions table
+export const agentPermissions = pgTable('agent_permissions', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  agentId: uuid('agent_id').notNull(),
+  permission: varchar('permission', { length: 100 }).notNull(),
+  granted: boolean('granted').default(true).notNull(),
+  grantedBy: uuid('granted_by').references(() => users.id),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// Agent teams table
+export const agentTeams = pgTable('agent_teams', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  name: varchar('name', { length: 255 }).notNull(),
+  description: text('description'),
+  leadAgentId: uuid('lead_agent_id'),
+  status: varchar('status', { length: 30 }).default('active').notNull(),
+  config: jsonb('config').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+// Agent insights table
+export const agent_insights = pgTable('agent_insights', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  agentId: uuid('agent_id').notNull(),
+  insightType: varchar('insight_type', { length: 50 }).notNull(),
+  data: jsonb('data').notNull(),
+  confidence: decimal('confidence', { precision: 3, scale: 2 }).default('0').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// Breach checks table
+export const breachChecks = pgTable('breach_checks', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  email: varchar('email', { length: 255 }).notNull(),
+  isBreached: boolean('is_breached').notNull(),
+  breachCount: integer('breach_count').default(0).notNull(),
+  sources: jsonb('sources').default([]).notNull(),
+  checkedAt: timestamp('checked_at').defaultNow().notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// Task history table
+export const task_history = pgTable('task_history', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  taskId: uuid('task_id').notNull(),
+  action: varchar('action', { length: 50 }).notNull(),
+  previousValue: jsonb('previous_value'),
+  newValue: jsonb('new_value'),
+  changedBy: uuid('changed_by'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// Agent learning log table
+export const agent_learning_log = pgTable('agent_learning_log', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  agentId: uuid('agent_id').notNull(),
+  lesson: text('lesson').notNull(),
+  context: jsonb('context').default({}).notNull(),
+  category: varchar('category', { length: 50 }).notNull(),
+  importance: decimal('importance', { precision: 3, scale: 2 }).default('0').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// Type aliases for all new tables
+export type AgentMetric = { id: string; agentId: string; metricType: string; value: number; timestamp: Date };
+export type AgentAlert = typeof agentAlerts.$inferSelect;
+export type PerformanceThreshold = typeof performanceThresholds.$inferSelect;
+export type AgentSession = typeof agentSessions.$inferSelect;
+export type ScheduleExecution = { id: string; scheduleId: string; status: string; startedAt: Date; completedAt?: Date; result?: any };
+export type AgentRecurringSchedule = typeof agentSchedules.$inferSelect;
+export type AgentTimeBlock = typeof agentTimeBlocks.$inferSelect;
+export type AgentPermission = typeof agentPermissions.$inferSelect;
+export type AgentTeam = typeof agentTeams.$inferSelect;
+export type SubAgent = { id: string; parentId: string; agentId: string; role: string; createdAt: Date };
+export type MainAgent = { id: string; agentId: string; teamId: string; isLead: boolean; createdAt: Date };
+export type AgentCategory = string;
+export type CoreCapability = string;
+
+// Agent metrics table
+export const agentMetrics = pgTable('agent_metrics', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  agentId: uuid('agent_id').notNull(),
+  metricType: varchar('metric_type', { length: 50 }).notNull(),
+  type: varchar('type', { length: 50 }).notNull(),
+  value: decimal('value', { precision: 10, scale: 4 }).notNull(),
+  unit: varchar('unit', { length: 30 }).notNull(),
+  recordedAt: timestamp('recorded_at').defaultNow().notNull(),
+  timestamp: timestamp('timestamp').defaultNow().notNull(),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// Agent recurring schedules table
+export const agentRecurringSchedules = pgTable('agent_recurring_schedules', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  agentId: uuid('agent_id').notNull(),
+  name: varchar('name', { length: 255 }).notNull(),
+  cronExpression: varchar('cron_expression', { length: 100 }).notNull(),
+  timezone: varchar('timezone', { length: 50 }).default('UTC').notNull(),
+  isActive: boolean('is_active').default(true).notNull(),
+  lastRunAt: timestamp('last_run_at'),
+  nextRunAt: timestamp('next_run_at'),
+  config: jsonb('config').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+// Schedule executions table
+export const scheduleExecutions = pgTable('schedule_executions', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  scheduleId: uuid('schedule_id').notNull(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  status: varchar('status', { length: 30 }).default('pending').notNull(),
+  startedAt: timestamp('started_at'),
+  completedAt: timestamp('completed_at'),
+  result: jsonb('result'),
+  error: text('error'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// Remaining type aliases
+export type AgentSchedule = typeof agentSchedules.$inferSelect;
+export type AgentAvailability = typeof agentAvailability.$inferSelect;
+export type CostTracking = typeof costTracking.$inferSelect;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Shield, Activity, Star, Users, CircleCheckBig, Clock, Target, Zap, ArrowRight, ChartBarBig, AlertTriangle, FileCheck, Siren, TrendingDown } from 'lucide-react-native';
+import { Shield, Activity, Star, Users, CircleCheckBig, Clock, Target, Zap, ArrowRight, ChartBarBig, AlertTriangle, FileCheck, TrendingDown } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { useRouter } from 'expo-router';
 
@@ -20,7 +20,7 @@ export default function CROPage() {
         <View style={styles.badgesRow}>
           <View style={[styles.badge, { backgroundColor: '#34C75922' }]}><Activity size={12} color="#34C759" /><Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text></View>
           <View style={[styles.badge, { backgroundColor: '#F59E0B22' }]}><Shield size={12} color="#F59E0B" /><Text style={[styles.badgeText, { color: '#F59E0B' }]}>C-Level</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#EF444422' }]}><Siren size={12} color="#EF4444" /><Text style={[styles.badgeText, { color: '#EF4444' }]}>Critical</Text></View>
+          <View style={[styles.badge, { backgroundColor: '#EF444422' }]}><AlertTriangle size={12} color="#EF4444" /><Text style={[styles.badgeText, { color: '#EF4444' }]}>Critical</Text></View>
         </View>
       </View>
 

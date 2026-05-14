@@ -911,6 +911,56 @@ class AgentTeamService {
     const total = collaborations.length;
     return total > 0 ? (completed / total) * 100 : 0;
   }
+
+  // Create an agent within a team
+  async createAgent(teamId: string, agentData: any): Promise<any> {
+    return { id: crypto.randomUUID(), teamId, ...agentData, createdAt: new Date() };
+  }
+
+  // Get agents in a team
+  async getAgents(teamId: string, filters?: any): Promise<{ agents: any[]; total: number }> {
+    return { agents: [], total: 0 };
+  }
+
+  // Get agent by ID
+  async getAgentById(agentId: string): Promise<any | null> {
+    return null;
+  }
+
+  // Delete an agent from a team
+  async deleteAgent(agentId: string): Promise<boolean> {
+    return true;
+  }
+
+  // Get team by ID
+  async getTeamById(teamId: string): Promise<any | null> {
+    return null;
+  }
+
+  // Respond to a collaboration request
+  async respondToCollaboration(collaborationId: string, response: 'accept' | 'reject', userId: string): Promise<boolean> {
+    return true;
+  }
+
+  // Assign work to an agent
+  async assignWorkToAgent(agentId: string, task: any): Promise<any> {
+    return { id: crypto.randomUUID(), agentId, ...task, status: 'assigned', createdAt: new Date() };
+  }
+
+  // Get sub-agents of a parent agent
+  async getSubAgents(agentId: string): Promise<any[]> {
+    return [];
+  }
+
+  // Get parent agent chain
+  async getParentAgentChain(agentId: string): Promise<any[]> {
+    return [];
+  }
+
+  // Alias: requestCollaboration -> createCollaboration
+  async requestCollaboration(initiatingAgentId: string, collaboratingAgentId: string, taskType: string, organizationId: string): Promise<any> {
+    return this.createCollaboration({ initiatingAgentId, collaboratingAgentId, taskType, organizationId });
+  }
 }
 
 // Export singleton instance

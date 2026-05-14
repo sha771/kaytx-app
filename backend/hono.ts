@@ -33,8 +33,8 @@ import { validateBody, validateParams, validateQuery } from './middleware/valida
 import { requireAuth, requirePermission, requireMinRole, getAuthContext } from './middleware/rbac-middleware';
 import { Permission, Role } from './lib/rbac';
 import { db as pgDb } from './db/connection';
-import { users } from './db/drizzle-schema';
-import { eq, sql } from 'drizzle-orm';
+import { users, callLogs } from './db/drizzle-schema';
+import { eq, sql, desc } from 'drizzle-orm';
 import { generateBase32Secret, buildOtpauthUrl } from './lib/mfa-totp';
 import {
   consumeRecoveryCode,
@@ -57,6 +57,25 @@ import {
 } from './lib/auth';
 import { safeJsonParse } from './lib/xss-sanitizer';
 import { APIUtils } from './utils/api-utils';
+import twilio from 'twilio';
+
+function toTwilioParams(rawBody: any): Record<string, string> {
+  if (rawBody instanceof URLSearchParams) {
+    const result: Record<string, string> = {};
+    rawBody.forEach((value: string, key: string) => { result[key] = value; });
+    return result;
+  }
+  if (typeof rawBody === 'object' && rawBody !== null) {
+    const result: Record<string, string> = {};
+    for (const [key, value] of Object.entries(rawBody)) {
+      if (typeof value === 'string') result[key] = value;
+      else if (Array.isArray(value) && typeof value[0] === 'string') result[key] = value[0];
+      else result[key] = String(value);
+    }
+    return result;
+  }
+  throw new Error('Invalid Twilio body');
+}
 
 import servicesRoutes from './api/routes/services';
 import consentRoutes from './api/routes/consent';
@@ -93,7 +112,7 @@ app.use('*', cors());
 app.use('*', protectAllRoutes);
 
 // Rate limiting by category
-app.use("/auth/*", rateLimitMiddleware(RateLimitPresets.AUTH));
+app.use("/auth/*", rateLimitMiddleware(RateLimitPresets.auth));
 app.use("/api/*", rateLimitMiddleware(RateLimitPresets.API));
 app.use("/api/v1/*", rateLimitMiddleware(RateLimitPresets.API));
 app.use("/webhooks/*", rateLimitMiddleware(RateLimitPresets.WEBHOOK));
@@ -198,9 +217,9 @@ app.get('/api/alerts/statistics', requirePermission(Permission.SYSTEM_READ), val
 // ============================================================================
 
 // 1. Rate limiting (first line of defense)
-app.use("/auth/login", rateLimitMiddleware(RateLimitPresets.AUTH));
-app.use("/auth/register", rateLimitMiddleware(RateLimitPresets.AUTH));
-app.use("/auth/reset-password", rateLimitMiddleware(RateLimitPresets.PASSWORD_RESET));
+app.use("/auth/login", rateLimitMiddleware(RateLimitPresets.auth));
+app.use("/auth/register", rateLimitMiddleware(RateLimitPresets.auth));
+app.use("/auth/reset-password", rateLimitMiddleware(RateLimitPresets.passwordReset));
 app.use("/api/*", rateLimitMiddleware(RateLimitPresets.API));
 app.use("/webhooks/*", rateLimitMiddleware(RateLimitPresets.WEBHOOK));
 app.use("/api/integrations/*", rateLimitMiddleware(RateLimitPresets.INTEGRATION));

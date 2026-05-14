@@ -51,6 +51,27 @@ export const RateLimitPresets = {
     windowMs: 60 * 60 * 1000, // 1 hour
     maxRequests: 3,
     message: 'Too many password reset attempts. Please try again later.'
+  },
+
+  // API endpoints
+  API: {
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    maxRequests: 100,
+    message: 'API rate limit exceeded. Please try again later.'
+  },
+
+  // Webhook endpoints
+  WEBHOOK: {
+    windowMs: 1 * 60 * 1000, // 1 minute
+    maxRequests: 120,
+    message: 'Webhook rate limit exceeded.'
+  },
+
+  // Integration endpoints
+  INTEGRATION: {
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    maxRequests: 50,
+    message: 'Integration rate limit exceeded. Please try again later.'
   }
 };
 

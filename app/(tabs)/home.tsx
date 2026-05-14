@@ -88,7 +88,7 @@ import {
   HardDrive,
   Package,
   ShieldAlert,
-  Siren,
+  AlertTriangle,
   Lock,
   FingerprintPattern,
   House,
@@ -133,6 +133,7 @@ interface SidebarSubItem {
   icon: React.ComponentType<any>;
   isHeader?: boolean;
   subSections?: SidebarSubSection[];
+  route?: string;
 }
 
 interface SidebarSubSection {
@@ -146,6 +147,7 @@ interface SidebarSubSectionItem {
   id: string;
   title: string;
   icon: React.ComponentType<any>;
+  route?: string;
 }
 
 interface SmartFeature {
@@ -162,14 +164,15 @@ interface SmartFeature {
 const sidebarOptions: SidebarOption[] = [
   {
     id: 'social-media',
-    title: 'Social Media Management',
+    title: 'Social Media Management (Enterprise)',
     icon: Share2,
     color: '#E91E63',
     subItems: [
-      { id: 'sm-1', title: 'Dashboard', icon: Activity },
+      { id: 'sm-0', title: 'DEEP ANALYSIS - Platforms 60+', icon: Globe },
+      { id: 'sm-1', title: 'Dashboard (Enterprise)', icon: Activity },
       { id: 'sm-2', title: 'Content Calendar', icon: Calendar },
       { id: 'sm-3', title: 'Post Scheduler', icon: Clock },
-      { id: 'sm-4', title: 'Social Analytics', icon: ChartLine },
+      { id: 'sm-4', title: 'Social Analytics (Enterprise)', icon: ChartLine },
       { id: 'sm-5', title: 'Engagement Hub', icon: MessageCircleIcon },
       { id: 'sm-6', title: 'Hashtag Manager', icon: Hash },
       { id: 'sm-7', title: 'Competitor Analysis', icon: Eye },
@@ -188,6 +191,7 @@ const sidebarOptions: SidebarOption[] = [
     icon: Bot,
     color: '#34C759',
     subItems: [
+      { id: '2-agents-overview', title: 'Agent Types (23+ Categories)', icon: Bot },
       {
         id: '2-section-csuite',
         title: '1: C-Suite Executives (17)',
@@ -227,6 +231,71 @@ const sidebarOptions: SidebarOption[] = [
             ]
           },
         ]
+      },
+      {
+        id: '2-section-11-layer-architecture',
+        title: '11-Layer AI Agent Architecture',
+        icon: Layers,
+        color: '#FF3B30',
+        subSections: [
+          {
+            id: '2-arch-row-1-4',
+            title: 'Layers 1-4 (Governance → Intelligence)',
+            icon: ShieldAlert,
+            items: [
+              {
+                id: '2-arch-l1-2',
+                title: '1. Governance (Security)\n2. Leadership (Strategy)',
+                icon: Shield,
+                route: '/ai-agent/ai-workforce-architecture',
+              },
+              {
+                id: '2-arch-l3-4',
+                title: '3. Simulation (Testing)\n4. Intelligence (Analysis)',
+                icon: Brain,
+                route: '/ai-agent/ai-workforce-architecture',
+              },
+            ],
+          },
+          {
+            id: '2-arch-row-5-8',
+            title: 'Layers 5-8 (Memory → Enterprise Operations)',
+            icon: Database,
+            items: [
+              {
+                id: '2-arch-l5-6',
+                title: '5. Memory (Learning)\n6. Translation (Communication)',
+                icon: Package,
+                route: '/ai-agent/ai-workforce-architecture',
+              },
+              {
+                id: '2-arch-l7-8',
+                title: '7. Command (Control)\n8. Enterprise (Operations)',
+                icon: Cpu,
+                route: '/ai-agent/ai-workforce-architecture',
+              },
+            ],
+          },
+          {
+            id: '2-arch-row-9-11',
+            title: 'Layers 9-11 (Execution → Review & Display)',
+            icon: Eye,
+            items: [
+              {
+                id: '2-arch-l9-10',
+                title: '9. Execution (Operations)\n10. Workforce (Execution)',
+                icon: Users,
+                route: '/ai-agent/ai-workforce-architecture',
+              },
+              {
+                id: '2-arch-l11',
+                title: '11. Review & Display (Feedback)\nResults to users & customers',
+                icon: CircleCheck,
+                route: '/ai-agent/ai-workforce-architecture',
+              },
+            ],
+          },
+        ],
       },
       {
         id: '2-section-command',
@@ -297,20 +366,26 @@ const sidebarOptions: SidebarOption[] = [
                 ?.map((item: any) => ({
                   ...item,
                   icon: item.icon,
+                  route: item.route ?? (/^\d+-ai-/.test(item.id) ? `/ai-agent/${item.id}` : undefined),
                 }))
                 ?.length
                   ? [{
                     id: `${subSection.id}-group`,
                     title: subSection.title,
                     icon: subSection.icon,
-                    items: subSection.items.filter((item: any) => item && item.icon),
+                    items: subSection.items
+                      .filter((item: any) => item && item.icon)
+                      .map((item: any) => ({
+                        ...item,
+                        route: item.route ?? (/^\d+-ai-/.test(item.id) ? `/ai-agent/${item.id}` : undefined),
+                      })),
                   }]
                   : undefined,
             })) || [],
         })),
       {
         id: '2-section-workforce',
-        title: '4: AI Workforce (199)',
+        title: '4: AI Workforce (1108)',
         icon: Bot,
         subSections: [
           {
@@ -318,7 +393,7 @@ const sidebarOptions: SidebarOption[] = [
             title: 'AI agents and employees',
             icon: Users,
             items: [
-              { id: '2-show-all-agents', title: 'Show all (199) AI agents and employees', icon: Bot },
+              { id: '2-show-all-agents', title: 'Show all (1108) AI agents and employees', icon: Bot },
             ]
           },
           {
@@ -337,10 +412,10 @@ const sidebarOptions: SidebarOption[] = [
             title: 'Hierarchy Levels',
             icon: Layers,
             items: [
-              { id: '2-vp-directors', title: 'VP/Directors (23)', icon: Users },
-              { id: '2-managers', title: 'Managers (28)', icon: UserCheck },
-              { id: '2-team-leads', title: 'Team Leads (28)', icon: Users },
-              { id: '2-specialists', title: 'Specialists (97+)', icon: Bot },
+              { id: '2-vp-directors', title: 'Main Agents (277)', icon: Users },
+              { id: '2-managers', title: 'Sub-Agents (831)', icon: UserCheck },
+              { id: '2-team-leads', title: 'Departments (22)', icon: Users },
+              { id: '2-specialists', title: 'Total (1108)', icon: Bot },
             ]
           },
           {
@@ -406,23 +481,28 @@ const sidebarOptions: SidebarOption[] = [
   },
   {
     id: '5',
-    title: 'CRM',
+    title: 'CRM (Enterprise)',
     icon: Building,
     color: '#FF2D92',
     subItems: [
-      { id: '5-1', title: 'CRM', icon: Building },
+      { id: '5-1', title: 'CRM Native (Enterprise)', icon: Building },
+      { id: '5-2', title: 'CRM Integration (60 Platforms)', icon: Globe },
+      { id: '5-3', title: 'Email, SMS, WhatsApp', icon: MessageCircleIcon },
+      { id: '5-4', title: 'Instagram, Twitter, Facebook', icon: Share2 },
       { id: '5-5', title: 'Cohort Analysis', icon: ChartPie },
     ],
   },
   {
     id: '6',
-    title: 'Analysis & Performance',
+    title: 'Analytics (Enterprise)',
     icon: ChartBarBig,
     color: '#FF3B30',
     subItems: [
-      { id: '6-1', title: 'Reports', icon: FileText },
-      { id: '6-2', title: 'Insights', icon: ChartBarBig },
-      { id: '6-3', title: 'Performance Insights', icon: Activity },
+      { id: '6-1', title: 'Analytics Dashboard (Enterprise)', icon: ChartLine },
+      { id: '6-2', title: 'AI Response Suggestions (Enterprise)', icon: Lightbulb },
+      { id: '6-3', title: 'Predictive Analytics (Enterprise)', icon: TrendingUp },
+      { id: '6-4', title: 'Reports & Insights', icon: FileText },
+      { id: '6-5', title: 'Performance Insights (Enterprise)', icon: Activity },
     ],
   },
   {
@@ -493,6 +573,46 @@ export default function HomeScreen() {
       color: '#34C759',
       enabled: true,
     },
+    {
+      id: 'crm-integration',
+      title: 'CRM Integration (Enterprise)',
+      description: '60 platforms: Email, SMS, WhatsApp, Instagram, Twitter, Facebook, LinkedIn, and more',
+      icon: Building,
+      color: '#FF2D92',
+      enabled: true,
+    },
+    {
+      id: 'analytics-dashboard',
+      title: 'Analytics Dashboard (Enterprise)',
+      description: 'Real-time enterprise analytics, custom reports, and KPI tracking',
+      icon: ChartLine,
+      color: '#FF9500',
+      enabled: true,
+    },
+    {
+      id: 'ai-response-suggestions',
+      title: 'AI Response Suggestions (Enterprise)',
+      description: 'Enterprise-grade AI response recommendations with sentiment analysis',
+      icon: Lightbulb,
+      color: '#AF52DE',
+      enabled: true,
+    },
+    {
+      id: 'predictive-analytics',
+      title: 'Predictive Analytics (Enterprise)',
+      description: 'AI-driven forecasting, trend analysis, and business insights',
+      icon: TrendingUp,
+      color: '#5856D6',
+      enabled: true,
+    },
+    {
+      id: 'agent-types',
+      title: 'AI Agent Types (23+ Categories)',
+      description: 'Enterprise AI agents: Sales, Marketing, Support, HR, Finance, Legal, Operations',
+      icon: Bot,
+      color: '#32D74B',
+      enabled: true,
+    },
   ]);
 
   const toggleSmartFeature = (featureId: string) => {
@@ -524,6 +644,41 @@ export default function HomeScreen() {
           [{ text: 'View Briefing', onPress: () => console.log('Open daily briefing') }, { text: 'Cancel' }]
         );
         break;
+      case 'crm-integration':
+        Alert.alert(
+          'CRM Integration (Enterprise)',
+          'Connect 60+ platforms: Email, SMS, WhatsApp, Instagram, Twitter, Facebook, LinkedIn, and more.\n\nUnified customer view across all channels.',
+          [{ text: 'Open CRM', onPress: () => router.push('/business/crm') }, { text: 'Cancel' }]
+        );
+        break;
+      case 'analytics-dashboard':
+        Alert.alert(
+          'Analytics Dashboard (Enterprise)',
+          'Real-time enterprise analytics with:\n\n• Custom reports\n• KPI tracking\n• Performance insights\n• Predictive trends',
+          [{ text: 'Open Analytics', onPress: () => router.push('/analytics/reports-insights') }, { text: 'Cancel' }]
+        );
+        break;
+      case 'ai-response-suggestions':
+        Alert.alert(
+          'AI Response Suggestions (Enterprise)',
+          'Enterprise-grade AI response recommendations with:\n\n• Sentiment analysis\n• Context awareness\n• Multi-language support\n• Custom templates',
+          [{ text: 'Enable Features', onPress: () => console.log('Enable AI suggestions') }, { text: 'Cancel' }]
+        );
+        break;
+      case 'predictive-analytics':
+        Alert.alert(
+          'Predictive Analytics (Enterprise)',
+          'AI-driven forecasting and business insights:\n\n• Trend analysis\n• Customer behavior prediction\n• Revenue forecasting\n• Risk assessment',
+          [{ text: 'View Insights', onPress: () => router.push('/analytics/analytics-performance') }, { text: 'Cancel' }]
+        );
+        break;
+      case 'agent-types':
+        Alert.alert(
+          'AI Agent Types (23+ Categories)',
+          'Enterprise AI agents across multiple categories:\n\n• Sales & Marketing\n• Customer Support\n• HR & Recruiting\n• Finance & Legal\n• Operations & More',
+          [{ text: 'View Agents', onPress: () => router.push('/ai-agent') }, { text: 'Cancel' }]
+        );
+        break;
     }
   };
 
@@ -544,7 +699,7 @@ export default function HomeScreen() {
     },
     {
       id: '3',
-      title: 'Analytics',
+      title: 'Analytics (Enterprise)',
       icon: ChartBarBig,
       color: '#FF9500',
       onPress: () => {},
@@ -596,8 +751,8 @@ export default function HomeScreen() {
     },
     {
       title: 'Platforms',
-      value: '8',
-      change: '+1%',
+      value: '60',
+      change: '+10%',
       icon: Globe,
       color: '#5AC8FA',
     },
@@ -683,12 +838,16 @@ export default function HomeScreen() {
     }
   };
 
-  const handleSubItemPress = (subItem: SidebarSubItem) => {
+  const isGeneratedWorkforceItem = (subItem: SidebarSubItem | SidebarSubSectionItem) =>
+    /^\d+-ai-/.test(subItem.id);
+
+  const handleSubItemPress = (subItem: SidebarSubItem | SidebarSubSectionItem) => {
     setShowSidebar(false);
     const routeMap: { [key: string]: string } = {
       // AI Agents & Employees - Main Dashboard
       '2-main': '/ai-agent',
       '2-show-all-agents': '/ai-agent',
+      '2-agents-overview': '/ai-agent',
       // C-Suite Executives
       '2-ceo': '/ai-agent/executive/ceo-advisor',
       '2-cfo': '/ai-agent/executive/cfo-analyst',
@@ -703,11 +862,11 @@ export default function HomeScreen() {
       '2-creo': '/ai-agent/executive/creo-advisor',
       '2-cro': '/ai-agent/executive/cro-risk',
       '2-cmo-hc': '/ai-agent/executive/cmo-healthcare',
-      '2-cpo': '/ai-agent/product',
+      '2-cpo': '/ai-agent/executive/cpo-production',
       '2-clo-log': '/ai-agent/executive/clo-logistics',
       '2-cao': '/ai-agent/executive/cao-automation',
       '2-cdao': '/ai-agent/executive/cdao-advisor',
-      '2-ethics': '/ai-agent/executive/ceo-advisor',
+      '2-ethics': '/ai-agent/executive/board-advisor',
       '2-ciso-ai': '/ai-agent/executive/ciso-advisor',
       // Command Center & Intelligence
       '2-cdoo': '/command-center',
@@ -876,17 +1035,23 @@ export default function HomeScreen() {
       '4-2': '/collaboration/team-management',
       // Business
       '5-1': '/business/crm',
+      '5-2': '/business/crm',
+      '5-3': '/business/crm',
+      '5-4': '/business/crm',
       '5-5': '/business/cohort-analysis',
       // Analytics
       '6-1': '/analytics/reports-insights',
       '6-2': '/analytics/analytics-performance',
       '6-3': '/analytics/analytics-performance',
+      '6-4': '/analytics/reports-insights',
+      '6-5': '/analytics/reports-insights',
       // Marketing
       '7-1': '/marketing/sms-marketing-hub',
       '7-2': '/marketing/email-marketing-hub',
       '7-3': '/analytics/ab-testing',
       '7-4': '/marketing/campaign',
       // Social Media
+      'sm-0': '/social-media/analytics',
       'sm-1': '/social-media/dashboard',
       'sm-2': '/social-media/content-calendar',
       'sm-3': '/social-media/post-scheduler',
@@ -908,6 +1073,21 @@ export default function HomeScreen() {
     };
 
     let route = routeMap[subItem.id];
+
+    if (!route && subItem.route) {
+      route = subItem.route;
+    }
+
+    if (!route && isGeneratedWorkforceItem(subItem)) {
+      router.push({
+        pathname: '/ai-agent/[id]',
+        params: {
+          id: subItem.id,
+          title: subItem.title,
+        },
+      } as any);
+      return;
+    }
 
     // Intelligent fallback routing for AI Agents & Employees based on ID patterns
     if (!route && subItem.id.startsWith('2-')) {
@@ -1366,9 +1546,14 @@ export default function HomeScreen() {
                                               {section.items.map((item) => {
                                                 if (!item.icon) return null;
                                                 const ItemIcon = item.icon;
+
+                                                // React keys must be unique across the whole rendered sidebar list.
+                                                // item.id can repeat across generated workforce items, which causes wrong handlers to be reused.
+                                                const uniqueKey = `${section.id}::${item.id}`;
+
                                                 return (
                                                   <TouchableOpacity
-                                                    key={item.id}
+                                                    key={uniqueKey}
                                                     style={[styles.nestedItem, { backgroundColor: theme.colors.background }]}
                                                     onPress={() => handleSubItemPress(item)}
                                                   >

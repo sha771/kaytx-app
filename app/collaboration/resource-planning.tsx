@@ -75,7 +75,7 @@ export default function ResourcePlanningScreen() {
                 ))}
 
                 <TouchableOpacity style={[styles.allocationButton, { backgroundColor: theme.colors.primary }]}>
-                    <BarChart size={20} color="white" />
+                    <ChartBarBig size={20} color="white" />
                     <Text style={styles.allocationButtonText}>Optimize Task Allocation (AI)</Text>
                 </TouchableOpacity>
 

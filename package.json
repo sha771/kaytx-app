@@ -1,7 +1,7 @@
 {
   "name": "kaytx",
   "main": "expo-router/entry",
-  "version": "2.5.8",
+  "version": "2.5.9",
   "license": "MIT",
   "author": "Kaytx <legal@kaytx.com>",
   "copyright": "Copyright (c) 2026 Kaytx. All rights reserved.",

@@ -1799,12 +1799,34 @@ export function AIAgentsSidebar({ activeCategory, onCategoryPress, compact }: AI
     }
   };
 
+  // 11-Layer Architecture tiles (3-line sidebar)
+  const architectureTiles: SidebarCategory[] = [
+    { id: 'arch-1-4', label: '11-Layer AI Agent Architecture — Layers 1–4: Governance, Leadership, Simulation, Intelligence', icon: Layers, color: '#7C4DFF', route: '/ai-agent/architecture#1-4', count: 11 },
+    { id: 'arch-5-8', label: 'Layers 5–8: Memory, Translation, Command, Enterprise', icon: Brain, color: '#34C759', route: '/ai-agent/architecture#5-8', count: 11 },
+    { id: 'arch-9-11', label: 'Layers 9–11: Execution, Workforce, Review & Display', icon: CrownIcon, color: '#FF9500', route: '/ai-agent/architecture#9-11', count: 11 },
+  ];
+
   return (
     <ScrollView style={[styles.container, { backgroundColor: colors.card }]} showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
         <Text style={[styles.headerTitle, { color: colors.text }]}>AI Workforce</Text>
         <Text style={[styles.headerSubtitle, { color: colors.text + '80' }]}>1,108 Agents • 22 Departments</Text>
       </View>
+
+      {/* 11-Layer AI Workforce */}
+      <TouchableOpacity
+        style={[styles.featureCardFull, { backgroundColor: '#6366F1' }]}
+        onPress={() => router.push('/ai-agent/ai-layers')}
+      >
+        <View style={styles.featureCardContent}>
+          <Layers size={28} color="#FFFFFF" />
+          <View style={styles.featureCardText}>
+            <Text style={styles.featureCardTitle}>11-Layer AI Workforce</Text>
+            <Text style={styles.featureCardSubtitle}>1,608 Agents • Enterprise OS</Text>
+          </View>
+        </View>
+        <ChevronRight size={20} color="#FFFFFF" />
+      </TouchableOpacity>
 
       {/* 22 Departments - 1,108 Agents */}
       <View style={styles.featureSection}>
@@ -2034,6 +2056,23 @@ export function AIAgentsSidebar({ activeCategory, onCategoryPress, compact }: AI
             <ChevronRight size={14} color={colors.text + '60'} />
           </TouchableOpacity>
         ))}
+      </View>
+
+      
+
+      {/* 11-Layer AI Agent Architecture (3-line) */}
+      <View style={styles.featureSection}>
+        <Text style={[styles.featureTitle, { color: colors.text + '60' }]}>11-Layer AI Agent Architecture</Text>
+        <View style={styles.line}>
+          {architectureTiles.map((cat) => (
+            <TouchableOpacity key={cat.id} style={[styles.categoryCard, { backgroundColor: colors.background, borderColor: activeCategory === cat.id ? cat.color : colors.border }, activeCategory === cat.id && { borderWidth: 2 }]} onPress={() => handlePress(cat)}>
+              <View style={[styles.iconContainer, { backgroundColor: cat.color + '15' }]}><cat.icon size={compact ? 20 : 24} color={cat.color} /></View>
+              <Text style={[styles.categoryLabel, { color: colors.text }]} numberOfLines={3}>{cat.label}</Text>
+              <View style={[styles.countBadge, { backgroundColor: cat.color }]}><Text style={styles.countText}>{cat.count}</Text></View>
+              <ChevronRight size={14} color={colors.text + '60'} />
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
 
       {/* Customer VP & Executive Hierarchy - Agents 1-6 */}
@@ -5537,6 +5576,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'relative',
   },
+  featureCardFull: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 16,
+    borderRadius: 16,
+    marginHorizontal: 12,
+    marginBottom: 12,
+  },
   featureIconContainer: {
     width: 44,
     height: 44,
@@ -5565,6 +5613,25 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 9,
     fontWeight: '700',
+  },
+  featureCardContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  featureCardText: {
+    marginLeft: 12,
+    flex: 1,
+  },
+  featureCardTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#FFFFFF',
+  },
+  featureCardSubtitle: {
+    fontSize: 12,
+    color: 'rgba(255,255,255,0.8)',
+    marginTop: 2,
   },
   moreSection: {
     paddingHorizontal: 12,

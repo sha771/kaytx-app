@@ -72,7 +72,7 @@ export default function CallerInsightsScreen() {
           headerShadowVisible: false,
         }}
       />
-      <SafeAreaView style={styles.container} ={['bottom']}>
+      <SafeAreaView style={styles.container} edges={['bottom']}>
         {isLoading ? (
           <View style={styles.loadingContainer}>
             <ActivityIndicator size="large" color={theme.colors.primary} />

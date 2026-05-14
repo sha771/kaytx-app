@@ -229,7 +229,7 @@ export function ComingSoon({ title, subtitle }: { title: string; subtitle?: stri
       title={title} 
       subtitle={subtitle ?? 'Advanced features and capabilities for your business needs.'}
       showBackButton={true}
-      ={[
+      features={[
         'Real-time data processing and analytics',
         'Advanced automation and workflow management', 
         'Seamless integration with existing tools',
@@ -237,7 +237,7 @@ export function ComingSoon({ title, subtitle }: { title: string; subtitle?: stri
         'Customizable dashboards and reporting',
         '24/7 customer support and monitoring'
       ]}
-      ={[
+      stats={[
         { label: 'Active Users', value: '10K+' },
         { label: 'Success Rate', value: '99.9%' },
         { label: 'Integrations', value: '500+' },

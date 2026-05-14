@@ -1,8 +1,13 @@
-import { createTRPCRouter } from '../../create-context';
+import { createLegacyRouter, type Context } from '../../create-context';
 import { z } from 'zod';
 import { organizationManagementService } from '../../../services/organization-management-service';
 import { requireAuth, requirePermission } from '../../../middleware/rbac-middleware';
 import { Permission, Role } from '../../../lib/rbac';
+
+function assertAuth(ctx: any): { user: NonNullable<Context['user']> } & Context {
+  if (!ctx.user) throw new Error('Unauthorized');
+  return ctx as { user: NonNullable<Context['user']> } & Context;
+}
 
 const createOrganizationSchema = z.object({
   name: z.string().min(1).max(255),
@@ -45,15 +50,15 @@ const getMembersSchema = z.object({
   search: z.string().optional(),
 });
 
-export const organizationsRouter = createTRPCRouter({
+export const organizationsRouter = createLegacyRouter({
   create: {
     input: createOrganizationSchema,
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
-      
+      const auth = assertAuth(ctx);
+
       const organization = await organizationManagementService.createOrganization({
         ...input,
-        ownerId: ctx.user.id,
+        ownerId: auth.user.id,
       });
 
       return organization;
@@ -62,10 +67,10 @@ export const organizationsRouter = createTRPCRouter({
 
   get: {
     resolve: async ({ ctx }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const organization = await organizationManagementService.getOrganization(
-        ctx.user.organizationId
+        auth.user.organizationId
       );
 
       return organization;
@@ -75,11 +80,11 @@ export const organizationsRouter = createTRPCRouter({
   update: {
     input: updateOrganizationSchema,
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       requirePermission(ctx, Permission.MANAGE_ORGANIZATION);
       
       const organization = await organizationManagementService.updateOrganization(
-        ctx.user.organizationId,
+        auth.user.organizationId,
         input
       );
 
@@ -90,12 +95,12 @@ export const organizationsRouter = createTRPCRouter({
   inviteMember: {
     input: inviteMemberSchema,
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       requirePermission(ctx, Permission.MANAGE_MEMBERS);
       
       const invitation = await organizationManagementService.inviteMember({
-        organizationId: ctx.user.organizationId,
-        invitedBy: ctx.user.id,
+        organizationId: auth.user.organizationId,
+        invitedBy: auth.user.id,
         ...input,
       });
 
@@ -106,11 +111,11 @@ export const organizationsRouter = createTRPCRouter({
   acceptInvitation: {
     input: z.string().uuid(),
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const result = await organizationManagementService.acceptInvitation(
         input,
-        ctx.user.id
+        auth.user.id
       );
 
       return result;
@@ -120,11 +125,11 @@ export const organizationsRouter = createTRPCRouter({
   declineInvitation: {
     input: z.string().uuid(),
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const result = await organizationManagementService.declineInvitation(
         input,
-        ctx.user.id
+        auth.user.id
       );
 
       return result;
@@ -133,10 +138,10 @@ export const organizationsRouter = createTRPCRouter({
 
   getInvitations: {
     resolve: async ({ ctx }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const invitations = await organizationManagementService.getInvitations(
-        ctx.user.organizationId
+        auth.user.organizationId
       );
 
       return invitations;
@@ -146,12 +151,12 @@ export const organizationsRouter = createTRPCRouter({
   cancelInvitation: {
     input: z.string().uuid(),
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       requirePermission(ctx, Permission.MANAGE_MEMBERS);
       
       const result = await organizationManagementService.cancelInvitation(
         input,
-        ctx.user.organizationId
+        auth.user.organizationId
       );
 
       return result;
@@ -161,10 +166,10 @@ export const organizationsRouter = createTRPCRouter({
   getMembers: {
     input: getMembersSchema.optional(),
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const members = await organizationManagementService.getMembers(
-        ctx.user.organizationId,
+        auth.user.organizationId,
         input || {}
       );
 
@@ -175,11 +180,11 @@ export const organizationsRouter = createTRPCRouter({
   updateMemberRole: {
     input: updateMemberRoleSchema,
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       requirePermission(ctx, Permission.MANAGE_MEMBERS);
       
       const result = await organizationManagementService.updateMemberRole(
-        ctx.user.organizationId,
+        auth.user.organizationId,
         input.userId,
         input.role,
         input.permissions
@@ -192,11 +197,11 @@ export const organizationsRouter = createTRPCRouter({
   removeMember: {
     input: z.string().uuid(),
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       requirePermission(ctx, Permission.MANAGE_MEMBERS);
       
       const result = await organizationManagementService.removeMember(
-        ctx.user.organizationId,
+        auth.user.organizationId,
         input
       );
 
@@ -206,11 +211,11 @@ export const organizationsRouter = createTRPCRouter({
 
   leaveOrganization: {
     resolve: async ({ ctx }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const result = await organizationManagementService.leaveOrganization(
-        ctx.user.id,
-        ctx.user.organizationId
+        auth.user.id,
+        auth.user.organizationId
       );
 
       return result;
@@ -219,11 +224,11 @@ export const organizationsRouter = createTRPCRouter({
 
   getStats: {
     resolve: async ({ ctx }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       requirePermission(ctx, Permission.VIEW_ANALYTICS);
       
       const stats = await organizationManagementService.getOrganizationStats(
-        ctx.user.organizationId
+        auth.user.organizationId
       );
 
       return stats;
@@ -232,10 +237,10 @@ export const organizationsRouter = createTRPCRouter({
 
   getSettings: {
     resolve: async ({ ctx }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const settings = await organizationManagementService.getOrganizationSettings(
-        ctx.user.organizationId
+        auth.user.organizationId
       );
 
       return settings;
@@ -245,11 +250,11 @@ export const organizationsRouter = createTRPCRouter({
   updateSettings: {
     input: z.record(z.any()),
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       requirePermission(ctx, Permission.MANAGE_ORGANIZATION);
       
       const settings = await organizationManagementService.updateOrganizationSettings(
-        ctx.user.organizationId,
+        auth.user.organizationId,
         input
       );
 
@@ -259,11 +264,11 @@ export const organizationsRouter = createTRPCRouter({
 
   getBilling: {
     resolve: async ({ ctx }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       requirePermission(ctx, Permission.MANAGE_BILLING);
       
       const billing = await organizationManagementService.getBillingInfo(
-        ctx.user.organizationId
+        auth.user.organizationId
       );
 
       return billing;
@@ -284,11 +289,11 @@ export const organizationsRouter = createTRPCRouter({
       taxId: z.string().optional(),
     }),
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       requirePermission(ctx, Permission.MANAGE_BILLING);
       
       const billing = await organizationManagementService.updateBillingInfo(
-        ctx.user.organizationId,
+        auth.user.organizationId,
         input
       );
 
@@ -302,11 +307,11 @@ export const organizationsRouter = createTRPCRouter({
       endDate: z.date().optional(),
     }).optional(),
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       requirePermission(ctx, Permission.VIEW_ANALYTICS);
       
       const usage = await organizationManagementService.getOrganizationUsage(
-        ctx.user.organizationId,
+        auth.user.organizationId,
         input || {}
       );
 
@@ -324,11 +329,11 @@ export const organizationsRouter = createTRPCRouter({
       endDate: z.date().optional(),
     }).optional(),
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       requirePermission(ctx, Permission.VIEW_AUDIT_LOG);
       
       const auditLog = await organizationManagementService.getAuditLog(
-        ctx.user.organizationId,
+        auth.user.organizationId,
         input || {}
       );
 

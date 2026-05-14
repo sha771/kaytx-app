@@ -74,6 +74,22 @@ export class ProductionLogger {
     return ProductionLogger.instance;
   }
 
+  static debug(message: string, context?: Record<string, unknown>): void {
+    ProductionLogger.getInstance().debug(message, context);
+  }
+
+  static info(message: string, context?: Record<string, unknown>): void {
+    ProductionLogger.getInstance().info(message, context);
+  }
+
+  static warn(message: string, context?: Record<string, unknown>): void {
+    ProductionLogger.getInstance().warn(message, context);
+  }
+
+  static error(message: string, error?: Error, context?: Record<string, unknown>): void {
+    ProductionLogger.getInstance().error(message, error, context);
+  }
+
   setServiceName(name: string): void {
     this.serviceName = name;
   }

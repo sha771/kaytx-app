@@ -70,7 +70,7 @@ const COMMON_ICONS = [
   'Settings', 'Settings2', 'Share', 'Share2', 'Sheet', 'Shield', 'ShieldAlert', 'ShieldCheck',
   'ShieldClose', 'ShieldOff', 'Shirt', 'ShoppingBag', 'ShoppingCart', 'Shovel', 'ShowerHead',
   'Shrink', 'Shuffle', 'Sidebar', 'SidebarClose', 'SidebarOpen', 'Sigma', 'Signal', 'SignalHigh',
-  'SignalLow', 'SignalMedium', 'SignalZero', 'Siren', 'SkipBack', 'SkipForward', 'Skull', 'Slack',
+  'SignalLow', 'SignalMedium', 'SignalZero', 'SkipBack', 'SkipForward', 'Skull', 'Slack',
   'Slice', 'Sliders', 'SlidersHorizontal', 'Smartphone', 'Smile', 'Snowflake', 'SortAsc', 'SortDesc',
   'Speaker', 'Sprout', 'Square', 'Star', 'StarHalf', 'StarOff', 'StepBack', 'StepForward', 'Stethoscope',
   'Sticker', 'StickyNote', 'StopCircle', 'StretchHorizontal', 'StretchVertical', 'Strikethrough',
@@ -89,7 +89,7 @@ const COMMON_ICONS = [
   // Additional icons from react-native
   'AlertTriangle', 'ServerIcon', 'Cpu', 'Cog', 'Navigation', 'Home', 'ClipboardList', 'FileCheck',
   'FileSignature', 'CheckSquare', 'Factory', 'GraduationCap', 'ShieldCheck', 'Landmark', 'HardDrive',
-  'Package', 'ShieldAlert', 'Siren', 'Lock', 'Fingerprint', 'Crown', 'Smile', 'Heart', 'Trophy',
+  'Package', 'ShieldAlert', 'AlertTriangle', 'Lock', 'Fingerprint', 'Crown', 'Smile', 'Heart', 'Trophy',
   'Palette', 'Truck', 'ServerIcon', 'DollarSign', 'Building2', 'Briefcase', 'Microscope', 'MapPin'
 ];
 

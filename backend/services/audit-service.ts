@@ -45,6 +45,30 @@ export class AuditService {
   async getEventById(eventId: string): Promise<AuditEvent | null> {
     return this.events.find(e => e.id === eventId) || null;
   }
+
+  async searchAuditLogs(query: {
+    userId?: string;
+    organizationId?: string;
+    action?: string;
+    resource?: string;
+    startDate?: Date;
+    endDate?: Date;
+    limit?: number;
+    offset?: number;
+  }): Promise<{ logs: AuditEvent[]; total: number }> {
+    let filtered = this.events;
+    if (query.userId) filtered = filtered.filter(e => e.userId === query.userId);
+    if (query.organizationId) filtered = filtered.filter(e => e.organizationId === query.organizationId);
+    if (query.action) filtered = filtered.filter(e => e.action === query.action);
+    if (query.resource) filtered = filtered.filter(e => e.resource === query.resource);
+    if (query.startDate) filtered = filtered.filter(e => e.timestamp >= query.startDate!);
+    if (query.endDate) filtered = filtered.filter(e => e.timestamp <= query.endDate!);
+    filtered = filtered.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
+    const total = filtered.length;
+    const offset = query.offset || 0;
+    const limit = query.limit || 50;
+    return { logs: filtered.slice(offset, offset + limit), total };
+  }
 }
 
 export const auditService = new AuditService();

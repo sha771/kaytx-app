@@ -15,30 +15,22 @@ declare module 'crypto' {
     randomBytes(size: number): { toString(encoding: string): string };
     createHash(algorithm: string): { update(data: any): any; digest(encoding?: string): any };
     createHmac(algorithm: string, key: any): { update(data: any): any; digest(encoding?: string): any };
+    createCipheriv(algorithm: string, key: any, iv: any): { update(data: any): any; final(): any };
+    createDecipheriv(algorithm: string, key: any, iv: any): { update(data: any, inputEncoding?: string, outputEncoding?: string): any; final(encoding?: string): any };
     timingSafeEqual(a: any, b: any): boolean;
   };
 
   export const createHash: typeof crypto.createHash;
   export const createHmac: typeof crypto.createHmac;
+  export const createCipheriv: typeof crypto.createCipheriv;
+  export const createDecipheriv: typeof crypto.createDecipheriv;
 
   export default crypto;
 }
 
-declare function require(moduleName: string): any;
-
-declare const __filename: string;
-
-declare const __dirname: string;
-
-declare const Buffer: {
-  from(data: any, encoding?: string): any;
-};
-
+// Global Node.js declarations are provided by @types/node
+// Only declare timer overrides if needed
 declare function setTimeout(handler: (...args: any[]) => void, timeout?: number, ...args: any[]): any;
 declare function clearTimeout(timeoutId: any): void;
 declare function setInterval(handler: (...args: any[]) => void, timeout?: number, ...args: any[]): any;
 declare function clearInterval(intervalId: any): void;
-
-declare const process: {
-  env: Record<string, string | undefined>;
-};

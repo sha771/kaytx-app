@@ -42,6 +42,7 @@ import {
     Landmark,
     Link,
     Brain,
+    ChevronRight,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useAIAssistant } from '@/providers/AIAssistantProvider';
@@ -94,6 +95,7 @@ export const AIWorkforceSidebar: React.FC<AIWorkforceSidebarProps> = ({ isVisibl
     const { activeAgents, toggleAgent } = useAIAssistant();
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [showAllDepartments, setShowAllDepartments] = useState(false);
+    const [showLayers, setShowLayers] = useState(false);
     const [searchQuery] = useState('');
     const [toggleError, setToggleError] = useState<string | null>(null);
     const sidebarAnim = useRef(new Animated.Value(-width)).current;
@@ -200,6 +202,195 @@ export const AIWorkforceSidebar: React.FC<AIWorkforceSidebarProps> = ({ isVisibl
                             <GitBranch size={16} color={theme.colors.primary} />
                             <Text style={[styles.mindMapButtonText, { color: theme.colors.primary }]}>View Workforce Map</Text>
                         </TouchableOpacity>
+
+                         {/* C-Suite Section */}
+                         <View style={[styles.departmentSection, { backgroundColor: theme.colors.cardBackground }]}>
+                             <TouchableOpacity
+                                 style={styles.departmentHeader}
+                                 onPress={() => {
+                                     onClose();
+                                     router.push('/ai-agent/hierarchy/c-suite' as any);
+                                 }}
+                             >
+                                 <View style={styles.departmentHeaderLeft}>
+                                     <SparklesIcon size={16} color="#FFD700" />
+                                     <Text style={[styles.departmentTitle, { color: theme.colors.text }]}>
+                                         C-Suite
+                                     </Text>
+                                 </View>
+                                 <Text style={[styles.departmentCount, { color: '#FFD700' }]}>
+                                     15 Chiefs
+                                 </Text>
+                             </TouchableOpacity>
+                         </View>
+
+                         {/* Command Center Section */}
+                         <View style={[styles.departmentSection, { backgroundColor: theme.colors.cardBackground }]}>
+                             <TouchableOpacity
+                                 style={styles.departmentHeader}
+                                 onPress={() => {
+                                     onClose();
+                                     router.push('/ai-agent/command-center' as any);
+                                 }}
+                             >
+                                 <View style={styles.departmentHeaderLeft}>
+                                     <Activity size={16} color="#007AFF" />
+                                     <Text style={[styles.departmentTitle, { color: theme.colors.text }]}>
+                                         Command Center
+                                     </Text>
+                                 </View>
+                                 <Text style={[styles.departmentCount, { color: '#007AFF' }]}>
+                                     Central Ops
+                                 </Text>
+                             </TouchableOpacity>
+                         </View>
+
+                         {/* AI Command and Visualization Section */}
+                         <View style={[styles.departmentSection, { backgroundColor: theme.colors.cardBackground }]}>
+                             <TouchableOpacity
+                                 style={styles.departmentHeader}
+                                 onPress={() => {
+                                     onClose();
+                                     router.push('/ai-agent/ai-command-visualization' as any);
+                                 }}
+                             >
+                                 <View style={styles.departmentHeaderLeft}>
+                                     <Monitor size={16} color="#FFD700" />
+                                     <Text style={[styles.departmentTitle, { color: theme.colors.text }]}>
+                                         AI Command & Viz
+                                     </Text>
+                                 </View>
+                                 <Text style={[styles.departmentCount, { color: '#FFD700' }]}>
+                                     Live View
+                                 </Text>
+                             </TouchableOpacity>
+                         </View>
+
+                        {/* 11-Layer AI Agent Architecture (3 summary tiles) - RED AREA */}
+                        <View
+                          style={[
+                            styles.departmentSection,
+                            {
+                              backgroundColor: 'rgba(244,63,94,0.10)',
+                              borderWidth: 1,
+                              borderColor: 'rgba(244,63,94,0.35)',
+                            },
+                          ]}
+                        >
+                          <TouchableOpacity
+                            style={styles.departmentHeader}
+                            onPress={() => setShowLayers(!showLayers)}
+                          >
+                            <View style={styles.departmentHeaderLeft}>
+                              <Brain size={16} color="#F43F5E" />
+                              <Text style={[styles.departmentTitle, { color: theme.colors.text }]}>
+                                11-Layer Architecture
+                              </Text>
+                            </View>
+                            <Text style={[styles.departmentCount, { color: '#F43F5E' }]}>
+                              11 Layers
+                            </Text>
+                          </TouchableOpacity>
+
+                          <View style={styles.line}>
+                            {[
+                              {
+                                id: 'arch-1-4',
+                                label: 'Layers 1–4: Governance, Leadership, Simulation, Intelligence',
+                                icon: Brain,
+                                color: '#F43F5E',
+                                route: '/ai-agent/ai-workforce-architecture',
+                              },
+                              {
+                                id: 'arch-5-8',
+                                label: 'Layers 5–8: Memory, Translation, Command, Enterprise',
+                                icon: GitBranch,
+                                color: '#F43F5E',
+                                route: '/ai-agent/ai-workforce-architecture',
+                              },
+                              {
+                                id: 'arch-9-11',
+                                label: 'Layers 9–11: Execution, Workforce, Review & Display',
+                                icon: SparklesIcon,
+                                color: '#F43F5E',
+                                route: '/ai-agent/ai-workforce-architecture',
+                              },
+                            ].map((tile) => (
+                              <TouchableOpacity
+                                key={tile.id}
+                                style={[
+                                  styles.categoryCard,
+                                  {
+                                    backgroundColor: 'rgba(244,63,94,0.08)',
+                                    borderColor: 'rgba(244,63,94,0.35)',
+                                  },
+                                ]}
+                                onPress={() => {
+                                  onClose();
+                                  router.push(tile.route as any);
+                                }}
+                              >
+                                <View
+                                  style={[
+                                    styles.iconContainer,
+                                    { backgroundColor: tile.color + '15' },
+                                  ]}
+                                >
+                                  {tile.icon ? <tile.icon size={20} color={tile.color} /> : null}
+                                </View>
+
+                                <Text
+                                  style={[styles.categoryLabel, { color: theme.colors.text }]}
+                                  numberOfLines={3}
+                                >
+                                  {tile.label}
+                                </Text>
+
+                                <ChevronRight size={14} color={theme.colors.secondaryText} />
+                              </TouchableOpacity>
+                            ))}
+                          </View>
+
+                          {showLayers && (
+                            <View style={styles.layerGrid}>
+                              {[
+                                { id: 1, name: 'Governance', type: 'Security', flow: 'Rules', use: 'Compliance, ethics', description: 'Ensures all AI operations follow security protocols and ethical guidelines', color: '#F44336', route: '/ai-agent/layer-governance' },
+                                { id: 2, name: 'Leadership', type: 'Strategy', flow: 'Vision', use: 'Direction', description: 'Sets overall strategic direction and vision for the AI workforce', color: '#FF9800', route: '/ai-agent/layer-leadership' },
+                                { id: 3, name: 'Simulation', type: 'Testing', flow: 'Test', use: 'Test before doing', description: 'Simulates scenarios to validate approaches before execution', color: '#FFEB3B', route: '/ai-agent/layer-simulation' },
+                                { id: 4, name: 'Intelligence', type: 'Analysis', flow: 'Predict', use: 'Analyze, predict', description: 'Analyzes data and makes predictions using AI intelligence', color: '#4CAF50', route: '/ai-agent/layer-intelligence' },
+                                { id: 5, name: 'Memory', type: 'Learning', flow: 'Remember', use: 'Remember, improve', description: 'Stores learnings and continuously improves from past interactions', color: '#00BCD4', route: '/ai-agent/layer-memory' },
+                                { id: 6, name: 'Translation', type: 'Communication', flow: 'Bridge', use: 'Business-AI bridge', description: 'Translates business requirements into AI-executable commands', color: '#2196F3', route: '/ai-agent/layer-translation' },
+                                { id: 7, name: 'Command', type: 'Control', flow: 'Orchestrate', use: 'Orchestration', description: 'Coordinates and orchestrates agent activities', color: '#9C27B0', route: '/ai-agent/layer-command' },
+                                { id: 8, name: 'Enterprise', type: 'Operations', flow: 'Automate', use: 'Automation', description: 'Handles enterprise-level automation and operations', color: '#673AB7', route: '/ai-agent/layer-enterprise' },
+                                { id: 9, name: 'Execution', type: 'Operations', flow: 'Execute', use: 'Department work', description: 'Executes department-specific operations', color: '#E91E63', route: '/ai-agent/layer-execution' },
+                                { id: 10, name: 'Workforce', type: 'Execution', flow: 'Do tasks', use: 'Task handling', description: 'Individual agents handle specific tasks', color: '#795548', route: '/ai-agent/layer-workforce' },
+                                { id: 11, name: 'Review & Display', type: 'Feedback', flow: 'Review & show', use: 'Results to users', description: 'Reviews work and displays results to users and customers', color: '#607D8B', route: '/ai-agent/layer-review' },
+                              ].map((layer) => (
+                                <TouchableOpacity
+                                  key={layer.id}
+                                  style={[styles.layerChip, { backgroundColor: layer.color + '15' }]}
+                                  onPress={() => {
+                                    onClose();
+                                    router.push(layer.route as any);
+                                  }}
+                                >
+                                  <View style={[styles.layerDot, { backgroundColor: layer.color }]} />
+                                  <View style={styles.layerInfo}>
+                                    <Text style={[styles.layerName, { color: theme.colors.text }]} numberOfLines={1}>
+                                      Layer {layer.id}: {layer.name}
+                                    </Text>
+                                    <Text style={[styles.layerType, { color: theme.colors.secondaryText }]} numberOfLines={1}>
+                                      Work Type: {layer.type} | Flow: {layer.flow}
+                                    </Text>
+                                    <Text style={[styles.layerUse, { color: theme.colors.secondaryText }]} numberOfLines={1}>
+                                      Use Case: {layer.use}
+                                    </Text>
+                                  </View>
+                                </TouchableOpacity>
+                              ))}
+                            </View>
+                          )}
+                        </View>
 
                         {/* Infrastructure Stats Bar */}
                         <View style={[styles.statsBar, { backgroundColor: theme.colors.cardBackground }]}>
@@ -407,6 +598,88 @@ const styles = StyleSheet.create({
         right: 0,
         bottom: 0,
         zIndex: 1000,
+    },
+    line: {
+        flexDirection: 'row',
+        gap: 10,
+        paddingHorizontal: 12,
+        paddingBottom: 12,
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+    },
+    categoryCard: {
+        flex: 1,
+        minWidth: 120,
+        borderWidth: 1,
+        borderRadius: 14,
+        padding: 10,
+        gap: 8,
+        alignItems: 'flex-start',
+    },
+    categoryLabel: {
+        fontSize: 11,
+        fontWeight: '700',
+        flex: 1,
+        flexShrink: 1,
+    },
+    iconContainer: {
+        width: 34,
+        height: 34,
+        borderRadius: 12,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    layerGrid: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: 10,
+        paddingHorizontal: 12,
+        paddingBottom: 14,
+        paddingTop: 6,
+    },
+    layerChip: {
+        width: '48%',
+        borderRadius: 14,
+        padding: 10,
+        borderWidth: 1,
+        borderColor: 'rgba(0,0,0,0.05)',
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        gap: 10,
+    },
+    layerDot: {
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        marginTop: 4,
+    },
+    layerInfo: {
+        flex: 1,
+        gap: 4,
+    },
+    layerName: {
+        fontSize: 10,
+        fontWeight: '800',
+    },
+    layerType: {
+        fontSize: 9,
+        fontWeight: '600',
+    },
+    layerFlow: {
+        fontSize: 9,
+        fontWeight: '600',
+    },
+    layerUseCase: {
+        fontSize: 9,
+        fontWeight: '600',
+    },
+    layerDescription: {
+        fontSize: 8,
+        fontWeight: '500',
+    },
+    layerUse: {
+        fontSize: 9,
+        fontWeight: '600',
     },
     overlayTouchable: {
         flex: 1,

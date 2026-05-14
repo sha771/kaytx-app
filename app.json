@@ -2,7 +2,7 @@
   "expo": {
     "name": "kaytx",
     "slug": "kaytx",
-    "version": "2.5.8",
+    "version": "2.5.9",
     "orientation": "portrait",
     "icon": "./assets/images/icon.jpg",
     "scheme": "kaytx",

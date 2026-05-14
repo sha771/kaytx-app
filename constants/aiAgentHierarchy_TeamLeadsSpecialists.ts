@@ -84,7 +84,7 @@ import {
   
   // Security Icons
   ShieldAlert,
-  Siren,
+  AlertTriangle,
   FingerprintPattern,
   
   // Research Icons

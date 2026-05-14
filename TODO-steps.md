@@ -1,26 +1,26 @@
-# Kaytx Full App - Detailed Execution Steps from Approved Plan
+# Kaytx Backend Upgrade - Execution Tracking
 
-Status: Starting full resolution of remaining issues (TS errors, verifies, runs, cleanup).
+## Phase A — Baseline health (no code changes)
+- [x] 1) Run `npm run typecheck` (tsconfig.server.json)  
+  - Result: Massive TS compilation failures (Hono type exports, service API mismatch, Zod/RBAC/middleware signature drift, redis/crypto/timing types, many drizzle schema mismatches).
+- [ ] 2) Run backend tests (`npm test` or backend subset)
+- [ ] 3) Start backend (`npm run backend`) and hit: `/health`
 
-## Step-by-Step TODO:
+## Phase B — Dependency/upgrade safely
+- [ ] 4) Check backend dependency drift (hono/drizzle/trpc/otel)
+- [ ] 5) Run `npm audit fix` (and/or targeted upgrades)
+- [ ] 6) Re-run typecheck + tests after dependency changes
 
-### Phase 1: TS Config Fix (Current)
-- [x] 1. Backup tsconfig.server.json → tsconfig.server-broken.json
-- [x] 2. Update tsconfig.server.json to fixed narrow include (backend core only)
-- [ ] 3. Run `npm run typecheck` → FIXED (narrow config resolves 2973→few/no errors)
+## Phase C — Scan artifacts & fix backend errors
+- [ ] 7) Inspect `backend-errors.txt` and `backend-errors2.txt` for failing modules
+- [ ] 8) Re-run build/typecheck with verbose output if available
+- [ ] 9) Fix all discovered backend issues (imports/runtime/middleware/webhooks/etc.)
 
-### Phase 2: Verify & Start Services
-- [ ] 4. `npm run lint` → expect clean
-- [ ] 5. `npm run backend` → check localhost:3000/health
-- [ ] 6. `set PUPPETEER_SKIP_DOWNLOAD=true && npm run start-web-dev` → web dev server
+## Phase D — Production hardening & code cleanup
+- [ ] 10) Reduce unsafe casts / fix incorrect types where feasible
+- [ ] 11) Remove or gate noisy logging
 
-### Phase 3: Tests & Deps Verify
-- [ ] 7. `npm list openai hono drizzle-orm react-native` → installed clean
-- [ ] 8. `npm test` (or specific backend test if fails)
+## Phase E — Final verification
+- [ ] 12) Run `npm run typecheck`, `npm run lint`, and `npm test`
+- [ ] 13) Produce final report of changes and validation commands
 
-### Phase 4: Cleanup & Complete
-- [ ] 9. Delete error/log files: typecheck*.txt, eslint*.json, *_output.txt, COMPREHENSIVE_ERROR_REPORT*.md (keep summaries)
-- [ ] 10. Update original TODO.md all complete
-- [ ] 11. attempt_completion: App fixed/running!
-
-**Progress: 0/11 → Update after each phase.**

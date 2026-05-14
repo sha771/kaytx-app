@@ -640,6 +640,76 @@ export const RateLimitPresets = {
     maxRequests: 1000,
     message: 'Rate limit exceeded. Please try again later.',
   },
+
+  // Webhook endpoints
+  WEBHOOK: {
+    windowMs: 1 * 60 * 1000, // 1 minute
+    maxRequests: 120,
+    message: 'Webhook rate limit exceeded.',
+  },
+
+  // Integration endpoints
+  INTEGRATION: {
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    maxRequests: 50,
+    message: 'Integration rate limit exceeded. Please try again later.',
+  },
+
+  // Export endpoints
+  EXPORT: {
+    windowMs: 60 * 60 * 1000, // 1 hour
+    maxRequests: 5,
+    message: 'Export rate limit exceeded. Please try again later.',
+  },
+
+  // File upload endpoints (alias)
+  FILE_UPLOAD: {
+    windowMs: 60 * 60 * 1000, // 1 hour
+    maxRequests: 10,
+    message: 'Upload limit exceeded. Please try again later.',
+  },
+
+  // Lowercase aliases for convenience
+  auth: {
+    windowMs: 15 * 60 * 1000,
+    maxRequests: 10,
+    message: 'Too many authentication attempts. Please try again later.',
+  },
+  api: {
+    windowMs: 15 * 60 * 1000,
+    maxRequests: 100,
+    message: 'API rate limit exceeded. Please try again later.',
+  },
+  passwordReset: {
+    windowMs: 60 * 60 * 1000,
+    maxRequests: 3,
+    message: 'Password reset limit exceeded. Please try again later.',
+  },
+  webhook: {
+    windowMs: 1 * 60 * 1000,
+    maxRequests: 120,
+    message: 'Webhook rate limit exceeded.',
+  },
+  integration: {
+    windowMs: 15 * 60 * 1000,
+    maxRequests: 50,
+    message: 'Integration rate limit exceeded. Please try again later.',
+  },
+  strict: {
+    windowMs: 15 * 60 * 1000,
+    maxRequests: 5,
+    message: 'Rate limit exceeded. Please try again in 15 minutes.',
+  },
+  standard: {
+    windowMs: 15 * 60 * 1000,
+    maxRequests: 100,
+    message: 'API rate limit exceeded. Please try again later.',
+  },
+  lenient: {
+    windowMs: 15 * 60 * 1000,
+    maxRequests: 1000,
+    message: 'Rate limit exceeded. Please try again later.',
+  },
 };
 
 // Create rate limiter instances

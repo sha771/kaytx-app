@@ -81,7 +81,7 @@ import {
   ChartLine,
   Wallet,
   ShieldCheck,
-  Siren,
+  AlertTriangle,
   FingerprintPattern,
   Search,
   Eye,

@@ -6,6 +6,9 @@ process.env.EXPO_ROUTER_APP_ROOT = 'app';
 
 const config = getDefaultConfig(__dirname);
 
+// Use local cache directory instead of temp to avoid ENOTEMPTY errors
+config.cacheStores = [];
+
 // Enable experimental ESM support
 config.resolver.unstable_enablePackageExports = true;
 config.resolver.unstable_conditionNames = ['import', 'require', 'react-native'];

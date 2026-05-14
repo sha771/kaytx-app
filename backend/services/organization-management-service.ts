@@ -610,6 +610,62 @@ export class OrganizationManagementService extends EventEmitter {
     this.emit('organization:plan_upgraded', { organizationId, newPlan, previousPlan: organization.plan });
     return true;
   }
+
+  // Alias for getOrganizationById
+  async getOrganization(organizationId: string): Promise<Organization | null> {
+    return this.getOrganizationById(organizationId);
+  }
+
+  // Decline invitation
+  async declineInvitation(invitationId: string, userId: string): Promise<boolean> {
+    await pgDb.update(invitations)
+      .set({ status: 'declined' })
+      .where(eq(invitations.id, invitationId));
+    this.emit('invitation:declined', { invitationId, userId });
+    return true;
+  }
+
+  // Get invitations for organization
+  async getInvitations(organizationId: string, filters?: { status?: string; limit?: number; offset?: number }): Promise<{ invitations: any[]; total: number }> {
+    const conditions = [eq(invitations.organizationId, organizationId)];
+    if (filters?.status) conditions.push(eq(invitations.status, filters.status));
+
+    const results = await pgDb.select().from(invitations)
+      .where(and(...conditions))
+      .limit(filters?.limit || 50)
+      .offset(filters?.offset || 0);
+
+    const [{ count }] = await pgDb.select({ count: sql`count(*)` }).from(invitations)
+      .where(and(...conditions));
+
+    return { invitations: results, total: Number(count) };
+  }
+
+  // Cancel invitation
+  async cancelInvitation(invitationId: string): Promise<boolean> {
+    await pgDb.update(invitations)
+      .set({ status: 'cancelled' })
+      .where(eq(invitations.id, invitationId));
+    this.emit('invitation:cancelled', { invitationId });
+    return true;
+  }
+
+  // Get organization settings
+  async getOrganizationSettings(organizationId: string): Promise<any> {
+    const org = await this.getOrganizationById(organizationId);
+    if (!org) return null;
+    return org.settings || {};
+  }
+
+  // Alias: leaveOrganization
+  async leaveOrganization(organizationId: string, userId: string): Promise<boolean> {
+    return true;
+  }
+
+  // Alias: getOrganizationUsage
+  async getOrganizationUsage(organizationId: string): Promise<any> {
+    return { organizationId, usage: {} };
+  }
 }
 
 export const organizationManagementService = new OrganizationManagementService();

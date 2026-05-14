@@ -20,6 +20,7 @@ import {
   Award,
   MessageSquare,
   TrendingUp,
+  TrendingDown,
   AlertTriangle,
   RefreshCw,
   PieChart,

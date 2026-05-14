@@ -84,7 +84,7 @@ export default function IntegrationsScreen() {
           headerShadowVisible: false,
         }}
       />
-      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} ={['bottom']}>
+      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} edges={['bottom']}>
         <View style={[styles.header, { backgroundColor: theme.colors.background, borderBottomColor: theme.colors.border }]}>
           <View style={styles.statsRow}>
             <View style={[styles.statBox, { backgroundColor: theme.colors.cardBackground }]}>

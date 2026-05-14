@@ -2,10 +2,10 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useRouter } from 'expo-router';
-import { Activity, RotateCcw, Clock, Target, Zap, ArrowRight, Briefcase, Star, CircleCheckBig, TrendingUp, BarChart3 } from 'lucide-react-native';
+import { Activity, RotateCcw, Clock, Target, Zap, ArrowRight, Briefcase, Star, CircleCheckBig, TrendingUp, BarChart3, RefreshCw } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
-export default function winbackCampaignSpecialistPage() {
+export default function WinbackCampaignSpecialistPage() {
   const { theme } = useTheme();
   const router = useRouter();
   const stats = [{label:'Status',value:'Active',icon:Activity,color:'#34C759'},{label:'Level',value:'Sub-Agent',icon:Briefcase,color:'#5856D6'},{label:'Efficiency',value:'20x',icon:Target,color:'#FF9500'},{label:'Parent',value:'',icon:RefreshCw,color:'#007AFF'}];

@@ -3,9 +3,9 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch } from 're
 import { useTheme } from '@/providers/ThemeProvider';
 import { useRouter } from 'expo-router';
 import { 
-  Shield, ShieldAlert, Globe, Target, TrendingUp, Activity, Zap, AlertTriangle,
+  Shield, ShieldAlert, Globe, Target, TrendingUp, Activity, Zap,
   Eye, Lock, Server, Network, FileWarning, BarChart3, ChevronRight, Users, Star,
-  CheckCircle, Clock, Search, Radar, Crosshair, Radio, Siren, Play, Pause,
+  CheckCircle, Clock, Search, Radar, Crosshair, Radio, Play, Pause,
   Settings, Filter, Download, Share2, Cpu
 } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';

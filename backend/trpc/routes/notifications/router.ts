@@ -1,7 +1,12 @@
-import { createTRPCRouter } from '../../create-context';
+import { createLegacyRouter, type Context } from '../../create-context';
 import { z } from 'zod';
 import { notificationService } from '../../../services/notification-service';
 import { requireAuth } from '../../../middleware/rbac-middleware';
+
+function assertAuth(ctx: any): { user: NonNullable<Context['user']> } & Context {
+  if (!ctx.user) throw new Error('Unauthorized');
+  return ctx as { user: NonNullable<Context['user']> } & Context;
+}
 
 const createNotificationSchema = z.object({
   type: z.enum(['info', 'success', 'warning', 'error', 'alert']),
@@ -38,15 +43,15 @@ const sendSMSSchema = z.object({
   message: z.string().min(1),
 });
 
-export const notificationsRouter = createTRPCRouter({
+export const notificationsRouter = createLegacyRouter({
   create: {
     input: createNotificationSchema,
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const notification = await notificationService.createNotification({
-        userId: ctx.user.id,
-        organizationId: ctx.user.organizationId,
+        userId: auth.user.id,
+        organizationId: auth.user.organizationId,
         ...input,
       });
 
@@ -57,11 +62,11 @@ export const notificationsRouter = createTRPCRouter({
   list: {
     input: getNotificationsSchema.optional(),
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const notifications = await notificationService.getUserNotifications(
-        ctx.user.id,
-        ctx.user.organizationId,
+        auth.user.id,
+        auth.user.organizationId,
         input || {}
       );
 
@@ -72,12 +77,12 @@ export const notificationsRouter = createTRPCRouter({
   markAsRead: {
     input: z.string().uuid(),
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const result = await notificationService.markAsRead(
         input,
-        ctx.user.id,
-        ctx.user.organizationId
+        auth.user.id,
+        auth.user.organizationId
       );
 
       return result;
@@ -86,11 +91,11 @@ export const notificationsRouter = createTRPCRouter({
 
   markAllAsRead: {
     resolve: async ({ ctx }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const result = await notificationService.markAllAsRead(
-        ctx.user.id,
-        ctx.user.organizationId
+        auth.user.id,
+        auth.user.organizationId
       );
 
       return result;
@@ -100,12 +105,12 @@ export const notificationsRouter = createTRPCRouter({
   delete: {
     input: z.string().uuid(),
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const result = await notificationService.deleteNotification(
         input,
-        ctx.user.id,
-        ctx.user.organizationId
+        auth.user.id,
+        auth.user.organizationId
       );
 
       return result;
@@ -115,12 +120,12 @@ export const notificationsRouter = createTRPCRouter({
   sendEmail: {
     input: sendEmailSchema,
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const result = await notificationService.sendEmailNotification({
         ...input,
-        userId: ctx.user.id,
-        organizationId: ctx.user.organizationId,
+        userId: auth.user.id,
+        organizationId: auth.user.organizationId,
       });
 
       return result;
@@ -130,11 +135,11 @@ export const notificationsRouter = createTRPCRouter({
   sendPush: {
     input: sendPushSchema,
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const result = await notificationService.sendPushNotification({
-        userId: ctx.user.id,
-        organizationId: ctx.user.organizationId,
+        userId: auth.user.id,
+        organizationId: auth.user.organizationId,
         ...input,
       });
 
@@ -145,12 +150,12 @@ export const notificationsRouter = createTRPCRouter({
   sendSMS: {
     input: sendSMSSchema,
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const result = await notificationService.sendSMSNotification({
         ...input,
-        userId: ctx.user.id,
-        organizationId: ctx.user.organizationId,
+        userId: auth.user.id,
+        organizationId: auth.user.organizationId,
       });
 
       return result;
@@ -159,11 +164,11 @@ export const notificationsRouter = createTRPCRouter({
 
   getStats: {
     resolve: async ({ ctx }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const stats = await notificationService.getNotificationStats(
-        ctx.user.id,
-        ctx.user.organizationId
+        auth.user.id,
+        auth.user.organizationId
       );
 
       return stats;
@@ -173,11 +178,11 @@ export const notificationsRouter = createTRPCRouter({
   batchCreate: {
     input: z.array(createNotificationSchema),
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const notifications = input.map(notification => ({
-        userId: ctx.user.id,
-        organizationId: ctx.user.organizationId,
+        userId: auth.user.id,
+        organizationId: auth.user.organizationId,
         ...notification,
       }));
 

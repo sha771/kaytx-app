@@ -157,7 +157,7 @@ export default function ReceptionistTranscriptsScreen() {
           headerShadowVisible: false,
         }}
       />
-      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} ={['bottom']}>
+      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} edges={['bottom']}>
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
           <View style={styles.header}>
             <Text style={[styles.title, { color: theme.colors.text }]} testID="receptionist-transcripts-title">Realtime call intelligence</Text>

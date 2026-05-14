@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from
 import { useTheme } from '@/providers/ThemeProvider';
 import { 
   Funnel, Users, MousePointer, ShoppingCart, CheckCircle, 
-  ChevronRight, ArrowDown, TrendingUp, AlertCircle
+  ChevronRight, ArrowDown, TrendingUp, AlertCircle, Sliders
 } from 'lucide-react-native';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 
@@ -34,7 +34,7 @@ const FUNNEL_STAGES = [
     visitors: 12500, 
     dropOff: 56,
     color: '#F59E0B',
-    icon: Filter,
+    icon: Sliders,
     metrics: { signups: 12500, contentDownloads: 3400, demoRequests: 890 }
   },
   { 

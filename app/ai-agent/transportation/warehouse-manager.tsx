@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { useTheme } from '@/providers/ThemeProvider';
 import { useRouter } from 'expo-router';
 import {
-  Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Users, MessageSquare, Calendar, ChartBarBig, TrendingUp, AlertTriangle, FileText, ChevronRight, Package, LayoutGrid, Route, Settings
+  Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Users, MessageSquare, Calendar, ChartBarBig, TrendingUp, AlertTriangle, FileText, ChevronRight, Package, LayoutGrid, Route, Settings, Truck
 } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
@@ -27,7 +27,7 @@ const METRICS = [
   { label: 'Warehouses', value: '36', change: '+2', trend: 'up' },
 ];
 
-export default function warehouseManagerPage() {
+export default function WarehouseManagerPage() {
   const { theme } = useTheme();
   const router = useRouter();
 

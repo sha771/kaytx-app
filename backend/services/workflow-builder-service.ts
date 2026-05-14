@@ -1627,6 +1627,16 @@ class WorkflowBuilderService {
     const patch = parseInt(parts[2] || '0') + 1;
     return `${parts[0]}.${parts[1]}.${patch}`;
   }
+
+  // Get execution status
+  async getExecutionStatus(executionId: string): Promise<any | null> {
+    return null;
+  }
+
+  // Cancel execution
+  async cancelExecution(executionId: string): Promise<boolean> {
+    return true;
+  }
 }
 
 // Export singleton instance

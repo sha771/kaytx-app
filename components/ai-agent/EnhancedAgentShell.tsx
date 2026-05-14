@@ -17,6 +17,7 @@ import {
     Settings,
     EllipsisVertical,
     ChartBar,
+    ChartBarBig,
     Target,
     DollarSign,
     CircleCheck,
@@ -509,7 +510,7 @@ export const EnhancedAgentShell: React.FC<EnhancedAgentShellProps> = ({ agent, c
                         <Text style={[styles.roiSubtext, { color: theme.colors.secondaryText }]}>24/7 Unlimited capacity</Text>
                     </View>
                 </View>
-                <LinearGradient ={['#34C75920', '#34C75910']} style={styles.efficiencyBanner}>
+                <LinearGradient colors={['#34C75920', '#34C75910']} style={styles.efficiencyBanner}>
             <Zap size={20} color="#34C759" />
             <Text style={[styles.efficiencyText, { color: '#34C759' }]}>{agent.efficiency || 'High efficiency'} Profitability Increase</Text>
                 </LinearGradient>
@@ -558,7 +559,7 @@ export const EnhancedAgentShell: React.FC<EnhancedAgentShellProps> = ({ agent, c
                             </View>
                             <View style={styles.operationalItem}>
                                 <Text style={[styles.operationalLabel, { color: theme.colors.secondaryText }]}>Accuracy Rate</Text>
-                                <Text style={[styles.operationalValue, { color: theme.colors.text }]}>{agent.roiMetrics.accuracyRate}</Text>
+                                <Text style={[styles.operationalValue, { color: theme.colors.text }]}>{agent?.roiMetrics?.accuracyRate || 'N/A'}</Text>
                             </View>
                         </View>
                     </View>
@@ -578,7 +579,7 @@ export const EnhancedAgentShell: React.FC<EnhancedAgentShellProps> = ({ agent, c
 
             {/* Enhanced Header */}
             <LinearGradient
-                ={[agent.color, agent.color + 'dd', agent.color + 'aa']}
+                colors={[agent.color || '#007AFF', (agent.color || '#007AFF') + 'dd', (agent.color || '#007AFF') + 'aa']}
                 style={styles.header}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
@@ -763,36 +764,36 @@ export const EnhancedAgentShell: React.FC<EnhancedAgentShellProps> = ({ agent, c
 
 const styles = StyleSheet.create({
     container: { flex: 1 },
-    header: { paddingBottom: 32, borderBottomLeftRadius: 40, borderBottomRightRadius: 40 },
-    headerTop: { flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 50 },
-    headerBtn: { width: 44, height: 44, borderRadius: 14, backgroundColor: 'rgba(255,255,255,0.15)', alignItems: 'center', justifyContent: 'center' },
-    headerActions: { flexDirection: 'row', gap: 10 },
-    toggleErrorBanner: { marginHorizontal: 20, marginTop: 12, padding: 10, borderRadius: 12 },
-    toggleErrorText: { color: '#fff', fontSize: 12, fontWeight: '700' },
-    heroContent: { paddingHorizontal: 30, paddingTop: 20, flexDirection: 'row', alignItems: 'center', gap: 20 },
-    heroIconContainer: { width: 84, height: 84, borderRadius: 24, backgroundColor: 'rgba(255,255,255,0.2)', alignItems: 'center', justifyContent: 'center', position: 'relative' },
+    header: { paddingBottom: 4, borderBottomLeftRadius: 20, borderBottomRightRadius: 20 },
+    headerTop: { flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 16, paddingTop: 45 },
+    headerBtn: { width: 36, height: 36, borderRadius: 10, backgroundColor: 'rgba(255,255,255,0.15)', alignItems: 'center', justifyContent: 'center' },
+    headerActions: { flexDirection: 'row', gap: 8 },
+    toggleErrorBanner: { marginHorizontal: 16, marginTop: 4, padding: 6, borderRadius: 10 },
+    toggleErrorText: { color: '#fff', fontSize: 11, fontWeight: '700' },
+    heroContent: { paddingHorizontal: 16, paddingTop: 6, flexDirection: 'row', alignItems: 'center', gap: 12 },
+    heroIconContainer: { width: 48, height: 48, borderRadius: 14, backgroundColor: 'rgba(255,255,255,0.2)', alignItems: 'center', justifyContent: 'center', position: 'relative' },
     heroText: { flex: 1 },
-    heroTitle: { fontSize: 28, fontWeight: '900', color: '#fff', letterSpacing: -1 },
-    heroSubtitle: { fontSize: 16, color: 'rgba(255,255,255,0.8)', fontWeight: '600', marginBottom: 8 },
-    statusRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-    statusPoint: { width: 10, height: 10, borderRadius: 5 },
-    statusText: { color: '#fff', fontSize: 10, fontWeight: '800', letterSpacing: 1 },
-    statusDivider: { width: 1, height: 10, backgroundColor: 'rgba(255,255,255,0.3)' },
-    pulseCircle: { position: 'absolute', width: 94, height: 94, borderRadius: 28, borderWidth: 1, opacity: 0.3 },
-    headerStats: { flexDirection: 'row', justifyContent: 'space-around', paddingHorizontal: 30, marginTop: 30 },
+    heroTitle: { fontSize: 18, fontWeight: '900', color: '#fff', letterSpacing: -1 },
+    heroSubtitle: { fontSize: 12, color: 'rgba(255,255,255,0.8)', fontWeight: '600', marginBottom: 2 },
+    statusRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+    statusPoint: { width: 8, height: 8, borderRadius: 4 },
+    statusText: { color: '#fff', fontSize: 9, fontWeight: '800', letterSpacing: 0.5 },
+    statusDivider: { width: 1, height: 8, backgroundColor: 'rgba(255,255,255,0.3)' },
+    pulseCircle: { position: 'absolute', width: 56, height: 56, borderRadius: 16, borderWidth: 1, opacity: 0.3 },
+    headerStats: { flexDirection: 'row', justifyContent: 'space-around', paddingHorizontal: 16, marginTop: 4 },
     headerStatItem: { alignItems: 'center' },
-    headerStatValue: { color: '#fff', fontSize: 13, fontWeight: '800', marginTop: 4 },
-    headerStatLabel: { color: 'rgba(255,255,255,0.6)', fontSize: 10, fontWeight: '600' },
-    tabsWrapper: { marginTop: -25, zIndex: 10 },
-    tabsContainer: { paddingHorizontal: 20, gap: 10, paddingBottom: 15 },
-    tab: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 20, paddingVertical: 12, borderRadius: 16, backgroundColor: '#fff', shadowColor: '#000', shadowOffset: { width: 0, height: 5 }, shadowOpacity: 0.1, shadowRadius: 10, elevation: 5 },
-    tabText: { fontSize: 14, fontWeight: '700' },
-    content: { flex: 1, paddingTop: 10 },
-    tabContent: { paddingHorizontal: 20 },
-    card: { padding: 24, borderRadius: 24, marginBottom: 20, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.05, shadowRadius: 10, elevation: 2 },
-    sectionHeader: { flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: 16 },
-    sectionTitle: { fontSize: 18, fontWeight: '800', flex: 1 },
-    description: { fontSize: 15, lineHeight: 22, marginBottom: 16 },
+    headerStatValue: { color: '#fff', fontSize: 10, fontWeight: '800', marginTop: 1 },
+    headerStatLabel: { color: 'rgba(255,255,255,0.6)', fontSize: 8, fontWeight: '600' },
+    tabsWrapper: { marginTop: -12, zIndex: 10 },
+    tabsContainer: { paddingHorizontal: 16, gap: 8, paddingBottom: 12 },
+    tab: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 16, paddingVertical: 10, borderRadius: 12, backgroundColor: '#fff', shadowColor: '#000', shadowOffset: { width: 0, height: 3 }, shadowOpacity: 0.08, shadowRadius: 8, elevation: 3 },
+    tabText: { fontSize: 13, fontWeight: '700' },
+    content: { flex: 1, paddingTop: 8 },
+    tabContent: { paddingHorizontal: 16 },
+    card: { padding: 18, borderRadius: 16, marginBottom: 14, shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.04, shadowRadius: 6, elevation: 1 },
+    sectionHeader: { flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 12 },
+    sectionTitle: { fontSize: 16, fontWeight: '800', flex: 1 },
+    description: { fontSize: 14, lineHeight: 20, marginBottom: 12 },
     divider: { height: 1, backgroundColor: 'rgba(150,150,150,0.1)', marginVertical: 16 },
     subsectionTitle: { fontSize: 14, fontWeight: '700', marginBottom: 8 },
     roleText: { fontSize: 14, lineHeight: 20 },

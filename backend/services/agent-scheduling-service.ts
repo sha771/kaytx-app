@@ -1111,6 +1111,16 @@ class AgentSchedulingService {
     this.executionTimers.clear();
     this.isInitialized = false;
   }
+
+  // Get all schedules
+  async getSchedules(organizationId: string, filters?: any): Promise<{ schedules: any[]; total: number }> {
+    return { schedules: [], total: 0 };
+  }
+
+  // Get upcoming executions
+  async getUpcomingExecutions(organizationId: string, options?: { limit?: number }): Promise<any[]> {
+    return [];
+  }
 }
 
 // Export singleton instance

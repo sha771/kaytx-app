@@ -187,7 +187,7 @@ export default function CREOPage() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Automation Settings</Text>
         <View style={styles.settingRow}><View><Text style={[styles.settingLabel, { color: theme.colors.text }]}>Auto Portfolio Optimization</Text><Text style={[styles.settingDesc, { color: theme.colors.textSecondary }]}>Automatically rebalance portfolio based on market conditions</Text></View><Switch value={autoOptimize} onValueChange={setAutoOptimize} trackColor={{true:'#33691E'}} /></View>
-        <View style={styles.settingRow}><View><Text style={[styles.settingLabel, { color: theme.colors.text }]}>Risk Alert Notifications</Text><Text style={[styles.settingDesc, { color: theme.colors.textSecondary }]}>Receive alerts for portfolio risk changes</Text></Text><Switch value={riskAlerts} onValueChange={setRiskAlerts} trackColor={{true:'#33691E'}} /></View>
+        <View style={styles.settingRow}><View><Text style={[styles.settingLabel, { color: theme.colors.text }]}>Risk Alert Notifications</Text><Text style={[styles.settingDesc, { color: theme.colors.textSecondary }]}>Receive alerts for portfolio risk changes</Text></View><Switch value={riskAlerts} onValueChange={setRiskAlerts} trackColor={{true:'#33691E'}} /></View>
       </View>
 
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>

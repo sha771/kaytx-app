@@ -139,6 +139,13 @@ export class ConsolidatedAuditService extends EventEmitter {
   }
 
   /**
+   * Create an audit log entry (alias for log)
+   */
+  async createAuditLog(request: CreateAuditLogRequest): Promise<AuditLog> {
+    return this.log(request);
+  }
+
+  /**
    * Create an audit log entry
    */
   async log(request: CreateAuditLogRequest): Promise<AuditLog> {

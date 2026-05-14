@@ -1,8 +1,13 @@
-import { createTRPCRouter } from '../../create-context';
+import { createLegacyRouter, type Context } from '../../create-context';
 import { z } from 'zod';
 import { paymentService } from '../../../services/payment-service';
 import { requireAuth, requirePermission } from '../../../middleware/rbac-middleware';
 import { Permission } from '../../../lib/rbac';
+
+function assertAuth(ctx: any): { user: NonNullable<Context['user']> } & Context {
+  if (!ctx.user) throw new Error('Unauthorized');
+  return ctx as { user: NonNullable<Context['user']> } & Context;
+}
 
 const createPaymentIntentSchema = z.object({
   amount: z.number().positive(),
@@ -38,14 +43,14 @@ const getPaymentsSchema = z.object({
   endDate: z.date().optional(),
 });
 
-export const paymentsRouter = createTRPCRouter({
+export const paymentsRouter = createLegacyRouter({
   createIntent: {
     input: createPaymentIntentSchema,
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const paymentIntent = await paymentService.createPaymentIntent(
-        ctx.user.organizationId,
+        auth.user.organizationId,
         input
       );
 
@@ -56,11 +61,11 @@ export const paymentsRouter = createTRPCRouter({
   confirmPayment: {
     input: confirmPaymentSchema,
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const payment = await paymentService.confirmPayment(
         input.paymentIntentId,
-        ctx.user.organizationId
+        auth.user.organizationId
       );
 
       return payment;
@@ -70,10 +75,10 @@ export const paymentsRouter = createTRPCRouter({
   createPaymentMethod: {
     input: createPaymentMethodSchema,
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const paymentMethod = await paymentService.createPaymentMethod(
-        ctx.user.organizationId,
+        auth.user.organizationId,
         input
       );
 
@@ -83,10 +88,10 @@ export const paymentsRouter = createTRPCRouter({
 
   getPaymentMethods: {
     resolve: async ({ ctx }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const paymentMethods = await paymentService.getPaymentMethods(
-        ctx.user.organizationId
+        auth.user.organizationId
       );
 
       return paymentMethods;
@@ -96,11 +101,11 @@ export const paymentsRouter = createTRPCRouter({
   deletePaymentMethod: {
     input: z.string(),
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const result = await paymentService.deletePaymentMethod(
         input,
-        ctx.user.organizationId
+        auth.user.organizationId
       );
 
       return result;
@@ -110,11 +115,11 @@ export const paymentsRouter = createTRPCRouter({
   setDefaultPaymentMethod: {
     input: z.string(),
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const result = await paymentService.setDefaultPaymentMethod(
         input,
-        ctx.user.organizationId
+        auth.user.organizationId
       );
 
       return result;
@@ -124,10 +129,10 @@ export const paymentsRouter = createTRPCRouter({
   getPayments: {
     input: getPaymentsSchema.optional(),
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const payments = await paymentService.getPayments(
-        ctx.user.organizationId,
+        auth.user.organizationId,
         input || {}
       );
 
@@ -138,11 +143,11 @@ export const paymentsRouter = createTRPCRouter({
   getPayment: {
     input: z.string(),
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const payment = await paymentService.getPayment(
         input,
-        ctx.user.organizationId
+        auth.user.organizationId
       );
 
       return payment;
@@ -152,11 +157,11 @@ export const paymentsRouter = createTRPCRouter({
   createRefund: {
     input: createRefundSchema,
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       requirePermission(ctx, Permission.MANAGE_PAYMENTS);
       
       const refund = await paymentService.createRefund(
-        ctx.user.organizationId,
+        auth.user.organizationId,
         input
       );
 
@@ -172,11 +177,11 @@ export const paymentsRouter = createTRPCRouter({
       endDate: z.date().optional(),
     }).optional(),
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       requirePermission(ctx, Permission.MANAGE_PAYMENTS);
       
       const refunds = await paymentService.getRefunds(
-        ctx.user.organizationId,
+        auth.user.organizationId,
         input || {}
       );
 
@@ -186,11 +191,11 @@ export const paymentsRouter = createTRPCRouter({
 
   getPaymentStats: {
     resolve: async ({ ctx }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       requirePermission(ctx, Permission.VIEW_ANALYTICS);
       
       const stats = await paymentService.getPaymentStats(
-        ctx.user.organizationId
+        auth.user.organizationId
       );
 
       return stats;
@@ -204,10 +209,10 @@ export const paymentsRouter = createTRPCRouter({
       offset: z.number().min(0).optional(),
     }).optional(),
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const invoices = await paymentService.getInvoices(
-        ctx.user.organizationId,
+        auth.user.organizationId,
         input || {}
       );
 
@@ -218,11 +223,11 @@ export const paymentsRouter = createTRPCRouter({
   getInvoice: {
     input: z.string(),
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const invoice = await paymentService.getInvoice(
         input,
-        ctx.user.organizationId
+        auth.user.organizationId
       );
 
       return invoice;
@@ -239,11 +244,11 @@ export const paymentsRouter = createTRPCRouter({
       metadata: z.record(z.any()).optional(),
     }),
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       requirePermission(ctx, Permission.MANAGE_PAYMENTS);
       
       const invoice = await paymentService.createInvoice(
-        ctx.user.organizationId,
+        auth.user.organizationId,
         input
       );
 
@@ -261,11 +266,11 @@ export const paymentsRouter = createTRPCRouter({
       }),
     }),
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       requirePermission(ctx, Permission.MANAGE_PAYMENTS);
       
       const invoice = await paymentService.updateInvoice(
-        ctx.user.organizationId,
+        auth.user.organizationId,
         input.invoiceId,
         input.updates
       );
@@ -277,10 +282,10 @@ export const paymentsRouter = createTRPCRouter({
   getCustomerBalance: {
     input: z.string().optional(),
     resolve: async ({ ctx, input }) => {
-      requireAuth(ctx);
+      const auth = assertAuth(ctx);
       
       const balance = await paymentService.getCustomerBalance(
-        ctx.user.organizationId,
+        auth.user.organizationId,
         input
       );
 

@@ -625,7 +625,7 @@ export class ConsolidatedPlatformSyncService extends EventEmitter {
   /**
    * Record webhook event
    */
-  private async recordWebhookEvent(event: {
+  async recordWebhookEvent(event: {
     organizationId: string;
     platform: PlatformType;
     eventId: string;
@@ -1384,6 +1384,24 @@ export class ConsolidatedPlatformSyncService extends EventEmitter {
     this.removeAllListeners();
     logger.info('ConsolidatedPlatformSyncService cleanup completed');
   }
+
+  // Enqueue and run a connection sync immediately
+  async enqueueAndRunConnectionSync(input: Omit<SyncJobInput, 'jobType' | 'priority'> & { jobType?: SyncJobInput['jobType']; priority?: SyncJobInput['priority'] }): Promise<SyncJob> {
+    const jobInput: SyncJobInput = {
+      organizationId: input.organizationId,
+      platform: input.platform,
+      connectionId: input.connectionId,
+      jobType: input.jobType || 'manual_sync',
+      priority: input.priority || 'medium',
+      scheduledFor: input.scheduledFor,
+      metadata: input.metadata,
+    };
+    const job = await this.enqueueJob(jobInput);
+    // Process immediately
+    await this.processJob(job.id);
+    return job;
+  }
 }
 
 export const consolidatedPlatformSyncService = new ConsolidatedPlatformSyncService();
+export const platformSyncEngine = consolidatedPlatformSyncService;

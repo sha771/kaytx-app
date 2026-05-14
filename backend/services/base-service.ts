@@ -195,6 +195,25 @@ export abstract class BaseService {
     return missing;
   }
 
+  // Success response helper
+  protected success<T>(data: T, metadata?: ServiceResponse['metadata']): ServiceResponse<T> {
+    return {
+      success: true,
+      data,
+      metadata,
+    };
+  }
+
+  // Error handling helper
+  protected handleError<T>(message: string, error: unknown): ServiceResponse<T> {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    logger.error(`${message}: ${errorMessage}`);
+    return {
+      success: false,
+      error: `${message}: ${errorMessage}`,
+    };
+  }
+
   // Permission checking helper with RBAC integration
   protected hasPermission(permission: string): boolean {
     try {

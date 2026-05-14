@@ -72,7 +72,7 @@ import {
   CreditCard,
   ShieldCheck,
   ShieldAlert,
-  Siren,
+  AlertTriangle,
   FingerprintPattern,
   ScanEye,
   Lock,

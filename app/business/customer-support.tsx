@@ -199,7 +199,7 @@ export default function CustomerSupportScreen() {
       <ScrollView style={styles.content}>
         <View style={styles.header}>
           <View style={styles.titleSection}>
-            <Headphones size={28} color="#007AFF" />
+            <HeadphonesIcon size={28} color="#007AFF" />
             <View>
               <Text style={styles.title}>Customer Support</Text>
               <Text style={styles.subtitle}>Manage support tickets and agents</Text>
@@ -270,7 +270,7 @@ export default function CustomerSupportScreen() {
               <Text style={styles.quickActionText}>New Ticket</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.quickAction}>
-              <Headphones size={24} color="#34C759" />
+              <HeadphonesIcon size={24} color="#34C759" />
               <Text style={styles.quickActionText}>Live Chat</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.quickAction}>

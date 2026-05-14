@@ -133,6 +133,46 @@ export enum Permission {
 
   SYSTEM_READ = 'system:read',
   SYSTEM_UPDATE = 'system:update',
+
+  ORGANIZATION_READ = 'organization:read',
+  ORGANIZATION_UPDATE = 'organization:update',
+  ORGANIZATION_CREATE = 'organization:create',
+  ORGANIZATION_DELETE = 'organization:delete',
+  MANAGE_ORGANIZATION = 'organization:manage',
+
+  LEAD_READ = 'lead:read',
+  LEAD_CREATE = 'lead:create',
+  LEAD_UPDATE = 'lead:update',
+  LEAD_DELETE = 'lead:delete',
+  LEAD_MANAGE = 'lead:manage',
+
+  CAMPAIGN_READ = 'campaign:read',
+  CAMPAIGN_CREATE = 'campaign:create',
+  CAMPAIGN_UPDATE = 'campaign:update',
+  CAMPAIGN_DELETE = 'campaign:delete',
+
+  BILLING_WRITE = 'billing:write',
+  MANAGE_BILLING = 'billing:manage',
+  MANAGE_PAYMENTS = 'payments:manage',
+
+  NOTIFICATION_READ = 'notification:read',
+  NOTIFICATION_CREATE = 'notification:create',
+  NOTIFICATION_UPDATE = 'notification:update',
+  NOTIFICATION_DELETE = 'notification:delete',
+
+  TEMPLATE_READ = 'template:read',
+  TEMPLATE_CREATE = 'template:create',
+  TEMPLATE_UPDATE = 'template:update',
+  TEMPLATE_DELETE = 'template:delete',
+
+  TEAM_UPDATE = 'team:update',
+  TEAM_DELETE = 'team:delete',
+  MANAGE_MEMBERS = 'team:members:manage',
+
+  VIEW_ANALYTICS = 'analytics:view',
+  VIEW_AUDIT_LOG = 'audit:view',
+
+  BUSINESS_CRM_READ = 'business:crm:read',
 }
 
 const rolePermissions: Record<Role, Permission[]> = {

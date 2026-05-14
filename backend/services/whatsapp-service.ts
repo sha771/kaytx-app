@@ -116,6 +116,8 @@ export class WhatsAppService extends EventEmitter {
   private templates: Map<string, WhatsAppTemplate> = new Map();
   private campaigns: Map<string, WhatsAppCampaign> = new Map();
   private rateLimits: Map<string, { count: number; resetTime: number }> = new Map();
+  private cleanupInterval: NodeJS.Timeout | null = null;
+  private rateLimitResetInterval: NodeJS.Timeout | null = null;
   private readonly maxMessagesPerSecond = 50;
   private readonly maxMessagesPerDay = 1000;
 

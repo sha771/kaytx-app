@@ -1,376 +1,188 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  Alert,
-} from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { useTheme } from '@/providers/ThemeProvider';
 import { useRouter } from 'expo-router';
 import {
-  ChevronLeft,
-  Zap,
-  Play,
-  Pause,
-  RotateCcw,
-  Settings,
-  Brain,
-  Upload,
-  ChartBarBig,
-  Users,
-  MessageSquare,
-  RefreshCw,
-  CircleCheck,
-  TriangleAlert,
-  Power,
-  Sparkles,
-  Command,
   Activity,
+  Server,
   Database,
-  FileText,
+  Zap,
   Target,
+  Shield,
+  Code,
+  Terminal,
+  Monitor,
 } from 'lucide-react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Animated, { FadeInUp } from 'react-native-reanimated';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { Colors } from '@/constants/Colors';
-import {
-  allAgents,
-  allSubAgents,
-  allMainAgents,
-  getAgentsWithVoiceEnabled,
-  initializeAgentConfigurations,
-} from '@/constants/aiAgentHierarchy';
 
-export default function AIAgentsCommandCenterScreen() {
+export default function CommandCenterPage() {
+  const { theme } = useTheme();
   const router = useRouter();
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
-  const [isRefreshing, setIsRefreshing] = useState(false);
-
-  const stats = {
-    totalActive: allAgents.filter(a => a.status === 'active').length,
-    totalPaused: allAgents.filter(a => a.status === ('paused' as any)).length,
-    withVoice: getAgentsWithVoiceEnabled().length,
-    withTraining: allAgents.filter(a => a.configuration?.training.enabled).length,
-  };
-
-  const quickActions = [
-    {
-      id: 'enable-all',
-      label: 'Enable All Agents',
-      icon: Power,
-      color: '#10B981',
-      description: 'Activate all AI agents',
-      action: () => {
-        allAgents.forEach(agent => agent.status = 'active');
-        Alert.alert('Success', 'All agents have been activated');
-      },
-    },
-    {
-      id: 'pause-all',
-      label: 'Pause All Agents',
-      icon: Pause,
-      color: '#F59E0B',
-      description: 'Temporarily pause all agents',
-      action: () => {
-        allAgents.forEach(agent => agent.status = 'paused' as any);
-        Alert.alert('Success', 'All agents have been paused');
-      },
-    },
-    {
-      id: 'refresh-configs',
-      label: 'Refresh Configurations',
-      icon: RefreshCw,
-      color: '#3B82F6',
-      description: 'Reload all agent configs',
-      action: () => {
-        setIsRefreshing(true);
-        initializeAgentConfigurations();
-        setTimeout(() => {
-          setIsRefreshing(false);
-          Alert.alert('Success', 'All configurations refreshed');
-        }, 1000);
-      },
-    },
-    {
-      id: 'bulk-upload',
-      label: 'Bulk Data Upload',
-      icon: Upload,
-      color: '#8B5CF6',
-      description: 'Upload to multiple agents',
-      route: '/ai-agent/bulk-config',
-    },
-    {
-      id: 'enable-voice',
-      label: 'Enable All Voice',
-      icon: Activity,
-      color: '#EC4899',
-      description: 'Turn on voice for all agents',
-      action: () => {
-        allAgents.forEach(agent => {
-          if (agent.configuration) agent.configuration.voice.enabled = true;
-        });
-        Alert.alert('Success', 'Voice enabled for all agents');
-      },
-    },
-    {
-      id: 'run-diagnostics',
-      label: 'Run Diagnostics',
-      icon: Target,
-      color: '#14B8A6',
-      description: 'Check all agent health',
-      action: () => {
-        const issues = allAgents.filter(a => a.performance?.successRate < 95);
-        if (issues.length === 0) {
-          Alert.alert('Diagnostics Complete', 'All agents are healthy!');
-        } else {
-          Alert.alert('Issues Found', `${issues.length} agents need attention`);
-        }
-      },
-    },
-  ];
-
-  const navigationItems = [
-    {
-      id: 'analytics',
-      label: 'Analytics Dashboard',
-      icon: ChartBarBig,
-      color: '#3B82F6',
-      route: '/ai-agent/analytics',
-      badge: 'Live',
-    },
-    {
-      id: 'compare',
-      label: 'Compare Agents',
-      icon: Target,
-      color: '#8B5CF6',
-      route: '/ai-agent/compare',
-    },
-    {
-      id: 'data-hub',
-      label: 'Data & Training Hub',
-      icon: Database,
-      color: '#10B981',
-      route: '/ai-agent/data-training-hub',
-    },
-    {
-      id: 'bulk-config',
-      label: 'Bulk Configuration',
-      icon: Settings,
-      color: '#F59E0B',
-      route: '/ai-agent/bulk-config',
-    },
-    {
-      id: 'settings',
-      label: 'Global Settings',
-      icon: Sparkles,
-      color: '#EC4899',
-      route: '/ai-agent/settings',
-    },
-    {
-      id: 'all-agents',
-      label: 'All Agents',
-      icon: Users,
-      color: '#6366F1',
-      route: '/ai-agent',
-    },
-  ];
-
-  const recentActivity = [
-    { id: 1, text: 'AI Bookkeeper processed 1,240 transactions', time: '2 min ago', icon: CircleCheck, color: '#10B981' },
-    { id: 2, text: 'AI Tax Agent completed compliance check', time: '15 min ago', icon: CircleCheck, color: '#10B981' },
-    { id: 3, text: 'New training data uploaded to 3 agents', time: '1 hour ago', icon: Upload, color: '#3B82F6' },
-    { id: 4, text: 'AI Sales Agent achieved 98% success rate', time: '2 hours ago', icon: Target, color: '#8B5CF6' },
-  ];
-
-  const handleAction = (item: typeof quickActions[0]) => {
-    if (item.route) {
-      router.push(item.route);
-    } else if (item.action) {
-      item.action();
-    }
-  };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      {/* Header */}
-      <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-        <View style={styles.headerTop}>
-          <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-            <ChevronLeft size={24} color={colors.text} />
-          </TouchableOpacity>
-          <View style={styles.headerTitleContainer}>
-            <Command size={22} color={colors.primary} />
-            <Text style={[styles.headerTitle, { color: colors.text }]}>Command Center</Text>
-          </View>
-          <TouchableOpacity onPress={() => setIsRefreshing(!isRefreshing)}>
-            <RotateCcw size={22} color={isRefreshing ? colors.primary : colors.text} />
-          </TouchableOpacity>
+    <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      {/* Hero Section */}
+      <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
+        <View style={[styles.heroIconWrap, { backgroundColor: '#007AFF20' }]}>
+          <Activity size={56} color="#007AFF" />
         </View>
-
-        {/* Status Overview */}
-        <View style={styles.statusGrid}>
-          <View style={[styles.statusCard, { backgroundColor: '#10B981' + '15' }]}>
-            <Power size={20} color="#10B981" />
-            <Text style={[styles.statusNumber, { color: '#10B981' }]}>{stats.totalActive}</Text>
-            <Text style={[styles.statusLabel, { color: colors.text + '60' }]}>Active</Text>
+        <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Command Center</Text>
+        <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>
+          Centralized AI Operations Hub
+        </Text>
+        <View style={styles.badgesRow}>
+          <View style={[styles.badge, { backgroundColor: '#34C75922' }]}>
+            <Server size={12} color="#34C759" />
+            <Text style={[styles.badgeText, { color: '#34C759' }]}>Systems Online</Text>
           </View>
-          <View style={[styles.statusCard, { backgroundColor: '#F59E0B' + '15' }]}>
-            <Pause size={20} color="#F59E0B" />
-            <Text style={[styles.statusNumber, { color: '#F59E0B' }]}>{stats.totalPaused}</Text>
-            <Text style={[styles.statusLabel, { color: colors.text + '60' }]}>Paused</Text>
+          <View style={[styles.badge, { backgroundColor: '#007AFF22' }]}>
+            <Zap size={12} color="#007AFF" />
+            <Text style={[styles.badgeText, { color: '#007AFF' }]}>Active Processes</Text>
           </View>
-          <View style={[styles.statusCard, { backgroundColor: '#8B5CF6' + '15' }]}>
-            <Activity size={20} color="#8B5CF6" />
-            <Text style={[styles.statusNumber, { color: '#8B5CF6' }]}>{stats.withVoice}</Text>
-            <Text style={[styles.statusLabel, { color: colors.text + '60' }]}>Voice</Text>
-          </View>
-          <View style={[styles.statusCard, { backgroundColor: '#EC4899' + '15' }]}>
-            <Zap size={20} color="#EC4899" />
-            <Text style={[styles.statusNumber, { color: '#EC4899' }]}>{stats.withTraining}</Text>
-            <Text style={[styles.statusLabel, { color: colors.text + '60' }]}>Training</Text>
+          <View style={[styles.badge, { backgroundColor: '#FF950022' }]}>
+            <Database size={12} color="#FF9500" />
+            <Text style={[styles.badgeText, { color: '#FF9500' }]}>Data Streams</Text>
           </View>
         </View>
       </View>
 
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        {/* Quick Actions Grid */}
-        <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text + '60' }]}>QUICK ACTIONS</Text>
-          <View style={styles.actionsGrid}>
-            {quickActions.map((action, index) => (
-              <Animated.View entering={FadeInUp.delay(index * 50)} key={action.id} style={{ flex: 1, minWidth: '45%' }}>
-                <TouchableOpacity
-                  style={[styles.actionCard, { backgroundColor: colors.card, borderColor: colors.border }]}
-                  onPress={() => handleAction(action)}
-                >
-                  <View style={[styles.actionIcon, { backgroundColor: action.color + '15' }]}>
-                    <action.icon size={24} color={action.color} />
-                  </View>
-                  <Text style={[styles.actionLabel, { color: colors.text }]}>{action.label}</Text>
-                  <Text style={[styles.actionDesc, { color: colors.text + '60' }]}>{action.description}</Text>
-                </TouchableOpacity>
-              </Animated.View>
-            ))}
-          </View>
+      {/* Stats Grid */}
+      <View style={styles.statsContainer}>
+        <View style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+          <Server size={24} color="#34C759" />
+          <Text style={[styles.statValue, { color: theme.colors.text }]}>99.8%</Text>
+          <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>Uptime</Text>
         </View>
-
-        {/* Navigation Links */}
-        <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text + '60' }]}>NAVIGATION</Text>
-          <View style={[styles.navCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            {navigationItems.map((item, index) => (
-              <TouchableOpacity
-                key={item.id}
-                style={[styles.navItem, index !== navigationItems.length - 1 && { borderBottomWidth: 1, borderBottomColor: colors.border }]}
-                onPress={() => router.push(item.route)}
-              >
-                <View style={[styles.navIcon, { backgroundColor: item.color + '15' }]}>
-                  <item.icon size={20} color={item.color} />
-                </View>
-                <View style={styles.navContent}>
-                  <Text style={[styles.navLabel, { color: colors.text }]}>{item.label}</Text>
-                  {item.badge && (
-                    <View style={[styles.navBadge, { backgroundColor: '#10B981' }]}>
-                      <Text style={styles.navBadgeText}>{item.badge}</Text>
-                    </View>
-                  )}
-                </View>
-                <ChevronLeft size={20} color={colors.text + '40'} style={{ transform: [{ rotate: '180deg' }] }} />
-              </TouchableOpacity>
-            ))}
-          </View>
+        <View style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+          <Zap size={24} color="#007AFF" />
+          <Text style={[styles.statValue, { color: theme.colors.text }]}>2.4K</Text>
+          <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>Tasks/Hour</Text>
         </View>
+        <View style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+          <Shield size={24} color="#FF9500" />
+          <Text style={[styles.statValue, { color: theme.colors.text }]}>0</Text>
+          <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>Security Alerts</Text>
+        </View>
+        <View style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+          <Monitor size={24} color="#FFD700" />
+          <Text style={[styles.statValue, { color: theme.colors.text }]}>15</Text>
+          <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>Active Monitors</Text>
+        </View>
+      </View>
 
-        {/* Recent Activity */}
-        <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text + '60' }]}>RECENT ACTIVITY</Text>
-          <View style={[styles.activityCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            {recentActivity.map((activity, index) => (
-              <View 
-                key={activity.id} 
-                style={[styles.activityItem, index !== recentActivity.length - 1 && { borderBottomWidth: 1, borderBottomColor: colors.border }]}
-              >
-                <View style={[styles.activityIcon, { backgroundColor: activity.color + '15' }]}>
-                  <activity.icon size={16} color={activity.color} />
-                </View>
-                <View style={styles.activityContent}>
-                  <Text style={[styles.activityText, { color: colors.text }]}>{activity.text}</Text>
-                  <Text style={[styles.activityTime, { color: colors.text + '40' }]}>{activity.time}</Text>
-                </View>
+      {/* Overview Section */}
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Overview</Text>
+        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>
+          The Command Center serves as the central nervous system for AI operations, providing 
+          real-time monitoring, control, and orchestration of all AI agents and workflows across 
+          the enterprise. It enables seamless coordination between different layers of the AI 
+          workforce architecture.
+        </Text>
+      </View>
+
+      {/* Key Components */}
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Components</Text>
+        <View style={styles.componentsList}>
+          {[
+            { label: 'Real-time Orchestration', icon: Zap, color: '#007AFF' },
+            { label: 'Workflow Management', icon: Activity, color: '#34C759' },
+            { label: 'Resource Allocation', icon: Server, color: '#FF9500' },
+            { label: 'Performance Monitoring', icon: Monitor, color: '#FFD700' },
+            { label: 'Security & Compliance', icon: Shield, color: '#EF4444' },
+            { label: 'API Gateway', icon: Terminal, color: '#64748B' },
+          ].map((comp, i) => (
+            <View key={i} style={styles.componentItem}>
+              <View style={[styles.componentIcon, { backgroundColor: comp.color + '20' }]}>
+                <comp.icon size={20} color={comp.color} />
               </View>
-            ))}
-          </View>
-        </View>
-
-        {/* System Status */}
-        <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text + '60' }]}>SYSTEM STATUS</Text>
-          <View style={[styles.systemCard, { backgroundColor: '#10B981' + '15', borderColor: '#10B981' }]}>
-            <View style={styles.systemHeader}>
-              <CircleCheck size={24} color="#10B981" />
-              <Text style={[styles.systemTitle, { color: '#10B981' }]}>All Systems Operational</Text>
+              <Text style={[styles.componentText, { color: theme.colors.textSecondary }]}>
+                {comp.label}
+              </Text>
             </View>
-            <View style={styles.systemMetrics}>
-              <View style={styles.systemMetric}>
-                <Text style={[styles.systemValue, { color: colors.text }]}>99.9%</Text>
-                <Text style={[styles.systemLabel, { color: colors.text + '60' }]}>Uptime</Text>
-              </View>
-              <View style={styles.systemMetric}>
-                <Text style={[styles.systemValue, { color: colors.text }]}>45ms</Text>
-                <Text style={[styles.systemLabel, { color: colors.text + '60' }]}>Avg Latency</Text>
-              </View>
-              <View style={styles.systemMetric}>
-                <Text style={[styles.systemValue, { color: colors.text }]}>{allAgents.length}</Text>
-                <Text style={[styles.systemLabel, { color: colors.text + '60' }]}>Agents</Text>
+          ))}
+        </View>
+      </View>
+
+      {/* Quick Actions */}
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
+        <View style={styles.actionsGrid}>
+          {[
+            { label: 'Deploy New Agent', icon: Server, route: '/ai-agent/deploy-agent' },
+            { label: 'Monitor Workflows', icon: Activity, route: '/ai-agent/workflow-monitor' },
+            { label: 'System Diagnostics', icon: Zap, route: '/ai-agent/system-diagnostics' },
+            { label: 'Resource Optimization', icon: Server, route: '/ai-agent/resource-optimizer' },
+          ].map((action, i) => (
+            <TouchableOpacity
+              key={i}
+              onPress={() => router.push(action.route)}
+              style={[styles.actionButton, { backgroundColor: '#007AFF15' }]}
+            >
+              <action.icon size={24} color="#007AFF" />
+              <Text style={[styles.actionText, { color: '#007AFF' }]}>{action.label}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
+
+      {/* System Status */}
+      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>System Status</Text>
+        <View style={styles.statusList}>
+          {[
+            { label: 'AI Orchestrator', status: 'Online', color: '#34C759' },
+            { label: 'Workflow Engine', status: 'Online', color: '#34C759' },
+            { label: 'Data Pipeline', status: 'Online', color: '#34C759' },
+            { label: 'Communication Hub', status: 'Online', color: '#34C759' },
+            { label: 'Security Monitor', status: 'Online', color: '#34C759' },
+            { label: 'API Gateway', status: 'Online', color: '#34C759' },
+          ].map((status, i) => (
+            <View key={i} style={styles.statusItem}>
+              <Text style={[styles.statusLabel, { color: theme.colors.textSecondary }]}>
+                {status.label}
+              </Text>
+              <View style={styles.statusIndicator}>
+                <View style={[styles.statusDot, { backgroundColor: status.color }]} />
+                <Text style={[styles.statusText, { color: theme.colors.textSecondary }]}>
+                  {status.status}
+                </Text>
               </View>
             </View>
-          </View>
+          ))}
         </View>
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  header: { borderBottomWidth: 1 },
-  headerTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 16 },
-  backButton: { padding: 4 },
-  headerTitleContainer: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  headerTitle: { fontSize: 18, fontWeight: '600' },
-  statusGrid: { flexDirection: 'row', padding: 16, gap: 10 },
-  statusCard: { flex: 1, padding: 12, borderRadius: 12, alignItems: 'center' },
-  statusNumber: { fontSize: 20, fontWeight: '700', marginTop: 4 },
-  statusLabel: { fontSize: 11, marginTop: 2 },
-  content: { padding: 16 },
-  section: { marginBottom: 24 },
-  sectionTitle: { fontSize: 12, fontWeight: '700', letterSpacing: 0.5, marginBottom: 12 },
-  actionsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
-  actionCard: { borderRadius: 16, borderWidth: 1, padding: 16, minHeight: 120 },
-  actionIcon: { width: 48, height: 48, borderRadius: 12, justifyContent: 'center', alignItems: 'center', marginBottom: 12 },
-  actionLabel: { fontSize: 14, fontWeight: '600' },
-  actionDesc: { fontSize: 12, marginTop: 4 },
-  navCard: { borderRadius: 16, borderWidth: 1, overflow: 'hidden' },
-  navItem: { flexDirection: 'row', alignItems: 'center', padding: 14 },
-  navIcon: { width: 40, height: 40, borderRadius: 10, justifyContent: 'center', alignItems: 'center' },
-  navContent: { flex: 1, marginLeft: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  navLabel: { fontSize: 15, fontWeight: '500' },
-  navBadge: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 10 },
-  navBadgeText: { color: '#fff', fontSize: 10, fontWeight: '600' },
-  activityCard: { borderRadius: 16, borderWidth: 1, overflow: 'hidden' },
-  activityItem: { flexDirection: 'row', alignItems: 'center', padding: 14 },
-  activityIcon: { width: 36, height: 36, borderRadius: 10, justifyContent: 'center', alignItems: 'center' },
-  activityContent: { flex: 1, marginLeft: 12 },
-  activityText: { fontSize: 14 },
-  activityTime: { fontSize: 12, marginTop: 2 },
-  systemCard: { borderRadius: 16, borderWidth: 1, padding: 16 },
-  systemHeader: { flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 16 },
-  systemTitle: { fontSize: 16, fontWeight: '600' },
-  systemMetrics: { flexDirection: 'row', justifyContent: 'space-around' },
-  systemMetric: { alignItems: 'center' },
-  systemValue: { fontSize: 20, fontWeight: '700' },
-  systemLabel: { fontSize: 12, marginTop: 2 },
+  hero: { alignItems: 'center', paddingVertical: 36, paddingHorizontal: 20, borderBottomWidth: 1 },
+  heroIconWrap: { width: 100, height: 100, borderRadius: 50, justifyContent: 'center', alignItems: 'center', marginBottom: 16 },
+  heroTitle: { fontSize: 28, fontWeight: 'bold' },
+  heroSubtitle: { fontSize: 15, marginTop: 6, fontWeight: '500' },
+  badgesRow: { flexDirection: 'row', gap: 10, marginTop: 18 },
+  badge: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 20, gap: 5 },
+  badgeText: { fontSize: 12, fontWeight: '600' },
+  statsContainer: { flexDirection: 'row', flexWrap: 'wrap', padding: 16, gap: 12 },
+  statCard: { flex: 1, minWidth: '22%', alignItems: 'center', padding: 16, borderRadius: 12 },
+  statValue: { fontSize: 20, fontWeight: 'bold', marginTop: 8 },
+  statLabel: { fontSize: 11, marginTop: 4 },
+  section: { marginHorizontal: 16, marginBottom: 16, padding: 20, borderRadius: 16 },
+  sectionTitle: { fontSize: 18, fontWeight: '700', marginBottom: 14 },
+  description: { fontSize: 14, lineHeight: 22 },
+  componentsList: { gap: 12 },
+  componentItem: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  componentIcon: { width: 40, height: 40, borderRadius: 10, alignItems: 'center', justifyContent: 'center' },
+  componentText: { flex: 1, fontSize: 14 },
+  actionsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
+  actionButton: { flex: 1, minWidth: '45%', alignItems: 'center', padding: 16, borderRadius: 12 },
+  actionText: { fontSize: 13, fontWeight: '600', marginTop: 8 },
+  statusList: { gap: 10 },
+  statusItem: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 8 },
+  statusLabel: { fontSize: 13, color: theme.colors.textSecondary },
+  statusIndicator: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  statusDot: { width: 8, height: 8, borderRadius: 4 },
+  statusText: { fontSize: 13, fontWeight: '600' },
 });

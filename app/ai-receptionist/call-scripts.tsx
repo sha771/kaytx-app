@@ -154,7 +154,7 @@ export default function ReceptionistCallScriptsScreen() {
           ),
         }}
       />
-      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} ={['bottom']}>
+      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} edges={['bottom']}>
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
           {isLoading ? (
             <View style={styles.loadingContainer}>

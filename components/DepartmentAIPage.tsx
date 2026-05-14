@@ -142,7 +142,7 @@ export function DepartmentAIPage({ config }: { config: DeptPageConfig }) {
             <View style={s.caps}><View style={s.secH}><Sparkles size={14} color={ACCENT} /><Text style={[s.secL, { color: theme.colors.secondaryText }]}>Capabilities</Text></View><View style={s.capList}>{agent.capabilities.map((c, i) => <View key={i} style={[s.capTag, { backgroundColor: `${ACCENT}10` }]}><Text style={[s.capT, { color: ACCENT }]}>{c}</Text></View>)}</View></View>
             <View style={s.btns}>
               <TouchableOpacity style={[s.btn, { backgroundColor: `${ACCENT}15` }]}><Settings size={16} color={ACCENT} /><Text style={[s.btnT, { color: ACCENT }]}>Configure</Text></TouchableOpacity>
-              <TouchableOpacity style={[s.btn, { backgroundColor: '#34C75915' }]}><ChartBarBig size={16} color="#34C759" /><Text style={[s.btnT, { color: '#34C759' }]}>Analytics</Text></TouchableOpacity>
+              <TouchableOpacity style={[s.btn, { backgroundColor: '#34C75915' }]}><ChartBar size={16} color="#34C759" /><Text style={[s.btnT, { color: '#34C759' }]}>Analytics</Text></TouchableOpacity>
               <TouchableOpacity style={[s.btn, { backgroundColor: '#FF950015' }]}><Eye size={16} color="#FF9500" /><Text style={[s.btnT, { color: '#FF9500' }]}>Monitor</Text></TouchableOpacity>
             </View>
           </View>

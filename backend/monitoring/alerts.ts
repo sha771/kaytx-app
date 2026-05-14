@@ -430,6 +430,23 @@ export class AlertManager {
       message: triggered ? this.generateAlertMessage(rule, testMetrics) : undefined,
     };
   }
+
+  // Shutdown alert manager
+  async shutdown(): Promise<void> {
+    this.activeAlerts.clear();
+    this.rules.clear();
+  }
+
+  // Get a specific rule by ID
+  getRule(ruleId: string): AlertRule | undefined {
+    return this.rules.get(ruleId);
+  }
+
+  // Get rule state (active/inactive)
+  getRuleState(ruleId: string): { active: boolean; lastEvaluated?: number } {
+    const rule = this.rules.get(ruleId);
+    return { active: rule?.enabled ?? false };
+  }
 }
 
 // Singleton instance

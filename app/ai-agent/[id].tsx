@@ -2,16 +2,137 @@ import React, { useMemo, useState } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { AgentShell } from '@/components/ai-agent/AgentShell';
-import { ChartBarBig, Brain, Clock, CircleCheckBig, TriangleAlert } from 'lucide-react-native';
+import { Bot, ChartBarBig, Brain, Clock, CircleCheckBig, TriangleAlert } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useAIAssistant } from '@/providers/AIAssistantProvider';
 import { aiEmployees } from '@/constants/aiEmployees';
+import type { AIEmployee } from '@/constants/aiEmployees';
+import { completeAIWorkforce } from '@/constants/completeAIWorkforce_1108';
+import aiAgentsSidebarSections from '@/constants/aiAgentsSidebarData';
 import { trpc } from '@/lib/trpc';
 import { useAgentCounseling } from '@/hooks/useAgentCounseling';
 import { getAgentById, getAgentHierarchy } from '@/constants/aiAgentHierarchy';
 
+const toTitleCase = (value: string) =>
+    value
+        .replace(/^\d+-/, '')
+        .split('-')
+        .filter(Boolean)
+        .map((part) => (part.toLowerCase() === 'ai' ? 'AI' : part.charAt(0).toUpperCase() + part.slice(1)))
+        .join(' ');
+
+const parseCanonicalAgentId = (rawId: string) => {
+    const match = rawId.match(/^(\d+)-(.+)$/);
+    return {
+        departmentId: match ? Number(match[1]) : undefined,
+        agentId: match ? match[2] : rawId,
+    };
+};
+
+const sidebarAgentLookup = new Map<string, { title: string; department: string }>();
+
+aiAgentsSidebarSections.forEach((section: any) => {
+    section.subSections?.forEach((subSection: any) => {
+        subSection.items?.forEach((item: any) => {
+            if (item?.id && item?.title) {
+                sidebarAgentLookup.set(item.id, {
+                    title: item.title,
+                    department: section.title?.replace(/^\d+:\s*/, '').replace(/\s*\(\d+\)$/, '') || 'AI Workforce',
+                });
+            }
+        });
+    });
+});
+
+const findWorkforceAgent = (rawId: string) => {
+    console.log('[findWorkforceAgent] Searching for agent with rawId:', rawId);
+    const { departmentId, agentId: normalizedId } = parseCanonicalAgentId(rawId);
+    console.log('[findWorkforceAgent] Parsed - departmentId:', departmentId, 'normalizedId:', normalizedId);
+    const candidateMainAgents = departmentId
+        ? completeAIWorkforce.filter((mainAgent) => mainAgent.departmentId === departmentId)
+        : completeAIWorkforce;
+    console.log('[findWorkforceAgent] Candidate main agents count:', candidateMainAgents.length);
+
+    for (const mainAgent of candidateMainAgents) {
+        if (mainAgent.id === normalizedId || mainAgent.id === rawId) {
+            console.log('[findWorkforceAgent] Found main agent:', mainAgent.name);
+            return {
+                id: rawId,
+                name: mainAgent.name,
+                title: mainAgent.title,
+                description: mainAgent.description,
+                capabilities: mainAgent.capabilities,
+                route: mainAgent.route,
+                color: mainAgent.color,
+                department: mainAgent.department,
+                type: 'employee' as const,
+            };
+        }
+
+        const subAgent = mainAgent.subAgents.find((candidate) => candidate.id === normalizedId || candidate.id === rawId);
+        if (subAgent) {
+            console.log('[findWorkforceAgent] Found sub agent:', subAgent.name);
+            return {
+                id: rawId,
+                name: subAgent.name,
+                title: subAgent.title,
+                description: subAgent.description,
+                capabilities: subAgent.capabilities,
+                route: `/ai-agent/${rawId}`,
+                color: mainAgent.color,
+                department: mainAgent.department,
+                type: 'agent' as const,
+            };
+        }
+    }
+
+    console.log('[findWorkforceAgent] Agent not found');
+    return undefined;
+};
+
+const createGeneratedAgent = (rawId: string, routeTitle?: string | string[]): AIEmployee => {
+    const workforceAgent = findWorkforceAgent(rawId);
+    const sidebarAgent = sidebarAgentLookup.get(rawId);
+    const displayTitle = Array.isArray(routeTitle) ? routeTitle[0] : routeTitle;
+    const name = workforceAgent?.name || sidebarAgent?.title || displayTitle || toTitleCase(rawId);
+    const title = workforceAgent?.title || name.replace(/^AI\s+/i, '');
+    const color = workforceAgent?.color || '#34C759';
+
+    return {
+        id: rawId,
+        name,
+        title,
+        description: workforceAgent?.description || `${name} is part of the 1,108-agent AI workforce and supports ${sidebarAgent?.department || 'department'} operations, automation, reporting, and coordinated execution.`,
+        icon: Bot,
+        color,
+        humanCost: '$60k/year',
+        aiCost: '$1.2k/year',
+        efficiency: workforceAgent ? 'Enterprise workforce automation' : 'Generated workforce profile',
+        capabilities: workforceAgent?.capabilities?.length
+            ? workforceAgent.capabilities
+            : ['Task Automation', 'Data Analysis', 'Workflow Coordination', 'Performance Reporting'],
+        route: `/ai-agent/${rawId}`,
+        category: 'operations',
+        type: workforceAgent?.type || 'agent',
+        replacesRole: title,
+        infrastructure: {
+            status: 'online',
+            health: 96,
+            uptime: '99.9%',
+            lastActive: 'Now',
+            processingPower: 'enterprise',
+        },
+        roiMetrics: {
+            savingsPerMonth: '$4,500',
+            tasksAutomatedDaily: 120,
+            responseTime: '<1s',
+            accuracyRate: '96%',
+        },
+    };
+};
+
 export default function DynamicAgentScreen() {
-    const { id } = useLocalSearchParams();
+    const { id, title } = useLocalSearchParams<{ id?: string; title?: string }>();
     const { theme } = useTheme();
 
     const { activeAgents, toggleAgent } = useAIAssistant();
@@ -21,8 +142,13 @@ export default function DynamicAgentScreen() {
 
     const agent = useMemo(() => {
         if (!id || typeof id !== 'string') return undefined;
-        return aiEmployees.find(e => e.id === id);
-    }, [id]);
+        console.log('[DynamicAgentScreen] Looking for agent with id:', id);
+        const foundInAiEmployees = aiEmployees.find(e => e.id === id);
+        console.log('[DynamicAgentScreen] Found in aiEmployees:', !!foundInAiEmployees);
+        const generatedAgent = createGeneratedAgent(id, title);
+        console.log('[DynamicAgentScreen] Generated agent name:', generatedAgent.name);
+        return foundInAiEmployees || generatedAgent;
+    }, [id, title]);
 
     const hierarchyAgent = useMemo(() => {
         if (!agent?.id) return undefined;

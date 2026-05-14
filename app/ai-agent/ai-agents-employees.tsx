@@ -29,8 +29,17 @@ import {
   Code,
   History,
   ToggleRight,
+  Shield,
+  Building,
+  Factory,
+  Truck,
+  Package,
+  Sparkles,
+  Heart,
+  Microscope,
+  Menu,
 } from 'lucide-react-native';
-import { Animated, TouchableOpacity, View, Text, ScrollView, TextInput } from 'react-native';
+import { Animated, TouchableOpacity, View, Text, ScrollView, TextInput, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
@@ -38,6 +47,7 @@ import { aiEmployees, AIEmployee } from '@/constants/aiEmployees';
 import { useAIAssistant } from '@/providers/AIAssistantProvider';
 import { trpc } from '@/lib/trpc';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { AIWorkforceSidebar } from '@/components/AIWorkforceSidebar';
 
 interface QuickAction {
   id: string;
@@ -69,6 +79,7 @@ export default function AIAgentsEmployeesScreen() {
   const insets = useSafeAreaInsets();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [showSidebar, setShowSidebar] = useState<boolean>(false);
 
   const statsCategory = useMemo(() => {
     const map: Record<typeof activeCategory, 'all' | 'customer-experience' | 'sales-revenue' | 'marketing-growth' | 'operations-management' | 'data-intelligence'> = {
@@ -104,61 +115,79 @@ export default function AIAgentsEmployeesScreen() {
   }, [fadeAnim, pulseAnim]);
 
   const departmentRoutes: Record<string, string> = {
-    'executive-leadership': '/ai-agent/executive-leadership-ai',
-    'accounting-finance': '/ai-agent/accounting-finance-ai',
     'customer-experience': '/ai-agent/customer-experience-ai',
     'sales-revenue': '/ai-agent/sales-revenue-ai',
     'marketing-growth': '/ai-agent/marketing-growth-ai',
-    'product-rnd': '/ai-agent/product-rnd-ai',
     'operations-management': '/ai-agent/operations-management-ai',
-    'social-media-management': '/ai-agent/social-media-management-ai',
-    'data-intelligence': '/ai-agent/data-intelligence-ai',
-    'analysis-insights-performance': '/ai-agent/analysis-performance-ai',
+    'finance-accounting': '/ai-agent/accounting-finance-ai',
+    'technology-engineering': '/ai-agent/engineering-development-ai',
     'human-resources': '/ai-agent/human-resources-ai',
-    'it-technology': '/ai-agent/it-technology-ai',
     'legal-compliance': '/ai-agent/legal-compliance-ai',
-    'engineering-development': '/ai-agent/engineering-development-ai',
-    'ai-personal-assistant': '/ai-agent/ai-personal-assistant-ai',
-    'trading-investment': '/ai-agent/trading-investment-ai',
+    'data-intelligence': '/ai-agent/data-intelligence-ai',
+    'product-management': '/ai-agent/product-rnd-ai',
+    'security-risk': '/ai-agent/security',
+    'research-development': '/ai-agent/research',
+    'administrative': '/ai-agent/admin',
+    'trading-investments': '/ai-agent/trading-investment-ai',
+    'real-estate-property': '/ai-agent/realestate',
+    'insurance-risk': '/ai-agent/insurance',
+    'healthcare-medical': '/ai-agent/healthcare',
+    'manufacturing-production': '/ai-agent/manufacturing',
+    'transportation-logistics': '/ai-agent/transportation',
+    'government-public-sector': '/ai-agent/government',
+    'supply-chain-logistics': '/ai-agent/supply-chain',
+    'ai-management-governance': '/ai-agent/ai-mgmt',
   };
 
   const departments = [
-    { id: 'executive-leadership', label: 'Executive & Leadership AI', icon: Crown, color: '#FFD700' },
-    { id: 'accounting-finance', label: 'Accounting & Finance AI', icon: Calculator, color: '#10B981' },
-    { id: 'customer-experience', label: 'Customer Experience AI', icon: Headphones, color: '#007AFF' },
-    { id: 'sales-revenue', label: 'Sales & Revenue AI', icon: TrendingUp, color: '#34C759' },
-    { id: 'marketing-growth', label: 'Marketing & Growth AI', icon: Megaphone, color: '#FF2D55' },
-    { id: 'product-rnd', label: 'Product & R&D AI', icon: Lightbulb, color: '#8B5CF6' },
-    { id: 'operations-management', label: 'Operations & Management AI', icon: Settings, color: '#FF6482' },
-    { id: 'social-media-management', label: 'Social Media Management AI', icon: Share2, color: '#1DA1F2' },
-    { id: 'data-intelligence', label: 'Data & Intelligence AI', icon: Database, color: '#06B6D4' },
-    { id: 'analysis-insights-performance', label: 'Analysis & Performance AI', icon: ChartBarBig, color: '#F97316' },
-    { id: 'human-resources', label: 'Human Resources AI', icon: Users, color: '#EC4899' },
-    { id: 'it-technology', label: 'IT & Technology AI', icon: MonitorIcon, color: '#6366F1' },
-    { id: 'legal-compliance', label: 'Legal & Compliance AI', icon: Scale, color: '#F59E0B' },
-    { id: 'engineering-development', label: 'Engineering & Development AI', icon: Code, color: '#14B8A6' },
-    { id: 'ai-personal-assistant', label: 'AI Personal Assistant', icon: User, color: '#6366F1' },
-    { id: 'trading-investment', label: 'Trading & Investment AI', icon: TrendingUp, color: '#00C853' },
+    { id: 'customer-experience', label: '1. Customer Experience (56)', icon: Headphones, color: '#007AFF' },
+    { id: 'sales-revenue', label: '2. Sales & Revenue (56)', icon: TrendingUp, color: '#34C759' },
+    { id: 'marketing-growth', label: '3. Marketing & Growth (60)', icon: Megaphone, color: '#FF2D55' },
+    { id: 'operations-management', label: '4. Operations & Management (52)', icon: Settings, color: '#FF6482' },
+    { id: 'finance-accounting', label: '5. Finance & Accounting (52)', icon: Calculator, color: '#10B981' },
+    { id: 'technology-engineering', label: '6. Technology & Engineering (64)', icon: Code, color: '#14B8A6' },
+    { id: 'human-resources', label: '7. Human Resources (44)', icon: Users, color: '#EC4899' },
+    { id: 'legal-compliance', label: '8. Legal & Compliance (40)', icon: Scale, color: '#F59E0B' },
+    { id: 'data-intelligence', label: '9. Data & Intelligence (52)', icon: Database, color: '#06B6D4' },
+    { id: 'product-management', label: '10. Product Management (40)', icon: Lightbulb, color: '#8B5CF6' },
+    { id: 'security-risk', label: '11. Security & Risk (48)', icon: Shield, color: '#F97316' },
+    { id: 'research-development', label: '12. Research & Development (36)', icon: Microscope, color: '#06B6D4' },
+    { id: 'administrative', label: '13. Administrative (36)', icon: Building, color: '#64748B' },
+    { id: 'trading-investments', label: '14. Trading & Investments (72)', icon: TrendingUp, color: '#00C853' },
+    { id: 'real-estate-property', label: '15. Real Estate & Property (56)', icon: Building, color: '#F59E0B' },
+    { id: 'insurance-risk', label: '16. Insurance & Risk (64)', icon: Shield, color: '#EF4444' },
+    { id: 'healthcare-medical', label: '17. Healthcare & Medical (56)', icon: Heart, color: '#EF4444' },
+    { id: 'manufacturing-production', label: '18. Manufacturing & Production (56)', icon: Factory, color: '#78716C' },
+    { id: 'transportation-logistics', label: '19. Transportation & Logistics (56)', icon: Truck, color: '#3B82F6' },
+    { id: 'government-public-sector', label: '20. Government & Public Sector (48)', icon: Building, color: '#6366F1' },
+    { id: 'supply-chain-logistics', label: '21. Supply Chain & Logistics (40)', icon: Package, color: '#8B5CF6' },
+    { id: 'ai-management-governance', label: '22. AI Management & Governance (24)', icon: Sparkles, color: '#A855F7' },
   ];
 
   const categories = [
-    { id: 'all', label: 'All', icon: Layers },
-    { id: 'executive-leadership', label: 'Executive', icon: Crown },
-    { id: 'accounting-finance', label: 'Finance', icon: Calculator },
-    { id: 'customer-experience', label: 'Customer', icon: Headphones },
-    { id: 'sales-revenue', label: 'Sales', icon: TrendingUp },
-    { id: 'marketing-growth', label: 'Marketing', icon: Megaphone },
-    { id: 'product-rnd', label: 'Product', icon: Lightbulb },
-    { id: 'operations-management', label: 'Operations', icon: Settings },
-    { id: 'social-media-management', label: 'Social Media', icon: Share2 },
-    { id: 'data-intelligence', label: 'Data', icon: Database },
-    { id: 'analysis-insights-performance', label: 'Analytics', icon: ChartBarBig },
-    { id: 'human-resources', label: 'HR', icon: Users },
-    { id: 'it-technology', label: 'IT', icon: MonitorIcon },
-    { id: 'legal-compliance', label: 'Legal', icon: Scale },
-    { id: 'engineering-development', label: 'Engineering', icon: Code },
-    { id: 'ai-personal-assistant', label: 'Assistant', icon: User },
-    { id: 'trading-investment', label: 'Trading', icon: TrendingUp },
+    { id: 'all', label: 'All (1108)', icon: Layers },
+    { id: 'customer-experience', label: 'CX (56)', icon: Headphones },
+    { id: 'sales-revenue', label: 'Sales (56)', icon: TrendingUp },
+    { id: 'marketing-growth', label: 'Marketing (60)', icon: Megaphone },
+    { id: 'operations-management', label: 'Operations (52)', icon: Settings },
+    { id: 'finance-accounting', label: 'Finance (52)', icon: Calculator },
+    { id: 'technology-engineering', label: 'Tech (64)', icon: Code },
+    { id: 'human-resources', label: 'HR (44)', icon: Users },
+    { id: 'legal-compliance', label: 'Legal (40)', icon: Scale },
+    { id: 'data-intelligence', label: 'Data (52)', icon: Database },
+    { id: 'product-management', label: 'Product (40)', icon: Lightbulb },
+    { id: 'security-risk', label: 'Security (48)', icon: Shield },
+    { id: 'research-development', label: 'R&D (36)', icon: Microscope },
+    { id: 'administrative', label: 'Admin (36)', icon: Building },
+    { id: 'trading-investments', label: 'Trading (72)', icon: TrendingUp },
+    { id: 'real-estate-property', label: 'Real Estate (56)', icon: Building },
+    { id: 'insurance-risk', label: 'Insurance (64)', icon: Shield },
+    { id: 'healthcare-medical', label: 'Healthcare (56)', icon: Heart },
+    { id: 'manufacturing-production', label: 'Manufacturing (56)', icon: Factory },
+    { id: 'transportation-logistics', label: 'Transport (56)', icon: Truck },
+    { id: 'government-public-sector', label: 'Government (48)', icon: Building },
+    { id: 'supply-chain-logistics', label: 'Supply Chain (40)', icon: Package },
+    { id: 'ai-management-governance', label: 'AI Mgmt (24)', icon: Sparkles },
   ];
 
   const filteredEmployees = useMemo(() => {
@@ -174,7 +203,7 @@ export default function AIAgentsEmployeesScreen() {
   }, [searchQuery, activeCategory, activeAgents]);
 
   const stats = useMemo(() => ({
-    total: globalStats?.totalAgents || aiEmployees.length,
+    total: globalStats?.totalAgents || 1108,
     active: globalStats?.activeAgents || providerStats.activeCount,
     savings: '$145K',
     uptime: '99.99%',
@@ -203,7 +232,10 @@ export default function AIAgentsEmployeesScreen() {
           borderLeftColor: emp.isActive ? '#34C759' : theme.colors.border
         }
       ]}
-      onPress={() => router.push(emp.route)}
+      onPress={() => {
+        console.log('Navigating to agent:', emp.id, 'route:', emp.route);
+        router.push(emp.route);
+      }}
     >
       <View style={styles.employeeHeader}>
         <View style={[styles.employeeIconContainer, { backgroundColor: emp.color + '15' }]}>
@@ -256,6 +288,9 @@ export default function AIAgentsEmployeesScreen() {
           <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
             <ArrowLeft size={24} color="#fff" />
           </TouchableOpacity>
+          <TouchableOpacity onPress={() => setShowSidebar(true)} style={styles.menuButton}>
+            <Menu size={24} color="#fff" />
+          </TouchableOpacity>
           <View style={styles.headerTitleContainer}>
             <Text style={styles.headerTitle}>AI Workforce</Text>
             <Text style={styles.headerSubtitle}>{stats.active}/{stats.total} Agents Online</Text>
@@ -285,6 +320,9 @@ export default function AIAgentsEmployeesScreen() {
           </View>
         </View>
       </LinearGradient>
+
+      {/* 3-Line Sidebar with all 1108 AI Agents */}
+      <AIWorkforceSidebar isVisible={showSidebar} onClose={() => setShowSidebar(false)} />
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
         <View style={styles.searchSection}>
@@ -362,11 +400,12 @@ export default function AIAgentsEmployeesScreen() {
   );
 }
 
-const styles = {
+const styles = StyleSheet.create({
   container: { flex: 1 },
   header: { paddingHorizontal: 20, paddingBottom: 25, borderBottomLeftRadius: 30, borderBottomRightRadius: 30 },
   navBar: { flexDirection: 'row', alignItems: 'center', marginBottom: 25 },
   backButton: { width: 40, height: 40, borderRadius: 12, backgroundColor: 'rgba(255,255,255,0.1)', justifyContent: 'center', alignItems: 'center' },
+  menuButton: { width: 40, height: 40, borderRadius: 12, backgroundColor: 'rgba(255,255,255,0.1)', justifyContent: 'center', alignItems: 'center' },
   headerTitleContainer: { flex: 1, marginLeft: 15 },
   headerTitle: { fontSize: 22, fontWeight: '800', color: '#fff' },
   headerSubtitle: { fontSize: 13, color: 'rgba(255,255,255,0.6)', marginTop: 2 },
@@ -412,4 +451,4 @@ const styles = {
   tagContainer: { flexDirection: 'row', gap: 8 },
   tag: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 8 },
   tagText: { fontSize: 10, fontWeight: '600' },
-};
+});

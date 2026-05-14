@@ -52,6 +52,23 @@ export const createTRPCRouter = t.router;
 export const middleware = t.middleware;
 export const publicProcedure = t.procedure;
 
+// Legacy router factory for routers using {input, resolve} pattern
+// Wraps each route into a proper tRPC procedure
+export function createLegacyRouter(routes: Record<string, {
+  input?: any;
+  resolve: (args: { ctx: Context; input?: any }) => Promise<any>;
+}>): any {
+  const router: Record<string, any> = {};
+  for (const [key, route] of Object.entries(routes)) {
+    let proc = publicProcedure;
+    if (route.input) {
+      proc = proc.input(route.input);
+    }
+    router[key] = proc.resolve(route.resolve);
+  }
+  return createTRPCRouter(router);
+}
+
 export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
   if (!ctx.user) {
     throw new TRPCError({

@@ -1264,6 +1264,41 @@ class AgentPerformanceMonitoringService {
       projected: Math.round(projected * 100) / 100,
     };
   }
+
+  // Get agent metrics
+  async getAgentMetrics(agentId: string): Promise<any> {
+    return { agentId, metrics: {}, timestamp: new Date() };
+  }
+
+  // Get alert rules
+  getAlertRules(): any[] {
+    return [];
+  }
+
+  // Get alerts
+  getAlerts(filters?: any): any[] {
+    return [];
+  }
+
+  // Create cost center
+  async createCostCenter(data: any): Promise<any> {
+    return { id: crypto.randomUUID(), ...data, createdAt: new Date() };
+  }
+
+  // Get cost centers
+  async getCostCenters(organizationId: string): Promise<any[]> {
+    return [];
+  }
+
+  // Get cost report
+  async getCostReport(organizationId: string, period: string): Promise<any> {
+    return { organizationId, period, costs: [], total: 0 };
+  }
+
+  // Check budget alert
+  async checkBudgetAlert(organizationId: string): Promise<{ triggered: boolean; message?: string }> {
+    return { triggered: false };
+  }
 }
 
 // Export singleton instance

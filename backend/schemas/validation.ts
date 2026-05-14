@@ -74,6 +74,11 @@ const sanitizeSql = (val: string): string => {
   return sqlPatterns.reduce((clean, pattern) => clean.replace(pattern, ''), val);
 };
 
+// Exported aliases used throughout the codebase
+const safeStringSchema = sanitizeString;
+const safeHtmlSchema = sanitizeHtml;
+const sqlInjectionSafeSchema = sanitizeSql;
+
 // User management schemas
 export const createUserSchema = z.object({
   email: emailSchema,
@@ -545,7 +550,7 @@ const _sanitizeSql = (val: string): string => {
     /(--|\/\*|\*\/|;|'|"|\`|\\)/g,
     /(\b(OR|AND|XOR|NOT|IN|EXISTS|BETWEEN|LIKE)\s+[^\s]+)/gi,
     /(\b(OR|AND|XOR|NOT|IN|EXISTS|BETWEEN|LIKE)\s+[^\s]+)/gi,
-    /(\b(CAST|CONVERT|CHAR|ASCII|ORD|HEX|UNHEX)\s*\(/gi,
+    /(\b(CAST|CONVERT|CHAR|ASCII|ORD|HEX|UNHEX)\s*\)/gi,
     /\b(CONCAT|SUBSTRING|LENGTH|REPLACE|INSERT|LPAD|RPAD)\s*\(/gi
   ];
   
@@ -692,7 +697,7 @@ export const updateSecureLeadSchema = z.object({
 // Enhanced payment processing schemas with security
 export const createSecurePaymentMethodSchema = z.object({
   type: z.enum(['card', 'bank_account']),
-  cardNumber: z.string().transform(val => val.replace(/\D/g, '')).min(13).max(19),
+  cardNumber: z.string().min(13).max(19).transform(val => val.replace(/\D/g, '')),
   expiryMonth: z.string().regex(/^(0[1-9]|1[0-2])$/),
   expiryYear: z.string().regex(/^[0-9]{4}$/),
   cvv: z.string().regex(/^[0-9]{3,4}$/),
@@ -860,7 +865,7 @@ export const campaignAnalyticsQuerySchema = z.object({
 export const healthCheckResponseSchema = z.object({
   status: z.enum(['healthy', 'unhealthy', 'degraded']),
   timestamp: z.string().datetime(),
-  services: z.record(z.object({
+  services: z.record(z.string(), z.object({
     status: z.enum(['healthy', 'unhealthy', 'degraded']),
     latency: z.number().optional(),
     error: z.string().optional(),
@@ -902,7 +907,7 @@ export const callRecordingQuerySchema = z.object({
 // Payment processing schemas with enhanced security
 export const createPaymentMethodSchema = z.object({
   type: z.enum(['card', 'bank_account']),
-  cardNumber: z.string().transform(val => val.replace(/\D/g, '')).min(13).max(19),
+  cardNumber: z.string().min(13).max(19).transform(val => val.replace(/\D/g, '')),
   expiryMonth: z.string().regex(/^(0[1-9]|1[0-2])$/),
   expiryYear: z.string().regex(/^[0-9]{4}$/),
   cvv: z.string().regex(/^[0-9]{3,4}$/),

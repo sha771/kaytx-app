@@ -199,8 +199,8 @@ export async function createSession(
     userId,
     token: tokenHash,
     refreshToken: refreshTokenHash,
-    expiresAt: new Date(now + config.auth.sessionExpiryMs),
-    refreshExpiresAt: new Date(now + config.auth.refreshTokenExpiryMs),
+    expiresAt: new Date(now + config.oauth.sessionExpiryMs),
+    refreshExpiresAt: new Date(now + config.oauth.refreshTokenExpiryMs),
     ipAddress: normalizedIp,
     userAgent: normalizedUserAgent,
     deviceId: deviceId || null,
@@ -305,7 +305,7 @@ export async function revokeSession(sessionId: string): Promise<void> {
     
     if (!existing) {
       await logAudit({
-        action: AuditActions.SESSION_REVOKED,
+        action: AuditActions.SESSION_REVOKE,
         resource: 'session',
         resourceId: sessionId,
         status: 'failure',
@@ -317,7 +317,7 @@ export async function revokeSession(sessionId: string): Promise<void> {
     await pgDb.delete(sessions).where(eq(sessions.id, sessionId));
 
     await logAudit({
-      action: AuditActions.SESSION_REVOKED,
+      action: AuditActions.SESSION_REVOKE,
       userId: existing.userId,
       organizationId: existing.organizationId,
       resource: 'session',
@@ -329,7 +329,7 @@ export async function revokeSession(sessionId: string): Promise<void> {
     await logAudit({
       userId: 'unknown',
       organizationId: 'unknown',
-      action: AuditActions.SESSION_REVOKED,
+      action: AuditActions.SESSION_REVOKE,
       resource: 'session',
       status: 'failure',
       metadata: { error: error instanceof Error ? error.message : 'Unknown error' },
@@ -765,8 +765,8 @@ initializeSSOProviders();
 
 // Enhanced SSO initiation with enterprise security
 export async function initiateSSO(
-  provider: 'saml' | 'oidc', 
-  organizationSlug: string, 
+  provider: 'saml' | 'oidc',
+  organizationSlug: string,
   providerId?: string,
   options?: {
     ipAddress?: string;
@@ -809,8 +809,7 @@ export async function initiateSSO(
     // Log SSO initiation attempt
     await logSSOEvent({
       organizationId: org.id,
-      provider,
-      providerId: providerKey,
+      provider: providerKey,
       event: 'login_attempt',
       details: { 
         organizationSlug, 
@@ -847,7 +846,7 @@ async function initiateSAMLFlow(
     loginHint?: string;
   }
 ) {
-  const provider = samlProviders.get(samlConfig.providerId || 'okta-saml');
+  const provider = samlProviders.get(samlConfig.provider || 'okta-saml');
   if (!provider) {
     throw new Error('SAML provider not configured');
   }
@@ -890,12 +889,12 @@ async function initiateSAMLFlow(
   return {
     redirectUrl: `${provider.ssoUrl}?SAMLRequest=${encodeURIComponent(samlRequest)}&RelayState=${relayState}`,
     relayState,
-    providerId: samlConfig.providerId || 'okta-saml'
+    provider: samlConfig.provider || 'okta-saml'
   };
 }
 
 async function initiateOIDCFlow(organizationSlug: string, oidcConfig: any) {
-  const provider = oidcProviders.get(oidcConfig.providerId || 'azure-oidc');
+  const provider = oidcProviders.get(oidcConfig.provider || 'azure-oidc');
   if (!provider) {
     throw new Error('OIDC provider not configured');
   }
@@ -933,12 +932,11 @@ async function logSSOEvent(event: SSOAuditEvent) {
       organizationId: event.organizationId,
       action: `SSO_${event.event.toUpperCase()}`,
       resource: 'sso',
-      resourceId: event.providerId,
+      resourceId: event.provider,
       ipAddress: event.ipAddress,
       userAgent: event.userAgent,
       metadata: {
         provider: event.provider,
-        providerId: event.providerId,
         details: event.details
       },
       status: event.event.includes('failure') ? 'failure' : 'success',
@@ -951,7 +949,6 @@ async function logSSOEvent(event: SSOAuditEvent) {
       organizationId: event.organizationId,
       userId: event.userId,
       provider: event.provider,
-      providerId: event.providerId,
       event: event.event,
       details: event.details,
       ipAddress: event.ipAddress,
@@ -1201,7 +1198,7 @@ export async function getSSOProviders(organizationSlug: string) {
     providers.push({
       type: 'saml',
       name: ssoConfig.saml.name || 'SAML',
-      providerId: ssoConfig.saml.providerId || 'okta-saml'
+      provider: ssoConfig.saml.provider || 'okta-saml'
     });
   }
 
@@ -1209,7 +1206,7 @@ export async function getSSOProviders(organizationSlug: string) {
     providers.push({
       type: 'oidc',
       name: ssoConfig.oidc.name || 'OIDC',
-      providerId: ssoConfig.oidc.providerId || 'azure-oidc'
+      provider: ssoConfig.oidc.provider || 'azure-oidc'
     });
   }
 
@@ -1225,12 +1222,12 @@ export async function configureSSO(
     enabled: boolean;
     saml?: {
       enabled: boolean;
-      providerId: string;
+      provider: string;
       name?: string;
     };
     oidc?: {
       enabled: boolean;
-      providerId: string;
+      provider: string;
       name?: string;
     };
   }

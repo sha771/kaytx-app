@@ -4,7 +4,7 @@ import { useTheme } from '@/providers/ThemeProvider';
 import { useRouter } from 'expo-router';
 import { 
   AlertTriangle, Shield, ClipboardList, Clock, ChevronRight, Star, Activity,
-  CheckCircle, BarChart3, Zap, Siren, Crosshair, Lock, Filter, Settings,
+  CheckCircle, BarChart3, Zap, Crosshair, Lock, Filter, Settings,
   Play, Pause, RotateCw, FileText, Users, Eye, TrendingUp, Target, Radio
 } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
@@ -69,7 +69,7 @@ export default function IncidentResponderEnterprisePage() {
   const metrics = [
     { title: 'MTTD', value: '2.4m', change: '-15%', icon: Clock, color: '#34C759' },
     { title: 'MTTR', value: '18m', change: '-12%', icon: Zap, color: '#007AFF' },
-    { title: 'Open Incidents', value: '3', change: '0', icon: Siren, color: '#FF3B30' },
+    { title: 'Open Incidents', value: '3', change: '0', icon: AlertTriangle, color: '#FF3B30' },
     { title: 'Success Rate', value: '98%', change: '+2%', icon: CheckCircle, color: '#34C759' },
   ];
 
@@ -101,7 +101,7 @@ export default function IncidentResponderEnterprisePage() {
   ];
 
   const capabilities = [
-    { name: 'Incident Triage', icon: Siren, enabled: true },
+    { name: 'Incident Triage', icon: AlertTriangle, enabled: true },
     { name: 'Containment', icon: Shield, enabled: true },
     { name: 'Evidence Collection', icon: ClipboardList, enabled: true },
     { name: 'Timeline Analysis', icon: Clock, enabled: true },
@@ -148,7 +148,7 @@ export default function IncidentResponderEnterprisePage() {
             <Text style={[styles.badgeText, { color: '#EC407A' }]}>Responder</Text>
           </View>
           <View style={[styles.badge, { backgroundColor: '#FF9500' + '22' }]}>
-            <Siren size={12} color="#FF9500" />
+            <AlertTriangle size={12} color="#FF9500" />
             <Text style={[styles.badgeText, { color: '#FF9500' }]}>3 Sub-Agents</Text>
           </View>
         </View>
