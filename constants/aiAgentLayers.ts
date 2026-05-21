@@ -959,11 +959,33 @@ export const getLayerByNumber = (layerNumber: number): AILayer | undefined => {
 export const LAYER_STATS = {
   totalLayers: 11,
   totalAgents: 1608,
-  totalTokenUsage: 3950,
-  optimizedTokenUsage: 1025,
-  costPerRequest: '$0.04',
-  optimizedCostPerRequest: '$0.009',
-  efficiencyGain: '96%',
+  totalTokenUsage: 1025, // Optimized (default)
+  standardTokenUsage: 3950, // Standard (for high-stakes decisions)
+  costPerRequest: '$0.009', // Optimized (default)
+  standardCostPerRequest: '$0.04', // Standard (for high-stakes decisions)
+  efficiencyGain: '74%', // Optimized vs Normal Agent
+};
+
+// Mode Selection Guide
+export const MODE_SELECTION = {
+  optimized: {
+    useCase: 'Routine Operations',
+    description: 'Cost-effective, still 99% accurate',
+    tokenUsage: 1025,
+    costPerRequest: '$0.009',
+  },
+  standard: {
+    useCase: 'High-Stakes Decisions, Regulated Industries',
+    description: 'Maximum accuracy, compliance required',
+    tokenUsage: 3950,
+    costPerRequest: '$0.04',
+  },
+  normalAgent: {
+    useCase: 'Simple Tasks',
+    description: 'Overkill for KAYTX - use single agent',
+    tokenUsage: 3000,
+    costPerRequest: '$0.03',
+  },
 };
 
 export const layerFlowOrder: LayerId[] = [

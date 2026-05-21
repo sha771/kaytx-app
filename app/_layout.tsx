@@ -1,4 +1,4 @@
-/**
+ /**
  * @copyright Copyright (c) 2026 Kaytx & Antigravity Ecosystem ("kaytx")
  * @license MIT - See LICENSE file for full terms
  */
@@ -188,7 +188,7 @@ function RootLayoutNav() {
       <Stack.Screen name="ai-agent/ai-agent" />
       <Stack.Screen name="ai-agent/ai-receptionist" />
       <Stack.Screen name="ai-agents-employees-builder" />
-      <Stack.Screen name="command-center" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="ai-agent/command-center" options={{ presentation: "fullScreenModal" }} />
       <Stack.Screen name="ai-agent/personal-assistant" />
       <Stack.Screen name="ai-agent/ai-voice-assistant" />
       <Stack.Screen name="ai-agent/ai-workflow" />

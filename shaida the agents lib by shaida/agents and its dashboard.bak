@@ -1,0 +1,1264 @@
+KAYTX AI WORKFORCE - COMPLETE AGENT TABLE (1,108 Agents)
+================================================================
+**VERIFIED STATUS:** May 16, 2026 - ALL 1,108 AGENTS PRESENT ?
+**Source:** generate-enterprise-agents.js (Full compact definitions for 277 Main + 831 Sub-Agents)
+
+<!-- DEPARTMENT LISTING BEGINS -->
+================================================================
+## 1. CUSTOMER EXPERIENCE (54 Agents)
+================================================================
+| Name of Agent | Dashboard |
+|-------------|---------------------------------------|
+| AI Chief Customer Officer (CCO) | /ai-agent/customer/chief-customer-officer |
+|   +-- AI CX Strategy Analyst | /ai-agent/customer/cx-strategy-analyst |
+|   +-- AI Customer Journey Mapper | /ai-agent/customer/customer-journey-mapper |
+|   +-- AI CX Metrics Tracker | /ai-agent/customer/cx-metrics-tracker |
+| AI VP Customer Success | /ai-agent/customer/vp-customer-success |
+|   +-- AI Onboarding Specialist | /ai-agent/customer/onboarding-specialist |
+|   +-- AI Account Health Monitor | /ai-agent/customer/account-health-monitor |
+|   +-- AI Success Plan Coordinator | /ai-agent/customer/success-plan-coordinator |
+| AI VP Support | /ai-agent/customer/vp-support |
+|   +-- AI Escalation Manager | /ai-agent/customer/escalation-manager |
+|   +-- AI Knowledge Base Curator | /ai-agent/customer/knowledge-base-curator |
+|   +-- AI Support Quality Auditor | /ai-agent/customer/support-quality-auditor |
+| AI VP Experience | /ai-agent/customer/vp-experience |
+|   +-- AI UX Feedback Analyst | /ai-agent/customer/ux-feedback-analyst |
+|   +-- AI Experience Benchmark Analyst | /ai-agent/customer/experience-benchmark-analyst |
+|   +-- AI Personalization Engine | /ai-agent/customer/personalization-engine |
+| AI VP Retention | /ai-agent/customer/vp-retention |
+|   +-- AI Churn Predictor | /ai-agent/customer/churn-predictor |
+|   +-- AI Win-back Campaign Specialist | /ai-agent/customer/win-back-campaign-specialist |
+|   +-- AI Retention Metrics Analyst | /ai-agent/customer/retention-metrics-analyst |
+| AI VP Loyalty | /ai-agent/customer/vp-loyalty |
+|   +-- AI Rewards Program Designer | /ai-agent/customer/rewards-program-designer |
+|   +-- AI Loyalty Tier Analyst | /ai-agent/customer/loyalty-tier-analyst |
+|   +-- AI Engagement Scoring Agent | /ai-agent/customer/engagement-scoring-agent |
+| AI Receptionist | /ai-agent/customer/receptionist |
+|   +-- AI Call Router | /ai-agent/customer/call-router |
+|   +-- AI Visitor Logger | /ai-agent/customer/visitor-logger |
+|   +-- AI Appointment Scheduler | /ai-agent/customer/appointment-scheduler |
+| AI Customer Support Agent | /ai-agent/customer/customer-support |
+|   +-- AI FAQ Responder | /ai-agent/customer/faq-responder |
+|   +-- AI Troubleshooting Guide | /ai-agent/customer/troubleshooting-guide |
+|   +-- AI Live Chat Handler | /ai-agent/customer/live-chat-handler |
+| AI Ticket Resolution Agent | /ai-agent/customer/ticket-resolution |
+|   +-- AI Ticket Classifier | /ai-agent/customer/ticket-classifier |
+|   +-- AI Solution Matcher | /ai-agent/customer/solution-matcher |
+|   +-- AI Escalation Router | /ai-agent/customer/escalation-router |
+| AI Complaint Handling Agent | /ai-agent/customer/complaint-handling |
+|   +-- AI Complaint Categorizer | /ai-agent/customer/complaint-categorizer |
+|   +-- AI Resolution Tracker | /ai-agent/customer/resolution-tracker |
+|   +-- AI Sentiment Analyzer | /ai-agent/customer/sentiment-analyzer |
+| AI Retention Specialist | /ai-agent/customer/retention-specialist |
+|   +-- AI At-Risk Identifier | /ai-agent/customer/at-risk-identifier |
+|   +-- AI Offer Optimizer | /ai-agent/customer/offer-optimizer |
+|   +-- AI Follow-up Scheduler | /ai-agent/customer/follow-up-scheduler |
+| AI Loyalty & Engagement Agent | /ai-agent/customer/loyalty-engagement |
+|   +-- AI Points Calculator | /ai-agent/customer/points-calculator |
+|   +-- AI Reward Recommender | /ai-agent/customer/reward-recommender |
+|   +-- AI Engagement Tracker | /ai-agent/customer/engagement-tracker |
+| AI Feedback & Survey Agent | /ai-agent/customer/feedback-survey |
+|   +-- AI Survey Designer | /ai-agent/customer/survey-designer |
+|   +-- AI Response Analyzer | /ai-agent/customer/response-analyzer |
+|   +-- AI Insight Reporter | /ai-agent/customer/insight-reporter |
+| AI Billing Support Agent | /ai-agent/customer/billing-support |
+|   +-- AI Payment Processor | /ai-agent/customer/payment-processor |
+|   +-- AI Invoice Explainer | /ai-agent/customer/invoice-explainer |
+|   +-- AI Dispute Resolver | /ai-agent/customer/dispute-resolver |
+
+================================================================
+## 2. SALES & REVENUE (50 Agents)
+================================================================
+| Name of Agent | Dashboard |
+|-------------|---------------------------------------|
+| AI VP Sales | /ai-agent/sales/vp-sales |
+|   +-- AI Pipeline Analyst | /ai-agent/sales/pipeline-analyst |
+|   +-- AI Quota Tracker | /ai-agent/sales/quota-tracker |
+|   +-- AI Territory Planner | /ai-agent/sales/territory-planner |
+| AI VP Revenue | /ai-agent/sales/vp-revenue |
+|   +-- AI Revenue Modeler | /ai-agent/sales/revenue-modeler |
+|   +-- AI Pricing Optimizer | /ai-agent/sales/pricing-optimizer |
+|   +-- AI Forecast Validator | /ai-agent/sales/forecast-validator |
+| AI VP Business Development | /ai-agent/sales/vp-business-development |
+|   +-- AI Partnership Scout | /ai-agent/sales/partnership-scout |
+|   +-- AI Market Expander | /ai-agent/sales/market-expander |
+|   +-- AI Alliance Coordinator | /ai-agent/sales/alliance-coordinator |
+| AI VP Channel Partners | /ai-agent/sales/vp-channel-partners |
+|   +-- AI Partner Onboarding Agent | /ai-agent/sales/partner-onboarding-agent |
+|   +-- AI Channel Performance Tracker | /ai-agent/sales/channel-performance-tracker |
+|   +-- AI Co-marketing Coordinator | /ai-agent/sales/co-marketing-coordinator |
+| AI Sales Operations Manager | /ai-agent/sales/sales-ops-manager |
+|   +-- AI CRM Data Cleaner | /ai-agent/sales/crm-data-cleaner |
+|   +-- AI Sales Process Auditor | /ai-agent/sales/sales-process-auditor |
+|   +-- AI Reporting Automator | /ai-agent/sales/reporting-automator |
+| AI Lead Development Rep (SDR) | /ai-agent/sales/sdr |
+|   +-- AI Prospect Researcher | /ai-agent/sales/prospect-researcher |
+|   +-- AI Outreach Sequencer | /ai-agent/sales/outreach-sequencer |
+|   +-- AI Lead Scorer | /ai-agent/sales/lead-scorer |
+| AI Sales Rep | /ai-agent/sales/sales-rep |
+|   +-- AI Discovery Questioner | /ai-agent/sales/discovery-questioner |
+|   +-- AI Demo Coordinator | /ai-agent/sales/demo-coordinator |
+|   +-- AI Objection Handler | /ai-agent/sales/objection-handler |
+| AI Sales Executive | /ai-agent/sales/sales-executive |
+|   +-- AI Deal Structurer | /ai-agent/sales/deal-structurer |
+|   +-- AI Stakeholder Mapper | /ai-agent/sales/stakeholder-mapper |
+|   +-- AI Closing Strategist | /ai-agent/sales/closing-strategist |
+| AI CRM Assistant | /ai-agent/sales/crm-assistant |
+|   +-- AI Contact Updater | /ai-agent/sales/contact-updater |
+|   +-- AI Activity Logger | /ai-agent/sales/activity-logger |
+|   +-- AI Pipeline Organizer | /ai-agent/sales/pipeline-organizer |
+| AI Proposal Generator | /ai-agent/sales/proposal-generator |
+|   +-- AI Template Selector | /ai-agent/sales/template-selector |
+|   +-- AI Pricing Calculator | /ai-agent/sales/pricing-calculator |
+|   +-- AI Proposal Reviewer | /ai-agent/sales/proposal-reviewer |
+| AI Negotiator | /ai-agent/sales/negotiator |
+|   +-- AI Term Analyzer | /ai-agent/sales/term-analyzer |
+|   +-- AI Concession Tracker | /ai-agent/sales/concession-tracker |
+|   +-- AI BATNA Calculator | /ai-agent/sales/batna-calculator |
+| AI Pricing Analyst | /ai-agent/sales/pricing-analyst |
+|   +-- AI Competitor Price Tracker | /ai-agent/sales/competitor-price-tracker |
+|   +-- AI Margin Calculator | /ai-agent/sales/margin-calculator |
+|   +-- AI Discount Approver | /ai-agent/sales/discount-approver |
+| AI Sales Forecasting Agent | /ai-agent/sales/sales-forecasting |
+|   +-- AI Trend Analyzer | /ai-agent/sales/trend-analyzer |
+|   +-- AI Seasonality Adjuster | /ai-agent/sales/seasonality-adjuster |
+|   +-- AI Pipeline Weighter | /ai-agent/sales/pipeline-weighter |
+| AI Sales Enablement Agent | /ai-agent/sales/sales-enablement |
+|   +-- AI Content Recommender | /ai-agent/sales/content-recommender |
+|   +-- AI Training Scheduler | /ai-agent/sales/training-scheduler |
+|   +-- AI Playbook Updater | /ai-agent/sales/playbook-updater |
+
+<!-- DEPARTMENT LISTING ENDS -->
+================================================
+## 3. MARKETING & GROWTH (54 Agents)
+================================================
+| Name of Agent | Dashboard |
+|-------------|---------------------------------------|
+| AI Chief Marketing Officer (CMO) | /ai-agent/marketing/cmo |
+|   +-- AI Marketing Strategy Analyst | /ai-agent/marketing/marketing-strategy-analyst |
+|   +-- AI Budget Allocator | /ai-agent/marketing/budget-allocator |
+|   +-- AI Campaign ROI Evaluator | /ai-agent/marketing/campaign-roi-evaluator |
+| AI VP Marketing | /ai-agent/marketing/vp-marketing |
+|   +-- AI Channel Planner | /ai-agent/marketing/channel-planner |
+|   +-- AI Marketing Calendar Manager | /ai-agent/marketing/marketing-calendar-manager |
+|   +-- AI Campaign Coordinator | /ai-agent/marketing/campaign-coordinator |
+| AI VP Brand | /ai-agent/marketing/vp-brand |
+|   +-- AI Brand Perception Monitor | /ai-agent/marketing/brand-perception-monitor |
+|   +-- AI Brand Guidelines Enforcer | /ai-agent/marketing/brand-guidelines-enforcer |
+|   +-- AI Visual Identity Auditor | /ai-agent/marketing/visual-identity-auditor |
+| AI VP Growth | /ai-agent/marketing/vp-growth |
+|   +-- AI Experiment Designer | /ai-agent/marketing/experiment-designer |
+|   +-- AI Funnel Analyzer | /ai-agent/marketing/funnel-analyzer |
+|   +-- AI A/B Test Coordinator | /ai-agent/marketing/ab-test-coordinator |
+| AI VP Content | /ai-agent/marketing/vp-content |
+|   +-- AI Editorial Calendar Planner | /ai-agent/marketing/editorial-calendar-planner |
+|   +-- AI Content Quality Reviewer | /ai-agent/marketing/content-quality-reviewer |
+|   +-- AI Repurposing Strategist | /ai-agent/marketing/repurposing-strategist |
+| AI VP Digital | /ai-agent/marketing/vp-digital |
+|   +-- AI Digital Channel Optimizer | /ai-agent/marketing/digital-channel-optimizer |
+|   +-- AI Web Performance Tracker | /ai-agent/marketing/web-performance-tracker |
+|   +-- AI Conversion Analyst | /ai-agent/marketing/conversion-analyst |
+| AI Marketing Manager | /ai-agent/marketing/marketing-manager |
+|   +-- AI Task Assigner | /ai-agent/marketing/task-assigner |
+|   +-- AI Deadline Tracker | /ai-agent/marketing/deadline-tracker |
+|   +-- AI Marketing Spend Monitor | /ai-agent/marketing/marketing-spend-monitor |
+| AI Content Marketing Agent | /ai-agent/marketing/content-marketing |
+|   +-- AI Blog Writer | /ai-agent/marketing/blog-writer |
+|   +-- AI Copy Editor | /ai-agent/marketing/copy-editor |
+|   +-- AI Content Distributor | /ai-agent/marketing/content-distributor |
+| AI SEO Specialist | /ai-agent/marketing/seo-specialist |
+|   +-- AI Keyword Researcher | /ai-agent/marketing/keyword-researcher |
+|   +-- AI On-page Optimizer | /ai-agent/marketing/on-page-optimizer |
+|   +-- AI Backlink Analyzer | /ai-agent/marketing/backlink-analyzer |
+| AI Social Media Manager | /ai-agent/marketing/social-media-manager |
+|   +-- AI Post Scheduler | /ai-agent/marketing/post-scheduler |
+|   +-- AI Engagement Responder | /ai-agent/marketing/engagement-responder |
+|   +-- AI Trend Monitor | /ai-agent/marketing/trend-monitor |
+| AI Email Marketing Agent | /ai-agent/marketing/email-marketing |
+|   +-- AI List Segmenter | /ai-agent/marketing/list-segmenter |
+|   +-- AI Template Designer | /ai-agent/marketing/template-designer |
+|   +-- AI Deliverability Monitor | /ai-agent/marketing/deliverability-monitor |
+| AI Ad Campaign Manager | /ai-agent/marketing/ad-campaign-manager |
+|   +-- AI Bid Optimizer | /ai-agent/marketing/bid-optimizer |
+|   +-- AI Creative Tester | /ai-agent/marketing/creative-tester |
+|   +-- AI Audience Targeter | /ai-agent/marketing/audience-targeter |
+| AI Marketing Analytics Agent | /ai-agent/marketing/marketing-analytics |
+|   +-- AI Attribution Modeler | /ai-agent/marketing/attribution-modeler |
+|   +-- AI KPI Dashboard Builder | /ai-agent/marketing/kpi-dashboard-builder |
+|   +-- AI Insight Summarizer | /ai-agent/marketing/insight-summarizer |
+| AI Brand Manager | /ai-agent/marketing/brand-manager |
+|   +-- AI Competitor Brand Tracker | /ai-agent/marketing/competitor-brand-tracker |
+|   +-- AI Brand Health Surveyor | /ai-agent/marketing/brand-health-surveyor |
+|   +-- AI Messaging Aligner | /ai-agent/marketing/messaging-aligner |
+| AI Growth Hacker | /ai-agent/marketing/growth-hacker |
+|   +-- AI Viral Loop Designer | /ai-agent/marketing/viral-loop-designer |
+|   +-- AI Referral Program Builder | /ai-agent/marketing/referral-program-builder |
+|   +-- AI Acquisition Channel Tester | /ai-agent/marketing/acquisition-channel-tester |
+
+================================================
+## 4. OPERATIONS & MANAGEMENT (57 Agents)
+================================================
+| Name of Agent | Dashboard |
+|-------------|---------------------------------------|
+| AI Chief Operating Officer (COO) | /ai-agent/operations/coo |
+|   +-- AI Operational Efficiency Analyst | /ai-agent/operations/operational-efficiency-analyst |
+|   +-- AI Cross-dept Coordinator | /ai-agent/operations/cross-dept-coordinator |
+|   +-- AI Strategic Initiative Tracker | /ai-agent/operations/strategic-initiative-tracker |
+| AI VP Operations | /ai-agent/operations/vp-operations |
+|   +-- AI Process Auditor | /ai-agent/operations/process-auditor |
+|   +-- AI SLA Monitor | /ai-agent/operations/sla-monitor |
+|   +-- AI Capacity Planner | /ai-agent/operations/capacity-planner |
+| AI VP Supply Chain | /ai-agent/operations/vp-supply-chain |
+|   +-- AI Supplier Risk Assessor | /ai-agent/operations/supplier-risk-assessor |
+|   +-- AI Inventory Optimizer | /ai-agent/operations/inventory-optimizer |
+|   +-- AI Logistics Cost Analyzer | /ai-agent/operations/logistics-cost-analyzer |
+| AI VP Quality | /ai-agent/operations/vp-quality |
+|   +-- AI Quality Standards Enforcer | /ai-agent/operations/quality-standards-enforcer |
+|   +-- AI Defect Pattern Analyzer | /ai-agent/operations/defect-pattern-analyzer |
+|   +-- AI Compliance Tracker | /ai-agent/operations/compliance-tracker |
+| AI VP Facilities | /ai-agent/operations/vp-facilities |
+|   +-- AI Space Utilization Analyst | /ai-agent/operations/space-utilization-analyst |
+|   +-- AI Maintenance Scheduler | /ai-agent/operations/maintenance-scheduler |
+|   +-- AI Energy Efficiency Monitor | /ai-agent/operations/energy-efficiency-monitor |
+| AI VP Project Management | /ai-agent/operations/vp-project-management |
+|   +-- AI Milestone Tracker | /ai-agent/operations/milestone-tracker |
+|   +-- AI Resource Allocator | /ai-agent/operations/resource-allocator |
+|   +-- AI Risk Identifier | /ai-agent/operations/risk-identifier |
+| AI Operations Manager | /ai-agent/operations/operations-manager |
+|   +-- AI Daily Operations Coordinator | /ai-agent/operations/daily-operations-coordinator |
+|   +-- AI Escalation Handler | /ai-agent/operations/escalation-handler |
+|   +-- AI Performance Reporter | /ai-agent/operations/performance-reporter |
+| AI Workflow Automation Agent | /ai-agent/operations/workflow-automation |
+|   +-- AI Process Mapper | /ai-agent/operations/process-mapper |
+|   +-- AI Automation Rule Builder | /ai-agent/operations/automation-rule-builder |
+|   +-- AI Exception Handler | /ai-agent/operations/exception-handler |
+| AI Task Coordinator | /ai-agent/operations/task-coordinator |
+|   +-- AI Task Prioritizer | /ai-agent/operations/task-prioritizer |
+|   +-- AI Deadline Enforcer | /ai-agent/operations/deadline-enforcer |
+|   +-- AI Dependency Tracker | /ai-agent/operations/dependency-tracker |
+| AI Process Optimization Agent | /ai-agent/operations/process-optimization |
+|   +-- AI Lean Analyst | /ai-agent/operations/lean-analyst |
+|   +-- AI Waste Identifier | /ai-agent/operations/waste-identifier |
+|   +-- AI Improvement Recommender | /ai-agent/operations/improvement-recommender |
+| AI Resource Planner | /ai-agent/operations/resource-planner |
+|   +-- AI Demand Forecaster | /ai-agent/operations/demand-forecaster |
+|   +-- AI Allocation Optimizer | /ai-agent/operations/allocation-optimizer |
+|   +-- AI Utilization Tracker | /ai-agent/operations/utilization-tracker |
+| AI Quality Assurance Agent | /ai-agent/operations/quality-assurance |
+|   +-- AI Test Case Generator | /ai-agent/operations/test-case-generator |
+|   +-- AI Defect Logger | /ai-agent/operations/defect-logger |
+|   +-- AI Regression Tracker | /ai-agent/operations/regression-tracker |
+
+<!-- DEPARTMENT LISTING ENDS -->
+================================================
+## 5. FINANCE & ACCOUNTING (78 Agents)
+================================================
+| Name of Agent | Dashboard |
+|-------------|---------------------------------------|
+| AI Chief Financial Officer (CFO) | /ai-agent/finance/cfo |
+|   +-- AI Financial Strategy Advisor | /ai-agent/finance/financial-strategy-advisor |
+|   +-- AI Capital Allocation Optimizer | /ai-agent/finance/capital-allocation-optimizer |
+|   +-- AI Risk-Reward Analyst | /ai-agent/finance/risk-reward-analyst |
+| AI VP Finance | /ai-agent/finance/vp-finance |
+|   +-- AI Financial Modeler | /ai-agent/finance/financial-modeler |
+|   +-- AI Cash Flow Forecaster | /ai-agent/finance/cash-flow-forecaster |
+|   +-- AI Investment Appraiser | /ai-agent/finance/investment-appraiser |
+| AI VP Accounting | /ai-agent/finance/vp-accounting |
+|   +-- AI Ledger Reconciler | /ai-agent/finance/ledger-reconciler |
+|   +-- AI Accounting Standards Enforcer | /ai-agent/finance/accounting-standards-enforcer |
+|   +-- AI Close Process Coordinator | /ai-agent/finance/close-process-coordinator |
+| AI VP Treasury | /ai-agent/finance/vp-treasury |
+|   +-- AI Liquidity Manager | /ai-agent/finance/liquidity-manager |
+|   +-- AI FX Risk Hedger | /ai-agent/finance/fx-risk-hedger |
+|   +-- AI Bank Relationship Coordinator | /ai-agent/finance/bank-relationship-coordinator |
+| AI VP Investor Relations | /ai-agent/finance/vp-investor-relations |
+|   +-- AI Earnings Report Drafter | /ai-agent/finance/earnings-report-drafter |
+|   +-- AI Investor Query Responder | /ai-agent/finance/investor-query-responder |
+|   +-- AI Market Sentiment Tracker | /ai-agent/finance/market-sentiment-tracker |
+| AI Controller | /ai-agent/finance/controller |
+|   +-- AI GL Reviewer | /ai-agent/finance/gl-reviewer |
+|   +-- AI Variance Analyzer | /ai-agent/finance/variance-analyzer |
+|   +-- AI Internal Policy Enforcer | /ai-agent/finance/internal-policy-enforcer |
+| AI Finance Manager | /ai-agent/finance/finance-manager |
+|   +-- AI Budget Tracker | /ai-agent/finance/budget-tracker |
+|   +-- AI Expense Approver | /ai-agent/finance/expense-approver |
+|   +-- AI Financial Report Compiler | /ai-agent/finance/financial-report-compiler |
+| AI Accounting Manager | /ai-agent/finance/accounting-manager |
+|   +-- AI Journal Entry Reviewer | /ai-agent/finance/journal-entry-reviewer |
+|   +-- AI Sub-ledger Reconciler | /ai-agent/finance/sub-ledger-reconciler |
+|   +-- AI Month-end Coordinator | /ai-agent/finance/month-end-coordinator |
+| AI Financial Analyst | /ai-agent/finance/financial-analyst |
+|   +-- AI Ratio Calculator | /ai-agent/finance/ratio-calculator |
+|   +-- AI Trend Projector | /ai-agent/finance/trend-projector |
+|   +-- AI Benchmark Comparator | /ai-agent/finance/benchmark-comparator |
+| AI Budget Manager | /ai-agent/finance/budget-manager |
+|   +-- AI Budget Planner | /ai-agent/finance/budget-planner |
+|   +-- AI Variance Reporter | /ai-agent/finance/variance-reporter |
+|   +-- AI Forecast Adjuster | /ai-agent/finance/forecast-adjuster |
+| AI Tax Specialist | /ai-agent/finance/tax-specialist |
+|   +-- AI Tax Code Researcher | /ai-agent/finance/tax-code-researcher |
+|   +-- AI Return Preparer | /ai-agent/finance/return-preparer |
+|   +-- AI Deduction Optimizer | /ai-agent/finance/deduction-optimizer |
+| AI Audit Manager | /ai-agent/finance/audit-manager |
+|   +-- AI Audit Planner | /ai-agent/finance/audit-planner |
+|   +-- AI Finding Tracker | /ai-agent/finance/finding-tracker |
+|   +-- AI Remediation Follow-upper | /ai-agent/finance/remediation-follow-upper |
+| AI Treasury Analyst | /ai-agent/finance/treasury-analyst |
+|   +-- AI Cash Position Monitor | /ai-agent/finance/cash-position-monitor |
+|   +-- AI Investment Yield Tracker | /ai-agent/finance/investment-yield-tracker |
+|   +-- AI Debt Schedule Manager | /ai-agent/finance/debt-schedule-manager |
+| AI Investment Strategy Advisor | /ai-agent/finance/investment-strategy-advisor |
+================================================
+## 6. TECHNOLOGY & ENGINEERING (98 Agents)
+================================================
+| Name of Agent | Dashboard |
+|-------------|---------------------------------------|
+| AI Chief Technology Officer (CTO) | /ai-agent/tech/cto |
+|   +-- AI Tech Strategy Advisor | /ai-agent/tech/tech-strategy-advisor |
+|   +-- AI Innovation Scout | /ai-agent/tech/innovation-scout |
+|   +-- AI Architecture Reviewer | /ai-agent/tech/architecture-reviewer |
+| AI VP Engineering | /ai-agent/tech/vp-engineering |
+|   +-- AI Sprint Capacity Planner | /ai-agent/tech/sprint-capacity-planner |
+|   +-- AI Engineering Metrics Tracker | /ai-agent/tech/engineering-metrics-tracker |
+|   +-- AI Tech Debt Prioritizer | /ai-agent/tech/tech-debt-prioritizer |
+| AI VP Infrastructure | /ai-agent/tech/vp-infrastructure |
+|   +-- AI Cloud Cost Optimizer | /ai-agent/tech/cloud-cost-optimizer |
+|   +-- AI Uptime Monitor | /ai-agent/tech/uptime-monitor |
+|   +-- AI Scalability Planner | /ai-agent/tech/scalability-planner |
+| AI VP AI/ML | /ai-agent/tech/vp-ai-ml |
+|   +-- AI Model Performance Monitor | /ai-agent/tech/model-performance-monitor |
+|   +-- AI Training Data Curator | /ai-agent/tech/training-data-curator |
+|   +-- AI Ethics Reviewer | /ai-agent/tech/ethics-reviewer |
+| AI VP Security Technology | /ai-agent/tech/vp-security-technology |
+|   +-- AI Security Tool Evaluator | /ai-agent/tech/security-tool-evaluator |
+|   +-- AI Threat Intelligence Aggregator | /ai-agent/tech/threat-intelligence-aggregator |
+|   +-- AI Vulnerability Scanner | /ai-agent/tech/vulnerability-scanner |
+| AI Lead Architect | /ai-agent/tech/lead-architect |
+|   +-- AI Design Pattern Advisor | /ai-agent/tech/design-pattern-advisor |
+|   +-- AI Integration Planner | /ai-agent/tech/integration-planner |
+|   +-- AI Tech Standard Enforcer | /ai-agent/tech/tech-standard-enforcer |
+| AI DevOps Manager | /ai-agent/tech/devops-manager |
+|   +-- AI CI/CD Pipeline Optimizer | /ai-agent/tech/cicd-pipeline-optimizer |
+|   +-- AI Deployment Coordinator | /ai-agent/tech/deployment-coordinator |
+|   +-- AI Incident Commander | /ai-agent/tech/incident-commander |
+| AI Frontend Lead | /ai-agent/tech/frontend-lead |
+|   +-- AI UI Component Librarian | /ai-agent/tech/ui-component-librarian |
+|   +-- AI Performance Profiler | /ai-agent/tech/performance-profiler |
+|   +-- AI Accessibility Auditor | /ai-agent/tech/accessibility-auditor |
+| AI Backend Lead | /ai-agent/tech/backend-lead |
+|   +-- AI API Design Reviewer | /ai-agent/tech/api-design-reviewer |
+|   +-- AI Database Query Optimizer | /ai-agent/tech/database-query-optimizer |
+|   +-- AI Service Mesh Coordinator | /ai-agent/tech/service-mesh-coordinator |
+| AI SRE Lead | /ai-agent/tech/sre-lead |
+|   +-- AI SLA Calculator | /ai-agent/tech/sla-calculator |
+|   +-- AI Incident Post-mortem Facilitator | /ai-agent/tech/incident-post-mortem-facilitator |
+|   +-- AI Chaos Engineering Planner | /ai-agent/tech/chaos-engineering-planner |
+| AI Frontend Developer | /ai-agent/tech/frontend-developer |
+|   +-- AI Component Builder | /ai-agent/tech/component-builder |
+|   +-- AI Style Enforcer | /ai-agent/tech/style-enforcer |
+|   +-- AI Cross-browser Tester | /ai-agent/tech/cross-browser-tester |
+| AI Backend Developer | /ai-agent/tech/backend-developer |
+|   +-- AI API Endpoint Developer | /ai-agent/tech/api-endpoint-developer |
+|   +-- AI Data Validator | /ai-agent/tech/data-validator |
+|   +-- AI Service Integrator | /ai-agent/tech/service-integrator |
+| AI SRE Engineer | /ai-agent/tech/sre-engineer |
+|   +-- AI Alert Tuner | /ai-agent/tech/alert-tuner |
+|   +-- AI Runbook Author | /ai-agent/tech/runbook-author |
+|   +-- AI Capacity Monitor | /ai-agent/tech/capacity-monitor |
+| AI QA Automation Engineer | /ai-agent/tech/qa-automation-engineer |
+|   +-- AI Test Framework Maintainer | /ai-agent/tech/test-framework-maintainer |
+|   +-- AI E2E Test Writer | /ai-agent/tech/e2e-test-writer |
+|   +-- AI Flaky Test Detector | /ai-agent/tech/flaky-test-detector |
+| AI Data Engineer | /ai-agent/tech/data-engineer |
+|   +-- AI Pipeline Builder | /ai-agent/tech/pipeline-builder |
+|   +-- AI Data Quality Checker | /ai-agent/tech/data-quality-checker |
+|   +-- AI Schema Migration Planner | /ai-agent/tech/schema-migration-planner |
+| AI Security Engineer | /ai-agent/tech/security-engineer |
+|   +-- AI Security Patch Tracker | /ai-agent/tech/security-patch-tracker |
+|   +-- AI Pen-test Script Writer | /ai-agent/tech/pen-test-script-writer |
+|   +-- AI Access Policy Implementer | /ai-agent/tech/access-policy-implementer |
+
+<!-- DEPARTMENT LISTING ENDS -->
+================================================
+## 7. HUMAN RESOURCES (75 Agents)
+================================================
+| Name of Agent | Dashboard |
+|-------------|---------------------------------------|
+| AI Chief Human Resources Officer (CHRO) | /ai-agent/hr/chro |
+|   +-- AI HR Strategy Advisor | /ai-agent/hr/hr-strategy-advisor |
+|   +-- AI Workforce Planner | /ai-agent/hr/workforce-planner |
+|   +-- AI Culture Health Monitor | /ai-agent/hr/culture-health-monitor |
+| AI VP Talent | /ai-agent/hr/vp-talent |
+|   +-- AI Talent Pipeline Analyst | /ai-agent/hr/talent-pipeline-analyst |
+|   +-- AI Employer Brand Strategist | /ai-agent/hr/employer-brand-strategist |
+|   +-- AI Hiring Forecast Planner | /ai-agent/hr/hiring-forecast-planner |
+| AI VP HR Operations | /ai-agent/hr/vp-hr-operations |
+|   +-- AI HR Process Automator | /ai-agent/hr/hr-process-automator |
+|   +-- AI HR Compliance Tracker | /ai-agent/hr/hr-compliance-tracker |
+|   +-- AI Employee Data Manager | /ai-agent/hr/employee-data-manager |
+| AI VP Learning | /ai-agent/hr/vp-learning |
+|   +-- AI L&D Curriculum Designer | /ai-agent/hr/lnd-curriculum-designer |
+|   +-- AI Skill Gap Analyzer | /ai-agent/hr/skill-gap-analyzer |
+|   +-- AI Training Effectiveness Evaluator | /ai-agent/hr/training-effectiveness-evaluator |
+| AI VP Culture | /ai-agent/hr/vp-culture |
+|   +-- AI Culture Survey Analyst | /ai-agent/hr/culture-survey-analyst |
+|   +-- AI Engagement Booster | /ai-agent/hr/engagement-booster |
+|   +-- AI Values Alignment Checker | /ai-agent/hr/values-alignment-checker |
+| AI VP Compensation | /ai-agent/hr/vp-compensation |
+|   +-- AI Market Compensation Researcher | /ai-agent/hr/market-compensation-researcher |
+|   +-- AI Pay Equity Auditor | /ai-agent/hr/pay-equity-auditor |
+|   +-- AI Incentive Plan Designer | /ai-agent/hr/incentive-plan-designer |
+| AI Recruiting Manager | /ai-agent/hr/recruiting-manager |
+|   +-- AI Requisition Prioritizer | /ai-agent/hr/requisition-prioritizer |
+|   +-- AI Recruiter Performance Tracker | /ai-agent/hr/recruiter-performance-tracker |
+|   +-- AI Hiring Budget Manager | /ai-agent/hr/hiring-budget-manager |
+| AI Recruiter | /ai-agent/hr/recruiter |
+|   +-- AI Candidate Sourcer | /ai-agent/hr/candidate-sourcer |
+|   +-- AI Interview Scheduler | /ai-agent/hr/interview-scheduler |
+|   +-- AI Reference Checker | /ai-agent/hr/reference-checker |
+| AI HR Operations Specialist | /ai-agent/hr/hr-operations-specialist |
+|   +-- AI Benefits Administrator | /ai-agent/hr/benefits-administrator |
+|   +-- AI Policy Update Communicator | /ai-agent/hr/policy-update-communicator |
+|   +-- AI HR Ticket Resolver | /ai-agent/hr/hr-ticket-resolver |
+| AI Learning Specialist | /ai-agent/hr/learning-specialist |
+|   +-- AI Course Catalog Curator | /ai-agent/hr/course-catalog-curator |
+|   +-- AI Certification Tracker | /ai-agent/hr/certification-tracker |
+|   +-- AI Mentorship Matcher | /ai-agent/hr/mentorship-matcher |
+| AI Compensation Analyst | /ai-agent/hr/compensation-analyst |
+|   +-- AI Salary Benchmarking Agent | /ai-agent/hr/salary-benchmarking-agent |
+|   +-- AI Bonus Calculator | /ai-agent/hr/bonus-calculator |
+|   +-- AI Equity Plan Administrator | /ai-agent/hr/equity-plan-administrator |
+
+<!-- DEPARTMENT LISTING ENDS -->
+================================================
+## 8. LEGAL & COMPLIANCE (65 Agents)
+================================================
+| Name of Agent | Dashboard |
+|-------------|---------------------------------------|
+| AI Chief Legal Officer (CLO) | /ai-agent/legal/clo |
+|   +-- AI Legal Strategy Advisor | /ai-agent/legal/legal-strategy-advisor |
+|   +-- AI Regulatory Change Monitor | /ai-agent/legal/regulatory-change-monitor |
+|   +-- AI Litigation Risk Assessor | /ai-agent/legal/litigation-risk-assessor |
+| AI VP Legal | /ai-agent/legal/vp-legal |
+|   +-- AI Case Portfolio Manager | /ai-agent/legal/case-portfolio-manager |
+|   +-- AI Outside Counsel Coordinator | /ai-agent/legal/outside-counsel-coordinator |
+|   +-- AI Legal Spend Analyst | /ai-agent/legal/legal-spend-analyst |
+| AI VP Compliance | /ai-agent/legal/vp-compliance |
+|   +-- AI Compliance Program Designer | /ai-agent/legal/compliance-program-designer |
+|   +-- AI Regulatory Scanner | /ai-agent/legal/regulatory-scanner |
+|   +-- AI Compliance Training Coordinator | /ai-agent/legal/compliance-training-coordinator |
+| AI VP Contracts | /ai-agent/legal/vp-contracts |
+|   +-- AI Contract Lifecycle Manager | /ai-agent/legal/contract-lifecycle-manager |
+|   +-- AI Template Librarian | /ai-agent/legal/template-librarian |
+|   +-- AI Obligation Tracker | /ai-agent/legal/obligation-tracker |
+| AI VP Intellectual Property | /ai-agent/legal/vp-intellectual-property |
+|   +-- AI IP Portfolio Manager | /ai-agent/legal/ip-portfolio-manager |
+|   +-- AI Patent Filing Coordinator | /ai-agent/legal/patent-filing-coordinator |
+|   +-- AI Infringement Monitor | /ai-agent/legal/infringement-monitor |
+| AI VP Governance | /ai-agent/legal/vp-governance |
+|   +-- AI Board Meeting Coordinator | /ai-agent/legal/board-meeting-coordinator |
+|   +-- AI Policy Framework Designer | /ai-agent/legal/policy-framework-designer |
+|   +-- AI Governance Auditor | /ai-agent/legal/governance-auditor |
+| AI Compliance Manager | /ai-agent/legal/compliance-manager |
+|   +-- AI Audit Scheduler | /ai-agent/legal/audit-scheduler |
+|   +-- AI Compliance Finding Tracker | /ai-agent/legal/compliance-finding-tracker |
+|   +-- AI Corrective Action Monitor | /ai-agent/legal/corrective-action-monitor |
+| AI Legal Researcher | /ai-agent/legal/legal-researcher |
+|   +-- AI Precedent Finder | /ai-agent/legal/precedent-finder |
+|   +-- AI Statute Analyzer | /ai-agent/legal/statute-analyzer |
+|   +-- AI Case Law Summarizer | /ai-agent/legal/case-law-summarizer |
+| AI Contract Specialist | /ai-agent/legal/contract-specialist |
+|   +-- AI Clause Librarian | /ai-agent/legal/clause-librarian |
+|   +-- AI Risk Spotter | /ai-agent/legal/risk-spotter |
+|   +-- AI Amendment Drafter | /ai-agent/legal/amendment-drafter |
+| AI Compliance Analyst | /ai-agent/legal/compliance-analyst |
+|   +-- AI Regulation Interpreter | /ai-agent/legal/regulation-interpreter |
+|   +-- AI Gap Assessor | /ai-agent/legal/gap-assessor |
+|   +-- AI Evidence Collector | /ai-agent/legal/evidence-collector |
+
+<!-- DEPARTMENT LISTING ENDS -->
+================================================
+## 9. DATA & ANALYTICS (75 Agents)
+================================================
+| Name of Agent | Dashboard |
+|-------------|---------------------------------------|
+| AI Chief Data & AI Officer (CDAO) | /ai-agent/data/cdao |
+|   +-- AI Data Strategy Advisor | /ai-agent/data/data-strategy-advisor |
+|   +-- AI AI Governance Enforcer | /ai-agent/data/ai-governance-enforcer |
+|   +-- AI Data Monetization Planner | /ai-agent/data/data-monetization-planner |
+| AI VP Data Science | /ai-agent/data/vp-data-science |
+|   +-- AI Research Direction Setter | /ai-agent/data/research-direction-setter |
+|   +-- AI Model Validation Overseer | /ai-agent/data/model-validation-overseer |
+|   +-- AI Publication Coordinator | /ai-agent/data/publication-coordinator |
+| AI VP Data Engineering | /ai-agent/data/vp-data-engineering |
+|   +-- AI Pipeline Architect | /ai-agent/data/pipeline-architect |
+|   +-- AI Data Platform Planner | /ai-agent/data/data-platform-planner |
+|   +-- AI Data Cost Optimizer | /ai-agent/data/data-cost-optimizer |
+| AI VP Analytics | /ai-agent/data/vp-analytics |
+|   +-- AI Analytics Roadmap Planner | /ai-agent/data/analytics-roadmap-planner |
+|   +-- AI Insight Delivery Manager | /ai-agent/data/insight-delivery-manager |
+|   +-- AI Stakeholder Communicator | /ai-agent/data/stakeholder-communicator |
+| AI VP Business Intelligence | /ai-agent/data/vp-business-intelligence |
+|   +-- AI Dashboard Architect | /ai-agent/data/dashboard-architect |
+|   +-- AI KPI Definition Specialist | /ai-agent/data/kpi-definition-specialist |
+|   +-- AI Report Scheduler | /ai-agent/data/report-scheduler |
+| AI Data Manager | /ai-agent/data/data-manager |
+|   +-- AI Data Catalog Curator | /ai-agent/data/data-catalog-curator |
+|   +-- AI Metadata Enforcer | /ai-agent/data/metadata-enforcer |
+|   +-- AI Data Lineage Tracker | /ai-agent/data/data-lineage-tracker |
+| AI Analytics Manager | /ai-agent/data/analytics-manager |
+|   +-- AI Analytics Project Coordinator | /ai-agent/data/analytics-project-coordinator |
+|   +-- AI Priority Planner | /ai-agent/data/priority-planner |
+|   +-- AI Quality Reviewer | /ai-agent/data/quality-reviewer |
+| AI Data Scientist | /ai-agent/data/data-scientist |
+|   +-- AI Feature Engineer | /ai-agent/data/feature-engineer |
+|   +-- AI Experiment Designer | /ai-agent/data/experiment-designer |
+|   +-- AI Model Tuner | /ai-agent/data/model-tuner |
+| AI Data Analyst | /ai-agent/data/data-analyst |
+|   +-- AI Query Builder | /ai-agent/data/query-builder |
+|   +-- AI Visualization Creator | /ai-agent/data/visualization-creator |
+|   +-- AI Anomaly Detector | /ai-agent/data/anomaly-detector |
+| AI BI Developer | /ai-agent/data/bi-developer |
+|   +-- AI Report Builder | /ai-agent/data/report-builder |
+|   +-- AI Dashboard Tester | /ai-agent/data/dashboard-tester |
+|   +-- AI Data Connector Builder | /ai-agent/data/data-connector-builder |
+| AI ML Engineer | /ai-agent/data/ml-engineer |
+|   +-- AI Model Deployer | /ai-agent/data/model-deployer |
+|   +-- AI Model Performance Monitor | /ai-agent/data/model-performance-monitor |
+|   +-- AI Pipeline Automator | /ai-agent/data/pipeline-automator |
+| AI Data Steward | /ai-agent/data/data-steward |
+|   +-- AI Data Quality Scorer | /ai-agent/data/data-quality-scorer |
+|   +-- AI Standard Enforcer | /ai-agent/data/standard-enforcer |
+|   +-- AI Issue Resolver | /ai-agent/data/issue-resolver |
+| AI Analytics Specialist | /ai-agent/data/analytics-specialist |
+|   +-- AI Advanced Statistician | /ai-agent/data/advanced-statistician |
+|   +-- AI Segmentation Expert | /ai-agent/data/segmentation-expert |
+|   +-- AI Forecast Builder | /ai-agent/data/forecast-builder |
+
+<!-- DEPARTMENT LISTING ENDS -->
+================================================
+## 10. SECURITY & RISK (85 Agents)
+================================================
+| Name of Agent | Dashboard |
+|-------------|---------------------------------------|
+| AI Chief Information Security Officer (CISO) | /ai-agent/security/ciso |
+|   +-- AI Security Strategy Advisor | /ai-agent/security/security-strategy-advisor |
+|   +-- AI Risk Appetite Definer | /ai-agent/security/risk-appetite-definer |
+|   +-- AI Board Reporter | /ai-agent/security/board-reporter |
+| AI VP Security Operations | /ai-agent/security/vp-security-operations |
+|   +-- AI SOC Workflow Optimizer | /ai-agent/security/soc-workflow-optimizer |
+|   +-- AI Alert Prioritizer | /ai-agent/security/alert-prioritizer |
+|   +-- AI Incident Escalation Manager | /ai-agent/security/incident-escalation-manager |
+| AI VP Cybersecurity | /ai-agent/security/vp-cybersecurity |
+|   +-- AI Threat Landscape Monitor | /ai-agent/security/threat-landscape-monitor |
+|   +-- AI Cyber Risk Quantifier | /ai-agent/security/cyber-risk-quantifier |
+|   +-- AI Security Architecture Reviewer | /ai-agent/security/security-architecture-reviewer |
+| AI VP Governance & Risk | /ai-agent/security/vp-governance-risk |
+|   +-- AI Risk Register Manager | /ai-agent/security/risk-register-manager |
+|   +-- AI Policy Drafter | /ai-agent/security/policy-drafter |
+|   +-- AI Risk Appetite Monitor | /ai-agent/security/risk-appetite-monitor |
+| AI VP Privacy | /ai-agent/security/vp-privacy |
+|   +-- AI Privacy Impact Assessor | /ai-agent/security/privacy-impact-assessor |
+|   +-- AI Data Classification Enforcer | /ai-agent/security/data-classification-enforcer |
+|   +-- AI Consent Manager | /ai-agent/security/consent-manager |
+| AI Security Architect | /ai-agent/security/security-architect |
+|   +-- AI Security Design Reviewer | /ai-agent/security/security-design-reviewer |
+|   +-- AI Threat Modeler | /ai-agent/security/threat-modeler |
+|   +-- AI Control Mapper | /ai-agent/security/control-mapper |
+| AI SOC Manager | /ai-agent/security/soc-manager |
+|   +-- AI Shift Coordinator | /ai-agent/security/shift-coordinator |
+|   +-- AI Playbook Author | /ai-agent/security/playbook-author |
+|   +-- AI Escalation Path Definer | /ai-agent/security/escalation-path-definer |
+| AI Security Analyst | /ai-agent/security/security-analyst |
+|   +-- AI Log Reviewer | /ai-agent/security/log-reviewer |
+|   +-- AI Alert Triage Agent | /ai-agent/security/alert-triage-agent |
+|   +-- AI IoC Collector | /ai-agent/security/ioc-collector |
+| AI Incident Responder | /ai-agent/security/incident-responder |
+|   +-- AI Containment Coordinator | /ai-agent/security/containment-coordinator |
+|   +-- AI Evidence Collector | /ai-agent/security/evidence-collector |
+|   +-- AI Timeline Reconstructor | /ai-agent/security/timeline-reconstructor |
+
+<!-- DEPARTMENT LISTING ENDS -->
+
+================================================
+## 11. PRODUCT DEVELOPMENT (60 Agents)
+================================================
+| Name of Agent | Dashboard |
+|-------------|---------------------------------------|
+| AI VP Product | /ai-agent/product/vp-product |
+|   +-- AI Product Roadmap Planner | /ai-agent/product/product-roadmap-planner |
+|   +-- AI Feature Prioritizer | /ai-agent/product/feature-prioritizer |
+|   +-- AI Market Alignment Checker | /ai-agent/product/market-alignment-checker |
+| AI VP Product Strategy | /ai-agent/product/vp-product-strategy |
+|   +-- AI Competitive Analyst | /ai-agent/product/competitive-analyst |
+|   +-- AI Strategic Opportunity Scout | /ai-agent/product/strategic-opportunity-scout |
+|   +-- AI Vision Communicator | /ai-agent/product/vision-communicator |
+| AI VP Product Operations | /ai-agent/product/vp-product-operations |
+|   +-- AI Process Standardizer | /ai-agent/product/process-standardizer |
+|   +-- AI Metric Tracker | /ai-agent/product/metric-tracker |
+|   +-- AI Cross-functional Coordinator | /ai-agent/product/cross-functional-coordinator |
+| AI Product Manager | /ai-agent/product/product-manager |
+|   +-- AI Backlog Groomer | /ai-agent/product/backlog-groomer |
+|   +-- AI Sprint Planner | /ai-agent/product/sprint-planner |
+|   +-- AI Stakeholder Communicator | /ai-agent/product/stakeholder-communicator |
+| AI Product Owner | /ai-agent/product/product-owner |
+|   +-- AI Story Writer | /ai-agent/product/story-writer |
+|   +-- AI Acceptance Criteria Definer | /ai-agent/product/acceptance-criteria-definer |
+|   +-- AI Sprint Reviewer | /ai-agent/product/sprint-reviewer |
+| AI Product Marketer | /ai-agent/product/product-marketer |
+|   +-- AI Launch Planner | /ai-agent/product/launch-planner |
+|   +-- AI Messaging Crafter | /ai-agent/product/messaging-crafter |
+|   +-- AI Competitive Differentiator | /ai-agent/product/competitive-differentiator |
+| AI UX Researcher | /ai-agent/product/ux-researcher |
+|   +-- AI Interview Scheduler | /ai-agent/product/interview-scheduler |
+|   +-- AI Usability Test Designer | /ai-agent/product/usability-test-designer |
+|   +-- AI Insight Synthesizer | /ai-agent/product/insight-synthesizer |
+| AI Release Manager | /ai-agent/product/release-manager |
+|   +-- AI Release Coordinator | /ai-agent/product/release-coordinator |
+|   +-- AI Rollback Planner | /ai-agent/product/rollback-planner |
+|   +-- AI Change Communicator | /ai-agent/product/change-communicator |
+| AI Technical Writer | /ai-agent/product/technical-writer |
+|   +-- AI Documentation Writer | /ai-agent/product/documentation-writer |
+|   +-- AI API Documenter | /ai-agent/product/api-documenter |
+|   +-- AI Knowledge Base Curator | /ai-agent/product/knowledge-base-curator |
+| AI Business Analyst | /ai-agent/product/business-analyst |
+|   +-- AI Requirements Gatherer | /ai-agent/product/requirements-gatherer |
+|   +-- AI Process Analyst | /ai-agent/product/process-analyst |
+|   +-- AI Solution Designer | /ai-agent/product/solution-designer |
+| AI Innovation Manager | /ai-agent/product/innovation-manager |
+|   +-- AI Idea Scorer | /ai-agent/product/idea-scorer |
+|   +-- AI Prototype Funder | /ai-agent/product/prototype-funder |
+|   +-- AI Innovation Workshop Facilitator | /ai-agent/product/innovation-workshop-facilitator |
+| AI Product Analyst | /ai-agent/product/product-analyst |
+|   +-- AI Usage Tracker | /ai-agent/product/usage-tracker |
+|   +-- AI Feature Impact Analyzer | /ai-agent/product/feature-impact-analyzer |
+|   +-- AI Competitive Monitor | /ai-agent/product/competitive-monitor |
+| AI Product Designer | /ai-agent/product/product-designer |
+|   +-- AI Wireframe Creator | /ai-agent/product/wireframe-creator |
+|   +-- AI Prototype Builder | /ai-agent/product/prototype-builder |
+|   +-- AI Design System Maintainer | /ai-agent/product/design-system-maintainer |
+
+================================================
+## 12. RESEARCH & DEVELOPMENT (36 Agents)
+================================================
+| Name of Agent | Dashboard |
+|-------------|---------------------------------------|
+| AI VP Research | /ai-agent/rd/vp-research |
+|   +-- AI Research Agenda Setter | /ai-agent/rd/research-agenda-setter |
+|   +-- AI Grant Proposal Writer | /ai-agent/rd/grant-proposal-writer |
+|   +-- AI Publication Planner | /ai-agent/rd/publication-planner |
+| AI VP Innovation | /ai-agent/rd/vp-innovation |
+|   +-- AI Innovation Pipeline Manager | /ai-agent/rd/innovation-pipeline-manager |
+|   +-- AI Idea Scorer | /ai-agent/rd/idea-scorer |
+|   +-- AI Prototype Funder | /ai-agent/rd/prototype-funder |
+| AI VP R&D Operations | /ai-agent/rd/vp-rd-operations |
+|   +-- AI Lab Resource Allocator | /ai-agent/rd/lab-resource-allocator |
+|   +-- AI Experiment Tracker | /ai-agent/rd/experiment-tracker |
+|   +-- AI R&D Budget Controller | /ai-agent/rd/rd-budget-controller |
+| AI Research Lead | /ai-agent/rd/research-lead |
+|   +-- AI Literature Review Coordinator | /ai-agent/rd/literature-review-coordinator |
+|   +-- AI Peer Review Organizer | /ai-agent/rd/peer-review-organizer |
+|   +-- AI Research Mentor | /ai-agent/rd/research-mentor |
+| AI Innovation Manager | /ai-agent/rd/innovation-manager |
+|   +-- AI Hackathon Organizer | /ai-agent/rd/hackathon-organizer |
+|   +-- AI Innovation Workshop Facilitator | /ai-agent/rd/innovation-workshop-facilitator |
+|   +-- AI IP Filing Coordinator | /ai-agent/rd/ip-filing-coordinator |
+| AI Research Scientist | /ai-agent/rd/research-scientist |
+|   +-- AI Hypothesis Designer | /ai-agent/rd/hypothesis-designer |
+|   +-- AI Experiment Executor | /ai-agent/rd/experiment-executor |
+|   +-- AI Paper Drafter | /ai-agent/rd/paper-drafter |
+| AI Innovation Analyst | /ai-agent/rd/innovation-analyst |
+|   +-- AI Trend Spotter | /ai-agent/rd/trend-spotter |
+|   +-- AI Technology Scout | /ai-agent/rd/technology-scout |
+|   +-- AI Feasibility Assessor | /ai-agent/rd/feasibility-assessor |
+| AI Prototype Engineer | /ai-agent/rd/prototype-engineer |
+|   +-- AI Rapid Prototyper | /ai-agent/rd/rapid-prototyper |
+|   +-- AI Demo Builder | /ai-agent/rd/demo-builder |
+|   +-- AI User Feedback Collector | /ai-agent/rd/user-feedback-collector |
+| AI Patent Researcher | /ai-agent/rd/patent-researcher |
+|   +-- AI Prior Art Searcher | /ai-agent/rd/prior-art-searcher |
+|   +-- AI Patent Drafter | /ai-agent/rd/patent-drafter |
+|   +-- AI Filing Tracker | /ai-agent/rd/filing-tracker |
+
+================================================
+## 13. ADMINISTRATION (20 Agents)
+================================================
+| Name of Agent | Dashboard |
+|-------------|---------------------------------------|
+| AI Chief Admin Officer | /ai-agent/admin/chief-admin-officer |
+|   +-- AI Office Manager | /ai-agent/admin/office-manager |
+|   +-- AI Executive Assistant | /ai-agent/admin/executive-assistant |
+|   +-- AI Vendor Coordinator | /ai-agent/admin/vendor-coordinator |
+| AI Chief Administrative Officer | /ai-agent/admin/chief-administrative-officer |
+|   +-- AI Admin Strategy Planner | /ai-agent/admin/admin-strategy-planner |
+|   +-- AI Cost Reduction Analyst | /ai-agent/admin/cost-reduction-analyst |
+|   +-- AI Policy Overseer | /ai-agent/admin/policy-overseer |
+| AI VP Admin Operations | /ai-agent/admin/vp-admin-operations |
+|   +-- AI Process Standardizer | /ai-agent/admin/process-standardizer |
+|   +-- AI Vendor Manager | /ai-agent/admin/vendor-manager |
+|   +-- AI Office Budget Controller | /ai-agent/admin/office-budget-controller |
+| AI VP Facilities | /ai-agent/admin/vp-facilities |
+|   +-- AI Space Planner | /ai-agent/admin/space-planner |
+|   +-- AI Maintenance Scheduler | /ai-agent/admin/maintenance-scheduler |
+|   +-- AI Safety Compliance Checker | /ai-agent/admin/safety-compliance-checker |
+| AI Admin Manager | /ai-agent/admin/admin-manager |
+|   +-- AI Task Delegator | /ai-agent/admin/task-delegator |
+|   +-- AI Schedule Coordinator | /ai-agent/admin/schedule-coordinator |
+|   +-- AI Inventory Manager | /ai-agent/admin/inventory-manager |
+| AI Office Manager | /ai-agent/admin/office-manager-spec |
+|   +-- AI Meeting Room Booker | /ai-agent/admin/meeting-room-booker |
+|   +-- AI Supply Orderer | /ai-agent/admin/supply-orderer |
+|   +-- AI Visitor Host | /ai-agent/admin/visitor-host |
+| AI Executive Assistant | /ai-agent/admin/exec-assistant |
+|   +-- AI Calendar Optimizer | /ai-agent/admin/calendar-optimizer |
+|   +-- AI Travel Booker | /ai-agent/admin/travel-booker |
+|   +-- AI Correspondence Drafter | /ai-agent/admin/correspondence-drafter |
+| AI Facilities Coordinator | /ai-agent/admin/facilities-coordinator |
+|   +-- AI Work Order Manager | /ai-agent/admin/work-order-manager |
+|   +-- AI Vendor Liaison | /ai-agent/admin/vendor-liaison |
+|   +-- AI Inspection Scheduler | /ai-agent/admin/inspection-scheduler |
+| AI Travel Coordinator | /ai-agent/admin/travel-coordinator |
+|   +-- AI Itinerary Planner | /ai-agent/admin/itinerary-planner |
+|   +-- AI Expense Reporter | /ai-agent/admin/expense-reporter |
+|   +-- AI Visa Documenter | /ai-agent/admin/visa-documenter |
+| AI Document Controller | /ai-agent/admin/document-controller |
+|   +-- AI Version Manager | /ai-agent/admin/version-manager |
+|   +-- AI Archive Organizer | /ai-agent/admin/archive-organizer |
+|   +-- AI Access Controller | /ai-agent/admin/access-controller |
+
+================================================
+## 14. TRADING & INVESTMENT (75 Agents)
+================================================
+| Name of Agent | Dashboard |
+|-------------|---------------------------------------|
+| AI Chief Investment Officer (CIO) | /ai-agent/trading/cio |
+|   +-- AI Investment Strategist | /ai-agent/trading/investment-strategist |
+|   +-- AI Portfolio Analyst | /ai-agent/trading/portfolio-analyst |
+|   +-- AI Risk Manager | /ai-agent/trading/risk-manager |
+| AI VP Trading | /ai-agent/trading/vp-trading |
+|   +-- AI Trading Desk Manager | /ai-agent/trading/trading-desk-manager |
+|   +-- AI Trading Risk Manager | /ai-agent/trading/trading-risk-manager |
+|   +-- AI Settlement Specialist | /ai-agent/trading/settlement-specialist |
+| AI VP Investments | /ai-agent/trading/vp-investments |
+|   +-- AI Portfolio Manager | /ai-agent/trading/portfolio-manager |
+|   +-- AI Investment Analyst | /ai-agent/trading/investment-analyst |
+|   +-- AI Strategy Lead | /ai-agent/trading/strategy-lead |
+| AI Portfolio Operations | /ai-agent/trading/portfolio-operations |
+|   +-- AI Asset Allocator | /ai-agent/trading/asset-allocator |
+|   +-- AI Rebalancing Scheduler | /ai-agent/trading/rebalancing-scheduler |
+|   +-- AI Performance Attribution Analyst | /ai-agent/trading/performance-attribution-analyst |
+| AI Trading Risk Management | /ai-agent/trading/trading-risk-management |
+|   +-- AI VaR Calculator | /ai-agent/trading/var-calculator |
+|   +-- AI Stress Test Designer | /ai-agent/trading/stress-test-designer |
+|   +-- AI Limit Breach Alerter | /ai-agent/trading/limit-breach-alerter |
+| AI Trading Desk | /ai-agent/trading/trading-desk |
+|   +-- AI Order Flow Optimizer | /ai-agent/trading/order-flow-optimizer |
+|   +-- AI Trader Performance Evaluator | /ai-agent/trading/trader-performance-evaluator |
+|   +-- AI Market Open/Closing Coordinator | /ai-agent/trading/market-open-closing-coordinator |
+| AI Trader | /ai-agent/trading/trader |
+|   +-- AI Equity Trader | /ai-agent/trading/equity-trader |
+|   +-- AI Forex Trader | /ai-agent/trading/forex-trader |
+|   +-- AI Crypto Trader | /ai-agent/trading/crypto-trader |
+| AI Investment Analyst | /ai-agent/trading/investment-analyst-main |
+|   +-- AI Equity Analyst | /ai-agent/trading/equity-analyst |
+|   +-- AI Fixed Income Analyst | /ai-agent/trading/fixed-income-analyst |
+|   +-- AI Quant Analyst | /ai-agent/trading/quant-analyst |
+| AI Derivatives Specialist | /ai-agent/trading/derivatives-specialist |
+|   +-- AI Options Pricer | /ai-agent/trading/options-pricer |
+|   +-- AI Greeks Calculator | /ai-agent/trading/greeks-calculator |
+|   +-- AI Volatility Surface Mapper | /ai-agent/trading/volatility-surface-mapper |
+| AI Trading Risk Analyst | /ai-agent/trading/trading-risk-analyst |
+|   +-- AI Scenario Modeler | /ai-agent/trading/scenario-modeler |
+|   +-- AI Correlation Tracker | /ai-agent/trading/correlation-tracker |
+|   +-- AI Tail Risk Assessor | /ai-agent/trading/tail-risk-assessor |
+| AI Trading Compliance | /ai-agent/trading/trading-compliance |
+|   +-- AI Trade Surveillance Agent | /ai-agent/trading/trade-surveillance-agent |
+|   +-- AI Regulatory Reporter | /ai-agent/trading/regulatory-reporter |
+|   +-- AI Restricted List Monitor | /ai-agent/trading/restricted-list-monitor |
+| AI Quantitative Analyst | /ai-agent/trading/quantitative-analyst |
+|   +-- AI Alpha Researcher | /ai-agent/trading/alpha-researcher |
+|   +-- AI Backtest Engine | /ai-agent/trading/backtest-engine |
+|   +-- AI Signal Generator | /ai-agent/trading/signal-generator |
+| AI ESG Analyst | /ai-agent/trading/esg-analyst |
+|   +-- AI ESG Data Collector | /ai-agent/trading/esg-data-collector |
+|   +-- AI Sustainability Scorer | /ai-agent/trading/sustainability-scorer |
+|   +-- AI Impact Reporter | /ai-agent/trading/impact-reporter |
+| AI Macro Analyst | /ai-agent/trading/macro-analyst |
+|   +-- AI Economic Indicator Tracker | /ai-agent/trading/economic-indicator-tracker |
+|   +-- AI Central Bank Watcher | /ai-agent/trading/central-bank-watcher |
+|   +-- AI Geopolitical Risk Assessor | /ai-agent/trading/geopolitical-risk-assessor |
+| AI Portfolio Analyst | /ai-agent/trading/portfolio-analyst-main |
+|   +-- AI Sector Analyzer | /ai-agent/trading/sector-analyzer |
+|   +-- AI Factor Modeler | /ai-agent/trading/factor-modeler |
+|   +-- AI Benchmark Comparator | /ai-agent/trading/benchmark-comparator |
+| AI Algo Trading Developer | /ai-agent/trading/algo-trading-developer |
+|   +-- AI Strategy Coder | /ai-agent/trading/strategy-coder |
+|   +-- AI Latency Optimizer | /ai-agent/trading/latency-optimizer |
+|   +-- AI Execution Algorithm Tester | /ai-agent/trading/execution-algorithm-tester |
+| AI Settlement Specialist | /ai-agent/trading/settlement-specialist-main |
+|   +-- AI Trade Reconciler | /ai-agent/trading/trade-reconciler |
+|   +-- AI Clearing Coordinator | /ai-agent/trading/clearing-coordinator |
+|   +-- AI Fail Manager | /ai-agent/trading/fail-manager |
+
+================================================
+## 15. REAL ESTATE (45 Agents)
+================================================
+| Name of Agent | Dashboard |
+|-------------|---------------------------------------|
+| AI Chief Real Estate Officer | /ai-agent/realestate/chief-real-estate-officer |
+|   +-- AI Portfolio Strategy Advisor | /ai-agent/realestate/portfolio-strategy-advisor |
+|   +-- AI Market Cycle Analyst | /ai-agent/realestate/market-cycle-analyst |
+|   +-- AI Capital Deployment Planner | /ai-agent/realestate/capital-deployment-planner |
+| AI VP Property Management | /ai-agent/realestate/vp-property-management |
+|   +-- AI Property Performance Monitor | /ai-agent/realestate/property-performance-monitor |
+|   +-- AI NOI Optimizer | /ai-agent/realestate/noi-optimizer |
+|   +-- AI Tenant Retention Strategist | /ai-agent/realestate/tenant-retention-strategist |
+| AI VP Real Estate Development | /ai-agent/realestate/vp-real-estate-development |
+|   +-- AI Development Pipeline Manager | /ai-agent/realestate/development-pipeline-manager |
+|   +-- AI Feasibility Analyst | /ai-agent/realestate/feasibility-analyst |
+|   +-- AI Permit Tracker | /ai-agent/realestate/permit-tracker |
+| AI Property Manager | /ai-agent/realestate/property-manager |
+|   +-- AI Rent Collector | /ai-agent/realestate/rent-collector |
+|   +-- AI Maintenance Dispatcher | /ai-agent/realestate/maintenance-dispatcher |
+|   +-- AI Lease Enforcer | /ai-agent/realestate/lease-enforcer |
+| AI Leasing Manager | /ai-agent/realestate/leasing-manager |
+|   +-- AI Vacancy Minimizer | /ai-agent/realestate/vacancy-minimizer |
+|   +-- AI Lease Negotiator | /ai-agent/realestate/lease-negotiator |
+|   +-- AI Tenant Qualifier | /ai-agent/realestate/tenant-qualifier |
+| AI Facilities Manager | /ai-agent/realestate/facilities-manager |
+|   +-- AI Building Systems Monitor | /ai-agent/realestate/building-systems-monitor |
+|   +-- AI Energy Manager | /ai-agent/realestate/energy-manager |
+|   +-- AI Space Optimizer | /ai-agent/realestate/space-optimizer |
+| AI Property Analyst | /ai-agent/realestate/property-analyst |
+|   +-- AI Comparable Analyzer | /ai-agent/realestate/comparable-analyzer |
+|   +-- AI Value Estimator | /ai-agent/realestate/value-estimator |
+|   +-- AI Market Trend Reporter | /ai-agent/realestate/market-trend-reporter |
+| AI Lease Administrator | /ai-agent/realestate/lease-administrator |
+|   +-- AI Lease Abstractor | /ai-agent/realestate/lease-abstractor |
+|   +-- AI Critical Date Tracker | /ai-agent/realestate/critical-date-tracker |
+|   +-- AI Rent Escalation Calculator | /ai-agent/realestate/rent-escalation-calculator |
+| AI Tenant Relations Specialist | /ai-agent/realestate/tenant-relations-specialist |
+|   +-- AI Issue Resolver | /ai-agent/realestate/issue-resolver |
+|   +-- AI Communication Coordinator | /ai-agent/realestate/communication-coordinator |
+|   +-- AI Satisfaction Surveyor | /ai-agent/realestate/satisfaction-surveyor |
+| AI Maintenance Coordinator | /ai-agent/realestate/maintenance-coordinator |
+|   +-- AI Work Order Prioritizer | /ai-agent/realestate/work-order-prioritizer |
+|   +-- AI Vendor Dispatcher | /ai-agent/realestate/vendor-dispatcher |
+|   +-- AI Cost Estimator | /ai-agent/realestate/cost-estimator |
+| AI Acquisition Analyst | /ai-agent/realestate/acquisition-analyst |
+|   +-- AI Deal Screener | /ai-agent/realestate/deal-screener |
+|   +-- AI Due Diligence Coordinator | /ai-agent/realestate/due-diligence-coordinator |
+|   +-- AI Underwriting Assistant | /ai-agent/realestate/underwriting-assistant |
+| AI Asset Manager | /ai-agent/realestate/asset-manager |
+|   +-- AI Asset Performance Tracker | /ai-agent/realestate/asset-performance-tracker |
+|   +-- AI Disposition Advisor | /ai-agent/realestate/disposition-advisor |
+|   +-- AI Return Calculator | /ai-agent/realestate/return-calculator |
+| AI Development Coordinator | /ai-agent/realestate/development-coordinator |
+|   +-- AI Timeline Manager | /ai-agent/realestate/timeline-manager |
+|   +-- AI Contractor Coordinator | /ai-agent/realestate/contractor-coordinator |
+|   +-- AI Budget Tracker | /ai-agent/realestate/budget-tracker |
+| AI Property Marketing | /ai-agent/realestate/property-marketing |
+|   +-- AI Listing Creator | /ai-agent/realestate/listing-creator |
+|   +-- AI Virtual Tour Builder | /ai-agent/realestate/virtual-tour-builder |
+|   +-- AI Lead Qualifier | /ai-agent/realestate/lead-qualifier |
+
+================================================
+## 16. INSURANCE (72 Agents)
+================================================
+| Name of Agent | Dashboard |
+|-------------|---------------------------------------|
+| AI Chief Risk Officer | /ai-agent/insurance/chief-risk-officer |
+|   +-- AI Enterprise Risk Strategy Advisor | /ai-agent/insurance/enterprise-risk-strategy-advisor |
+|   +-- AI Risk Appetite Definer | /ai-agent/insurance/risk-appetite-definer |
+|   +-- AI Board Risk Reporter | /ai-agent/insurance/board-risk-reporter |
+| AI VP Underwriting | /ai-agent/insurance/vp-underwriting |
+|   +-- AI Underwriting Guidelines Enforcer | /ai-agent/insurance/underwriting-guidelines-enforcer |
+|   +-- AI Portfolio Mix Manager | /ai-agent/insurance/portfolio-mix-manager |
+|   +-- AI Pricing Strategy Advisor | /ai-agent/insurance/pricing-strategy-advisor |
+| AI VP Claims | /ai-agent/insurance/vp-claims |
+|   +-- AI Claims Process Optimizer | /ai-agent/insurance/claims-process-optimizer |
+|   +-- AI Settlement Authority Manager | /ai-agent/insurance/settlement-authority-manager |
+|   +-- AI Litigation Coordinator | /ai-agent/insurance/litigation-coordinator |
+| AI VP Risk Assessment | /ai-agent/insurance/vp-risk-assessment |
+|   +-- AI Risk Model Overseer | /ai-agent/insurance/risk-model-overseer |
+|   +-- AI Assessment Standards Enforcer | /ai-agent/insurance/assessment-standards-enforcer |
+|   +-- AI Emerging Risk Spotter | /ai-agent/insurance/emerging-risk-spotter |
+| AI VP Actuarial | /ai-agent/insurance/vp-actuarial |
+|   +-- AI Actuary Analyst | /ai-agent/insurance/actuary-analyst |
+|   +-- AI Risk Modeler | /ai-agent/insurance/risk-modeler |
+|   +-- AI Reinsurance Specialist | /ai-agent/insurance/reinsurance-specialist |
+| AI Underwriting Manager | /ai-agent/insurance/underwriting-manager |
+|   +-- AI Workflow Prioritizer | /ai-agent/insurance/workflow-prioritizer |
+|   +-- AI Quality Reviewer | /ai-agent/insurance/quality-reviewer |
+|   +-- AI Exception Approver | /ai-agent/insurance/exception-approver |
+| AI Claims Manager | /ai-agent/insurance/claims-manager |
+|   +-- AI Claims Assigner | /ai-agent/insurance/claims-assigner |
+|   +-- AI Reserve Reviewer | /ai-agent/insurance/reserve-reviewer |
+|   +-- AI Fraud Flag Coordinator | /ai-agent/insurance/fraud-flag-coordinator |
+| AI Policy Manager | /ai-agent/insurance/policy-manager |
+|   +-- AI Policy Lifecycle Manager | /ai-agent/insurance/policy-lifecycle-manager |
+|   +-- AI Renewal Tracker | /ai-agent/insurance/renewal-tracker |
+|   +-- AI Endorsement Processor | /ai-agent/insurance/endorsement-processor |
+| AI Catastrophe Modeler | /ai-agent/insurance/catastrophe-modeler |
+|   +-- AI Event Simulator | /ai-agent/insurance/event-simulator |
+|   +-- AI Exposure Aggregator | /ai-agent/insurance/exposure-aggregator |
+|   +-- AI Loss Estimator | /ai-agent/insurance/loss-estimator |
+| AI Underwriting Specialist | /ai-agent/insurance/underwriting-specialist |
+|   +-- AI Risk Evaluator | /ai-agent/insurance/risk-evaluator |
+|   +-- AI Premium Calculator | /ai-agent/insurance/premium-calculator |
+|   +-- AI Coverage Analyzer | /ai-agent/insurance/coverage-analyzer |
+| AI Underwriter | /ai-agent/insurance/underwriter |
+|   +-- AI Risk Evaluator | /ai-agent/insurance/risk-evaluator-2 |
+|   +-- AI Premium Calculator | /ai-agent/insurance/premium-calculator-2 |
+|   +-- AI Coverage Analyzer | /ai-agent/insurance/coverage-analyzer-2 |
+| AI Claims Processor | /ai-agent/insurance/claims-processor |
+|   +-- AI Intake Handler | /ai-agent/insurance/intake-handler |
+|   +-- AI Processor | /ai-agent/insurance/processor |
+|   +-- AI Settlement Coordinator | /ai-agent/insurance/settlement-coordinator |
+| AI Claims Adjuster | /ai-agent/insurance/claims-adjuster |
+|   +-- AI Damage Assessor | /ai-agent/insurance/damage-assessor |
+|   +-- AI Liability Determiner | /ai-agent/insurance/liability-determiner |
+|   +-- AI Settlement Negotiator | /ai-agent/insurance/settlement-negotiator |
+| AI Fraud Detection Agent | /ai-agent/insurance/fraud-detection-agent |
+|   +-- AI Pattern Detector | /ai-agent/insurance/pattern-detector |
+|   +-- AI Anomaly Scorer | /ai-agent/insurance/anomaly-scorer |
+|   +-- AI Investigation Coordinator | /ai-agent/insurance/investigation-coordinator |
+| AI Policy Administrator | /ai-agent/insurance/policy-administrator |
+|   +-- AI Policy Issuer | /ai-agent/insurance/policy-issuer |
+|   +-- AI Document Generator | /ai-agent/insurance/document-generator |
+|   +-- AI Compliance Checker | /ai-agent/insurance/compliance-checker |
+| AI Customer Risk Analyst | /ai-agent/insurance/customer-risk-analyst |
+|   +-- AI Risk Profiler | /ai-agent/insurance/risk-profiler |
+|   +-- AI Behavioral Scorer | /ai-agent/insurance/behavioral-scorer |
+|   +-- AI Segmentation Analyst | /ai-agent/insurance/segmentation-analyst |
+| AI Risk Modeler | /ai-agent/insurance/risk-modeler-main |
+|   +-- AI Scenario Builder | /ai-agent/insurance/scenario-builder |
+|   +-- AI Correlation Analyst | /ai-agent/insurance/correlation-analyst |
+|   +-- AI Capital Requirement Calculator | /ai-agent/insurance/capital-requirement-calculator |
+
+================================================
+## 17. HEALTHCARE (50 Agents)
+================================================
+| Name of Agent | Dashboard |
+|-------------|---------------------------------------|
+| AI Chief Medical Officer | /ai-agent/healthcare/chief-medical-officer |
+|   +-- AI Clinical Strategy Advisor | /ai-agent/healthcare/clinical-strategy-advisor |
+|   +-- AI Quality Standards Enforcer | /ai-agent/healthcare/quality-standards-enforcer |
+|   +-- AI Medical Policy Reviewer | /ai-agent/healthcare/medical-policy-reviewer |
+| AI VP Healthcare Operations | /ai-agent/healthcare/vp-healthcare-operations |
+|   +-- AI Workflow Optimizer | /ai-agent/healthcare/workflow-optimizer |
+|   +-- AI Staff Scheduler | /ai-agent/healthcare/staff-scheduler |
+|   +-- AI Regulatory Compliance Monitor | /ai-agent/healthcare/regulatory-compliance-monitor |
+| AI VP Patient Experience | /ai-agent/healthcare/vp-patient-experience |
+|   +-- AI Satisfaction Analyzer | /ai-agent/healthcare/satisfaction-analyzer |
+|   +-- AI Service Improvement Planner | /ai-agent/healthcare/service-improvement-planner |
+|   +-- AI Feedback Coordinator | /ai-agent/healthcare/feedback-coordinator |
+| AI Patient Services Manager | /ai-agent/healthcare/patient-services-manager |
+|   +-- AI Intake Coordinator | /ai-agent/healthcare/intake-coordinator |
+|   +-- AI Service Navigator | /ai-agent/healthcare/service-navigator |
+|   +-- AI Discharge Planner | /ai-agent/healthcare/discharge-planner |
+| AI Medical Billing Manager | /ai-agent/healthcare/medical-billing-manager |
+|   +-- AI Claims Optimizer | /ai-agent/healthcare/claims-optimizer |
+|   +-- AI Denial Manager | /ai-agent/healthcare/denial-manager |
+|   +-- AI Revenue Cycle Analyst | /ai-agent/healthcare/revenue-cycle-analyst |
+| AI Scheduling Manager | /ai-agent/healthcare/scheduling-manager |
+|   +-- AI Appointment Optimizer | /ai-agent/healthcare/appointment-optimizer |
+|   +-- AI No-show Predictor | /ai-agent/healthcare/no-show-predictor |
+|   +-- AI Provider Calendar Manager | /ai-agent/healthcare/provider-calendar-manager |
+| AI Patient Coordinator | /ai-agent/healthcare/patient-coordinator |
+|   +-- AI Referral Processor | /ai-agent/healthcare/referral-processor |
+|   +-- AI Pre-authorization Agent | /ai-agent/healthcare/pre-authorization-agent |
+|   +-- AI Care Transition Coordinator | /ai-agent/healthcare/care-transition-coordinator |
+| AI Medical Coder | /ai-agent/healthcare/medical-coder |
+|   +-- AI Code Assigner | /ai-agent/healthcare/code-assigner |
+|   +-- AI Coding Compliance Auditor | /ai-agent/healthcare/coding-compliance-auditor |
+|   +-- AI Coding Update Tracker | /ai-agent/healthcare/coding-update-tracker |
+| AI Billing Specialist | /ai-agent/healthcare/billing-specialist |
+|   +-- AI Charge Capture Agent | /ai-agent/healthcare/charge-capture-agent |
+|   +-- AI Payment Poster | /ai-agent/healthcare/payment-poster |
+|   +-- AI Balance Collector | /ai-agent/healthcare/balance-collector |
+| AI Care Coordinator | /ai-agent/healthcare/care-coordinator |
+|   +-- AI Care Plan Manager | /ai-agent/healthcare/care-plan-manager |
+|   +-- AI Follow-up Scheduler | /ai-agent/healthcare/follow-up-scheduler |
+|   +-- AI Outcome Tracker | /ai-agent/healthcare/outcome-tracker |
+| AI Health Records Specialist | /ai-agent/healthcare/health-records-specialist |
+|   +-- AI Record Organizer | /ai-agent/healthcare/record-organizer |
+|   +-- AI Release Manager | /ai-agent/healthcare/release-manager |
+|   +-- AI Data Integrity Checker | /ai-agent/healthcare/data-integrity-checker |
+| AI Telehealth Support | /ai-agent/healthcare/telehealth-support |
+|   +-- AI Virtual Visit Facilitator | /ai-agent/healthcare/virtual-visit-facilitator |
+|   +-- AI Tech Troubleshooter | /ai-agent/healthcare/tech-troubleshooter |
+|   +-- AI Remote Monitor | /ai-agent/healthcare/remote-monitor |
+| AI Healthcare Compliance | /ai-agent/healthcare/healthcare-compliance |
+|   +-- AI Regulation Tracker | /ai-agent/healthcare/regulation-tracker |
+|   +-- AI Audit Preparer | /ai-agent/healthcare/audit-preparer |
+|   +-- AI Compliance Training Coordinator | /ai-agent/healthcare/compliance-training-coordinator |
+| AI Quality Improvement Specialist | /ai-agent/healthcare/quality-improvement-specialist |
+|   +-- AI Metric Analyzer | /ai-agent/healthcare/metric-analyzer |
+|   +-- AI Improvement Planner | /ai-agent/healthcare/improvement-planner |
+|   +-- AI Benchmark Reporter | /ai-agent/healthcare/benchmark-reporter |
+
+================================================
+## 18. MANUFACTURING (63 Agents)
+================================================
+| Name of Agent | Dashboard |
+|-------------|---------------------------------------|
+| AI Chief Production Officer (CPO) | /ai-agent/manufacturing/chief-production-officer |
+|   +-- AI Production Strategy Advisor | /ai-agent/manufacturing/production-strategy-advisor |
+|   +-- AI Capacity Planner | /ai-agent/manufacturing/capacity-planner |
+|   +-- AI Cost Reduction Analyst | /ai-agent/manufacturing/cost-reduction-analyst |
+| AI VP Manufacturing | /ai-agent/manufacturing/vp-manufacturing |
+|   +-- AI Production Line Optimizer | /ai-agent/manufacturing/production-line-optimizer |
+|   +-- AI Yield Tracker | /ai-agent/manufacturing/yield-tracker |
+|   +-- AI Throughput Analyzer | /ai-agent/manufacturing/throughput-analyzer |
+| AI VP Quality Assurance | /ai-agent/manufacturing/vp-quality-assurance |
+|   +-- AI Quality Standards Enforcer | /ai-agent/manufacturing/quality-standards-enforcer |
+|   +-- AI Audit Scheduler | /ai-agent/manufacturing/audit-scheduler |
+|   +-- AI Corrective Action Monitor | /ai-agent/manufacturing/corrective-action-monitor |
+| AI Production Manager | /ai-agent/manufacturing/production-manager |
+|   +-- AI Shift Coordinator | /ai-agent/manufacturing/shift-coordinator |
+|   +-- AI Production Scheduler | /ai-agent/manufacturing/production-scheduler |
+|   +-- AI Output Tracker | /ai-agent/manufacturing/output-tracker |
+| AI Quality Manager | /ai-agent/manufacturing/quality-manager |
+|   +-- AI Inspection Planner | /ai-agent/manufacturing/inspection-planner |
+|   +-- AI Defect Categorizer | /ai-agent/manufacturing/defect-categorizer |
+|   +-- AI Supplier Quality Auditor | /ai-agent/manufacturing/supplier-quality-auditor |
+| AI Safety Manager | /ai-agent/manufacturing/safety-manager |
+|   +-- AI Hazard Identifier | /ai-agent/manufacturing/hazard-identifier |
+|   +-- AI Safety Trainer | /ai-agent/manufacturing/safety-trainer |
+|   +-- AI Incident Investigator | /ai-agent/manufacturing/incident-investigator |
+| AI Production Planner | /ai-agent/manufacturing/production-planner |
+|   +-- AI Material Requirements Planner | /ai-agent/manufacturing/material-requirements-planner |
+|   +-- AI Capacity Loader | /ai-agent/manufacturing/capacity-loader |
+|   +-- AI Order Sequencer | /ai-agent/manufacturing/order-sequencer |
+| AI Quality Inspector | /ai-agent/manufacturing/quality-inspector |
+|   +-- AI Measurement Analyst | /ai-agent/manufacturing/measurement-analyst |
+|   +-- AI Specification Checker | /ai-agent/manufacturing/specification-checker |
+|   +-- AI Non-conformance Reporter | /ai-agent/manufacturing/non-conformance-reporter |
+| AI Supply Chain Coordinator | /ai-agent/manufacturing/supply-chain-coordinator |
+|   +-- AI Supplier Scheduler | /ai-agent/manufacturing/supplier-scheduler |
+|   +-- AI Delivery Tracker | /ai-agent/manufacturing/delivery-tracker |
+|   +-- AI Inventory Buffer Manager | /ai-agent/manufacturing/inventory-buffer-manager |
+| AI Maintenance Technician | /ai-agent/manufacturing/maintenance-technician |
+|   +-- AI Predictive Maintenance Monitor | /ai-agent/manufacturing/predictive-maintenance-monitor |
+|   +-- AI Repair Scheduler | /ai-agent/manufacturing/repair-scheduler |
+|   +-- AI Spare Parts Manager | /ai-agent/manufacturing/spare-parts-manager |
+| AI Inventory Controller | /ai-agent/manufacturing/inventory-controller |
+|   +-- AI Stock Level Monitor | /ai-agent/manufacturing/stock-level-monitor |
+|   +-- AI Reorder Point Calculator | /ai-agent/manufacturing/reorder-point-calculator |
+|   +-- AI Cycle Count Coordinator | /ai-agent/manufacturing/cycle-count-coordinator |
+| AI Lean Specialist | /ai-agent/manufacturing/lean-specialist |
+|   +-- AI Waste Identifier | /ai-agent/manufacturing/waste-identifier |
+|   +-- AI Value Stream Mapper | /ai-agent/manufacturing/value-stream-mapper |
+|   +-- AI Kaizen Facilitator | /ai-agent/manufacturing/kaizen-facilitator |
+| AI Safety Inspector | /ai-agent/manufacturing/safety-inspector |
+|   +-- AI Compliance Auditor | /ai-agent/manufacturing/compliance-auditor |
+|   +-- AI Risk Assessor | /ai-agent/manufacturing/risk-assessor |
+|   +-- AI Corrective Action Tracker | /ai-agent/manufacturing/corrective-action-tracker |
+| AI Logistics Coordinator | /ai-agent/manufacturing/logistics-coordinator |
+|   +-- AI Shipment Planner | /ai-agent/manufacturing/shipment-planner |
+|   +-- AI Carrier Selector | /ai-agent/manufacturing/carrier-selector |
+|   +-- AI Delivery Optimizer | /ai-agent/manufacturing/delivery-optimizer |
+
+================================================
+## 19. TRANSPORTATION & LOGISTICS (59 Agents)
+================================================
+| Name of Agent | Dashboard |
+|-------------|---------------------------------------|
+| AI Chief Logistics Officer | /ai-agent/logistics/chief-logistics-officer |
+|   +-- AI Logistics Strategy Advisor | /ai-agent/logistics/logistics-strategy-advisor |
+|   +-- AI Network Optimizer | /ai-agent/logistics/network-optimizer |
+|   +-- AI Cost-to-serve Analyst | /ai-agent/logistics/cost-to-serve-analyst |
+| AI VP Transportation | /ai-agent/logistics/vp-transportation |
+|   +-- AI Fleet Strategy Planner | /ai-agent/logistics/fleet-strategy-planner |
+|   +-- AI Route Network Designer | /ai-agent/logistics/route-network-designer |
+|   +-- AI Capacity Planner | /ai-agent/logistics/capacity-planner |
+| AI VP Logistics Operations | /ai-agent/logistics/vp-logistics-operations |
+|   +-- AI Hub Operations Optimizer | /ai-agent/logistics/hub-operations-optimizer |
+|   +-- AI Throughput Monitor | /ai-agent/logistics/throughput-monitor |
+|   +-- AI SLA Enforcer | /ai-agent/logistics/sla-enforcer |
+| AI Fleet Manager | /ai-agent/logistics/fleet-manager |
+|   +-- AI Vehicle Scheduler | /ai-agent/logistics/vehicle-scheduler |
+|   +-- AI Fuel Efficiency Monitor | /ai-agent/logistics/fuel-efficiency-monitor |
+|   +-- AI Maintenance Planner | /ai-agent/logistics/maintenance-planner |
+| AI Warehouse Manager | /ai-agent/logistics/warehouse-manager |
+|   +-- AI Slot Optimizer | /ai-agent/logistics/slot-optimizer |
+|   +-- AI Pick Path Planner | /ai-agent/logistics/pick-path-planner |
+|   +-- AI Labor Scheduler | /ai-agent/logistics/labor-scheduler |
+| AI Distribution Manager | /ai-agent/logistics/distribution-manager |
+|   +-- AI Zone Planner | /ai-agent/logistics/zone-planner |
+|   +-- AI Delivery Window Manager | /ai-agent/logistics/delivery-window-manager |
+|   +-- AI Carrier Allocator | /ai-agent/logistics/carrier-allocator |
+| AI Route Optimizer | /ai-agent/logistics/route-optimizer |
+|   +-- AI Traffic Predictor | /ai-agent/logistics/traffic-predictor |
+|   +-- AI Multi-stop Planner | /ai-agent/logistics/multi-stop-planner |
+|   +-- AI Real-time Rerouter | /ai-agent/logistics/real-time-rerouter |
+| AI Fleet Coordinator | /ai-agent/logistics/fleet-coordinator |
+|   +-- AI Dispatch Optimizer | /ai-agent/logistics/dispatch-optimizer |
+|   +-- AI Driver Assignment Agent | /ai-agent/logistics/driver-assignment-agent |
+|   +-- AI Vehicle Tracker | /ai-agent/logistics/vehicle-tracker |
+| AI Warehouse Operator | /ai-agent/logistics/warehouse-operator |
+|   +-- AI Inventory Put-away Agent | /ai-agent/logistics/inventory-put-away-agent |
+|   +-- AI Pick & Pack Coordinator | /ai-agent/logistics/pick-pack-coordinator |
+|   +-- AI Return Processor | /ai-agent/logistics/return-processor |
+| AI Dispatcher | /ai-agent/logistics/dispatcher |
+|   +-- AI Load Matcher | /ai-agent/logistics/load-matcher |
+|   +-- AI Driver Communicator | /ai-agent/logistics/driver-communicator |
+|   +-- AI Delivery Sequencer | /ai-agent/logistics/delivery-sequencer |
+| AI Tracking Specialist | /ai-agent/logistics/tracking-specialist |
+|   +-- AI Shipment Monitor | /ai-agent/logistics/shipment-monitor |
+|   +-- AI ETA Predictor | /ai-agent/logistics/eta-predictor |
+|   +-- AI Exception Alerter | /ai-agent/logistics/exception-alerter |
+| AI Last Mile Coordinator | /ai-agent/logistics/last-mile-coordinator |
+|   +-- AI Delivery Window Negotiator | /ai-agent/logistics/delivery-window-negotiator |
+|   +-- AI Proof-of-delivery Manager | /ai-agent/logistics/proof-of-delivery-manager |
+|   +-- AI Customer Notifier | /ai-agent/logistics/customer-notifier |
+| AI Freight Broker | /ai-agent/logistics/freight-broker |
+|   +-- AI Rate Negotiator | /ai-agent/logistics/rate-negotiator |
+|   +-- AI Carrier Qualifier | /ai-agent/logistics/carrier-qualifier |
+|   +-- AI Lane Optimizer | /ai-agent/logistics/lane-optimizer |
+| AI Customs Specialist | /ai-agent/logistics/customs-specialist |
+|   +-- AI Duty Calculator | /ai-agent/logistics/duty-calculator |
+|   +-- AI Document Preparer | /ai-agent/logistics/document-preparer |
+|   +-- AI Compliance Checker | /ai-agent/logistics/compliance-checker |
+
+================================================
+## 20. GOVERNMENT AFFAIRS (55 Agents)
+================================================
+| Name of Agent | Dashboard |
+|-------------|---------------------------------------|
+| AI Chief Administrative Officer (Gov) | /ai-agent/govaffairs/chief-administrative-officer |
+|   +-- AI Operations Director | /ai-agent/govaffairs/operations-director |
+|   +-- AI Policy Coordinator | /ai-agent/govaffairs/policy-coordinator |
+|   +-- AI Compliance Manager | /ai-agent/govaffairs/compliance-manager |
+| AI VP Public Policy | /ai-agent/govaffairs/vp-public-policy |
+|   +-- AI Policy Researcher | /ai-agent/govaffairs/policy-researcher |
+|   +-- AI Stakeholder Mapper | /ai-agent/govaffairs/stakeholder-mapper |
+|   +-- AI Impact Assessor | /ai-agent/govaffairs/impact-assessor |
+| AI VP Regulatory Affairs | /ai-agent/govaffairs/vp-regulatory-affairs |
+|   +-- AI Regulatory Tracker | /ai-agent/govaffairs/regulatory-tracker |
+|   +-- AI Submission Coordinator | /ai-agent/govaffairs/submission-coordinator |
+|   +-- AI Comment Drafter | /ai-agent/govaffairs/comment-drafter |
+| AI Policy Manager | /ai-agent/govaffairs/policy-manager |
+|   +-- AI Policy Drafter | /ai-agent/govaffairs/policy-drafter |
+|   +-- AI Implementation Tracker | /ai-agent/govaffairs/implementation-tracker |
+|   +-- AI Review Scheduler | /ai-agent/govaffairs/review-scheduler |
+| AI Grants Manager | /ai-agent/govaffairs/grants-manager |
+|   +-- AI Grant Opportunity Scanner | /ai-agent/govaffairs/grant-opportunity-scanner |
+|   +-- AI Application Writer | /ai-agent/govaffairs/application-writer |
+|   +-- AI Compliance Reporter | /ai-agent/govaffairs/compliance-reporter |
+| AI Policy Analyst | /ai-agent/govaffairs/policy-analyst |
+|   +-- AI Data Analyst | /ai-agent/govaffairs/data-analyst |
+|   +-- AI Benchmark Researcher | /ai-agent/govaffairs/benchmark-researcher |
+|   +-- AI Recommendation Drafter | /ai-agent/govaffairs/recommendation-drafter |
+| AI Regulatory Specialist | /ai-agent/govaffairs/regulatory-specialist |
+|   +-- AI Regulation Interpreter | /ai-agent/govaffairs/regulation-interpreter |
+|   +-- AI Compliance Gap Analyst | /ai-agent/govaffairs/compliance-gap-analyst |
+|   +-- AI Filing Coordinator | /ai-agent/govaffairs/filing-coordinator |
+| AI Public Affairs Specialist | /ai-agent/govaffairs/public-affairs-specialist |
+|   +-- AI Press Release Writer | /ai-agent/govaffairs/press-release-writer |
+|   +-- AI Media Monitor | /ai-agent/govaffairs/media-monitor |
+|   +-- AI Crisis Communicator | /ai-agent/govaffairs/crisis-communicator |
+| AI Grants Specialist | /ai-agent/govaffairs/grants-specialist |
+|   +-- AI Budget Preparer | /ai-agent/govaffairs/budget-preparer |
+|   +-- AI Performance Reporter | /ai-agent/govaffairs/performance-reporter |
+|   +-- AI Audit Liaison | /ai-agent/govaffairs/audit-liaison |
+| AI Government Compliance | /ai-agent/govaffairs/government-compliance |
+|   +-- AI Ethics Monitor | /ai-agent/govaffairs/ethics-monitor |
+|   +-- AI Reporting Automator | /ai-agent/govaffairs/reporting-automator |
+|   +-- AI Record Keeper | /ai-agent/govaffairs/record-keeper |
+| AI Transparency Officer | /ai-agent/govaffairs/transparency-officer |
+|   +-- AI Data Publisher | /ai-agent/govaffairs/data-publisher |
+|   +-- AI FOIA Responder | /ai-agent/govaffairs/foia-responder |
+|   +-- AI Accountability Auditor | /ai-agent/govaffairs/accountability-auditor |
+| AI Lobbying Coordinator | /ai-agent/govaffairs/lobbying-coordinator |
+|   +-- AI Meeting Scheduler | /ai-agent/govaffairs/meeting-scheduler |
+|   +-- AI Position Paper Writer | /ai-agent/govaffairs/position-paper-writer |
+|   +-- AI Stakeholder Communicator | /ai-agent/govaffairs/stakeholder-communicator |
+
+================================================
+## 21. SUPPLY CHAIN (40 Agents)
+================================================
+| Name of Agent | Dashboard |
+|-------------|---------------------------------------|
+| AI VP Supply Chain Operations | /ai-agent/supplychain/vp-supply-chain-operations |
+|   +-- AI Supply Chain Strategist | /ai-agent/supplychain/supply-chain-strategist |
+|   +-- AI Network Designer | /ai-agent/supplychain/network-designer |
+|   +-- AI Cost Optimizer | /ai-agent/supplychain/cost-optimizer |
+| AI Procurement Manager | /ai-agent/supplychain/procurement-manager |
+|   +-- AI Sourcing Strategist | /ai-agent/supplychain/sourcing-strategist |
+|   +-- AI Contract Negotiator | /ai-agent/supplychain/contract-negotiator |
+|   +-- AI Supplier Evaluator | /ai-agent/supplychain/supplier-evaluator |
+| AI Logistics Manager | /ai-agent/supplychain/logistics-manager |
+|   +-- AI Transport Mode Selector | /ai-agent/supplychain/transport-mode-selector |
+|   +-- AI Cost Analyzer | /ai-agent/supplychain/cost-analyzer |
+|   +-- AI Service Level Monitor | /ai-agent/supplychain/service-level-monitor |
+| AI Warehouse Lead | /ai-agent/supplychain/warehouse-lead |
+|   +-- AI Layout Optimizer | /ai-agent/supplychain/layout-optimizer |
+|   +-- AI Safety Enforcer | /ai-agent/supplychain/safety-enforcer |
+|   +-- AI Productivity Tracker | /ai-agent/supplychain/productivity-tracker |
+| AI Procurement Buyer | /ai-agent/supplychain/procurement-buyer |
+|   +-- AI RFQ Issuer | /ai-agent/supplychain/rfq-issuer |
+|   +-- AI Bid Analyzer | /ai-agent/supplychain/bid-analyzer |
+|   +-- AI Order Placer | /ai-agent/supplychain/order-placer |
+| AI Inventory Specialist | /ai-agent/supplychain/inventory-specialist |
+|   +-- AI Stock Optimizer | /ai-agent/supplychain/stock-optimizer |
+|   +-- AI ABC Analyzer | /ai-agent/supplychain/abc-analyzer |
+|   +-- AI Obsolescence Tracker | /ai-agent/supplychain/obsolescence-tracker |
+| AI Demand Planner | /ai-agent/supplychain/demand-planner |
+|   +-- AI Forecast Modeler | /ai-agent/supplychain/forecast-modeler |
+|   +-- AI Seasonality Adjuster | /ai-agent/supplychain/seasonality-adjuster |
+|   +-- AI Bias Corrector | /ai-agent/supplychain/bias-corrector |
+| AI Supplier Relations | /ai-agent/supplychain/supplier-relations |
+|   +-- AI Performance Scorer | /ai-agent/supplychain/performance-scorer |
+|   +-- AI Risk Monitor | /ai-agent/supplychain/risk-monitor |
+|   +-- AI Relationship Manager | /ai-agent/supplychain/relationship-manager |
+| AI Shipping Coordinator | /ai-agent/supplychain/shipping-coordinator |
+|   +-- AI Carrier Booker | /ai-agent/supplychain/carrier-booker |
+|   +-- AI Document Preparer | /ai-agent/supplychain/document-preparer |
+|   +-- AI Tracking Monitor | /ai-agent/supplychain/tracking-monitor |
+| AI Fulfillment Specialist | /ai-agent/supplychain/fulfillment-specialist |
+|   +-- AI Order Processor | /ai-agent/supplychain/order-processor |
+|   +-- AI Pick List Generator | /ai-agent/supplychain/pick-list-generator |
+|   +-- AI Packaging Optimizer | /ai-agent/supplychain/packaging-optimizer |
+
+================================================
+## 22. AI MANAGEMENT (24 Agents)
+================================================
+| Name of Agent | Dashboard |
+|-------------|---------------------------------------|
+| AI Chief Automation Officer | /ai-agent/aimgmt/chief-automation-officer |
+|   +-- AI Automation Strategy Advisor | /ai-agent/aimgmt/automation-strategy-advisor |
+|   +-- AI ROI Calculator | /ai-agent/aimgmt/roi-calculator |
+|   +-- AI Technology Evaluator | /ai-agent/aimgmt/technology-evaluator |
+| AI VP Automation | /ai-agent/aimgmt/vp-automation |
+|   +-- AI Automation Pipeline Manager | /ai-agent/aimgmt/automation-pipeline-manager |
+|   +-- AI Tool Selector | /ai-agent/aimgmt/tool-selector |
+|   +-- AI Implementation Planner | /ai-agent/aimgmt/implementation-planner |
+| AI VP Process Excellence | /ai-agent/aimgmt/vp-process-excellence |
+|   +-- AI Process Miner | /ai-agent/aimgmt/process-miner |
+|   +-- AI Maturity Assessor | /ai-agent/aimgmt/maturity-assessor |
+|   +-- AI Benchmark Analyzer | /ai-agent/aimgmt/benchmark-analyzer |
+| AI Automation Ops Director Lead | /ai-agent/aimgmt/automation-ops-director |
+|   +-- AI Automation Runbook Author | /ai-agent/aimgmt/automation-runbook-author |
+|   +-- AI Exception Handler | /ai-agent/aimgmt/exception-handler |
+|   +-- AI Performance Monitor | /ai-agent/aimgmt/performance-monitor |
+| AI RPA Manager | /ai-agent/aimgmt/rpa-manager |
+|   +-- AI Bot Deployer | /ai-agent/aimgmt/bot-deployer |
+|   +-- AI License Manager | /ai-agent/aimgmt/license-manager |
+|   +-- AI Bot Health Monitor | /ai-agent/aimgmt/bot-health-monitor |
+| AI Workflow Specialist | /ai-agent/aimgmt/workflow-specialist |
+|   +-- AI Workflow Designer | /ai-agent/aimgmt/workflow-designer |
+|   +-- AI Integration Builder | /ai-agent/aimgmt/integration-builder |
+|   +-- AI Trigger Configurator | /ai-agent/aimgmt/trigger-configurator |
+
+<!-- DEPARTMENT LISTING ENDS -->
+
+================================================================
+## SUMMARY
+================================================================
+Total Main Agents: 277
+Total Sub Agents: 831
+Grand Total: 1,108 Agents
+Departments: 22
+
