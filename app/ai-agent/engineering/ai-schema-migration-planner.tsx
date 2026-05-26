@@ -1,1 +1,38 @@
-import React from'react';import{View,Text,StyleSheet,ScrollView}from'react-native';import{useTheme}from'@/providers/ThemeProvider';import{Layers,Activity,Star,CircleCheckBig,Clock,Target,ArrowRight,Zap}from'lucide-react-native';import AgentFeatures from'@/components/ai-agent/AgentFeatures';export default function AgentPage(){const{theme}=useTheme();const stats=[{label:'Migrations',value:'34',icon:CircleCheckBig,color:'#34C759'},{label:'Zero-Downtime',value:'100%',icon:Activity,color:'#007AFF'},{label:'Rollback',value:'2s',icon:Clock,color:'#FF9500'},{label:'Success',value:'99%',icon:Target,color:'#1565C0'}];const capabilities=['Migration Strategy','Schema Versioning','Rollback Planning','Dependency Analysis','Impact Assessment','Blue-Green Deployment'];const responsibilities=['Plan database migration strategies','Version control schema changes','Prepare rollback procedures','Analyze migration dependencies','Assess change impact on systems','Coordinate blue-green deployments'];const activities=[{time:'3 min ago',text:'Planned migration for users table',icon:CircleCheckBig},{time:'6 min ago',text:'Validated rollback scripts',icon:Clock},{time:'9 min ago',text:'Completed zero-downtime migration',icon:Zap}];return(<ScrollView style={[styles.container,{backgroundColor:theme.colors.background}]}><View style={[styles.hero,{borderBottomColor:theme.colors.border||'#E5E5EA'}]}><View style={[styles.heroIconWrap,{backgroundColor:'#1565C020'}]}><Layers size={48} color="#1565C0"/></View><Text style={[styles.heroTitle,{color:theme.colors.text}]}>AI Schema Migration Planner</Text><Text style={[styles.heroSubtitle,{color:theme.colors.textSecondary}]}>Engineering</Text><View style={styles.badgesRow}><View style={[styles.badge,{backgroundColor:'#34C75922'}]}><Activity size={12} color="#34C759"/><Text style={[styles.badgeText,{color:'#34C759'}]}>Active</Text></View><View style={[styles.badge,{backgroundColor:'#1565C022'}]}><Star size={12} color="#1565C0"/><Text style={[styles.badgeText,{color:'#1565C0'}]}>Sub-Agent</Text></View></View></View><View style={styles.statsContainer}>{stats.map((s,i)=>(<View key={i} style={[styles.statCard,{backgroundColor:theme.colors.card||'#F2F2F7'}]}><s.icon size={22} color={s.color}/><Text style={[styles.statValue,{color:theme.colors.text}]}>{s.value}</Text><Text style={[styles.statLabel,{color:theme.colors.textSecondary}]}>{s.label}</Text></View>))}</View><View style={[styles.section,{backgroundColor:theme.colors.card||'#F2F2F7'}]}><Text style={[styles.sectionTitle,{color:theme.colors.text}]}>Overview</Text><Text style={[styles.description,{color:theme.colors.textSecondary}]}>The AI Schema Migration Planner designs safe, reversible database migrations with minimal downtime and comprehensive rollback strategies.</Text></View><View style={[styles.section,{backgroundColor:theme.colors.card||'#F2F2F7'}]}><Text style={[styles.sectionTitle,{color:theme.colors.text}]}>Capabilities</Text><View style={styles.tagsContainer}>{capabilities.map((c,i)=>(<View key={i} style={[styles.tag,{backgroundColor:'#1565C018'}]}><Text style={[styles.tagText,{color:'#1565C0'}]}>{c}</Text></View>))}</View></View><View style={[styles.section,{backgroundColor:theme.colors.card||'#F2F2F7'}]}><Text style={[styles.sectionTitle,{color:theme.colors.text}]}>Key Responsibilities</Text>{responsibilities.map((r,i)=>(<View key={i} style={styles.responsibilityRow}><ArrowRight size={14} color="#1565C0"/><Text style={[styles.responsibilityText,{color:theme.colors.textSecondary}]}>{r}</Text></View>))}</View><View style={[styles.section,{backgroundColor:theme.colors.card||'#F2F2F7'}]}><Text style={[styles.sectionTitle,{color:theme.colors.text}]}>Recent Activity</Text>{activities.map((a,i)=>(<View key={i} style={styles.activityRow}><View style={[styles.activityIcon,{backgroundColor:'#1565C015'}]}><a.icon size={14} color="#1565C0"/></View><View style={styles.activityContent}><Text style={[styles.activityText,{color:theme.colors.text}]}>{a.text}</Text><Text style={[styles.activityTime,{color:theme.colors.textSecondary}]}>{a.time}</Text></View></View>))}</View><AgentFeatures agentId="ai-schema-migration-planner" agentName="AI Schema Migration Planner"/></ScrollView>);}const styles=StyleSheet.create({container:{flex:1},hero:{alignItems:'center',paddingVertical:32,paddingHorizontal:20,borderBottomWidth:1},heroIconWrap:{width:88,height:88,borderRadius:44,justifyContent:'center',alignItems:'center',marginBottom:16},heroTitle:{fontSize:26,fontWeight:'bold'},heroSubtitle:{fontSize:15,marginTop:4,fontWeight:'500'},badgesRow:{flexDirection:'row',gap:10,marginTop:16},badge:{flexDirection:'row',alignItems:'center',paddingHorizontal:10,paddingVertical:5,borderRadius:20,gap:4},badgeText:{fontSize:12,fontWeight:'600'},statsContainer:{flexDirection:'row',flexWrap:'wrap',padding:16,gap:12},statCard:{flex:1,minWidth:'22%',alignItems:'center',padding:14,borderRadius:12},statValue:{fontSize:18,fontWeight:'bold',marginTop:8},statLabel:{fontSize:11,marginTop:4},section:{marginHorizontal:16,marginBottom:16,padding:20,borderRadius:16},sectionTitle:{fontSize:18,fontWeight:'700',marginBottom:14},description:{fontSize:14,lineHeight:22},tagsContainer:{flexDirection:'row',flexWrap:'wrap',gap:8},tag:{paddingHorizontal:12,paddingVertical:6,borderRadius:20},tagText:{fontSize:12,fontWeight:'600'},responsibilityRow:{flexDirection:'row',alignItems:'center',marginBottom:10,gap:8},responsibilityText:{fontSize:14,flex:1,lineHeight:20},activityRow:{flexDirection:'row',alignItems:'center',marginBottom:12,gap:12},activityIcon:{width:32,height:32,borderRadius:16,justifyContent:'center',alignItems:'center'},activityContent:{flex:1},activityText:{fontSize:14,fontWeight:'500'},activityTime:{fontSize:12,marginTop:2}});
+import React from 'react';
+import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
+import { Bot } from 'lucide-react-native';
+
+export default function AgentPage() {
+  const agent = {
+    id: 'ai-schema-migration-planner',
+    name: 'AI Schema Migration Planner',
+    title: 'Engineering',
+    description: 'The AI Schema Migration Planner designs safe, reversible database migrations with minimal downtime and comprehensive rollback strategies.',
+    capabilities: ["Migration Strategy","Schema Versioning","Rollback Planning","Dependency Analysis","Impact Assessment","Blue-Green Deployment"],
+    icon: Bot,
+    color: '#00BCD4',
+    type: 'agent' as const,
+    humanCost: '$60k/year',
+    aiCost: '$1k/year',
+    efficiency: '60x efficiency improvement',
+    replacesRole: 'Engineering',
+    infrastructure: {
+      status: 'online',
+      health: 97,
+      uptime: '99.9%',
+      lastActive: 'Now',
+      processingPower: 'standard',
+    },
+    roiMetrics: {
+      savingsPerMonth: '$4',
+      tasksAutomatedDaily: 716,
+      responseTime: '1.0s',
+      accuracyRate: '97.3%',
+    },
+    hierarchy: {
+      department: 'Engineering',
+    },
+  };
+
+  return <AgentPageWrapper agent={agent} />;
+}

@@ -1,237 +1,35 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Activity, ChartBarBig, CircleCheck, Zap, ChevronLeft, ArrowRight, Star, Calculator } from 'lucide-react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { TouchableOpacity } from 'react-native';
-import { useRouter } from 'expo-router';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { Colors } from '@/constants/Colors';
-import { LinearGradient } from 'expo-linear-gradient';
+import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
+import { Bot } from 'lucide-react-native';
 
-const ACCENT = '#AF52DE';
-const AGENT_NAME = 'AI Points Calculator';
-const AGENT_TITLE = 'Loyalty Points Engine';
-const AGENT_DESC = 'Calculates, tracks, and manages loyalty point balances across all earning rules, redemption logic, expiration policies, and tier multipliers. Ensures point accuracy and real-time balance synchronization.';
-const PARENT_NAME = 'AI Loyalty & Engagement';
-const PARENT_ROUTE = '/ai-agent/customer-experience/loyalty-engagement';
+export default function PointsCalculatorPage() {
+  const agent = {
+    id: 'points-calculator',
+    name: 'AI Points Calculator',
+    title: 'Customer Agent',
+    description: 'Automated Points Calculator agent specializing in customer operations with advanced AI capabilities for task automation, data processing, and workflow coordination.',
+    capabilities: ["Task Automation","Data Processing","Workflow Coordination","Performance Reporting","Quality Assurance","Compliance Monitoring"],
+    icon: Bot,
+    color: '#EC4899',
+    type: 'agent' as const,
+    humanCost: '$50k/year',
+    aiCost: '$1.0k/year',
+    efficiency: '15x efficiency improvement',
+    replacesRole: 'Points Calculator',
+    infrastructure: {
+      status: 'online',
+      health: 95,
+      uptime: '99.5%',
+      lastActive: 'Now',
+      processingPower: 'standard',
+    },
+    roiMetrics: {
+      savingsPerMonth: '$3,200',
+      tasksAutomatedDaily: 75,
+      responseTime: '<2s',
+      accuracyRate: '94%',
+    },
+  };
 
-const METRICS = [
-  { label: 'Calculations Today', value: '8.5k', color: ACCENT },
-  { label: 'Accuracy', value: '99.7%', color: '#00C853' },
-  { label: 'Avg Speed', value: '0.1s', color: '#007AFF' },
-  { label: 'Balance Sync', value: '100%', color: '#5856D6' },
-];
-
-const RECENT_TASKS = [
-  { action: 'Calculated 500 bonus points for referral conversion', time: '1m ago' },
-  { action: 'Applied 2x tier multiplier for VIP purchase', time: '5m ago' },
-  { action: 'Processed point expiration for 23 dormant accounts', time: '12m ago' },
-  { action: 'Synced point balances across 3 partner systems', time: '20m ago' },
-  { action: 'Recalculated earning rules for Q4 promotion', time: '35m ago' },
-  { action: 'Verified point audit trail for compliance check', time: '1h ago' },
-];
-
-const CAPABILITIES = [
-  'Point Earning Rule Engine',
-  'Redemption Logic & Validation',
-  'Tier Multiplier Calculation',
-  'Expiration Policy Management',
-  'Real-Time Balance Sync',
-  'Retroactive Point Adjustments',
-  'Partner Point Conversion',
-  'Audit Trail & Compliance',
-  'Promotional Bonus Allocation',
-  'Point Fraud Detection',
-];
-
-const PERFORMANCE_BARS = [
-  { label: 'Calculation Accuracy', value: 99, color: '#00C853' },
-  { label: 'Sync Reliability', value: 100, color: ACCENT },
-  { label: 'Processing Speed', value: 98, color: '#007AFF' },
-  { label: 'Fraud Detection', value: 94, color: '#5856D6' },
-  { label: 'Compliance Score', value: 99, color: '#FF9500' },
-];
-
-const A2A_ENDPOINTS = [
-  '/consult/points-calculator',
-  '/points/calculate-earning',
-  '/points/validate-redemption',
-  '/points/sync-balance',
-  '/points/apply-expiration',
-  '/points/audit-trail',
-];
-
-export default function AgentScreen() {
-  const router = useRouter();
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
-
-  return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <ChevronLeft size={24} color={colors.text} />
-        </TouchableOpacity>
-        <View style={styles.headerCenter}>
-          <Text style={[styles.headerTitle, { color: colors.text }]}>{AGENT_NAME}</Text>
-          <Text style={[styles.headerSub, { color: colors.text + '70' }]}>{PARENT_NAME}</Text>
-        </View>
-        <View style={styles.headerRight} />
-      </View>
-
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        <LinearGradient colors={[ACCENT, ACCENT + 'BB']} style={styles.hero}>
-          <View style={styles.heroIcon}>
-            <Star size={32} color="#fff" />
-          </View>
-          <Text style={styles.heroTitle}>{AGENT_NAME}</Text>
-          <Text style={styles.heroSub}>{AGENT_TITLE}</Text>
-          <Text style={styles.heroDesc}>{AGENT_DESC}</Text>
-          <View style={styles.statusRow}>
-            <View style={styles.onlineDot} />
-            <Text style={styles.statusText}>Online · Active · Sub-Agent</Text>
-          </View>
-        </LinearGradient>
-
-        <View style={styles.metricsGrid}>
-          {METRICS.map((m, i) => (
-            <View key={i} style={[styles.metricCard, { backgroundColor: colors.card }]}>
-              <Text style={[styles.metricValue, { color: m.color }]}>{m.value}</Text>
-              <Text style={[styles.metricLabel, { color: colors.text + '70' }]}>{m.label}</Text>
-            </View>
-          ))}
-        </View>
-
-        <View style={[styles.section, { backgroundColor: colors.card }]}>
-          <View style={styles.sectionHeader}>
-            <Activity size={18} color={ACCENT} />
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>Live Activity</Text>
-            <View style={styles.liveBadge}>
-              <View style={styles.liveDot} />
-              <Text style={styles.liveText}>LIVE</Text>
-            </View>
-          </View>
-          {RECENT_TASKS.map((task, i) => (
-            <View key={i} style={[styles.taskRow, { borderBottomColor: colors.border }]}>
-              <CircleCheck size={16} color="#00C853" />
-              <Text style={[styles.taskText, { color: colors.text }]}>{task.action}</Text>
-              <Text style={[styles.taskTime, { color: colors.text + '60' }]}>{task.time}</Text>
-            </View>
-          ))}
-        </View>
-
-        <View style={[styles.section, { backgroundColor: colors.card }]}>
-          <View style={styles.sectionHeader}>
-            <Zap size={18} color={ACCENT} />
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>Capabilities</Text>
-          </View>
-          <View style={styles.capGrid}>
-            {CAPABILITIES.map((cap, i) => (
-              <View key={i} style={[styles.capChip, { backgroundColor: ACCENT + '18', borderColor: ACCENT + '40' }]}>
-                <Text style={[styles.capText, { color: ACCENT }]}>{cap}</Text>
-              </View>
-            ))}
-          </View>
-        </View>
-
-        <View style={[styles.section, { backgroundColor: colors.card }]}>
-          <View style={styles.sectionHeader}>
-            <ChartBarBig size={18} color={ACCENT} />
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>Performance</Text>
-          </View>
-          {PERFORMANCE_BARS.map((bar, i) => (
-            <View key={i} style={{ marginBottom: 14 }}>
-              <View style={styles.barLabelRow}>
-                <Text style={[styles.barLabel, { color: colors.text }]}>{bar.label}</Text>
-                <Text style={[styles.barPct, { color: bar.color }]}>{bar.value}%</Text>
-              </View>
-              <View style={[styles.barBg, { backgroundColor: colors.border }]}>
-                <View style={[styles.barFill, { width: bar.value + '%', backgroundColor: bar.color }]} />
-              </View>
-            </View>
-          ))}
-        </View>
-
-        <View style={[styles.section, { backgroundColor: colors.card }]}>
-          <View style={styles.sectionHeader}>
-            <Zap size={18} color={ACCENT} />
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>A2A Endpoints</Text>
-          </View>
-          {A2A_ENDPOINTS.map((ep, i) => (
-            <View key={i} style={styles.endpointRow}>
-              <View style={styles.endpointDot} />
-              <Text style={[styles.endpointText, { color: colors.text + '80' }]}>{ep}</Text>
-            </View>
-          ))}
-        </View>
-
-        <View style={[styles.section, { backgroundColor: colors.card }]}>
-          <View style={styles.sectionHeader}>
-            <Calculator size={18} color={ACCENT} />
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>Parent Agent</Text>
-          </View>
-          <TouchableOpacity onPress={() => router.push(PARENT_ROUTE)} style={[styles.parentCard, { backgroundColor: colors.background }]}>
-            <View style={[styles.parentIcon, { backgroundColor: ACCENT + '18' }]}>
-              <Activity size={22} color={ACCENT} />
-            </View>
-            <View style={styles.parentInfo}>
-              <Text style={[styles.parentName, { color: colors.text }]}>{PARENT_NAME}</Text>
-              <Text style={[styles.parentDesc, { color: colors.text + '70' }]}>Main Agent</Text>
-            </View>
-            <ArrowRight size={18} color={colors.text + '50'} />
-          </TouchableOpacity>
-        </View>
-
-        <View style={{ height: 60 }} />
-      </ScrollView>
-    </SafeAreaView>
-  );
+  return <AgentPageWrapper agent={agent} />;
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  header: { flexDirection: 'row', alignItems: 'center', padding: 16, borderBottomWidth: 1 },
-  backButton: { padding: 8 },
-  headerCenter: { flex: 1, alignItems: 'center' },
-  headerTitle: { fontSize: 16, fontWeight: '700' },
-  headerSub: { fontSize: 11, marginTop: 1 },
-  headerRight: { width: 40 },
-  content: { flex: 1 },
-  hero: { margin: 16, borderRadius: 24, padding: 24, alignItems: 'center' },
-  heroIcon: { width: 72, height: 72, borderRadius: 22, backgroundColor: 'rgba(255,255,255,0.2)', justifyContent: 'center', alignItems: 'center', marginBottom: 14 },
-  heroTitle: { fontSize: 22, fontWeight: '800', color: '#fff', marginBottom: 4 },
-  heroSub: { fontSize: 13, color: 'rgba(255,255,255,0.8)', marginBottom: 10 },
-  heroDesc: { fontSize: 13, color: 'rgba(255,255,255,0.7)', textAlign: 'center', lineHeight: 18, marginBottom: 14 },
-  statusRow: { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: 'rgba(255,255,255,0.15)', paddingHorizontal: 14, paddingVertical: 6, borderRadius: 20 },
-  onlineDot: { width: 8, height: 8, borderRadius: 4, backgroundColor: '#00FF88' },
-  statusText: { color: '#fff', fontSize: 12, fontWeight: '600' },
-  metricsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, paddingHorizontal: 16, marginBottom: 16 },
-  metricCard: { flex: 1, minWidth: '45%', padding: 16, borderRadius: 16, alignItems: 'center' },
-  metricValue: { fontSize: 22, fontWeight: '800', marginBottom: 4 },
-  metricLabel: { fontSize: 11, textTransform: 'uppercase', textAlign: 'center' },
-  section: { marginHorizontal: 16, marginBottom: 14, padding: 18, borderRadius: 20 },
-  sectionHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 16 },
-  sectionTitle: { flex: 1, fontSize: 16, fontWeight: '700' },
-  liveBadge: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: '#FF3B3018', paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8 },
-  liveDot: { width: 6, height: 6, borderRadius: 3, backgroundColor: '#FF3B30' },
-  liveText: { fontSize: 10, color: '#FF3B30', fontWeight: '700' },
-  taskRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 10, borderBottomWidth: StyleSheet.hairlineWidth, gap: 10 },
-  taskText: { flex: 1, fontSize: 13 },
-  taskTime: { fontSize: 11 },
-  capGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  capChip: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 20, borderWidth: 1 },
-  capText: { fontSize: 12, fontWeight: '600' },
-  barLabelRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 },
-  barLabel: { fontSize: 13, fontWeight: '500' },
-  barPct: { fontSize: 13, fontWeight: '700' },
-  barBg: { height: 7, borderRadius: 4, overflow: 'hidden' },
-  barFill: { height: '100%', borderRadius: 4 },
-  endpointRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 8, gap: 8 },
-  endpointDot: { width: 6, height: 6, borderRadius: 3, backgroundColor: '#AF52DE' },
-  endpointText: { fontSize: 13, fontFamily: 'monospace' },
-  parentCard: { flexDirection: 'row', alignItems: 'center', padding: 16, borderRadius: 14, gap: 12 },
-  parentIcon: { width: 44, height: 44, borderRadius: 12, justifyContent: 'center', alignItems: 'center' },
-  parentInfo: { flex: 1 },
-  parentName: { fontSize: 15, fontWeight: '600' },
-  parentDesc: { fontSize: 12, marginTop: 2 },
-});

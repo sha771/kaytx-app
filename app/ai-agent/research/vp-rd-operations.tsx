@@ -1,271 +1,38 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { useTheme } from '@/providers/ThemeProvider';
-import { FlaskConical, Activity, Star, CircleCheckBig, Clock, Target, ArrowRight, Zap, Users, Settings, TrendingUp, BarChart3, MessageSquare, Calendar, Shield, FileText, Database, DollarSign, Layers, Cpu, Globe, Award, CheckCircle, Wrench, Building2 } from 'lucide-react-native';
-import AgentFeatures from '@/components/ai-agent/AgentFeatures';
-import { useRouter } from 'expo-router';
+import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
+import { Briefcase } from 'lucide-react-native';
 
-export default function VPRDOperationsPage() {
-  const { theme } = useTheme();
-  const router = useRouter();
-  const stats = [
-    { label: 'Operations', value: '867', icon: CircleCheckBig, color: '#34C759' },
-    { label: 'Uptime', value: '99.9%', icon: Activity, color: '#007AFF' },
-    { label: 'Response', value: '0.9s', icon: Clock, color: '#FF9500' },
-    { label: 'Accuracy', value: '99.7%', icon: Target, color: '#FF9500' },
-  ];
-  const capabilities = ['R&D Operations', 'Resource Planning', 'Compliance Management', 'Lab Management', 'Budget Oversight', 'Process Optimization', 'Facility Management', 'Equipment Tracking', 'Safety Protocols', 'Quality Assurance'];
-  const responsibilities = [
-    'R&D operations strategy & management',
-    'Resource planning & allocation optimization',
-    'Research compliance & ethics oversight',
-    'Lab & facility management coordination',
-    'R&D budget development & oversight',
-    'Process optimization & efficiency improvement',
-    'Equipment procurement & maintenance',
-    'Safety protocol enforcement & training'
-  ];
-  const activities = [
-    { time: '3 min ago', text: 'Optimized R&D resource allocation', icon: CircleCheckBig },
-    { time: '6 min ago', text: 'Reviewed compliance for 5 studies', icon: Shield },
-    { time: '9 min ago', text: 'Managed $20M R&D budget', icon: DollarSign },
-    { time: '15 min ago', text: 'Updated lab equipment inventory', icon: Database },
-    { time: '1 hour ago', text: 'Conducted safety audit', icon: CheckCircle },
-  ];
-  const quickActions = [
-    { label: 'Resources', icon: Database, route: '/ai-agent/research' },
-    { label: 'Team Chat', icon: MessageSquare, route: '/ai-agent/collaboration' },
-    { label: 'Schedule', icon: Calendar, route: '/ai-agent/scheduling' },
-    { label: 'Settings', icon: Shield, route: '/ai-agent/settings' },
-    { label: 'Analytics', icon: BarChart3, route: '/ai-agent/analytics' },
-    { label: 'Documents', icon: FileText, route: '/ai-agent/knowledge-base' },
-  ];
-  const subAgents = [
-    { id: 'lab-resource-allocator', name: 'AI Lab Resource Allocator', description: 'Allocates lab resources and equipment efficiently', icon: Database, color: '#8B5CF6' },
-    { id: 'experiment-tracker', name: 'AI Experiment Tracker', description: 'Tracks and monitors experiment progress', icon: Target, color: '#F59E0B' },
-    { id: 'rd-budget-controller', name: 'AI R&D Budget Controller', description: 'Manages R&D budget allocation and tracking', icon: DollarSign, color: '#10B981' },
-  ];
-  const a2aEndpoints = [
-    { method: 'GET', endpoint: '/api/v1/rd-ops/vp/resources', description: 'Get resource allocation' },
-    { method: 'POST', endpoint: '/api/v1/rd-ops/vp/allocate', description: 'Allocate resources' },
-    { method: 'GET', endpoint: '/api/v1/rd-ops/vp/experiments', description: 'List experiments' },
-    { method: 'POST', endpoint: '/api/v1/rd-ops/vp/budget', description: 'Update budget' },
-    { method: 'GET', endpoint: '/api/v1/rd-ops/vp/compliance', description: 'Get compliance status' },
-  ];
-  const performanceMetrics = [
-    { label: 'Lab Utilization', value: '94%', trend: '+8%' },
-    { label: 'Budget Efficiency', value: '97%', trend: '+12%' },
-    { label: 'Compliance Score', value: '100%', trend: '+2%' },
-    { label: 'Experiments/Day', value: '47', trend: '+15%' },
-  ];
+export default function AgentPage() {
+  const agent = {
+    id: 'vp-rd-operations',
+    name: 'vp-rd-operations',
+    title: 'vp-rd-operations',
+    description: 'The vp-rd-operations AI provides specialized services and automation within its department.',
+    capabilities: ["Task Automation","Data Processing","Workflow Management"],
+    icon: Briefcase,
+    color: '#673AB7',
+    type: 'employee' as const,
+    humanCost: '$172k/year',
+    aiCost: '$3k/year',
+    efficiency: '57x efficiency improvement',
+    replacesRole: 'vp-rd-operations',
+    infrastructure: {
+      status: 'online',
+      health: 99,
+      uptime: '99.9%',
+      lastActive: 'Now',
+      processingPower: 'enterprise',
+    },
+    roiMetrics: {
+      savingsPerMonth: '$12',
+      tasksAutomatedDaily: 1364,
+      responseTime: '1.3s',
+      accuracyRate: '96.4%',
+    },
+    hierarchy: {
+      department: 'Research',
+    },
+  };
 
-  return (
-    <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <View style={[styles.hero, { backgroundColor: '#FF950018' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#FF950025' }]}>
-          <Settings size={48} color="#FF9500" />
-        </View>
-        <Text style={[styles.heroTitle, { color: theme.colors.text }]}>AI VP R&D Operations</Text>
-        <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>R&D Operations Division</Text>
-        <View style={styles.badgesRow}>
-          <View style={[styles.badge, { backgroundColor: '#34C75922' }]}><Activity size={12} color="#34C759" /><Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#FF950022' }]}><Star size={12} color="#FF9500" /><Text style={[styles.badgeText, { color: '#FF9500' }]}>VP Level</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#007AFF22' }]}><Users size={12} color="#007AFF" /><Text style={[styles.badgeText, { color: '#007AFF' }]}>3 Sub-Agents</Text></View>
-        </View>
-      </View>
-
-      <View style={styles.statsContainer}>
-        {stats.map((stat, index) => (
-          <View key={index} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-            <stat.icon size={22} color={stat.color} />
-            <Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text>
-            <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text>
-          </View>
-        ))}
-      </View>
-
-      {/* Performance Metrics */}
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Performance Metrics</Text>
-        <View style={styles.metricsGrid}>
-          {performanceMetrics.map((metric, index) => (
-            <View key={index} style={[styles.metricCard, { backgroundColor: '#FF950010' }]}>
-              <Text style={[styles.metricValue, { color: theme.colors.text }]}>{metric.value}</Text>
-              <Text style={[styles.metricLabel, { color: theme.colors.textSecondary }]}>{metric.label}</Text>
-              <View style={[styles.trendBadge, { backgroundColor: '#34C75920' }]}>
-                <TrendingUp size={10} color="#34C759" />
-                <Text style={[styles.trendText, { color: '#34C759' }]}>{metric.trend}</Text>
-              </View>
-            </View>
-          ))}
-        </View>
-      </View>
-
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Overview</Text>
-        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>
-          The AI VP R&D Operations manages the operational backbone of the research division. This executive-level agent oversees resource allocation, lab management, compliance, budget control, and process optimization to ensure smooth and efficient R&D operations.
-        </Text>
-      </View>
-
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Core Capabilities</Text>
-        <View style={styles.tagsContainer}>
-          {capabilities.map((cap, index) => (
-            <View key={index} style={[styles.tag, { backgroundColor: '#FF950018' }]}>
-              <Text style={[styles.tagText, { color: '#FF9500' }]}>{cap}</Text>
-            </View>
-          ))}
-        </View>
-      </View>
-
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Responsibilities</Text>
-        {responsibilities.map((item, index) => (
-          <View key={index} style={styles.responsibilityRow}>
-            <ArrowRight size={14} color="#FF9500" />
-            <Text style={[styles.responsibilityText, { color: theme.colors.textSecondary }]}>{item}</Text>
-          </View>
-        ))}
-      </View>
-
-      {/* Sub-Agents Section */}
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
-        <Text style={[styles.sectionSubtitle, { color: theme.colors.textSecondary }]}>Specialized agents working under VP R&D Operations</Text>
-        {subAgents.map((agent, index) => (
-          <TouchableOpacity key={index} onPress={() => router.push(`/ai-agent/research/sub-agents/${agent.id}` as any)} style={[styles.subAgentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
-            <View style={[styles.subAgentIcon, { backgroundColor: agent.color + '20' }]}>
-              <agent.icon size={24} color={agent.color} />
-            </View>
-            <View style={styles.subAgentInfo}>
-              <Text style={[styles.subAgentName, { color: theme.colors.text }]}>{agent.name}</Text>
-              <Text style={[styles.subAgentDesc, { color: theme.colors.textSecondary }]}>{agent.description}</Text>
-            </View>
-            <ArrowRight size={20} color={theme.colors.textSecondary} />
-          </TouchableOpacity>
-        ))}
-      </View>
-
-      {/* A2A Endpoints */}
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>A2A API Endpoints</Text>
-        <Text style={[styles.sectionSubtitle, { color: theme.colors.textSecondary }]}>Agent-to-Agent communication interfaces</Text>
-        {a2aEndpoints.map((api, index) => (
-          <View key={index} style={styles.endpointRow}>
-            <View style={[styles.methodBadge, { backgroundColor: api.method === 'GET' ? '#007AFF20' : '#34C75920' }]}>
-              <Text style={[styles.methodText, { color: api.method === 'GET' ? '#007AFF' : '#34C759' }]}>{api.method}</Text>
-            </View>
-            <View style={styles.endpointInfo}>
-              <Text style={[styles.endpointPath, { color: theme.colors.text }]}>{api.endpoint}</Text>
-              <Text style={[styles.endpointDesc, { color: theme.colors.textSecondary }]}>{api.description}</Text>
-            </View>
-          </View>
-        ))}
-      </View>
-
-      {/* Recent Activity */}
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Recent Activity</Text>
-        {activities.map((act, index) => (
-          <View key={index} style={styles.activityRow}>
-            <View style={[styles.activityIcon, { backgroundColor: '#FF950015' }]}>
-              <act.icon size={14} color="#FF9500" />
-            </View>
-            <View style={styles.activityContent}>
-              <Text style={[styles.activityText, { color: theme.colors.text }]}>{act.text}</Text>
-              <Text style={[styles.activityTime, { color: theme.colors.textSecondary }]}>{act.time}</Text>
-            </View>
-          </View>
-        ))}
-      </View>
-
-      {/* Quick Actions */}
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
-        <View style={styles.actionsGrid}>
-          {quickActions.map((action, index) => (
-            <TouchableOpacity key={index} style={[styles.actionButton, { backgroundColor: '#FF950012' }]} onPress={() => router.push(action.route as any)}>
-              <action.icon size={24} color="#FF9500" />
-              <Text style={[styles.actionText, { color: '#FF9500' }]}>{action.label}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </View>
-
-      {/* Related Agents */}
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Related Agents</Text>
-        <View style={styles.relatedAgentsRow}>
-          <TouchableOpacity onPress={() => router.push('/ai-agent/research/vp-research' as any)} style={[styles.relatedAgentCard, { backgroundColor: '#00968815' }]}>
-            <FlaskConical size={20} color="#009688" />
-            <Text style={[styles.relatedAgentText, { color: '#009688' }]}>VP Research</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => router.push('/ai-agent/research/vp-innovation' as any)} style={[styles.relatedAgentCard, { backgroundColor: '#E91E6315' }]}>
-            <Zap size={20} color="#E91E63" />
-            <Text style={[styles.relatedAgentText, { color: '#E91E63' }]}>VP Innovation</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => router.push('/ai-agent/research/research-lead' as any)} style={[styles.relatedAgentCard, { backgroundColor: '#10B98115' }]}>
-            <Target size={20} color="#10B981" />
-            <Text style={[styles.relatedAgentText, { color: '#10B981' }]}>Research Lead</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      <AgentFeatures agentId="vp-rd-operations" agentName="AI VP R&D Operations" />
-      <View style={{ height: 40 }} />
-    </ScrollView>
-  );
+  return <AgentPageWrapper agent={agent} />;
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  hero: { alignItems: 'center', paddingVertical: 32, paddingHorizontal: 20, borderBottomWidth: 1, borderBottomColor: '#E5E5EA' },
-  heroIconWrap: { width: 88, height: 88, borderRadius: 44, justifyContent: 'center', alignItems: 'center', marginBottom: 16 },
-  heroTitle: { fontSize: 26, fontWeight: 'bold' },
-  heroSubtitle: { fontSize: 15, marginTop: 4, fontWeight: '500' },
-  badgesRow: { flexDirection: 'row', marginTop: 16, gap: 8 },
-  badge: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 20, gap: 4 },
-  badgeText: { fontSize: 12, fontWeight: '600' },
-  statsContainer: { flexDirection: 'row', flexWrap: 'wrap', padding: 16, gap: 12 },
-  statCard: { flex: 1, minWidth: '22%', alignItems: 'center', padding: 14, borderRadius: 12 },
-  statValue: { fontSize: 18, fontWeight: 'bold', marginTop: 8 },
-  statLabel: { fontSize: 11, marginTop: 4 },
-  section: { marginHorizontal: 16, marginBottom: 16, padding: 20, borderRadius: 16 },
-  sectionTitle: { fontSize: 18, fontWeight: '700', marginBottom: 14 },
-  sectionSubtitle: { fontSize: 13, color: '#666', marginBottom: 12 },
-  description: { fontSize: 14, lineHeight: 22 },
-  tagsContainer: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  tag: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 20 },
-  tagText: { fontSize: 12, fontWeight: '600' },
-  responsibilityRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 10, gap: 8 },
-  responsibilityText: { fontSize: 14, flex: 1, lineHeight: 20 },
-  activityRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 12, gap: 12 },
-  activityIcon: { width: 32, height: 32, borderRadius: 16, justifyContent: 'center', alignItems: 'center' },
-  activityContent: { flex: 1 },
-  activityText: { fontSize: 14, fontWeight: '500' },
-  activityTime: { fontSize: 12, marginTop: 2 },
-  actionsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
-  actionButton: { flex: 1, minWidth: '45%', alignItems: 'center', padding: 16, borderRadius: 12 },
-  actionText: { fontSize: 13, fontWeight: '600', marginTop: 8 },
-  metricsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
-  metricCard: { flex: 1, minWidth: '45%', padding: 16, borderRadius: 12, alignItems: 'center' },
-  metricValue: { fontSize: 20, fontWeight: 'bold' },
-  metricLabel: { fontSize: 11, marginTop: 4, textAlign: 'center' },
-  trendBadge: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 8, paddingVertical: 4, borderRadius: 12, marginTop: 8, gap: 4 },
-  trendText: { fontSize: 11, fontWeight: '600' },
-  subAgentCard: { flexDirection: 'row', alignItems: 'center', padding: 16, borderRadius: 12, marginBottom: 12 },
-  subAgentIcon: { width: 48, height: 48, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
-  subAgentInfo: { flex: 1, marginLeft: 12 },
-  subAgentName: { fontSize: 16, fontWeight: '600' },
-  subAgentDesc: { fontSize: 12, marginTop: 2 },
-  endpointRow: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: 12, gap: 12 },
-  methodBadge: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 6 },
-  methodText: { fontSize: 11, fontWeight: '700', fontFamily: 'monospace' },
-  endpointInfo: { flex: 1 },
-  endpointPath: { fontSize: 13, fontFamily: 'monospace', fontWeight: '500' },
-  endpointDesc: { fontSize: 12, marginTop: 2 },
-  relatedAgentsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
-  relatedAgentCard: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 14, paddingVertical: 10, borderRadius: 20, gap: 8 },
-  relatedAgentText: { fontSize: 13, fontWeight: '600' },
-});

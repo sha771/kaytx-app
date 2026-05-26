@@ -1,17 +1,38 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { useTheme } from '@/providers/ThemeProvider';
-import { LayoutDashboard, Activity, Star, Users, CircleCheckBig, Clock, ArrowRight, Zap, Package, ClipboardList, Calendar, MessageSquare } from 'lucide-react-native';
-import AgentFeatures from '@/components/ai-agent/AgentFeatures';
-import { useRouter } from 'expo-router';
-export default function AgentPage(){const{theme}=useTheme();const router=useRouter();const stats=[{label:'Backlogs',value:'5,384',icon:CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Response',value:'1.6s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.7%',icon:Package,color:'#6A1B9A'}];const capabilities=['Backlog Management','Sprint Planning','Stakeholder Communication','Feature Prioritization','Roadmap Execution','User Story Management','Release Coordination','Data-driven Decisions'];const responsibilities=['Groom and prioritize product backlog continuously','Plan and coordinate sprint cycles with engineering teams','Communicate product updates to all stakeholders','Prioritize features based on business value and effort','Execute product roadmap milestones on schedule','Manage user stories and acceptance criteria','Coordinate release schedules across dependent teams','Make data-driven product decisions using analytics'];const activities=[{time:'3 min ago',text:'Groomed 25 backlog items for next sprint'},{time:'10 min ago',text:'Planned sprint 14 with engineering leads'},{time:'45 min ago',text:'Sent stakeholder update on v2.5 progress'},{time:'2 hours ago',text:'Prioritized 8 features using RICE framework'}];const subAgents=[{name:'AI Backlog Groomer',route:'/ai-agent/product/sub-agents/backlog-groomer',desc:'Backlog prioritization & refinement'},{name:'AI Sprint Planner',route:'/ai-agent/product/sub-agents/sprint-planner',desc:'Sprint planning & capacity management'},{name:'AI Stakeholder Communicator',route:'/ai-agent/product/sub-agents/stakeholder-communicator',desc:'Stakeholder updates & alignment'}];
-return(<ScrollView style={[styles.container,{backgroundColor:theme.colors.background}]}><View style={[styles.hero,{borderBottomColor:theme.colors.border||'#E5E5EA'}]}><View style={[styles.heroIconWrap,{backgroundColor:'#6A1B9A20'}]}><LayoutDashboard size={48} color="#6A1B9A"/></View><Text style={[styles.heroTitle,{color:theme.colors.text}]}>AI Product Manager</Text><Text style={[styles.heroSubtitle,{color:theme.colors.textSecondary}]}>Product Management Department</Text><View style={styles.badgesRow}><View style={[styles.badge,{backgroundColor:'#34C75922'}]}><Activity size={12}color="#34C759"/><Text style={[styles.badgeText,{color:'#34C759'}]}>Active</Text></View><View style={[styles.badge,{backgroundColor:'#6A1B9A22'}]}><Star size={12}color="#6A1B9A"/><Text style={[styles.badgeText,{color:'#6A1B9A'}]}>Manager</Text></View><View style={[styles.badge,{backgroundColor:'#FF950022'}]}><Users size={12}color="#FF9500"/><Text style={[styles.badgeText,{color:'#FF9500'}]}>{subAgents.length} Sub-Agents</Text></View></View></View>
-<View style={styles.statsContainer}>{stats.map((s,i)=>(<View key={i}style={[styles.statCard,{backgroundColor:theme.colors.card||'#F2F2F7'}]}><s.icon size={22}color={s.color}/><Text style={[styles.statValue,{color:theme.colors.text}]}>{s.value}</Text><Text style={[styles.statLabel,{color:theme.colors.textSecondary}]}>{s.label}</Text></View>))}</View>
-<View style={[styles.section,{backgroundColor:theme.colors.card||'#F2F2F7'}]}><Text style={[styles.sectionTitle,{color:theme.colors.text}]}>Overview</Text><Text style={[styles.description,{color:theme.colors.textSecondary}]}>The AI Product Manager coordinates team operations, manages backlogs, plans sprints, and ensures quality delivery. It oversees 3 specialized sub-agents for comprehensive product management coverage.</Text></View>
-<View style={[styles.section,{backgroundColor:theme.colors.card||'#F2F2F7'}]}><Text style={[styles.sectionTitle,{color:theme.colors.text}]}>Capabilities</Text><View style={styles.tagsContainer}>{capabilities.map((cap,i)=>(<View key={i}style={[styles.tag,{backgroundColor:'#6A1B9A18'}]}><Text style={[styles.tagText,{color:'#6A1B9A'}]}>{cap}</Text></View>))}</View></View>
-<View style={[styles.section,{backgroundColor:theme.colors.card||'#F2F2F7'}]}><Text style={[styles.sectionTitle,{color:theme.colors.text}]}>Key Responsibilities</Text>{responsibilities.map((r,i)=>(<View key={i}style={styles.responsibilityRow}><ArrowRight size={14}color="#6A1B9A"/><Text style={[styles.responsibilityText,{color:theme.colors.textSecondary}]}>{r}</Text></View>))}</View>
-<View style={[styles.section,{backgroundColor:theme.colors.card||'#F2F2F7'}]}><Text style={[styles.sectionTitle,{color:theme.colors.text}]}>A2A Endpoints</Text>{['/consult/ai-product-manager','/product-mgr/execute','/product-mgr/analyze','/product-mgr/backlog'].map((e,i)=>(<View key={i}style={styles.endpointRow}><Zap size={14}color="#6A1B9A"/><Text style={[styles.endpointText,{color:theme.colors.textSecondary}]}>{e}</Text></View>))}</View>
-<View style={[styles.section,{backgroundColor:theme.colors.card||'#F2F2F7'}]}><Text style={[styles.sectionTitle,{color:theme.colors.text}]}>Sub-Agents</Text>{subAgents.map((sub,i)=>(<TouchableOpacity key={i}onPress={()=>router.push(sub.route as any)}style={[styles.subAgentCard,{backgroundColor:theme.colors.background||'#F2F2F7',marginTop:i>0?8:0}]}><Package size={24}color="#6A1B9A"/><View style={styles.subAgentInfo}><Text style={[styles.subAgentName,{color:theme.colors.text}]}>{sub.name}</Text><Text style={[styles.subAgentDesc,{color:theme.colors.textSecondary}]}>{sub.desc}</Text></View><ArrowRight size={20}color={theme.colors.textSecondary}/></TouchableOpacity>))}</View>
-<View style={[styles.section,{backgroundColor:theme.colors.card||'#F2F2F7'}]}><Text style={[styles.sectionTitle,{color:theme.colors.text}]}>Recent Activity</Text>{activities.map((a,i)=>(<View key={i}style={styles.activityRow}><View style={[styles.activityIcon,{backgroundColor:'#6A1B9A15'}]}><Package size={14}color="#6A1B9A"/></View><View style={styles.activityContent}><Text style={[styles.activityText,{color:theme.colors.text}]}>{a.text}</Text><Text style={[styles.activityTime,{color:theme.colors.textSecondary}]}>{a.time}</Text></View></View>))}</View>
-<AgentFeatures agentId="ai-product-manager" agentName="AI Product Manager"/><View style={{height:40}}/></ScrollView>);}
-const styles=StyleSheet.create({container:{flex:1},hero:{alignItems:'center',paddingVertical:32,paddingHorizontal:20,borderBottomWidth:1},heroIconWrap:{width:88,height:88,borderRadius:44,justifyContent:'center',alignItems:'center',marginBottom:16},heroTitle:{fontSize:26,fontWeight:'bold'},heroSubtitle:{fontSize:15,marginTop:4,fontWeight:'500'},badgesRow:{flexDirection:'row',gap:10,marginTop:16},badge:{flexDirection:'row',alignItems:'center',paddingHorizontal:10,paddingVertical:5,borderRadius:20,gap:4},badgeText:{fontSize:12,fontWeight:'600'},statsContainer:{flexDirection:'row',flexWrap:'wrap',padding:16,gap:12},statCard:{flex:1,minWidth:'22%',alignItems:'center',padding:14,borderRadius:12},statValue:{fontSize:18,fontWeight:'bold',marginTop:8},statLabel:{fontSize:11,marginTop:4},section:{marginHorizontal:16,marginBottom:16,padding:20,borderRadius:16},sectionTitle:{fontSize:18,fontWeight:'700',marginBottom:14},description:{fontSize:14,lineHeight:22},tagsContainer:{flexDirection:'row',flexWrap:'wrap',gap:8},tag:{paddingHorizontal:12,paddingVertical:6,borderRadius:20},tagText:{fontSize:12,fontWeight:'600'},responsibilityRow:{flexDirection:'row',alignItems:'center',marginBottom:10,gap:8},responsibilityText:{fontSize:14,flex:1,lineHeight:20},endpointRow:{flexDirection:'row',alignItems:'center',marginBottom:8,gap:8},endpointText:{fontSize:13,fontFamily:'monospace'},subAgentCard:{flexDirection:'row',alignItems:'center',padding:16,borderRadius:12,gap:12},subAgentInfo:{flex:1},subAgentName:{fontSize:16,fontWeight:'600'},subAgentDesc:{fontSize:12,marginTop:2},activityRow:{flexDirection:'row',alignItems:'center',marginBottom:12,gap:12},activityIcon:{width:32,height:32,borderRadius:16,justifyContent:'center',alignItems:'center'},activityContent:{flex:1},activityText:{fontSize:14,fontWeight:'500'},activityTime:{fontSize:12,marginTop:2}});
+import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
+import { User } from 'lucide-react-native';
+
+export default function AgentPage() {
+  const agent = {
+    id: 'ai-product-manager',
+    name: 'ai-product-manager',
+    title: 'ai-product-manager',
+    description: 'The ai-product-manager AI provides specialized services and automation within its department.',
+    capabilities: ["Task Automation","Data Processing","Workflow Management"],
+    icon: User,
+    color: '#3F51B5',
+    type: 'agent' as const,
+    humanCost: '$92k/year',
+    aiCost: '$1k/year',
+    efficiency: '92x efficiency improvement',
+    replacesRole: 'ai-product-manager',
+    infrastructure: {
+      status: 'online',
+      health: 99,
+      uptime: '99.9%',
+      lastActive: 'Now',
+      processingPower: 'standard',
+    },
+    roiMetrics: {
+      savingsPerMonth: '$6',
+      tasksAutomatedDaily: 1112,
+      responseTime: '0.9s',
+      accuracyRate: '95.5%',
+    },
+    hierarchy: {
+      department: 'Product',
+    },
+  };
+
+  return <AgentPageWrapper agent={agent} />;
+}

@@ -24,16 +24,47 @@ A comprehensive guide to creating a professional product demo video similar to o
 | Time | Section | Visual | Audio/Narration |
 |------|---------|--------|-----------------|
 | 0:00-0:05 | HOOK | Notification chaos → text: "What if you never missed a message again?" | *Notification cascade SFX* → sudden silence |
-| 0:05-0:30 | Unified Inbox | Messages tab, omnichannel view | "The Unified Inbox brings all your communication together" |
-| 0:30-1:00 | AI Workforce | C-Suite hierarchy, agent categories | "From C-Suite executives to specialized agents - organized like a real company" |
-| 1:00-1:15 | Token Efficiency | Cost comparison, savings metrics | "85% cost reduction through smart hierarchical routing" |
-| 1:15-1:35 | Social Media | Content calendar, cross-platform publishing | "Social Media Management handles content creation to engagement tracking" |
-| 1:35-2:00 | Social CRM | Customer profiles, 360° intelligence | "Social CRM gives you a complete view of every relationship" |
-| 2:00-2:25 | Team Collaboration | Workspace, task boards, agent coordination | "Team Collaboration enables seamless human and AI coordination" |
-| 2:25-2:35 | Brand Opening | Animated Kaytx logo reveal | "Meet Kaytx - The World's Most Comprehensive Enterprise AI Operating System" |
-| 2:35-2:50 | The Problem | Fragmented tools visualization | "Enterprises struggle with disconnected tools and siloed departments" |
-| 2:50-3:10 | Solution Intro | Main dashboard reveal | "Kaytx unifies everything into one AI Operating System" |
-| 3:10-3:30 | ROI/CTA | Pricing tiers, ROI calculator, contact info | "Ready to transform your enterprise? Visit kaytx.com" |
+| 0:05-0:10 | Unified Inbox A | Messages tab opens | "The Unified Inbox brings all your communication together" |
+| 0:10-0:15 | Unified Inbox B | Omnichannel view reveal | "Email, SMS, social media, chat - all in one place" |
+| 0:15-0:20 | Unified Inbox C | Message filtering | "Smart filtering and prioritization" |
+| 0:20-0:25 | Unified Inbox D | Quick actions | "Reply, forward, assign - instantly" |
+| 0:25-0:30 | Unified Inbox E | Analytics view | "Track response times and engagement" |
+| 0:30-0:35 | AI Workforce A | C-Suite hierarchy | "From C-Suite executives to specialized agents" |
+| 0:35-0:40 | AI Workforce B | Agent categories | "Organized like a real company" |
+| 0:40-0:45 | AI Workforce C | Department grid | "22+ business departments covered" |
+| 0:45-0:50 | AI Workforce D | Agent profiles | "1,100+ specialized AI employees" |
+| 0:50-0:55 | AI Workforce E | Deployment | "Deploy in seconds, scale instantly" |
+| 0:55-1:00 | AI Workforce F | Activity feed | "Real-time agent coordination" |
+| 1:00-1:05 | Token Efficiency A | Cost comparison | "85% cost reduction" |
+| 1:05-1:10 | Token Efficiency B | Savings metrics | "Through smart hierarchical routing" |
+| 1:10-1:15 | Token Efficiency C | ROI visualization | "Maximum efficiency, minimum cost" |
+| 1:15-1:20 | Social Media A | Content calendar | "Social Media Management handles content creation" |
+| 1:20-1:25 | Social Media B | Cross-platform publishing | "To engagement tracking across all platforms" |
+| 1:25-1:30 | Social Media C | Analytics dashboard | "Comprehensive social analytics" |
+| 1:30-1:35 | Social Media D | Automation | "Automated scheduling and posting" |
+| 1:35-1:40 | Social CRM A | Customer profiles | "Social CRM gives you a complete view" |
+| 1:40-1:45 | Social CRM B | 360° intelligence | "Of every relationship and interaction" |
+| 1:45-1:50 | Social CRM C | Engagement tracking | "Track every touchpoint automatically" |
+| 1:50-1:55 | Social CRM D | Sentiment analysis | "Understand customer sentiment at scale" |
+| 1:55-2:00 | Social CRM E | Integration | "Seamlessly integrated with all channels" |
+| 2:00-2:05 | Team Collaboration A | Workspace overview | "Team Collaboration enables seamless" |
+| 2:05-2:10 | Team Collaboration B | Task boards | "Human and AI coordination" |
+| 2:10-2:15 | Team Collaboration C | Agent coordination | "Assign tasks to AI agents instantly" |
+| 2:15-2:20 | Team Collaboration D | Progress tracking | "Real-time progress updates" |
+| 2:20-2:25 | Team Collaboration E | Communication | "Integrated chat and notifications" |
+| 2:25-2:30 | Brand Opening A | Logo animation start | "Meet Kaytx" |
+| 2:30-2:35 | Brand Opening B | Full tagline | "The World's Most Comprehensive Enterprise AI Operating System" |
+| 2:35-2:40 | The Problem A | Fragmented tools | "Enterprises struggle with disconnected tools" |
+| 2:40-2:45 | The Problem B | Siloed departments | "And siloed departments" |
+| 2:45-2:50 | The Problem C | Inefficiency | "Wasting time and resources" |
+| 2:50-2:55 | Solution Intro A | Dashboard reveal | "Kaytx unifies everything" |
+| 2:55-3:00 | Solution Intro B | Platform overview | "Into one AI Operating System" |
+| 3:00-3:05 | Solution Intro C | Feature highlights | "All your tools, one platform" |
+| 3:05-3:10 | Solution Intro D | Seamless integration | "Seamlessly integrated and automated" |
+| 3:10-3:15 | ROI/CTA A | Pricing tiers | "Ready to transform your enterprise?" |
+| 3:15-3:20 | ROI/CTA B | ROI calculator | "Calculate your potential savings" |
+| 3:20-3:25 | ROI/CTA C | Contact info | "Visit kaytx.com to get started" |
+| 3:25-3:30 | ROI/CTA D | Final CTA | "Start your free trial today" |
 
 ---
 

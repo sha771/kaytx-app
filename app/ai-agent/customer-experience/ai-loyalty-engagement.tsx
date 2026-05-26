@@ -1,28 +1,38 @@
-import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
-import { useRouter } from 'expo-router';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { Colors } from '@/constants/Colors';
+import React from 'react';
+import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
+import { Bot } from 'lucide-react-native';
 
-export default function AiLoyaltyEngagementPage() {
-  const router = useRouter();
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+export default function AgentPage() {
+  const agent = {
+    id: 'ai-loyalty-engagement',
+    name: 'ai-loyalty-engagement',
+    title: 'ai-loyalty-engagement',
+    description: 'The ai-loyalty-engagement AI provides specialized services and automation within its department.',
+    capabilities: ["Task Automation","Data Processing","Workflow Management"],
+    icon: Bot,
+    color: '#2196F3',
+    type: 'agent' as const,
+    humanCost: '$84k/year',
+    aiCost: '$1k/year',
+    efficiency: '84x efficiency improvement',
+    replacesRole: 'ai-loyalty-engagement',
+    infrastructure: {
+      status: 'online',
+      health: 98,
+      uptime: '99.9%',
+      lastActive: 'Now',
+      processingPower: 'standard',
+    },
+    roiMetrics: {
+      savingsPerMonth: '$6',
+      tasksAutomatedDaily: 1248,
+      responseTime: '0.7s',
+      accuracyRate: '98.9%',
+    },
+    hierarchy: {
+      department: 'Customer-experience',
+    },
+  };
 
-  useEffect(() => {
-    // Redirect to full enterprise page
-    router.replace('/ai-agent/customer-experience/loyalty-engagement');
-  }, [router]);
-
-  return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <ActivityIndicator size="large" color="#AF52DE" />
-      <Text style={[styles.text, { color: colors.text }]}>Loading AI Loyalty & Engagement...</Text>
-    </View>
-  );
+  return <AgentPageWrapper agent={agent} />;
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center', gap: 16 },
-  text: { fontSize: 16, fontWeight: '500' },
-});

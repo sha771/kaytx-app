@@ -1,16 +1,24 @@
 import React from 'react';
-import { Monitor, Shield, Headphones, Server, Cloud, Wifi } from 'lucide-react-native';
-import { DepartmentAIPage, DeptSubAgent } from '@/components/DepartmentAIPage';
+import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
+import { Bot } from 'lucide-react-native';
 
-const subAgents: DeptSubAgent[] = [
-  { id: 'it-1', name: 'AI DevOps Agent', description: 'CI/CD pipeline management, deployment automation, and infrastructure monitoring', icon: Server, enabled: true, status: 'active', tasksCompleted: 4520, successRate: 97, lastActive: '1 min ago', capabilities: ['CI/CD Automation', 'Container Orchestration', 'Infrastructure as Code', 'Deployment Strategies', 'Rollback Management', 'Environment Management'], tier: 'enterprise', learningProgress: 95, efficiency: 98, todayTasks: 156, avgResponseTime: '0.5s', trend: 'up', recentActions: ['Deployed v2.4.1 to production', 'Scaled up K8s cluster', 'Automated pipeline fix'], healthScore: 99, weeklyGrowth: 10 },
-  { id: 'it-2', name: 'AI Security Analyst', description: 'Threat detection, vulnerability scanning, and security compliance', icon: Shield, enabled: true, status: 'active', tasksCompleted: 3210, successRate: 99, lastActive: '30 sec ago', capabilities: ['Threat Detection', 'Vulnerability Scanning', 'Incident Response', 'Compliance Monitoring', 'Penetration Testing', 'Security Audits'], tier: 'enterprise', learningProgress: 94, efficiency: 99, todayTasks: 234, avgResponseTime: '0.2s', trend: 'up', recentActions: ['Blocked 12 suspicious IPs', 'Completed vulnerability scan', 'Updated security policies'], healthScore: 100, weeklyGrowth: 8 },
-  { id: 'it-3', name: 'AI Help Desk', description: 'IT support ticket resolution, troubleshooting, and knowledge base', icon: Headphones, enabled: true, status: 'active', tasksCompleted: 5670, successRate: 93, lastActive: '2 min ago', capabilities: ['Ticket Resolution', 'Remote Troubleshooting', 'Knowledge Base', 'Asset Management', 'User Provisioning', 'Password Resets'], tier: 'premium', learningProgress: 91, efficiency: 95, todayTasks: 189, avgResponseTime: '0.8s', trend: 'up', recentActions: ['Resolved 45 tickets', 'Updated knowledge articles', 'Provisioned 8 accounts'], healthScore: 96, weeklyGrowth: 12 },
-  { id: 'it-4', name: 'AI Infrastructure Manager', description: 'Server management, capacity planning, and performance optimization', icon: Server, enabled: true, status: 'active', tasksCompleted: 2340, successRate: 96, lastActive: '5 min ago', capabilities: ['Server Management', 'Capacity Planning', 'Performance Monitoring', 'Cost Optimization', 'Disaster Recovery', 'Backup Management'], tier: 'enterprise', learningProgress: 92, efficiency: 97, todayTasks: 67, avgResponseTime: '1.2s', trend: 'stable', recentActions: ['Optimized server resources', 'Updated DR plan', 'Analyzed capacity trends'], healthScore: 97, weeklyGrowth: 6 },
-  { id: 'it-5', name: 'AI Cloud Architect', description: 'Cloud infrastructure design, migration, and multi-cloud management', icon: Cloud, enabled: true, status: 'training', tasksCompleted: 890, successRate: 94, lastActive: '15 min ago', capabilities: ['Cloud Design', 'Migration Planning', 'Multi-cloud Strategy', 'Cost Optimization', 'Security Architecture', 'Serverless Design'], tier: 'enterprise', learningProgress: 82, efficiency: 91, todayTasks: 18, avgResponseTime: '3.5s', trend: 'up', recentActions: ['Designed microservices architecture', 'Optimized cloud spend', 'Planned migration strategy'], healthScore: 89, weeklyGrowth: 20 },
-  { id: 'it-6', name: 'AI Network Monitor', description: 'Network performance monitoring, anomaly detection, and topology management', icon: Wifi, enabled: false, status: 'inactive', tasksCompleted: 1560, successRate: 98, lastActive: '1 hour ago', capabilities: ['Network Monitoring', 'Anomaly Detection', 'Bandwidth Management', 'Topology Mapping', 'DNS Management', 'VPN Management'], tier: 'premium', learningProgress: 88, efficiency: 96, todayTasks: 0, avgResponseTime: '-', trend: 'stable', recentActions: ['Paused - awaiting activation'], healthScore: 72, weeklyGrowth: 0 },
-];
-
-export default function ITTechnologyAIScreen() {
-  return <DepartmentAIPage config={{ title: 'IT & Technology AI', subtitle: 'Infrastructure → Security → Innovation', accentColor: '#6366F1', gradientColors: ['#6366F1', '#4F46E5'], mainIcon: Monitor, mainAgentId: 'main-it', category: 'it-technology', statLabels: ['IT Tasks', 'Uptime', 'Sub-Agents'], subAgents }} />;
+export default function ItTechnologyAIPage() {
+  const agent = {
+    id: 'it-technology',
+    name: 'AI It Technology',
+    title: 'It Technology AI',
+    description: 'The It Technology AI provides specialized services and automation within its department with full support for chat, analytics, performance tracking, capabilities, history, counseling, live monitoring, and comprehensive settings.',
+    capabilities: ["Task Automation","Data Processing","Workflow Coordination","Performance Reporting","Quality Assurance","Compliance Monitoring","Strategic Analysis"],
+    icon: Bot,
+    color: '#0EA5E9',
+    type: 'agent' as const,
+    humanCost: '$68k/year',
+    aiCost: '$1.3k/year',
+    efficiency: '24x efficiency improvement',
+    replacesRole: 'It Technology',
+    infrastructure: { status: 'online', health: 97, uptime: '99.8%', lastActive: 'Now', processingPower: 'high' },
+    roiMetrics: { savingsPerMonth: '$5,400', tasksAutomatedDaily: 142, responseTime: '<1.1s', accuracyRate: '97.4%' },
+    hierarchy: { department: 'Tech' },
+  };
+  return <AgentPageWrapper agent={agent} />;
 }

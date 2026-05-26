@@ -1,16 +1,24 @@
 import React from 'react';
-import { Crown, TrendingUp, Target, Briefcase, Globe, Brain } from 'lucide-react-native';
-import { DepartmentAIPage, DeptSubAgent } from '@/components/DepartmentAIPage';
+import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
+import { Bot } from 'lucide-react-native';
 
-const subAgents: DeptSubAgent[] = [
-  { id: 'el-1', name: 'AI CEO Advisor', description: 'Strategic decision support, vision alignment, and executive intelligence', icon: Crown, enabled: true, status: 'active', tasksCompleted: 1240, successRate: 96, lastActive: '2 min ago', capabilities: ['Strategic Planning', 'Vision Alignment', 'Board Briefings', 'Risk Assessment', 'Market Strategy', 'M&A Analysis'], tier: 'enterprise', learningProgress: 95, efficiency: 97, todayTasks: 34, avgResponseTime: '2.1s', trend: 'up', recentActions: ['Prepared board briefing', 'Analyzed M&A opportunity', 'Updated strategic roadmap'], healthScore: 98, weeklyGrowth: 15 },
-  { id: 'el-2', name: 'AI CFO Analyst', description: 'Financial strategy, reporting, and fiscal decision intelligence', icon: TrendingUp, enabled: true, status: 'active', tasksCompleted: 2890, successRate: 98, lastActive: '1 min ago', capabilities: ['Financial Modeling', 'Cash Flow Analysis', 'Budget Forecasting', 'Investor Relations', 'Risk Modeling', 'Revenue Optimization'], tier: 'enterprise', learningProgress: 94, efficiency: 98, todayTasks: 67, avgResponseTime: '1.5s', trend: 'up', recentActions: ['Generated P&L report', 'Updated cash flow forecast', 'Analyzed investment opportunity'], healthScore: 99, weeklyGrowth: 12 },
-  { id: 'el-3', name: 'AI COO Strategist', description: 'Operational excellence and cross-department coordination', icon: Target, enabled: true, status: 'active', tasksCompleted: 1560, successRate: 94, lastActive: '5 min ago', capabilities: ['Operations Strategy', 'Process Optimization', 'Cross-team Coordination', 'KPI Management', 'Resource Planning', 'Efficiency Audits'], tier: 'enterprise', learningProgress: 91, efficiency: 95, todayTasks: 45, avgResponseTime: '1.8s', trend: 'up', recentActions: ['Optimized supply chain', 'Coordinated Q4 initiatives', 'Reviewed department KPIs'], healthScore: 96, weeklyGrowth: 18 },
-  { id: 'el-4', name: 'AI Board Advisor', description: 'Corporate governance, board meeting prep, and compliance', icon: Briefcase, enabled: true, status: 'training', tasksCompleted: 450, successRate: 92, lastActive: '15 min ago', capabilities: ['Board Prep', 'Governance Compliance', 'Shareholder Reports', 'Policy Review', 'ESG Reporting', 'Vote Analysis'], tier: 'enterprise', learningProgress: 78, efficiency: 88, todayTasks: 12, avgResponseTime: '3.5s', trend: 'up', recentActions: ['Prepared AGM materials', 'Reviewed governance policies', 'Compiled ESG report'], healthScore: 85, weeklyGrowth: 22 },
-  { id: 'el-5', name: 'AI Strategy Planner', description: 'Long-term planning, competitive positioning, market intelligence', icon: Globe, enabled: true, status: 'active', tasksCompleted: 890, successRate: 91, lastActive: '8 min ago', capabilities: ['Market Research', 'Competitive Analysis', 'Trend Forecasting', 'Strategic Roadmaps', 'Innovation Pipeline', 'Partnership Strategy'], tier: 'premium', learningProgress: 87, efficiency: 92, todayTasks: 23, avgResponseTime: '2.8s', trend: 'stable', recentActions: ['Updated 5-year roadmap', 'Identified market opportunity', 'Analyzed competitive landscape'], healthScore: 91, weeklyGrowth: 10 },
-  { id: 'el-6', name: 'AI Decision Engine', description: 'Data-driven decisions with scenario modeling and impact analysis', icon: Brain, enabled: false, status: 'inactive', tasksCompleted: 670, successRate: 95, lastActive: '1 hour ago', capabilities: ['Scenario Modeling', 'Impact Analysis', 'Decision Trees', 'Risk Quantification', 'Probability Mapping', 'Outcome Prediction'], tier: 'enterprise', learningProgress: 82, efficiency: 94, todayTasks: 0, avgResponseTime: '-', trend: 'stable', recentActions: ['Paused - awaiting activation'], healthScore: 75, weeklyGrowth: 0 },
-];
-
-export default function ExecutiveLeadershipAIScreen() {
-  return <DepartmentAIPage config={{ title: 'Executive & Leadership AI', subtitle: 'Strategic Vision → Decision Intelligence', accentColor: '#FFD700', gradientColors: ['#1a1a2e', '#16213e'], mainIcon: Crown, mainAgentId: 'main-el', category: 'executive-leadership', statLabels: ['Decisions', 'Success', 'Sub-Agents'], subAgents }} />;
+export default function ExecutiveLeadershipAIPage() {
+  const agent = {
+    id: 'executive-leadership',
+    name: 'AI Executive Leadership',
+    title: 'Executive Leadership AI',
+    description: 'The Executive Leadership AI provides specialized services and automation within its department with full support for chat, analytics, performance tracking, capabilities, history, counseling, live monitoring, and comprehensive settings.',
+    capabilities: ["Task Automation","Data Processing","Workflow Coordination","Performance Reporting","Quality Assurance","Compliance Monitoring","Strategic Analysis"],
+    icon: Bot,
+    color: '#1E40AF',
+    type: 'agent' as const,
+    humanCost: '$68k/year',
+    aiCost: '$1.3k/year',
+    efficiency: '24x efficiency improvement',
+    replacesRole: 'Executive Leadership',
+    infrastructure: { status: 'online', health: 97, uptime: '99.8%', lastActive: 'Now', processingPower: 'high' },
+    roiMetrics: { savingsPerMonth: '$5,400', tasksAutomatedDaily: 142, responseTime: '<1.1s', accuracyRate: '97.4%' },
+    hierarchy: { department: 'Executive' },
+  };
+  return <AgentPageWrapper agent={agent} />;
 }

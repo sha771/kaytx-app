@@ -1,17 +1,24 @@
 import React from 'react';
-import { Users, UserPlus, Award, Heart, BookOpen, Smile, Shield } from 'lucide-react-native';
-import { DepartmentAIPage, DeptSubAgent } from '@/components/DepartmentAIPage';
+import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
+import { Bot } from 'lucide-react-native';
 
-const subAgents: DeptSubAgent[] = [
-  { id: 'hr-1', name: 'AI Recruiter', description: 'End-to-end talent acquisition from sourcing to offer management', icon: UserPlus, enabled: true, status: 'active', tasksCompleted: 3240, successRate: 94, lastActive: '2 min ago', capabilities: ['Candidate Sourcing', 'Resume Screening', 'Interview Scheduling', 'Pipeline Management', 'Offer Management', 'Culture Fit Analysis'], tier: 'enterprise', learningProgress: 93, efficiency: 96, todayTasks: 78, avgResponseTime: '1.2s', trend: 'up', recentActions: ['Screened 45 resumes', 'Scheduled 12 interviews', 'Sourced 30 candidates'], healthScore: 97, weeklyGrowth: 16 },
-  { id: 'hr-2', name: 'AI Onboarding Agent', description: 'Automated new hire onboarding with personalized training paths', icon: BookOpen, enabled: true, status: 'active', tasksCompleted: 1890, successRate: 97, lastActive: '5 min ago', capabilities: ['Welcome Programs', 'Document Collection', 'Training Assignment', 'Buddy Matching', 'Progress Tracking', 'First 90 Days'], tier: 'premium', learningProgress: 91, efficiency: 95, todayTasks: 34, avgResponseTime: '0.8s', trend: 'up', recentActions: ['Onboarded 5 new hires', 'Assigned training modules', 'Set up buddy program'], healthScore: 96, weeklyGrowth: 12 },
-  { id: 'hr-3', name: 'AI Performance Reviewer', description: 'Continuous performance tracking, feedback, and review automation', icon: Award, enabled: true, status: 'active', tasksCompleted: 1560, successRate: 92, lastActive: '10 min ago', capabilities: ['360 Reviews', 'Goal Tracking', 'Feedback Collection', 'Performance Scoring', 'Development Plans', 'Compensation Analysis'], tier: 'enterprise', learningProgress: 88, efficiency: 93, todayTasks: 45, avgResponseTime: '2.0s', trend: 'up', recentActions: ['Generated 15 performance reports', 'Tracked 89 OKR updates', 'Analyzed team trends'], healthScore: 94, weeklyGrowth: 14 },
-  { id: 'hr-4', name: 'AI Benefits Manager', description: 'Benefits enrollment, plan comparison, and employee wellness', icon: Heart, enabled: true, status: 'active', tasksCompleted: 890, successRate: 96, lastActive: '15 min ago', capabilities: ['Plan Comparison', 'Enrollment Automation', 'Claim Processing', 'Wellness Programs', 'Cost Optimization', 'Compliance'], tier: 'premium', learningProgress: 85, efficiency: 94, todayTasks: 23, avgResponseTime: '1.5s', trend: 'stable', recentActions: ['Processed 12 enrollments', 'Updated benefit plans', 'Launched wellness challenge'], healthScore: 93, weeklyGrowth: 8 },
-  { id: 'hr-5', name: 'AI Training Coordinator', description: 'Learning path design, skill gap analysis, and development tracking', icon: BookOpen, enabled: true, status: 'training', tasksCompleted: 670, successRate: 90, lastActive: '20 min ago', capabilities: ['Skill Gap Analysis', 'Learning Paths', 'Course Assignment', 'Progress Tracking', 'Certification Management', 'ROI Analysis'], tier: 'standard', learningProgress: 79, efficiency: 87, todayTasks: 15, avgResponseTime: '2.8s', trend: 'up', recentActions: ['Created 3 learning paths', 'Identified skill gaps', 'Assigned certifications'], healthScore: 86, weeklyGrowth: 20 },
-  { id: 'hr-6', name: 'AI Culture Agent', description: 'Employee engagement, culture monitoring, and satisfaction tracking', icon: Smile, enabled: true, status: 'active', tasksCompleted: 1120, successRate: 91, lastActive: '8 min ago', capabilities: ['Pulse Surveys', 'Engagement Tracking', 'Culture Metrics', 'Event Planning', 'Recognition Programs', 'Diversity Analytics'], tier: 'premium', learningProgress: 86, efficiency: 92, todayTasks: 28, avgResponseTime: '1.5s', trend: 'up', recentActions: ['Launched pulse survey', 'Analyzed engagement scores', 'Planned team event'], healthScore: 92, weeklyGrowth: 15 },
-  { id: 'hr-7', name: 'AI HR Compliance', description: 'Labor law compliance, policy management, and regulatory tracking', icon: Shield, enabled: false, status: 'inactive', tasksCompleted: 450, successRate: 98, lastActive: '1 hour ago', capabilities: ['Labor Law Compliance', 'Policy Updates', 'Regulatory Alerts', 'Document Management', 'Audit Preparation', 'Training Compliance'], tier: 'enterprise', learningProgress: 82, efficiency: 96, todayTasks: 0, avgResponseTime: '-', trend: 'stable', recentActions: ['Paused - awaiting activation'], healthScore: 74, weeklyGrowth: 0 },
-];
-
-export default function HumanResourcesAIScreen() {
-  return <DepartmentAIPage config={{ title: 'Human Resources AI', subtitle: 'Talent → Culture → Growth', accentColor: '#EC4899', gradientColors: ['#EC4899', '#DB2777'], mainIcon: Users, mainAgentId: 'main-hr', category: 'human-resources', statLabels: ['HR Tasks', 'Success', 'Sub-Agents'], subAgents }} />;
+export default function HumanResourcesAIPage() {
+  const agent = {
+    id: 'human-resources',
+    name: 'AI Human Resources',
+    title: 'Human Resources AI',
+    description: 'The Human Resources AI provides specialized services and automation within its department with full support for chat, analytics, performance tracking, capabilities, history, counseling, live monitoring, and comprehensive settings.',
+    capabilities: ["Task Automation","Data Processing","Workflow Coordination","Performance Reporting","Quality Assurance","Compliance Monitoring","Strategic Analysis"],
+    icon: Bot,
+    color: '#F97316',
+    type: 'agent' as const,
+    humanCost: '$68k/year',
+    aiCost: '$1.3k/year',
+    efficiency: '24x efficiency improvement',
+    replacesRole: 'Human Resources',
+    infrastructure: { status: 'online', health: 97, uptime: '99.8%', lastActive: 'Now', processingPower: 'high' },
+    roiMetrics: { savingsPerMonth: '$5,400', tasksAutomatedDaily: 142, responseTime: '<1.1s', accuracyRate: '97.4%' },
+    hierarchy: { department: 'Hr' },
+  };
+  return <AgentPageWrapper agent={agent} />;
 }

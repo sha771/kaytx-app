@@ -1,16 +1,24 @@
 import React from 'react';
-import { Calendar, Mail, ListChecks, MessageCircle, Search, Bell , User} from 'lucide-react-native';
-import { DepartmentAIPage, DeptSubAgent } from '@/components/DepartmentAIPage';
+import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
+import { Bot } from 'lucide-react-native';
 
-const subAgents: DeptSubAgent[] = [
-  { id: 'pa-1', name: 'AI Calendar Manager', description: 'Smart scheduling, conflict resolution, and meeting optimization', icon: Calendar, enabled: true, status: 'active', tasksCompleted: 3240, successRate: 97, lastActive: '1 min ago', capabilities: ['Smart Scheduling', 'Conflict Resolution', 'Meeting Optimization', 'Time Blocking', 'Calendar Sync', 'Availability Management'], tier: 'enterprise', learningProgress: 95, efficiency: 98, todayTasks: 89, avgResponseTime: '0.5s', trend: 'up', recentActions: ['Scheduled 12 meetings', 'Resolved 3 conflicts', 'Optimized weekly calendar'], healthScore: 99, weeklyGrowth: 10 },
-  { id: 'pa-2', name: 'AI Email Assistant', description: 'Email drafting, prioritization, summarization, and smart responses', icon: Mail, enabled: true, status: 'active', tasksCompleted: 5670, successRate: 94, lastActive: '30 sec ago', capabilities: ['Email Drafting', 'Priority Sorting', 'Thread Summary', 'Smart Replies', 'Follow-up Tracking', 'Spam Detection'], tier: 'enterprise', learningProgress: 93, efficiency: 96, todayTasks: 234, avgResponseTime: '0.8s', trend: 'up', recentActions: ['Drafted 15 emails', 'Summarized 8 threads', 'Flagged 3 urgent items'], healthScore: 97, weeklyGrowth: 14 },
-  { id: 'pa-3', name: 'AI Task Prioritizer', description: 'Intelligent task management, deadline tracking, and priority optimization', icon: ListChecks, enabled: true, status: 'active', tasksCompleted: 2890, successRate: 93, lastActive: '3 min ago', capabilities: ['Priority Matrix', 'Deadline Tracking', 'Dependency Management', 'Workload Balancing', 'Progress Tracking', 'Smart Reminders'], tier: 'premium', learningProgress: 91, efficiency: 94, todayTasks: 67, avgResponseTime: '0.5s', trend: 'up', recentActions: ['Reprioritized 8 tasks', 'Set 5 smart reminders', 'Updated project timeline'], healthScore: 95, weeklyGrowth: 12 },
-  { id: 'pa-4', name: 'AI Meeting Summarizer', description: 'Real-time meeting notes, action item extraction, and follow-up generation', icon: MessageCircle, enabled: true, status: 'active', tasksCompleted: 1560, successRate: 96, lastActive: '10 min ago', capabilities: ['Meeting Notes', 'Action Items', 'Decision Tracking', 'Follow-up Generation', 'Attendee Insights', 'Transcript Analysis'], tier: 'enterprise', learningProgress: 89, efficiency: 95, todayTasks: 23, avgResponseTime: '1.5s', trend: 'up', recentActions: ['Summarized 5 meetings', 'Extracted 18 action items', 'Sent follow-up emails'], healthScore: 96, weeklyGrowth: 18 },
-  { id: 'pa-5', name: 'AI Research Agent', description: 'Information gathering, topic research, and competitive intelligence', icon: Search, enabled: true, status: 'training', tasksCompleted: 890, successRate: 91, lastActive: '15 min ago', capabilities: ['Web Research', 'Data Gathering', 'Report Generation', 'Fact Checking', 'Trend Analysis', 'Source Verification'], tier: 'premium', learningProgress: 82, efficiency: 89, todayTasks: 12, avgResponseTime: '3.5s', trend: 'up', recentActions: ['Researched 3 topics', 'Generated market brief', 'Verified 15 data points'], healthScore: 87, weeklyGrowth: 22 },
-  { id: 'pa-6', name: 'AI Notification Manager', description: 'Smart notification filtering, digest creation, and alert management', icon: Bell, enabled: false, status: 'inactive', tasksCompleted: 4520, successRate: 98, lastActive: '1 hour ago', capabilities: ['Smart Filtering', 'Daily Digest', 'Priority Alerts', 'Do Not Disturb', 'Channel Management', 'Alert Rules'], tier: 'standard', learningProgress: 94, efficiency: 97, todayTasks: 0, avgResponseTime: '-', trend: 'stable', recentActions: ['Paused - awaiting activation'], healthScore: 72, weeklyGrowth: 0 },
-];
-
-export default function AIPersonalAssistantAIScreen() {
-  return <DepartmentAIPage config={{ title: 'AI Personal Assistant', subtitle: 'Organize → Automate → Focus', accentColor: '#6366F1', gradientColors: ['#6366F1', '#4F46E5'], mainicon: User, mainAgentId: 'main-pa', category: 'ai-personal-assistant', statLabels: ['Tasks Done', 'Success', 'Sub-Agents'], subAgents }} />;
+export default function AiPersonalAssistantAIPage() {
+  const agent = {
+    id: 'ai-personal-assistant',
+    name: 'AI Ai Personal Assistant',
+    title: 'Ai Personal Assistant AI',
+    description: 'The Ai Personal Assistant AI provides specialized services and automation within its department with full support for chat, analytics, performance tracking, capabilities, history, counseling, live monitoring, and comprehensive settings.',
+    capabilities: ["Task Automation","Data Processing","Workflow Coordination","Performance Reporting","Quality Assurance","Compliance Monitoring","Strategic Analysis"],
+    icon: Bot,
+    color: '#6366F1',
+    type: 'agent' as const,
+    humanCost: '$68k/year',
+    aiCost: '$1.3k/year',
+    efficiency: '24x efficiency improvement',
+    replacesRole: 'Ai Personal Assistant',
+    infrastructure: { status: 'online', health: 97, uptime: '99.8%', lastActive: 'Now', processingPower: 'high' },
+    roiMetrics: { savingsPerMonth: '$5,400', tasksAutomatedDaily: 142, responseTime: '<1.1s', accuracyRate: '97.4%' },
+    hierarchy: { department: 'Admin' },
+  };
+  return <AgentPageWrapper agent={agent} />;
 }

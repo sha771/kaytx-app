@@ -1,56 +1,38 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { Colors } from '@/constants/Colors';
-import { ChevronLeft , User} from 'lucide-react-native';
-import { TouchableOpacity } from 'react-native';
-import { useRouter } from 'expo-router';
-import { EnhancedAgentShell } from '@/components/ai-agent/EnhancedAgentShell';
+import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
+import { User } from 'lucide-react-native';
 
-const agent = {
-  id: 'treasury-manager',
-  name: 'AI Treasury Manager',
-  title: 'Treasury Management AI',
-  description: 'Manages cash flow, optimizes working capital, and handles financial liquidity.',
-  icon: User,
-  color: '#00897B',
-  type: 'subagent' as const,
-  category: 'accounting',
-  parentCategory: 'Finance & Accounting',
-  capabilities: ['Cash Flow Management', 'Working Capital Optimization', 'Liquidity Management', 'Investment Oversight', 'Risk Management'],
-  performance: { tasksCompleted: 0, successRate: 0, averageResponseTime: 0, customerSatisfaction: 0, uptime: '99.9%' },
-  humanCostEquivalent: '$0/year',
-  aiCost: '$0/year',
-  efficiency: '0x cost efficiency',
-};
+export default function AgentPage() {
+  const agent = {
+    id: 'treasury-manager',
+    name: 'treasury-manager',
+    title: 'treasury-manager',
+    description: 'The treasury-manager AI provides specialized services and automation within its department.',
+    capabilities: ["Task Automation","Data Processing","Workflow Management"],
+    icon: User,
+    color: '#0D47A1',
+    type: 'agent' as const,
+    humanCost: '$61k/year',
+    aiCost: '$1k/year',
+    efficiency: '61x efficiency improvement',
+    replacesRole: 'treasury-manager',
+    infrastructure: {
+      status: 'online',
+      health: 97,
+      uptime: '99.9%',
+      lastActive: 'Now',
+      processingPower: 'standard',
+    },
+    roiMetrics: {
+      savingsPerMonth: '$4',
+      tasksAutomatedDaily: 953,
+      responseTime: '1.7s',
+      accuracyRate: '95.9%',
+    },
+    hierarchy: {
+      department: 'Accounting',
+    },
+  };
 
-export default function AgentScreen() {
-  const router = useRouter();
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
-
-  return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <ChevronLeft size={24} color={colors.text} />
-        </TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: colors.text }]}>{agent.name}</Text>
-        <View style={styles.headerRight} />
-      </View>
-      <ScrollView style={styles.content}>
-        <EnhancedAgentShell agent={agent} />
-      </ScrollView>
-    </SafeAreaView>
-  );
+  return <AgentPageWrapper agent={agent} />;
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  header: { flexDirection: 'row', alignItems: 'center', padding: 16, borderBottomWidth: 1 },
-  backButton: { padding: 8 },
-  headerTitle: { flex: 1, fontSize: 18, fontWeight: '700', textAlign: 'center' },
-  headerRight: { width: 40 },
-  content: { flex: 1 },
-});

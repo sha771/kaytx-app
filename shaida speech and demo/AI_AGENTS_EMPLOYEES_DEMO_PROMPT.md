@@ -13,7 +13,160 @@
 **C-Suite Executives:** 17  
 **Business Departments:** 22+  
 **Implementation Status:** 100% Complete (All 1,108 agents exist)  
-**Architecture:** 11-Layer AI Agent System
+**Architecture:** 12-Layer AI Agent System
+
+---
+
+## Leadership & Executive
+
+The KAYTX AI Workforce is led by a strategic executive team that sets direction and makes high-level decisions:
+
+### Executive Roles
+- **CEO (Chief Executive Officer)** - Overall strategic direction and decision-making
+- **CFO (Chief Financial Officer)** - Financial strategy, budgeting, and resource allocation
+- **COO (Chief Operations Officer)** - Operational excellence and workflow orchestration
+- **CTO (Chief Technology Officer)** - Technology infrastructure and AI architecture
+- **CMO (Chief Marketing Officer)** - Market strategy and brand positioning
+- **CISO (Chief Security Officer)** - Security protocols and risk management
+- **CLO (Chief Legal Officer)** - Legal compliance and regulatory oversight
+- **CHO (Chief Human Resources Officer)** - Talent management and workforce optimization
+
+### Executive Functions
+- **Strategic Vision** - Sets long-term organizational direction
+- **Resource Allocation** - Approves budgets and resource distribution
+- **Risk Management** - Identifies and mitigates enterprise risks
+- **Stakeholder Relations** - Manages board, investors, and partners
+- **Policy Governance** - Establishes organizational policies and standards
+
+---
+
+## Command Center
+
+The KAYTX AI Workforce is orchestrated through a centralized Command Center that coordinates all AI agents:
+
+### Key Command Roles
+- **DDO (Digital Operations Director)** - Digital transformation and operational automation
+- **CDDO (Chief Data & Digital Officer)** - Data governance and digital strategy
+- **WOL (Workforce Operations Lead)** - Agent deployment, monitoring, and optimization
+- **AOD (AI Operations Director)** - AI system operations and maintenance
+- **SOD (Security Operations Director)** - Security operations and threat response
+- **NOD (Network Operations Director)** - Network infrastructure and connectivity
+- **DOD (Data Operations Director)** - Data pipeline and database operations
+- **MOD (Monitoring Operations Director)** - System monitoring and alerting
+
+### Command Center Functions
+- **Agent Orchestration** - Coordinates agent activities and workflows
+- **Performance Monitoring** - Tracks agent effectiveness and optimization
+- **Crisis Management** - Handles agent failures and system issues
+- **Integration Hub** - Connects all AI layers and departments
+- **Policy Enforcement** - Ensures compliance with governance rules
+- **Operational Control** - Manages day-to-day AI workforce operations
+
+---
+
+## 12-Layer AI Architecture
+
+The KAYTX AI Workforce operates through a sophisticated 12-layer architecture:
+
+```
+LAYER 1: Governance    →    Set rules
+            ▼
+    LAYER 2: Leadership    →    Strategic vision
+            ▼
+    LAYER 3: Simulation    →    Test before deciding
+            ▼
+    LAYER 4: Intelligence  →    Analyze & predict
+            ▼
+    LAYER 5: Memory        →    Remember & learn
+            ▼
+    LAYER 6: Translation   →    Business ↔ AI bridge
+            ▼
+    LAYER 7: Command       →    Orchestrate & control
+            ▼
+    LAYER 8: Enterprise    →    Enterprise operations
+            ▼
+    LAYER 9: Execution     →    Department work
+            ▼
+    LAYER 10: Workforce    →    Task execution
+            ▼
+    LAYER 11: Privacy      →    Data protection & security
+            ▼
+    LAYER 12: Review & Display → Review work → Show to users & customers
+```
+
+### Layer Descriptions
+
+**LAYER 1: Governance**
+- Establishes rules, policies, and ethical guidelines
+- Ensures compliance with regulations and standards
+- Sets boundaries for AI decision-making
+- Maintains audit trails and accountability
+
+**LAYER 2: Leadership**
+- Provides strategic vision and direction
+- Makes high-level decisions and priorities
+- Aligns AI actions with business objectives
+- Coordinates across all layers
+
+**LAYER 3: Simulation**
+- Tests decisions before implementation
+- Runs scenario modeling and what-if analysis
+- Predicts outcomes and risks
+- Enables safe experimentation
+
+**LAYER 4: Intelligence**
+- Analyzes data and generates insights
+- Predicts trends and patterns
+- Provides decision support
+- Processes complex information
+
+**LAYER 5: Memory**
+- Remembers past actions and outcomes
+- Learns from experience and feedback
+- Stores institutional knowledge
+- Enables continuous improvement
+
+**LAYER 6: Translation**
+- Bridges business requirements with AI capabilities
+- Translates user intent into agent tasks
+- Converts AI outputs into business insights
+- Ensures clear communication
+
+**LAYER 7: Command**
+- Orchestrates agent activities
+- Controls task distribution
+- Manages agent coordination
+- Enforces execution priorities
+
+**LAYER 8: Enterprise**
+- Handles enterprise-level operations
+- Manages cross-department workflows
+- Integrates with enterprise systems
+- Ensures organizational alignment
+
+**LAYER 9: Execution**
+- Performs department-specific work
+- Executes specialized tasks
+- Manages departmental processes
+- Delivers functional outputs
+
+**LAYER 10: Workforce**
+- Executes individual tasks
+- Performs specific agent functions
+- Handles routine operations
+- Delivers task-level results
+
+**LAYER 11: Privacy**
+- Protects sensitive data
+- Ensures data security
+- Manages access controls
+- Maintains compliance with privacy regulations
+
+**LAYER 12: Review & Display**
+- Reviews work quality and accuracy
+- Validates outputs against requirements
+- Presents results to users
+- Displays insights to customers
 
 ---
 
@@ -21,68 +174,131 @@
 
 | Scene | Time | Focus | Key Visual |
 |-------|------|-------|------------|
-| 1 | 0:00-0:15 | Hook | "What if you had 1,100 plus AI employees?" |
-| 2 | 0:15-0:30 | C-Suite Reveal | 17 Executive AI agents |
-| 3 | 0:30-0:50 | Department Grid | 22+ business departments |
-| 4 | 0:50-1:05 | Deep Dive | Specific agent examples |
-| 5 | 1:05-1:20 | Hierarchy | 11-layer architecture visualization |
-| 6 | 1:20-1:35 | Agent Builder | Custom agent creation |
-| 7 | 1:35-1:50 | Close | CTA and tagline |
+| 1A | 0:00-0:05 | Hook Intro | "What if you had 1,100 plus AI employees?" |
+| 1B | 0:05-0:10 | Hook Build | Dashboard slides in, counter animates |
+| 1C | 0:10-0:15 | Hook Impact | Text overlay with key metrics |
+| 2A | 0:15-0:20 | C-Suite Intro | Scroll to C-Suite section |
+| 2B | 0:20-0:25 | C-Suite Cards | Show 17 executive agent cards |
+| 2C | 0:25-0:30 | C-Suite Detail | CEO agent profile expansion |
+| 3A | 0:30-0:35 | Department Grid | Full department grid reveal |
+| 3B | 0:35-0:40 | Department Count | Show agent counts per department |
+| 3C | 0:40-0:45 | Department Expand | Finance & Accounting expansion |
+| 3D | 0:45-0:50 | Department Expand | Sales & Revenue expansion |
+| 4A | 0:50-0:55 | Agent Profile | Sales Director agent page |
+| 4B | 0:55-1:00 | Agent Capabilities | Show capabilities and metrics |
+| 4C | 1:00-1:05 | Agent Status | Active status and activity feed |
+| 5A | 1:05-1:10 | Hierarchy Start | Org chart with CEO at top |
+| 5B | 1:10-1:15 | Hierarchy Build | C-Suite and VPs levels |
+| 5C | 1:15-1:20 | Hierarchy Full | Complete hierarchy with all agents |
+| 6A | 1:20-1:25 | Deploy Click | One-click deployment animation |
+| 6B | 1:25-1:30 | Deploy Success | Agent deployed successfully |
+| 6C | 1:30-1:35 | Deploy Multiple | Batch deployment of 5 agents |
+| 7A | 1:35-1:40 | Montage | Quick feature montage |
+| 7B | 1:40-1:45 | CTA | Logo, pricing, and final message |
+| 7C | 1:45-1:50 | Close | Fade to white with tagline |
 
 ---
 
-## SCENE 1: THE HOOK (0:00-0:15)
+## SCENE 1A: THE HOOK INTRO (0:00-0:05)
 
 **Visual:**
 - Black screen with white text appearing: "What if your company had 1,108 AI employees?"
+- Text fades in with dramatic effect
+- Notification sounds cascade in background
+
+**Voiceover:**
+> "What if your company had 1,108 AI employees?"
+
+**Text Overlay:**
+```
+1,108 AI Employees
+```
+
+---
+
+## SCENE 1B: THE HOOK BUILD (0:05-0:10)
+
+**Visual:**
 - Text fades out
 - KAYTX dashboard slides in from left
 - Sidebar with "AI Agents & Employees" section highlights
 - Show agent count counter animating: 0 → 1,108
 
 **Voiceover:**
-> "What if your company had 1,108 AI employees? Working 24/7. Never sleeping. Never taking a break. Always learning. What if you could deploy them instantly?"
+> "Working 24/7. Never sleeping. Never taking a break. Always learning."
 
 **Text Overlay:**
 ```
-1,108 AI Employees
 24/7 Operation
+Always Learning
+```
+
+---
+
+## SCENE 1C: THE HOOK IMPACT (0:10-0:15)
+
+**Visual:**
+- Counter completes animation
+- Dashboard fully visible
+- Key metrics pulse on screen
+
+**Voiceover:**
+> "What if you could deploy them instantly?"
+
+**Text Overlay:**
+```
 Instant Deployment
 100% Implementation Complete
 ```
 
 ---
 
-## SCENE 2: C-SUITE REVEAL (0:15-0:30)
+## SCENE 2A: C-SUITE INTRO (0:15-0:20)
 
 **Screen:** `@/app/home.tsx` - C-Suite Executives section
 
-**Visual Sequence:**
-
-**Shot 2A (0:15-0:22):** C-Suite cards
+**Visual:**
 - Smooth scroll to "C-Suite Executives" section
-- Show 17 agent cards in a grid:
+- Show 17 agent cards in a grid
+- Each card shows: Avatar, Name, Title, Department badge
+- Hover effects show capabilities
+
+**Voiceover:**
+> "Meet your C-Suite. Seventeen AI executives setting strategy, making decisions, leading your organization."
+
+**Text Overlay:**
+```
+👔 17 C-Suite AI Executives
+```
+
+---
+
+## SCENE 2B: C-SUITE CARDS (0:20-0:25)
+
+**Visual:**
+- Highlight key executives:
   - CEO - Chief Executive Officer
   - CFO - Chief Financial Officer
   - CTO - Chief Technology Officer
   - CMO - Chief Marketing Officer
-  - CCO - Chief Customer Officer
-  - COO - Chief Operating Officer
-  - CHRO - Chief HR Officer
-  - CLO - Chief Legal Officer
   - CISO - Chief Security Officer
-  - CIO - Chief Investment Officer
-  - CREO - Chief Real Estate Officer
-  - CRO - Chief Risk Officer
-  - CMO (Healthcare) - Chief Medical Officer
-  - CPO - Chief Production Officer
-  - CLO (Logistics) - Chief Logistics Officer
-  - CAO - Chief Admin Officer
   - CDAO - Chief Data & AI Officer
-- Each card shows: Avatar, Name, Title, Department badge
-- Hover effects show capabilities
+- Cards pulse with highlight effect
 
-**Shot 2B (0:22-0:30):** CEO Agent detail
+**Voiceover:**
+> "The CEO handles strategic planning. The CFO manages financial operations. The CTO drives technology strategy."
+
+**Text Overlay:**
+```
+📊 Strategic Leadership
+🎯 Decision Support
+```
+
+---
+
+## SCENE 2C: C-SUITE DETAIL (0:25-0:30)
+
+**Visual:**
 - Click CEO Advisor card
 - Card expands to show full profile
 - Display capabilities:
@@ -93,79 +309,100 @@ Instant Deployment
 - Show "Deploy" button with green highlight
 
 **Voiceover:**
-> "Meet your C-Suite. Seventeen AI executives setting strategy, making decisions, leading your organization. The CEO handles strategic planning. The CFO manages financial operations. The CTO drives technology strategy. The CDAO leads data and AI initiatives. All working in perfect coordination."
+> "The CDAO leads data and AI initiatives. All working in perfect coordination."
 
 **Text Overlay:**
 ```
-👔 17 C-Suite AI Executives
-📊 Strategic Leadership
-🎯 Decision Support
 🧠 AI-Powered Strategy
 ```
 
 ---
 
-## SCENE 3: DEPARTMENT GRID (0:30-0:50)
+## SCENE 3A: DEPARTMENT GRID (0:30-0:35)
 
 **Screen:** `@/app/home.tsx` - Department categories
 
-**Visual Sequence:**
-
-**Shot 3A (0:30-0:40):** Full department grid
+**Visual:**
 - Return to main view
-- Show 4x6 department grid with animated appearance:
+- Show department grid with animated appearance
+- Key departments highlight:
   - Customer Experience (56 agents)
   - Sales & Revenue (56 agents)
   - Marketing & Growth (60 agents)
   - Human Resources (73 agents)
+- Each department shows agent count badge
+
+**Voiceover:**
+> "Twenty-two business departments. Finance and Accounting with fifty-four specialized agents."
+
+**Text Overlay:**
+```
+🏢 22+ Business Departments
+```
+
+---
+
+## SCENE 3B: DEPARTMENT COUNT (0:35-0:40)
+
+**Visual:**
+- Continue grid reveal:
   - Finance & Accounting (54 agents)
   - Operations (100 agents)
   - Technology/IT (66 agents)
   - Legal & Compliance (61 agents)
   - Healthcare (70 agents)
-  - Trading & Investments (89 agents)
-  - Real Estate (68 agents)
-  - Government (50 agents)
-  - Manufacturing (67 agents)
-  - Insurance (75 agents)
-  - Transportation (58 agents)
-  - Security (79 agents)
-  - Research (39 agents)
-  - Product (52 agents)
-  - Engineering (44 agents)
-  - Data/Analytics (72 agents)
-  - Social Media (9 agents)
-  - Supply Chain (42 agents)
-- Each department shows agent count badge
 - Hover over departments shows quick preview
 
-**Shot 3B (0:40-0:50):** Department expansion
-- Click "Finance & Accounting" → expands to show 54 agents
-- Quick scroll through: CFO, Controller, Auditor, Tax Specialist, Payroll Manager, Financial Analyst, Budget Manager, etc.
-- Click "Sales & Revenue" → shows 56 sales agents
-- Show: Sales Director, Account Executive, SDR, Sales Analyst, Revenue Operations, etc.
-- Show total count animation: 277 Main Agents + 831 Sub-Agents = 1,108 Total
-
 **Voiceover:**
-> "Twenty-two business departments. Finance and Accounting with fifty-four specialized agents. Sales and Revenue with fifty-six dedicated teams. Marketing with sixty agents. Operations with one hundred. Healthcare, Trading, Manufacturing, Insurance, Transportation, Security. Every function covered. Every role filled. One thousand eighty-eight AI employees ready to work."
+> "Sales and Revenue with fifty-six dedicated teams. Marketing with sixty agents. Operations with one hundred."
 
 **Text Overlay:**
 ```
-🏢 22+ Business Departments
 🎯 1,108 Specialized Agents
+```
+
+---
+
+## SCENE 3C: DEPARTMENT EXPAND (0:40-0:45)
+
+**Visual:**
+- Click "Finance & Accounting" → expands to show 54 agents
+- Quick scroll through: CFO, Controller, Auditor, Tax Specialist, Payroll Manager
+- Click "Sales & Revenue" → shows 56 sales agents
+- Show: Sales Director, Account Executive, SDR, Sales Analyst
+
+**Voiceover:**
+> "Healthcare, Trading, Manufacturing, Insurance, Transportation, Security. Every function covered."
+
+**Text Overlay:**
+```
 📋 Complete Coverage
+```
+
+---
+
+## SCENE 3D: DEPARTMENT TOTAL (0:45-0:50)
+
+**Visual:**
+- Show total count animation: 277 Main Agents + 831 Sub-Agents = 1,108 Total
+- Counter animates up to 1,108
+- All department cards visible
+
+**Voiceover:**
+> "Every role filled. One thousand eighty-eight AI employees ready to work."
+
+**Text Overlay:**
+```
 277 Main + 831 Sub-Agents
 ```
 
 ---
 
-## SCENE 4: DEEP DIVE (0:45-1:00)
+## SCENE 4A: AGENT PROFILE (0:50-0:55)
 
 **Screen:** Individual agent pages
 
-**Visual Sequence:**
-
-**Shot 4A (0:45-0:52):** Sales Agent example
+**Visual:**
 - Navigate to Sales Director agent page
 - Show agent profile with:
   - Avatar and name
@@ -175,7 +412,19 @@ Instant Deployment
   - Recent activity feed
 - Show "Chat with Agent" button
 
-**Shot 4B (0:52-1:00):** Marketing Agent example
+**Voiceover:**
+> "Each agent is a specialist. The Sales Director manages your pipeline."
+
+**Text Overlay:**
+```
+🤖 Specialized Capabilities
+```
+
+---
+
+## SCENE 4B: AGENT CAPABILITIES (0:55-1:00)
+
+**Visual:**
 - Navigate to Marketing Growth AI agent
 - Show different capabilities:
   - Campaign Strategy
@@ -185,66 +434,116 @@ Instant Deployment
 - Show agent status: "Active - Processing 3 campaigns"
 
 **Voiceover:**
-> "Each agent is a specialist. The Sales Director manages your pipeline. The Marketing Growth AI runs campaigns and analyzes performance. The Data Intelligence Agent processes information and generates insights. They don't just assist—they execute."
+> "The Marketing Growth AI runs campaigns and analyzes performance. The Data Intelligence Agent processes information and generates insights."
 
 **Text Overlay:**
 ```
-🤖 Specialized Capabilities
 📊 Performance Metrics
 🔄 Real-Time Activity
 ```
 
 ---
 
-## SCENE 5: HIERARCHY VISUALIZATION (1:00-1:15)
+## SCENE 4C: AGENT STATUS (1:00-1:05)
+
+**Visual:**
+- Show multiple agent status indicators
+- Active agents pulse with green glow
+- Processing agents show activity animation
+- Idle agents show gray status
+
+**Voiceover:**
+> "They don't just assist—they execute."
+
+**Text Overlay:**
+```
+⚡ Instant Execution
+```
+
+---
+
+## SCENE 5A: HIERARCHY START (1:05-1:10)
 
 **Screen:** Organizational chart view
 
-**Visual Sequence:**
-
-**Shot 5A (1:00-1:08):** Org chart reveal
+**Visual:**
 - Switch to organizational chart view
 - CEO at top level
 - C-Suite executives at second level
-- VPs and Directors at third level
-- Managers at fourth level
-- Specialists at fifth level
 - Animate connections drawing between levels (lines appearing from top to bottom)
 
-**Shot 5B (1:08-1:15):** Full hierarchy
-- Zoom out to show complete hierarchy
-- All 1,100+ agents visible in the structure
-- Color-coding by department
-- Show "23 VP & Directors" and "Hundreds of Specialists" labels
-- End with full org chart visible
-
 **Voiceover:**
-> "Organized like a real company. Clear hierarchy. Clear reporting lines. Fifteen C-Suite executives. Twenty-three VPs and Directors. Hundreds of specialists. All coordinated. All accountable. All working toward your goals."
+> "Organized like a real company. Clear hierarchy. Clear reporting lines."
 
 **Text Overlay:**
 ```
 📊 Real Corporate Hierarchy
+```
+
+---
+
+## SCENE 5B: HIERARCHY BUILD (1:10-1:15)
+
+**Visual:**
+- VPs and Directors at third level
+- Managers at fourth level
+- Specialists at fifth level
+- Continue animating connections
+
+**Voiceover:**
+> "Fifteen C-Suite executives. Twenty-three VPs and Directors. Hundreds of specialists."
+
+**Text Overlay:**
+```
 👔 15 C-Suite
 📈 23 VP & Directors
+```
+
+---
+
+## SCENE 5C: HIERARCHY FULL (1:15-1:20)
+
+**Visual:**
+- Zoom out to show complete hierarchy
+- All 1,100+ agents visible in the structure
+- Color-coding by department
+- Show "Hundreds of Specialists" labels
+- End with full org chart visible
+
+**Voiceover:**
+> "All coordinated. All accountable. All working toward your goals."
+
+**Text Overlay:**
+```
 🎯 1,000+ Specialists
 ```
 
 ---
 
-## SCENE 6: DEPLOYMENT (1:15-1:30)
+## SCENE 6A: DEPLOY CLICK (1:20-1:25)
 
 **Screen:** Agent deployment interface
 
-**Visual Sequence:**
-
-**Shot 6A (1:15-1:22):** One-click deployment
+**Visual:**
 - Show agent card with "Deploy" button
 - Click "Deploy" button
 - Show deployment modal with configuration options
 - Click "Confirm Deployment"
 - Show success animation: "Agent deployed successfully"
 
-**Shot 6B (1:22-1:30):** Multiple deployment
+**Voiceover:**
+> "Deploy in seconds. One click. No hiring process. No training. No onboarding."
+
+**Text Overlay:**
+```
+⚡ One-Click Deployment
+```
+
+---
+
+## SCENE 6B: DEPLOY SUCCESS (1:25-1:30)
+
+**Visual:**
 - Show "Deploy Multiple" option
 - Select 5 agents from different departments
 - Click "Deploy All"
@@ -253,22 +552,37 @@ Instant Deployment
 - Show agent status indicators changing from gray to green
 
 **Voiceover:**
-> "Deploy in seconds. One click. No hiring process. No training. No onboarding. Just select your agents and deploy. Scale from five to five hundred instantly. Your workforce, on demand."
+> "Just select your agents and deploy. Scale from five to five hundred instantly."
 
 **Text Overlay:**
 ```
-⚡ One-Click Deployment
 🚀 Instant Scaling
 🎯 No Training Required
 ```
 
 ---
 
-## SCENE 7: CLOSE (1:30-1:45)
+## SCENE 6C: DEPLOY MULTIPLE (1:30-1:35)
 
-**Visual Sequence:**
+**Visual:**
+- Show multiple agents now active
+- Status indicators all green
+- Activity feed showing deployed agents
+- Dashboard updates with new active count
 
-**Shot 7A (1:30-1:38):** Summary montage
+**Voiceover:**
+> "Your workforce, on demand."
+
+**Text Overlay:**
+```
+🎯 Workforce On Demand
+```
+
+---
+
+## SCENE 7A: MONTAGE (1:35-1:40)
+
+**Visual:**
 - Quick montage of key visuals:
   - C-Suite executives
   - Department grid
@@ -277,15 +591,26 @@ Instant Deployment
   - Deployment animation
 - Each visual shows for 1-2 seconds with smooth transitions
 
-**Shot 7B (1:38-1:45):** Final CTA
+**Voiceover:**
+> "KAYTX. The world's most comprehensive enterprise AI operating system. One thousand one hundred specialized AI employees."
+
+**Text Overlay:**
+```
+🎯 Complete Implementation
+```
+
+---
+
+## SCENE 7B: CTA (1:40-1:45)
+
+**Visual:**
 - KAYTX logo appears with tagline
 - Text: "The World's Most Comprehensive Enterprise AI Operating System"
 - Show pricing: "Starts at $49/month"
 - Show "Get Started Free" button
-- Fade to white with final message
 
 **Voiceover:**
-> "KAYTX. The world's most comprehensive enterprise AI operating system. One thousand one hundred specialized AI employees. Ready to work. Ready to scale. Start free today at kaytx.com."
+> "Ready to work. Ready to scale. Start free today at kaytx.com."
 
 **Text Overlay:**
 ```
@@ -293,6 +618,22 @@ KAYTX
 1,100+ AI Employees
 Starts at $49/month
 kaytx.com
+```
+
+---
+
+## SCENE 7C: CLOSE (1:45-1:50)
+
+**Visual:**
+- Fade to white with final message
+- End with tagline: "KAYTX - Enterprise AI Operating System"
+
+**Voiceover:**
+> "Enterprise AI Operating System."
+
+**Text Overlay:**
+```
+KAYTX - Enterprise AI Operating System
 ```
 
 ---

@@ -11,28 +11,85 @@
 
 | Scene | Time | Feature | Key Visual |
 |-------|------|---------|------------|
-| 1 | 0:00-0:15 | Hook | Notification chaos → unified dashboard |
-| 2 | 0:15-0:45 | Unified Inbox | Omnichannel messaging with AI |
-| 3 | 0:45-1:45 | AI Workforce | 1,100+ agents, hierarchy, departments |
-| 4 | 1:45-2:15 | Social Media | Cross-platform scheduling & analytics |
-| 5 | 2:15-2:45 | Social CRM | 360° customer view, lead scoring |
-| 6 | 2:45-3:15 | Team Collaboration | Human-AI task management |
-| 7 | 3:15-3:35 | Enterprise Dashboard | Metrics & monitoring |
-| 8 | 3:35-3:55 | Security & Compliance | Encryption & certifications |
-| 9 | 3:55-4:15 | Pricing & ROI | Tiers & comparison |
-| 10 | 4:15-4:30 | Omnichannel Control | Slack, WhatsApp, Discord, Telegram |
-| 11 | 4:30-4:45 | Brand Close | Logo + CTA |
+| 1A | 0:00-0:05 | Hook A | Notification chaos |
+| 1B | 0:05-0:10 | Hook B | Split screen chaos |
+| 1C | 0:10-0:15 | Hook C | Collapse to dashboard |
+| 2A | 0:15-0:20 | Unified Inbox A | Full inbox view |
+| 2B | 0:20-0:25 | Unified Inbox B | Priority system |
+| 2C | 0:25-0:30 | Unified Inbox C | Message detail |
+| 2D | 0:30-0:35 | Unified Inbox D | AI summary |
+| 2E | 0:35-0:40 | Unified Inbox E | Smart replies |
+| 2F | 0:40-0:45 | Unified Inbox F | Channel switching |
+| 3A | 0:45-0:50 | AI Agents A | Dashboard reveal |
+| 3B | 0:50-0:55 | AI Agents B | Sidebar categories |
+| 3C | 0:55-1:00 | AI Agents C | C-Suite section |
+| 3D | 1:00-1:05 | AI Agents D | Agent cards |
+| 3E | 1:05-1:10 | AI Agents E | CEO profile |
+| 3F | 1:10-1:15 | AI Agents F | Department grid |
+| 3G | 1:15-1:20 | AI Agents G | More departments |
+| 3H | 1:20-1:25 | AI Agents H | Finance agents |
+| 3I | 1:25-1:30 | AI Agents I | Sales agents |
+| 3J | 1:30-1:35 | AI Agents J | Hierarchy chart |
+| 3K | 1:35-1:40 | AI Agents K | Connections animate |
+| 3L | 1:40-1:45 | AI Agents L | Full hierarchy |
+| 4A | 1:45-1:50 | Social Media A | Dashboard overview |
+| 4B | 1:50-1:55 | Social Media B | Platform breakdown |
+| 4C | 1:55-2:00 | Social Media C | Content calendar |
+| 4D | 2:00-2:05 | Social Media D | Color coding |
+| 4E | 2:05-2:10 | Social Media E | Post composer |
+| 4F | 2:10-2:15 | Social Media F | AI suggestions |
+| 5A | 2:15-2:20 | Social CRM A | Contact list |
+| 5B | 2:20-2:25 | Social CRM B | Score colors |
+| 5C | 2:25-2:30 | Social CRM C | 360° profile |
+| 5D | 2:30-2:35 | Social CRM D | Social profiles |
+| 5E | 2:35-2:40 | Social CRM E | Deal stage |
+| 5F | 2:40-2:45 | Social CRM F | AI insights |
+| 6A | 2:45-2:50 | Team Collab A | Team workspace |
+| 6B | 2:50-2:55 | Team Collab B | Role labels |
+| 6C | 2:55-3:00 | Team Collab C | Kanban board |
+| 6D | 3:00-3:05 | Team Collab D | Task assignment |
+| 6E | 3:05-3:10 | Team Collab E | Activity feed |
+| 6F | 3:10-3:15 | Team Collab F | Agent coordination |
+| 7A | 3:15-3:20 | Dashboard A | Key metrics |
+| 7B | 3:20-3:25 | Dashboard B | Trend indicators |
+| 7C | 3:25-3:30 | Dashboard C | Service status |
+| 7D | 3:30-3:35 | Dashboard D | Quick actions |
+| 8A | 3:35-3:40 | Security A | Compliance badges |
+| 8B | 3:40-3:45 | Security B | Certification dates |
+| 8C | 3:45-3:50 | Security C | Encryption status |
+| 8D | 3:50-3:55 | Security D | Security features |
+| 9A | 3:55-4:00 | Pricing A | Pricing cards |
+| 9B | 4:00-4:05 | Pricing B | More tiers |
+| 9C | 4:05-4:10 | Pricing C | ROI comparison |
+| 9D | 4:10-4:15 | Pricing D | Savings |
+| 10A | 4:15-4:20 | Omnichannel A | Slack integration |
+| 10B | 4:20-4:25 | Omnichannel B | Agent status |
+| 10C | 4:25-4:30 | Omnichannel C | WhatsApp control |
+| 11A | 4:30-4:35 | Brand Close A | Logo animation |
+| 11B | 4:35-4:40 | Brand Close B | Tagline |
+| 11C | 4:40-4:45 | Brand Close C | Final CTA |
 
 ---
 
-## SCENE 1: THE HOOK (0:00-0:15)
+## SCENE 1A: THE HOOK A (0:00-0:05)
 
 **Visual:**
-- 0:00-0:03: Black screen with rapid notification sounds (email ping, Slack chime, WhatsApp pop)
-- 0:03-0:06: Split screen showing: 5 email tabs, 3 chat apps, 2 CRM windows - all flashing chaotic
-- 0:06-0:09: All screens collapse into one → KAYTX logo appears
-- 0:09-0:12: Dashboard slides into view
-- 0:12-0:15: Silence - then voiceover begins
+- 0:00-0:05: Black screen with rapid notification sounds (email ping, Slack chime, WhatsApp pop)
+
+---
+
+## SCENE 1B: THE HOOK B (0:05-0:10)
+
+**Visual:**
+- 0:05-0:10: Split screen showing: 5 email tabs, 3 chat apps, 2 CRM windows - all flashing chaotic
+
+---
+
+## SCENE 1C: THE HOOK C (0:10-0:15)
+
+**Visual:**
+- 0:10-0:13: All screens collapse into one → KAYTX logo appears
+- 0:13-0:15: Dashboard slides into view
 
 **Voiceover:**
 > "Every day, your team drowns in notifications. 247 emails. 89 Slack messages. 34 missed calls. Leads that never get followed up. Responses that come too late. What if there was a better way?"
@@ -45,32 +102,64 @@
 
 ---
 
-## SCENE 2: UNIFIED INBOX (0:15-0:45)
+## SCENE 2A: UNIFIED INBOX A (0:15-0:20)
 
 **Screen:** `@/app/communications/unified-inbox.tsx`
 
-**Visual Sequence:**
-
-**Shot 2A (0:15-0:20):** Full inbox view
-- Camera: Wide shot showing message list
+**Visual:**
+- Wide shot showing message list
 - Show 15-20 messages with different channel icons
 - Highlight: Email 📧 | WhatsApp 💬 | LinkedIn 🔗 | SMS 💭
+
+---
+
+## SCENE 2B: UNIFIED INBOX B (0:20-0:25)
+
+**Screen:** `@/app/communications/unified-inbox.tsx`
+
+**Visual:**
 - Show filter tabs at top: All | Email | WhatsApp | LinkedIn | SMS
 
-**Shot 2B (0:20-0:25):** Priority system
+---
+
+## SCENE 2C: UNIFIED INBOX C (0:25-0:30)
+
+**Screen:** `@/app/communications/unified-inbox.tsx`
+
+**Visual:**
 - Click "High Priority" filter
 - Show 3-4 messages with red 🔴 badge
 - Hover over priority badge → tooltip "AI-scored: High intent"
-- Show "AI Summary" pill on first message
 
-**Shot 2C (0:25-0:35):** Message detail
+---
+
+## SCENE 2D: UNIFIED INBOX D (0:30-0:35)
+
+**Screen:** `@/app/communications/unified-inbox.tsx`
+
+**Visual:**
+- Show "AI Summary" pill on first message
 - Click a high-priority message
 - Show conversation thread
+
+---
+
+## SCENE 2E: UNIFIED INBOX E (0:35-0:40)
+
+**Screen:** `@/app/communications/unified-inbox.tsx`
+
+**Visual:**
 - Highlight "AI Summary" section at top
 - Show "Smart Reply" suggestions (3 buttons)
 - Show "Auto-categorized: Sales Inquiry" tag
 
-**Shot 2D (0:35-0:45):** Channel switching
+---
+
+## SCENE 2F: UNIFIED INBOX F (0:40-0:45)
+
+**Screen:** `@/app/communications/unified-inbox.tsx`
+
+**Visual:**
 - Click WhatsApp filter → show WhatsApp messages
 - Click LinkedIn filter → show LinkedIn messages
 - Return to "All" → show unified stream
@@ -87,52 +176,119 @@
 
 ---
 
-## SCENE 3: AI AGENTS & EMPLOYEES (0:45-1:45)
+## SCENE 3A: AI AGENTS A (0:45-0:50)
 
 **Screen:** `@/app/home.tsx` + `@/app/ai-agents-employees-builder.tsx`
 
-**Visual Sequence:**
-
-**Shot 3A (0:45-0:55):** Home dashboard reveal
+**Visual:**
 - Start with KAYTX logo
 - Camera zooms out to show full dashboard
+
+---
+
+## SCENE 3B: AI AGENTS B (0:50-0:55)
+
+**Screen:** `@/app/home.tsx` + `@/app/ai-agents-employees-builder.tsx`
+
+**Visual:**
 - Sidebar visible on left with all agent categories
 - Main area shows "AI Agents & Employees" header
-- Scroll indicator appears
 
-**Shot 3B (0:55-1:05):** C-Suite section
+---
+
+## SCENE 3C: AI AGENTS C (0:55-1:00)
+
+**Screen:** `@/app/home.tsx` + `@/app/ai-agents-employees-builder.tsx`
+
+**Visual:**
 - Scroll down to "C-Suite Executives" section
 - Show 6 agent cards: CEO, CFO, CTO, CMO, CISO, COO
+
+---
+
+## SCENE 3D: AI AGENTS D (1:00-1:05)
+
+**Screen:** `@/app/home.tsx` + `@/app/ai-agents-employees-builder.tsx`
+
+**Visual:**
 - Each card shows: Avatar, Name, Title, Department badge
 - Click CEO Agent card → expand profile
+
+---
+
+## SCENE 3E: AI AGENTS E (1:05-1:10)
+
+**Screen:** `@/app/home.tsx` + `@/app/ai-agents-employees-builder.tsx`
+
+**Visual:**
 - Show capabilities: "Strategic Planning", "Board Presentations", "Market Analysis"
 
-**Shot 3C (1:05-1:20):** Department grid
+---
+
+## SCENE 3F: AI AGENTS F (1:10-1:15)
+
+**Screen:** `@/app/home.tsx` + `@/app/ai-agents-employees-builder.tsx`
+
+**Visual:**
 - Return to main view
-- Show department categories grid (3x4 layout):
-  - Executive Office
-  - Finance & Accounting
-  - Sales & Revenue
-  - Marketing & Growth
-  - Human Resources
-  - Operations
-  - Technology
-  - Legal & Compliance
-  - Healthcare
-  - Trading & Investments
-  - Real Estate
-  - Government
+- Show department categories grid (3x4 layout): Executive Office, Finance & Accounting, Sales & Revenue, Marketing & Growth
+
+---
+
+## SCENE 3G: AI AGENTS G (1:15-1:20)
+
+**Screen:** `@/app/home.tsx` + `@/app/ai-agents-employees-builder.tsx`
+
+**Visual:**
+- Human Resources, Operations, Technology, Legal & Compliance
+
+---
+
+## SCENE 3H: AI AGENTS H (1:20-1:25)
+
+**Screen:** `@/app/home.tsx` + `@/app/ai-agents-employees-builder.tsx`
+
+**Visual:**
+- Healthcare, Trading & Investments, Real Estate, Government
 - Hover over each to show agent count
 
-**Shot 3D (1:20-1:35):** Deep dive into 2 departments
-- Click "Finance & Accounting" → show 15+ finance agents
-- Scroll through: CFO, Controller, Auditor, Tax Specialist, Payroll Manager, etc.
-- Click "Sales & Revenue" → show sales agents
-- Show: Sales Director, Account Executive, SDR, Sales Analyst, etc.
+---
 
-**Shot 3E (1:35-1:45):** Hierarchy visualization
+## SCENE 3I: AI AGENTS I (1:25-1:30)
+
+**Screen:** `@/app/home.tsx` + `@/app/ai-agents-employees-builder.tsx`
+
+**Visual:**
+- Click "Finance & Accounting" → show 15+ finance agents
+- Scroll through: CFO, Controller, Auditor, Tax Specialist, Payroll Manager
+
+---
+
+## SCENE 3J: AI AGENTS J (1:30-1:35)
+
+**Screen:** `@/app/home.tsx` + `@/app/ai-agents-employees-builder.tsx`
+
+**Visual:**
+- Click "Sales & Revenue" → show sales agents
+- Show: Sales Director, Account Executive, SDR, Sales Analyst
+
+---
+
+## SCENE 3K: AI AGENTS K (1:35-1:40)
+
+**Screen:** `@/app/home.tsx` + `@/app/ai-agents-employees-builder.tsx`
+
+**Visual:**
 - Show organizational chart view
 - CEO at top → C-Suite below → VPs → Managers → Specialists
+
+---
+
+## SCENE 3L: AI AGENTS L (1:40-1:45)
+
+**Screen:** `@/app/home.tsx` + `@/app/ai-agents-employees-builder.tsx`
+
+**Visual:**
 - Animate connections (lines drawing between levels)
 - Final shot: Full hierarchy with all 1,100+ agents visible
 
@@ -148,31 +304,61 @@
 
 ---
 
-## SCENE 4: SOCIAL MEDIA MANAGEMENT (1:45-2:15)
+## SCENE 4A: SOCIAL MEDIA A (1:45-1:50)
 
 **Screen:** `@/app/social-media/dashboard.tsx` + `@/app/social-media/content-calendar.tsx`
 
-**Visual Sequence:**
+**Visual:**
+- Show main dashboard with metric cards: Total Followers: 24.5K, Engagement Rate: 4.2%, Total Reach: 156K, Posts This Month: 47
 
-**Shot 4A (1:45-1:55):** Dashboard overview
-- Show main dashboard with metric cards:
-  - Total Followers: 24.5K
-  - Engagement Rate: 4.2%
-  - Total Reach: 156K
-  - Posts This Month: 47
+---
+
+## SCENE 4B: SOCIAL MEDIA B (1:50-1:55)
+
+**Screen:** `@/app/social-media/dashboard.tsx` + `@/app/social-media/content-calendar.tsx`
+
+**Visual:**
 - Show platform breakdown: Instagram 40% | Twitter 30% | LinkedIn 20% | Facebook 10%
 
-**Shot 4B (1:55-2:05):** Content calendar
+---
+
+## SCENE 4C: SOCIAL MEDIA C (1:55-2:00)
+
+**Screen:** `@/app/social-media/dashboard.tsx` + `@/app/social-media/content-calendar.tsx`
+
+**Visual:**
 - Switch to calendar view
 - Show monthly view with scheduled posts
 - Each post shows: Platform icon, time, content preview
+
+---
+
+## SCENE 4D: SOCIAL MEDIA D (2:00-2:05)
+
+**Screen:** `@/app/social-media/dashboard.tsx` + `@/app/social-media/content-calendar.tsx`
+
+**Visual:**
 - Hover over post → show full content
 - Show color coding: Green = Published | Blue = Scheduled | Orange = Draft
 
-**Shot 4C (2:05-2:15):** Post composer + Analytics
+---
+
+## SCENE 4E: SOCIAL MEDIA E (2:05-2:10)
+
+**Screen:** `@/app/social-media/dashboard.tsx` + `@/app/social-media/content-calendar.tsx`
+
+**Visual:**
 - Click "New Post" → composer opens
 - Show multi-platform selector (toggle Instagram, Twitter, LinkedIn, Facebook)
 - Show character count for each platform
+
+---
+
+## SCENE 4F: SOCIAL MEDIA F (2:10-2:15)
+
+**Screen:** `@/app/social-media/dashboard.tsx` + `@/app/social-media/content-calendar.tsx`
+
+**Visual:**
 - Show AI suggestions: "Best time to post: 2PM"
 - Switch to analytics → show engagement graph over time
 - Show "Top Performing Post" highlight
@@ -188,39 +374,65 @@
 
 ---
 
-## SCENE 5: SOCIAL CRM (2:15-2:45)
+## SCENE 5A: SOCIAL CRM A (2:15-2:20)
 
 **Screen:** `@/app/business/crm.tsx`
 
-**Visual Sequence:**
-
-**Shot 5A (2:15-2:25):** Contact list
+**Visual:**
 - Show contact grid/list view
 - Each contact card shows: Avatar, Name, Company, Lead score badge
+
+---
+
+## SCENE 5B: SOCIAL CRM B (2:20-2:25)
+
+**Screen:** `@/app/business/crm.tsx`
+
+**Visual:**
 - Show lead score colors: 🔴 80-100 | 🟡 50-79 | 🟢 0-49
 - Show "Last contacted" timestamp
+
+---
+
+## SCENE 5C: SOCIAL CRM C (2:25-2:30)
+
+**Screen:** `@/app/business/crm.tsx`
+
+**Visual:**
 - Show tags: "Hot Lead", "Decision Maker", "Demo Requested"
-
-**Shot 5B (2:25-2:35):** 360° profile
 - Click a contact → full profile opens
-- Show sections:
-  - Contact Info (name, email, phone, company)
-  - Social Profiles (LinkedIn, Twitter with links)
-  - Interaction Timeline (vertical timeline with icons)
-    - Email sent (2 days ago)
-    - Demo call (5 days ago)
-    - LinkedIn connection (2 weeks ago)
-  - Deal Stage: "Negotiation"
-  - Estimated Value: $50,000
 
-**Shot 5C (2:35-2:45):** AI insights
+---
+
+## SCENE 5D: SOCIAL CRM D (2:30-2:35)
+
+**Screen:** `@/app/business/crm.tsx`
+
+**Visual:**
+- Show sections: Contact Info (name, email, phone, company)
+- Social Profiles (LinkedIn, Twitter with links)
+
+---
+
+## SCENE 5E: SOCIAL CRM E (2:35-2:40)
+
+**Screen:** `@/app/business/crm.tsx`
+
+**Visual:**
+- Interaction Timeline (vertical timeline with icons): Email sent (2 days ago), Demo call (5 days ago), LinkedIn connection (2 weeks ago)
+- Deal Stage: "Negotiation"
+- Estimated Value: $50,000
+
+---
+
+## SCENE 5F: SOCIAL CRM F (2:40-2:45)
+
+**Screen:** `@/app/business/crm.tsx`
+
+**Visual:**
 - Show "AI Insights" panel
 - Display: "Lead Score: 85/100"
-- Show scoring factors:
-  - +25: Multiple demo requests
-  - +20: Decision maker
-  - +15: Recent LinkedIn activity
-  - +15: Email engagement
+- Show scoring factors: +25: Multiple demo requests, +20: Decision maker, +15: Recent LinkedIn activity, +15: Email engagement
 - Show AI suggestion: "Schedule follow-up call this week"
 - Show "Next Best Action" recommendations
 
@@ -235,34 +447,64 @@
 
 ---
 
-## SCENE 6: TEAM MANAGEMENT / COLLABORATION (2:45-3:15)
+## SCENE 6A: TEAM COLLAB A (2:45-2:50)
 
 **Screen:** `@/app/collaboration/team-collaboration.tsx`
 
-**Visual Sequence:**
-
-**Shot 6A (2:45-2:55):** Team workspace
+**Visual:**
 - Show team members panel
 - Show mixed list: Human avatars (3) + AI agent avatars (5)
+
+---
+
+## SCENE 6B: TEAM COLLAB B (2:50-2:55)
+
+**Screen:** `@/app/collaboration/team-collaboration.tsx`
+
+**Visual:**
 - Show status indicators: 🟢 Active | 🟡 Busy | ⚪ Offline
 - Show role labels: "You (Admin)" | "John (Developer)" | "Sarah (Sales)" | "AI - Sales Agent" | "AI - Content Writer"
 
-**Shot 6B (2:55-3:05):** Kanban board
+---
+
+## SCENE 6C: TEAM COLLAB C (2:55-3:00)
+
+**Screen:** `@/app/collaboration/team-collaboration.tsx`
+
+**Visual:**
 - Show Kanban columns: To Do | In Progress | Review | Done
 - Show task cards in each column
+
+---
+
+## SCENE 6D: TEAM COLLAB D (3:00-3:05)
+
+**Screen:** `@/app/collaboration/team-collaboration.tsx`
+
+**Visual:**
 - Drag a task from "To Do" to "In Progress"
 - Show task assignment modal
+
+---
+
+## SCENE 6E: TEAM COLLAB E (3:05-3:10)
+
+**Screen:** `@/app/collaboration/team-collaboration.tsx`
+
+**Visual:**
 - Select AI agent → show "Assigned to: AI - Content Writer"
 - Show estimated completion time
 
-**Shot 6C (3:05-3:15):** Activity & coordination
+---
+
+## SCENE 6F: TEAM COLLAB F (3:10-3:15)
+
+**Screen:** `@/app/collaboration/team-collaboration.tsx`
+
+**Visual:**
 - Show activity feed (right panel)
-- Show real-time updates:
-  - "AI - Content Writer started task: Q3 Blog Post"
-  - "AI - Sales Agent sent follow-up email to John Smith"
-  - "AI - Data Analyst completed: Weekly Report"
-- Show agent-to-agent message:
-  - "AI - Sales Agent → AI - Data Analyst: 'Can you generate report for client meeting?'"
+- Show real-time updates: "AI - Content Writer started task: Q3 Blog Post", "AI - Sales Agent sent follow-up email to John Smith", "AI - Data Analyst completed: Weekly Report"
+- Show agent-to-agent message: "AI - Sales Agent → AI - Data Analyst: 'Can you generate report for client meeting?'"
 - Show performance metrics: Tasks completed, Response time, Success rate
 
 **Voiceover:**
@@ -276,27 +518,38 @@
 
 ---
 
-## SCENE 7: ENTERPRISE DASHBOARD (3:15-3:35)
+## SCENE 7A: DASHBOARD A (3:15-3:20)
 
 **Screen:** `@/app/enterprise-dashboard.tsx`
 
-**Visual Sequence:**
+**Visual:**
+- Show metric cards in grid (2x2): 💰 Revenue: $2.4M MRR, ⏱️ Uptime: 99.9%, 🤖 Active Agents: 1,100+, 👥 Team Members: 45
 
-**Shot 7A (3:15-3:25):** Key metrics
-- Show metric cards in grid (2x2):
-  - 💰 Revenue: $2.4M MRR
-  - ⏱️ Uptime: 99.9%
-  - 🤖 Active Agents: 1,100+
-  - 👥 Team Members: 45
+---
+
+## SCENE 7B: DASHBOARD B (3:20-3:25)
+
+**Screen:** `@/app/enterprise-dashboard.tsx`
+
+**Visual:**
 - Show trend indicators: ↑ 12% | ↑ 0.1% | ↑ 25 | ↑ 5
 
-**Shot 7B (3:25-3:35):** System status
-- Show service status grid:
-  - API: 🟢 Operational
-  - Database: 🟢 Operational
-  - AI Models: 🟢 Operational
-  - Storage: 🟢 Operational
-  - Analytics: 🟢 Operational
+---
+
+## SCENE 7C: DASHBOARD C (3:25-3:30)
+
+**Screen:** `@/app/enterprise-dashboard.tsx`
+
+**Visual:**
+- Show service status grid: API: 🟢 Operational, Database: 🟢 Operational, AI Models: 🟢 Operational, Storage: 🟢 Operational, Analytics: 🟢 Operational
+
+---
+
+## SCENE 7D: DASHBOARD D (3:30-3:35)
+
+**Screen:** `@/app/enterprise-dashboard.tsx`
+
+**Visual:**
 - Show quick actions: "Deploy Agent" | "View Logs" | "Settings" | "Support"
 - Show recent activity feed (5 items)
 
@@ -310,29 +563,40 @@
 
 ---
 
-## SCENE 8: SECURITY & COMPLIANCE (3:35-3:55)
+## SCENE 8A: SECURITY A (3:35-3:40)
 
 **Screen:** `@/app/privacy-dashboard.tsx`
 
-**Visual Sequence:**
+**Visual:**
+- Show compliance section with large badges: ✅ GDPR Compliant, ✅ SOC 2 Type II, ✅ HIPAA Ready
 
-**Shot 8A (3:35-3:45):** Compliance badges
-- Show compliance section with large badges:
-  - ✅ GDPR Compliant
-  - ✅ SOC 2 Type II
-  - ✅ HIPAA Ready
+---
+
+## SCENE 8B: SECURITY B (3:40-3:45)
+
+**Screen:** `@/app/privacy-dashboard.tsx`
+
+**Visual:**
 - Show certification dates
 - Show audit status: "Last audit: March 2026"
 
-**Shot 8B (3:45-3:55):** Security features
-- Show encryption status:
-  - 🔐 Data at Rest: AES-256-GCM
-  - 🔐 Data in Transit: TLS 1.3
-- Show security features list:
-  - Role-Based Access Control
-  - Multi-Factor Authentication
-  - Audit Logging
-  - PII Encryption
+---
+
+## SCENE 8C: SECURITY C (3:45-3:50)
+
+**Screen:** `@/app/privacy-dashboard.tsx`
+
+**Visual:**
+- Show encryption status: 🔐 Data at Rest: AES-256-GCM, 🔐 Data in Transit: TLS 1.3
+
+---
+
+## SCENE 8D: SECURITY D (3:50-3:55)
+
+**Screen:** `@/app/privacy-dashboard.tsx`
+
+**Visual:**
+- Show security features list: Role-Based Access Control, Multi-Factor Authentication, Audit Logging, PII Encryption
 - Show recent security events (last 7 days): "No threats detected"
 
 **Voiceover:**
@@ -345,22 +609,31 @@
 
 ---
 
-## SCENE 9: PRICING & ROI (3:55-4:15)
+## SCENE 9A: PRICING A (3:55-4:00)
 
-**Visual Sequence:**
+**Visual:**
+- Animate pricing cards appearing: **Free** - $0/mo - 1 agent, 1GB storage, 100 requests/day, **Starter** - $49/mo - 5 agents, 10GB storage, 1,000 requests/day
 
-**Shot 9A (3:55-4:05):** Pricing cards
-- Animate pricing cards appearing:
-  - **Free** - $0/mo - 1 agent, 1GB storage, 100 requests/day
-  - **Starter** - $49/mo - 5 agents, 10GB storage, 1,000 requests/day
-  - **Professional** - $199/mo - 20 agents, 100GB storage, 10,000 requests/day
-  - **Enterprise** - Custom - Unlimited everything
+---
 
-**Shot 9B (4:05-4:15):** ROI comparison
-- Show comparison:
-  - KAYTX Starter: $49/month
-  - 1 Human Employee: $5,000/month ($60,000/year)
-  - Savings: $59,451/month (99% savings)
+## SCENE 9B: PRICING B (4:00-4:05)
+
+**Visual:**
+- **Professional** - $199/mo - 20 agents, 100GB storage, 10,000 requests/day, **Enterprise** - Custom - Unlimited everything
+
+---
+
+## SCENE 9C: PRICING C (4:05-4:10)
+
+**Visual:**
+- Show comparison: KAYTX Starter: $49/month, 1 Human Employee: $5,000/month ($60,000/year)
+
+---
+
+## SCENE 9D: PRICING D (4:10-4:15)
+
+**Visual:**
+- Savings: $59,451/month (99% savings)
 - Show "Start Free" button highlight
 - Show "Book Demo" button
 
@@ -374,33 +647,31 @@
 
 ---
 
-## SCENE 10: OMNICHANNEL AGENT CONTROL (4:15-4:45)
+## SCENE 10A: OMNICHANNEL A (4:15-4:20)
 
 **Concept:** Control your entire AI workforce from any messaging app - WhatsApp, Slack, Discord, Telegram
 
-**Visual Sequence:**
-
-**Shot 10A (4:15-4:25):** Slack integration
+**Visual:**
 - Show Slack workspace with KAYTX app installed
 - Show message: "@kaytx deploy sales agent"
 - Show bot response: "🚀 Deploying Sales Agent..."
+
+---
+
+## SCENE 10B: OMNICHANNEL B (4:20-4:25)
+
+**Visual:**
 - Show agent status: "Active - Processing 12 leads"
 - Show quick actions: /kaytx status | /kaytx agents | /kaytx pause
 
-**Shot 10B (4:25-4:35):** WhatsApp control
+---
+
+## SCENE 10C: OMNICHANNEL C (4:25-4:30)
+
+**Visual:**
 - Show WhatsApp chat with KAYTX bot
 - User types: "Show me active agents"
-- Bot responds with interactive list:
-  - 🤖 Sales Agent - Active
-  - 🤖 Content Writer - Idle
-  - 🤖 Data Analyst - Processing
-- User: "Pause Sales Agent"
-- Bot: "✅ Sales Agent paused"
-
-**Shot 10C (4:35-4:45):** Discord + Telegram
-- Discord: Show KAYTX bot in server, slash commands
-- Telegram: Show bot with inline keyboard controls
-- End with all 4 platforms showing connected status
+- Bot responds with interactive list: 🤖 Sales Agent - Active, 🤖 Content Writer - Idle, 🤖 Data Analyst - Processing
 
 **Voiceover:**
 > "Control your AI workforce from anywhere. Slack. WhatsApp. Discord. Telegram. Deploy agents. Check status. Assign tasks. All from the messaging apps you already use. Your AI workforce, accessible from anywhere."
@@ -414,20 +685,26 @@
 
 ---
 
-## SCENE 11: BRAND CLOSE (4:45-5:00)
+## SCENE 11A: BRAND CLOSE A (4:30-4:35)
 
-**Visual Sequence:**
-
-**Shot 11A (4:45-4:55):** Logo animation
+**Visual:**
 - KAYTX logo animates in (fade + scale)
+
+---
+
+## SCENE 11B: BRAND CLOSE B (4:35-4:40)
+
+**Visual:**
 - Tagline appears below: "The World's Most Comprehensive Enterprise AI Operating System"
 
-**Shot 11B (4:55-5:00):** Final CTA
+---
+
+## SCENE 11C: BRAND CLOSE C (4:40-4:45)
+
+**Visual:**
 - Show website: kaytx.com
 - Show "Get Started Free" button
-- Fade to black with white text:
-  - "The future of work isn't humans versus AI."
-  - "It's humans empowered by AI."
+- Fade to black with white text: "The future of work isn't humans versus AI." "It's humans empowered by AI."
 
 **Voiceover:**
 > "KAYTX - The World's Most Comprehensive Enterprise AI Operating System. The future of work isn't humans versus AI. It's humans empowered by AI. Join the revolution."

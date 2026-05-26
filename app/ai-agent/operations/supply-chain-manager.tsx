@@ -1,56 +1,38 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { Colors } from '@/constants/Colors';
-import { ChevronLeft , User} from 'lucide-react-native';
-import { TouchableOpacity } from 'react-native';
-import { useRouter } from 'expo-router';
-import { EnhancedAgentShell } from '@/components/ai-agent/EnhancedAgentShell';
+import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
+import { User } from 'lucide-react-native';
 
-const agent = {
-  id: 'supply-chain-manager',
-  name: 'AI Supply Chain Manager',
-  title: 'Supply Chain Optimization AI',
-  description: 'Manages end-to-end supply chain operations, optimizes inventory, and coordinates supplier relationships.',
-  icon: User,
-  color: '#FF6B35',
-  type: 'subagent' as const,
-  category: 'operations',
-  parentCategory: 'Business Operations',
-  capabilities: ['Inventory Optimization', 'Supplier Management', 'Demand Forecasting', 'Procurement Automation', 'Logistics Coordination'],
-  performance: { tasksCompleted: 0, successRate: 0, averageResponseTime: 0, customerSatisfaction: 0, uptime: '99.9%' },
-  humanCostEquivalent: '$0/year',
-  aiCost: '$0/year',
-  efficiency: '0x cost efficiency',
-};
+export default function AgentPage() {
+  const agent = {
+    id: 'supply-chain-manager',
+    name: 'supply-chain-manager',
+    title: 'supply-chain-manager',
+    description: 'The supply-chain-manager AI provides specialized services and automation within its department.',
+    capabilities: ["Task Automation","Data Processing","Workflow Management"],
+    icon: User,
+    color: '#607D8B',
+    type: 'agent' as const,
+    humanCost: '$93k/year',
+    aiCost: '$1k/year',
+    efficiency: '93x efficiency improvement',
+    replacesRole: 'supply-chain-manager',
+    infrastructure: {
+      status: 'online',
+      health: 99,
+      uptime: '99.9%',
+      lastActive: 'Now',
+      processingPower: 'standard',
+    },
+    roiMetrics: {
+      savingsPerMonth: '$6',
+      tasksAutomatedDaily: 831,
+      responseTime: '1.8s',
+      accuracyRate: '95.4%',
+    },
+    hierarchy: {
+      department: 'Operations',
+    },
+  };
 
-export default function AgentScreen() {
-  const router = useRouter();
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
-
-  return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <ChevronLeft size={24} color={colors.text} />
-        </TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: colors.text }]}>{agent.name}</Text>
-        <View style={styles.headerRight} />
-      </View>
-      <ScrollView style={styles.content}>
-        <EnhancedAgentShell agent={agent} />
-      </ScrollView>
-    </SafeAreaView>
-  );
+  return <AgentPageWrapper agent={agent} />;
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  header: { flexDirection: 'row', alignItems: 'center', padding: 16, borderBottomWidth: 1 },
-  backButton: { padding: 8 },
-  headerTitle: { flex: 1, fontSize: 18, fontWeight: '700', textAlign: 'center' },
-  headerRight: { width: 40 },
-  content: { flex: 1 },
-});

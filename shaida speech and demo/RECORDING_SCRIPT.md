@@ -41,7 +41,7 @@ npx expo start --web
 
 3. **Click hamburger menu** (top left)
    - Sidebar expands smoothly
-   - Pause 1 second
+   - Pause 5 seconds
 
 4. **Scroll sidebar down slowly**
    - Show all menu items
@@ -50,13 +50,13 @@ npx expo start --web
 
 5. **Click "AI Agents & Employees"**
    - Section expands
-   - Pause 1 second
+   - Pause 5 seconds
 
 6. **Scroll within expanded section**
    - Show C-Suite Executives
    - Show Command Center
    - Show AI Workforce
-   - Duration: 8 seconds
+   - Duration: 5 seconds
 
 7. **Stop recording** (F9)
 
@@ -73,9 +73,9 @@ npx expo start --web
 2. Click "AI Agents & Employees" in sidebar
 3. Click "C-Suite Executives (17)"
 4. Slow scroll through executives
-5. Hover over CEO, CFO, CTO cards (2 sec each)
+5. Hover over CEO, CFO, CTO cards (5 sec each)
 6. Click "CEO - Chief Executive Officer"
-7. Show CEO Advisor page for 3 seconds
+7. Show CEO Advisor page for 5 seconds
 8. Click back
 9. Stop recording
 
@@ -87,7 +87,7 @@ npx expo start --web
 4. Show Sales section
 5. Show Marketing section
 6. Show HR section
-7. Brief pause on each (2 seconds)
+7. Brief pause on each (5 seconds)
 8. Stop recording
 
 **Verbal cue:**
@@ -117,7 +117,7 @@ npx expo start --web
 
 1. Start recording
 2. Navigate to `/app/enterprise-dashboard.tsx`
-3. **Hold on header** (3 seconds):
+3. **Hold on header** (5 seconds):
    - Show "$2.4M Total MRR"
    - Show "99.9% Core Uptime"
    - Show "Active Security"
@@ -132,7 +132,7 @@ npx expo start --web
    - Compliance & Audit
    - Security Settings
 
-6. **Continue scroll** (3 seconds):
+6. **Continue scroll** (5 seconds):
    - Show Recent Activity
 
 7. Stop recording
@@ -146,14 +146,14 @@ npx expo start --web
 
 1. Start recording
 2. Navigate to `/app/privacy-dashboard.tsx`
-3. Show compliance badges (3 seconds):
+3. Show compliance badges (5 seconds):
    - GDPR
    - SOC2
    - HIPAA
 
-4. Scroll to encryption section (3 seconds)
+4. Scroll to encryption section (5 seconds)
 
-5. Show audit trail preview (2 seconds)
+5. Show audit trail preview (5 seconds)
 
 6. Stop recording
 
@@ -167,7 +167,7 @@ npx expo start --web
 **Option A - If pricing page exists:**
 1. Navigate to pricing page
 2. Show all 4 tiers
-3. Slow scroll through features
+3. Slow scroll through features (5 seconds each tier)
 
 **Option B - Create overlay in editing:**
 1. Record static home screen
@@ -183,15 +183,15 @@ npx expo start --web
 **ACTION SCRIPT:**
 
 1. Start recording (black screen)
-2. **Create notification cascade** (3 seconds):
+2. **Create notification cascade** (5 seconds):
    - Show rapid notification sounds visually
    - Email, WhatsApp, Slack, SMS icons flashing
    - 99+ badge counters flying upward
-3. **Freeze frame** (1 second):
+3. **Freeze frame** (5 seconds):
    - Hold on chaotic inbox visualization
-4. **Text slam** (1 second):
+4. **Text slam** (5 seconds):
    - "What if you never missed a message again?"
-5. **Quick flash transition** (0.5s):
+5. **Quick flash transition** (5 seconds):
    - Cut to pristine Unified Inbox interface
 6. Stop recording
 
@@ -206,15 +206,15 @@ npx expo start --web
 
 1. Start recording
 2. Navigate to `/(tabs)/messages`
-3. Show message list with channel icons (3 seconds):
+3. Show message list with channel icons (5 seconds):
    - Email icon
    - WhatsApp icon
    - LinkedIn icon
    - SMS icon
-4. Scroll through inbox showing priority badges
+4. Scroll through inbox showing priority badges (5 seconds)
 5. Click on a conversation thread
-6. Show AI summary card at top
-7. Show conversation history
+6. Show AI summary card at top (5 seconds)
+7. Show conversation history (5 seconds)
 8. Click back to inbox
 9. Stop recording
 
@@ -233,7 +233,7 @@ npx expo start --web
    - Monthly view with scheduled posts
    - Different platform colors/icons
 4. Click on a scheduled post
-5. Show post preview across platforms:
+5. Show post preview across platforms (5 seconds):
    - LinkedIn preview
    - Twitter/X preview
    - Instagram preview
@@ -255,15 +255,15 @@ npx expo start --web
 
 1. Start recording
 2. Navigate to `/business/crm`
-3. Show customer list view (3 seconds)
+3. Show customer list view (5 seconds)
 4. Click on a customer profile card
-5. Show 360° view (8 seconds):
+5. Show 360° view (5 seconds):
    - Profile header with social links
    - Interaction history timeline
    - Last contact across channels
    - Social sentiment score
-6. Scroll to lead scoring section
-7. Show segmentation tags
+6. Scroll to lead scoring section (5 seconds)
+7. Show segmentation tags (5 seconds)
 8. Stop recording
 
 **Verbal cue:**
@@ -277,15 +277,15 @@ npx expo start --web
 
 1. Start recording
 2. Navigate to `/collaboration/team-collaboration`
-3. Show team workspace (3 seconds):
+3. Show team workspace (5 seconds):
    - Team member avatars
    - Human + AI agent members
-4. Show task board (Kanban view) (3 seconds):
+4. Show task board (Kanban view) (5 seconds):
    - To Do, In Progress, Done columns
 5. Drag a task from To Do to In Progress
 6. Show task assignment dropdown
 7. Assign to an AI agent
-8. Show real-time activity feed (3 seconds):
+8. Show real-time activity feed (5 seconds):
    - Agent actions
    - Task updates
    - Notifications
@@ -298,7 +298,7 @@ npx expo start --web
 
 ## Recording Session 2: B-Roll (15-20 minutes)
 
-### Quick Shots (5-10 seconds each)
+### Quick Shots (5 seconds each)
 
 **Shot 13A: Social Media Extra**
 1. Navigate to Social Media Dashboard

@@ -1,28 +1,38 @@
-import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
-import { useRouter } from 'expo-router';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { Colors } from '@/constants/Colors';
+import React from 'react';
+import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
+import { Bot } from 'lucide-react-native';
 
-export default function AiFeedbackSurveyPage() {
-  const router = useRouter();
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+export default function AgentPage() {
+  const agent = {
+    id: 'ai-feedback-survey',
+    name: 'ai-feedback-survey',
+    title: 'ai-feedback-survey',
+    description: 'The ai-feedback-survey AI provides specialized services and automation within its department.',
+    capabilities: ["Task Automation","Data Processing","Workflow Management"],
+    icon: Bot,
+    color: '#2196F3',
+    type: 'agent' as const,
+    humanCost: '$74k/year',
+    aiCost: '$1k/year',
+    efficiency: '74x efficiency improvement',
+    replacesRole: 'ai-feedback-survey',
+    infrastructure: {
+      status: 'online',
+      health: 97,
+      uptime: '99.9%',
+      lastActive: 'Now',
+      processingPower: 'standard',
+    },
+    roiMetrics: {
+      savingsPerMonth: '$5',
+      tasksAutomatedDaily: 1008,
+      responseTime: '1.0s',
+      accuracyRate: '96.6%',
+    },
+    hierarchy: {
+      department: 'Customer-experience',
+    },
+  };
 
-  useEffect(() => {
-    // Redirect to full enterprise page
-    router.replace('/ai-agent/customer-experience/feedback-survey');
-  }, [router]);
-
-  return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <ActivityIndicator size="large" color="#5856D6" />
-      <Text style={[styles.text, { color: colors.text }]}>Loading AI Feedback & Survey...</Text>
-    </View>
-  );
+  return <AgentPageWrapper agent={agent} />;
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center', gap: 16 },
-  text: { fontSize: 16, fontWeight: '500' },
-});

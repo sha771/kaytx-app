@@ -11,67 +11,151 @@
 
 | Scene | Time | Feature | Key Visual |
 |-------|------|---------|------------|
-| 1 | 0:00-0:20 | Hook | Scattered tools → Unified team workspace |
-| 2 | 0:20-0:50 | Hybrid Team Workspace | Human + AI team members working together |
-| 3 | 0:50-1:30 | Project Management | Projects, milestones, task tracking |
-| 4 | 1:30-2:10 | AI-Powered Task Assignment | Auto-assignment, workload balancing |
-| 5 | 2:10-2:40 | Team Communication | Real-time chat, AI agent coordination |
-| 6 | 2:40-3:00 | Performance Analytics | Team metrics, goals, insights |
-| 7 | 3:00-3:20 | Team Management | Roles, permissions, member administration |
-| 8 | 3:20-3:40 | Brand Close | CTA + pricing |
+| 1A | 0:00-0:05 | Hook A | Black screen with notification sounds |
+| 1B | 0:05-0:10 | Hook B | Split screen showing 5 different apps |
+| 1C | 0:10-0:15 | Hook C | Screens collapse into KAYTX logo |
+| 1D | 0:15-0:20 | Hook D | Hybrid workspace slides into view |
+| 2A | 0:20-0:25 | Hybrid Workspace A | Team overview with stats |
+| 2B | 0:25-0:30 | Hybrid Workspace B | Team cards with mixed avatars |
+| 2C | 0:30-0:35 | Hybrid Workspace C | Team detail view |
+| 2D | 0:35-0:40 | Hybrid Workspace D | Team expansion |
+| 2E | 0:40-0:45 | Hybrid Workspace E | Quick actions |
+| 2F | 0:45-0:50 | Hybrid Workspace F | Chat interface |
+| 3A | 0:50-0:55 | Project A | Project list |
+| 3B | 0:55-1:00 | Project B | Project cards with details |
+| 3C | 1:00-1:05 | Project C | Priority and status badges |
+| 3D | 1:05-1:10 | Project D | Project detail |
+| 3E | 1:10-1:15 | Project E | Progress bar and milestones |
+| 3F | 1:15-1:20 | Project F | Task breakdown |
+| 3G | 1:20-1:25 | Project G | Task management |
+| 3H | 1:25-1:30 | Project H | AI assignment suggestion |
+| 4A | 1:30-1:35 | Task Assignment A | Workload analysis |
+| 4B | 1:35-1:40 | Task Assignment B | Team capacity metrics |
+| 4C | 1:40-1:45 | Task Assignment C | AI recommendation |
+| 4D | 1:45-1:50 | Task Assignment D | Auto-assignment |
+| 4E | 1:50-1:55 | Task Assignment E | Task creation modal |
+| 4F | 1:55-2:00 | Task Assignment F | AI agent assignment |
+| 4G | 2:00-2:05 | Task Assignment G | AI agent selection |
+| 4H | 2:05-2:10 | Task Assignment H | Task coordination |
+| 5A | 2:10-2:15 | Communication A | Team chats overview |
+| 5B | 2:15-2:20 | Communication B | Team chat list |
+| 5C | 2:20-2:25 | Communication C | Real-time chat |
+| 5D | 2:25-2:30 | Communication D | Mixed conversation |
+| 5E | 2:30-2:35 | Communication E | AI coordination |
+| 5F | 2:35-2:40 | Communication F | Agent-to-agent messages |
+| 6A | 2:40-2:45 | Analytics A | Performance overview |
+| 6B | 2:45-2:50 | Analytics B | Performance metrics dashboard |
+| 6C | 2:50-2:55 | Analytics C | Individual performance |
+| 6D | 2:55-3:00 | Analytics D | Team goals |
+| 7A | 3:00-3:05 | Management A | Team management overview |
+| 7B | 3:05-3:10 | Management B | Roles and permissions |
+| 7C | 3:10-3:15 | Management C | Member administration |
+| 7D | 3:15-3:20 | Management D | Team settings |
+| 8A | 3:20-3:25 | Close A | Feature recap |
+| 8B | 3:25-3:30 | Close B | Pricing reveal |
+| 8C | 3:30-3:35 | Close C | Final CTA |
+| 8D | 3:35-3:40 | Close D | Logo and tagline |
 
 ---
 
-## SCENE 1: THE HOOK (0:00-0:20)
+## SCENE 1A: THE HOOK A (0:00-0:05)
 
 **Visual:**
-- 0:00-0:05: Black screen with chaotic notification sounds (Slack ping, email chime, Jira alert, Teams notification)
-- 0:05-0:10: Split screen showing: 5 different apps open (Slack, Asana, Jira, Google Drive, Zoom) - all flashing
-- 0:10-0:15: All screens collapse into one → KAYTX Team Collaboration logo appears
-- 0:15-0:20: Hybrid workspace slides into view with smooth animation
+- Black screen with chaotic notification sounds (Slack ping, email chime, Jira alert, Teams notification)
+
+**Text Overlay:**
+- "5+ different tools"
+
+---
+
+## SCENE 1B: THE HOOK B (0:05-0:10)
+
+**Visual:**
+- Split screen showing: 5 different apps open (Slack, Asana, Jira, Google Drive, Zoom) - all flashing
+
+**Text Overlay:**
+- "Scattered team workflows"
+
+---
+
+## SCENE 1C: THE HOOK C (0:10-0:15)
+
+**Visual:**
+- All screens collapse into one → KAYTX Team Collaboration logo appears
+
+**Text Overlay:**
+- "Productivity lost in context switching"
+
+---
+
+## SCENE 1D: THE HOOK D (0:15-0:20)
+
+**Visual:**
+- Hybrid workspace slides into view with smooth animation
+
+**Text Overlay:**
+- "What if... everything was unified?"
 
 **Voiceover:**
 > "Your team is scattered. Slack for chat. Asana for tasks. Jira for projects. Google Drive for files. Zoom for meetings. Tools everywhere. Productivity nowhere. What if your entire team - humans and AI - worked in one unified workspace? Projects. Tasks. Communication. Analytics. All connected. All intelligent. This is Team Collaboration by KAYTX."
 
-**Text Overlay:**
-- "5+ different tools"
-- "Scattered team workflows"
-- "Productivity lost in context switching"
-- "What if... everything was unified?"
-
 ---
 
-## SCENE 2: HYBRID TEAM WORKSPACE (0:20-0:50)
+## SCENE 2A: HYBRID TEAM WORKSPACE A (0:20-0:25)
 
 **Screen:** `app/ai-agent/team-workspace.tsx`
 
-**Visual Sequence:**
-
-**Shot 2A (0:20-0:30):** Team overview
+**Visual:**
 - Show team workspace header with stats:
   - Total Squad: 24
   - AI Agents: 12
   - Sync Health: 99.9%
+
+---
+
+## SCENE 2B: HYBRID TEAM WORKSPACE B (0:25-0:30)
+
+**Visual:**
 - Show team cards with mixed avatars:
   - Human avatars (Sarah, Mike, Emily) with status indicators
   - AI agent avatars (Support AI, Sales AI, Knowledge Base AI) with purple badges
 - Show member count per team: "Customer Success Squad - 4 members (2 human, 2 AI)"
 
-**Shot 2B (0:30-0:40):** Team detail view
+---
+
+## SCENE 2C: HYBRID TEAM WORKSPACE C (0:30-0:35)
+
+**Visual:**
 - Click on "Customer Success Squad" team card
 - Team expands to show:
   - Team description: "Handling customer inquiries and support tickets"
   - Active projects: "Q1 Support Improvement" (75% progress)
-  - Team members list with roles:
-    - Sarah Chen (Admin) - Online
-    - Mike Johnson (Member) - Online
-    - Support AI (Agent) - Online
-    - Knowledge Base AI (Agent) - Online
+
+---
+
+## SCENE 2D: HYBRID TEAM WORKSPACE D (0:35-0:40)
+
+**Visual:**
+- Show team members list with roles:
+  - Sarah Chen (Admin) - Online
+  - Mike Johnson (Member) - Online
+  - Support AI (Agent) - Online
+  - Knowledge Base AI (Agent) - Online
 - Show activity: "12 active conversations"
 
-**Shot 2C (0:40-0:50):** Quick actions
+---
+
+## SCENE 2E: HYBRID TEAM WORKSPACE E (0:40-0:45)
+
+**Visual:**
 - Show action buttons: "Join Team Chat", "View Projects", "Manage Members"
 - Click "Join Team Chat" → chat interface slides in
+
+---
+
+## SCENE 2F: HYBRID TEAM WORKSPACE F (0:45-0:50)
+
+**Visual:**
 - Show mixed conversation: Human messages + AI responses
 - End with smooth zoom out to team list
 
@@ -86,39 +170,75 @@
 
 ---
 
-## SCENE 3: PROJECT MANAGEMENT (0:50-1:30)
+## SCENE 3A: PROJECT MANAGEMENT A (0:50-0:55)
 
 **Screen:** `app/collaboration/team-collaboration.tsx` (Projects tab)
 
-**Visual Sequence:**
-
-**Shot 3A (0:50-1:00):** Project list
+**Visual:**
 - Switch to "Projects" tab
 - Show project cards with rich details:
   - "Mobile App Redesign" - In Progress - 65% - Due: March 15 - $50K budget
   - "API Integration" - Planning - 20% - Due: April 1 - $25K budget
+
+---
+
+## SCENE 3B: PROJECT MANAGEMENT B (0:55-1:00)
+
+**Visual:**
 - Show priority badges: HIGH (red) | MEDIUM (orange) | LOW (green)
 - Show status badges: IN PROGRESS (blue) | PLANNING (orange) | COMPLETED (green)
 
-**Shot 3B (1:00-1:15):** Project detail
+---
+
+## SCENE 3C: PROJECT MANAGEMENT C (1:00-1:05)
+
+**Visual:**
 - Click on "Mobile App Redesign" project
 - Show project detail panel:
   - Progress bar: 65% complete
   - Team members: 3 assigned (avatars shown)
-  - Milestones:
-    - ✅ Design Complete (Feb 15)
-    - 🔄 Development (March 1 - In Progress)
-    - ⏳ Testing (March 20)
-    - ⏳ Launch (April 1)
+
+---
+
+## SCENE 3D: PROJECT MANAGEMENT D (1:05-1:10)
+
+**Visual:**
+- Show milestones:
+  - ✅ Design Complete (Feb 15)
+  - 🔄 Development (March 1 - In Progress)
+  - ⏳ Testing (March 20)
+  - ⏳ Launch (April 1)
+
+---
+
+## SCENE 3E: PROJECT MANAGEMENT E (1:10-1:15)
+
+**Visual:**
 - Show task breakdown: 12 tasks total, 8 completed, 4 in progress
 
-**Shot 3C (1:15-1:30):** Task management
+---
+
+## SCENE 3F: PROJECT MANAGEMENT F (1:15-1:20)
+
+**Visual:**
 - Show task list within project:
   - "Design user interface mockups" - In Progress - Emily Davis - HIGH
   - "Implement authentication system" - To Do - Mike Chen - HIGH
   - "Write API documentation" - To Do - Unassigned - MEDIUM
+
+---
+
+## SCENE 3G: PROJECT MANAGEMENT G (1:20-1:25)
+
+**Visual:**
 - Click "Assign Task" → assignment modal opens
 - Show AI suggestion: "AI recommends: Assign to Mike Chen (available, relevant skills)"
+
+---
+
+## SCENE 3H: PROJECT MANAGEMENT H (1:25-1:30)
+
+**Visual:**
 - Click "Assign" → task updates with Mike's avatar
 
 **Voiceover:**
@@ -132,38 +252,72 @@
 
 ---
 
-## SCENE 4: AI-POWERED TASK ASSIGNMENT (1:30-2:10)
+## SCENE 4A: AI-POWERED TASK ASSIGNMENT A (1:30-1:35)
 
 **Screen:** `app/collaboration/team-collaboration.tsx` (Tasks tab) + Backend service visualization
 
-**Visual Sequence:**
-
-**Shot 4A (1:30-1:40):** Workload analysis
+**Visual:**
 - Show "Workload Analysis" panel
 - Display team capacity metrics:
   - Sarah Chen: 6/8 hours utilized (75%)
   - Mike Chen: 8/8 hours utilized (100%) - ⚠️ Overload
   - Emily Davis: 4/8 hours utilized (50%)
+
+---
+
+## SCENE 4B: AI-POWERED TASK ASSIGNMENT B (1:35-1:40)
+
+**Visual:**
 - Show AI recommendation: "Rebalance: Move 2 tasks from Mike to Emily"
 
-**Shot 4B (1:40-1:50):** Auto-assignment
+---
+
+## SCENE 4C: AI-POWERED TASK ASSIGNMENT C (1:40-1:45)
+
+**Visual:**
 - Click "New Task" → task creation modal
 - Enter: "Write customer onboarding guide"
 - Select priority: HIGH
+
+---
+
+## SCENE 4D: AI-POWERED TASK ASSIGNMENT D (1:45-1:50)
+
+**Visual:**
 - Click "Auto-Assign" toggle
 - AI analyzes and selects: Emily Davis (available, relevant skills, underutilized)
 - Show confidence score: "Assignment confidence: 92%"
 
-**Shot 4C (1:50-2:00):** AI agent assignment
+---
+
+## SCENE 4E: AI-POWERED TASK ASSIGNMENT E (1:50-1:55)
+
+**Visual:**
 - Create another task: "Analyze customer support tickets"
 - Click "Assign to AI Agent"
+
+---
+
+## SCENE 4F: AI-POWERED TASK ASSIGNMENT F (1:55-2:00)
+
+**Visual:**
 - Show AI agent list:
   - Support AI (Specialized in customer support)
   - Data Analyst AI (Specialized in analysis)
 - Select "Support AI" → task assigned
+
+---
+
+## SCENE 4G: AI-POWERED TASK ASSIGNMENT G (2:00-2:05)
+
+**Visual:**
 - Show: "AI Agent will complete in 2 hours (estimated)"
 
-**Shot 4D (2:00-2:10):** Task coordination
+---
+
+## SCENE 4H: AI-POWERED TASK ASSIGNMENT H (2:05-2:10)
+
+**Visual:**
 - Show activity feed:
   - "AI - Support AI started task: Analyze customer support tickets"
   - "Emily Davis completed task: Write customer onboarding guide"
@@ -181,32 +335,57 @@
 
 ---
 
-## SCENE 5: TEAM COMMUNICATION (2:10-2:40)
+## SCENE 5A: TEAM COMMUNICATION A (2:10-2:15)
 
 **Screen:** `app/communications/team-communication.tsx` + `app/ai-agent/team-workspace.tsx` (Chat tab)
 
-**Visual Sequence:**
-
-**Shot 5A (2:10-2:20):** Team chats overview
+**Visual:**
 - Show team chat list:
   - "Product Team" - 3 unread - 8 members - Active
   - "Marketing Team" - 0 unread - 12 members - Active
   - "Engineering Team" - 5 unread - 15 members - Busy
+
+---
+
+## SCENE 5B: TEAM COMMUNICATION B (2:15-2:20)
+
+**Visual:**
 - Show quick actions: "Create Team", "Broadcast Message", "Schedule Meeting"
 
-**Shot 5B (2:20-2:30):** Real-time chat
+---
+
+## SCENE 5C: TEAM COMMUNICATION C (2:20-2:25)
+
+**Visual:**
 - Click on "Product Team" chat
 - Show conversation with mixed participants:
   - Sarah Chen (Human): "Hey team, can we review the Q1 metrics today?"
   - Support AI (Agent): "I've analyzed response times - improved by 35% this quarter"
+
+---
+
+## SCENE 5D: TEAM COMMUNICATION D (2:25-2:30)
+
+**Visual:**
+- Show conversation with mixed participants:
   - Mike Johnson (Human): "That's amazing! What about CSAT scores?"
   - Support AI (Agent): "CSAT increased from 4.2 to 4.7. Automated routing helped."
 - Show AI message with purple badge to distinguish from humans
 
-**Shot 5C (2:30-2:40):** AI coordination
+---
+
+## SCENE 5E: TEAM COMMUNICATION E (2:30-2:35)
+
+**Visual:**
 - Show agent-to-agent message:
   - "Support AI → Knowledge Base AI: 'Can you identify FAQ entries based on recent tickets?'"
   - "Knowledge Base AI → Support AI: 'Found 15 new FAQ entries. Adding to database now.'"
+
+---
+
+## SCENE 5F: TEAM COMMUNICATION F (2:35-2:40)
+
+**Visual:**
 - Show coordination panel with active AI conversations
 - End with message count: "4 members online, 2 AI agents active"
 
@@ -221,13 +400,11 @@
 
 ---
 
-## SCENE 6: PERFORMANCE ANALYTICS (2:40-3:00)
+## SCENE 6A: PERFORMANCE ANALYTICS A (2:40-2:45)
 
 **Screen:** `app/automation/team-performance.tsx`
 
-**Visual Sequence:**
-
-**Shot 6A (2:40-2:45):** Performance overview
+**Visual:**
 - Show performance metrics dashboard:
   - Team Productivity: 89% (+5.2%)
   - Task Completion Rate: 94% (+2.1%)
@@ -235,14 +412,28 @@
   - Quality Score: 4.7/5 (+0.3)
 - Show trend indicators with green arrows for improvements
 
-**Shot 6B (2:45-2:52):** Individual performance
+---
+
+## SCENE 6B: PERFORMANCE ANALYTICS B (2:45-2:50)
+
+**Visual:**
 - Switch to "Individual" tab
 - Show team member performance cards:
   - John Doe - Designer - 92% performance - 15 tasks - 88% efficiency - 7 day streak
   - Jane Smith - Developer - 88% performance - 23 tasks - 92% efficiency - 12 day streak
+
+---
+
+## SCENE 6C: PERFORMANCE ANALYTICS C (2:50-2:55)
+
+**Visual:**
 - Show performance bars with color coding: Green (90%+) | Orange (80-89%) | Red (<80%)
 
-**Shot 6C (2:52-3:00):** Team goals
+---
+
+## SCENE 6D: PERFORMANCE ANALYTICS D (2:55-3:00)
+
+**Visual:**
 - Switch to "Goals" tab
 - Show team goals with progress:
   - "Q1 Productivity Target" - 85% complete - Achieve 90% by March 31
@@ -261,20 +452,28 @@
 
 ---
 
-## SCENE 7: TEAM MANAGEMENT (3:00-3:20)
+## SCENE 7A: TEAM MANAGEMENT A (3:00-3:05)
 
 **Screen:** `app/collaboration/team-management.tsx`
 
-**Visual Sequence:**
-
-**Shot 7A (3:00-3:08):** Member administration
+**Visual:**
 - Show team members list with detailed cards:
   - John Smith - Admin - Sales - Active - Full Access, User Management, Billing
   - Sarah Johnson - Manager - Marketing - Active - View Reports, Manage Campaigns
   - Mike Wilson - Member - Sales - Active - View Data, Create Leads
+
+---
+
+## SCENE 7B: TEAM MANAGEMENT B (3:05-3:10)
+
+**Visual:**
 - Show status badges: Active (green) | Pending (orange) | Inactive (gray)
 
-**Shot 7B (3:08-3:14):** Permissions management
+---
+
+## SCENE 7C: TEAM MANAGEMENT C (3:10-3:15)
+
+**Visual:**
 - Click on Sarah Johnson's card
 - Show permissions section with permission chips:
   - "View Reports" ✅
@@ -283,7 +482,11 @@
   - "User Management" ❌
 - Show action buttons: "Edit", "Permissions", "Remove"
 
-**Shot 7C (3:14-3:20):** Invite workflow
+---
+
+## SCENE 7D: TEAM MANAGEMENT D (3:15-3:20)
+
+**Visual:**
 - Show "Invite Team Members" card
 - Click "Invite" → invite modal opens
 - Show email input field
@@ -302,28 +505,42 @@
 
 ---
 
-## SCENE 8: BRAND CLOSE (3:20-3:40)
+## SCENE 8A: BRAND CLOSE A (3:20-3:25)
 
-**Visual Sequence:**
-
-**Shot 8A (3:20-3:30):** Feature recap
+**Visual:**
 - Rapid montage of key features:
   - Hybrid Team Workspace
   - Project Management
   - AI-Powered Task Assignment
+- Each feature shows for 1.5 seconds with icon
+
+---
+
+## SCENE 8B: BRAND CLOSE B (3:25-3:30)
+
+**Visual:**
+- Rapid montage of key features:
   - Team Communication
   - Performance Analytics
   - Team Management
 - Each feature shows for 1.5 seconds with icon
 
-**Shot 8B (3:30-3:35):** Pricing reveal
+---
+
+## SCENE 8C: BRAND CLOSE C (3:30-3:35)
+
+**Visual:**
 - Show pricing cards:
   - **Starter**: $49/mo - 5 team members, 10 AI agents
   - **Professional**: $199/mo - 20 team members, 50 AI agents
   - **Enterprise**: Custom - Unlimited everything
 - Highlight "Start Free" button
 
-**Shot 8C (3:35-3:40):** Final CTA
+---
+
+## SCENE 8D: BRAND CLOSE D (3:35-3:40)
+
+**Visual:**
 - KAYTX logo animates in
 - Tagline: "Team Collaboration - Humans + AI, Working Together"
 - Show website: kaytx.com

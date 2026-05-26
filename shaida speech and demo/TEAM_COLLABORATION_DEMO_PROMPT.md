@@ -11,69 +11,154 @@
 
 | Scene | Time | Feature | Key Visual |
 |-------|------|---------|------------|
-| 1 | 0:00-0:20 | Hook | Scattered tools → Unified team workspace |
-| 2 | 0:20-0:50 | Team Workspace | Human-AI hybrid teams, real-time coordination |
-| 3 | 0:50-1:30 | Workload Management | AI-powered capacity balancing, smart recommendations |
-| 4 | 1:30-2:10 | Goals & OKRs | Company/Team/Individual goals with key results |
-| 5 | 2:10-2:40 | Project Management | Kanban boards, task assignment, progress tracking |
-| 6 | 2:40-3:00 | Team Chat & Wiki | Real-time messaging, knowledge sharing |
-| 7 | 3:00-3:20 | Team Analytics | Performance metrics, collaboration insights |
-| 8 | 3:20-3:40 | Brand Close | CTA + pricing |
+| 1A | 0:00-0:05 | Hook A | Black screen with notification sounds |
+| 1B | 0:05-0:10 | Hook B | Split screen showing 5 different apps |
+| 1C | 0:10-0:15 | Hook C | Screens collapse into KAYTX logo |
+| 1D | 0:15-0:20 | Hook D | Team workspace slides into view |
+| 2A | 0:20-0:25 | Team Workspace A | Team overview with stats |
+| 2B | 0:25-0:30 | Team Workspace B | Team cards display |
+| 2C | 0:30-0:35 | Team Workspace C | Team deep dive |
+| 2D | 0:35-0:40 | Team Workspace D | Team members panel |
+| 2E | 0:40-0:45 | Team Workspace E | Active projects |
+| 2F | 0:45-0:50 | Team Workspace F | Team chat interface |
+| 3A | 0:50-0:55 | Workload A | Workload overview |
+| 3B | 0:55-1:00 | Workload B | Team member cards |
+| 3C | 1:00-1:05 | Workload C | AI recommendations |
+| 3D | 1:05-1:10 | Workload D | Recommendation details |
+| 3E | 1:10-1:15 | Workload E | Emily's card expansion |
+| 3F | 1:15-1:20 | Workload F | Rebalance action |
+| 3G | 1:20-1:25 | Workload G | Task redistribution modal |
+| 3H | 1:25-1:30 | Workload H | Success animation |
+| 4A | 1:30-1:35 | Goals A | Goals overview |
+| 4B | 1:35-1:40 | Goals B | Summary stats |
+| 4C | 1:40-1:45 | Goals C | Goal cards with progress |
+| 4D | 1:45-1:50 | Goals D | Goal deep dive |
+| 4E | 1:50-1:55 | Goals E | Key results expansion |
+| 4F | 1:55-2:00 | Goals F | Goal metadata |
+| 4G | 2:00-2:05 | Goals G | Individual goals |
+| 4H | 2:05-2:10 | Goals H | Achievements section |
+| 5A | 2:10-2:15 | Project A | Project overview |
+| 5B | 2:15-2:20 | Project B | Project cards |
+| 5C | 2:20-2:25 | Project C | Project details |
+| 5D | 2:25-2:30 | Project D | Task management |
+| 5E | 2:30-2:35 | Project E | Task cards |
+| 5F | 2:35-2:40 | Project F | Wiki & knowledge |
+| 6A | 2:40-2:45 | Chat A | Wiki overview |
+| 6B | 2:45-2:50 | Chat B | Document list |
+| 6C | 2:50-2:55 | Chat C | Team chat interface |
+| 6D | 2:55-3:00 | Chat D | Real-time messaging |
+| 7A | 3:00-3:05 | Analytics A | Team analytics overview |
+| 7B | 3:05-3:10 | Analytics B | Performance metrics |
+| 7C | 3:10-3:15 | Analytics C | Collaboration insights |
+| 7D | 3:15-3:20 | Analytics D | Analytics dashboard |
+| 8A | 3:20-3:25 | Close A | CTA introduction |
+| 8B | 3:25-3:30 | Close B | Pricing display |
+| 8C | 3:30-3:35 | Close C | Website button |
+| 8D | 3:35-3:40 | Close D | Final branding |
 
 ---
 
-## SCENE 1: THE HOOK (0:00-0:20)
+## SCENE 1A: THE HOOK A (0:00-0:05)
 
 **Visual:**
-- 0:00-0:05: Black screen with notification sounds (Slack ping, email alert, Jira notification, Teams chime)
-- 0:05-0:10: Split screen showing: 5 different apps open (Slack, Jira, Asana, Email, Excel spreadsheet) - all flashing
-- 0:10-0:15: All screens collapse into one → KAYTX Team Collaboration logo appears
-- 0:15-0:20: Team workspace slides into view with smooth animation
+- Black screen with notification sounds (Slack ping, email alert, Jira notification, Teams chime)
+
+**Text Overlay:**
+- "10+ tools for team management"
+
+---
+
+## SCENE 1B: THE HOOK B (0:05-0:10)
+
+**Visual:**
+- Split screen showing: 5 different apps open (Slack, Jira, Asana, Email, Excel spreadsheet) - all flashing
+
+**Text Overlay:**
+- "Disconnected workflows"
+
+---
+
+## SCENE 1C: THE HOOK C (0:10-0:15)
+
+**Visual:**
+- All screens collapse into one → KAYTX Team Collaboration logo appears
+
+**Text Overlay:**
+- "Lost information"
+
+---
+
+## SCENE 1D: THE HOOK D (0:15-0:20)
+
+**Visual:**
+- Team workspace slides into view with smooth animation
+
+**Text Overlay:**
+- "What if... everything was unified?"
 
 **Voiceover:**
 > "Your team is scattered across 10 different tools. Slack for chat. Jira for tasks. Asana for projects. Email for updates. Excel for tracking. Information gets lost. Deadlines get missed. What if your entire team - humans and AI - worked in one place? One workspace. One source of truth. This is Team Collaboration by KAYTX."
 
-**Text Overlay:**
-- "10+ tools for team management"
-- "Disconnected workflows"
-- "Lost information"
-- "What if... everything was unified?"
-
 ---
 
-## SCENE 2: TEAM WORKSPACE (0:20-0:50)
+## SCENE 2A: TEAM WORKSPACE A (0:20-0:25)
 
 **Screen:** `app/ai-agent/team-workspace.tsx`
 
-**Visual Sequence:**
-
-**Shot 2A (0:20-0:30):** Team overview
+**Visual:**
 - Show team workspace with stats header:
   - 24 Total Squad
   - 12 AI Agents
   - 99.9% Sync Health
+
+---
+
+## SCENE 2B: TEAM WORKSPACE B (0:25-0:30)
+
+**Visual:**
 - Show team cards:
   - "Customer Success Squad" - 4 members (2 human, 2 AI) - 12 active conversations
   - "Sales & Revenue Team" - 3 members (2 human, 1 AI) - 8 active conversations
   - "Product Development" - 4 members (2 human, 2 AI) - 5 active conversations
 - Show member avatars with AI badge (⚡) for agents
 
-**Shot 2B (0:30-0:40):** Team deep dive
+---
+
+## SCENE 2C: TEAM WORKSPACE C (0:30-0:35)
+
+**Visual:**
 - Click on "Customer Success Squad"
 - Show team members panel:
   - Sarah Chen (Admin) - Online - Human
   - Mike Johnson (Member) - Online - Human
   - Support AI (Agent) - Online - AI ⚡
   - Knowledge Base AI (Agent) - Online - AI ⚡
+
+---
+
+## SCENE 2D: TEAM WORKSPACE D (0:35-0:40)
+
+**Visual:**
 - Show active projects:
   - "Q1 Support Improvement" - 75% complete - Due Mar 31
   - Tasks: Analyze response times (completed), Update FAQ database (in progress)
 
-**Shot 2C (0:40-0:50):** Team chat
+---
+
+## SCENE 2E: TEAM WORKSPACE E (0:40-0:45)
+
+**Visual:**
 - Click "Join Team Chat"
 - Show chat interface with mixed messages:
   - Sarah Chen: "Hey team, can we review Q1 metrics?"
   - Support AI: "I've analyzed response times - improved by 35%. Average first response under 2 minutes."
+
+---
+
+## SCENE 2F: TEAM WORKSPACE F (0:45-0:50)
+
+**Visual:**
+- Show chat interface with mixed messages:
   - Mike Johnson: "That's amazing! What about CSAT?"
   - Support AI: "CSAT increased from 4.2 to 4.7. Automated ticket routing really helped."
 - Show message input with AI suggestions
@@ -89,39 +174,76 @@
 
 ---
 
-## SCENE 3: WORKLOAD MANAGEMENT (0:50-1:30)
+## SCENE 3A: WORKLOAD MANAGEMENT A (0:50-0:55)
 
 **Screen:** `app/ai-agent/team-management/workload.tsx`
 
-**Visual Sequence:**
-
-**Shot 3A (0:50-1:00):** Workload overview
+**Visual:**
 - Show workload management header with stats:
   - Available: 2 (green)
   - Busy: 3 (orange)
   - Overloaded: 1 (red)
+
+---
+
+## SCENE 3B: WORKLOAD MANAGEMENT B (0:55-1:00)
+
+**Visual:**
 - Show team member cards with workload bars:
   - Sarah Chen - 85% workload - Busy - AI assisted ⚡
   - Michael Johnson - 72% workload - Available - AI assisted ⚡
+
+---
+
+## SCENE 3C: WORKLOAD MANAGEMENT C (1:00-1:05)
+
+**Visual:**
+- Show team member cards with workload bars:
   - Emily Rodriguez - 95% workload - Overloaded - No AI
   - David Kim - 60% workload - Available - AI assisted ⚡
 
-**Shot 3B (1:00-1:15):** AI recommendations
+---
+
+## SCENE 3D: WORKLOAD MANAGEMENT D (1:05-1:10)
+
+**Visual:**
 - Show "AI Recommendations" section:
   - 🔴 HIGH: "Consider redistributing 2 tasks from Emily to David"
   - 🟡 MEDIUM: "AI can automate 15% of Sarah's reporting tasks"
   - 🟢 LOW: "Team has 35 hours of available capacity this week"
+
+---
+
+## SCENE 3E: WORKLOAD MANAGEMENT E (1:10-1:15)
+
+**Visual:**
 - Click on Emily's card → expand details
 - Show: 10 assigned tasks, 35h capacity, 28 completed, projects: Design System, Mobile App
 
-**Shot 3C (1:15-1:30):** Rebalance action
+---
+
+## SCENE 3F: WORKLOAD MANAGEMENT F (1:15-1:20)
+
+**Visual:**
 - Click "Rebalance Tasks" button
 - Show task redistribution modal:
   - Select tasks to move from Emily to David
-  - Show new workload projections after rebalance
+
+---
+
+## SCENE 3G: WORKLOAD MANAGEMENT G (1:20-1:25)
+
+**Visual:**
+- Show new workload projections after rebalance:
   - Emily: 75% (from 95%)
   - David: 75% (from 60%)
 - Click "Confirm Rebalance"
+
+---
+
+## SCENE 3H: WORKLOAD MANAGEMENT H (1:25-1:30)
+
+**Visual:**
 - Show success animation with workload bars updating
 
 **Voiceover:**
@@ -135,45 +257,82 @@
 
 ---
 
-## SCENE 4: GOALS & OKRS (1:30-2:10)
+## SCENE 4A: GOALS & OKRS A (1:30-1:35)
 
 **Screen:** `app/ai-agent/team-management/goals.tsx`
 
-**Visual Sequence:**
-
-**Shot 4A (1:30-1:40):** Goals overview
+**Visual:**
 - Show goals header with filters:
   - Type selector: Company | Team | Individual
   - Period selector: Q1 2026 | Q2 2026 | Annual 2026
+
+---
+
+## SCENE 4B: GOALS & OKRS B (1:35-1:40)
+
+**Visual:**
 - Show summary stats:
   - Completed: 1
   - On Track: 3
   - At Risk: 1
+
+---
+
+## SCENE 4C: GOALS & OKRS C (1:40-1:45)
+
+**Visual:**
 - Show goal cards with progress bars:
   - "Increase Monthly Recurring Revenue" - 82% - On Track
   - "Improve Customer Satisfaction" - 87% - On Track
+
+---
+
+## SCENE 4D: GOALS & OKRS D (1:45-1:50)
+
+**Visual:**
+- Show goal cards with progress bars:
   - "Launch New Product Line" - 75% - At Risk
   - "Reduce Churn Rate" - 100% - Completed
 
-**Shot 4B (1:40-1:55):** Goal deep dive
+---
+
+## SCENE 4E: GOALS & OKRS E (1:50-1:55)
+
+**Visual:**
 - Click on "Increase Monthly Recurring Revenue"
 - Expand to show key results:
   - New Customer Acquisition: 134/150 (89%)
   - Upsell Revenue: $178K/$200K (89%)
   - Churn Reduction: 4.2%/<5% (100%)
+
+---
+
+## SCENE 4F: GOALS & OKRS F (1:55-2:00)
+
+**Visual:**
 - Show goal metadata:
   - Owner: Executive Team
   - Target: $1.5M
   - Current: $1.24M
   - Deadline: Mar 31, 2026
 
-**Shot 4C (1:55-2:10):** Individual goals
+---
+
+## SCENE 4G: GOALS & OKRS G (2:00-2:05)
+
+**Visual:**
 - Switch to "Individual" type filter
 - Show personal goals:
   - "Personal Development Goals" - 45% - On Track
     - Course Completion: 5/12 modules (42%)
     - Mentorship Sessions: 3/6 sessions (50%)
     - Capstone Project: Planning (40%)
+
+---
+
+## SCENE 4H: GOALS & OKRS H (2:05-2:10)
+
+**Visual:**
 - Show achievements section:
   - 🏆 Goal Crusher - Completed 5 goals ahead of schedule
   - 🥇 Team Player - Contributed to 10+ team goals
@@ -190,39 +349,63 @@
 
 ---
 
-## SCENE 5: PROJECT MANAGEMENT (2:10-2:40)
+## SCENE 5A: PROJECT MANAGEMENT A (2:10-2:15)
 
 **Screen:** `app/collaboration/team-collaboration.tsx`
 
-**Visual Sequence:**
-
-**Shot 5A (2:10-2:20):** Project overview
+**Visual:**
 - Show projects tab with project cards:
   - "Mobile App Redesign" - In Progress - 65% - High Priority - $50K budget
   - "API Integration" - Planning - 20% - Medium Priority - $25K budget
+
+---
+
+## SCENE 5B: PROJECT MANAGEMENT B (2:15-2:20)
+
+**Visual:**
 - Show project details:
   - Team members assigned
   - Progress bar with status color
   - Due date
   - Budget
 
-**Shot 5B (2:20-2:30):** Task management
+---
+
+## SCENE 5C: PROJECT MANAGEMENT C (2:20-2:25)
+
+**Visual:**
 - Switch to tasks tab
 - Show task cards:
   - "Design user interface mockups" - In Progress - High Priority - Assigned to Emily Davis
   - "Implement authentication system" - Todo - High Priority - Assigned to Mike Chen
+
+---
+
+## SCENE 5D: PROJECT MANAGEMENT D (2:25-2:30)
+
+**Visual:**
 - Show task details:
   - Description
   - Assignee
   - Due date
   - Priority badge
 
-**Shot 5C (2:30-2:40):** Wiki & knowledge
+---
+
+## SCENE 5E: PROJECT MANAGEMENT E (2:30-2:35)
+
+**Visual:**
 - Switch to wiki tab
 - Show wiki documents:
   - "Onboarding Guide" - HR - Updated 2 days ago
   - "API Documentation" - Engineering - Updated 1 week ago
   - "Design System" - Design - Updated 3 days ago
+
+---
+
+## SCENE 5F: PROJECT MANAGEMENT F (2:35-2:40)
+
+**Visual:**
 - Show document preview with author and category
 - End with smooth transition to analytics
 
@@ -237,13 +420,11 @@
 
 ---
 
-## SCENE 6: TEAM CHAT & WIKI (2:40-3:00)
+## SCENE 6A: TEAM CHAT & WIKI A (2:40-2:45)
 
 **Screen:** `app/collaboration/team-collaboration.tsx` (Wiki tab)
 
-**Visual Sequence:**
-
-**Shot 6A (2:40-2:45):** Wiki overview
+**Visual:**
 - Show wiki tab with document list
 - Each document shows:
   - Document icon
@@ -252,7 +433,11 @@
   - Last updated time
   - Author
 
-**Shot 6B (2:45-2:50):** Document preview
+---
+
+## SCENE 6B: TEAM CHAT & WIKI B (2:45-2:50)
+
+**Visual:**
 - Click on "API Documentation"
 - Show document preview with:
   - Full content
@@ -260,10 +445,20 @@
   - Contributors list
   - Related documents
 
-**Shot 6C (2:50-3:00):** Quick actions
+---
+
+## SCENE 6C: TEAM CHAT & WIKI C (2:50-2:55)
+
+**Visual:**
 - Show action buttons: Edit, Share, Export
 - Click "Share" → share modal opens
 - Show share options: Team members, External users, Public link
+
+---
+
+## SCENE 6D: TEAM CHAT & WIKI D (2:55-3:00)
+
+**Visual:**
 - End with smooth zoom out to wiki list
 
 **Voiceover:**
@@ -277,13 +472,11 @@
 
 ---
 
-## SCENE 7: TEAM ANALYTICS (3:00-3:20)
+## SCENE 7A: TEAM ANALYTICS A (3:00-3:05)
 
 **Screen:** `app/collaboration/team-collaboration.tsx` (Analytics tab)
 
-**Visual Sequence:**
-
-**Shot 7A (3:00-3:08):** Collaboration metrics
+**Visual:**
 - Show analytics tab with metric cards:
   - Autonomous Projects: 8 (+2)
   - AI Coworkers: 12 (Synced)
@@ -291,19 +484,33 @@
   - Squad Health: 98% (+2%)
 - Each card shows icon, value, and change indicator
 
-**Shot 7B (3:08-3:14):** Performance trends
+---
+
+## SCENE 7B: TEAM ANALYTICS B (3:05-3:10)
+
+**Visual:**
 - Show performance trend graph:
   - Tasks completed over time
   - Team velocity
   - AI agent contribution
 - Color-coded lines for different metrics
 
-**Shot 7C (3:14-3:20):** Team health
+---
+
+## SCENE 7C: TEAM ANALYTICS C (3:10-3:15)
+
+**Visual:**
 - Show team health scorecard:
   - Communication: 95%
   - Collaboration: 92%
   - Productivity: 88%
   - Satisfaction: 90%
+
+---
+
+## SCENE 7D: TEAM ANALYTICS D (3:15-3:20)
+
+**Visual:**
 - Show overall team health: 91%
 - Show improvement suggestions from AI
 
@@ -318,28 +525,40 @@
 
 ---
 
-## SCENE 8: BRAND CLOSE (3:20-3:40)
+## SCENE 8A: BRAND CLOSE A (3:20-3:25)
 
-**Visual Sequence:**
-
-**Shot 8A (3:20-3:30):** Feature recap
+**Visual:**
 - Rapid montage of key features:
   - Team Workspace
   - Workload Management
   - Goals & OKRs
+- Each feature shows for 1.5 seconds with icon
+
+---
+
+## SCENE 8B: BRAND CLOSE B (3:25-3:30)
+
+**Visual:**
+- Rapid montage of key features:
   - Project Management
   - Team Chat & Wiki
   - Team Analytics
 - Each feature shows for 1.5 seconds with icon
 
-**Shot 8B (3:30-3:35):** Pricing reveal
+## SCENE 8C: BRAND CLOSE C (3:30-3:35)
+
+**Visual:**
 - Show pricing cards:
   - **Starter**: $49/mo - 5 agents, 10 team members
   - **Professional**: $199/mo - 20 agents, 50 team members
   - **Enterprise**: Custom - Unlimited everything
 - Highlight "Start Free" button
 
-**Shot 8C (3:35-3:40):** Final CTA
+---
+
+## SCENE 8D: BRAND CLOSE D (3:35-3:40)
+
+**Visual:**
 - KAYTX logo animates in
 - Tagline: "Team Collaboration - Humans + AI, Working Together"
 - Show website: kaytx.com

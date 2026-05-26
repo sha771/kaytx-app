@@ -11,61 +11,143 @@
 
 | Scene | Time | Feature | Key Visual |
 |-------|------|---------|------------|
-| 1 | 0:00-0:20 | Hook | Notification chaos across platforms → unified dashboard |
-| 2 | 0:20-0:50 | Omnichannel Inbox | 60+ platforms, unified stream, platform filtering |
-| 3 | 0:50-1:30 | AI Priority System | High/Medium/Low scoring, VIP contacts, smart filtering |
-| 4 | 1:30-2:10 | Priority Messaging Modal | VIP management, rules engine, analytics |
-| 5 | 2:10-2:40 | Real-Time Sync | WebSocket connection, live message updates |
-| 6 | 2:40-3:00 | Smart Actions | Star, archive, quick reply, AI summaries |
-| 7 | 3:00-3:20 | Search & Organization | Universal search, platform-specific filters |
-| 8 | 3:20-3:40 | Brand Close | CTA + integration showcase |
+| 1A | 0:00-0:05 | Hook A | Black screen with notification sounds |
+| 1B | 0:05-0:10 | Hook B | Split screen showing 5 different apps |
+| 1C | 0:10-0:15 | Hook C | Screens collapse into KAYTX logo |
+| 1D | 0:15-0:20 | Hook D | Dashboard slides into view |
+| 2A | 0:20-0:25 | Omnichannel A | Full inbox overview |
+| 2B | 0:25-0:30 | Omnichannel B | Platform badges and count |
+| 2C | 0:30-0:35 | Omnichannel C | Filter tabs |
+| 2D | 0:35-0:40 | Omnichannel D | Platform filtering |
+| 2E | 0:40-0:45 | Omnichannel E | Filter transitions |
+| 2F | 0:45-0:50 | Omnichannel F | Message detail preview |
+| 3A | 0:50-0:55 | Priority A | Priority visualization |
+| 3B | 0:55-1:00 | Priority B | Priority badges |
+| 3C | 1:00-1:05 | Priority C | Filter by priority |
+| 3D | 1:05-1:10 | Priority D | High priority filter |
+| 3E | 1:10-1:15 | Priority E | Unread and starred filters |
+| 3F | 1:15-1:20 | Priority F | AI scoring explanation |
+| 3G | 1:20-1:25 | Priority G | AI score display |
+| 3H | 1:25-1:30 | Priority H | Scoring factors |
+| 4A | 1:30-1:35 | Modal A | Open Priority Modal |
+| 4B | 1:35-1:40 | Modal B | Modal tabs and banner |
+| 4C | 1:40-1:45 | Modal C | VIP Contacts tab |
+| 4D | 1:45-1:50 | Modal D | VIP stats and cards |
+| 4E | 1:50-1:55 | Modal E | Rules Engine tab |
+| 4F | 1:55-2:00 | Modal F | Priority rules |
+| 4G | 2:00-2:05 | Modal G | Analytics tab |
+| 4H | 2:05-2:10 | Modal H | Analytics cards |
+| 5A | 2:10-2:15 | Sync A | WebSocket connection |
+| 5B | 2:15-2:20 | Sync B | Connection status |
+| 5C | 2:20-2:25 | Sync C | Live message arrival |
+| 5D | 2:25-2:30 | Sync D | Notification toast |
+| 5E | 2:30-2:35 | Sync E | Multi-platform sync |
+| 5F | 2:35-2:40 | Sync F | Rapid message sequence |
+| 6A | 2:40-2:45 | Actions A | Star messages |
+| 6B | 2:45-2:50 | Actions B | Archive messages |
+| 6C | 2:50-2:55 | Actions C | Quick actions menu |
+| 6D | 2:55-3:00 | Actions D | Quick reply composer |
+| 7A | 3:00-3:05 | Search A | Universal search |
+| 7B | 3:05-3:10 | Search B | Search results |
+| 7C | 3:10-3:15 | Search C | Platform-specific filters |
+| 7D | 3:15-3:20 | Search D | Advanced filters |
+| 8A | 3:20-3:25 | Close A | Feature recap |
+| 8B | 3:25-3:30 | Close B | Integration showcase |
+| 8C | 3:30-3:35 | Close C | Pricing reveal |
+| 8D | 3:35-3:40 | Close D | Final CTA |
 
 ---
 
-## SCENE 1: THE HOOK (0:00-0:20)
+## SCENE 1A: THE HOOK A (0:00-0:05)
 
 **Visual:**
-- 0:00-0:05: Black screen with rapid notification sounds (email ping, WhatsApp chime, Slack notification, Twitter mention, SMS alert)
-- 0:05-0:10: Split screen showing: Email inbox open, WhatsApp web, Slack workspace, Twitter DMs, SMS messages - all flashing with new messages
-- 0:10-0:15: All screens collapse into one → KAYTX Unified Inbox logo appears
-- 0:15-0:20: Dashboard slides into view with smooth animation showing 60+ platform icons
+- Black screen with rapid notification sounds (email ping, WhatsApp chime, Slack notification, Twitter mention, SMS alert)
+
+**Text Overlay:**
+- "247 emails"
+
+---
+
+## SCENE 1B: THE HOOK B (0:05-0:10)
+
+**Visual:**
+- Split screen showing: Email inbox open, WhatsApp web, Slack workspace, Twitter DMs, SMS messages - all flashing with new messages
+
+**Text Overlay:**
+- "89 WhatsApp messages"
+
+---
+
+## SCENE 1C: THE HOOK C (0:10-0:15)
+
+**Visual:**
+- All screens collapse into one → KAYTX Unified Inbox logo appears
+
+**Text Overlay:**
+- "45 Slack pings"
+
+---
+
+## SCENE 1D: THE HOOK D (0:15-0:20)
+
+**Visual:**
+- Dashboard slides into view with smooth animation showing 60+ platform icons
+
+**Text Overlay:**
+- "What if... everything was in one place?"
 
 **Voiceover:**
 > "Every day, you're drowning in notifications. 247 emails. 89 WhatsApp messages. 45 Slack pings. 32 Twitter DMs. 18 SMS texts. All scattered across different apps. Different tabs. Different devices. What if there was one place to see it all? One inbox to rule them all."
 
-**Text Overlay:**
-- "247 emails"
-- "89 WhatsApp messages"
-- "45 Slack pings"
-- "32 Twitter DMs"
-- "18 SMS texts"
-- "What if... everything was in one place?"
-
 ---
 
-## SCENE 2: OMNICHANNEL INBOX (0:20-0:50)
+## SCENE 2A: OMNICHANNEL INBOX A (0:20-0:25)
 
 **Screen:** `app/communications/unified-inbox.tsx`
 
-**Visual Sequence:**
-
-**Shot 2A (0:20-0:30):** Full inbox overview
+**Visual:**
 - Camera: Wide shot showing unified message list
 - Show 15-20 messages with different platform icons
 - Highlight platform badges: Email 📧 | WhatsApp 💬 | Instagram 📷 | Twitter 🐦 | Facebook 📘 | SMS 💭 | LinkedIn 🔗
+
+---
+
+## SCENE 2B: OMNICHANNEL INBOX B (0:25-0:30)
+
+**Visual:**
 - Show platform count: "Platforms: 60 (Email, SMS, WhatsApp, Instagram, Twitter, FB, LinkedIn, Slack, Discord, Telegram, and 50+ more)"
 - Show filter tabs at top: All | Unread | Starred | High Priority
 
-**Shot 2B (0:30-0:40):** Platform filtering
+---
+
+## SCENE 2C: OMNICHANNEL INBOX C (0:30-0:35)
+
+**Visual:**
 - Click "WhatsApp" platform filter → show only WhatsApp messages
 - Click "Email" platform filter → show only email messages
 - Click "Instagram" platform filter → show only Instagram DMs
+
+---
+
+## SCENE 2D: OMNICHANNEL INBOX D (0:35-0:40)
+
+**Visual:**
 - Click "All" → show unified stream with all platforms mixed
 - Smooth transition between filters with platform-specific colors
 
-**Shot 2C (0:40-0:50):** Message detail preview
+---
+
+## SCENE 2E: OMNICHANNEL INBOX E (0:40-0:45)
+
+**Visual:**
 - Hover over a high-priority email → show preview card
 - Show sender avatar, platform badge, priority indicator, subject line
+
+---
+
+## SCENE 2F: OMNICHANNEL INBOX F (0:45-0:50)
+
+**Visual:**
 - Show unread indicator (left border highlight)
 - Show star icon for important messages
 - Show attachment count indicator
@@ -81,33 +163,69 @@
 
 ---
 
-## SCENE 3: AI PRIORITY SYSTEM (0:50-1:30)
+## SCENE 3A: AI PRIORITY SYSTEM A (0:50-0:55)
 
-**Visual Sequence:**
-
-**Shot 3A (0:50-1:00):** Priority visualization
+**Visual:**
 - Show message cards with priority badges
 - 🔴 High Priority (red badge with alert icon) - urgent messages
 - 🟠 Medium Priority (orange badge with clock icon) - time-sensitive
 - 🟢 Low Priority (green badge with check icon) - can wait
+
+---
+
+## SCENE 3B: AI PRIORITY SYSTEM B (0:55-1:00)
+
+**Visual:**
 - Hover over high priority → tooltip shows "AI-scored: High intent based on keywords, sender importance, and response time"
 
-**Shot 3B (1:00-1:15):** Filter by priority
+---
+
+## SCENE 3C: AI PRIORITY SYSTEM C (1:00-1:05)
+
+**Visual:**
 - Click "High" filter → show only high-priority messages
 - Show 3-4 urgent messages with red badges
+
+---
+
+## SCENE 3D: AI PRIORITY SYSTEM D (1:05-1:10)
+
+**Visual:**
 - Click "Unread" filter → show all unread messages
 - Click "Starred" filter → show starred/important messages
+
+---
+
+## SCENE 3E: AI PRIORITY SYSTEM E (1:10-1:15)
+
+**Visual:**
 - Return to "All" → show full unified stream
 
-**Shot 3C (1:15-1:30):** AI scoring explanation
+---
+
+## SCENE 3F: AI PRIORITY SYSTEM F (1:15-1:20)
+
+**Visual:**
 - Click on a message → expand detail view
 - Show "AI Score: 85/100" with circular progress indicator
+
+---
+
+## SCENE 3G: AI PRIORITY SYSTEM G (1:20-1:25)
+
+**Visual:**
 - Show scoring factors:
   - +25: Urgent keywords detected
   - +20: VIP sender
   - +15: No response in 2+ hours
   - +15: High engagement history
   - +10: Multiple mentions
+
+---
+
+## SCENE 3H: AI PRIORITY SYSTEM H (1:25-1:30)
+
+**Visual:**
 - Show "Priority: HIGH" with animated badge
 
 **Voiceover:**
@@ -122,36 +240,65 @@
 
 ---
 
-## SCENE 4: PRIORITY MESSAGING MODAL (1:30-2:10)
+## SCENE 4A: PRIORITY MESSAGING MODAL A (1:30-1:35)
 
 **Screen:** `components/messaging/PriorityMessagingModal.tsx`
 
-**Visual Sequence:**
-
-**Shot 4A (1:30-1:40):** Open Priority Modal
+**Visual:**
 - Click star icon in header → Priority Messaging Modal slides up
 - Show modal with 5 tabs: Inbox | VIP | Rules | Analytics | Settings
+
+---
+
+## SCENE 4B: PRIORITY MESSAGING MODAL B (1:35-1:40)
+
+**Visual:**
 - Show AI banner: "AI Priority Engine Active - 3 VIP • 5 urgent • 94% accuracy"
 - Show refresh button for re-scoring
 
-**Shot 4B (1:40-1:50):** VIP Contacts tab
+---
+
+## SCENE 4C: PRIORITY MESSAGING MODAL C (1:40-1:45)
+
+**Visual:**
 - Click "VIP" tab → show VIP contacts grid
 - Show VIP stats: 12 VIP contacts, 45 unread, 12m avg response, 98% response rate
+
+---
+
+## SCENE 4D: PRIORITY MESSAGING MODAL D (1:45-1:50)
+
+**Visual:**
 - Show VIP contact cards with crown badges
 - Show toggle to mark/unmark contacts as VIP
 - Click "Add VIP" button → show contact selector
 
-**Shot 4C (1:50-2:00):** Rules Engine tab
+---
+
+## SCENE 4E: PRIORITY MESSAGING MODAL E (1:50-1:55)
+
+**Visual:**
 - Click "Rules" tab → show priority rules
 - Show enabled rules:
   - VIP Auto-Priority: Always show at top, bypass DND
   - Urgent Keywords: Mark as high priority, send alert
+
+---
+
+## SCENE 4F: PRIORITY MESSAGING MODAL F (1:55-2:00)
+
+**Visual:**
+- Show enabled rules:
   - Quick Response Needed: Escalate if no reply in 2+ hours
   - Low Engagement Filter: Auto-snooze low engagement contacts
 - Show toggle switches for each rule
 - Show "Add Rule" button
 
-**Shot 4D (2:00-2:10):** Analytics tab
+---
+
+## SCENE 4G: PRIORITY MESSAGING MODAL G (2:00-2:05)
+
+**Visual:**
 - Click "Analytics" tab → show priority analytics
 - Show timeframe selector: Day | Week | Month
 - Show analytics cards:
@@ -159,6 +306,12 @@
   - Avg Response Time: 18m (-23%)
   - Urgent Handled: 24 (+12)
   - AI Accuracy: 94%
+
+---
+
+## SCENE 4H: PRIORITY MESSAGING MODAL H (2:05-2:10)
+
+**Visual:**
 - Show AI Insights:
   - "You saved 2.5h this week with smart prioritization"
   - "Peak activity hours: 9AM - 11AM"
@@ -176,31 +329,56 @@
 
 ---
 
-## SCENE 5: REAL-TIME SYNC (2:10-2:40)
+## SCENE 5A: REAL-TIME SYNC A (2:10-2:15)
 
-**Visual Sequence:**
-
-**Shot 5A (2:10-2:20):** WebSocket connection
+**Visual:**
 - Show connection status indicator in header: "🟢 Real-time Connected"
 - Show sync status: "Synced"
 - Show incoming message counter: "Incoming: 0"
 - Show message queue: "Queue: 0"
 
-**Shot 5B (2:20-2:30):** Live message arrival
+---
+
+## SCENE 5B: REAL-TIME SYNC B (2:15-2:20)
+
+**Visual:**
 - Simulate incoming message from WhatsApp
 - Show notification toast: "New message from Sarah via WhatsApp"
 - Message appears at top of list with animation
+
+---
+
+## SCENE 5C: REAL-TIME SYNC C (2:20-2:25)
+
+**Visual:**
 - Unread count updates: "Incoming: 1"
 - Sync status briefly shows "Syncing" then returns to "Synced"
 
-**Shot 5C (2:30-2:40):** Multi-platform sync
+---
+
+## SCENE 5D: REAL-TIME SYNC D (2:25-2:30)
+
+**Visual:**
 - Show rapid sequence of incoming messages:
   - Email from john@company.com
   - WhatsApp from Mike
   - Twitter DM from @customer
+
+---
+
+## SCENE 5E: REAL-TIME SYNC E (2:30-2:35)
+
+**Visual:**
+- Show rapid sequence of incoming messages:
   - Slack message from #sales
 - All messages appear in real-time with platform badges
 - Show last message timestamp updating
+
+---
+
+## SCENE 5F: REAL-TIME SYNC F (2:35-2:40)
+
+**Visual:**
 - End with smooth scroll through all new messages
 
 **Voiceover:**
@@ -215,24 +393,36 @@
 
 ---
 
-## SCENE 6: SMART ACTIONS (2:40-3:00)
+## SCENE 6A: SMART ACTIONS A (2:40-2:45)
 
-**Visual Sequence:**
-
-**Shot 6A (2:40-2:45):** Star messages
+**Visual:**
 - Click star icon on important message → star turns gold
 - Click "Starred" filter → show only starred messages
 - Show starred count badge
 
-**Shot 6B (2:45-2:50):** Archive messages
+---
+
+## SCENE 6B: SMART ACTIONS B (2:45-2:50)
+
+**Visual:**
 - Click archive icon → message slides away with animation
 - Show archive confirmation toast
 - Message removed from active inbox
 
-**Shot 6C (2:50-3:00):** Quick actions menu
+---
+
+## SCENE 6C: SMART ACTIONS C (2:50-2:55)
+
+**Visual:**
 - Click ellipsis icon on message → action menu appears
 - Show options: Mark as Read, Archive, Star, Mute, Delete, Reply
 - Click "Reply" → quick reply composer opens
+
+---
+
+## SCENE 6D: SMART ACTIONS D (2:55-3:00)
+
+**Visual:**
 - Show AI-suggested responses: "Yes, I can help", "Let me check and get back to you", "Thanks for reaching out"
 
 **Voiceover:**
@@ -247,23 +437,35 @@
 
 ---
 
-## SCENE 7: SEARCH & ORGANIZATION (3:00-3:20)
+## SCENE 7A: SEARCH & ORGANIZATION A (3:00-3:05)
 
-**Visual Sequence:**
-
-**Shot 7A (3:00-3:08):** Universal search
+**Visual:**
 - Click search bar → type "project update"
 - Show real-time search results across all platforms
 - Highlight matching text in sender name, subject, and preview
+
+---
+
+## SCENE 7B: SEARCH & ORGANIZATION B (3:05-3:10)
+
+**Visual:**
 - Show result count: "5 messages found"
 
-**Shot 7B (3:08-3:15):** Advanced filtering
+---
+
+## SCENE 7C: SEARCH & ORGANIZATION C (3:10-3:15)
+
+**Visual:**
 - Clear search
 - Click "Unread" + "High Priority" + "WhatsApp" filters
 - Show only unread, high-priority WhatsApp messages
 - Show active filter chips with remove buttons
 
-**Shot 7C (3:15-3:20):** Platform-specific search
+---
+
+## SCENE 7D: SEARCH & ORGANIZATION D (3:15-3:20)
+
+**Visual:**
 - Select "Email" platform
 - Type "invoice" in search
 - Show only email messages containing "invoice"
@@ -281,27 +483,41 @@
 
 ---
 
-## SCENE 8: BRAND CLOSE (3:20-3:40)
+## SCENE 8A: BRAND CLOSE A (3:20-3:25)
 
-**Visual Sequence:**
-
-**Shot 8A (3:20-3:30):** Feature recap
+**Visual:**
 - Rapid montage of key features:
   - 60+ platforms unified
   - AI priority scoring
   - VIP contact management
+- Each feature shows for 1.5 seconds with icon
+
+---
+
+## SCENE 8B: BRAND CLOSE B (3:25-3:30)
+
+**Visual:**
+- Rapid montage of key features:
   - Custom rules engine
   - Real-time sync
   - Smart actions
   - Universal search
 - Each feature shows for 1.5 seconds with icon
 
-**Shot 8B (3:30-3:35):** Integration showcase
+---
+
+## SCENE 8C: BRAND CLOSE C (3:30-3:35)
+
+**Visual:**
 - Show all 60+ platform icons in a grid
 - Highlight key integrations: Email, WhatsApp, Instagram, Twitter, Facebook, SMS, LinkedIn, Slack, Discord, Telegram
 - Show "Connect More" button
 
-**Shot 8C (3:35-3:40):** Final CTA
+---
+
+## SCENE 8D: BRAND CLOSE D (3:35-3:40)
+
+**Visual:**
 - KAYTX logo animates in
 - Tagline: "Unified Inbox - One Inbox. Every Platform."
 - Show website: kaytx.com

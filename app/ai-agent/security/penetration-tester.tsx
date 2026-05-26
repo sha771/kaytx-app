@@ -1,23 +1,38 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { useTheme } from '@/providers/ThemeProvider';
-import { Target, Activity, Star, Users, CircleCheckBig, Clock, ArrowRight, Zap, ChevronRight } from 'lucide-react-native';
-import AgentFeatures from '@/components/ai-agent/AgentFeatures';
-import { useRouter } from 'expo-router';
-export default function AgentPage(){const{theme}=useTheme();const router=useRouter();
-const stats=[{label:'Vulnerabilities Found',value:'3,456',icon:CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'97.8%',icon:Activity,color:'#007AFF'},{label:'Response',value:'0.5s',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'97.8%',icon:Zap,color:'#C62828'}];
-const capabilities=['Penetration Testing','Vulnerability Assessment','Exploit Research','Security Testing','Red Team Operations','Vulnerability Reporting','Remediation Guidance','Security Validation'];
-const responsibilities=['Conduct penetration testing on systems and applications','Perform vulnerability assessments and scanning','Research and develop exploit techniques','Execute security testing methodologies','Participate in red team operations and exercises','Document and report discovered vulnerabilities','Provide remediation guidance for findings','Validate security controls and measures'];
-const activities=[{time:'5 min ago',text:'Found 3 critical vulnerabilities'},{time:'25 min ago',text:'Completed penetration test report'},{time:'1 hour ago',text:'Researched new exploit technique'},{time:'3 hours ago',text:'Validated security controls'}];
-const subAgents=[{name:'AI Exploit Researcher',route:'/ai-agent/security/sub-agents/exploit-researcher',desc:'Exploit research & development'},{name:'AI Vulnerability Reporter',route:'/ai-agent/security/sub-agents/vulnerability-reporter',desc:'Vulnerability reporting & documentation'},{name:'AI Remediation Advisor',route:'/ai-agent/security/sub-agents/remediation-advisor',desc:'Remediation guidance & support'}];
-return(<ScrollView style={[styles.container,{backgroundColor:theme.colors.background}]}><View style={[styles.hero,{borderBottomColor:theme.colors.border||'#E5E5EA'}]}><View style={[styles.heroIconWrap,{backgroundColor:'#C6282820'}]}><Target size={48} color="#C62828"/></View><Text style={[styles.heroTitle,{color:theme.colors.text}]}>AI Penetration Tester</Text><Text style={[styles.heroSubtitle,{color:theme.colors.textSecondary}]}>Security & Risk Department</Text><View style={styles.badgesRow}><View style={[styles.badge,{backgroundColor:'#34C75922'}]}><Activity size={12}color="#34C759"/><Text style={[styles.badgeText,{color:'#34C759'}]}>Active</Text></View><View style={[styles.badge,{backgroundColor:'#C6282822'}]}><Star size={12}color="#C62828"/><Text style={[styles.badgeText,{color:'#C62828'}]}>Specialist</Text></View><View style={[styles.badge,{backgroundColor:'#FF950022'}]}><Users size={12}color="#FF9500"/><Text style={[styles.badgeText,{color:'#FF9500'}]}>{subAgents.length} Sub-Agents</Text></View></View></View>
-<View style={styles.statsContainer}>{stats.map((s,i)=>(<View key={i}style={[styles.statCard,{backgroundColor:theme.colors.card||'#F2F2F7'}]}><s.icon size={22}color={s.color}/><Text style={[styles.statValue,{color:theme.colors.text}]}>{s.value}</Text><Text style={[styles.statLabel,{color:theme.colors.textSecondary}]}>{s.label}</Text></View>))}</View>
-<View style={[styles.section,{backgroundColor:theme.colors.card||'#F2F2F7'}]}><Text style={[styles.sectionTitle,{color:theme.colors.text}]}>Overview</Text><Text style={[styles.description,{color:theme.colors.textSecondary}]}>The AI Penetration Tester conducts security testing, discovers vulnerabilities, and provides remediation guidance. It oversees 3 specialized sub-agents for comprehensive penetration testing coverage.</Text></View>
-<View style={[styles.section,{backgroundColor:theme.colors.card||'#F2F2F7'}]}><Text style={[styles.sectionTitle,{color:theme.colors.text}]}>Core Capabilities</Text><View style={styles.tagsRow}>{capabilities.map((c,i)=>(<View key={i}style={[styles.tag,{backgroundColor:'#C6282815'}]}><Text style={[styles.tagText,{color:'#C62828'}]}>{c}</Text></View>))}</View></View>
-<View style={[styles.section,{backgroundColor:theme.colors.card||'#F2F2F7'}]}><Text style={[styles.sectionTitle,{color:theme.colors.text}]}>Key Responsibilities</Text>{responsibilities.map((r,i)=>(<View key={i}style={styles.respItem}><CircleCheckBig size={16}color="#34C759"/><Text style={[styles.respText,{color:theme.colors.textSecondary}]}>{r}</Text></View>))}</View>
-<View style={[styles.section,{backgroundColor:theme.colors.card||'#F2F2F7'}]}><Text style={[styles.sectionTitle,{color:theme.colors.text}]}>Recent Activity</Text>{activities.map((a,i)=>(<View key={i}style={styles.actItem}><Clock size={14}color="#FF9500"/><Text style={[styles.actText,{color:theme.colors.textSecondary}]}>{a.time} - {a.text}</Text></View>))}</View>
-<View style={[styles.section,{backgroundColor:theme.colors.card||'#F2F2F7'}]}><Text style={[styles.sectionTitle,{color:theme.colors.text}]}>A2A Endpoints</Text>{['/consult/penetration-tester','/penetration-tester/execute','/penetration-tester/analyze'].map((e,i)=>(<View key={i}style={styles.epItem}><Zap size={14}color="#007AFF"/><Text style={[styles.epText,{color:theme.colors.textSecondary}]}>{e}</Text></View>))}</View>
-<View style={[styles.section,{backgroundColor:theme.colors.card||'#F2F2F7'}]}><Text style={[styles.sectionTitle,{color:theme.colors.text}]}>Sub-Agents</Text>{subAgents.map((s,i)=>(<TouchableOpacity key={i}style={styles.subCard}onPress={()=>router.push(s.route as any)}><View style={styles.subInfo}><Text style={[styles.subName,{color:theme.colors.text}]}>{s.name}</Text><Text style={[styles.subDesc,{color:theme.colors.textSecondary}]}>{s.desc}</Text></View><ChevronRight size={20}color="#C62828"/></TouchableOpacity>))}</View>
-<AgentFeatures agentId="penetration-tester" agentName="AI Penetration Tester" />
-</ScrollView>);}
-const styles=StyleSheet.create({container:{flex:1},hero:{padding:20,alignItems:'center',borderBottomWidth:1},heroIconWrap:{width:80,height:80,borderRadius:40,alignItems:'center',justifyContent:'center',marginBottom:12},heroTitle:{fontSize:22,fontWeight:'700',textAlign:'center',marginBottom:4},heroSubtitle:{fontSize:14,textAlign:'center',marginBottom:12},badgesRow:{flexDirection:'row',gap:8},badge:{flexDirection:'row',alignItems:'center',paddingHorizontal:8,paddingVertical:4,borderRadius:12,gap:4},badgeText:{fontSize:11,fontWeight:'600'},statsContainer:{flexDirection:'row',flexWrap:'wrap',padding:12,gap:8},statCard:{flex:1,minWidth:'45%',padding:12,borderRadius:12,alignItems:'center'},statValue:{fontSize:18,fontWeight:'700',marginTop:4},statLabel:{fontSize:11,marginTop:2},section:{padding:16,marginHorizontal:12,marginTop:12,borderRadius:12},sectionTitle:{fontSize:16,fontWeight:'700',marginBottom:12},description:{fontSize:14,lineHeight:20},tagsRow:{flexDirection:'row',flexWrap:'wrap',gap:6},tag:{paddingHorizontal:10,paddingVertical:5,borderRadius:16},tagText:{fontSize:12,fontWeight:'500'},respItem:{flexDirection:'row',alignItems:'flex-start',marginBottom:8,gap:8},respText:{flex:1,fontSize:13,lineHeight:18},actItem:{flexDirection:'row',alignItems:'center',marginBottom:6,gap:8},actText:{fontSize:12},epItem:{flexDirection:'row',alignItems:'center',marginBottom:6,gap:8},epText:{fontSize:12,fontFamily:'monospace'},subCard:{flexDirection:'row',alignItems:'center',padding:12,backgroundColor:'#F2F2F7',borderRadius:10,marginBottom:8},subInfo:{flex:1},subName:{fontSize:14,fontWeight:'600',marginBottom:2},subDesc:{fontSize:12}});
+import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
+import { Bot } from 'lucide-react-native';
+
+export default function AgentPage() {
+  const agent = {
+    id: 'penetration-tester',
+    name: 'penetration-tester',
+    title: 'penetration-tester',
+    description: 'The penetration-tester AI provides specialized services and automation within its department.',
+    capabilities: ["Task Automation","Data Processing","Workflow Management"],
+    icon: Bot,
+    color: '#00BCD4',
+    type: 'agent' as const,
+    humanCost: '$58k/year',
+    aiCost: '$1k/year',
+    efficiency: '58x efficiency improvement',
+    replacesRole: 'penetration-tester',
+    infrastructure: {
+      status: 'online',
+      health: 98,
+      uptime: '99.9%',
+      lastActive: 'Now',
+      processingPower: 'standard',
+    },
+    roiMetrics: {
+      savingsPerMonth: '$4',
+      tasksAutomatedDaily: 1306,
+      responseTime: '1.4s',
+      accuracyRate: '98.1%',
+    },
+    hierarchy: {
+      department: 'Security',
+    },
+  };
+
+  return <AgentPageWrapper agent={agent} />;
+}

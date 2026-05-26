@@ -1,209 +1,38 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { useTheme } from '@/providers/ThemeProvider';
-import { Box, Activity, CircleCheckBig, Clock, Target, ChartBarBig, MessageSquare, Calendar, Shield, ArrowRight, Users, Zap, Star, Rocket, Lightbulb, LayoutDashboard, Layers, Map, ListFilter, Compass } from 'lucide-react-native';
-import AgentFeatures from '@/components/ai-agent/AgentFeatures';
-import { useRouter } from 'expo-router';
+import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
+import { Briefcase } from 'lucide-react-native';
 
-export default function VPProductPage() {
-  const { theme } = useTheme();
-  const router = useRouter();
+export default function AgentPage() {
+  const agent = {
+    id: 'vp-product',
+    name: 'vp-product',
+    title: 'vp-product',
+    description: 'The vp-product AI provides specialized services and automation within its department.',
+    capabilities: ["Task Automation","Data Processing","Workflow Management"],
+    icon: Briefcase,
+    color: '#3F51B5',
+    type: 'employee' as const,
+    humanCost: '$161k/year',
+    aiCost: '$3k/year',
+    efficiency: '53x efficiency improvement',
+    replacesRole: 'vp-product',
+    infrastructure: {
+      status: 'online',
+      health: 97,
+      uptime: '99.9%',
+      lastActive: 'Now',
+      processingPower: 'enterprise',
+    },
+    roiMetrics: {
+      savingsPerMonth: '$12',
+      tasksAutomatedDaily: 1397,
+      responseTime: '0.6s',
+      accuracyRate: '98.6%',
+    },
+    hierarchy: {
+      department: 'Product',
+    },
+  };
 
-  const stats = [
-    { label: 'Shipped', value: '892', icon: CircleCheckBig, color: '#34C759' },
-    { label: 'Uptime', value: '99.95%', icon: Activity, color: '#007AFF' },
-    { label: 'Response', value: '1.0s', icon: Clock, color: '#FF9500' },
-    { label: 'Accuracy', value: '98.3%', icon: Target, color: '#AF52DE' },
-  ];
-
-  const capabilities = [
-    'Product Strategy', 'Roadmapping', 'User Research', 'Prioritization',
-    'A/B Testing', 'Launch Planning', 'Metrics & OKRs', 'Cross-functional'
-  ];
-
-  const responsibilities = [
-    'Product Strategy & Vision Alignment',
-    'Roadmap Planning & Prioritization',
-    'User Research & Customer Discovery',
-    'Feature Specification & Acceptance',
-    'A/B Testing & Experimentation',
-    'Go-to-Market & Launch Coordination',
-    'Product Metrics, OKRs & Analytics',
-    'Cross-functional Team Leadership'
-  ];
-
-  const activities = [
-    { time: '3 min ago', text: 'Shipped new onboarding flow v4.1', icon: Rocket },
-    { time: '18 min ago', text: 'Updated Q3 product roadmap', icon: LayoutDashboard },
-    { time: '55 min ago', text: 'Completed user interview synthesis', icon: Lightbulb },
-    { time: '2 hours ago', text: 'Approved feature spec for AI chat', icon: Layers },
-    { time: '5 hours ago', text: 'Launched pricing experiment B', icon: Zap },
-  ];
-
-  const quickActions = [
-    { label: 'View Reports', icon: ChartBarBig },
-    { label: 'Team Chat', icon: MessageSquare },
-    { label: 'Schedule', icon: Calendar },
-    { label: 'Settings', icon: Shield },
-  ];
-
-  return (
-    <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <View style={[styles.hero, { backgroundColor: theme.colors.primary + '18' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: theme.colors.primary + '25' }]}>
-          <Box size={48} color={theme.colors.primary} />
-        </View>
-        <Text style={[styles.heroTitle, { color: theme.colors.text }]}>AI VP Product</Text>
-        <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Product Management Department</Text>
-        <View style={styles.badgesRow}>
-          <View style={[styles.badge, { backgroundColor: '#34C75922' }]}>
-            <Activity size={12} color="#34C759" />
-            <Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text>
-          </View>
-          <View style={[styles.badge, { backgroundColor: theme.colors.primary + '22' }]}>
-            <Star size={12} color={theme.colors.primary} />
-            <Text style={[styles.badgeText, { color: theme.colors.primary }]}>VP Level</Text>
-          </View>
-          <View style={[styles.badge, { backgroundColor: '#FF950022' }]}>
-            <Users size={12} color="#FF9500" />
-            <Text style={[styles.badgeText, { color: '#FF9500' }]}>5+ Reports</Text>
-          </View>
-        </View>
-      </View>
-
-      <View style={styles.statsContainer}>
-        {stats.map((stat, index) => (
-          <View key={index} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-            <stat.icon size={22} color={stat.color} />
-            <Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text>
-            <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text>
-          </View>
-        ))}
-      </View>
-
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Overview</Text>
-        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>
-          The VP Product AI leads product strategy, roadmap execution, and cross-functional delivery. This agent ensures customer-centric innovation, data-informed prioritization, and successful product launches that drive business outcomes.
-        </Text>
-      </View>
-
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Capabilities</Text>
-        <View style={styles.tagsContainer}>
-          {capabilities.map((cap, index) => (
-            <View key={index} style={[styles.tag, { backgroundColor: theme.colors.primary + '18' }]}>
-              <Text style={[styles.tagText, { color: theme.colors.primary }]}>{cap}</Text>
-            </View>
-          ))}
-        </View>
-      </View>
-
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Key Responsibilities</Text>
-        {responsibilities.map((item, index) => (
-          <View key={index} style={styles.responsibilityRow}>
-            <ArrowRight size={14} color={theme.colors.primary} />
-            <Text style={[styles.responsibilityText, { color: theme.colors.textSecondary }]}>{item}</Text>
-          </View>
-        ))}
-      </View>
-
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Recent Activity</Text>
-        {activities.map((act, index) => (
-          <View key={index} style={styles.activityRow}>
-            <View style={[styles.activityIcon, { backgroundColor: theme.colors.primary + '15' }]}>
-              <act.icon size={14} color={theme.colors.primary} />
-            </View>
-            <View style={styles.activityContent}>
-              <Text style={[styles.activityText, { color: theme.colors.text }]}>{act.text}</Text>
-              <Text style={[styles.activityTime, { color: theme.colors.textSecondary }]}>{act.time}</Text>
-            </View>
-          </View>
-        ))}
-      </View>
-
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>A2A Endpoints</Text>
-        {['/consult/vp-product', '/product/roadmap', '/product/features', '/product/market-alignment'].map((endpoint, index) => (
-          <View key={index} style={styles.endpointRow}>
-            <Zap size={14} color="#8B5CF6" />
-            <Text style={[styles.endpointText, { color: theme.colors.textSecondary }]}>{endpoint}</Text>
-          </View>
-        ))}
-      </View>
-
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
-        {[
-          {n:'AI Product Roadmap Planner',i:Map,r:'/ai-agent/product/sub-agents/product-roadmap-planner',c:'#FF6D00'},
-          {n:'AI Feature Prioritizer',i:ListFilter,r:'/ai-agent/product/sub-agents/feature-prioritizer',c:'#007AFF'},
-          {n:'AI Market Alignment Checker',i:Compass,r:'/ai-agent/product/sub-agents/market-alignment-checker',c:'#FF9500'}
-        ].map((sa,i)=>{
-          const IconComponent = sa.i;
-          return (
-          <TouchableOpacity key={i} onPress={()=>router.push(sa.r as any)} style={[styles.parentCard,{backgroundColor:theme.colors.background||'#F2F2F7',marginTop:i>0?8:0}]}>
-            <IconComponent size={24} color={sa.c}/>
-            <View style={styles.parentInfo}>
-              <Text style={[styles.parentName,{color:theme.colors.text}]}>{sa.n}</Text>
-              <Text style={[styles.parentDesc,{color:theme.colors.textSecondary}]}>Sub-Agent</Text>
-            </View>
-            <ArrowRight size={20} color={theme.colors.textSecondary}/>
-          </TouchableOpacity>
-        )})}
-      </View>
-
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
-        <View style={styles.actionsGrid}>
-          {quickActions.map((action, index) => (
-            <TouchableOpacity key={index} style={[styles.actionButton, { backgroundColor: theme.colors.primary + '12' }]}>
-              <action.icon size={24} color={theme.colors.primary} />
-              <Text style={[styles.actionText, { color: theme.colors.primary }]}>{action.label}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </View>
-    <AgentFeatures agentId="vp-product" agentName="AI VP Product" />
-
-    </ScrollView>
-  );
+  return <AgentPageWrapper agent={agent} />;
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  hero: { alignItems: 'center', paddingVertical: 32, paddingHorizontal: 20, borderBottomWidth: 1, borderBottomColor: '#E5E5EA' },
-  heroIconWrap: { width: 88, height: 88, borderRadius: 44, justifyContent: 'center', alignItems: 'center', marginBottom: 16 },
-  heroTitle: { fontSize: 26, fontWeight: 'bold' },
-  heroSubtitle: { fontSize: 15, marginTop: 4, fontWeight: '500' },
-  badgesRow: { flexDirection: 'row', marginTop: 16, gap: 8 },
-  badge: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 20, gap: 4 },
-  badgeText: { fontSize: 12, fontWeight: '600' },
-  statsContainer: { flexDirection: 'row', flexWrap: 'wrap', padding: 16, gap: 12 },
-  statCard: { flex: 1, minWidth: '22%', alignItems: 'center', padding: 14, borderRadius: 12 },
-  statValue: { fontSize: 18, fontWeight: 'bold', marginTop: 8 },
-  statLabel: { fontSize: 11, marginTop: 4 },
-  section: { marginHorizontal: 16, marginBottom: 16, padding: 20, borderRadius: 16 },
-  sectionTitle: { fontSize: 18, fontWeight: '700', marginBottom: 14 },
-  description: { fontSize: 14, lineHeight: 22 },
-  tagsContainer: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  tag: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 20 },
-  tagText: { fontSize: 12, fontWeight: '600' },
-  responsibilityRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 10, gap: 8 },
-  responsibilityText: { fontSize: 14, flex: 1, lineHeight: 20 },
-  activityRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 12, gap: 12 },
-  activityIcon: { width: 32, height: 32, borderRadius: 16, justifyContent: 'center', alignItems: 'center' },
-  activityContent: { flex: 1 },
-  activityText: { fontSize: 14, fontWeight: '500' },
-  activityTime: { fontSize: 12, marginTop: 2 },
-  actionsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
-  actionButton: { flex: 1, minWidth: '45%', alignItems: 'center', padding: 16, borderRadius: 12 },
-  actionText: { fontSize: 13, fontWeight: '600', marginTop: 8 },
-  endpointRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 8, gap: 8 },
-  endpointText: { fontSize: 13, fontFamily: 'monospace' },
-  parentCard: { flexDirection: 'row', alignItems: 'center', padding: 16, borderRadius: 12, gap: 12 },
-  parentInfo: { flex: 1 },
-  parentName: { fontSize: 16, fontWeight: '600' },
-  parentDesc: { fontSize: 12, marginTop: 2 },
-});

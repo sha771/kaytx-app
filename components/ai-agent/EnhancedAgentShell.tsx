@@ -26,10 +26,17 @@ import {
     Eye,
     RefreshCw,
     Shield,
-    Database
+    Database,
+    MessageSquare,
+    LayoutDashboard,
+    FileText
 } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { AIEmployee } from '@/constants/aiEmployees';
+import { AgentChat } from './AgentChat';
+import { AgentDashboard } from './AgentDashboard';
+import { AgentSummaryNotes } from './AgentSummaryNotes';
+import { AgentSettings } from './AgentSettings';
 
 // const { width } = Dimensions.get('window'); // unused
 
@@ -142,15 +149,18 @@ export const EnhancedAgentShell: React.FC<EnhancedAgentShellProps> = ({ agent, c
     }, [refetchActivity, refetchStats]);
 
     const tabs = [
+        { id: 'chat', label: 'Chat', icon: MessageSquare },
         { id: 'overview', label: 'Overview', icon: Eye },
+        { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
         { id: 'analytics', label: 'Analytics', icon: ChartBar },
         { id: 'performance', label: 'Performance', icon: TrendingUp },
         { id: 'capabilities', label: 'Capabilities', icon: Brain },
         { id: 'activity', label: 'Live Activity', icon: Activity },
         { id: 'history', label: 'History', icon: Clock },
+        { id: 'summary', label: 'Summary & Notes', icon: FileText },
         ...customTabs,
         { id: 'counseling', label: 'Counseling', icon: Brain },
-        { id: 'config', label: 'Settings', icon: Settings }
+        { id: 'settings', label: 'Settings', icon: Settings }
     ];
 
     const renderOverview = () => (
@@ -739,6 +749,10 @@ export const EnhancedAgentShell: React.FC<EnhancedAgentShellProps> = ({ agent, c
                         </View>
                     </View>
                 )}
+                {activeTab === 'chat' && <AgentChat agent={agent} />}
+                {activeTab === 'dashboard' && <AgentDashboard agent={agent} />}
+                {activeTab === 'summary' && <AgentSummaryNotes agent={agent} />}
+                {activeTab === 'settings' && <AgentSettings agent={agent} />}
                 {activeTab === 'config' && (
                     <View style={styles.tabContent}>
                         <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>

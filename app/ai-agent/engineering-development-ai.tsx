@@ -1,17 +1,24 @@
 import React from 'react';
-import { Code, Eye, TestTube, Layers, FileText, Bug, GitBranch } from 'lucide-react-native';
-import { DepartmentAIPage, DeptSubAgent } from '@/components/DepartmentAIPage';
+import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
+import { Bot } from 'lucide-react-native';
 
-const subAgents: DeptSubAgent[] = [
-  { id: 'ed-1', name: 'AI Code Reviewer', description: 'Automated code review, best practice enforcement, and quality analysis', icon: Eye, enabled: true, status: 'active', tasksCompleted: 4520, successRate: 95, lastActive: '1 min ago', capabilities: ['Code Analysis', 'Best Practices', 'Security Scanning', 'Performance Issues', 'Style Enforcement', 'Refactoring Suggestions'], tier: 'enterprise', learningProgress: 94, efficiency: 97, todayTasks: 156, avgResponseTime: '1.2s', trend: 'up', recentActions: ['Reviewed 23 pull requests', 'Flagged 5 security issues', 'Suggested 12 optimizations'], healthScore: 98, weeklyGrowth: 12 },
-  { id: 'ed-2', name: 'AI Test Automation', description: 'Test generation, execution, and coverage analysis', icon: TestTube, enabled: true, status: 'active', tasksCompleted: 3890, successRate: 97, lastActive: '2 min ago', capabilities: ['Test Generation', 'E2E Testing', 'Unit Tests', 'Integration Tests', 'Coverage Analysis', 'Regression Detection'], tier: 'enterprise', learningProgress: 93, efficiency: 98, todayTasks: 234, avgResponseTime: '0.8s', trend: 'up', recentActions: ['Generated 45 test cases', 'Achieved 92% coverage', 'Detected 3 regressions'], healthScore: 99, weeklyGrowth: 10 },
-  { id: 'ed-3', name: 'AI Architecture Advisor', description: 'System design guidance, pattern recommendations, and scalability analysis', icon: Layers, enabled: true, status: 'active', tasksCompleted: 1240, successRate: 93, lastActive: '10 min ago', capabilities: ['System Design', 'Pattern Analysis', 'Scalability Review', 'Tech Stack Evaluation', 'Migration Planning', 'API Design'], tier: 'enterprise', learningProgress: 90, efficiency: 94, todayTasks: 18, avgResponseTime: '3.0s', trend: 'up', recentActions: ['Reviewed microservices architecture', 'Proposed caching strategy', 'Evaluated tech stack options'], healthScore: 95, weeklyGrowth: 15 },
-  { id: 'ed-4', name: 'AI Sprint Manager', description: 'Sprint planning, velocity tracking, and team productivity optimization', icon: GitBranch, enabled: true, status: 'active', tasksCompleted: 1890, successRate: 91, lastActive: '5 min ago', capabilities: ['Sprint Planning', 'Velocity Tracking', 'Burndown Charts', 'Capacity Planning', 'Blocker Detection', 'Retrospective Analysis'], tier: 'premium', learningProgress: 88, efficiency: 92, todayTasks: 45, avgResponseTime: '1.5s', trend: 'stable', recentActions: ['Planned Sprint 24', 'Updated velocity metrics', 'Identified 2 blockers'], healthScore: 93, weeklyGrowth: 8 },
-  { id: 'ed-5', name: 'AI Documentation Agent', description: 'Auto-generated docs, API documentation, and knowledge management', icon: FileText, enabled: true, status: 'active', tasksCompleted: 2340, successRate: 94, lastActive: '8 min ago', capabilities: ['Auto-documentation', 'API Docs', 'README Generation', 'Changelog', 'Wiki Management', 'Diagram Generation'], tier: 'standard', learningProgress: 92, efficiency: 96, todayTasks: 67, avgResponseTime: '1.0s', trend: 'up', recentActions: ['Generated API docs for v3', 'Updated README', 'Created architecture diagrams'], healthScore: 96, weeklyGrowth: 14 },
-  { id: 'ed-6', name: 'AI Bug Triager', description: 'Bug prioritization, duplicate detection, and root cause analysis', icon: Bug, enabled: true, status: 'training', tasksCompleted: 1560, successRate: 90, lastActive: '15 min ago', capabilities: ['Bug Prioritization', 'Duplicate Detection', 'Root Cause Analysis', 'Impact Assessment', 'Assignment Routing', 'SLA Tracking'], tier: 'premium', learningProgress: 82, efficiency: 89, todayTasks: 34, avgResponseTime: '1.8s', trend: 'up', recentActions: ['Triaged 23 bug reports', 'Found 5 duplicates', 'Identified root cause for crash'], healthScore: 87, weeklyGrowth: 18 },
-  { id: 'ed-7', name: 'AI CI/CD Agent', description: 'Pipeline optimization, build monitoring, and deployment automation', icon: Code, enabled: false, status: 'inactive', tasksCompleted: 890, successRate: 98, lastActive: '1 hour ago', capabilities: ['Pipeline Optimization', 'Build Monitoring', 'Deploy Automation', 'Rollback Management', 'Environment Sync', 'Release Notes'], tier: 'enterprise', learningProgress: 86, efficiency: 97, todayTasks: 0, avgResponseTime: '-', trend: 'stable', recentActions: ['Paused - awaiting activation'], healthScore: 74, weeklyGrowth: 0 },
-];
-
-export default function EngineeringDevelopmentAIScreen() {
-  return <DepartmentAIPage config={{ title: 'Engineering & Development AI', subtitle: 'Code → Test → Deploy → Scale', accentColor: '#14B8A6', gradientColors: ['#14B8A6', '#0D9488'], mainIcon: Code, mainAgentId: 'main-ed', category: 'engineering-development', statLabels: ['Commits', 'Quality', 'Sub-Agents'], subAgents }} />;
+export default function EngineeringDevelopmentAIPage() {
+  const agent = {
+    id: 'engineering-development',
+    name: 'AI Engineering Development',
+    title: 'Engineering Development AI',
+    description: 'The Engineering Development AI provides specialized services and automation within its department with full support for chat, analytics, performance tracking, capabilities, history, counseling, live monitoring, and comprehensive settings.',
+    capabilities: ["Task Automation","Data Processing","Workflow Coordination","Performance Reporting","Quality Assurance","Compliance Monitoring","Strategic Analysis"],
+    icon: Bot,
+    color: '#0EA5E9',
+    type: 'agent' as const,
+    humanCost: '$68k/year',
+    aiCost: '$1.3k/year',
+    efficiency: '24x efficiency improvement',
+    replacesRole: 'Engineering Development',
+    infrastructure: { status: 'online', health: 97, uptime: '99.8%', lastActive: 'Now', processingPower: 'high' },
+    roiMetrics: { savingsPerMonth: '$5,400', tasksAutomatedDaily: 142, responseTime: '<1.1s', accuracyRate: '97.4%' },
+    hierarchy: { department: 'Tech' },
+  };
+  return <AgentPageWrapper agent={agent} />;
 }

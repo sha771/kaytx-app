@@ -1,10 +1,58 @@
 make it full professional
 
-HOOK (0:00 - 0:05)
+## OVERVIEW
+
+| Scene | Time | Focus | Key Visual |
+|-------|------|-------|------------|
+| 1 | 0:00-0:05 | HOOK | "What if you never missed a message again?" |
+| 2A | 0:05-0:10 | Unified Inbox A | Messages tab opens |
+| 2B | 0:10-0:15 | Unified Inbox B | Omnichannel view reveal |
+| 2C | 0:15-0:20 | Unified Inbox C | Message filtering |
+| 2D | 0:20-0:25 | Unified Inbox D | Quick actions |
+| 2E | 0:25-0:30 | Unified Inbox E | Analytics view |
+| 3A | 0:30-0:35 | The Problem A | Fragmented tools |
+| 3B | 0:35-0:40 | The Problem B | Siloed departments |
+| 3C | 0:40-0:45 | The Problem C | Scaling challenges |
+| 4A | 0:45-0:50 | Dashboard A | Main dashboard reveal |
+| 4B | 0:50-0:55 | Dashboard B | Metric cards |
+| 4C | 0:55-1:00 | Dashboard C | Sidebar navigation |
+| 4D | 1:00-1:05 | Dashboard D | Smart features |
+| 5A | 1:05-1:10 | AI Agents A | C-Suite hierarchy |
+| 5B | 1:10-1:15 | AI Agents B | Agent categories |
+| 5C | 1:15-1:20 | AI Agents C | Department grid |
+| 5D | 1:20-1:25 | AI Agents D | Agent profiles |
+| 5E | 1:25-1:30 | AI Agents E | Deployment |
+| 5F | 1:30-1:35 | AI Agents F | Activity feed |
+| 6A | 1:35-1:40 | Social Media A | Content calendar |
+| 6B | 1:40-1:45 | Social Media B | Analytics dashboard |
+| 6C | 1:45-1:50 | Social Media C | AI content generation |
+| 6D | 1:50-1:55 | Social Media D | Cross-platform publishing |
+| 7A | 1:55-2:00 | Social CRM A | Customer profiles |
+| 7B | 2:00-2:05 | Social CRM B | 360° intelligence |
+| 7C | 2:05-2:10 | Social CRM C | Engagement tracking |
+| 7D | 2:10-2:15 | Social CRM D | Sales pipeline |
+| 7E | 2:15-2:20 | Social CRM E | Revenue forecast |
+| 8A | 2:20-2:25 | Team Collab A | Workspace overview |
+| 8B | 2:25-2:30 | Team Collab B | Project board |
+| 8C | 2:30-2:35 | Team Collab C | Human + AI visual |
+| 8D | 2:35-2:40 | Team Collab D | Activity feed |
+| 8E | 2:40-2:45 | Team Collab E | Metrics |
+| 9A | 2:45-2:50 | ROI A | Cost comparison |
+| 9B | 2:50-2:55 | ROI B | Savings calculator |
+| 9C | 2:55-3:00 | ROI C | ROI visualization |
+| 10A | 3:00-3:05 | CTA A | Logo and tagline |
+| 10B | 3:05-3:10 | CTA B | Pricing |
+| 10C | 3:10-3:15 | CTA C | Buttons |
+| 10D | 3:15-3:20 | CTA D | Final message |
+
+---
+
+## SCENE 1: HOOK (0:00 - 0:05)
+
 Visual Description:
-Dark gradient background transitioning from deep charcoal (#0A0A0F) to navy blue (#1A1A2E). 
-Center: Large animated "KAYTX" logo in white with subtle blue glow effect (#007AFF). 
-Behind logo: Animated neural network lines connecting glowing nodes in blue and purple. 
+Dark gradient background transitioning from deep charcoal (#0A0A0F) to navy blue (#1A1A2E).
+Center: Large animated "KAYTX" logo in white with subtle blue glow effect (#007AFF).
+Behind logo: Animated neural network lines connecting glowing nodes in blue and purple.
 Particles floating upward creating depth.
 Text Elements:
 "99+" notification badges flying upward
@@ -14,52 +62,182 @@ Black screen, notification sounds cascade rapidly (email, WhatsApp, Slack, SMS)
 Sudden freeze frame with chaotic inbox
 Quick flash transition to pristine Unified Inbox interface
 Sound: Notification crescendo → sudden silence → crystalline chime
-SCENE 2: THE PROBLEM (0:10 - 0:25)
+
+---
+
+## SCENE 2A: UNIFIED INBOX A (0:05 - 0:10)
+
 Visual Description:
-Split screen chaos. Left half shows fragmented business tools: 
+Messages tab opens with smooth animation
+Split-panel messaging interface mockup:
+LEFT PANEL (35% width):
+- Dark sidebar (#1C1C1E)
+- Conversation list with 5 items
+- Each item: Avatar, Name, Preview text, Timestamp, Platform icon
+Platform icons with color coding:
+- Blue envelope: Email
+- Green phone: WhatsApp
+- Blue LinkedIn: LinkedIn
+- Purple speech: SMS
+- Pink Instagram: Instagram
+
+---
+
+## SCENE 2B: UNIFIED INBOX B (0:10 - 0:15)
+
+Visual Description:
+Priority indicators appear:
+- Gold crown on VIP conversations
+- Red dot on unread messages
+- Blue AI sparkle on auto-summarized threads
+RIGHT PANEL (65% width):
+- Active conversation view
+- Chat bubbles: White (received) / Blue (sent)
+- Message input bar at bottom
+- Typing indicator animation
+Text Overlays (Animated):
+"Unified Inbox" - 56px, White, Top center
+"All Channels. One Stream." - 28px, Blue (#007AFF), Below title
+
+---
+
+## SCENE 2C: UNIFIED INBOX C (0:15 - 0:20)
+
+Visual Description:
+Feature Callouts (Bottom cards sliding up):
+Card 1 (Blue):
+Icon: Globe
+"Universal Search" - 20px, White
+"Cross-platform message search" - 14px, Gray
+Card 2 (Orange):
+Icon: Zap/Crown
+"Priority Messaging" - 20px, White
+"AI-powered urgency detection" - 14px, Gray
+Card 3 (Green):
+Icon: Newspaper
+"Daily Briefing" - 20px, White
+"AI-curated morning summary" - 14px, Gray
+
+---
+
+## SCENE 2D: UNIFIED INBOX D (0:20 - 0:25)
+
+Visual Description:
+Animation:
+Messages scroll up in conversation list
+Typing indicator animates (three dots)
+Platform icons bounce when mentioned
+Priority badges pulse gold
+Show quick reply actions
+Demonstrate message filtering
+Highlight AI auto-summarization feature
+
+---
+
+## SCENE 2E: UNIFIED INBOX E (0:25 - 0:30)
+
+Visual Description:
+Analytics view slides in
+Show response time metrics
+Display engagement statistics
+Highlight cross-platform integration
+End with full unified inbox visible
+Text Overlay:
+"Track response times and engagement"
+
+---
+
+## SCENE 3A: THE PROBLEM A (0:30 - 0:35)
+
+Visual Description:
+Split screen chaos. Left half shows fragmented business tools:
 - Email client (blue)
-- Slack workspace (purple) 
+- Slack workspace (purple)
 - Excel spreadsheet (green)
 - CRM interface (orange)
 - Calendar app (red)
 All cluttered, overlapping, disconnected.
- 
-Right half: Clean transition to unified dark interface with blue accent (#007AFF).
 Text Overlays (Animated - wipe left to right):
-"Fragmented Tools" - Red (#FF3B30), 48px, Bold - Appears 0:12
-"Siloed Departments" - Orange (#FF9500), 48px, Bold - Appears 0:15
-"Scaling Challenges" - Yellow (#FFCC02), 48px, Bold - Appears 0:18
-Transition Effect:
-At 0:22, all fragmented tools rapidly shrink and fly toward center, merging into a single glowing Kaytx dashboard interface.
+"Fragmented Tools" - Red (#FF3B30), 48px, Bold
 
-Text: "Until Now." - White, 64px, Center screen at 0:23
-SCENE 3: MAIN DASHBOARD REVEAL (0:25 - 0:45)
+---
+
+## SCENE 3B: THE PROBLEM B (0:35 - 0:40)
+
+Visual Description:
+Continue showing chaos
+Right half: Clean transition to unified dark interface with blue accent (#007AFF)
+Text Overlays:
+"Siloed Departments" - Orange (#FF9500), 48px, Bold
+Show disconnected communication flows
+
+---
+
+## SCENE 3C: THE PROBLEM C (0:40 - 0:45)
+
+Visual Description:
+Text Overlays:
+"Scaling Challenges" - Yellow (#FFCC02), 48px, Bold
+Transition Effect:
+All fragmented tools rapidly shrink and fly toward center, merging into a single glowing Kaytx dashboard interface.
+Text: "Until Now." - White, 64px, Center screen
+
+---
+
+## SCENE 4A: MAIN DASHBOARD REVEAL A (0:45 - 0:50)
+
 Visual Description:
 Full screen hero shot of Kaytx Dashboard UI mockup:
 - Dark sidebar on left (#1C1C1E) with icons
 - Main content area showing metric cards in grid (4 cards)
 - Top navigation bar with search and notifications
 - Clean, modern dark mode aesthetic
- 
-Cards shown:
+Text Overlays:
+"Your Command Center" - 48px, White, Top left
+"Real-time Insights" - 24px, Gray (#8E8E93), Below main title
+
+---
+
+## SCENE 4B: MAIN DASHBOARD REVEAL B (0:50 - 0:55)
+
+Visual Description:
+Cards shown with animation:
 1. Blue card: Message icon, "1,247" messages, "+12%" green indicator
 2. Green card: Users icon, "199+" AI Agents, "+15" indicator
 3. Orange card: Chart icon, "$45K" Revenue, "+18%" indicator
 4. Purple card: Zap icon, "12" Automations, "+3%" indicator
+Numbers animate up: 0 → 1,247 (count animation)
+Cards slide in from right staggered
+
+---
+
+## SCENE 4C: MAIN DASHBOARD REVEAL C (0:55 - 1:00)
+
+Visual Description:
 UI Elements to Show:
 Sidebar sections: Social Media, AI Agents & Employees, CRM, Collaboration
 Smart Features toggles: Universal Search, Prioritised Messaging, Daily Briefing (all ON)
 Quick Actions bar: New Message, Add Platform, Analytics, Settings
-Text Overlays:
-"Your Command Center" - 48px, White, Top left at 0:27
-"Real-time Insights" - 24px, Gray (#8E8E93), Below main title
-Numbers animate up: 0 → 1,247 (2 second count animation starting at 0:30)
-Animation:
-Cards slide in from right staggered (0.2s delay each)
-Numbers count up animation
 Icons pulse subtly
 Sidebar icons highlight in sequence (blue glow)
-SCENE 2: AI AGENTS & EMPLOYEES (0:30 - 1:00)
+
+---
+
+## SCENE 4D: MAIN DASHBOARD REVEAL D (1:00 - 1:05)
+
+Visual Description:
+Complete dashboard view
+All metrics visible
+Sidebar fully expanded
+Navigation bar active
+End with full dashboard hero shot
+Text Overlay:
+"All your tools. One platform."
+
+---
+
+## SCENE 5A: AI AGENTS & EMPLOYEES A (1:05 - 1:10)
+
 Visual Description:
 Hierarchical org chart visualization floating in 3D space:
 - Top tier: Gold crown icons with "C-Suite" label
@@ -67,101 +245,149 @@ Hierarchical org chart visualization floating in 3D space:
 - Third tier: Green people icons "Managers"
 - Fourth tier: Purple bot icons "Specialists"
 - Bottom: Teal infinity icon "Swarm Agents"
- 
-Connecting lines animate between tiers showing flow of command.
-Each tier expands on hover/scroll.
-Text Hierarchy (Large to Small):
-Tier 1 - C-Suite (0:47):
+Connecting lines animate between tiers showing flow of command
+Org chart expands from top down
 
+---
+
+## SCENE 5B: AI AGENTS & EMPLOYEES B (1:10 - 1:15)
+
+Visual Description:
+Tier 1 - C-Suite:
 "17 C-Suite Executives" - Gold (#FFD700), 56px
 Subtext: "CEO • CFO • CTO • CMO • COO • CISO" - 20px, Light Gray
-Tier 2 - Command Center (0:53):
-
+Each tier lights up when mentioned
+Tier 2 - Command Center:
 "7 Command Center Agents" - Blue (#007AFF), 48px
 Subtext: "Digital Operations • Swarm Intelligence" - 20px
-Tier 3 - Workforce (0:59):
 
+---
+
+## SCENE 5C: AI AGENTS & EMPLOYEES C (1:15 - 1:20)
+
+Visual Description:
+Tier 3 - Workforce:
 "199+ AI Employees" - Green (#34C759), 64px, LARGEST TEXT
 Subtext: "Across 20+ Departments" - 20px
-Tier 4 - Hierarchy Breakdown (1:05):
-
+Tier 4 - Hierarchy Breakdown:
 "23 VPs • 28 Managers • 28 Team Leads • 97+ Specialists" - White, 28px, horizontal layout
-Floating Agent Cards (1:10):
-Show 6 circular agent avatars floating up with labels:
+Connecting lines pulse with data flow animation
 
+---
+
+## SCENE 5D: AI AGENTS & EMPLOYEES D (1:20 - 1:25)
+
+Visual Description:
+Floating Agent Cards:
+Show 6 circular agent avatars floating up with labels:
 "CEO Advisor" (Gold)
 "Sales Agent" (Blue)
 "Marketing Agent" (Pink)
 "Data Analytics" (Purple)
 "Customer Support" (Teal)
 "Legal Counsel" (Orange)
-Animation:
-Org chart expands from top down (3 seconds)
-Each tier lights up when mentioned
 Floating cards bob gently up and down
-Connecting lines pulse with data flow animation
-SCENE 1: UNIFIED INBOX (0:05 - 0:30)
+
+---
+
+## SCENE 5E: AI AGENTS & EMPLOYEES E (1:25 - 1:30)
+
 Visual Description:
-Split-panel messaging interface mockup:
-LEFT PANEL (35% width):
-- Dark sidebar (#1C1C1E)
-- Conversation list with 5 items
-- Each item: Avatar, Name, Preview text, Timestamp, Platform icon
- 
-Platform icons with color coding:
-- Blue envelope: Email
-- Green phone: WhatsApp  
-- Blue LinkedIn: LinkedIn
-- Purple speech: SMS
-- Pink Instagram: Instagram
- 
-Priority indicators:
-- Gold crown on VIP conversations
-- Red dot on unread messages
-- Blue AI sparkle on auto-summarized threads
- 
-RIGHT PANEL (65% width):
-- Active conversation view
-- Chat bubbles: White (received) / Blue (sent)
-- Message input bar at bottom
-- Typing indicator animation
-Text Overlays (Animated):
-"Unified Inbox" - 56px, White, Top center at 1:16
-"All Channels. One Stream." - 28px, Blue (#007AFF), Below title
-Feature Callouts (Bottom cards sliding up):
-At 1:22, three feature cards slide up from bottom:
+Show agent deployment interface
+One-click deployment animation
+Deploy button with green highlight
+Agent status indicators
+Show "Deploy" button
+Demonstrate instant activation
 
-Card 1 (Blue):
+---
 
-Icon: Globe
-"Universal Search" - 20px, White
-"Cross-platform message search" - 14px, Gray
-Card 2 (Orange):
+## SCENE 5F: AI AGENTS & EMPLOYEES F (1:30 - 1:35)
 
-Icon: Zap/Crown
-"Priority Messaging" - 20px, White
-"AI-powered urgency detection" - 14px, Gray
-Card 3 (Green):
-
-Icon: Newspaper
-"Daily Briefing" - 20px, White
-"AI-curated morning summary" - 14px, Gray
-Animation:
-Messages scroll up in conversation list
-Typing indicator animates (three dots)
-Platform icons bounce when mentioned
-Priority badges pulse gold
-SCENE 5: SOCIAL CRM (1:30 - 1:55)
 Visual Description:
-CRM Dashboard interface with three sections:
- 
-TOP SECTION:
+Activity feed showing deployed agents
+Real-time agent coordination
+Status indicators all green
+Dashboard updates with new active count
+Text Overlay:
+"Deploy in seconds. Scale instantly."
+
+---
+
+## SCENE 6A: SOCIAL MEDIA MANAGEMENT A (1:35 - 1:40)
+
+Visual Description:
+Social Media Dashboard with Content Calendar view:
+- Monthly calendar grid
+- Color-coded posts: Blue (scheduled), Green (published), Orange (draft)
+- Platform icons on each post (Instagram, Twitter, LinkedIn, Facebook)
+- Hover/click shows post preview
+Text Overlays:
+"Social Media Management" - 56px, White
+"Create. Schedule. Analyze." - 28px, Pink (#E91E63)
+
+---
+
+## SCENE 6B: SOCIAL MEDIA MANAGEMENT B (1:40 - 1:45)
+
+Visual Description:
+Analytics view:
+- Line chart showing engagement over 30 days
+- Bar chart comparing platforms
+- Pie chart for audience demographics
+- Numbers: "Followers: 45.2K", "Engagement: 8.4%"
+Feature Icons (Floating):
+"Content Calendar" - Calendar icon
+"Analytics" - Chart icon
+
+---
+
+## SCENE 6C: SOCIAL MEDIA MANAGEMENT C (1:45 - 1:50)
+
+Visual Description:
+AI Content view:
+- "Generate Content" button glowing
+- AI writing assistant interface
+- Hashtag suggestions panel
+- Preview cards for Stories/Reels
+Feature Icons:
+"AI Content Gen" - Sparkles icon
+"Brand Monitoring" - Shield icon
+
+---
+
+## SCENE 6D: SOCIAL MEDIA MANAGEMENT D (1:50 - 1:55)
+
+Visual Description:
+Cross-Platform publishing:
+- Share icon
+- Platform selection
+- Scheduling interface
+- Bulk posting capability
+Feature Icons:
+"Cross-Platform" - Share icon
+End with full social media dashboard
+
+---
+
+## SCENE 7A: SOCIAL CRM A (1:55 - 2:00)
+
+Visual Description:
+CRM Dashboard interface with TOP SECTION:
 - Four metric cards in row
   * "Total Contacts: 1,847" (Blue)
-  * "Active Deals: $2.4M" (Green)  
+  * "Active Deals: $2.4M" (Green)
   * "Conversion Rate: 24%" (Orange)
   * "Customer Satisfaction: 4.8/5" (Purple)
- 
+Text Overlays:
+"Social CRM" - 56px, White, Top left
+"Know Every Customer" - 32px, Light Blue, Below title
+
+---
+
+## SCENE 7B: SOCIAL CRM B (2:00 - 2:05)
+
+Visual Description:
 MIDDLE SECTION:
 - Customer profile cards (3 visible)
   * Profile photo, Name, Company, Position
@@ -169,38 +395,67 @@ MIDDLE SECTION:
   * Tags: "VIP", "Enterprise", "Hot Lead"
   * Last contact timestamp
   * Deal value: "$25,000"
- 
+360° View Effect:
+Show profile card flipping animation revealing contact details
+
+---
+
+## SCENE 7C: SOCIAL CRM C (2:05 - 2:10)
+
+Visual Description:
+360° View Effect continued:
+- Interaction history timeline
+- Social media links
+- Notes and activity log
+Feature Highlights (Animated circles):
+"Lead Scoring" - Stars animating 1-5
+"Deal Tracking" - Pipeline flow animation
+
+---
+
+## SCENE 7D: SOCIAL CRM D (2:10 - 2:15)
+
+Visual Description:
 BOTTOM SECTION:
 - Sales pipeline Kanban board
   * 4 columns: Prospecting → Qualification → Proposal → Closed-Won
   * Cards with deal names and values
   * Progress indicators
-360° View Effect (1:50):
-Show profile card flipping animation revealing:
-
-Contact details
-Interaction history timeline
-Social media links
-Notes and activity log
-Text Overlays:
-"Social CRM" - 56px, White, Top left at 1:42
-"Know Every Customer" - 32px, Light Blue, Below title
-"360° Customer Intelligence" - 24px, Gray, Bottom center at 1:55
-Feature Highlights (Animated circles):
-"Lead Scoring" - Stars animating 1-5
-"Deal Tracking" - Pipeline flow animation
+Feature Highlights:
 "Interaction History" - Timeline scroll
 "Revenue Forecast" - Chart line drawing upward
-SCENE 6: TEAM COLLABORATION (1:55 - 2:20)
+
+---
+
+## SCENE 7E: SOCIAL CRM E (2:15 - 2:20)
+
 Visual Description:
-Team workspace interface with multiple panels:
- 
-LEFT PANEL - Team Members:
+Text Overlay:
+"360° Customer Intelligence" - 24px, Gray, Bottom center
+Complete CRM dashboard visible
+All sections shown
+Pipeline with active deals
+End with full CRM view
+
+---
+
+## SCENE 8A: TEAM COLLABORATION A (2:20 - 2:25)
+
+Visual Description:
+Team workspace interface with LEFT PANEL - Team Members:
 - Grid of 8 avatars (4 human, 4 AI bot icons)
 - Status indicators: Green (online), Yellow (away), Gray (offline)
 - Names and roles below each
 - Department tags
- 
+Text Overlays:
+"Team Collaboration" - 56px, White, Top center
+"Humans + AI. One Team." - 32px, Teal (#5AC8FA), Below
+
+---
+
+## SCENE 8B: TEAM COLLABORATION B (2:25 - 2:30)
+
+Visual Description:
 CENTER PANEL - Project Board:
 - Kanban board with 4 columns
 - Task cards with:
@@ -210,102 +465,139 @@ CENTER PANEL - Project Board:
   * Priority badge (Low/Medium/High)
   * Progress bar
 - Some cards being dragged between columns
- 
+Animation: Task cards move from "To Do" → "In Progress" → "Done"
+
+---
+
+## SCENE 8C: TEAM COLLABORATION C (2:30 - 2:35)
+
+Visual Description:
+Human + AI Visual:
+Split graphic showing:
+Left: Human team member photo
+Right: AI agent bot icon
+Center: Handshake or connection icon
+Text: "Seamless Collaboration"
+Avatars pulse when active
+Progress bars fill
+
+---
+
+## SCENE 8D: TEAM COLLABORATION D (2:35 - 2:40)
+
+Visual Description:
 RIGHT PANEL - Activity Feed:
 - Real-time updates scrolling
 - "Sarah completed Website Redesign"
 - "AI Marketing Agent published post"
 - "John commented on Q4 Strategy"
-Human + AI Visual (2:15):
-Split graphic showing:
+Checkmarks appear on completed tasks
+Activity feed continues scrolling
 
-Left: Human team member photo
-Right: AI agent bot icon
-Center: Handshake or connection icon
-Text: "Seamless Collaboration"
-Text Overlays:
-"Team Collaboration" - 56px, White, Top center at 2:06
-"Humans + AI. One Team." - 32px, Teal (#5AC8FA), Below
-Animated Metrics (Bottom bar at 2:20):
+---
+
+## SCENE 8E: TEAM COLLABORATION E (2:40 - 2:45)
+
+Visual Description:
+Animated Metrics (Bottom bar):
 " Tasks Completed: 1,247" - Counting up
 " Projects Active: 24" - Counting up
 " Team Efficiency: +45%" - Green upward arrow
-Animation:
-Task cards move from "To Do" → "In Progress" → "Done"
-Avatars pulse when active
-Progress bars fill
-Checkmarks appear on completed tasks
-SCENE 4: SOCIAL MEDIA MANAGEMENT (1:10 - 1:30)
-Visual Description:
-Social Media Dashboard with multiple views:
- 
-VIEW 1 - Content Calendar (2:32):
-- Monthly calendar grid
-- Color-coded posts: Blue (scheduled), Green (published), Orange (draft)
-- Platform icons on each post (Instagram, Twitter, LinkedIn, Facebook)
-- Hover/click shows post preview
- 
-VIEW 2 - Analytics (2:40):
-- Line chart showing engagement over 30 days
-- Bar chart comparing platforms
-- Pie chart for audience demographics
-- Numbers: "Followers: 45.2K", "Engagement: 8.4%"
- 
-VIEW 3 - AI Content (2:45):
-- "Generate Content" button glowing
-- AI writing assistant interface
-- Hashtag suggestions panel
-- Preview cards for Stories/Reels
-Text Overlays:
-"Social Media Management" - 56px, White at 2:31
-"Create. Schedule. Analyze." - 28px, Pink (#E91E63) at 2:35
-Feature Icons (Floating at 2:40):
-"Content Calendar" - Calendar icon
-"AI Content Gen" - Sparkles icon
-"Cross-Platform" - Share icon
-"Brand Monitoring" - Shield icon
+End with full team collaboration view
+All panels visible and active
 
-SCENE 10: ROI & CALL TO ACTION (2:40 - 3:00)
+---
+
+## SCENE 9A: ROI & CALL TO ACTION A (2:45 - 2:50)
+
 Visual Description:
 Split comparison graphic:
- 
 LEFT SIDE - Human Employee:
 - Person icon
 - **"$60,000/year"** - Large gray text
 - "Per employee" - Small text
 - Plus: Hiring time, training costs, benefits icons
- 
 RIGHT SIDE - Kaytx AI:
 - Bot icon with sparkle
 - **"$49/month"** - Large green text (#34C759)
 - "Starter plan" - Small text
+CENTER: Large "VS" with glow effect
+
+---
+
+## SCENE 9B: ROI & CALL TO ACTION B (2:50 - 2:55)
+
+Visual Description:
+RIGHT SIDE continued:
 - "628+ agents included" - Bullet point
 - "Unlimited scaling" - Bullet point
- 
-CENTER: Large "VS" with glow effect
-ROI Calculator Animation (3:12):
+ROI Calculator Animation:
 Graph showing cost savings over 12 months
 Green line (Kaytx) vs Red line (Human hires)
 "Save $710,000+ annually" appears at peak
-Final CTA Screen (3:18):
+Text Overlay:
+"$49/month vs $60,000/year" - 48px, White/Green
+
+---
+
+## SCENE 9C: ROI & CALL TO ACTION C (2:55 - 3:00)
+
+Visual Description:
+ROI Calculator Animation continues:
+Graph completes animation
+Savings number animates up
+Comparison metrics appear
+Text Overlay:
+"Immediate ROI. Unlimited Scale." - 28px, Green
+End with ROI visualization complete
+
+---
+
+## SCENE 10A: CTA A (3:00 - 3:05)
+
+Visual Description:
+Final CTA Screen:
 Full screen dark background with:
 - Kaytx logo center
 - **"Ready to Transform Your Enterprise?"** - 48px, White
-- **"kaytx.com"** - 36px, Blue (#007AFF), Bold
-- Three buttons: "Get Started" | "Schedule Demo" | "Contact Sales"
 - Background: All previous feature icons floating gently
-Text Overlays:
-"$49/month vs $60,000/year" - 48px, White/Green at 3:06
-"Immediate ROI. Unlimited Scale." - 28px, Green at 3:14
-"The Future of Work is Here." - 40px, White at 3:22
+Logo animation with glow effect
 
+---
 
+## SCENE 10B: CTA B (3:05 - 3:10)
 
+Visual Description:
+Text Overlay:
+**"kaytx.com"** - 36px, Blue (#007AFF), Bold
+Pricing information appears
+"$49/month" highlighted
+Feature icons continue floating
+Background subtle animation
 
+---
 
+## SCENE 10C: CTA C (3:10 - 3:15)
 
+Visual Description:
+Three buttons appear:
+- "Get Started" | "Schedule Demo" | "Contact Sales"
+Buttons pulse with hover effect
+Call to action prominent
+Interactive elements highlighted
 
+---
 
+## SCENE 10D: CTA D (3:15 - 3:20)
+
+Visual Description:
+Text Overlay:
+"The Future of Work is Here." - 40px, White
+Fade to white
+End with tagline: "KAYTX - Enterprise AI Operating System"
+Final logo reveal
+
+---
 
 ## **REAL-WORLD COST EXAMPLE**
 
@@ -320,8 +612,7 @@ Text Overlays:
 
 **Hierarchical saves $5,100/month (85% reduction)**
 
-
-
+---
 
 ## **RESULT: WHY TOKENS/CREDITS MATTER**
 

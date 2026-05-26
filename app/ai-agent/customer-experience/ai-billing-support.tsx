@@ -1,28 +1,38 @@
-import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
-import { useRouter } from 'expo-router';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { Colors } from '@/constants/Colors';
+import React from 'react';
+import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
+import { Headphones } from 'lucide-react-native';
 
-export default function AiBillingSupportPage() {
-  const router = useRouter();
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+export default function AgentPage() {
+  const agent = {
+    id: 'ai-billing-support',
+    name: 'ai-billing-support',
+    title: 'ai-billing-support',
+    description: 'The ai-billing-support AI provides specialized services and automation within its department.',
+    capabilities: ["Task Automation","Data Processing","Workflow Management"],
+    icon: Headphones,
+    color: '#2196F3',
+    type: 'agent' as const,
+    humanCost: '$65k/year',
+    aiCost: '$1k/year',
+    efficiency: '65x efficiency improvement',
+    replacesRole: 'ai-billing-support',
+    infrastructure: {
+      status: 'online',
+      health: 99,
+      uptime: '99.9%',
+      lastActive: 'Now',
+      processingPower: 'standard',
+    },
+    roiMetrics: {
+      savingsPerMonth: '$4',
+      tasksAutomatedDaily: 533,
+      responseTime: '1.3s',
+      accuracyRate: '95.6%',
+    },
+    hierarchy: {
+      department: 'Customer-experience',
+    },
+  };
 
-  useEffect(() => {
-    // Redirect to full enterprise page
-    router.replace('/ai-agent/customer-experience/billing-support');
-  }, [router]);
-
-  return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <ActivityIndicator size="large" color="#007AFF" />
-      <Text style={[styles.text, { color: colors.text }]}>Loading AI Billing Support...</Text>
-    </View>
-  );
+  return <AgentPageWrapper agent={agent} />;
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center', gap: 16 },
-  text: { fontSize: 16, fontWeight: '500' },
-});

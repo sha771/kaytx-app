@@ -470,16 +470,6 @@ const sidebarOptions: SidebarOption[] = [
     ],
   },
   {
-    id: '4',
-    title: 'Collaboration & Team Management',
-    icon: UserCheck,
-    color: '#5AC8FA',
-    subItems: [
-      { id: '4-1', title: 'Team Collaboration', icon: Users },
-      { id: '4-2', title: 'Team Management', icon: UserCheck },
-    ],
-  },
-  {
     id: '5',
     title: 'CRM (Enterprise)',
     icon: Building,
@@ -490,6 +480,32 @@ const sidebarOptions: SidebarOption[] = [
       { id: '5-3', title: 'Email, SMS, WhatsApp', icon: MessageCircleIcon },
       { id: '5-4', title: 'Instagram, Twitter, Facebook', icon: Share2 },
       { id: '5-5', title: 'Cohort Analysis', icon: ChartPie },
+    ],
+  },
+  {
+    id: '11',
+    title: 'Company Brain',
+    icon: Brain,
+    color: '#8B5CF6',
+    subItems: [
+      { id: '11-1', title: 'Dashboard', icon: Activity },
+      { id: '11-2', title: 'Knowledge Base', icon: Database },
+      { id: '11-3', title: 'Search & Discovery', icon: Search },
+      { id: '11-4', title: 'Onboarding Assistant', icon: UserPlus },
+      { id: '11-5', title: 'Knowledge Graph', icon: NetworkIcon },
+      { id: '11-6', title: 'Team Knowledge', icon: Users },
+      { id: '11-7', title: 'Continuity Protection', icon: ShieldCheck },
+      { id: '11-8', title: 'Analytics & Insights', icon: ChartLine },
+    ],
+  },
+  {
+    id: '4',
+    title: 'Collaboration & Team Management',
+    icon: UserCheck,
+    color: '#5AC8FA',
+    subItems: [
+      { id: '4-1', title: 'Team Collaboration', icon: Users },
+      { id: '4-2', title: 'Team Management', icon: UserCheck },
     ],
   },
   {

@@ -390,10 +390,11 @@ const salesManagerHierarchy: SidebarCategory[] = [
 // New Feature Categories - Social CRM, Analytics, Performance, Collaboration, Team Management
 const featureCategories: SidebarCategory[] = [
   { id: 'social-crm', label: 'Social CRM', icon: HeartHandshake, color: '#3B82F6', route: '/ai-agent/social-crm', count: 5 },
-  { id: 'analytics', label: 'Analytics & Insights', icon: BarChart3, color: '#8B5CF6', route: '/ai-agent/analytics', count: 4 },
-  { id: 'performance', label: 'Performance & KPIs', icon: LineChart, color: '#10B981', route: '/ai-agent/performance', count: 3 },
   { id: 'collaboration', label: 'Team Collaboration', icon: LayoutGrid, color: '#F59E0B', route: '/ai-agent/collaboration', count: 4 },
   { id: 'team-management', label: 'Team Management', icon: Users, color: '#EC4899', route: '/ai-agent/team-management', count: 5 },
+  { id: 'company-brain', label: 'Company Brain', icon: Brain, color: '#7C3AED', route: '/ai-agent/company-brain', count: 8 },
+  { id: 'analytics', label: 'Analytics & Insights', icon: BarChart3, color: '#8B5CF6', route: '/ai-agent/analytics', count: 4 },
+  { id: 'performance', label: 'Performance & KPIs', icon: LineChart, color: '#10B981', route: '/ai-agent/performance', count: 3 },
 ];
 
 // HR VP & Specialist Hierarchy - Agents 90-96
