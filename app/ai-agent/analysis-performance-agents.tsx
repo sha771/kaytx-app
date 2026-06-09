@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
   TextInput,
+  Dimensions,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import {
@@ -34,11 +35,427 @@ import {
   analysisInsightsPerformanceSubAgents,
   getMainAgentByCategory,
 } from '@/constants/aiAgentHierarchy';
+import { LineChart, BarChart, PieChart } from 'react-native-chart-kit';
+
+// Chart Data
+const PERFORMANCE_TREND_DATA = {
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+  datasets: [
+    {
+      data: [85, 88, 92, 90, 94, 96],
+      color: (opacity = 1) => `rgba(16, 185, 129, ${opacity})`,
+      strokeWidth: 2,
+    },
+  ],
+    comprehensiveFeatures: {
+  "communicationChannels": {
+    "call": {
+      "enabled": true,
+      "provider": "Twilio",
+      "features": [
+        "PBX Integration",
+        "IVR Menu",
+        "Call Routing",
+        "Call Recording",
+        "Transcriptions"
+      ],
+      "recordingRetention": "90 days",
+      "consentLogging": true
+    },
+    "chatSystem": {
+      "enabled": true,
+      "platforms": [
+        "Web Widget",
+        "Slack",
+        "Intercom",
+        "Microsoft Teams"
+      ],
+      "persistentThreads": true,
+      "transcriptExport": true
+    },
+    "sms": {
+      "enabled": true,
+      "provider": "Twilio",
+      "features": [
+        "Templated Messages",
+        "Two-Way Support",
+        "Opt-Out Handling"
+      ],
+      "number": "TBD"
+    },
+    "voice": {
+      "enabled": true,
+      "primaryDID": "TBD",
+      "ttsVoice": "default",
+      "failoverNumbers": [],
+      "geoRouting": true
+    },
+    "recording": {
+      "enabled": true,
+      "autoRecording": true,
+      "consentLogging": true,
+      "transcriptGeneration": true,
+      "scriptTemplates": []
+    },
+    "location": {
+      "allowedRegions": [
+        "Global"
+      ],
+      "timezoneAware": true,
+      "localeFormats": [
+        "en-US",
+        "en-GB",
+        "es-ES",
+        "fr-FR",
+        "de-DE"
+      ]
+    }
+  },
+  "companySetup": {
+    "profile": {
+      "enabled": true,
+      "fields": [
+        "Company Name",
+        "Industry",
+        "Size",
+        "Location"
+      ]
+    },
+    "products": {
+      "enabled": true,
+      "catalog": true,
+      "pricingTiers": true
+    },
+    "negotiationRules": {
+      "enabled": true,
+      "templates": true,
+      "maxConcession": "10%"
+    }
+  },
+  "generalInfo": {
+    "name": "",
+    "role": "",
+    "availability": "24/7",
+    "personality": "professional",
+    "tone": "conversational",
+    "voice": "neutral"
+  },
+  "modelConfig": {
+    "modelName": "LLM-X v2",
+    "modelFamily": "GPT-4",
+    "version": "latest",
+    "primaryLanguage": "en-US",
+    "fallbackLanguages": [
+      "es",
+      "fr",
+      "de"
+    ],
+    "multilingualSupport": true
+  },
+  "timing": {
+    "businessHours": {
+      "enabled": true,
+      "schedule": "Mon-Fri 09:00-18:00 local",
+      "timezone": "UTC",
+      "holidays": []
+    },
+    "waitingDuration": {
+      "call": 120,
+      "chat": 30,
+      "sms": 0
+    },
+    "appointmentScheduling": {
+      "enabled": true,
+      "calendars": [
+        "Google",
+        "Outlook"
+      ],
+      "timezoneHandling": "automatic"
+    }
+  },
+  "pricing": {
+    "pricingModel": "fixed monthly",
+    "priceLimit": "TBD",
+    "negotiationRules": {
+      "enabled": true,
+      "maxConcession": "10%",
+      "autoNegotiation": false
+    }
+  },
+  "integrations": {
+    "crm": [
+      "Salesforce",
+      "HubSpot",
+      "Zendesk"
+    ],
+    "ticketing": [
+      "Zendesk",
+      "Freshdesk",
+      "Jira"
+    ],
+    "calendar": [
+      "Google Calendar",
+      "Outlook Calendar"
+    ],
+    "telephony": [
+      "Twilio",
+      "Vonage",
+      "RingCentral"
+    ],
+    "analytics": [
+      "Google Analytics",
+      "Mixpanel",
+      "Amplitude"
+    ],
+    "mcpConnectors": []
+  },
+  "responsibilities": {
+    "taskRouting": {
+      "method": "intent-based",
+      "escalationPath": "human after 3 failed handoffs",
+      "slaEnforcement": true
+    },
+    "appointmentScheduling": {
+      "enabled": true,
+      "rules": []
+    }
+  },
+  "taskManagement": {
+    "assignedTasks": {
+      "queue": true,
+      "slaTimers": true,
+      "dependencies": true
+    },
+    "progressTracking": {
+      "enabled": true,
+      "metrics": [
+        "completion percentage",
+        "time remaining"
+      ]
+    }
+  },
+  "behaviour": {
+    "safetyFilters": {
+      "enabled": true,
+      "restrictedDomains": [
+        "legal",
+        "medical",
+        "financial advice"
+      ]
+    },
+    "refusalTemplates": {
+      "enabled": true
+    },
+    "rateLimits": {
+      "enabled": true,
+      "requestsPerMinute": 60
+    }
+  },
+  "performance": {
+    "metrics": {
+      "latency": true,
+      "accuracy": true,
+      "successRate": true,
+      "userSatisfaction": true
+    },
+    "reporting": {
+      "dashboards": true,
+      "scheduledReports": true,
+      "cadence": [
+        "daily",
+        "weekly",
+        "monthly"
+      ]
+    }
+  },
+  "summary": {
+    "enabled": true,
+    "adminNotes": "",
+    "handoverContext": true
+  },
+  "predictive": {
+    "forecasting": {
+      "enabled": true,
+      "models": []
+    },
+    "anomalyDetection": {
+      "enabled": true,
+      "triggers": []
+    }
+  },
+  "regulations": {
+    "compliance": {
+      "gdpr": true,
+      "hipaa": false,
+      "soc2": false,
+      "regional": true
+    },
+    "dataResidency": {
+      "enabled": true,
+      "regions": []
+    },
+    "consentPolicies": {
+      "enabled": true
+    }
+  },
+  "memory": {
+    "session": {
+      "duration": "30 minutes",
+      "retention": true
+    },
+    "longTerm": {
+      "duration": "365 days",
+      "retention": true
+    },
+    "piiRedaction": {
+      "enabled": true
+    },
+    "purgeSchedule": "quarterly"
+  },
+  "detailedSetup": {
+    "onboardingFlow": true,
+    "productPricingSetup": true,
+    "negotiationRulesSetup": true,
+    "trainingPlan": true,
+    "knowledgeBaseImport": true,
+    "voicePersonalityTuning": true,
+    "businessHoursSetup": true,
+    "additionalConfigs": []
+  },
+  "twoStepVerification": {
+    "enabled": true,
+    "criticalActions": [
+      "billing",
+      "admin modifications",
+      "data export"
+    ],
+    "deviceCheck": true
+  },
+  "importExport": {
+    "endpoints": [
+      "CSV",
+      "JSON"
+    ],
+    "scheduledExports": true,
+    "retentionPolicy": true,
+    "complianceControls": true
+  },
+  "reports": {
+    "types": [
+      "performance",
+      "usage",
+      "errors",
+      "compliance"
+    ],
+    "cadence": [
+      "daily",
+      "weekly",
+      "monthly"
+    ],
+    "deliveryChannels": [
+      "email",
+      "dashboard",
+      "webhook"
+    ]
+  },
+  "mcpIntegrations": {
+    "connectors": [],
+    "apiSpecs": [],
+    "mapping": []
+  }
+}};
+
+const INSIGHTS_GENERATED_DATA = {
+  labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+  datasets: [
+    {
+      data: [120, 145, 138, 165, 152, 85, 92],
+    },
+  ],
+};
+
+const ANALYSIS_TYPE_DATA = [
+  {
+    name: 'Predictive',
+    population: 35,
+    color: '#10B981',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'Descriptive',
+    population: 30,
+    color: '#3B82F6',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'Diagnostic',
+    population: 20,
+    color: '#F59E0B',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'Prescriptive',
+    population: 15,
+    color: '#8B5CF6',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+];
+
+const MODEL_ACCURACY_DATA = {
+  labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+  datasets: [
+    {
+      data: [82, 87, 91, 94],
+      color: (opacity = 1) => `rgba(16, 185, 129, ${opacity})`,
+      strokeWidth: 2,
+    },
+  ],
+};
+
+const DATA_VOLUME_DATA = {
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+  datasets: [
+    {
+      data: [450, 520, 580, 650, 720, 810],
+      color: (opacity = 1) => `rgba(59, 130, 246, ${opacity})`,
+      strokeWidth: 2,
+    },
+  ],
+};
+
+const PREDICTION_ACCURACY_DATA = [
+  {
+    name: 'High',
+    population: 45,
+    color: '#10B981',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'Medium',
+    population: 35,
+    color: '#3B82F6',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'Low',
+    population: 20,
+    color: '#F59E0B',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+];
 
 export default function AnalysisPerformanceAgentsScreen() {
   const router = useRouter();
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
+  const screenWidth = Dimensions.get('window').width;
   const [searchQuery, setSearchQuery] = useState('');
 
   const mainAgent = getMainAgentByCategory('analysis-insights-performance');
@@ -59,6 +476,99 @@ export default function AnalysisPerformanceAgentsScreen() {
     withVoice: analysisInsightsPerformanceSubAgents.filter(a => a.configuration?.voice.enabled).length,
     withTraining: analysisInsightsPerformanceSubAgents.filter(a => a.configuration?.training.enabled).length,
   };
+
+  const renderLineChart = (data: any, title: string, color: string) => (
+    <Animated.View entering={FadeInUp} style={[styles.chartCard, { backgroundColor: colors.card }]}>
+      <View style={styles.chartHeader}>
+        <Text style={[styles.chartTitle, { color: colors.text }]}>{title}</Text>
+        <TouchableOpacity>
+          <ChartLine size={18} color={colors.primary} />
+        </TouchableOpacity>
+      </View>
+      <LineChart
+        data={data}
+        width={screenWidth - 64}
+        height={200}
+        chartConfig={{
+          backgroundColor: colors.card,
+          backgroundGradientFrom: colors.card,
+          backgroundGradientTo: colors.card,
+          decimalPlaces: 0,
+          color: (opacity = 1) => color,
+          labelColor: colors.text + '80',
+          style: {
+            borderRadius: 16,
+          },
+          propsForDots: {
+            r: '4',
+            strokeWidth: '2',
+            stroke: color,
+          },
+        }}
+        bezier
+        style={styles.chart}
+      />
+    </Animated.View>
+  );
+
+  const renderBarChart = (data: any, title: string) => (
+    <Animated.View entering={FadeInUp} style={[styles.chartCard, { backgroundColor: colors.card }]}>
+      <View style={styles.chartHeader}>
+        <Text style={[styles.chartTitle, { color: colors.text }]}>{title}</Text>
+        <TouchableOpacity>
+          <ChartBarBig size={18} color={colors.primary} />
+        </TouchableOpacity>
+      </View>
+      <BarChart
+        data={data}
+        width={screenWidth - 64}
+        height={200}
+        chartConfig={{
+          backgroundColor: colors.card,
+          backgroundGradientFrom: colors.card,
+          backgroundGradientTo: colors.card,
+          decimalPlaces: 0,
+          color: (opacity = 1) => colors.primary,
+          labelColor: colors.text + '80',
+          style: {
+            borderRadius: 16,
+          },
+        }}
+        style={styles.chart}
+      />
+    </Animated.View>
+  );
+
+  const renderPieChart = (data: any, title: string) => (
+    <Animated.View entering={FadeInUp} style={[styles.chartCard, { backgroundColor: colors.card }]}>
+      <View style={styles.chartHeader}>
+        <Text style={[styles.chartTitle, { color: colors.text }]}>{title}</Text>
+        <TouchableOpacity>
+          <ChartPie size={18} color={colors.primary} />
+        </TouchableOpacity>
+      </View>
+      <PieChart
+        data={data}
+        width={screenWidth - 64}
+        height={200}
+        chartConfig={{
+          backgroundColor: colors.card,
+          backgroundGradientFrom: colors.card,
+          backgroundGradientTo: colors.card,
+          color: (opacity = 1) => colors.primary,
+          labelColor: colors.text + '80',
+          style: {
+            borderRadius: 16,
+          },
+        }}
+        accessor="population"
+        backgroundColor="transparent"
+        paddingLeft="15"
+        absolute
+        style={styles.chart}
+      />
+    </Animated.View>
+  );
 
   const renderAgentCard = (agent: AIAgent, index: number) => (
     <Animated.View entering={FadeInUp.delay(index * 50)} style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
@@ -157,6 +667,16 @@ export default function AnalysisPerformanceAgentsScreen() {
         </View>
       </View>
 
+      {/* Analytics Charts */}
+      <View style={styles.chartsSection}>
+        {renderLineChart(PERFORMANCE_TREND_DATA, 'Performance Trend (6 Months)', '#10B981')}
+        {renderBarChart(INSIGHTS_GENERATED_DATA, 'Insights Generated (Weekly)')}
+        {renderPieChart(ANALYSIS_TYPE_DATA, 'Analysis Type Distribution')}
+        {renderLineChart(MODEL_ACCURACY_DATA, 'Model Accuracy (Quarterly)', '#10B981')}
+        {renderLineChart(DATA_VOLUME_DATA, 'Data Volume (6 Months)', '#3B82F6')}
+        {renderPieChart(PREDICTION_ACCURACY_DATA, 'Prediction Accuracy')}
+      </View>
+
       <FlatList
         data={filteredAgents}
         keyExtractor={(item) => item.id}
@@ -202,4 +722,28 @@ const styles = StyleSheet.create({
   actionBtnText: { color: '#fff', fontSize: 12, fontWeight: '600' },
   actionBtnOutline: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 12, paddingVertical: 6, borderRadius: 6, borderWidth: 1 },
   actionBtnTextOutline: { fontSize: 12, fontWeight: '600' },
+  chartsSection: { paddingHorizontal: 16, paddingBottom: 16 },
+  chartCard: {
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  chartHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  chartTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  chart: {
+    borderRadius: 16,
+  },
 });

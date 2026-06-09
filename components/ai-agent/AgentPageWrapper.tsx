@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ScrollView, TextInput } from 'react-native';
 import { AgentShell } from './AgentShell';
 import { AgentChat } from './AgentChat';
 import { AgentDashboard } from './AgentDashboard';
@@ -8,12 +8,12 @@ import { AgentSettings } from './AgentSettings';
 import { AIEmployee } from '@/constants/aiEmployees';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useAgentCounseling } from '@/hooks/useAgentCounseling';
-import { getAgentHierarchy } from '@/constants/aiAgentHierarchy';
-import { 
-  MessageSquare, Brain, LayoutDashboard, BarChart3, ChartBarBig, Target, 
-  Clock, FileText, Activity, Settings, Bot, CircleCheckBig, TriangleAlert, 
+import { getAgentHierarchy, navigationHierarchy, getAllNavigationHierarchies } from '@/constants/aiAgentHierarchy';
+import {
+  MessageSquare, Brain, LayoutDashboard, BarChart3, ChartBarBig, Target,
+  Clock, FileText, Activity, Settings, Bot, CircleCheckBig, TriangleAlert,
   TrendingUp, Gauge, Network, Cpu, Database, Shield, Zap, Award, Sparkles,
-  RefreshCw
+  RefreshCw, TreeStructure, ArrowRight, Users, Building2
 } from 'lucide-react-native';
 
 interface AgentPageWrapperProps {
@@ -67,6 +67,9 @@ export const AgentPageWrapper: React.FC<AgentPageWrapperProps> = ({
   const { theme } = useTheme();
   const [selectedRelatedAgentId, setSelectedRelatedAgentId] = useState<string | null>(null);
   const [isLive, setIsLive] = useState(false);
+  const [hierarchySearchQuery, setHierarchySearchQuery] = useState('');
+  const [hierarchySortBy, setHierarchySortBy] = useState<'name' | 'total' | 'main'>('total');
+  const [expandedDepartments, setExpandedDepartments] = useState<Set<string>>(new Set());
 
   const {
     sessions: counselingSessions,
@@ -919,6 +922,356 @@ export const AgentPageWrapper: React.FC<AgentPageWrapperProps> = ({
 
   const renderSettingsTab = () => <AgentSettings agent={agent} />;
 
+  const renderHierarchyTab = () => {
+    const allHierarchies = getAllNavigationHierarchies();
+    const currentCategory = agent?.category || '';
+
+    // Filter and sort departments
+    const filteredDepartments = allHierarchies
+      .filter((dept: any) =>
+        dept.label.toLowerCase().includes(hierarchySearchQuery.toLowerCase()) ||
+        dept.description.toLowerCase().includes(hierarchySearchQuery.toLowerCase())
+      )
+      .sort((a: any, b: any) => {
+        if (hierarchySortBy === 'name') return a.label.localeCompare(b.label);
+        if (hierarchySortBy === 'total') return b.stats.total - a.stats.total;
+        if (hierarchySortBy === 'main') return b.stats.main - a.stats.main;
+        return 0;
+      });
+
+    // Calculate statistics
+    const totalAgents = allHierarchies.reduce((sum: number, dept: any) => sum + dept.stats.total, 0);
+    const totalMainAgents = allHierarchies.reduce((sum: number, dept: any) => sum + dept.stats.main, 0);
+    const totalSubAgents = allHierarchies.reduce((sum: number, dept: any) => sum + dept.stats.sub, 0);
+    const largestDepartment = allHierarchies.reduce((max: any, dept: any) =>
+      dept.stats.total > max.stats.total ? dept : max
+    );
+
+    const toggleDepartment = (deptId: string) => {
+      setExpandedDepartments(prev => {
+        const newSet = new Set(prev);
+        if (newSet.has(deptId)) {
+          newSet.delete(deptId);
+        } else {
+          newSet.add(deptId);
+        }
+        return newSet;
+      });
+    };
+
+    return (
+      <ScrollView style={styles.tabContent}>
+        {/* Current Agent Hierarchy */}
+        <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+          <View style={styles.cardHeader}>
+            <TreeStructure size={20} color={agent.color || '#007AFF'} />
+            <Text style={[styles.cardTitle, { color: theme.colors.text }]}>Agent Hierarchy</Text>
+          </View>
+          <Text style={[styles.cardText, { color: theme.colors.secondaryText }]}>
+            This agent's position in the organizational structure and information flow.
+          </Text>
+
+          {/* Main Agent */}
+          {hierarchyInfo.mainAgent && (
+            <>
+              <View style={[styles.sectionDivider, { borderBottomColor: theme.colors.border }]} />
+              <View style={styles.hierarchySection}>
+                <View style={styles.hierarchySectionHeader}>
+                  <Building2 size={16} color={agent.color || '#007AFF'} />
+                  <Text style={[styles.hierarchySectionTitle, { color: theme.colors.text }]}>Reports To</Text>
+                </View>
+                <View style={[styles.hierarchyAgentCard, { backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}>
+                  <Text style={[styles.hierarchyAgentName, { color: theme.colors.text }]}>{hierarchyInfo.mainAgent.name}</Text>
+                  <Text style={[styles.hierarchyAgentRole, { color: theme.colors.secondaryText }]}>{hierarchyInfo.mainAgent.title}</Text>
+                  <View style={styles.hierarchyMeta}>
+                    <Text style={[styles.hierarchyMetaLabel, { color: theme.colors.secondaryText }]}>ID:</Text>
+                    <Text style={[styles.hierarchyMetaValue, { color: theme.colors.text }]}>{hierarchyInfo.mainAgent.id}</Text>
+                  </View>
+                </View>
+              </View>
+            </>
+          )}
+
+          {/* Subordinate Agents */}
+          {hierarchyInfo.subAgents && hierarchyInfo.subAgents.length > 0 && (
+            <>
+              <View style={[styles.sectionDivider, { borderBottomColor: theme.colors.border }]} />
+              <View style={styles.hierarchySection}>
+                <View style={styles.hierarchySectionHeader}>
+                  <Users size={16} color={agent.color || '#007AFF'} />
+                  <Text style={[styles.hierarchySectionTitle, { color: theme.colors.text }]}>Manages ({hierarchyInfo.subAgents.length})</Text>
+                </View>
+                <View style={styles.hierarchyAgentList}>
+                  {hierarchyInfo.subAgents.map((subAgent: any) => (
+                    <View key={subAgent.id} style={[styles.hierarchyAgentCard, { backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}>
+                      <View style={styles.hierarchyAgentHeader}>
+                        <Text style={[styles.hierarchyAgentName, { color: theme.colors.text }]}>{subAgent.name}</Text>
+                        <ArrowRight size={14} color={agent.color || '#007AFF'} />
+                      </View>
+                      <Text style={[styles.hierarchyAgentRole, { color: theme.colors.secondaryText }]}>{subAgent.title}</Text>
+                      <View style={styles.hierarchyMeta}>
+                    <Text style={[styles.hierarchyMetaLabel, { color: theme.colors.secondaryText }]}>ID:</Text>
+                    <Text style={[styles.hierarchyMetaValue, { color: theme.colors.text }]}>{subAgent.id}</Text>
+                  </View>
+                    </View>
+                  ))}
+                </View>
+              </View>
+            </>
+          )}
+
+          {/* Information Flow */}
+          <View style={[styles.sectionDivider, { borderBottomColor: theme.colors.border }]} />
+          <View style={styles.hierarchySection}>
+            <View style={styles.hierarchySectionHeader}>
+              <Network size={16} color={agent.color || '#007AFF'} />
+              <Text style={[styles.hierarchySectionTitle, { color: theme.colors.text }]}>Information Flow</Text>
+            </View>
+            <View style={styles.informationFlow}>
+              {hierarchyInfo.mainAgent && (
+                <View style={styles.flowStep}>
+                  <View style={[styles.flowDot, { backgroundColor: agent.color || '#007AFF' }]} />
+                  <Text style={[styles.flowText, { color: theme.colors.text }]}>Receives guidance from {hierarchyInfo.mainAgent.name}</Text>
+                </View>
+              )}
+              <View style={styles.flowStep}>
+                <View style={[styles.flowDot, { backgroundColor: agent.color || '#007AFF' }]} />
+                <Text style={[styles.flowText, { color: theme.colors.text }]}>Processes tasks and makes decisions</Text>
+              </View>
+              {hierarchyInfo.subAgents && hierarchyInfo.subAgents.length > 0 && (
+                <View style={styles.flowStep}>
+                  <View style={[styles.flowDot, { backgroundColor: agent.color || '#007AFF' }]} />
+                  <Text style={[styles.flowText, { color: theme.colors.text }]}>Delegates to {hierarchyInfo.subAgents.length} subordinate agents</Text>
+                </View>
+              )}
+              <View style={styles.flowStep}>
+                <View style={[styles.flowDot, { backgroundColor: agent.color || '#007AFF' }]} />
+                <Text style={[styles.flowText, { color: theme.colors.text }]}>Reports results and metrics</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+
+        {/* Statistics Summary */}
+        <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+          <View style={styles.cardHeader}>
+            <BarChart3 size={20} color={agent.color || '#007AFF'} />
+            <Text style={[styles.cardTitle, { color: theme.colors.text }]}>Organization Statistics</Text>
+          </View>
+          <View style={styles.statsGrid}>
+            <View style={[styles.statCard, { backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}>
+              <Text style={[styles.statCardLabel, { color: theme.colors.secondaryText }]}>Total Agents</Text>
+              <Text style={[styles.statCardValue, { color: agent.color || '#007AFF' }]}>{totalAgents}</Text>
+            </View>
+            <View style={[styles.statCard, { backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}>
+              <Text style={[styles.statCardLabel, { color: theme.colors.secondaryText }]}>Main Agents</Text>
+              <Text style={[styles.statCardValue, { color: '#34C759' }]}>{totalMainAgents}</Text>
+            </View>
+            <View style={[styles.statCard, { backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}>
+              <Text style={[styles.statCardLabel, { color: theme.colors.secondaryText }]}>Sub Agents</Text>
+              <Text style={[styles.statCardValue, { color: '#FF9500' }]}>{totalSubAgents}</Text>
+            </View>
+            <View style={[styles.statCard, { backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}>
+              <Text style={[styles.statCardLabel, { color: theme.colors.secondaryText }]}>Departments</Text>
+              <Text style={[styles.statCardValue, { color: '#5856D6' }]}>{allHierarchies.length}</Text>
+            </View>
+          </View>
+          <View style={[styles.largestDeptCard, { backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}>
+            <Text style={[styles.largestDeptLabel, { color: theme.colors.secondaryText }]}>Largest Department</Text>
+            <Text style={[styles.largestDeptName, { color: theme.colors.text }]}>{largestDepartment.label}</Text>
+            <Text style={[styles.largestDeptCount, { color: largestDepartment.color }]}>{largestDepartment.stats.total} agents</Text>
+          </View>
+        </View>
+
+        {/* Visual Hierarchy Tree */}
+        <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+          <View style={styles.cardHeader}>
+            <Network size={20} color={agent.color || '#007AFF'} />
+            <Text style={[styles.cardTitle, { color: theme.colors.text }]}>Visual Hierarchy Tree</Text>
+          </View>
+          <Text style={[styles.cardText, { color: theme.colors.secondaryText }]}>
+            Interactive tree view of the agent's position in the organizational structure.
+          </Text>
+
+          <View style={styles.hierarchyTree}>
+            {/* Root Level - CEO/Executive */}
+            <View style={styles.treeLevel}>
+              <View style={[styles.treeNode, { backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}>
+                <Text style={[styles.treeNodeText, { color: theme.colors.text }]}>🏢 CEO / Executive</Text>
+              </View>
+              <View style={[styles.treeLine, { backgroundColor: theme.colors.border }]} />
+            </View>
+
+            {/* Department Level */}
+            <View style={styles.treeLevel}>
+              <View style={[styles.treeNode, { backgroundColor: `${agent.color || '#007AFF'}15`, borderColor: agent.color || '#007AFF' }]}>
+                <Text style={[styles.treeNodeText, { color: theme.colors.text }]}>📁 {currentCategory.replace('-', ' ').toUpperCase()}</Text>
+              </View>
+              <View style={[styles.treeLine, { backgroundColor: theme.colors.border }]} />
+            </View>
+
+            {/* Current Agent Level */}
+            <View style={styles.treeLevel}>
+              <View style={[styles.treeNode, { backgroundColor: theme.colors.background, borderColor: agent.color || '#007AFF' }]}>
+                <Text style={[styles.treeNodeText, { color: theme.colors.text }]}>🤖 {agent.name}</Text>
+                <Text style={[styles.treeNodeSubtext, { color: theme.colors.secondaryText }]}>{agent.title}</Text>
+              </View>
+              {hierarchyInfo.subAgents && hierarchyInfo.subAgents.length > 0 && (
+                <View style={[styles.treeLine, { backgroundColor: theme.colors.border }]} />
+              )}
+            </View>
+
+            {/* Sub-agents Level */}
+            {hierarchyInfo.subAgents && hierarchyInfo.subAgents.length > 0 && (
+              <View style={styles.treeLevel}>
+                <View style={styles.subAgentsContainer}>
+                  {hierarchyInfo.subAgents.slice(0, 4).map((subAgent: any, index: number) => (
+                    <View key={subAgent.id} style={styles.subAgentItem}>
+                      <View style={[styles.treeLineVertical, { backgroundColor: theme.colors.border }]} />
+                      <View style={[styles.treeNodeSmall, { backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}>
+                        <Text style={[styles.treeNodeTextSmall, { color: theme.colors.text }]}>{subAgent.name}</Text>
+                      </View>
+                    </View>
+                  ))}
+                  {hierarchyInfo.subAgents.length > 4 && (
+                    <View style={styles.subAgentItem}>
+                      <View style={[styles.treeLineVertical, { backgroundColor: theme.colors.border }]} />
+                      <View style={[styles.treeNodeSmall, { backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}>
+                        <Text style={[styles.treeNodeTextSmall, { color: theme.colors.secondaryText }]}>+{hierarchyInfo.subAgents.length - 4} more</Text>
+                      </View>
+                    </View>
+                  )}
+                </View>
+              </View>
+            )}
+          </View>
+        </View>
+
+        {/* Department Navigation Hierarchy */}
+        <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+          <View style={styles.cardHeader}>
+            <Building2 size={20} color={agent.color || '#007AFF'} />
+            <Text style={[styles.cardTitle, { color: theme.colors.text }]}>Department Navigation</Text>
+          </View>
+          <Text style={[styles.cardText, { color: theme.colors.secondaryText }]}>
+            Complete organizational structure with all departments and their agent counts.
+          </Text>
+
+          {/* Search Bar */}
+          <View style={[styles.searchBar, { backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}>
+            <Text style={{ fontSize: 16, color: theme.colors.secondaryText }}>🔍</Text>
+            <TextInput
+              style={[styles.searchInput, { color: theme.colors.text }]}
+              placeholder="Search departments..."
+              placeholderTextColor={theme.colors.secondaryText}
+              value={hierarchySearchQuery}
+              onChangeText={setHierarchySearchQuery}
+            />
+            {hierarchySearchQuery.length > 0 && (
+              <Pressable onPress={() => setHierarchySearchQuery('')}>
+                <Text style={{ fontSize: 16, color: theme.colors.secondaryText }}>✕</Text>
+              </Pressable>
+            )}
+          </View>
+
+          {/* Sort Options */}
+          <View style={styles.sortOptions}>
+            <Pressable
+              style={[styles.sortButton, hierarchySortBy === 'name' && styles.sortButtonActive]}
+              onPress={() => setHierarchySortBy('name')}
+            >
+              <Text style={[styles.sortButtonText, hierarchySortBy === 'name' && styles.sortButtonTextActive]}>Name</Text>
+            </Pressable>
+            <Pressable
+              style={[styles.sortButton, hierarchySortBy === 'total' && styles.sortButtonActive]}
+              onPress={() => setHierarchySortBy('total')}
+            >
+              <Text style={[styles.sortButtonText, hierarchySortBy === 'total' && styles.sortButtonTextActive]}>Total</Text>
+            </Pressable>
+            <Pressable
+              style={[styles.sortButton, hierarchySortBy === 'main' && styles.sortButtonActive]}
+              onPress={() => setHierarchySortBy('main')}
+            >
+              <Text style={[styles.sortButtonText, hierarchySortBy === 'main' && styles.sortButtonTextActive]}>Main</Text>
+            </Pressable>
+          </View>
+
+          <Text style={[styles.resultsCount, { color: theme.colors.secondaryText }]}>
+            Showing {filteredDepartments.length} of {allHierarchies.length} departments
+          </Text>
+
+          <View style={styles.departmentList}>
+            {filteredDepartments.map((dept: any) => (
+              <View
+                key={dept.id}
+                style={[
+                  styles.departmentCard,
+                  {
+                    backgroundColor: dept.id === currentCategory ? `${agent.color || '#007AFF'}15` : theme.colors.background,
+                    borderColor: dept.id === currentCategory ? agent.color || '#007AFF' : theme.colors.border,
+                  }
+                ]}
+              >
+                <Pressable
+                  style={styles.departmentHeader}
+                  onPress={() => toggleDepartment(dept.id)}
+                >
+                  <View style={[styles.departmentIcon, { backgroundColor: dept.color + '20' }]}>
+                    <Text style={{ fontSize: 18, color: dept.color }}>📁</Text>
+                  </View>
+                  <View style={styles.departmentInfo}>
+                    <Text style={[styles.departmentName, { color: theme.colors.text }]}>{dept.label}</Text>
+                    <Text style={[styles.departmentPath, { color: theme.colors.secondaryText }]}>{dept.path}</Text>
+                  </View>
+                  <View style={styles.departmentHeaderRight}>
+                    {dept.id === currentCategory && (
+                      <View style={[styles.currentBadge, { backgroundColor: agent.color || '#007AFF' }]}>
+                        <Text style={styles.currentBadgeText}>Current</Text>
+                      </View>
+                    )}
+                    <Text style={{ fontSize: 12, color: theme.colors.secondaryText }}>
+                      {expandedDepartments.has(dept.id) ? '▼' : '▶'}
+                    </Text>
+                  </View>
+                </Pressable>
+
+                {expandedDepartments.has(dept.id) && (
+                  <>
+                    <View style={styles.departmentStats}>
+                      <View style={styles.departmentStat}>
+                        <Text style={[styles.departmentStatValue, { color: dept.color }]}>{dept.stats.main}</Text>
+                        <Text style={[styles.departmentStatLabel, { color: theme.colors.secondaryText }]}>Main</Text>
+                      </View>
+                      <View style={styles.departmentStat}>
+                        <Text style={[styles.departmentStatValue, { color: dept.color }]}>{dept.stats.sub}</Text>
+                        <Text style={[styles.departmentStatLabel, { color: theme.colors.secondaryText }]}>Sub</Text>
+                      </View>
+                      <View style={styles.departmentStat}>
+                        <Text style={[styles.departmentStatValue, { color: dept.color }]}>{dept.stats.total}</Text>
+                        <Text style={[styles.departmentStatLabel, { color: theme.colors.secondaryText }]}>Total</Text>
+                      </View>
+                    </View>
+                    <Text style={[styles.departmentDescription, { color: theme.colors.secondaryText }]}>
+                      {dept.description}
+                    </Text>
+                    <View style={[styles.quickActions, { borderTopColor: theme.colors.border }]}>
+                      <Pressable style={styles.quickActionButton}>
+                        <Text style={[styles.quickActionText, { color: agent.color || '#007AFF' }]}>View Agents</Text>
+                      </Pressable>
+                      <Pressable style={styles.quickActionButton}>
+                        <Text style={[styles.quickActionText, { color: agent.color || '#007AFF' }]}>Analytics</Text>
+                      </Pressable>
+                    </View>
+                  </>
+                )}
+              </View>
+            ))}
+          </View>
+        </View>
+      </ScrollView>
+    );
+  };
+
   const customTabs = [
     { id: 'chat', label: 'Chat', icon: MessageSquare, component: renderChatTab },
     { id: 'overview', label: 'Overview', icon: Brain, component: renderOverviewTab },
@@ -926,6 +1279,7 @@ export const AgentPageWrapper: React.FC<AgentPageWrapperProps> = ({
     { id: 'analytics', label: 'Analytics', icon: BarChart3, component: renderAnalyticsTab },
     { id: 'performance', label: 'Performance', icon: ChartBarBig, component: renderPerformanceTab },
     { id: 'capabilities', label: 'Capabilities', icon: Target, component: renderCapabilitiesTab },
+    { id: 'hierarchy', label: 'Hierarchy', icon: TreeStructure, component: renderHierarchyTab },
     { id: 'history', label: 'History', icon: Clock, component: renderHistoryTab },
     { id: 'summary', label: 'Summary & Notes', icon: FileText, component: renderSummaryNotesTab },
     { id: 'activity', label: 'Live Activity', icon: Activity, component: renderLiveActivityTab },
@@ -1022,4 +1376,68 @@ const styles = StyleSheet.create({
   counselingBenefits: { gap: 8, marginTop: 8 },
   counselingBenefit: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   counselingBenefitText: { fontSize: 13, fontWeight: '500' },
+  // Hierarchy styles
+  hierarchySection: { marginTop: 12 },
+  hierarchySectionHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 10 },
+  hierarchySectionTitle: { fontSize: 14, fontWeight: '700' },
+  hierarchyAgentCard: { padding: 12, borderRadius: 12, borderWidth: 1, marginBottom: 8 },
+  hierarchyAgentHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 },
+  hierarchyAgentName: { fontSize: 14, fontWeight: '700', marginBottom: 4 },
+  hierarchyAgentRole: { fontSize: 12, fontWeight: '500', marginBottom: 8 },
+  hierarchyMeta: { flexDirection: 'row', gap: 6 },
+  hierarchyMetaLabel: { fontSize: 11, fontWeight: '600' },
+  hierarchyMetaValue: { fontSize: 11, fontWeight: '500' },
+  hierarchyAgentList: { gap: 8 },
+  informationFlow: { gap: 12 },
+  flowStep: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+  flowDot: { width: 8, height: 8, borderRadius: 4 },
+  flowText: { fontSize: 13, fontWeight: '500', flex: 1 },
+  departmentList: { gap: 12 },
+  departmentCard: { padding: 16, borderRadius: 12, borderWidth: 1 },
+  departmentHeader: { flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: 12 },
+  departmentIcon: { width: 36, height: 36, borderRadius: 8, alignItems: 'center', justifyContent: 'center' },
+  departmentInfo: { flex: 1 },
+  departmentName: { fontSize: 14, fontWeight: '700', marginBottom: 2 },
+  departmentPath: { fontSize: 11, fontWeight: '500' },
+  currentBadge: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 12 },
+  currentBadgeText: { fontSize: 10, fontWeight: '700', color: '#FFFFFF' },
+  departmentStats: { flexDirection: 'row', gap: 16, marginBottom: 8 },
+  departmentStat: { alignItems: 'center' },
+  departmentStatValue: { fontSize: 18, fontWeight: '900' },
+  departmentStatLabel: { fontSize: 11, fontWeight: '600', marginTop: 2 },
+  departmentDescription: { fontSize: 12, fontWeight: '400', lineHeight: 18 },
+  // Statistics styles
+  statsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginBottom: 12 },
+  statCard: { flex: 1, minWidth: '45%', padding: 16, borderRadius: 12, borderWidth: 1 },
+  statCardLabel: { fontSize: 12, fontWeight: '600', marginBottom: 4 },
+  statCardValue: { fontSize: 24, fontWeight: '900' },
+  largestDeptCard: { padding: 16, borderRadius: 12, borderWidth: 1 },
+  largestDeptLabel: { fontSize: 12, fontWeight: '600', marginBottom: 4 },
+  largestDeptName: { fontSize: 16, fontWeight: '700', marginBottom: 2 },
+  largestDeptCount: { fontSize: 14, fontWeight: '600' },
+  // Search and sort styles
+  searchBar: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 16, paddingVertical: 12, borderRadius: 12, borderWidth: 1, marginBottom: 12 },
+  searchInput: { flex: 1, fontSize: 14, fontWeight: '500' },
+  sortOptions: { flexDirection: 'row', gap: 8, marginBottom: 8 },
+  sortButton: { paddingHorizontal: 16, paddingVertical: 8, borderRadius: 8, borderWidth: 1 },
+  sortButtonActive: { backgroundColor: '#007AFF', borderColor: '#007AFF' },
+  sortButtonText: { fontSize: 12, fontWeight: '600', color: '#007AFF' },
+  sortButtonTextActive: { color: '#FFFFFF' },
+  resultsCount: { fontSize: 12, fontWeight: '500', marginBottom: 12 },
+  departmentHeaderRight: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  quickActions: { flexDirection: 'row', gap: 8, paddingTop: 12, borderTopWidth: 1 },
+  quickActionButton: { paddingHorizontal: 12, paddingVertical: 8, borderRadius: 8, borderWidth: 1 },
+  quickActionText: { fontSize: 12, fontWeight: '600' },
+  // Hierarchy tree styles
+  hierarchyTree: { gap: 8, marginTop: 12 },
+  treeLevel: { alignItems: 'center' },
+  treeNode: { padding: 12, borderRadius: 12, borderWidth: 1, minWidth: 200, alignItems: 'center' },
+  treeNodeText: { fontSize: 14, fontWeight: '700' },
+  treeNodeSubtext: { fontSize: 11, fontWeight: '500', marginTop: 2 },
+  treeLine: { width: 2, height: 20, marginTop: 4 },
+  subAgentsContainer: { flexDirection: 'row', gap: 8, marginTop: 8 },
+  subAgentItem: { alignItems: 'center' },
+  treeLineVertical: { width: 2, height: 20 },
+  treeNodeSmall: { padding: 8, borderRadius: 8, borderWidth: 1, minWidth: 100, alignItems: 'center' },
+  treeNodeTextSmall: { fontSize: 11, fontWeight: '600' },
 });

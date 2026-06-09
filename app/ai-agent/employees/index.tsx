@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, Dimensions } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Users, Search, Filter, Crown, UserCircle, UsersRound, User, ArrowRight, Activity, ChartBarBig, Briefcase, Plus } from 'lucide-react-native';
+import { Users, Search, Filter, Crown, UserCircle, UsersRound, User, ArrowRight, Activity, ChartBarBig, Briefcase, Plus, ChartLine } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
+import { LineChart, BarChart, PieChart } from 'react-native-chart-kit';
 
 const EMPLOYEES_DATA = [
   // C-Suite
@@ -47,12 +48,295 @@ const LEVEL_CONFIG = {
 
 const DEPARTMENTS = ['All', 'Executive', 'Sales', 'Marketing', 'Engineering', 'Product', 'Operations', 'HR', 'Customer', 'Finance'];
 
+// Chart Data
+const EMPLOYEE_GROWTH_DATA = {
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+  datasets: [
+    {
+      data: [45, 52, 58, 65, 72, 78],
+      color: (opacity = 1) => `rgba(59, 130, 246, ${opacity})`,
+      strokeWidth: 2,
+    },
+  ],
+};
+
+const DEPARTMENT_DISTRIBUTION_DATA = [
+  {
+    name: 'Engineering',
+    population: 25,
+    color: '#3B82F6',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'Sales',
+    population: 18,
+    color: '#E65100',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'Marketing',
+    population: 15,
+    color: '#F43F5E',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'Product',
+    population: 12,
+    color: '#A855F7',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'Operations',
+    population: 8,
+    color: '#8B5CF6',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+];
+
+const PERFORMANCE_SCORES_DATA = {
+  labels: ['C-Suite', 'VP', 'Manager', 'Team Lead', 'Specialist'],
+  datasets: [
+    {
+      data: [95, 88, 82, 78, 75],
+    },
+  ],
+};
+
+const HIRING_TREND_DATA = {
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+  datasets: [
+    {
+      data: [8, 12, 15, 10, 18, 14],
+      color: (opacity = 1) => `rgba(59, 130, 246, ${opacity})`,
+      strokeWidth: 2,
+    },
+  ],
+};
+
+const SATISFACTION_SCORE_DATA = {
+  labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+  datasets: [
+    {
+      data: [4.2, 4.5, 4.3, 4.7],
+      color: (opacity = 1) => `rgba(16, 185, 129, ${opacity})`,
+      strokeWidth: 2,
+    },
+  ],
+};
+
+const SKILL_DISTRIBUTION_DATA = [
+  {
+    name: 'Technical',
+    population: 35,
+    color: '#3B82F6',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'Leadership',
+    population: 25,
+    color: '#10B981',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'Communication',
+    population: 20,
+    color: '#F59E0B',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'Creative',
+    population: 20,
+    color: '#8B5CF6',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+];
+
+const TRAINING_COMPLETION_DATA = {
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+  datasets: [
+    {
+      data: [65, 72, 78, 85, 88, 92],
+      color: (opacity = 1) => `rgba(16, 185, 129, ${opacity})`,
+      strokeWidth: 2,
+    },
+  ],
+};
+
+const PROJECT_ALLOCATION_DATA = [
+  {
+    name: 'Active',
+    population: 45,
+    color: '#10B981',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'On Hold',
+    population: 25,
+    color: '#F59E0B',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'Completed',
+    population: 20,
+    color: '#3B82F6',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'Available',
+    population: 10,
+    color: '#8B5CF6',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+];
+
+const WORK_HOURS_DATA = {
+  labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+  datasets: [
+    {
+      data: [42, 45, 44, 46, 43, 8, 5],
+      color: (opacity = 1) => `rgba(59, 130, 246, ${opacity})`,
+      strokeWidth: 2,
+    },
+  ],
+};
+
+const ABSENCE_RATE_DATA = {
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+  datasets: [
+    {
+      data: [3.2, 2.8, 3.5, 2.9, 2.5, 2.1],
+      color: (opacity = 1) => `rgba(239, 68, 68, ${opacity})`,
+      strokeWidth: 2,
+    },
+  ],
+};
+
+const PROMOTION_RATE_DATA = {
+  labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+  datasets: [
+    {
+      data: [8, 12, 10, 15],
+      color: (opacity = 1) => `rgba(16, 185, 129, ${opacity})`,
+      strokeWidth: 2,
+    },
+  ],
+};
+
+const TENURE_DISTRIBUTION_DATA = [
+  {
+    name: '< 1 year',
+    population: 25,
+    color: '#3B82F6',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: '1-3 years',
+    population: 35,
+    color: '#10B981',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: '3-5 years',
+    population: 25,
+    color: '#F59E0B',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: '> 5 years',
+    population: 15,
+    color: '#8B5CF6',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+];
+
+const SKILL_DEVELOPMENT_DATA = {
+  labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+  datasets: [
+    {
+      data: [65, 72, 78, 85],
+      color: (opacity = 1) => `rgba(59, 130, 246, ${opacity})`,
+      strokeWidth: 2,
+    },
+  ],
+};
+
+const TEAM_COLLABORATION_DATA = {
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+  datasets: [
+    {
+      data: [72, 78, 82, 86, 90, 94],
+      color: (opacity = 1) => `rgba(16, 185, 129, ${opacity})`,
+      strokeWidth: 2,
+    },
+  ],
+};
+
+const WORK_LIFE_BALANCE_DATA = {
+  labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+  datasets: [
+    {
+      data: [68, 72, 75, 78],
+      color: (opacity = 1) => `rgba(59, 130, 246, ${opacity})`,
+      strokeWidth: 2,
+    },
+  ],
+};
+
+const ROLE_DISTRIBUTION_DATA = [
+  {
+    name: 'Leadership',
+    population: 15,
+    color: '#10B981',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'Senior',
+    population: 30,
+    color: '#3B82F6',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'Mid',
+    population: 35,
+    color: '#F59E0B',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'Junior',
+    population: 20,
+    color: '#8B5CF6',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+];
+
 export default function EmployeesIndexPage() {
   const { theme } = useTheme();
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
   const [selectedDept, setSelectedDept] = useState('All');
+  const screenWidth = Dimensions.get('window').width;
 
   const filteredEmployees = EMPLOYEES_DATA.filter(emp => {
     const matchesSearch = emp.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -61,6 +345,99 @@ export default function EmployeesIndexPage() {
     const matchesDept = selectedDept === 'All' ? true : emp.department === selectedDept;
     return matchesSearch && matchesLevel && matchesDept;
   });
+
+  const renderLineChart = (data: any, title: string, color: string) => (
+    <View style={[styles.chartCard, { backgroundColor: theme.colors.card }]}>
+      <View style={styles.chartHeader}>
+        <Text style={[styles.chartTitle, { color: theme.colors.text }]}>{title}</Text>
+        <TouchableOpacity>
+          <ChartLine size={18} color={theme.colors.primary} />
+        </TouchableOpacity>
+      </View>
+      <LineChart
+        data={data}
+        width={screenWidth - 64}
+        height={200}
+        chartConfig={{
+          backgroundColor: theme.colors.card,
+          backgroundGradientFrom: theme.colors.card,
+          backgroundGradientTo: theme.colors.card,
+          decimalPlaces: 0,
+          color: (opacity = 1) => color,
+          labelColor: theme.colors.textSecondary,
+          style: {
+            borderRadius: 16,
+          },
+          propsForDots: {
+            r: '4',
+            strokeWidth: '2',
+            stroke: color,
+          },
+        }}
+        bezier
+        style={styles.chart}
+      />
+    </View>
+  );
+
+  const renderBarChart = (data: any, title: string) => (
+    <View style={[styles.chartCard, { backgroundColor: theme.colors.card }]}>
+      <View style={styles.chartHeader}>
+        <Text style={[styles.chartTitle, { color: theme.colors.text }]}>{title}</Text>
+        <TouchableOpacity>
+          <ChartBarBig size={18} color={theme.colors.primary} />
+        </TouchableOpacity>
+      </View>
+      <BarChart
+        data={data}
+        width={screenWidth - 64}
+        height={200}
+        chartConfig={{
+          backgroundColor: theme.colors.card,
+          backgroundGradientFrom: theme.colors.card,
+          backgroundGradientTo: theme.colors.card,
+          decimalPlaces: 0,
+          color: (opacity = 1) => theme.colors.primary,
+          labelColor: theme.colors.textSecondary,
+          style: {
+            borderRadius: 16,
+          },
+        }}
+        style={styles.chart}
+      />
+    </View>
+  );
+
+  const renderPieChart = (data: any, title: string) => (
+    <View style={[styles.chartCard, { backgroundColor: theme.colors.card }]}>
+      <View style={styles.chartHeader}>
+        <Text style={[styles.chartTitle, { color: theme.colors.text }]}>{title}</Text>
+        <TouchableOpacity>
+          <ChartBarBig size={18} color={theme.colors.primary} />
+        </TouchableOpacity>
+      </View>
+      <PieChart
+        data={data}
+        width={screenWidth - 64}
+        height={200}
+        chartConfig={{
+          backgroundColor: theme.colors.card,
+          backgroundGradientFrom: theme.colors.card,
+          backgroundGradientTo: theme.colors.card,
+          color: (opacity = 1) => theme.colors.primary,
+          labelColor: theme.colors.textSecondary,
+          style: {
+            borderRadius: 16,
+          },
+        }}
+        accessor="population"
+        backgroundColor="transparent"
+        paddingLeft="15"
+        absolute
+        style={styles.chart}
+      />
+    </View>
+  );
 
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
@@ -208,6 +585,27 @@ export default function EmployeesIndexPage() {
         </View>
       </View>
 
+      {/* Analytics Charts */}
+      <View style={styles.chartsSection}>
+        <Text style={[styles.chartsTitle, { color: theme.colors.text }]}>Workforce Analytics</Text>
+        {renderLineChart(EMPLOYEE_GROWTH_DATA, 'Employee Growth (6 Months)', '#3B82F6')}
+        {renderPieChart(DEPARTMENT_DISTRIBUTION_DATA, 'Department Distribution')}
+        {renderBarChart(PERFORMANCE_SCORES_DATA, 'Performance by Level')}
+        {renderLineChart(HIRING_TREND_DATA, 'Hiring Trend (6 Months)', '#3B82F6')}
+        {renderLineChart(SATISFACTION_SCORE_DATA, 'Satisfaction Score (Quarterly)', '#10B981')}
+        {renderPieChart(SKILL_DISTRIBUTION_DATA, 'Skill Distribution')}
+        {renderLineChart(TRAINING_COMPLETION_DATA, 'Training Completion (6 Months)', '#10B981')}
+        {renderPieChart(PROJECT_ALLOCATION_DATA, 'Project Allocation')}
+        {renderLineChart(WORK_HOURS_DATA, 'Work Hours (Weekly)', '#3B82F6')}
+        {renderLineChart(ABSENCE_RATE_DATA, 'Absence Rate (6 Months)', '#EF4444')}
+        {renderLineChart(PROMOTION_RATE_DATA, 'Promotion Rate (Quarterly)', '#10B981')}
+        {renderPieChart(TENURE_DISTRIBUTION_DATA, 'Tenure Distribution')}
+        {renderLineChart(SKILL_DEVELOPMENT_DATA, 'Skill Development (Quarterly)', '#3B82F6')}
+        {renderLineChart(TEAM_COLLABORATION_DATA, 'Team Collaboration (6 Months)', '#10B981')}
+        {renderLineChart(WORK_LIFE_BALANCE_DATA, 'Work Life Balance (Quarterly)', '#3B82F6')}
+        {renderPieChart(ROLE_DISTRIBUTION_DATA, 'Role Distribution')}
+      </View>
+
       <AgentFeatures agentId="employees-index" agentName="Employees Directory" />
       <View style={{ height: 40 }} />
     </ScrollView>
@@ -251,4 +649,29 @@ const styles = StyleSheet.create({
   quickGrid: { flexDirection: 'row', gap: 10 },
   quickCard: { flex: 1, alignItems: 'center', padding: 16, borderRadius: 12 },
   quickCardText: { fontSize: 12, marginTop: 8, textAlign: 'center' },
+  chartsSection: { padding: 16, paddingBottom: 20 },
+  chartsTitle: { fontSize: 18, fontWeight: '700', marginBottom: 14 },
+  chartCard: {
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  chartHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  chartTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  chart: {
+    borderRadius: 16,
+  },
 });

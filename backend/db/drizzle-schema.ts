@@ -746,6 +746,320 @@ export const realtimePresence = pgTable('realtime_presence', {
   userIdx: index('realtime_presence_user_idx').on(table.userId),
 }));
 
+// Company Brain Chat Tables
+
+export const companyBrainChatConversations = pgTable('company_brain_chat_conversations', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  title: varchar('title', { length: 255 }).notNull(),
+  status: varchar('status', { length: 20 }).default('active').notNull(),
+  messageCount: integer('message_count').default(0).notNull(),
+  tags: jsonb('tags').default([]).notNull(),
+  context: jsonb('context').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('company_brain_chat_conversations_org_idx').on(table.organizationId),
+  userIdx: index('company_brain_chat_conversations_user_idx').on(table.userId),
+  statusIdx: index('company_brain_chat_conversations_status_idx').on(table.status),
+  updatedAtIdx: index('company_brain_chat_conversations_updated_idx').on(table.updatedAt),
+}));
+
+export const companyBrainChatMessages = pgTable('company_brain_chat_messages', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  conversationId: uuid('conversation_id').references(() => companyBrainChatConversations.id, { onDelete: 'cascade' }).notNull(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  role: varchar('role', { length: 20 }).notNull(),
+  content: text('content').notNull(),
+  metadata: jsonb('metadata').default({}).notNull(),
+  embeddingVector: vector('embedding_vector', { dimensions: 1536 }),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('company_brain_chat_messages_org_idx').on(table.organizationId),
+  conversationIdx: index('company_brain_chat_messages_conversation_idx').on(table.conversationId),
+  userIdx: index('company_brain_chat_messages_user_idx').on(table.userId),
+  roleIdx: index('company_brain_chat_messages_role_idx').on(table.role),
+  createdAtIdx: index('company_brain_chat_messages_created_idx').on(table.createdAt),
+}));
+
+export const companyBrainChatContext = pgTable('company_brain_chat_context', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  conversationId: uuid('conversation_id').references(() => companyBrainChatConversations.id, { onDelete: 'cascade' }).notNull(),
+  department: varchar('department', { length: 100 }),
+  project: varchar('project', { length: 100 }),
+  topic: varchar('topic', { length: 100 }),
+  recentQueries: jsonb('recent_queries').default([]).notNull(),
+  knowledgeAreas: jsonb('knowledge_areas').default([]).notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgUserConvIdx: uniqueIndex('company_brain_chat_context_org_user_conv_idx').on(table.organizationId, table.userId, table.conversationId),
+  userIdx: index('company_brain_chat_context_user_idx').on(table.userId),
+  conversationIdx: index('company_brain_chat_context_conversation_idx').on(table.conversationId),
+}));
+
+// Company Brain Extended Features Tables
+
+// Continuous Chat Archiving (Slack/Teams)
+export const companyBrainChatLogs = pgTable('company_brain_chat_logs', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  platform: varchar('platform', { length: 50 }).notNull(),
+  channelId: varchar('channel_id', { length: 255 }).notNull(),
+  channelName: varchar('channel_name', { length: 255 }),
+  userId: varchar('user_id', { length: 255 }).notNull(),
+  userName: varchar('user_name', { length: 255 }),
+  message: text('message').notNull(),
+  timestamp: timestamp('timestamp').notNull(),
+  threadId: varchar('thread_id', { length: 255 }),
+  replyCount: integer('reply_count').default(0).notNull(),
+  reactions: jsonb('reactions').default([]).notNull(),
+  attachments: jsonb('attachments').default([]).notNull(),
+  mentions: jsonb('mentions').default([]).notNull(),
+  embeddingVector: vector('embedding_vector', { dimensions: 1536 }),
+  extractedKnowledge: jsonb('extracted_knowledge').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('company_brain_chat_logs_org_idx').on(table.organizationId),
+  platformIdx: index('company_brain_chat_logs_platform_idx').on(table.platform),
+  channelIdx: index('company_brain_chat_logs_channel_idx').on(table.channelId),
+  userIdx: index('company_brain_chat_logs_user_idx').on(table.userId),
+  timestampIdx: index('company_brain_chat_logs_timestamp_idx').on(table.timestamp),
+}));
+
+// Automated Meeting Transcription
+export const companyBrainMeetingTranscriptions = pgTable('company_brain_meeting_transcriptions', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  platform: varchar('platform', { length: 50 }).notNull(),
+  meetingId: varchar('meeting_id', { length: 255 }).notNull(),
+  meetingTitle: varchar('meeting_title', { length: 500 }),
+  meetingUrl: text('meeting_url'),
+  startTime: timestamp('start_time').notNull(),
+  endTime: timestamp('end_time'),
+  duration: integer('duration'),
+  hostId: varchar('host_id', { length: 255 }),
+  hostName: varchar('host_name', { length: 255 }),
+  participants: jsonb('participants').default([]).notNull(),
+  transcription: text('transcription'),
+  summary: text('summary'),
+  actionItems: jsonb('action_items').default([]).notNull(),
+  decisions: jsonb('decisions').default([]).notNull(),
+  keyTopics: jsonb('key_topics').default([]).notNull(),
+  embeddingVector: vector('embedding_vector', { dimensions: 1536 }),
+  recordingUrl: text('recording_url'),
+  status: varchar('status', { length: 50 }).default('processing').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('company_brain_meeting_transcriptions_org_idx').on(table.organizationId),
+  platformIdx: index('company_brain_meeting_transcriptions_platform_idx').on(table.platform),
+  meetingIdIdx: index('company_brain_meeting_transcriptions_meeting_id_idx').on(table.meetingId),
+  startTimeIdx: index('company_brain_meeting_transcriptions_start_time_idx').on(table.startTime),
+  statusIdx: index('company_brain_meeting_transcriptions_status_idx').on(table.status),
+}));
+
+// Email Thread Mapping
+export const companyBrainEmailThreads = pgTable('company_brain_email_threads', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  threadId: varchar('thread_id', { length: 500 }).notNull(),
+  subject: varchar('subject', { length: 1000 }).notNull(),
+  sender: varchar('sender', { length: 255 }).notNull(),
+  recipients: jsonb('recipients').default([]).notNull(),
+  cc: jsonb('cc').default([]).notNull(),
+  bcc: jsonb('bcc').default([]).notNull(),
+  messageCount: integer('message_count').default(1).notNull(),
+  firstMessageDate: timestamp('first_message_date').notNull(),
+  lastMessageDate: timestamp('last_message_date').notNull(),
+  projectId: uuid('project_id'),
+  clientId: uuid('client_id'),
+  category: varchar('category', { length: 100 }),
+  priority: varchar('priority', { length: 20 }).default('normal').notNull(),
+  status: varchar('status', { length: 50 }).default('active').notNull(),
+  summary: text('summary'),
+  actionItems: jsonb('action_items').default([]).notNull(),
+  embeddingVector: vector('embedding_vector', { dimensions: 1536 }),
+  extractedKnowledge: jsonb('extracted_knowledge').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('company_brain_email_threads_org_idx').on(table.organizationId),
+  threadIdIdx: uniqueIndex('company_brain_email_threads_thread_id_idx').on(table.threadId),
+  senderIdx: index('company_brain_email_threads_sender_idx').on(table.sender),
+  projectIdx: index('company_brain_email_threads_project_idx').on(table.projectId),
+  clientIdx: index('company_brain_email_threads_client_idx').on(table.clientId),
+  statusIdx: index('company_brain_email_threads_status_idx').on(table.status),
+}));
+
+export const companyBrainEmailMessages = pgTable('company_brain_email_messages', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  threadId: uuid('thread_id').references(() => companyBrainEmailThreads.id, { onDelete: 'cascade' }).notNull(),
+  messageId: varchar('message_id', { length: 500 }).notNull(),
+  sender: varchar('sender', { length: 255 }).notNull(),
+  recipients: jsonb('recipients').default([]).notNull(),
+  subject: varchar('subject', { length: 1000 }).notNull(),
+  body: text('body').notNull(),
+  htmlBody: text('html_body'),
+  sentDate: timestamp('sent_date').notNull(),
+  attachments: jsonb('attachments').default([]).notNull(),
+  inReplyTo: varchar('in_reply_to', { length: 500 }),
+  references: jsonb('references').default([]).notNull(),
+  headers: jsonb('headers').default({}).notNull(),
+  embeddingVector: vector('embedding_vector', { dimensions: 1536 }),
+  extractedKnowledge: jsonb('extracted_knowledge').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('company_brain_email_messages_org_idx').on(table.organizationId),
+  threadIdx: index('company_brain_email_messages_thread_idx').on(table.threadId),
+  messageIdIdx: uniqueIndex('company_brain_email_messages_message_id_idx').on(table.messageId),
+  senderIdx: index('company_brain_email_messages_sender_idx').on(table.sender),
+  sentDateIdx: index('company_brain_email_messages_sent_date_idx').on(table.sentDate),
+}));
+
+// AI-Generated SOPs
+export const companyBrainSOPs = pgTable('company_brain_sops', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  title: varchar('title', { length: 500 }).notNull(),
+  description: text('description'),
+  category: varchar('category', { length: 100 }),
+  department: varchar('department', { length: 100 }),
+  process: text('process').notNull(),
+  steps: jsonb('steps').default([]).notNull(),
+  prerequisites: jsonb('prerequisites').default([]).notNull(),
+  tools: jsonb('tools').default([]).notNull(),
+  estimatedTime: varchar('estimated_time', { length: 50 }),
+  difficulty: varchar('difficulty', { length: 20 }).default('medium').notNull(),
+  status: varchar('status', { length: 50 }).default('draft').notNull(),
+  version: integer('version').default(1).notNull(),
+  sourceType: varchar('source_type', { length: 50 }).notNull(),
+  sourceId: varchar('source_id', { length: 255 }),
+  extractedFrom: jsonb('extracted_from').default([]).notNull(),
+  confidence: decimal('confidence', { precision: 3, scale: 2 }).default('0').notNull(),
+  reviewedBy: uuid('reviewed_by').references(() => users.id),
+  approvedBy: uuid('approved_by').references(() => users.id),
+  approvedAt: timestamp('approved_at'),
+  embeddingVector: vector('embedding_vector', { dimensions: 1536 }),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('company_brain_sops_org_idx').on(table.organizationId),
+  categoryIdx: index('company_brain_sops_category_idx').on(table.category),
+  departmentIdx: index('company_brain_sops_department_idx').on(table.department),
+  statusIdx: index('company_brain_sops_status_idx').on(table.status),
+  sourceTypeIdx: index('company_brain_sops_source_type_idx').on(table.sourceType),
+}));
+
+// Expertise Profiling
+export const companyBrainExpertiseProfiles = pgTable('company_brain_expertise_profiles', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  userName: varchar('user_name', { length: 255 }).notNull(),
+  skills: jsonb('skills').default([]).notNull(),
+  domains: jsonb('domains').default([]).notNull(),
+  projects: jsonb('projects').default([]).notNull(),
+  contributions: jsonb('contributions').default([]).notNull(),
+  activityScore: decimal('activity_score', { precision: 3, scale: 2 }).default('0').notNull(),
+  expertiseScore: decimal('expertise_score', { precision: 3, scale: 2 }).default('0').notNull(),
+  lastActiveAt: timestamp('last_active_at'),
+  availability: varchar('availability', { length: 20 }).default('unknown').notNull(),
+  mentorshipTopics: jsonb('mentorship_topics').default([]).notNull(),
+  embeddingVector: vector('embedding_vector', { dimensions: 1536 }),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('company_brain_expertise_profiles_org_idx').on(table.organizationId),
+  userIdx: uniqueIndex('company_brain_expertise_profiles_user_idx').on(table.userId),
+  domainIdx: index('company_brain_expertise_profiles_domain_idx').on(table.domains),
+  expertiseScoreIdx: index('company_brain_expertise_profiles_expertise_score_idx').on(table.expertiseScore),
+}));
+
+// Historical Project Linking
+export const companyBrainProjectTimelines = pgTable('company_brain_project_timelines', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  projectId: uuid('project_id').notNull(),
+  projectName: varchar('project_name', { length: 500 }).notNull(),
+  startDate: timestamp('start_date').notNull(),
+  endDate: timestamp('end_date'),
+  status: varchar('status', { length: 50 }).default('active').notNull(),
+  teamMembers: jsonb('team_members').default([]).notNull(),
+  milestones: jsonb('milestones').default([]).notNull(),
+  decisions: jsonb('decisions').default([]).notNull(),
+  files: jsonb('files').default([]).notNull(),
+  edits: jsonb('edits').default([]).notNull(),
+  communications: jsonb('communications').default([]).notNull(),
+  dependencies: jsonb('dependencies').default([]).notNull(),
+  risks: jsonb('risks').default([]).notNull(),
+  lessonsLearned: jsonb('lessons_learned').default([]).notNull(),
+  embeddingVector: vector('embedding_vector', { dimensions: 1536 }),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('company_brain_project_timelines_org_idx').on(table.organizationId),
+  projectIdIdx: uniqueIndex('company_brain_project_timelines_project_id_idx').on(table.projectId),
+  statusIdx: index('company_brain_project_timelines_status_idx').on(table.status),
+  startDateIdx: index('company_brain_project_timelines_start_date_idx').on(table.startDate),
+}));
+
+// Access Revocation & Ownership Transfer
+export const companyBrainAccessRevocations = pgTable('company_brain_access_revocations', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  userName: varchar('user_name', { length: 255 }).notNull(),
+  userEmail: varchar('user_email', { length: 255 }).notNull(),
+  revocationDate: timestamp('revocation_date').defaultNow().notNull(),
+  revokedBy: uuid('revoked_by').references(() => users.id),
+  reason: text('reason'),
+  dataPreserved: jsonb('data_preserved').default({}).notNull(),
+  accessTypes: jsonb('access_types').default([]).notNull(),
+  systemsAffected: jsonb('systems_affected').default([]).notNull(),
+  ownershipTransfers: jsonb('ownership_transfers').default([]).notNull(),
+  status: varchar('status', { length: 50 }).default('completed').notNull(),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('company_brain_access_revocations_org_idx').on(table.organizationId),
+  userIdx: index('company_brain_access_revocations_user_idx').on(table.userId),
+  revocationDateIdx: index('company_brain_access_revocations_revocation_date_idx').on(table.revocationDate),
+  statusIdx: index('company_brain_access_revocations_status_idx').on(table.status),
+}));
+
+export const companyBrainOwnershipTransfers = pgTable('company_brain_ownership_transfers', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  fromUserId: uuid('from_user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  toUserId: uuid('to_user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  fromUserName: varchar('from_user_name', { length: 255 }).notNull(),
+  toUserName: varchar('to_user_name', { length: 255 }).notNull(),
+  transferDate: timestamp('transfer_date').defaultNow().notNull(),
+  initiatedBy: uuid('initiated_by').references(() => users.id),
+  resources: jsonb('resources').default([]).notNull(),
+  permissions: jsonb('permissions').default([]).notNull(),
+  projects: jsonb('projects').default([]).notNull(),
+  documents: jsonb('documents').default([]).notNull(),
+  status: varchar('status', { length: 50 }).default('pending').notNull(),
+  completedAt: timestamp('completed_at'),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('company_brain_ownership_transfers_org_idx').on(table.organizationId),
+  fromUserIdx: index('company_brain_ownership_transfers_from_user_idx').on(table.fromUserId),
+  toUserIdx: index('company_brain_ownership_transfers_to_user_idx').on(table.toUserId),
+  transferDateIdx: index('company_brain_ownership_transfers_transfer_date_idx').on(table.transferDate),
+  statusIdx: index('company_brain_ownership_transfers_status_idx').on(table.status),
+}));
+
 export const callLogs = pgTable('call_logs', {
   id: uuid('id').primaryKey().defaultRandom(),
   organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
@@ -2238,6 +2552,502 @@ export const scheduleExecutions = pgTable('schedule_executions', {
   error: text('error'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
+
+// Company Brain - Knowledge Management System
+
+// Enums for Company Brain
+export const knowledgeNodeTypeEnum = pgEnum('knowledge_node_type', ['process', 'decision', 'client', 'project', 'technical', 'tribal', 'sop', 'workflow', 'playbook', 'meeting', 'email', 'document', 'ai_conversation', 'custom']);
+export const knowledgeSourceTypeEnum = pgEnum('knowledge_source_type', ['document', 'slack', 'email', 'jira', 'asana', 'trello', 'github', 'gitlab', 'google_drive', 'sharepoint', 'onedrive', 'notion', 'confluence', 'zoom', 'google_meet', 'ai_agent', 'manual', 'api']);
+export const knowledgeRelationshipTypeEnum = pgEnum('knowledge_relationship_type', ['related_to', 'depends_on', 'references', 'part_of', 'follows', 'precedes', 'contradicts', 'supports', 'implements', 'documents', 'mentions', 'authored_by', 'approved_by', 'reviewed_by']);
+export const knowledgeStatusEnum = pgEnum('knowledge_status', ['draft', 'active', 'archived', 'deprecated', 'verified', 'pending_review']);
+export const personTypeEnum = pgEnum('person_type', ['employee', 'client', 'partner', 'contractor', 'vendor', 'consultant']);
+export const projectStatusEnum = pgEnum('project_status', ['planning', 'active', 'on_hold', 'completed', 'cancelled', 'archived']);
+export const searchIntentEnum = pgEnum('search_intent', ['informational', 'navigational', 'transactional', 'troubleshooting', 'comparison', 'how_to', 'what_is', 'why', 'who']);
+
+// KnowledgeNode - Main knowledge storage
+export const knowledgeNodes = pgTable('knowledge_nodes', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  title: varchar('title', { length: 500 }).notNull(),
+  content: text('content').notNull(),
+  summary: text('summary'),
+  type: knowledgeNodeTypeEnum('type').notNull(),
+  sourceType: knowledgeSourceTypeEnum('source_type').notNull(),
+  sourceId: varchar('source_id', { length: 255 }),
+  sourceUrl: text('source_url'),
+  status: knowledgeStatusEnum('status').default('draft').notNull(),
+  embeddingVector: vector('embedding_vector', { dimensions: 1536 }),
+  tags: jsonb('tags').default([]).notNull(),
+  confidenceScore: decimal('confidence_score', { precision: 3, scale: 2 }).default('0.00').notNull(),
+  priorityScore: decimal('priority_score', { precision: 3, scale: 2 }).default('0.00').notNull(),
+  viewCount: integer('view_count').default(0).notNull(),
+  searchCount: integer('search_count').default(0).notNull(),
+  authorId: uuid('author_id').references(() => users.id, { onDelete: 'set null' }),
+  departmentId: uuid('department_id'),
+  projectId: uuid('project_id'),
+  clientId: uuid('client_id'),
+  verifiedBy: uuid('verified_by').references(() => users.id, { onDelete: 'set null' }),
+  verifiedAt: timestamp('verified_at'),
+  lastAccessedAt: timestamp('last_accessed_at'),
+  expiresAt: timestamp('expires_at'),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_nodes_org_idx').on(table.organizationId),
+  typeIdx: index('knowledge_nodes_type_idx').on(table.type),
+  sourceTypeIdx: index('knowledge_nodes_source_type_idx').on(table.sourceType),
+  authorIdx: index('knowledge_nodes_author_idx').on(table.authorId),
+  projectIdx: index('knowledge_nodes_project_idx').on(table.projectId),
+  clientIdx: index('knowledge_nodes_client_idx').on(table.clientId),
+  statusIdx: index('knowledge_nodes_status_idx').on(table.status),
+  createdAtIdx: index('knowledge_nodes_created_at_idx').on(table.createdAt),
+  priorityScoreIdx: index('knowledge_nodes_priority_score_idx').on(table.priorityScore),
+}));
+
+// KnowledgeRelationship - Relationships between knowledge nodes
+export const knowledgeRelationships = pgTable('knowledge_relationships', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  sourceNodeId: uuid('source_node_id').references(() => knowledgeNodes.id, { onDelete: 'cascade' }).notNull(),
+  targetNodeId: uuid('target_node_id').references(() => knowledgeNodes.id, { onDelete: 'cascade' }).notNull(),
+  relationshipType: knowledgeRelationshipTypeEnum('relationship_type').notNull(),
+  strength: decimal('strength', { precision: 3, scale: 2 }).default('0.50').notNull(),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_relationships_org_idx').on(table.organizationId),
+  sourceNodeIdx: index('knowledge_relationships_source_node_idx').on(table.sourceNodeId),
+  targetNodeIdx: index('knowledge_relationships_target_node_idx').on(table.targetNodeId),
+  relationshipTypeIdx: index('knowledge_relationships_type_idx').on(table.relationshipType),
+  sourceTargetIdx: uniqueIndex('knowledge_relationships_source_target_idx').on(table.sourceNodeId, table.targetNodeId, table.relationshipType),
+}));
+
+// Person - Extended person tracking for knowledge management
+export const knowledgePersons = pgTable('knowledge_persons', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'set null' }),
+  name: varchar('name', { length: 255 }).notNull(),
+  email: varchar('email', { length: 255 }),
+  type: personTypeEnum('type').notNull(),
+  role: varchar('role', { length: 100 }),
+  department: varchar('department', { length: 100 }),
+  expertiseAreas: jsonb('expertise_areas').default([]).notNull(),
+  knowledgeContributionScore: decimal('knowledge_contribution_score', { precision: 5, scale: 2 }).default('0.00').notNull(),
+  departureDate: timestamp('departure_date'),
+  replacementId: uuid('replacement_id').references(() => knowledgePersons.id, { onDelete: 'set null' }),
+  isCriticalKnowledgeHolder: boolean('is_critical_knowledge_holder').default(false).notNull(),
+  riskScore: decimal('risk_score', { precision: 3, scale: 2 }).default('0.00').notNull(),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_persons_org_idx').on(table.organizationId),
+  userIdIdx: index('knowledge_persons_user_idx').on(table.userId),
+  emailIdx: index('knowledge_persons_email_idx').on(table.email),
+  typeIdx: index('knowledge_persons_type_idx').on(table.type),
+  departmentIdx: index('knowledge_persons_department_idx').on(table.department),
+}));
+
+// Project - Project tracking for knowledge management
+export const knowledgeProjects = pgTable('knowledge_projects', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  name: varchar('name', { length: 255 }).notNull(),
+  description: text('description'),
+  status: projectStatusEnum('status').default('planning').notNull(),
+  startDate: timestamp('start_date'),
+  endDate: timestamp('end_date'),
+  timeline: jsonb('timeline').default({}).notNull(),
+  stakeholderIds: jsonb('stakeholder_ids').default([]).notNull(),
+  teamMemberIds: jsonb('team_member_ids').default([]).notNull(),
+  knowledgeNodeIds: jsonb('knowledge_node_ids').default([]).notNull(),
+  goals: jsonb('goals').default([]).notNull(),
+  blockers: jsonb('blockers').default([]).notNull(),
+  budget: decimal('budget', { precision: 10, scale: 2 }),
+  actualCost: decimal('actual_cost', { precision: 10, scale: 2 }),
+  progress: integer('progress').default(0).notNull(),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_projects_org_idx').on(table.organizationId),
+  statusIdx: index('knowledge_projects_status_idx').on(table.status),
+}));
+
+// Client - Client tracking for knowledge management
+export const knowledgeClients = pgTable('knowledge_clients', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  name: varchar('name', { length: 255 }).notNull(),
+  industry: varchar('industry', { length: 100 }),
+  contactInfo: jsonb('contact_info').default({}).notNull(),
+  interactionHistory: jsonb('interaction_history').default([]).notNull(),
+  preferences: jsonb('preferences').default({}).notNull(),
+  communicationPatterns: jsonb('communication_patterns').default({}).notNull(),
+  knowledgeNodeIds: jsonb('knowledge_node_ids').default([]).notNull(),
+  relationshipScore: decimal('relationship_score', { precision: 3, scale: 2 }).default('0.00').notNull(),
+  riskLevel: varchar('risk_level', { length: 20 }).default('low'),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_clients_org_idx').on(table.organizationId),
+  industryIdx: index('knowledge_clients_industry_idx').on(table.industry),
+}));
+
+// SearchQuery - Search analytics
+export const knowledgeSearchQueries = pgTable('knowledge_search_queries', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'set null' }),
+  queryText: text('query_text').notNull(),
+  resultsCount: integer('results_count').default(0).notNull(),
+  resultsClicked: jsonb('results_clicked').default([]).notNull(),
+  intentCategory: searchIntentEnum('intent_category'),
+  filters: jsonb('filters').default({}).notNull(),
+  sessionId: varchar('session_id', { length: 255 }),
+  timestamp: timestamp('timestamp').defaultNow().notNull(),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_search_queries_org_idx').on(table.organizationId),
+  userIdIdx: index('knowledge_search_queries_user_idx').on(table.userId),
+  timestampIdx: index('knowledge_search_queries_timestamp_idx').on(table.timestamp),
+  intentIdx: index('knowledge_search_queries_intent_idx').on(table.intentCategory),
+}));
+
+// Knowledge Contributions - Manual knowledge additions
+export const knowledgeContributions = pgTable('knowledge_contributions', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  knowledgeNodeId: uuid('knowledge_node_id').references(() => knowledgeNodes.id, { onDelete: 'cascade' }).notNull(),
+  contributorId: uuid('contributor_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  contributionType: varchar('contribution_type', { length: 50 }).notNull(),
+  content: text('content').notNull(),
+  status: varchar('status', { length: 50 }).default('pending').notNull(),
+  reviewedBy: uuid('reviewed_by').references(() => users.id, { onDelete: 'set null' }),
+  reviewedAt: timestamp('reviewed_at'),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_contributions_org_idx').on(table.organizationId),
+  knowledgeNodeIdx: index('knowledge_contributions_knowledge_node_idx').on(table.knowledgeNodeId),
+  contributorIdx: index('knowledge_contributions_contributor_idx').on(table.contributorId),
+  statusIdx: index('knowledge_contributions_status_idx').on(table.status),
+}));
+
+// Knowledge Verification - Verification records
+export const knowledgeVerifications = pgTable('knowledge_verifications', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  knowledgeNodeId: uuid('knowledge_node_id').references(() => knowledgeNodes.id, { onDelete: 'cascade' }).notNull(),
+  verifierId: uuid('verifier_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  status: varchar('status', { length: 50 }).default('approved').notNull(),
+  confidenceLevel: varchar('confidence_level', { length: 20 }).default('high'),
+  notes: text('notes'),
+  previousStatus: varchar('previous_status', { length: 50 }),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_verifications_org_idx').on(table.organizationId),
+  knowledgeNodeIdx: index('knowledge_verifications_knowledge_node_idx').on(table.knowledgeNodeId),
+  verifierIdx: index('knowledge_verifications_verifier_idx').on(table.verifierId),
+}));
+
+// Knowledge Analytics - Analytics data
+export const knowledgeAnalytics = pgTable('knowledge_analytics', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  metricType: varchar('metric_type', { length: 100 }).notNull(),
+  metricName: varchar('metric_name', { length: 255 }).notNull(),
+  value: decimal('value', { precision: 15, scale: 2 }).notNull(),
+  dimensions: jsonb('dimensions').default({}).notNull(),
+  period: varchar('period', { length: 50 }).notNull(),
+  recordedAt: timestamp('recorded_at').defaultNow().notNull(),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_analytics_org_idx').on(table.organizationId),
+  metricTypeIdx: index('knowledge_analytics_metric_type_idx').on(table.metricType),
+  periodIdx: index('knowledge_analytics_period_idx').on(table.period),
+  recordedAtIdx: index('knowledge_analytics_recorded_at_idx').on(table.recordedAt),
+}));
+
+// Document Uploads - Document tracking
+export const knowledgeDocuments = pgTable('knowledge_documents', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  knowledgeNodeId: uuid('knowledge_node_id').references(() => knowledgeNodes.id, { onDelete: 'cascade' }),
+  fileName: varchar('file_name', { length: 500 }).notNull(),
+  fileType: varchar('file_type', { length: 100 }).notNull(),
+  fileSize: integer('file_size').notNull(),
+  fileUrl: text('file_url').notNull(),
+  storagePath: text('storage_path'),
+  ocrProcessed: boolean('ocr_processed').default(false).notNull(),
+  ocrText: text('ocr_text'),
+  version: integer('version').default(1).notNull(),
+  parentDocumentId: uuid('parent_document_id').references(() => knowledgeDocuments.id, { onDelete: 'set null' }),
+  uploadedBy: uuid('uploaded_by').references(() => users.id, { onDelete: 'set null' }),
+  processingStatus: varchar('processing_status', { length: 50 }).default('pending').notNull(),
+  processingError: text('processing_error'),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_documents_org_idx').on(table.organizationId),
+  knowledgeNodeIdx: index('knowledge_documents_knowledge_node_idx').on(table.knowledgeNodeId),
+  uploadedByIdx: index('knowledge_documents_uploaded_by_idx').on(table.uploadedBy),
+  processingStatusIdx: index('knowledge_documents_processing_status_idx').on(table.processingStatus),
+}));
+
+// Integration Sync Logs - Track integration syncs
+export const knowledgeIntegrationSyncs = pgTable('knowledge_integration_syncs', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  integrationId: uuid('integration_id').references(() => integrations.id, { onDelete: 'cascade' }).notNull(),
+  sourceType: knowledgeSourceTypeEnum('source_type').notNull(),
+  syncType: varchar('sync_type', { length: 50 }).notNull(),
+  status: varchar('status', { length: 50 }).default('running').notNull(),
+  itemsProcessed: integer('items_processed').default(0).notNull(),
+  itemsCreated: integer('items_created').default(0).notNull(),
+  itemsUpdated: integer('items_updated').default(0).notNull(),
+  itemsFailed: integer('items_failed').default(0).notNull(),
+  errorDetails: jsonb('error_details').default([]).notNull(),
+  startedAt: timestamp('started_at').defaultNow().notNull(),
+  completedAt: timestamp('completed_at'),
+  nextSyncAt: timestamp('next_sync_at'),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_integration_syncs_org_idx').on(table.organizationId),
+  integrationIdx: index('knowledge_integration_syncs_integration_idx').on(table.integrationId),
+  sourceTypeIdx: index('knowledge_integration_syncs_source_type_idx').on(table.sourceType),
+  statusIdx: index('knowledge_integration_syncs_status_idx').on(table.status),
+}));
+
+// Onboarding Progress - Track onboarding journeys
+export const knowledgeOnboardingProgress = pgTable('knowledge_onboarding_progress', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  role: varchar('role', { length: 100 }).notNull(),
+  department: varchar('department', { length: 100 }),
+  progress: integer('progress').default(0).notNull(),
+  modulesCompleted: jsonb('modules_completed').default([]).notNull(),
+  questionsAsked: jsonb('questions_asked').default([]).notNull(),
+  knowledgeGapsIdentified: jsonb('knowledge_gaps_identified').default([]).notNull(),
+  mentorId: uuid('mentor_id').references(() => users.id, { onDelete: 'set null' }),
+  startedAt: timestamp('started_at').defaultNow().notNull(),
+  completedAt: timestamp('completed_at'),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_onboarding_progress_org_idx').on(table.organizationId),
+  userIdIdx: index('knowledge_onboarding_progress_user_idx').on(table.userId),
+  roleIdx: index('knowledge_onboarding_progress_role_idx').on(table.role),
+}));
+
+// Company Brain Internal Chat System Tables
+
+// Chat Channels - Organizational chat channels
+export const companyBrainChatChannels = pgTable('company_brain_chat_channels', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  name: varchar('name', { length: 255 }).notNull(),
+  description: text('description'),
+  type: varchar('type', { length: 50 }).notNull(), // 'public', 'private', 'direct', 'group'
+  createdBy: uuid('created_by').references(() => users.id, { onDelete: 'set null' }),
+  members: jsonb('members').default([]).notNull(), // Array of user IDs
+  admins: jsonb('admins').default([]).notNull(), // Array of user IDs
+  linkedProjectId: uuid('linked_project_id'), // Link to project timeline
+  linkedSOPId: uuid('linked_sop_id'), // Link to SOP
+  isArchived: boolean('is_archived').default(false).notNull(),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('company_brain_chat_channels_org_idx').on(table.organizationId),
+  typeIdx: index('company_brain_chat_channels_type_idx').on(table.type),
+  createdByIdx: index('company_brain_chat_channels_created_by_idx').on(table.createdBy),
+}));
+
+// Chat Conversations - Individual or group conversations
+export const companyBrainChatConversations = pgTable('company_brain_chat_conversations', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  channelId: uuid('channel_id').references(() => companyBrainChatChannels.id, { onDelete: 'cascade' }),
+  type: varchar('type', { length: 50 }).notNull(), // 'direct', 'group', 'channel'
+  participants: jsonb('participants').default([]).notNull(), // Array of user IDs
+  createdBy: uuid('created_by').references(() => users.id, { onDelete: 'set null' }),
+  title: varchar('title', { length: 255 }),
+  lastMessageAt: timestamp('last_message_at'),
+  lastMessagePreview: text('last_message_preview'),
+  isPinned: boolean('is_pinned').default(false).notNull(),
+  isArchived: boolean('is_archived').default(false).notNull(),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('company_brain_chat_conversations_org_idx').on(table.organizationId),
+  channelIdIdx: index('company_brain_chat_conversations_channel_idx').on(table.channelId),
+  typeIdx: index('company_brain_chat_conversations_type_idx').on(table.type),
+  createdByIdx: index('company_brain_chat_conversations_created_by_idx').on(table.createdBy),
+  lastMessageAtIdx: index('company_brain_chat_conversations_last_message_idx').on(table.lastMessageAt),
+}));
+
+// Chat Messages - Individual messages in conversations
+export const companyBrainChatMessages = pgTable('company_brain_chat_messages', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  conversationId: uuid('conversation_id').references(() => companyBrainChatConversations.id, { onDelete: 'cascade' }).notNull(),
+  senderId: uuid('sender_id').references(() => users.id, { onDelete: 'set null' }),
+  senderName: varchar('sender_name', { length: 255 }),
+  content: text('content').notNull(),
+  messageType: varchar('message_type', { length: 50 }).notNull(), // 'text', 'image', 'file', 'code', 'system'
+  replyToId: uuid('reply_to_id').references(() => companyBrainChatMessages.id, { onDelete: 'set null' }),
+  threadId: uuid('thread_id'), // For threaded conversations
+  mentions: jsonb('mentions').default([]).notNull(), // Array of user IDs mentioned
+  reactions: jsonb('reactions').default([]).notNull(), // Array of {emoji, userIds}
+  attachments: jsonb('attachments').default([]).notNull(), // Array of file metadata
+  isEdited: boolean('is_edited').default(false).notNull(),
+  editedAt: timestamp('edited_at'),
+  isDeleted: boolean('is_deleted').default(false).notNull(),
+  deletedAt: timestamp('deleted_at'),
+  isPinned: boolean('is_pinned').default(false).notNull(),
+  embeddingVector: vector('embedding_vector', { dimensions: 1536 }),
+  extractedKnowledge: jsonb('extracted_knowledge').default({}).notNull(), // Auto-extracted knowledge
+  linkedSOPId: uuid('linked_sop_id'), // Auto-linked SOP
+  linkedProjectId: uuid('linked_project_id'), // Auto-linked project
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('company_brain_chat_messages_org_idx').on(table.organizationId),
+  conversationIdIdx: index('company_brain_chat_messages_conversation_idx').on(table.conversationId),
+  senderIdIdx: index('company_brain_chat_messages_sender_idx').on(table.senderId),
+  threadIdIdx: index('company_brain_chat_messages_thread_idx').on(table.threadId),
+  replyToIdIdx: index('company_brain_chat_messages_reply_to_idx').on(table.replyToId),
+  createdAtIdx: index('company_brain_chat_messages_created_idx').on(table.createdAt),
+}));
+
+// Chat Threads - Threaded conversations within channels
+export const companyBrainChatThreads = pgTable('company_brain_chat_threads', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  channelId: uuid('channel_id').references(() => companyBrainChatChannels.id, { onDelete: 'cascade' }).notNull(),
+  parentMessageId: uuid('parent_message_id').references(() => companyBrainChatMessages.id, { onDelete: 'cascade' }).notNull(),
+  title: varchar('title', { length: 255 }),
+  participants: jsonb('participants').default([]).notNull(),
+  messageCount: integer('message_count').default(0).notNull(),
+  isResolved: boolean('is_resolved').default(false).notNull(),
+  resolvedBy: uuid('resolved_by').references(() => users.id, { onDelete: 'set null' }),
+  resolvedAt: timestamp('resolved_at'),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('company_brain_chat_threads_org_idx').on(table.organizationId),
+  channelIdIdx: index('company_brain_chat_threads_channel_idx').on(table.channelId),
+  parentMessageIdIdx: index('company_brain_chat_threads_parent_idx').on(table.parentMessageId),
+}));
+
+// AI Assistant Conversations - Chat with Company Brain AI
+export const companyBrainAIConversations = pgTable('company_brain_ai_conversations', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  assistantType: varchar('assistant_type', { length: 50 }).notNull(), // 'knowledge', 'onboarding', 'expertise', 'project'
+  title: varchar('title', { length: 255 }),
+  context: jsonb('context').default({}).notNull(), // Conversation context
+  messageCount: integer('message_count').default(0).notNull(),
+  lastMessageAt: timestamp('last_message_at'),
+  isArchived: boolean('is_archived').default(false).notNull(),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('company_brain_ai_conversations_org_idx').on(table.organizationId),
+  userIdIdx: index('company_brain_ai_conversations_user_idx').on(table.userId),
+  assistantTypeIdx: index('company_brain_ai_conversations_type_idx').on(table.assistantType),
+  lastMessageAtIdx: index('company_brain_ai_conversations_last_idx').on(table.lastMessageAt),
+}));
+
+// AI Assistant Messages - Messages in AI conversations
+export const companyBrainAIMessages = pgTable('company_brain_ai_messages', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  conversationId: uuid('conversation_id').references(() => companyBrainAIConversations.id, { onDelete: 'cascade' }).notNull(),
+  role: varchar('role', { length: 50 }).notNull(), // 'user', 'assistant', 'system'
+  content: text('content').notNull(),
+  sources: jsonb('sources').default([]).notNull(), // Knowledge sources used
+  confidence: decimal('confidence', { precision: 3, scale: 2 }), // AI confidence score
+  tokensUsed: integer('tokens_used'),
+  modelUsed: varchar('model_used', { length: 100 }),
+  embeddingVector: vector('embedding_vector', { dimensions: 1536 }),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('company_brain_ai_messages_org_idx').on(table.organizationId),
+  conversationIdIdx: index('company_brain_ai_messages_conversation_idx').on(table.conversationId),
+  roleIdx: index('company_brain_ai_messages_role_idx').on(table.role),
+  createdAtIdx: index('company_brain_ai_messages_created_idx').on(table.createdAt),
+}));
+
+// Real-time Collaboration Features
+export const companyBrainChatTypingIndicators = pgTable('company_brain_chat_typing', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  conversationId: uuid('conversation_id').references(() => companyBrainChatConversations.id, { onDelete: 'cascade' }).notNull(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  isTyping: boolean('is_typing').default(false).notNull(),
+  lastSeenAt: timestamp('last_seen_at').defaultNow().notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('company_brain_chat_typing_org_idx').on(table.organizationId),
+  conversationIdIdx: index('company_brain_chat_typing_conversation_idx').on(table.conversationId),
+  userIdIdx: index('company_brain_chat_typing_user_idx').on(table.userId),
+}));
+
+export const companyBrainChatReadReceipts = pgTable('company_brain_chat_read_receipts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  messageId: uuid('message_id').references(() => companyBrainChatMessages.id, { onDelete: 'cascade' }).notNull(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  readAt: timestamp('read_at').defaultNow().notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('company_brain_chat_read_receipts_org_idx').on(table.organizationId),
+  messageIdIdx: index('company_brain_chat_read_receipts_message_idx').on(table.messageId),
+  userIdIdx: index('company_brain_chat_read_receipts_user_idx').on(table.userId),
+}));
+
+// Type aliases for Company Brain Chat System
+export type CompanyBrainChatChannel = typeof companyBrainChatChannels.$inferSelect;
+export type CompanyBrainChatConversation = typeof companyBrainChatConversations.$inferSelect;
+export type CompanyBrainChatMessage = typeof companyBrainChatMessages.$inferSelect;
+export type CompanyBrainChatThread = typeof companyBrainChatThreads.$inferSelect;
+export type CompanyBrainAIConversation = typeof companyBrainAIConversations.$inferSelect;
+export type CompanyBrainAIMessage = typeof companyBrainAIMessages.$inferSelect;
+export type CompanyBrainChatTypingIndicator = typeof companyBrainChatTypingIndicators.$inferSelect;
+export type CompanyBrainChatReadReceipt = typeof companyBrainChatReadReceipts.$inferSelect;
+
+// Type aliases for Company Brain
+export type KnowledgeNode = typeof knowledgeNodes.$inferSelect;
+export type KnowledgeRelationship = typeof knowledgeRelationships.$inferSelect;
+export type KnowledgePerson = typeof knowledgePersons.$inferSelect;
+export type KnowledgeProject = typeof knowledgeProjects.$inferSelect;
+export type KnowledgeClient = typeof knowledgeClients.$inferSelect;
+export type KnowledgeSearchQuery = typeof knowledgeSearchQueries.$inferSelect;
+export type KnowledgeContribution = typeof knowledgeContributions.$inferSelect;
+export type KnowledgeVerification = typeof knowledgeVerifications.$inferSelect;
+export type KnowledgeAnalytics = typeof knowledgeAnalytics.$inferSelect;
+export type KnowledgeDocument = typeof knowledgeDocuments.$inferSelect;
+export type KnowledgeIntegrationSync = typeof knowledgeIntegrationSyncs.$inferSelect;
+export type KnowledgeOnboardingProgress = typeof knowledgeOnboardingProgress.$inferSelect;
 
 // Remaining type aliases
 export type AgentSchedule = typeof agentSchedules.$inferSelect;

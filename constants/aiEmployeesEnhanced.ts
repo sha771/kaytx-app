@@ -293,6 +293,641 @@ export interface TaskHistoryConfig {
   patternRecognition: boolean;
 }
 
+// ============================================
+// MAIN AGENT LEADERSHIP & MANAGEMENT FEATURES
+// ============================================
+
+export interface LeadershipCapabilities {
+  enabled: boolean;
+  leadershipStyle: 'transformational' | 'transactional' | 'servant' | 'situational' | 'democratic' | 'autocratic';
+  teamSize: number;
+  directReports: string[];
+  decisionAuthority: 'full' | 'shared' | 'consultative' | 'delegated';
+  strategicPlanning: boolean;
+  budgetAuthority: {
+    hasBudget: boolean;
+    budgetAmount?: string;
+    approvalLimit?: string;
+    canAllocate: boolean;
+  };
+  performanceManagement: {
+    canReview: boolean;
+    canSetGoals: boolean;
+    canProvideFeedback: boolean;
+    reviewCycle: 'weekly' | 'monthly' | 'quarterly' | 'annual';
+    kpiTracking: boolean;
+  };
+  crossDepartmentCoordination: {
+    enabled: boolean;
+    coordinatedDepartments: string[];
+    collaborationProjects: string[];
+    sharedResources: boolean;
+  };
+  crisisManagement: {
+    enabled: boolean;
+    crisisTypes: string[];
+    escalationProtocol: string[];
+    canDeclareEmergency: boolean;
+  };
+}
+
+export interface ResourceManagement {
+  enabled: boolean;
+  managedResources: {
+    type: 'human' | 'financial' | 'technological' | 'data' | 'infrastructure';
+    allocation: string;
+    utilization: number;
+    availability: string;
+  }[];
+  resourceOptimization: boolean;
+  capacityPlanning: boolean;
+  costTracking: boolean;
+}
+
+export interface StrategicPlanning {
+  enabled: boolean;
+  planningHorizon: 'short_term' | 'medium_term' | 'long_term';
+  strategicGoals: {
+    id: string;
+    objective: string;
+    kpis: string[];
+    timeline: string;
+    progress: number;
+    status: 'on_track' | 'at_risk' | 'behind' | 'completed';
+  }[];
+  scenarioPlanning: boolean;
+  riskAssessment: boolean;
+  competitiveAnalysis: boolean;
+}
+
+// ============================================
+// SUB AGENT TASK EXECUTION & SPECIALIZATION
+// ============================================
+
+export interface TaskSpecialization {
+  enabled: boolean;
+  specializationAreas: string[];
+  expertiseLevel: 'novice' | 'intermediate' | 'advanced' | 'expert' | 'master';
+  taskTypes: {
+    type: string;
+    proficiency: number; // 0.0 - 1.0
+    avgDuration: number; // seconds
+    successRate: number; // 0.0 - 1.0
+  }[];
+  preferredTasks: string[];
+  avoidedTasks: string[];
+  skillGaps: string[];
+}
+
+export interface WorkflowIntegration {
+  enabled: boolean;
+  supportedWorkflows: string[];
+  workflowTriggers: {
+    event: string;
+    action: string;
+    conditions: string[];
+  }[];
+  automationRules: {
+    ruleId: string;
+    condition: string;
+    action: string;
+    priority: number;
+  }[];
+  integrations: {
+    platform: string;
+    type: 'api' | 'webhook' | 'sdk' | 'custom';
+    status: 'connected' | 'disconnected' | 'error';
+    lastSync: string;
+  }[];
+}
+
+export interface EscalationProtocol {
+  enabled: boolean;
+  escalationLevels: {
+    level: number;
+    trigger: string;
+    escalateTo: string;
+    timeThreshold: number; // minutes
+    autoEscalate: boolean;
+  }[];
+  emergencyContacts: string[];
+  escalationHistory: {
+    id: string;
+    from: string;
+    to: string;
+    reason: string;
+    timestamp: string;
+    resolved: boolean;
+  }[];
+}
+
+export interface PerformanceMetrics {
+  enabled: boolean;
+  metrics: {
+    taskId: string;
+    taskType: string;
+    duration: number;
+    quality: number; // 0.0 - 1.0
+    efficiency: number; // 0.0 - 1.0
+    timestamp: string;
+  }[];
+  benchmarks: {
+    metric: string;
+    target: number;
+    current: number;
+    trend: 'improving' | 'stable' | 'declining';
+  }[];
+  alerts: {
+    metric: string;
+    threshold: number;
+    condition: 'above' | 'below';
+    notification: boolean;
+  }[];
+}
+
+// ============================================
+// WORKFLOW AUTOMATION & INTEGRATION OPTIONS
+// ============================================
+
+export interface AutomationCapabilities {
+  enabled: boolean;
+  automationLevel: 'manual' | 'semi_automated' | 'fully_automated' | 'intelligent';
+  automatedTasks: string[];
+  triggerConditions: string[];
+  workflowTemplates: {
+    templateId: string;
+    name: string;
+    steps: string[];
+    estimatedDuration: number;
+    successRate: number;
+  }[];
+  customWorkflows: {
+    workflowId: string;
+    name: string;
+    description: string;
+    triggers: string[];
+    actions: string[];
+    conditions: string[];
+  }[];
+}
+
+export interface IntegrationOptions {
+  enabled: boolean;
+  integrations: {
+    id: string;
+    name: string;
+    type: 'crm' | 'erp' | 'communication' | 'analytics' | 'storage' | 'security' | 'custom';
+    status: 'active' | 'inactive' | 'error';
+    configuration: {
+      apiKey?: string;
+      endpoint?: string;
+      version?: string;
+      settings?: Record<string, any>;
+    };
+    lastSync: string;
+    syncFrequency: 'real_time' | 'hourly' | 'daily' | 'weekly';
+  }[];
+  webhooks: {
+    webhookId: string;
+    url: string;
+    events: string[];
+    headers: Record<string, string>;
+    active: boolean;
+  }[];
+  apiEndpoints: {
+    endpointId: string;
+    path: string;
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+    authentication: string;
+    rateLimit: number;
+  }[];
+}
+
+// ============================================
+// SECURITY, COMPLIANCE & GOVERNANCE
+// ============================================
+
+export interface SecurityConfiguration {
+  enabled: boolean;
+  accessLevel: 'public' | 'internal' | 'restricted' | 'confidential' | 'top_secret';
+  authentication: {
+    method: 'none' | 'api_key' | 'oauth' | 'jwt' | 'custom';
+    mfaEnabled: boolean;
+    sessionTimeout: number; // minutes
+  };
+  dataEncryption: {
+    atRest: boolean;
+    inTransit: boolean;
+    algorithm: string;
+    keyRotation: number; // days
+  };
+  auditLogging: {
+    enabled: boolean;
+    logLevel: 'basic' | 'detailed' | 'comprehensive';
+    retentionPeriod: number; // days
+    logEvents: string[];
+  };
+  compliance: {
+    frameworks: string[];
+    certifications: string[];
+    lastAudit: string;
+    nextAudit: string;
+    complianceStatus: 'compliant' | 'non_compliant' | 'pending_review';
+  };
+  dataPrivacy: {
+    gdprCompliant: boolean;
+    dataResidency: string[];
+    anonymization: boolean;
+    consentManagement: boolean;
+  };
+}
+
+export interface GovernancePolicies {
+  enabled: boolean;
+  policies: {
+    policyId: string;
+    name: string;
+    type: 'operational' | 'security' | 'compliance' | 'ethical' | 'data';
+    description: string;
+    enforced: boolean;
+    lastUpdated: string;
+  }[];
+  approvalWorkflows: {
+    workflowId: string;
+    name: string;
+    approvers: string[];
+    conditions: string[];
+    required: boolean;
+  }[];
+  ethicalGuidelines: {
+    enabled: boolean;
+    guidelines: string[];
+    biasDetection: boolean;
+    fairnessChecks: boolean;
+    transparencyLevel: 'low' | 'medium' | 'high';
+  };
+}
+
+// ============================================
+// PERFORMANCE MONITORING & ANALYTICS
+// ============================================
+
+export interface MonitoringConfiguration {
+  enabled: boolean;
+  monitoringLevel: 'basic' | 'standard' | 'comprehensive' | 'enterprise';
+  metrics: {
+    cpu: boolean;
+    memory: boolean;
+    responseTime: boolean;
+    errorRate: boolean;
+    throughput: boolean;
+    customMetrics: string[];
+  };
+  alerts: {
+    metric: string;
+    threshold: number;
+    operator: 'greater_than' | 'less_than' | 'equals';
+    severity: 'info' | 'warning' | 'error' | 'critical';
+    notificationChannels: string[];
+  }[];
+  dashboards: {
+    dashboardId: string;
+    name: string;
+    widgets: string[];
+    refreshInterval: number; // seconds
+    sharedWith: string[];
+  }[];
+  reports: {
+    reportId: string;
+    name: string;
+    type: 'performance' | 'usage' | 'error' | 'custom';
+    schedule: string;
+    recipients: string[];
+    format: 'pdf' | 'csv' | 'json' | 'html';
+  }[];
+}
+
+export interface AnalyticsConfiguration {
+  enabled: boolean;
+  analyticsLevel: 'basic' | 'advanced' | 'predictive' | 'ai_driven';
+  dataSources: string[];
+  analysisTypes: ('descriptive' | 'diagnostic' | 'predictive' | 'prescriptive')[];
+  models: {
+    modelId: string;
+    name: string;
+    type: 'classification' | 'regression' | 'clustering' | 'anomaly_detection' | 'time_series';
+    accuracy: number;
+    lastTrained: string;
+    trainingDataSize: number;
+  }[];
+  insights: {
+    insightId: string;
+    type: string;
+    description: string;
+    confidence: number;
+    actionable: boolean;
+    impact: 'low' | 'medium' | 'high' | 'critical';
+    createdAt: string;
+  }[];
+}
+
+// ============================================
+// HELPER FUNCTIONS FOR AGENT CONFIGURATION
+// ============================================
+
+/**
+ * Apply default leadership configuration for main agents
+ */
+export const applyMainAgentDefaults = (agent: AIEmployee): AIEmployee => {
+  if (agent.type !== 'main_agent' && agent.type !== 'employee') return agent;
+
+  return {
+    ...agent,
+    leadership: {
+      enabled: true,
+      leadershipStyle: 'transformational',
+      teamSize: 0,
+      directReports: [],
+      decisionAuthority: 'shared',
+      strategicPlanning: true,
+      budgetAuthority: {
+        hasBudget: false,
+        canAllocate: false,
+      },
+      performanceManagement: {
+        canReview: true,
+        canSetGoals: true,
+        canProvideFeedback: true,
+        reviewCycle: 'monthly',
+        kpiTracking: true,
+      },
+      crossDepartmentCoordination: {
+        enabled: true,
+        coordinatedDepartments: [],
+        collaborationProjects: [],
+        sharedResources: true,
+      },
+      crisisManagement: {
+        enabled: true,
+        crisisTypes: [],
+        escalationProtocol: [],
+        canDeclareEmergency: false,
+      },
+    },
+    resourceManagement: {
+      enabled: true,
+      managedResources: [],
+      resourceOptimization: true,
+      capacityPlanning: true,
+      costTracking: true,
+    },
+    strategicPlanning: {
+      enabled: true,
+      planningHorizon: 'medium_term',
+      strategicGoals: [],
+      scenarioPlanning: true,
+      riskAssessment: true,
+      competitiveAnalysis: true,
+    },
+    security: {
+      enabled: true,
+      accessLevel: 'internal',
+      authentication: {
+        method: 'jwt',
+        mfaEnabled: true,
+        sessionTimeout: 60,
+      },
+      dataEncryption: {
+        atRest: true,
+        inTransit: true,
+        algorithm: 'AES-256',
+        keyRotation: 90,
+      },
+      auditLogging: {
+        enabled: true,
+        logLevel: 'detailed',
+        retentionPeriod: 365,
+        logEvents: ['login', 'access', 'modification', 'deletion'],
+      },
+      compliance: {
+        frameworks: [],
+        certifications: [],
+        lastAudit: '',
+        nextAudit: '',
+        complianceStatus: 'compliant',
+      },
+      dataPrivacy: {
+        gdprCompliant: true,
+        dataResidency: [],
+        anonymization: true,
+        consentManagement: true,
+      },
+    },
+    governance: {
+      enabled: true,
+      policies: [],
+      approvalWorkflows: [],
+      ethicalGuidelines: {
+        enabled: true,
+        guidelines: [],
+        biasDetection: true,
+        fairnessChecks: true,
+        transparencyLevel: 'high',
+      },
+    },
+    monitoring: {
+      enabled: true,
+      monitoringLevel: 'standard',
+      metrics: {
+        cpu: true,
+        memory: true,
+        responseTime: true,
+        errorRate: true,
+        throughput: true,
+        customMetrics: [],
+      },
+      alerts: [],
+      dashboards: [],
+      reports: [],
+    },
+    analytics: {
+      enabled: true,
+      analyticsLevel: 'advanced',
+      dataSources: [],
+      analysisTypes: ['descriptive', 'diagnostic', 'predictive'],
+      models: [],
+      insights: [],
+    },
+  };
+};
+
+/**
+ * Apply default task execution configuration for sub agents
+ */
+export const applySubAgentDefaults = (agent: AIEmployee): AIEmployee => {
+  if (agent.type !== 'subagent' && agent.type !== 'agent') return agent;
+
+  return {
+    ...agent,
+    taskSpecialization: {
+      enabled: true,
+      specializationAreas: [],
+      expertiseLevel: 'intermediate',
+      taskTypes: [],
+      preferredTasks: [],
+      avoidedTasks: [],
+      skillGaps: [],
+    },
+    workflowIntegration: {
+      enabled: true,
+      supportedWorkflows: [],
+      workflowTriggers: [],
+      automationRules: [],
+      integrations: [],
+    },
+    escalationProtocol: {
+      enabled: true,
+      escalationLevels: [],
+      emergencyContacts: [],
+      escalationHistory: [],
+    },
+    performanceMetrics: {
+      enabled: true,
+      metrics: [],
+      benchmarks: [],
+      alerts: [],
+    },
+    automation: {
+      enabled: true,
+      automationLevel: 'semi_automated',
+      automatedTasks: [],
+      triggerConditions: [],
+      workflowTemplates: [],
+      customWorkflows: [],
+    },
+    integrations: {
+      enabled: true,
+      integrations: [],
+      webhooks: [],
+      apiEndpoints: [],
+    },
+    security: {
+      enabled: true,
+      accessLevel: 'internal',
+      authentication: {
+        method: 'jwt',
+        mfaEnabled: false,
+        sessionTimeout: 30,
+      },
+      dataEncryption: {
+        atRest: true,
+        inTransit: true,
+        algorithm: 'AES-256',
+        keyRotation: 90,
+      },
+      auditLogging: {
+        enabled: true,
+        logLevel: 'basic',
+        retentionPeriod: 90,
+        logEvents: ['access', 'modification'],
+      },
+      compliance: {
+        frameworks: [],
+        certifications: [],
+        lastAudit: '',
+        nextAudit: '',
+        complianceStatus: 'compliant',
+      },
+      dataPrivacy: {
+        gdprCompliant: true,
+        dataResidency: [],
+        anonymization: true,
+        consentManagement: false,
+      },
+    },
+    monitoring: {
+      enabled: true,
+      monitoringLevel: 'basic',
+      metrics: {
+        cpu: true,
+        memory: true,
+        responseTime: true,
+        errorRate: true,
+        throughput: false,
+        customMetrics: [],
+      },
+      alerts: [],
+      dashboards: [],
+      reports: [],
+    },
+    analytics: {
+      enabled: true,
+      analyticsLevel: 'basic',
+      dataSources: [],
+      analysisTypes: ['descriptive'],
+      models: [],
+      insights: [],
+    },
+  };
+};
+
+/**
+ * Enable specific feature for an agent
+ */
+export const enableFeature = (agent: AIEmployee, feature: string): AIEmployee => {
+  const updatedAgent = { ...agent };
+
+  switch (feature) {
+    case 'leadership':
+      updatedAgent.leadership = { enabled: true, leadershipStyle: 'transformational', teamSize: 0, directReports: [], decisionAuthority: 'shared', strategicPlanning: true, budgetAuthority: { hasBudget: false, canAllocate: false }, performanceManagement: { canReview: true, canSetGoals: true, canProvideFeedback: true, reviewCycle: 'monthly', kpiTracking: true }, crossDepartmentCoordination: { enabled: true, coordinatedDepartments: [], collaborationProjects: [], sharedResources: true }, crisisManagement: { enabled: true, crisisTypes: [], escalationProtocol: [], canDeclareEmergency: false } };
+      break;
+    case 'taskSpecialization':
+      updatedAgent.taskSpecialization = { enabled: true, specializationAreas: [], expertiseLevel: 'intermediate', taskTypes: [], preferredTasks: [], avoidedTasks: [], skillGaps: [] };
+      break;
+    case 'automation':
+      updatedAgent.automation = { enabled: true, automationLevel: 'semi_automated', automatedTasks: [], triggerConditions: [], workflowTemplates: [], customWorkflows: [] };
+      break;
+    case 'security':
+      updatedAgent.security = { enabled: true, accessLevel: 'internal', authentication: { method: 'jwt', mfaEnabled: true, sessionTimeout: 60 }, dataEncryption: { atRest: true, inTransit: true, algorithm: 'AES-256', keyRotation: 90 }, auditLogging: { enabled: true, logLevel: 'detailed', retentionPeriod: 365, logEvents: ['login', 'access', 'modification', 'deletion'] }, compliance: { frameworks: [], certifications: [], lastAudit: '', nextAudit: '', complianceStatus: 'compliant' }, dataPrivacy: { gdprCompliant: true, dataResidency: [], anonymization: true, consentManagement: true } };
+      break;
+    case 'monitoring':
+      updatedAgent.monitoring = { enabled: true, monitoringLevel: 'standard', metrics: { cpu: true, memory: true, responseTime: true, errorRate: true, throughput: true, customMetrics: [] }, alerts: [], dashboards: [], reports: [] };
+      break;
+    case 'analytics':
+      updatedAgent.analytics = { enabled: true, analyticsLevel: 'advanced', dataSources: [], analysisTypes: ['descriptive', 'diagnostic', 'predictive'], models: [], insights: [] };
+      break;
+  }
+
+  return updatedAgent;
+};
+
+/**
+ * Get available features for an agent type
+ */
+export const getAvailableFeatures = (agentType: string): string[] => {
+  const mainAgentFeatures = ['leadership', 'resourceManagement', 'strategicPlanning', 'automation', 'integrations', 'security', 'governance', 'monitoring', 'analytics'];
+  const subAgentFeatures = ['taskSpecialization', 'workflowIntegration', 'escalationProtocol', 'performanceMetrics', 'automation', 'integrations', 'security', 'monitoring', 'analytics'];
+
+  if (agentType === 'main_agent' || agentType === 'employee') {
+    return mainAgentFeatures;
+  } else if (agentType === 'subagent' || agentType === 'agent') {
+    return subAgentFeatures;
+  }
+  return [];
+};
+
+/**
+ * Apply all default configurations to an agent based on type
+ */
+export const applyAgentDefaults = (agent: AIEmployee): AIEmployee => {
+  if (agent.type === 'main_agent' || agent.type === 'employee') {
+    return applyMainAgentDefaults(agent);
+  } else if (agent.type === 'subagent' || agent.type === 'agent') {
+    return applySubAgentDefaults(agent);
+  }
+  return agent;
+};
+
 export interface AIEmployee {
   id: string;
   name: string;
@@ -332,6 +967,29 @@ export interface AIEmployee {
   notes?: EmployeeNotesCapability;
   d2dConfig?: D2DCommunicationConfig;
   taskHistory?: TaskHistoryConfig;
+
+  // Main Agent Leadership & Management Features
+  leadership?: LeadershipCapabilities;
+  resourceManagement?: ResourceManagement;
+  strategicPlanning?: StrategicPlanning;
+
+  // Sub Agent Task Execution & Specialization
+  taskSpecialization?: TaskSpecialization;
+  workflowIntegration?: WorkflowIntegration;
+  escalationProtocol?: EscalationProtocol;
+  performanceMetrics?: PerformanceMetrics;
+
+  // Workflow Automation & Integration Options
+  automation?: AutomationCapabilities;
+  integrations?: IntegrationOptions;
+
+  // Security, Compliance & Governance
+  security?: SecurityConfiguration;
+  governance?: GovernancePolicies;
+
+  // Performance Monitoring & Analytics
+  monitoring?: MonitoringConfiguration;
+  analytics?: AnalyticsConfiguration;
 
   // Agent Hierarchy & Consulting (for aiAgentHierarchy compatibility)
   hierarchy?: {
@@ -3789,4 +4447,71 @@ export const agentHierarchy = {
   totalSubAgents: allSubAgents.length,
   totalMainAgents: mainAgents.length,
   totalAgents: allAgents.length
+};
+
+// ============================================
+// ENHANCED AGENT COLLECTIONS WITH NEW FEATURES
+// ============================================
+
+/**
+ * Enhanced agent arrays with new features and options applied
+ */
+export const enhancedMainAgents = mainAgents.map(agent => applyMainAgentDefaults(agent));
+export const enhancedSubAgents = allSubAgents.map(agent => applySubAgentDefaults(agent));
+export const enhancedAllAgents = allAgents.map(agent => applyAgentDefaults(agent));
+
+/**
+ * Query functions for filtering agents by features
+ */
+export const getAgentsWithFeature = (feature: string, agents: AIEmployee[] = allAgents): AIEmployee[] => {
+  return agents.filter(agent => {
+    switch (feature) {
+      case 'leadership': return agent.leadership?.enabled;
+      case 'taskSpecialization': return agent.taskSpecialization?.enabled;
+      case 'automation': return agent.automation?.enabled;
+      case 'security': return agent.security?.enabled;
+      case 'monitoring': return agent.monitoring?.enabled;
+      case 'analytics': return agent.analytics?.enabled;
+      case 'resourceManagement': return agent.resourceManagement?.enabled;
+      case 'strategicPlanning': return agent.strategicPlanning?.enabled;
+      case 'workflowIntegration': return agent.workflowIntegration?.enabled;
+      case 'escalationProtocol': return agent.escalationProtocol?.enabled;
+      case 'performanceMetrics': return agent.performanceMetrics?.enabled;
+      case 'integrations': return agent.integrations?.enabled;
+      case 'governance': return agent.governance?.enabled;
+      default: return false;
+    }
+  });
+};
+
+export const getAgentsByLeadershipStyle = (style: string): AIEmployee[] => {
+  return enhancedMainAgents.filter(agent => agent.leadership?.leadershipStyle === style);
+};
+
+export const getAgentsByAutomationLevel = (level: string): AIEmployee[] => {
+  return enhancedAllAgents.filter(agent => agent.automation?.automationLevel === level);
+};
+
+export const getAgentsByExpertiseLevel = (level: string): AIEmployee[] => {
+  return enhancedSubAgents.filter(agent => agent.taskSpecialization?.expertiseLevel === level);
+};
+
+export const getAgentsBySecurityLevel = (level: string): AIEmployee[] => {
+  return enhancedAllAgents.filter(agent => agent.security?.accessLevel === level);
+};
+
+export const getMainAgentsWithReports = (): AIEmployee[] => {
+  return enhancedMainAgents.filter(agent => agent.leadership?.directReports && agent.leadership.directReports.length > 0);
+};
+
+export const getSubAgentsWithEscalation = (): AIEmployee[] => {
+  return enhancedSubAgents.filter(agent => agent.escalationProtocol?.escalationLevels && agent.escalationProtocol.escalationLevels.length > 0);
+};
+
+export const getAgentsByMonitoringLevel = (level: string): AIEmployee[] => {
+  return enhancedAllAgents.filter(agent => agent.monitoring?.monitoringLevel === level);
+};
+
+export const getAgentsByAnalyticsLevel = (level: string): AIEmployee[] => {
+  return enhancedAllAgents.filter(agent => agent.analytics?.analyticsLevel === level);
 };

@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
   TextInput,
+  Dimensions,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import {
@@ -32,6 +33,7 @@ import {
   Phone,
   Mail,
   Handshake,
+  ChartLine,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BlurView } from 'expo-blur';
@@ -44,11 +46,540 @@ import {
   getMainAgentByCategory,
   updateAgentConfiguration,
 } from '@/constants/aiAgentHierarchy';
+import { LineChart, BarChart, PieChart } from 'react-native-chart-kit';
+
+// Chart Data
+const SALES_PERFORMANCE_DATA = {
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+  datasets: [
+    {
+      data: [125000, 145000, 138000, 165000, 178000, 195000],
+      color: (opacity = 1) => `rgba(52, 199, 89, ${opacity})`,
+      strokeWidth: 2,
+    },
+  ],
+    comprehensiveFeatures: {
+  "communicationChannels": {
+    "call": {
+      "enabled": true,
+      "provider": "Twilio",
+      "features": [
+        "PBX Integration",
+        "IVR Menu",
+        "Call Routing",
+        "Call Recording",
+        "Transcriptions"
+      ],
+      "recordingRetention": "90 days",
+      "consentLogging": true
+    },
+    "chatSystem": {
+      "enabled": true,
+      "platforms": [
+        "Web Widget",
+        "Slack",
+        "Intercom",
+        "Microsoft Teams"
+      ],
+      "persistentThreads": true,
+      "transcriptExport": true
+    },
+    "sms": {
+      "enabled": true,
+      "provider": "Twilio",
+      "features": [
+        "Templated Messages",
+        "Two-Way Support",
+        "Opt-Out Handling"
+      ],
+      "number": "TBD"
+    },
+    "voice": {
+      "enabled": true,
+      "primaryDID": "TBD",
+      "ttsVoice": "default",
+      "failoverNumbers": [],
+      "geoRouting": true
+    },
+    "recording": {
+      "enabled": true,
+      "autoRecording": true,
+      "consentLogging": true,
+      "transcriptGeneration": true,
+      "scriptTemplates": []
+    },
+    "location": {
+      "allowedRegions": [
+        "Global"
+      ],
+      "timezoneAware": true,
+      "localeFormats": [
+        "en-US",
+        "en-GB",
+        "es-ES",
+        "fr-FR",
+        "de-DE"
+      ]
+    }
+  },
+  "companySetup": {
+    "profile": {
+      "enabled": true,
+      "fields": [
+        "Company Name",
+        "Industry",
+        "Size",
+        "Location"
+      ]
+    },
+    "products": {
+      "enabled": true,
+      "catalog": true,
+      "pricingTiers": true
+    },
+    "negotiationRules": {
+      "enabled": true,
+      "templates": true,
+      "maxConcession": "10%"
+    }
+  },
+  "generalInfo": {
+    "name": "",
+    "role": "",
+    "availability": "24/7",
+    "personality": "professional",
+    "tone": "conversational",
+    "voice": "neutral"
+  },
+  "modelConfig": {
+    "modelName": "LLM-X v2",
+    "modelFamily": "GPT-4",
+    "version": "latest",
+    "primaryLanguage": "en-US",
+    "fallbackLanguages": [
+      "es",
+      "fr",
+      "de"
+    ],
+    "multilingualSupport": true
+  },
+  "timing": {
+    "businessHours": {
+      "enabled": true,
+      "schedule": "Mon-Fri 09:00-18:00 local",
+      "timezone": "UTC",
+      "holidays": []
+    },
+    "waitingDuration": {
+      "call": 120,
+      "chat": 30,
+      "sms": 0
+    },
+    "appointmentScheduling": {
+      "enabled": true,
+      "calendars": [
+        "Google",
+        "Outlook"
+      ],
+      "timezoneHandling": "automatic"
+    }
+  },
+  "pricing": {
+    "pricingModel": "fixed monthly",
+    "priceLimit": "TBD",
+    "negotiationRules": {
+      "enabled": true,
+      "maxConcession": "10%",
+      "autoNegotiation": false
+    }
+  },
+  "integrations": {
+    "crm": [
+      "Salesforce",
+      "HubSpot",
+      "Zendesk"
+    ],
+    "ticketing": [
+      "Zendesk",
+      "Freshdesk",
+      "Jira"
+    ],
+    "calendar": [
+      "Google Calendar",
+      "Outlook Calendar"
+    ],
+    "telephony": [
+      "Twilio",
+      "Vonage",
+      "RingCentral"
+    ],
+    "analytics": [
+      "Google Analytics",
+      "Mixpanel",
+      "Amplitude"
+    ],
+    "mcpConnectors": []
+  },
+  "responsibilities": {
+    "taskRouting": {
+      "method": "intent-based",
+      "escalationPath": "human after 3 failed handoffs",
+      "slaEnforcement": true
+    },
+    "appointmentScheduling": {
+      "enabled": true,
+      "rules": []
+    }
+  },
+  "taskManagement": {
+    "assignedTasks": {
+      "queue": true,
+      "slaTimers": true,
+      "dependencies": true
+    },
+    "progressTracking": {
+      "enabled": true,
+      "metrics": [
+        "completion percentage",
+        "time remaining"
+      ]
+    }
+  },
+  "behaviour": {
+    "safetyFilters": {
+      "enabled": true,
+      "restrictedDomains": [
+        "legal",
+        "medical",
+        "financial advice"
+      ]
+    },
+    "refusalTemplates": {
+      "enabled": true
+    },
+    "rateLimits": {
+      "enabled": true,
+      "requestsPerMinute": 60
+    }
+  },
+  "performance": {
+    "metrics": {
+      "latency": true,
+      "accuracy": true,
+      "successRate": true,
+      "userSatisfaction": true
+    },
+    "reporting": {
+      "dashboards": true,
+      "scheduledReports": true,
+      "cadence": [
+        "daily",
+        "weekly",
+        "monthly"
+      ]
+    }
+  },
+  "summary": {
+    "enabled": true,
+    "adminNotes": "",
+    "handoverContext": true
+  },
+  "predictive": {
+    "forecasting": {
+      "enabled": true,
+      "models": []
+    },
+    "anomalyDetection": {
+      "enabled": true,
+      "triggers": []
+    }
+  },
+  "regulations": {
+    "compliance": {
+      "gdpr": true,
+      "hipaa": false,
+      "soc2": false,
+      "regional": true
+    },
+    "dataResidency": {
+      "enabled": true,
+      "regions": []
+    },
+    "consentPolicies": {
+      "enabled": true
+    }
+  },
+  "memory": {
+    "session": {
+      "duration": "30 minutes",
+      "retention": true
+    },
+    "longTerm": {
+      "duration": "365 days",
+      "retention": true
+    },
+    "piiRedaction": {
+      "enabled": true
+    },
+    "purgeSchedule": "quarterly"
+  },
+  "detailedSetup": {
+    "onboardingFlow": true,
+    "productPricingSetup": true,
+    "negotiationRulesSetup": true,
+    "trainingPlan": true,
+    "knowledgeBaseImport": true,
+    "voicePersonalityTuning": true,
+    "businessHoursSetup": true,
+    "additionalConfigs": []
+  },
+  "twoStepVerification": {
+    "enabled": true,
+    "criticalActions": [
+      "billing",
+      "admin modifications",
+      "data export"
+    ],
+    "deviceCheck": true
+  },
+  "importExport": {
+    "endpoints": [
+      "CSV",
+      "JSON"
+    ],
+    "scheduledExports": true,
+    "retentionPolicy": true,
+    "complianceControls": true
+  },
+  "reports": {
+    "types": [
+      "performance",
+      "usage",
+      "errors",
+      "compliance"
+    ],
+    "cadence": [
+      "daily",
+      "weekly",
+      "monthly"
+    ],
+    "deliveryChannels": [
+      "email",
+      "dashboard",
+      "webhook"
+    ]
+  },
+  "mcpIntegrations": {
+    "connectors": [],
+    "apiSpecs": [],
+    "mapping": []
+  }
+}};
+
+const AGENT_PRODUCTIVITY_DATA = {
+  labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+  datasets: [
+    {
+      data: [85, 92, 88, 95, 90, 75, 70],
+    },
+  ],
+};
+
+const REVENUE_SOURCES_DATA = [
+  {
+    name: 'Direct Sales',
+    population: 45,
+    color: '#34C759',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'Referrals',
+    population: 25,
+    color: '#3B82F6',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'Marketing',
+    population: 20,
+    color: '#F59E0B',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'Partners',
+    population: 10,
+    color: '#8B5CF6',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+];
+
+const CONVERSION_RATE_DATA = {
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+  datasets: [
+    {
+      data: [3.2, 3.8, 4.1, 4.5, 4.8, 5.2],
+      color: (opacity = 1) => `rgba(16, 185, 129, ${opacity})`,
+      strokeWidth: 2,
+    },
+  ],
+};
+
+const DEAL_SIZE_DATA = {
+  labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+  datasets: [
+    {
+      data: [25000, 32000, 28000, 35000],
+      color: (opacity = 1) => `rgba(59, 130, 246, ${opacity})`,
+      strokeWidth: 2,
+    },
+  ],
+};
+
+const SALES_CYCLE_DATA = [
+  {
+    name: '< 30 days',
+    population: 35,
+    color: '#10B981',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: '30-60 days',
+    population: 30,
+    color: '#3B82F6',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: '60-90 days',
+    population: 20,
+    color: '#F59E0B',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: '> 90 days',
+    population: 15,
+    color: '#EF4444',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+];
+
+const QUOTA_ACHIEVEMENT_DATA = {
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+  datasets: [
+    {
+      data: [92, 105, 98, 112, 108, 118],
+      color: (opacity = 1) => `rgba(16, 185, 129, ${opacity})`,
+      strokeWidth: 2,
+    },
+  ],
+};
+
+const PIPELINE_VELOCITY_DATA = {
+  labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+  datasets: [
+    {
+      data: [28, 32, 35, 38],
+      color: (opacity = 1) => `rgba(59, 130, 246, ${opacity})`,
+      strokeWidth: 2,
+    },
+  ],
+};
+
+const REGIONAL_PERFORMANCE_DATA = [
+  {
+    name: 'North',
+    population: 35,
+    color: '#10B981',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'South',
+    population: 25,
+    color: '#3B82F6',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'East',
+    population: 22,
+    color: '#F59E0B',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'West',
+    population: 18,
+    color: '#8B5CF6',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+];
+
+const SALES_CYCLE_TREND_DATA = {
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+  datasets: [
+    {
+      data: [45, 42, 38, 35, 32, 28],
+      color: (opacity = 1) => `rgba(16, 185, 129, ${opacity})`,
+      strokeWidth: 2,
+    },
+  ],
+};
+
+const CUSTOMER_ACQUISITION_DATA = {
+  labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+  datasets: [
+    {
+      data: [120, 145, 168, 195],
+      color: (opacity = 1) => `rgba(59, 130, 246, ${opacity})`,
+      strokeWidth: 2,
+    },
+  ],
+};
+
+const PRODUCT_CATEGORY_DATA = [
+  {
+    name: 'Enterprise',
+    population: 40,
+    color: '#10B981',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'SMB',
+    population: 30,
+    color: '#3B82F6',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'Consumer',
+    population: 20,
+    color: '#F59E0B',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+  {
+    name: 'Government',
+    population: 10,
+    color: '#8B5CF6',
+    legendFontColor: '#fff',
+    legendFontSize: 12,
+  },
+];
 
 export default function SalesAgentsScreen() {
   const router = useRouter();
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
+  const screenWidth = Dimensions.get('window').width;
 
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilters, setShowFilters] = useState(false);
@@ -74,6 +605,99 @@ export default function SalesAgentsScreen() {
     withVoice: salesRevenueSubAgents.filter(a => a.configuration?.voice.enabled).length,
     withTraining: salesRevenueSubAgents.filter(a => a.configuration?.training.enabled).length,
   };
+
+  const renderLineChart = (data: any, title: string, color: string) => (
+    <Animated.View entering={FadeInUp} style={[styles.chartCard, { backgroundColor: colors.card }]}>
+      <View style={styles.chartHeader}>
+        <Text style={[styles.chartTitle, { color: colors.text }]}>{title}</Text>
+        <TouchableOpacity>
+          <ChartLine size={18} color={colors.primary} />
+        </TouchableOpacity>
+      </View>
+      <LineChart
+        data={data}
+        width={screenWidth - 64}
+        height={200}
+        chartConfig={{
+          backgroundColor: colors.card,
+          backgroundGradientFrom: colors.card,
+          backgroundGradientTo: colors.card,
+          decimalPlaces: 0,
+          color: (opacity = 1) => color,
+          labelColor: colors.text + '80',
+          style: {
+            borderRadius: 16,
+          },
+          propsForDots: {
+            r: '4',
+            strokeWidth: '2',
+            stroke: color,
+          },
+        }}
+        bezier
+        style={styles.chart}
+      />
+    </Animated.View>
+  );
+
+  const renderBarChart = (data: any, title: string) => (
+    <Animated.View entering={FadeInUp} style={[styles.chartCard, { backgroundColor: colors.card }]}>
+      <View style={styles.chartHeader}>
+        <Text style={[styles.chartTitle, { color: colors.text }]}>{title}</Text>
+        <TouchableOpacity>
+          <ChartBarBig size={18} color={colors.primary} />
+        </TouchableOpacity>
+      </View>
+      <BarChart
+        data={data}
+        width={screenWidth - 64}
+        height={200}
+        chartConfig={{
+          backgroundColor: colors.card,
+          backgroundGradientFrom: colors.card,
+          backgroundGradientTo: colors.card,
+          decimalPlaces: 0,
+          color: (opacity = 1) => colors.primary,
+          labelColor: colors.text + '80',
+          style: {
+            borderRadius: 16,
+          },
+        }}
+        style={styles.chart}
+      />
+    </Animated.View>
+  );
+
+  const renderPieChart = (data: any, title: string) => (
+    <Animated.View entering={FadeInUp} style={[styles.chartCard, { backgroundColor: colors.card }]}>
+      <View style={styles.chartHeader}>
+        <Text style={[styles.chartTitle, { color: colors.text }]}>{title}</Text>
+        <TouchableOpacity>
+          <ChartBarBig size={18} color={colors.primary} />
+        </TouchableOpacity>
+      </View>
+      <PieChart
+        data={data}
+        width={screenWidth - 64}
+        height={200}
+        chartConfig={{
+          backgroundColor: colors.card,
+          backgroundGradientFrom: colors.card,
+          backgroundGradientTo: colors.card,
+          color: (opacity = 1) => colors.primary,
+          labelColor: colors.text + '80',
+          style: {
+            borderRadius: 16,
+          },
+        }}
+        accessor="population"
+        backgroundColor="transparent"
+        paddingLeft="15"
+        absolute
+        style={styles.chart}
+      />
+    </Animated.View>
+  );
 
   const renderAgentCard = (agent: AIAgent, index: number) => (
     <Animated.View
@@ -243,6 +867,22 @@ export default function SalesAgentsScreen() {
           />
         </View>
       </View>
+
+      {/* Analytics Charts */}
+      <ScrollView style={styles.chartsSection} horizontal={false}>
+        {renderLineChart(SALES_PERFORMANCE_DATA, 'Sales Performance (6 Months)', '#34C759')}
+        {renderBarChart(AGENT_PRODUCTIVITY_DATA, 'Agent Productivity (Weekly)')}
+        {renderPieChart(REVENUE_SOURCES_DATA, 'Revenue Sources')}
+        {renderLineChart(CONVERSION_RATE_DATA, 'Conversion Rate (6 Months)', '#10B981')}
+        {renderLineChart(DEAL_SIZE_DATA, 'Deal Size (Quarterly)', '#3B82F6')}
+        {renderPieChart(SALES_CYCLE_DATA, 'Sales Cycle Distribution')}
+        {renderLineChart(QUOTA_ACHIEVEMENT_DATA, 'Quota Achievement (6 Months)', '#10B981')}
+        {renderLineChart(PIPELINE_VELOCITY_DATA, 'Pipeline Velocity (Quarterly)', '#3B82F6')}
+        {renderPieChart(REGIONAL_PERFORMANCE_DATA, 'Regional Performance')}
+        {renderLineChart(SALES_CYCLE_TREND_DATA, 'Sales Cycle Trend (6 Months)', '#10B981')}
+        {renderLineChart(CUSTOMER_ACQUISITION_DATA, 'Customer Acquisition (Quarterly)', '#3B82F6')}
+        {renderPieChart(PRODUCT_CATEGORY_DATA, 'Product Category Distribution')}
+      </ScrollView>
 
       {/* Agents List */}
       <FlatList
@@ -492,5 +1132,32 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: 16,
     marginTop: 16,
+  },
+  chartsSection: {
+    paddingHorizontal: 16,
+    paddingBottom: 16,
+  },
+  chartCard: {
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  chartHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  chartTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  chart: {
+    borderRadius: 16,
   },
 });

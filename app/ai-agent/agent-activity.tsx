@@ -190,20 +190,7 @@ export default function AgentActivityScreen() {
       case 'error': return '#FF3B30';
       case 'maintenance': return '#AF52DE';
       default: return '#8E8E93';
-    }
-  };
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'online': return Wifi;
-      case 'busy': return Activity;
-      case 'idle': return Clock;
-      case 'offline': return WifiOff;
-      case 'error': return TriangleAlert;
-      case 'maintenance': return Settings;
-      default: return Circle;
-    }
-  };
+}
 
   const getActivityStatusIcon = (status: string) => {
     switch (status) {

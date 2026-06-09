@@ -1,0 +1,421 @@
+/**
+ * @copyright Copyright (c) 2026 Kaytx & Antigravity Ecosystem ("kaytx")
+ * @license MIT - See LICENSE file for full terms
+ */
+
+import React, { useState } from 'react';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Upload, FileText, File, Trash2, Eye, MoreVertical, CheckCircle, Clock, AlertCircle } from 'lucide-react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+export default function CompanyBrainDocuments() {
+  const router = useRouter();
+  const insets = useSafeAreaInsets();
+  const [isUploading, setIsUploading] = useState(false);
+
+  const mockDocuments = [
+    {
+      id: 1,
+      name: 'Q4 Sales Strategy.pdf',
+      type: 'pdf',
+      size: '2.4 MB',
+      uploadedAt: '2 hours ago',
+      status: 'processed',
+      knowledgeNodes: 12,
+      author: 'Sarah M.',
+    },
+    {
+      id: 2,
+      name: 'API Documentation.docx',
+      type: 'docx',
+      size: '1.8 MB',
+      uploadedAt: '1 day ago',
+      status: 'processing',
+      knowledgeNodes: 0,
+      author: 'John D.',
+    },
+    {
+      id: 3,
+      name: 'Employee Handbook.pdf',
+      type: 'pdf',
+      size: '5.2 MB',
+      uploadedAt: '3 days ago',
+      status: 'processed',
+      knowledgeNodes: 45,
+      author: 'HR Team',
+    },
+    {
+      id: 4,
+      name: 'Product Roadmap.pptx',
+      type: 'pptx',
+      size: '8.1 MB',
+      uploadedAt: '1 week ago',
+      status: 'processed',
+      knowledgeNodes: 23,
+      author: 'Product Team',
+    },
+    {
+      id: 5,
+      name: 'Client Contracts.zip',
+      type: 'zip',
+      size: '15.3 MB',
+      uploadedAt: '2 weeks ago',
+      status: 'error',
+      knowledgeNodes: 0,
+      author: 'Legal Team',
+    },
+  ];
+
+  const handleUpload = () => {
+    Alert.alert(
+      'Upload Document',
+      'Select a file to upload to Company Brain',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Choose File', onPress: () => {
+          setIsUploading(true);
+          setTimeout(() => {
+            setIsUploading(false);
+            Alert.alert('Success', 'Document uploaded successfully');
+          }, 2000);
+        }}
+      ]
+    );
+  };
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'processed':
+        return <CheckCircle size={16} color="#10b981" />;
+      case 'processing':
+        return <Clock size={16} color="#f59e0b" />;
+      case 'error':
+        return <AlertCircle size={16} color="#ef4444" />;
+      default:
+        return <Clock size={16} color="#64748b" />;
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'processed':
+        return '#10b981';
+      case 'processing':
+        return '#f59e0b';
+      case 'error':
+        return '#ef4444';
+      default:
+        return '#64748b';
+    }
+  };
+
+  const getFileIcon = (type: string) => {
+    return FileText;
+  };
+
+  return (
+    <ScrollView 
+      style={[styles.container, { paddingTop: insets.top }]}
+      contentContainerStyle={[styles.contentContainer, { paddingBottom: insets.bottom + 20 }]}
+    >
+      {/* Header */}
+      <View style={styles.header}>
+        <Text style={styles.title}>Documents</Text>
+        <Text style={styles.subtitle}>Upload and manage knowledge documents</Text>
+      </View>
+
+      {/* Upload Section */}
+      <TouchableOpacity 
+        style={styles.uploadSection}
+        onPress={handleUpload}
+        disabled={isUploading}
+        activeOpacity={0.7}
+      >
+        {isUploading ? (
+          <View style={styles.uploadingContainer}>
+            <ActivityIndicator size="large" color="#6366f1" />
+            <Text style={styles.uploadingText}>Uploading document...</Text>
+          </View>
+        ) : (
+          <>
+            <View style={styles.uploadIcon}>
+              <Upload size={32} color="#6366f1" />
+            </View>
+            <Text style={styles.uploadTitle}>Upload Document</Text>
+            <Text style={styles.uploadSubtitle}>Drag & drop or click to browse</Text>
+            <Text style={styles.uploadFormats}>PDF, DOCX, PPTX, TXT, MD, CSV</Text>
+          </>
+        )}
+      </TouchableOpacity>
+
+      {/* Stats */}
+      <View style={styles.statsContainer}>
+        <View style={styles.statItem}>
+          <Text style={styles.statValue}>{mockDocuments.length}</Text>
+          <Text style={styles.statLabel}>Total Documents</Text>
+        </View>
+        <View style={styles.statDivider} />
+        <View style={styles.statItem}>
+          <Text style={styles.statValue}>
+            {mockDocuments.reduce((sum, doc) => sum + doc.knowledgeNodes, 0)}
+          </Text>
+          <Text style={styles.statLabel}>Knowledge Nodes</Text>
+        </View>
+        <View style={styles.statDivider} />
+        <View style={styles.statItem}>
+          <Text style={styles.statValue}>
+            {mockDocuments.filter(doc => doc.status === 'processed').length}
+          </Text>
+          <Text style={styles.statLabel}>Processed</Text>
+        </View>
+      </View>
+
+      {/* Documents List */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>All Documents</Text>
+        <View style={styles.documentsList}>
+          {mockDocuments.map((doc) => {
+            const Icon = getFileIcon(doc.type);
+            const statusColor = getStatusColor(doc.status);
+            return (
+              <TouchableOpacity 
+                key={doc.id}
+                style={styles.documentItem}
+                onPress={() => router.push(`/company-brain/document/${doc.id}` as any)}
+                activeOpacity={0.7}
+              >
+                <View style={styles.documentIcon}>
+                  <Icon size={24} color="#6366f1" />
+                </View>
+                <View style={styles.documentInfo}>
+                  <Text style={styles.documentName}>{doc.name}</Text>
+                  <View style={styles.documentMeta}>
+                    <Text style={styles.documentSize}>{doc.size}</Text>
+                    <Text style={styles.documentSeparator}>•</Text>
+                    <Text style={styles.documentAuthor}>{doc.author}</Text>
+                    <Text style={styles.documentSeparator}>•</Text>
+                    <Text style={styles.documentTime}>{doc.uploadedAt}</Text>
+                  </View>
+                  <View style={styles.documentStatus}>
+                    {getStatusIcon(doc.status)}
+                    <Text style={[styles.statusText, { color: statusColor }]}>
+                      {doc.status.charAt(0).toUpperCase() + doc.status.slice(1)}
+                    </Text>
+                    {doc.knowledgeNodes > 0 && (
+                      <>
+                        <Text style={styles.documentSeparator}>•</Text>
+                        <Text style={styles.knowledgeNodes}>{doc.knowledgeNodes} nodes</Text>
+                      </>
+                    )}
+                  </View>
+                </View>
+                <TouchableOpacity style={styles.moreButton}>
+                  <MoreVertical size={20} color="#64748b" />
+                </TouchableOpacity>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      </View>
+
+      {/* Supported Formats */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Supported Formats</Text>
+        <View style={styles.formatsGrid}>
+          {['PDF', 'DOCX', 'PPTX', 'TXT', 'MD', 'CSV'].map((format) => (
+            <View key={format} style={styles.formatItem}>
+              <Text style={styles.formatText}>{format}</Text>
+            </View>
+          ))}
+        </View>
+      </View>
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#0f172a',
+  },
+  contentContainer: {
+    padding: 20,
+  },
+  header: {
+    marginBottom: 24,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#ffffff',
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#94a3b8',
+    marginTop: 4,
+  },
+  uploadSection: {
+    backgroundColor: '#1e293b',
+    borderRadius: 16,
+    borderWidth: 2,
+    borderColor: '#334155',
+    borderStyle: 'dashed',
+    padding: 40,
+    alignItems: 'center',
+    marginBottom: 24,
+  },
+  uploadingContainer: {
+    alignItems: 'center',
+  },
+  uploadingText: {
+    fontSize: 16,
+    color: '#94a3b8',
+    marginTop: 16,
+  },
+  uploadIcon: {
+    width: 64,
+    height: 64,
+    borderRadius: 16,
+    backgroundColor: '#6366f120',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  uploadTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#ffffff',
+    marginBottom: 8,
+  },
+  uploadSubtitle: {
+    fontSize: 14,
+    color: '#94a3b8',
+    marginBottom: 4,
+  },
+  uploadFormats: {
+    fontSize: 12,
+    color: '#64748b',
+  },
+  statsContainer: {
+    flexDirection: 'row',
+    backgroundColor: '#1e293b',
+    borderRadius: 12,
+    padding: 20,
+    marginBottom: 24,
+    justifyContent: 'space-around',
+  },
+  statItem: {
+    alignItems: 'center',
+  },
+  statValue: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#ffffff',
+  },
+  statLabel: {
+    fontSize: 12,
+    color: '#94a3b8',
+    marginTop: 4,
+  },
+  statDivider: {
+    width: 1,
+    backgroundColor: '#334155',
+  },
+  section: {
+    marginBottom: 24,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#ffffff',
+    marginBottom: 16,
+  },
+  documentsList: {
+    gap: 12,
+  },
+  documentItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#1e293b',
+    borderRadius: 12,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#334155',
+  },
+  documentIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 8,
+    backgroundColor: '#6366f120',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12,
+  },
+  documentInfo: {
+    flex: 1,
+  },
+  documentName: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#ffffff',
+    marginBottom: 4,
+  },
+  documentMeta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  documentSize: {
+    fontSize: 12,
+    color: '#94a3b8',
+  },
+  documentSeparator: {
+    fontSize: 12,
+    color: '#64748b',
+    marginHorizontal: 4,
+  },
+  documentAuthor: {
+    fontSize: 12,
+    color: '#94a3b8',
+  },
+  documentTime: {
+    fontSize: 12,
+    color: '#94a3b8',
+  },
+  documentStatus: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  statusText: {
+    fontSize: 12,
+    fontWeight: '500',
+    marginLeft: 4,
+  },
+  knowledgeNodes: {
+    fontSize: 12,
+    color: '#6366f1',
+    marginLeft: 4,
+  },
+  moreButton: {
+    padding: 8,
+  },
+  formatsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  formatItem: {
+    backgroundColor: '#1e293b',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#334155',
+  },
+  formatText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#e2e8f0',
+  },
+});

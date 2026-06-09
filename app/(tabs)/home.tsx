@@ -844,6 +844,9 @@ export default function HomeScreen() {
         case '10': // Settings
           router.push('/settings');
           break;
+        case '11': // Company Brain
+          router.push('/ai-agent/company-brain');
+          break;
         default:
           Alert.alert(
             option.title,
@@ -1086,6 +1089,15 @@ export default function HomeScreen() {
       'sm-16': '/social-media/audience-insights',
       'sm-17': '/social-media/ai-content',
       'sm-18': '/social-media/multi-account',
+      // Company Brain
+      '11-1': '/company-brain',
+      '11-2': '/company-brain/documents',
+      '11-3': '/company-brain/search',
+      '11-4': '/company-brain/onboarding',
+      '11-5': '/company-brain/graph',
+      '11-6': '/company-brain/team',
+      '11-7': '/company-brain/succession',
+      '11-8': '/company-brain/analytics',
     };
 
     let route = routeMap[subItem.id];

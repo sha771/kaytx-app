@@ -1,40 +1,427 @@
-import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, useSafeAreaInsets } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, TextInput, useSafeAreaInsets, Switch } from 'react-native';
 import { useRouter } from 'expo-router';
-import { ArrowLeft, Users, Briefcase, Target, Shield, Plus, Search, MoreHorizontal, FileText, MessageSquare, Clock, UserPlus, Settings, ChevronRight, Folder, Lock, Globe, Bot } from 'lucide-react-native';
+import { ArrowLeft, Users, Briefcase, Target, Shield, Plus, Search, MoreHorizontal, FileText, MessageSquare, Clock, UserPlus, Settings, ChevronRight, Folder, Lock, Globe, Bot, X, CheckCircle } from 'lucide-react-native';
 
 export default function TeamSpacesScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
-  const DEPARTMENTS = [
-    { id: 'engineering', name: 'Engineering', icon: 'code', color: '#3B82F6', members: 45, nodes: 456, privacy: 'private' },
-    { id: 'sales', name: 'Sales', icon: 'trending-up', color: '#10B981', members: 28, nodes: 234, privacy: 'private' },
-    { id: 'product', name: 'Product', icon: 'package', color: '#7C3AED', members: 15, nodes: 189, privacy: 'private' },
-    { id: 'marketing', name: 'Marketing', icon: 'megaphone', color: '#F59E0B', members: 18, nodes: 145, privacy: 'public' },
-    { id: 'hr', name: 'Human Resources', icon: 'users', color: '#EC4899', members: 8, nodes: 98, privacy: 'private' },
-    { id: 'operations', name: 'Operations', icon: 'settings', color: '#06B6D4', members: 12, nodes: 123, privacy: 'private' },
-  ];
+  // Core Space States
+  const [departments, setDepartments] = useState([
+    { id: 'engineering', name: 'Engineering', color: '#3B82F6', members: 45, nodes: 456, privacy: 'private', desc: 'Central core infrastructure blueprints, server scaling specs, and repos.' },
+    { id: 'sales', name: 'Sales', color: '#10B981', members: 28, nodes: 234, privacy: 'private', desc: 'Enterprise negotiations playbook, pricing sheets, and CRM pipelines.' },
+    { id: 'product', name: 'Product', color: '#7C3AED', members: 15, nodes: 189, privacy: 'private', desc: 'PRD specifications, launch timeline roadmaps, and stakeholder context.' },
+    { id: 'marketing', name: 'Marketing', color: '#F59E0B', members: 18, nodes: 145, privacy: 'public', desc: 'Social campaign briefs, performance insights, and brand assets.' },
+    { id: 'hr', name: 'Human Resources', color: '#EC4899', members: 8, nodes: 98, privacy: 'private', desc: 'Onboarding guides, mentor logs, and compliance check frameworks.' },
+    { id: 'operations', name: 'Operations', color: '#06B6D4', members: 12, nodes: 123, privacy: 'private', desc: 'Refund rules, customer success blueprints, and sync parameters.' }
+  ]);
 
-  const PROJECTS = [
-    { name: 'AWS Migration', dept: 'Engineering', members: 12, nodes: 89, updated: '2h ago' },
-    { name: 'Q4 Product Launch', dept: 'Product', members: 8, nodes: 67, updated: '5h ago' },
-    { name: 'Enterprise Sales Playbook', dept: 'Sales', members: 15, nodes: 45, updated: '1d ago' },
-    { name: 'Security Audit 2024', dept: 'Operations', members: 6, nodes: 34, updated: '3h ago' },
-  ];
+  const [projects, setProjects] = useState([
+    { id: 'proj1', name: 'AWS Migration', dept: 'Engineering', members: 12, nodes: 89, updated: '2h ago' },
+    { id: 'proj2', name: 'Q4 Product Launch', dept: 'Product', members: 8, nodes: 67, updated: '5h ago' },
+    { id: 'proj3', name: 'Enterprise Sales Playbook', dept: 'Sales', members: 15, nodes: 45, updated: '1d ago' },
+    { id: 'proj4', name: 'Security Audit 2026', dept: 'Operations', members: 6, nodes: 34, updated: '3h ago' }
+  ]);
 
-  const CLIENT_HUBS = [
-    { name: 'Acme Corp', industry: 'Technology', contacts: 8, nodes: 56, lastContact: '2h ago' },
-    { name: 'Global Bank', industry: 'Finance', contacts: 12, nodes: 89, lastContact: '1d ago' },
-    { name: 'HealthPlus', industry: 'Healthcare', contacts: 5, nodes: 34, lastContact: '3d ago' },
-  ];
+  const [clients, setClients] = useState([
+    { id: 'cli1', name: 'Acme Corp', industry: 'Technology', contacts: 8, nodes: 56, lastContact: '2h ago' },
+    { id: 'cli2', name: 'Global Bank', industry: 'Finance', contacts: 12, nodes: 89, lastContact: '1d ago' },
+    { id: 'cli3', name: 'HealthPlus', industry: 'Healthcare', contacts: 5, nodes: 34, lastContact: '3d ago' }
+  ]);
 
-  const SHARED_SPACES = [
+  const [companyWide, setCompanyWide] = useState([
     { name: 'Company Policies', type: 'Company-wide', nodes: 234, contributors: 15 },
     { name: 'Onboarding Guide', type: 'Company-wide', nodes: 156, contributors: 8 },
     { name: 'Brand Guidelines', type: 'Company-wide', nodes: 78, contributors: 4 },
-    { name: 'IT & Security', type: 'Cross-functional', nodes: 123, contributors: 6 },
-  ];
+    { name: 'IT & Security', type: 'Cross-functional', nodes: 123, contributors: 6 }
+  ]);
+
+  // Modal States
+  const [showAddSpaceModal, setShowAddSpaceModal] = useState(false);
+  const [spaceName, setSpaceName] = useState('');
+  const [spaceType, setSpaceType] = useState<'dept' | 'project' | 'client'>('project');
+  const [spacePrivacy, setSpacePrivacy] = useState(true); // true = private, false = public
+  const [spaceDeptName, setSpaceDeptName] = useState('Engineering');
+  const [spaceMembersCount, setSpaceMembersCount] = useState('6');
+
+  // Space Inspector drawer
+  const [selectedSpace, setSelectedSpace] = useState<any>(null);
+  const [spaceEnableSync, setSpaceEnableSync] = useState(true);
+  const [spaceEnablePublic, setSpaceEnablePublic] = useState(false);
+
+  // Search filter
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Confirm space creation
+  const handleCreateSpace = () => {
+    if (!spaceName.trim()) return;
+
+    if (spaceType === 'dept') {
+      const newDept = {
+        id: Date.now().toString(),
+        name: spaceName,
+        color: '#7C3AED',
+        members: parseInt(spaceMembersCount) || 1,
+        nodes: 12,
+        privacy: spacePrivacy ? 'private' : 'public',
+        desc: `Custom space mapping regarding ${spaceName} processes.`
+    comprehensiveFeatures: {
+  "communicationChannels": {
+    "call": {
+      "enabled": true,
+      "provider": "Twilio",
+      "features": [
+        "PBX Integration",
+        "IVR Menu",
+        "Call Routing",
+        "Call Recording",
+        "Transcriptions"
+      ],
+      "recordingRetention": "90 days",
+      "consentLogging": true
+    },
+    "chatSystem": {
+      "enabled": true,
+      "platforms": [
+        "Web Widget",
+        "Slack",
+        "Intercom",
+        "Microsoft Teams"
+      ],
+      "persistentThreads": true,
+      "transcriptExport": true
+    },
+    "sms": {
+      "enabled": true,
+      "provider": "Twilio",
+      "features": [
+        "Templated Messages",
+        "Two-Way Support",
+        "Opt-Out Handling"
+      ],
+      "number": "TBD"
+    },
+    "voice": {
+      "enabled": true,
+      "primaryDID": "TBD",
+      "ttsVoice": "default",
+      "failoverNumbers": [],
+      "geoRouting": true
+    },
+    "recording": {
+      "enabled": true,
+      "autoRecording": true,
+      "consentLogging": true,
+      "transcriptGeneration": true,
+      "scriptTemplates": []
+    },
+    "location": {
+      "allowedRegions": [
+        "Global"
+      ],
+      "timezoneAware": true,
+      "localeFormats": [
+        "en-US",
+        "en-GB",
+        "es-ES",
+        "fr-FR",
+        "de-DE"
+      ]
+    }
+  },
+  "companySetup": {
+    "profile": {
+      "enabled": true,
+      "fields": [
+        "Company Name",
+        "Industry",
+        "Size",
+        "Location"
+      ]
+    },
+    "products": {
+      "enabled": true,
+      "catalog": true,
+      "pricingTiers": true
+    },
+    "negotiationRules": {
+      "enabled": true,
+      "templates": true,
+      "maxConcession": "10%"
+    }
+  },
+  "generalInfo": {
+    "name": "",
+    "role": "",
+    "availability": "24/7",
+    "personality": "professional",
+    "tone": "conversational",
+    "voice": "neutral"
+  },
+  "modelConfig": {
+    "modelName": "LLM-X v2",
+    "modelFamily": "GPT-4",
+    "version": "latest",
+    "primaryLanguage": "en-US",
+    "fallbackLanguages": [
+      "es",
+      "fr",
+      "de"
+    ],
+    "multilingualSupport": true
+  },
+  "timing": {
+    "businessHours": {
+      "enabled": true,
+      "schedule": "Mon-Fri 09:00-18:00 local",
+      "timezone": "UTC",
+      "holidays": []
+    },
+    "waitingDuration": {
+      "call": 120,
+      "chat": 30,
+      "sms": 0
+    },
+    "appointmentScheduling": {
+      "enabled": true,
+      "calendars": [
+        "Google",
+        "Outlook"
+      ],
+      "timezoneHandling": "automatic"
+    }
+  },
+  "pricing": {
+    "pricingModel": "fixed monthly",
+    "priceLimit": "TBD",
+    "negotiationRules": {
+      "enabled": true,
+      "maxConcession": "10%",
+      "autoNegotiation": false
+    }
+  },
+  "integrations": {
+    "crm": [
+      "Salesforce",
+      "HubSpot",
+      "Zendesk"
+    ],
+    "ticketing": [
+      "Zendesk",
+      "Freshdesk",
+      "Jira"
+    ],
+    "calendar": [
+      "Google Calendar",
+      "Outlook Calendar"
+    ],
+    "telephony": [
+      "Twilio",
+      "Vonage",
+      "RingCentral"
+    ],
+    "analytics": [
+      "Google Analytics",
+      "Mixpanel",
+      "Amplitude"
+    ],
+    "mcpConnectors": []
+  },
+  "responsibilities": {
+    "taskRouting": {
+      "method": "intent-based",
+      "escalationPath": "human after 3 failed handoffs",
+      "slaEnforcement": true
+    },
+    "appointmentScheduling": {
+      "enabled": true,
+      "rules": []
+    }
+  },
+  "taskManagement": {
+    "assignedTasks": {
+      "queue": true,
+      "slaTimers": true,
+      "dependencies": true
+    },
+    "progressTracking": {
+      "enabled": true,
+      "metrics": [
+        "completion percentage",
+        "time remaining"
+      ]
+    }
+  },
+  "behaviour": {
+    "safetyFilters": {
+      "enabled": true,
+      "restrictedDomains": [
+        "legal",
+        "medical",
+        "financial advice"
+      ]
+    },
+    "refusalTemplates": {
+      "enabled": true
+    },
+    "rateLimits": {
+      "enabled": true,
+      "requestsPerMinute": 60
+    }
+  },
+  "performance": {
+    "metrics": {
+      "latency": true,
+      "accuracy": true,
+      "successRate": true,
+      "userSatisfaction": true
+    },
+    "reporting": {
+      "dashboards": true,
+      "scheduledReports": true,
+      "cadence": [
+        "daily",
+        "weekly",
+        "monthly"
+      ]
+    }
+  },
+  "summary": {
+    "enabled": true,
+    "adminNotes": "",
+    "handoverContext": true
+  },
+  "predictive": {
+    "forecasting": {
+      "enabled": true,
+      "models": []
+    },
+    "anomalyDetection": {
+      "enabled": true,
+      "triggers": []
+    }
+  },
+  "regulations": {
+    "compliance": {
+      "gdpr": true,
+      "hipaa": false,
+      "soc2": false,
+      "regional": true
+    },
+    "dataResidency": {
+      "enabled": true,
+      "regions": []
+    },
+    "consentPolicies": {
+      "enabled": true
+    }
+  },
+  "memory": {
+    "session": {
+      "duration": "30 minutes",
+      "retention": true
+    },
+    "longTerm": {
+      "duration": "365 days",
+      "retention": true
+    },
+    "piiRedaction": {
+      "enabled": true
+    },
+    "purgeSchedule": "quarterly"
+  },
+  "detailedSetup": {
+    "onboardingFlow": true,
+    "productPricingSetup": true,
+    "negotiationRulesSetup": true,
+    "trainingPlan": true,
+    "knowledgeBaseImport": true,
+    "voicePersonalityTuning": true,
+    "businessHoursSetup": true,
+    "additionalConfigs": []
+  },
+  "twoStepVerification": {
+    "enabled": true,
+    "criticalActions": [
+      "billing",
+      "admin modifications",
+      "data export"
+    ],
+    "deviceCheck": true
+  },
+  "importExport": {
+    "endpoints": [
+      "CSV",
+      "JSON"
+    ],
+    "scheduledExports": true,
+    "retentionPolicy": true,
+    "complianceControls": true
+  },
+  "reports": {
+    "types": [
+      "performance",
+      "usage",
+      "errors",
+      "compliance"
+    ],
+    "cadence": [
+      "daily",
+      "weekly",
+      "monthly"
+    ],
+    "deliveryChannels": [
+      "email",
+      "dashboard",
+      "webhook"
+    ]
+  },
+  "mcpIntegrations": {
+    "connectors": [],
+    "apiSpecs": [],
+    "mapping": []
+  }
+}};
+      setDepartments([...departments, newDept]);
+    } else if (spaceType === 'project') {
+      const newProj = {
+        id: Date.now().toString(),
+        name: spaceName,
+        dept: spaceDeptName,
+        members: parseInt(spaceMembersCount) || 1,
+        nodes: 0,
+        updated: 'Just now'
+      };
+      setProjects([newProj, ...projects]);
+    } else {
+      const newCli = {
+        id: Date.now().toString(),
+        name: spaceName,
+        industry: spaceDeptName || 'Enterprise',
+        contacts: parseInt(spaceMembersCount) || 1,
+        nodes: 0,
+        lastContact: 'Just now'
+      };
+      setClients([newCli, ...clients]);
+    }
+
+    // Reset Form
+    setShowAddSpaceModal(false);
+    setSpaceName('');
+    setSpaceMembersCount('6');
+  };
+
+  // Trigger inspector deep-dive
+  const openInspector = (space: any, typeLabel: string) => {
+    setSelectedSpace({ ...space, typeLabel });
+    setSpaceEnableSync(true);
+    setSpaceEnablePublic(space.privacy === 'public');
+  };
+
+  const filteredDepts = departments.filter(d => d.name.toLowerCase().includes(searchQuery.toLowerCase()));
+  const filteredProjs = projects.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
+  const filteredClis = clients.filter(c => c.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
     <View style={{ flex: 1, backgroundColor: '#0F172A' }}>
@@ -45,9 +432,9 @@ export default function TeamSpacesScreen() {
         </TouchableOpacity>
         <View style={styles.headerTitle}>
           <Text style={styles.headerTitleText}>Team Spaces</Text>
-          <Text style={styles.headerSubtitle}>Department and project-specific knowledge bases</Text>
+          <Text style={styles.headerSubtitle}>Department, project, and client-specific folders</Text>
         </View>
-        <TouchableOpacity style={styles.addButton}>
+        <TouchableOpacity style={styles.addButton} onPress={() => setShowAddSpaceModal(true)}>
           <Plus size={20} color="#FFFFFF" />
         </TouchableOpacity>
       </View>
@@ -56,18 +443,18 @@ export default function TeamSpacesScreen() {
         {/* Quick Stats */}
         <View style={styles.statsRow}>
           <View style={[styles.statCard, { backgroundColor: '#1E293B' }]}>
-            <Users size={20} color="#3B82F6" />
-            <Text style={styles.statValue}>6</Text>
+            <Users size={18} color="#3B82F6" />
+            <Text style={styles.statValue}>{departments.length}</Text>
             <Text style={styles.statLabel}>Departments</Text>
           </View>
           <View style={[styles.statCard, { backgroundColor: '#1E293B' }]}>
-            <Briefcase size={20} color="#7C3AED" />
-            <Text style={styles.statValue}>12</Text>
+            <Briefcase size={18} color="#7C3AED" />
+            <Text style={styles.statValue}>{projects.length}</Text>
             <Text style={styles.statLabel}>Projects</Text>
           </View>
           <View style={[styles.statCard, { backgroundColor: '#1E293B' }]}>
-            <Target size={20} color="#10B981" />
-            <Text style={styles.statValue}>3</Text>
+            <Target size={18} color="#10B981" />
+            <Text style={styles.statValue}>{clients.length}</Text>
             <Text style={styles.statLabel}>Client Hubs</Text>
           </View>
         </View>
@@ -75,19 +462,29 @@ export default function TeamSpacesScreen() {
         {/* Search */}
         <View style={[styles.searchBar, { backgroundColor: '#1E293B' }]}>
           <Search size={18} color="#6B7280" />
-          <Text style={styles.searchPlaceholder}>Search team spaces...</Text>
+          <TextInput
+            style={styles.searchField}
+            placeholder="Search spaces (e.g. Engineering, Acme)..."
+            placeholderTextColor="#6B7280"
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+          />
         </View>
 
         {/* Department Spaces */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Department Spaces</Text>
-            <TouchableOpacity>
-              <Text style={styles.seeAll}>See All</Text>
+            <Text style={styles.sectionTitle}>Department Spaces ({filteredDepts.length})</Text>
+            <TouchableOpacity onPress={() => setShowAddSpaceModal(true)}>
+              <Text style={styles.seeAll}>Add Dept</Text>
             </TouchableOpacity>
           </View>
-          {DEPARTMENTS.map((dept, index) => (
-            <TouchableOpacity key={dept.id} style={[styles.spaceCard, { backgroundColor: '#1E293B' }]}>
+          {filteredDepts.map((dept) => (
+            <TouchableOpacity 
+              key={dept.id} 
+              style={[styles.spaceCard, { backgroundColor: '#1E293B' }]}
+              onPress={() => openInspector(dept, 'Department')}
+            >
               <View style={[styles.spaceIcon, { backgroundColor: dept.color + '20' }]}>
                 <Users size={22} color={dept.color} />
               </View>
@@ -95,23 +492,23 @@ export default function TeamSpacesScreen() {
                 <View style={styles.spaceNameRow}>
                   <Text style={styles.spaceName}>{dept.name}</Text>
                   {dept.privacy === 'private' ? (
-                    <Lock size={12} color="#6B7280" />
+                    <Lock size={11} color="#6B7280" />
                   ) : (
-                    <Globe size={12} color="#10B981" />
+                    <Globe size={11} color="#10B981" />
                   )}
                 </View>
                 <View style={styles.spaceMeta}>
                   <View style={styles.spaceMetaItem}>
-                    <Users size={12} color="#6B7280" />
+                    <Users size={11} color="#6B7280" />
                     <Text style={styles.spaceMetaText}>{dept.members} members</Text>
                   </View>
                   <View style={styles.spaceMetaItem}>
-                    <FileText size={12} color="#6B7280" />
+                    <FileText size={11} color="#6B7280" />
                     <Text style={styles.spaceMetaText}>{dept.nodes} nodes</Text>
                   </View>
                 </View>
               </View>
-              <ChevronRight size={18} color="#6B7280" />
+              <ChevronRight size={16} color="#6B7280" />
             </TouchableOpacity>
           ))}
         </View>
@@ -119,15 +516,19 @@ export default function TeamSpacesScreen() {
         {/* Project Spaces */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Project Spaces</Text>
-            <TouchableOpacity>
-              <Text style={styles.seeAll}>See All</Text>
+            <Text style={styles.sectionTitle}>Project Spaces ({filteredProjs.length})</Text>
+            <TouchableOpacity onPress={() => setShowAddSpaceModal(true)}>
+              <Text style={styles.seeAll}>Add Project</Text>
             </TouchableOpacity>
           </View>
-          {PROJECTS.map((project, index) => (
-            <TouchableOpacity key={index} style={[styles.projectCard, { backgroundColor: '#1E293B' }]}>
+          {filteredProjs.map((project) => (
+            <TouchableOpacity 
+              key={project.id} 
+              style={[styles.projectCard, { backgroundColor: '#1E293B' }]}
+              onPress={() => openInspector(project, 'Project')}
+            >
               <View style={[styles.projectIcon, { backgroundColor: '#7C3AED20' }]}>
-                <Briefcase size={20} color="#7C3AED" />
+                <Briefcase size={18} color="#7C3AED" />
               </View>
               <View style={styles.projectInfo}>
                 <Text style={styles.projectName}>{project.name}</Text>
@@ -141,18 +542,22 @@ export default function TeamSpacesScreen() {
           ))}
         </View>
 
-        {/* Client Hubs */}
+        {/* Client Knowledge Hubs */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Client Knowledge Hubs</Text>
-            <TouchableOpacity>
-              <Text style={styles.seeAll}>See All</Text>
+            <Text style={styles.sectionTitle}>Client Hubs ({filteredClis.length})</Text>
+            <TouchableOpacity onPress={() => setShowAddSpaceModal(true)}>
+              <Text style={styles.seeAll}>Add Client</Text>
             </TouchableOpacity>
           </View>
-          {CLIENT_HUBS.map((client, index) => (
-            <TouchableOpacity key={index} style={[styles.clientCard, { backgroundColor: '#1E293B' }]}>
+          {filteredClis.map((client) => (
+            <TouchableOpacity 
+              key={client.id} 
+              style={[styles.clientCard, { backgroundColor: '#1E293B' }]}
+              onPress={() => openInspector(client, 'Client')}
+            >
               <View style={[styles.clientIcon, { backgroundColor: '#10B98120' }]}>
-                <Target size={20} color="#10B981" />
+                <Target size={18} color="#10B981" />
               </View>
               <View style={styles.clientInfo}>
                 <Text style={styles.clientName}>{client.name}</Text>
@@ -168,11 +573,11 @@ export default function TeamSpacesScreen() {
 
         {/* Shared Company Spaces */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Company-Wide Spaces</Text>
-          {SHARED_SPACES.map((space, index) => (
-            <TouchableOpacity key={index} style={[styles.sharedCard, { backgroundColor: '#1E293B' }]}>
+          <Text style={styles.sectionTitle}>Company-Wide Shared Spaces</Text>
+          {companyWide.map((space, index) => (
+            <TouchableOpacity key={index} style={[styles.sharedCard, { backgroundColor: '#1E293B' }]} onPress={() => openInspector(space, 'Shared')}>
               <View style={[styles.sharedIcon, { backgroundColor: '#3B82F620' }]}>
-                <Globe size={20} color="#3B82F6" />
+                <Globe size={18} color="#3B82F6" />
               </View>
               <View style={styles.sharedInfo}>
                 <Text style={styles.sharedName}>{space.name}</Text>
@@ -180,38 +585,38 @@ export default function TeamSpacesScreen() {
               </View>
               <View style={styles.sharedStats}>
                 <Text style={styles.sharedNodes}>{space.nodes} nodes</Text>
-                <Text style={styles.sharedContributors}>{space.contributors} contributors</Text>
+                <Text style={styles.sharedContributors}>{space.contributors} authors</Text>
               </View>
             </TouchableOpacity>
           ))}
         </View>
 
-        {/* Create New Space */}
+        {/* Create New Space Toggles */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Create New Space</Text>
+          <Text style={styles.sectionTitle}>Launch Space Wizards</Text>
           <View style={styles.createGrid}>
-            <TouchableOpacity style={[styles.createCard, { backgroundColor: '#1E293B' }]}>
+            <TouchableOpacity style={[styles.createCard, { backgroundColor: '#1E293B' }]} onPress={() => { setSpaceType('dept'); setShowAddSpaceModal(true); }}>
               <Users size={24} color="#3B82F6" />
-              <Text style={styles.createText}>Department Space</Text>
+              <Text style={styles.createText}>Dept Space</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.createCard, { backgroundColor: '#1E293B' }]}>
+            <TouchableOpacity style={[styles.createCard, { backgroundColor: '#1E293B' }]} onPress={() => { setSpaceType('project'); setShowAddSpaceModal(true); }}>
               <Briefcase size={24} color="#7C3AED" />
               <Text style={styles.createText}>Project Space</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.createCard, { backgroundColor: '#1E293B' }]}>
+            <TouchableOpacity style={[styles.createCard, { backgroundColor: '#1E293B' }]} onPress={() => { setSpaceType('client'); setShowAddSpaceModal(true); }}>
               <Target size={24} color="#10B981" />
               <Text style={styles.createText}>Client Hub</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.createCard, { backgroundColor: '#1E293B' }]}>
+            <TouchableOpacity style={[styles.createCard, { backgroundColor: '#1E293B' }]} onPress={() => { setSpaceType('project'); setShowAddSpaceModal(true); }}>
               <Shield size={24} color="#F59E0B" />
-              <Text style={styles.createText}>Cross-Functional</Text>
+              <Text style={styles.createText}>Cross-Group</Text>
             </TouchableOpacity>
           </View>
         </View>
 
         {/* Team Spaces AI Agents */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Team Spaces AI Agents</Text>
+          <Text style={styles.sectionTitle}>Autonomous Space Managers</Text>
           <View style={styles.agentsRow}>
             {[
               { name: 'Space Manager', color: '#3B82F6' },
@@ -219,7 +624,7 @@ export default function TeamSpacesScreen() {
               { name: 'Sync Coordinator', color: '#10B981' },
               { name: 'Content Router', color: '#F59E0B' },
             ].map((agent, index) => (
-              <View key={index} style={[styles.agentChip, { backgroundColor: agent.color + '20' }]}>
+              <View key={index} style={[styles.agentChip, { backgroundColor: agent.color + '15' }]}>
                 <Bot size={14} color={agent.color} />
                 <Text style={[styles.agentChipText, { color: agent.color }]}>{agent.name}</Text>
               </View>
@@ -227,8 +632,131 @@ export default function TeamSpacesScreen() {
           </View>
         </View>
 
-        <View style={{ height: 40 }} />
+        <View style={{ height: 60 }} />
       </ScrollView>
+
+      {/* CREATE SPACE MODAL */}
+      {showAddSpaceModal && (
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalCard}>
+            <View style={styles.modalHeader}>
+              <Text style={styles.modalTitle}>
+                {spaceType === 'dept' ? 'New Department Space' : spaceType === 'project' ? 'New Project Folder' : 'New Client Hub'}
+              </Text>
+              <TouchableOpacity onPress={() => setShowAddSpaceModal(false)}>
+                <X size={20} color="#FFFFFF" />
+              </TouchableOpacity>
+            </View>
+
+            <Text style={styles.inputLabel}>Space Designation Name</Text>
+            <TextInput
+              style={styles.configInput}
+              placeholder="e.g. SaaS Billings, Frontend engineering..."
+              placeholderTextColor="#4B5563"
+              value={spaceName}
+              onChangeText={setSpaceName}
+            />
+
+            <Text style={styles.inputLabel}>
+              {spaceType === 'dept' ? 'Associated Division' : spaceType === 'project' ? 'Parent Department' : 'Industry sector'}
+            </Text>
+            <TextInput
+              style={styles.configInput}
+              placeholder="e.g. Engineering, Sales, Healthcare"
+              placeholderTextColor="#4B5563"
+              value={spaceDeptName}
+              onChangeText={setSpaceDeptName}
+            />
+
+            <Text style={styles.inputLabel}>Active Contributors Count</Text>
+            <TextInput
+              style={styles.configInput}
+              placeholder="e.g. 12"
+              placeholderTextColor="#4B5563"
+              value={spaceMembersCount}
+              onChangeText={setSpaceMembersCount}
+              keyboardType="numeric"
+            />
+
+            <View style={styles.configFieldRow}>
+              <Text style={styles.configLabel}>Restrict Private Access</Text>
+              <Switch 
+                value={spacePrivacy} 
+                onValueChange={setSpacePrivacy}
+                trackColor={{ false: '#374151', true: '#3B82F6' }}
+                thumbColor={spacePrivacy ? '#FFFFFF' : '#9CA3AF'}
+              />
+            </View>
+
+            <View style={styles.modalActions}>
+              <TouchableOpacity 
+                style={[styles.btnCancel, { backgroundColor: '#374151' }]} 
+                onPress={() => setShowAddSpaceModal(false)}
+              >
+                <Text style={styles.btnText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity 
+                style={[styles.btnSave, { backgroundColor: '#3B82F6' }]} 
+                onPress={handleCreateSpace}
+              >
+                <Text style={styles.btnText}>Confirm Create</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      )}
+
+      {/* SPACE INSPECTOR DRAWER overlay */}
+      {selectedSpace && (
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalCard}>
+            <View style={styles.modalHeader}>
+              <View>
+                <Text style={styles.modalTitle}>{selectedSpace.name}</Text>
+                <Text style={styles.modalSubtitle}>{selectedSpace.typeLabel} Folder Profile</Text>
+              </View>
+              <TouchableOpacity onPress={() => setSelectedSpace(null)}>
+                <X size={20} color="#FFFFFF" />
+              </TouchableOpacity>
+            </View>
+
+            <Text style={styles.descInline}>{selectedSpace.desc || 'Comprehensive institutional folder mapping resources, SOP nodes, and communication threads.'}</Text>
+
+            <View style={styles.configFieldRow}>
+              <Text style={styles.configLabel}>Auto-sync Slack/Docs</Text>
+              <Switch 
+                value={spaceEnableSync} 
+                onValueChange={setSpaceEnableSync}
+                trackColor={{ false: '#374151', true: '#10B981' }}
+              />
+            </View>
+
+            <View style={styles.configFieldRow}>
+              <Text style={styles.configLabel}>Public Company-Wide Access</Text>
+              <Switch 
+                value={spaceEnablePublic} 
+                onValueChange={setSpaceEnablePublic}
+                trackColor={{ false: '#374151', true: '#3B82F6' }}
+              />
+            </View>
+
+            <View style={styles.detailsRowBox}>
+              <Text style={styles.detailsTitle}>Routing AI agent settings:</Text>
+              <View style={styles.aiSettingCard}>
+                <Bot size={16} color="#7C3AED" />
+                <Text style={styles.aiSettingText}>Dedicated Space Manager connected</Text>
+              </View>
+            </View>
+
+            <TouchableOpacity 
+              style={[styles.btnCloseModal, { backgroundColor: '#374151' }]} 
+              onPress={() => setSelectedSpace(null)}
+            >
+              <Text style={styles.btnCloseText}>Apply & Close Inspector</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
     </View>
   );
 }
@@ -239,54 +767,74 @@ const styles = {
   headerTitle: { flex: 1 },
   headerTitleText: { fontSize: 20, fontWeight: 'bold', color: '#FFFFFF' },
   headerSubtitle: { fontSize: 13, color: '#9CA3AF' },
-  addButton: { width: 40, height: 40, borderRadius: 20, backgroundColor: '#3B82F6', justifyContent: 'center', alignItems: 'center' },
+  addButton: { width: 40, height: 40, borderRadius: 20, backgroundColor: '#3B82F620', justifyContent: 'center', alignItems: 'center' },
   content: { flex: 1, paddingHorizontal: 16 },
-  statsRow: { flexDirection: 'row', gap: 8, marginBottom: 20 },
-  statCard: { flex: 1, padding: 14, borderRadius: 12, alignItems: 'center' },
-  statValue: { fontSize: 22, fontWeight: 'bold', color: '#FFFFFF', marginTop: 6 },
-  statLabel: { fontSize: 11, color: '#9CA3AF', marginTop: 2 },
-  searchBar: { flexDirection: 'row', alignItems: 'center', padding: 12, borderRadius: 12, marginBottom: 20, gap: 10 },
-  searchPlaceholder: { fontSize: 14, color: '#6B7280' },
+  statsRow: { flexDirection: 'row', gap: 8, marginBottom: 16 },
+  statCard: { flex: 1, padding: 12, borderRadius: 12, alignItems: 'center' },
+  statValue: { fontSize: 18, fontWeight: 'bold', color: '#FFFFFF', marginTop: 4 },
+  statLabel: { fontSize: 10, color: '#9CA3AF', marginTop: 2 },
+  searchBar: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 12, paddingVertical: 10, borderRadius: 12, marginBottom: 20, gap: 10 },
+  searchField: { flex: 1, color: '#FFFFFF', fontSize: 13 },
   section: { marginBottom: 24 },
   sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 },
-  sectionTitle: { fontSize: 16, fontWeight: '600', color: '#FFFFFF' },
-  seeAll: { fontSize: 13, color: '#3B82F6' },
-  spaceCard: { flexDirection: 'row', alignItems: 'center', padding: 14, borderRadius: 12, marginBottom: 8 },
-  spaceIcon: { width: 44, height: 44, borderRadius: 12, justifyContent: 'center', alignItems: 'center' },
+  sectionTitle: { fontSize: 15, fontWeight: '600', color: '#FFFFFF' },
+  seeAll: { fontSize: 12, color: '#3B82F6', fontWeight: '600' },
+  spaceCard: { flexDirection: 'row', alignItems: 'center', padding: 14, borderRadius: 12, marginBottom: 8, borderWidth: 1, borderColor: '#37415130' },
+  spaceIcon: { width: 40, height: 40, borderRadius: 12, justifyContent: 'center', alignItems: 'center' },
   spaceInfo: { flex: 1, marginLeft: 12 },
   spaceNameRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  spaceName: { fontSize: 15, fontWeight: '600', color: '#FFFFFF' },
-  spaceMeta: { flexDirection: 'row', gap: 16, marginTop: 4 },
+  spaceName: { fontSize: 14, fontWeight: '600', color: '#FFFFFF' },
+  spaceMeta: { flexDirection: 'row', gap: 14, marginTop: 4 },
   spaceMetaItem: { flexDirection: 'row', alignItems: 'center', gap: 4 },
-  spaceMetaText: { fontSize: 12, color: '#6B7280' },
-  projectCard: { flexDirection: 'row', alignItems: 'center', padding: 12, borderRadius: 10, marginBottom: 6 },
-  projectIcon: { width: 40, height: 40, borderRadius: 10, justifyContent: 'center', alignItems: 'center' },
+  spaceMetaText: { fontSize: 11, color: '#6B7280' },
+  projectCard: { flexDirection: 'row', alignItems: 'center', padding: 12, borderRadius: 10, marginBottom: 6, borderWidth: 1, borderColor: '#37415130' },
+  projectIcon: { width: 36, height: 36, borderRadius: 8, justifyContent: 'center', alignItems: 'center' },
   projectInfo: { flex: 1, marginLeft: 12 },
-  projectName: { fontSize: 14, fontWeight: '600', color: '#FFFFFF' },
-  projectDept: { fontSize: 12, color: '#9CA3AF' },
+  projectName: { fontSize: 13, fontWeight: '600', color: '#FFFFFF' },
+  projectDept: { fontSize: 11, color: '#9CA3AF' },
   projectStats: { alignItems: 'flex-end' },
-  projectNodes: { fontSize: 13, color: '#FFFFFF' },
-  projectTime: { fontSize: 11, color: '#6B7280', marginTop: 2 },
-  clientCard: { flexDirection: 'row', alignItems: 'center', padding: 12, borderRadius: 10, marginBottom: 6 },
-  clientIcon: { width: 40, height: 40, borderRadius: 10, justifyContent: 'center', alignItems: 'center' },
+  projectNodes: { fontSize: 12, color: '#FFFFFF', fontWeight: '500' },
+  projectTime: { fontSize: 10, color: '#6B7280', marginTop: 2 },
+  clientCard: { flexDirection: 'row', alignItems: 'center', padding: 12, borderRadius: 10, marginBottom: 6, borderWidth: 1, borderColor: '#37415130' },
+  clientIcon: { width: 36, height: 36, borderRadius: 8, justifyContent: 'center', alignItems: 'center' },
   clientInfo: { flex: 1, marginLeft: 12 },
-  clientName: { fontSize: 14, fontWeight: '600', color: '#FFFFFF' },
-  clientIndustry: { fontSize: 12, color: '#9CA3AF' },
+  clientName: { fontSize: 13, fontWeight: '600', color: '#FFFFFF' },
+  clientIndustry: { fontSize: 11, color: '#9CA3AF' },
   clientStats: { alignItems: 'flex-end' },
-  clientContacts: { fontSize: 13, color: '#FFFFFF' },
-  clientTime: { fontSize: 11, color: '#6B7280', marginTop: 2 },
-  sharedCard: { flexDirection: 'row', alignItems: 'center', padding: 12, borderRadius: 10, marginBottom: 6 },
-  sharedIcon: { width: 40, height: 40, borderRadius: 10, justifyContent: 'center', alignItems: 'center' },
+  clientContacts: { fontSize: 12, color: '#FFFFFF', fontWeight: '500' },
+  clientTime: { fontSize: 10, color: '#6B7280', marginTop: 2 },
+  sharedCard: { flexDirection: 'row', alignItems: 'center', padding: 12, borderRadius: 10, marginBottom: 6, borderWidth: 1, borderColor: '#37415130' },
+  sharedIcon: { width: 36, height: 36, borderRadius: 8, justifyContent: 'center', alignItems: 'center' },
   sharedInfo: { flex: 1, marginLeft: 12 },
-  sharedName: { fontSize: 14, fontWeight: '600', color: '#FFFFFF' },
-  sharedType: { fontSize: 12, color: '#9CA3AF' },
+  sharedName: { fontSize: 13, fontWeight: '600', color: '#FFFFFF' },
+  sharedType: { fontSize: 11, color: '#9CA3AF' },
   sharedStats: { alignItems: 'flex-end' },
-  sharedNodes: { fontSize: 13, color: '#FFFFFF' },
-  sharedContributors: { fontSize: 11, color: '#6B7280', marginTop: 2 },
+  sharedNodes: { fontSize: 12, color: '#FFFFFF', fontWeight: '500' },
+  sharedContributors: { fontSize: 10, color: '#6B7280', marginTop: 2 },
   createGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  createCard: { width: '48%', padding: 16, borderRadius: 12, alignItems: 'center' },
-  createText: { fontSize: 13, color: '#FFFFFF', marginTop: 8, textAlign: 'center' },
+  createCard: { width: '48%', padding: 14, borderRadius: 12, alignItems: 'center', borderWidth: 1, borderColor: '#37415130' },
+  createText: { fontSize: 12, color: '#FFFFFF', marginTop: 8, textAlign: 'center', fontWeight: '600' },
   agentsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   agentChip: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 12, paddingVertical: 8, borderRadius: 20, gap: 6 },
-  agentChipText: { fontSize: 12, fontWeight: '500' }
+  agentChipText: { fontSize: 12, fontWeight: '600' },
+  modalOverlay: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: '#000000BA', justifyContent: 'center', alignItems: 'center', padding: 16, zIndex: 999 },
+  modalCard: { width: '100%', maxWidth: 400, backgroundColor: '#1E293B', borderRadius: 16, padding: 20, borderWidth: 1, borderColor: '#374151' },
+  modalHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12, borderBottomWidth: 1, borderBottomColor: '#37415150', paddingBottom: 8 },
+  modalTitle: { fontSize: 16, fontWeight: 'bold', color: '#FFFFFF' },
+  modalSubtitle: { fontSize: 11, color: '#9CA3AF', marginTop: 2 },
+  inputLabel: { fontSize: 11, fontWeight: '600', color: '#9CA3AF', marginTop: 12, marginBottom: 6 },
+  configInput: { backgroundColor: '#0F172A', color: '#FFFFFF', paddingHorizontal: 12, paddingVertical: 10, borderRadius: 8, fontSize: 12, borderWidth: 1, borderColor: '#374151' },
+  configFieldRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 14, marginBottom: 6 },
+  configLabel: { fontSize: 12, fontWeight: '600', color: '#FFFFFF' },
+  modalActions: { flexDirection: 'row', gap: 8, marginTop: 20, borderTopWidth: 1, borderTopColor: '#37415150', paddingTop: 14 },
+  btnCancel: { flex: 1, paddingVertical: 10, borderRadius: 8, alignItems: 'center' },
+  btnSave: { flex: 1, paddingVertical: 10, borderRadius: 8, alignItems: 'center' },
+  btnText: { fontSize: 13, fontWeight: '600', color: '#FFFFFF' },
+  descInline: { fontSize: 12, color: '#9CA3AF', lineHeight: 16, marginBottom: 12 },
+  detailsRowBox: { marginTop: 14, borderTopWidth: 1, borderTopColor: '#37415140', paddingTop: 12 },
+  detailsTitle: { fontSize: 11, fontWeight: '600', color: '#9CA3AF', marginBottom: 8 },
+  aiSettingCard: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#0F172A', padding: 10, borderRadius: 8 },
+  aiSettingText: { fontSize: 11, color: '#FFFFFF', fontWeight: '500' },
+  btnCloseModal: { paddingVertical: 12, borderRadius: 8, alignItems: 'center', marginTop: 16 },
+  btnCloseText: { fontSize: 13, fontWeight: '600', color: '#FFFFFF' }
 };

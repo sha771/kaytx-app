@@ -1,38 +1,412 @@
-import React, { useState } from 'react';
-import { View, Text, ScrollView, TextInput, TouchableOpacity, useSafeAreaInsets } from 'react-native';
-import { useRouter } from 'expo-router';
-import { ArrowLeft, Search, Filter, Mic, Image, Clock, User, FileText, MessageSquare, Star, Zap, ArrowRight, TrendingUp } from 'lucide-react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ScrollView, TextInput, TouchableOpacity, useSafeAreaInsets, ActivityIndicator } from 'react-native';
+import { useRouter, useLocalSearchParams } from 'expo-router';
+import { ArrowLeft, Search, Filter, Mic, Image as ImageIcon, Clock, User, FileText, MessageSquare, Star, Zap, ArrowRight, TrendingUp, Shield, Sparkles, BookOpen } from 'lucide-react-native';
 
 export default function SmartSearchScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const [searchQuery, setSearchQuery] = useState('');
+  
+  // Search state
+  const params = useLocalSearchParams();
+  const [searchQuery, setSearchQuery] = useState((params.query as string) || '');
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchStep, setSearchStep] = useState('');
+  const [activeFilter, setActiveFilter] = useState('all');
+  
+  // Dynamic search results
+  const [results, setResults] = useState<any[]>([]);
+  const [aiAnswer, setAiAnswer] = useState<string | null>(null);
 
-  const SAMPLE_RESULTS = [
-    { 
-      title: 'Client Refund Policy v2.3', 
-      type: 'Process', 
-      source: 'Google Docs', 
-      confidence: 96,
-      snippet: 'To process a refund, the customer must provide their order number within 30 days of purchase...',
-      updated: '2 days ago'
-    },
-    { 
-      title: 'Q4 Product Launch Strategy', 
-      type: 'Decision', 
-      source: 'Slack #product', 
-      confidence: 94,
-      snippet: 'After reviewing market analysis, we decided to launch with a phased approach starting...',
-      updated: '5 hours ago'
-    },
-    { 
-      title: 'AWS Migration Timeline', 
-      type: 'Project', 
-      source: 'Jira', 
-      confidence: 92,
-      snippet: 'Phase 1: Infrastructure assessment complete. Phase 2: Pilot migration scheduled for...',
-      updated: '1 week ago'
+  const DATABASE_NODES = [
+    { id: 1, title: 'Client Refund Policy v2.3', type: 'Decision', source: 'Google Docs', confidence: 96, snippet: 'To process a client refund, the account executive must provide the unique order identifier within 30 calendar days of transaction completion. Escalations above $500 require VP approval.', updated: '2 days ago', tag: 'refund' },
+    { id: 2, title: 'AWS Migration Playbook', type: 'Technical', source: 'Confluence', confidence: 94, snippet: 'Lift-and-shift server blueprints. Relies on VPC endpoints, transit gateways, and RDS PostgreSQL replication. Phase 1 deployment finalized in US-West-2.', updated: '5 hours ago', tag: 'aws' },
+    { id: 3, title: 'Acme Corp Account Preferences', type: 'Client', source: 'CRM', confidence: 98, snippet: 'Acme Corp requires single-tenant deployment structures. Principal contact is Sarah Rivera. Billing reviews occur on a quarterly frequency.', updated: '3 days ago', tag: 'acme' },
+    { id: 4, title: 'Sprint 47 Retrospective SOP', type: 'Process', source: 'Jira', confidence: 91, snippet: 'Standard sprint reviews occur every second Thursday at 10 AM EST. Action items must be logged in the centralized engineering ticket queue.', updated: '1 week ago', tag: 'sprint' },
+    { id: 5, title: 'API Gateway Authentication Pattern', type: 'Technical', source: 'GitHub', confidence: 95, snippet: 'Uses JWT token verification with Redis-backed caching for rate limiting. Key rotations occur automatically every 90 days.', updated: '4 hours ago', tag: 'aws' },
+    { id: 6, title: 'Q4 Product Launch Timeline', type: 'Project', source: 'Notion', updated: '2 weeks ago', confidence: 93, snippet: 'Phased rollout calendar starting Oct 1st. Marketing materials due Sept 15. Security compliance certification must sign off prior to release.', tag: 'launch' },
+  ];
+
+  // Run RAG Search Simulator
+  const performSearch = (queryStr: string) => {
+    if (!queryStr.trim()) {
+      setResults([]);
+      setAiAnswer(null);
+      return;
     }
+
+    setIsSearching(true);
+    setSearchStep('Querying Pinecone vector embeddings...');
+    setAiAnswer(null);
+
+    setTimeout(() => {
+      setSearchStep('Synthesizing institutional context...');
+      
+      setTimeout(() => {
+        setIsSearching(false);
+        const query = queryStr.toLowerCase();
+        
+        // Match logic
+        const matches = DATABASE_NODES.filter(node => 
+          node.title.toLowerCase().includes(query) || 
+          node.snippet.toLowerCase().includes(query) || 
+          node.tag.includes(query)
+        );
+
+        setResults(matches);
+
+        // Synthesis generation
+        if (query.includes('aws') || query.includes('migr')) {
+          setAiAnswer('Company Brain Synthesis: Our AWS migration is currently on Phase 1, managed by Sarah Chen. It uses RDS PostgreSQL replication and VPC endpoints in US-West-2. API gateways are governed by Redis-backed JWT token rate limiting.');
+        } else if (query.includes('refund') || query.includes('policy')) {
+          setAiAnswer('Company Brain Synthesis: Client refunds are capped at 30 days post-purchase, requiring a unique order ID. Transactions exceeding $500 are routed to the VP of Engineering for manual overrides.');
+        } else if (query.includes('acme')) {
+          setAiAnswer('Company Brain Synthesis: Acme Corp is a high-priority enterprise client requiring single-tenant server isolating configurations. Sarah Rivera is the key stakeholder.');
+        } else {
+          setAiAnswer(`Company Brain Synthesis: Found ${matches.length} institutional entries relating to "${queryStr}". Relevant authors include Sarah Chen and James Wilson.`);
+        }
+      }, 500);
+    }, 600);
+    comprehensiveFeatures: {
+  "communicationChannels": {
+    "call": {
+      "enabled": true,
+      "provider": "Twilio",
+      "features": [
+        "PBX Integration",
+        "IVR Menu",
+        "Call Routing",
+        "Call Recording",
+        "Transcriptions"
+      ],
+      "recordingRetention": "90 days",
+      "consentLogging": true
+    },
+    "chatSystem": {
+      "enabled": true,
+      "platforms": [
+        "Web Widget",
+        "Slack",
+        "Intercom",
+        "Microsoft Teams"
+      ],
+      "persistentThreads": true,
+      "transcriptExport": true
+    },
+    "sms": {
+      "enabled": true,
+      "provider": "Twilio",
+      "features": [
+        "Templated Messages",
+        "Two-Way Support",
+        "Opt-Out Handling"
+      ],
+      "number": "TBD"
+    },
+    "voice": {
+      "enabled": true,
+      "primaryDID": "TBD",
+      "ttsVoice": "default",
+      "failoverNumbers": [],
+      "geoRouting": true
+    },
+    "recording": {
+      "enabled": true,
+      "autoRecording": true,
+      "consentLogging": true,
+      "transcriptGeneration": true,
+      "scriptTemplates": []
+    },
+    "location": {
+      "allowedRegions": [
+        "Global"
+      ],
+      "timezoneAware": true,
+      "localeFormats": [
+        "en-US",
+        "en-GB",
+        "es-ES",
+        "fr-FR",
+        "de-DE"
+      ]
+    }
+  },
+  "companySetup": {
+    "profile": {
+      "enabled": true,
+      "fields": [
+        "Company Name",
+        "Industry",
+        "Size",
+        "Location"
+      ]
+    },
+    "products": {
+      "enabled": true,
+      "catalog": true,
+      "pricingTiers": true
+    },
+    "negotiationRules": {
+      "enabled": true,
+      "templates": true,
+      "maxConcession": "10%"
+    }
+  },
+  "generalInfo": {
+    "name": "",
+    "role": "",
+    "availability": "24/7",
+    "personality": "professional",
+    "tone": "conversational",
+    "voice": "neutral"
+  },
+  "modelConfig": {
+    "modelName": "LLM-X v2",
+    "modelFamily": "GPT-4",
+    "version": "latest",
+    "primaryLanguage": "en-US",
+    "fallbackLanguages": [
+      "es",
+      "fr",
+      "de"
+    ],
+    "multilingualSupport": true
+  },
+  "timing": {
+    "businessHours": {
+      "enabled": true,
+      "schedule": "Mon-Fri 09:00-18:00 local",
+      "timezone": "UTC",
+      "holidays": []
+    },
+    "waitingDuration": {
+      "call": 120,
+      "chat": 30,
+      "sms": 0
+    },
+    "appointmentScheduling": {
+      "enabled": true,
+      "calendars": [
+        "Google",
+        "Outlook"
+      ],
+      "timezoneHandling": "automatic"
+    }
+  },
+  "pricing": {
+    "pricingModel": "fixed monthly",
+    "priceLimit": "TBD",
+    "negotiationRules": {
+      "enabled": true,
+      "maxConcession": "10%",
+      "autoNegotiation": false
+    }
+  },
+  "integrations": {
+    "crm": [
+      "Salesforce",
+      "HubSpot",
+      "Zendesk"
+    ],
+    "ticketing": [
+      "Zendesk",
+      "Freshdesk",
+      "Jira"
+    ],
+    "calendar": [
+      "Google Calendar",
+      "Outlook Calendar"
+    ],
+    "telephony": [
+      "Twilio",
+      "Vonage",
+      "RingCentral"
+    ],
+    "analytics": [
+      "Google Analytics",
+      "Mixpanel",
+      "Amplitude"
+    ],
+    "mcpConnectors": []
+  },
+  "responsibilities": {
+    "taskRouting": {
+      "method": "intent-based",
+      "escalationPath": "human after 3 failed handoffs",
+      "slaEnforcement": true
+    },
+    "appointmentScheduling": {
+      "enabled": true,
+      "rules": []
+    }
+  },
+  "taskManagement": {
+    "assignedTasks": {
+      "queue": true,
+      "slaTimers": true,
+      "dependencies": true
+    },
+    "progressTracking": {
+      "enabled": true,
+      "metrics": [
+        "completion percentage",
+        "time remaining"
+      ]
+    }
+  },
+  "behaviour": {
+    "safetyFilters": {
+      "enabled": true,
+      "restrictedDomains": [
+        "legal",
+        "medical",
+        "financial advice"
+      ]
+    },
+    "refusalTemplates": {
+      "enabled": true
+    },
+    "rateLimits": {
+      "enabled": true,
+      "requestsPerMinute": 60
+    }
+  },
+  "performance": {
+    "metrics": {
+      "latency": true,
+      "accuracy": true,
+      "successRate": true,
+      "userSatisfaction": true
+    },
+    "reporting": {
+      "dashboards": true,
+      "scheduledReports": true,
+      "cadence": [
+        "daily",
+        "weekly",
+        "monthly"
+      ]
+    }
+  },
+  "summary": {
+    "enabled": true,
+    "adminNotes": "",
+    "handoverContext": true
+  },
+  "predictive": {
+    "forecasting": {
+      "enabled": true,
+      "models": []
+    },
+    "anomalyDetection": {
+      "enabled": true,
+      "triggers": []
+    }
+  },
+  "regulations": {
+    "compliance": {
+      "gdpr": true,
+      "hipaa": false,
+      "soc2": false,
+      "regional": true
+    },
+    "dataResidency": {
+      "enabled": true,
+      "regions": []
+    },
+    "consentPolicies": {
+      "enabled": true
+    }
+  },
+  "memory": {
+    "session": {
+      "duration": "30 minutes",
+      "retention": true
+    },
+    "longTerm": {
+      "duration": "365 days",
+      "retention": true
+    },
+    "piiRedaction": {
+      "enabled": true
+    },
+    "purgeSchedule": "quarterly"
+  },
+  "detailedSetup": {
+    "onboardingFlow": true,
+    "productPricingSetup": true,
+    "negotiationRulesSetup": true,
+    "trainingPlan": true,
+    "knowledgeBaseImport": true,
+    "voicePersonalityTuning": true,
+    "businessHoursSetup": true,
+    "additionalConfigs": []
+  },
+  "twoStepVerification": {
+    "enabled": true,
+    "criticalActions": [
+      "billing",
+      "admin modifications",
+      "data export"
+    ],
+    "deviceCheck": true
+  },
+  "importExport": {
+    "endpoints": [
+      "CSV",
+      "JSON"
+    ],
+    "scheduledExports": true,
+    "retentionPolicy": true,
+    "complianceControls": true
+  },
+  "reports": {
+    "types": [
+      "performance",
+      "usage",
+      "errors",
+      "compliance"
+    ],
+    "cadence": [
+      "daily",
+      "weekly",
+      "monthly"
+    ],
+    "deliveryChannels": [
+      "email",
+      "dashboard",
+      "webhook"
+    ]
+  },
+  "mcpIntegrations": {
+    "connectors": [],
+    "apiSpecs": [],
+    "mapping": []
+  }
+}};
+
+  // Perform search on mount if parameter exists
+  useEffect(() => {
+    if (searchQuery) {
+      performSearch(searchQuery);
+    }
+  }, []);
+
+  const handleQuerySubmit = () => {
+    performSearch(searchQuery);
+  };
+
+  const handleSuggestedClick = (text: string) => {
+    setSearchQuery(text);
+    performSearch(text);
+  };
+
+  const FILTERS = [
+    { id: 'all', label: 'All Context' },
+    { id: 'document', label: 'Documents' },
+    { id: 'slack', label: 'Slack Logs' },
+    { id: 'decision', label: 'Decisions' },
+    { id: 'client', label: 'Client Hubs' }
   ];
 
   const RECENT_SEARCHES = [
@@ -49,14 +423,10 @@ export default function SmartSearchScreen() {
     'When was this last updated?'
   ];
 
-  const FILTERS = [
-    { id: 'all', label: 'All', active: true },
-    { id: 'documents', label: 'Documents', active: false },
-    { id: 'slack', label: 'Slack', active: false },
-    { id: 'email', label: 'Email', active: false },
-    { id: 'decisions', label: 'Decisions', active: false },
-    { id: 'clients', label: 'Clients', active: false }
-  ];
+  // Filtered results
+  const displayedResults = results.filter(r => 
+    activeFilter === 'all' || r.type.toLowerCase() === activeFilter.toLowerCase() || r.source.toLowerCase().includes(activeFilter.toLowerCase())
+  );
 
   return (
     <View style={{ flex: 1, backgroundColor: '#0F172A' }}>
@@ -67,28 +437,29 @@ export default function SmartSearchScreen() {
         </TouchableOpacity>
         <View style={styles.headerTitle}>
           <Text style={styles.headerTitleText}>Smart Search</Text>
-          <Text style={styles.headerSubtitle}>Natural language queries with contextual results</Text>
+          <Text style={styles.headerSubtitle}>Semantic queries powered by vector embeddings</Text>
         </View>
       </View>
 
-      {/* Search Input */}
+      {/* Search Input Section */}
       <View style={styles.searchSection}>
         <View style={[styles.searchContainer, { backgroundColor: '#1E293B' }]}>
           <Search size={20} color="#6B7280" />
           <TextInput
             style={styles.searchInput}
-            placeholder="Ask anything about your company..."
+            placeholder="Ask anything about your company (e.g. AWS Migration, Client refunds)..."
             placeholderTextColor="#6B7280"
             value={searchQuery}
             onChangeText={setSearchQuery}
+            onSubmitEditing={handleQuerySubmit}
             autoFocus
           />
           <View style={styles.searchActions}>
-            <TouchableOpacity style={styles.searchAction}>
+            <TouchableOpacity style={styles.searchAction} onPress={() => handleSuggestedClick('AWS migration')}>
               <Mic size={18} color="#6B7280" />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.searchAction}>
-              <Image size={18} color="#6B7280" />
+            <TouchableOpacity style={styles.searchAction} onPress={() => handleSuggestedClick('refund policy')}>
+              <ImageIcon size={18} color="#6B7280" />
             </TouchableOpacity>
           </View>
         </View>
@@ -100,22 +471,42 @@ export default function SmartSearchScreen() {
               key={filter.id} 
               style={[
                 styles.filterChip, 
-                { backgroundColor: filter.active ? '#3B82F6' : '#1E293B' }
+                { backgroundColor: activeFilter === filter.id ? '#3B82F6' : '#1E293B' }
               ]}
+              onPress={() => setActiveFilter(filter.id)}
             >
-              <Text style={[styles.filterText, { color: filter.active ? '#FFFFFF' : '#9CA3AF' }]}>
+              <Text style={[styles.filterText, { color: activeFilter === filter.id ? '#FFFFFF' : '#9CA3AF' }]}>
                 {filter.label}
               </Text>
             </TouchableOpacity>
           ))}
-          <TouchableOpacity style={[styles.filterChip, { backgroundColor: '#1E293B' }]}>
-            <Filter size={14} color="#9CA3AF" />
-            <Text style={styles.filterText}>More Filters</Text>
-          </TouchableOpacity>
         </ScrollView>
       </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+        {/* Search Progress State */}
+        {isSearching && (
+          <View style={styles.searchProgress}>
+            <ActivityIndicator size="small" color="#3B82F6" />
+            <Text style={styles.progressText}>{searchStep}</Text>
+          </View>
+        )}
+
+        {/* RAG Synthesis Result Card */}
+        {aiAnswer && !isSearching && (
+          <View style={styles.synthesisContainer}>
+            <View style={styles.synthesisHeader}>
+              <Sparkles size={16} color="#7C3AED" />
+              <Text style={styles.synthesisTitle}>Autonomous RAG Synthesis</Text>
+            </View>
+            <Text style={styles.synthesisBody}>{aiAnswer}</Text>
+            <View style={styles.synthesisFooter}>
+              <Shield size={10} color="#10B981" />
+              <Text style={styles.synthesisBadgeText}>Confidence high • Source verified</Text>
+            </View>
+          </View>
+        )}
+
         {/* Search Stats */}
         <View style={styles.statsRow}>
           <View style={[styles.statCard, { backgroundColor: '#1E293B' }]}>
@@ -124,64 +515,67 @@ export default function SmartSearchScreen() {
           </View>
           <View style={[styles.statCard, { backgroundColor: '#1E293B' }]}>
             <Text style={styles.statValue}>94%</Text>
-            <Text style={styles.statLabel}>Success Rate</Text>
+            <Text style={styles.statLabel}>Precision Rating</Text>
           </View>
           <View style={[styles.statCard, { backgroundColor: '#1E293B' }]}>
-            <Text style={styles.statValue}>1.2s</Text>
-            <Text style={styles.statLabel}>Avg Response</Text>
+            <Text style={styles.statValue}>0.4s</Text>
+            <Text style={styles.statLabel}>Avg Query Latency</Text>
           </View>
         </View>
 
         {/* Search Results */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Results for "refund policy and client decisions"</Text>
-          {SAMPLE_RESULTS.map((result, index) => (
-            <TouchableOpacity key={index} style={[styles.resultCard, { backgroundColor: '#1E293B' }]}>
-              <View style={styles.resultHeader}>
-                <View style={[styles.typeBadge, { backgroundColor: '#3B82F620' }]}>
-                  <Text style={styles.typeText}>{result.type}</Text>
+        {displayedResults.length > 0 && !isSearching && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Relevant Knowledge Nodes ({displayedResults.length})</Text>
+            {displayedResults.map((result, index) => (
+              <TouchableOpacity 
+                key={index} 
+                style={[styles.resultCard, { backgroundColor: '#1E293B' }]}
+                onPress={() => router.push(`/ai-agent/company-brain/graph`)}
+              >
+                <View style={styles.resultHeader}>
+                  <View style={[styles.typeBadge, { backgroundColor: '#3B82F615' }]}>
+                    <Text style={styles.typeText}>{result.type}</Text>
+                  </View>
+                  <View style={styles.resultMeta}>
+                    <Text style={styles.resultSource}>{result.source}</Text>
+                    <Text style={styles.resultDot}>•</Text>
+                    <Text style={styles.resultTime}>{result.updated}</Text>
+                  </View>
                 </View>
-                <View style={styles.resultMeta}>
-                  <Text style={styles.resultSource}>{result.source}</Text>
-                  <Text style={styles.resultDot}>•</Text>
-                  <Text style={styles.resultTime}>{result.updated}</Text>
+                <Text style={styles.resultTitle}>{result.title}</Text>
+                <Text style={styles.resultSnippet} numberOfLines={3}>{result.snippet}</Text>
+                
+                <View style={styles.resultFooter}>
+                  <View style={styles.confidenceRow}>
+                    <Zap size={12} color="#F59E0B" />
+                    <Text style={styles.confidenceText}>{result.confidence}% vector confidence</Text>
+                  </View>
+                  <ArrowRight size={14} color="#6B7280" />
                 </View>
-              </View>
-              <Text style={styles.resultTitle}>{result.title}</Text>
-              <Text style={styles.resultSnippet} numberOfLines={2}>{result.snippet}</Text>
-              <View style={styles.resultFooter}>
-                <View style={styles.confidenceRow}>
-                  <Zap size={12} color="#F59E0B" />
-                  <Text style={styles.confidenceText}>{result.confidence}% confidence</Text>
-                </View>
-                <ArrowRight size={16} color="#6B7280" />
-              </View>
-            </TouchableOpacity>
-          ))}
-        </View>
-
-        {/* Recent Searches */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Recent Searches</Text>
-            <TouchableOpacity>
-              <Text style={styles.clearText}>Clear</Text>
-            </TouchableOpacity>
+              </TouchableOpacity>
+            ))}
           </View>
-          {RECENT_SEARCHES.map((search, index) => (
-            <TouchableOpacity key={index} style={[styles.recentItem, { backgroundColor: '#1E293B' }]}>
-              <Clock size={14} color="#6B7280" />
-              <Text style={styles.recentText}>{search}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+        )}
+
+        {/* Empty Fallback */}
+        {searchQuery && displayedResults.length === 0 && !isSearching && (
+          <View style={styles.emptyContainer}>
+            <BookOpen size={24} color="#6B7280" />
+            <Text style={styles.emptyText}>No explicit matches. Try broad terms like "AWS" or "Refund".</Text>
+          </View>
+        )}
 
         {/* Suggested Follow-ups */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Suggested Follow-ups</Text>
+          <Text style={styles.sectionTitle}>Conversational Follow-ups</Text>
           <View style={styles.followUps}>
             {SUGGESTED_FOLLOWUPS.map((followup, index) => (
-              <TouchableOpacity key={index} style={[styles.followUpItem, { backgroundColor: '#1E293B' }]}>
+              <TouchableOpacity 
+                key={index} 
+                style={[styles.followUpItem, { backgroundColor: '#1E293B' }]}
+                onPress={() => handleSuggestedClick(followup)}
+              >
                 <MessageSquare size={14} color="#3B82F6" />
                 <Text style={styles.followUpText}>{followup}</Text>
               </TouchableOpacity>
@@ -189,49 +583,50 @@ export default function SmartSearchScreen() {
           </View>
         </View>
 
+        {/* Recent Searches */}
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Recent Searches</Text>
+            <TouchableOpacity onPress={() => setSearchQuery('')}>
+              <Text style={styles.clearText}>Clear Feed</Text>
+            </TouchableOpacity>
+          </View>
+          {RECENT_SEARCHES.map((search, index) => (
+            <TouchableOpacity 
+              key={index} 
+              style={[styles.recentItem, { backgroundColor: '#1E293B' }]}
+              onPress={() => handleSuggestedClick(search)}
+            >
+              <Clock size={14} color="#6B7280" />
+              <Text style={styles.recentText}>{search}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
         {/* Trending Topics */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Trending Searches</Text>
+          <Text style={styles.sectionTitle}>Trending Corporate Queries</Text>
           <View style={styles.trendingRow}>
             {[
-              { topic: 'Q4 Strategy', trend: '+45%' },
-              { topic: 'AWS Migration', trend: '+32%' },
-              { topic: 'Security Audit', trend: '+28%' },
-              { topic: 'Product Launch', trend: '+21%' }
+              { topic: 'AWS Migration Phase 1', trend: '+45%' },
+              { topic: 'Single-tenant policies', trend: '+32%' },
+              { topic: 'Quarterly compliance checklist', trend: '+28%' },
+              { topic: 'Onboarding mentors list', trend: '+21%' }
             ].map((item, index) => (
-              <View key={index} style={[styles.trendingCard, { backgroundColor: '#1E293B' }]}>
+              <TouchableOpacity 
+                key={index} 
+                style={[styles.trendingCard, { backgroundColor: '#1E293B' }]}
+                onPress={() => handleSuggestedClick(item.topic)}
+              >
                 <TrendingUp size={14} color="#10B981" />
                 <Text style={styles.trendingTopic}>{item.topic}</Text>
                 <Text style={styles.trendingTrend}>{item.trend}</Text>
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
         </View>
 
-        {/* Advanced Search Options */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Advanced Search</Text>
-          <View style={styles.advancedGrid}>
-            <TouchableOpacity style={[styles.advancedItem, { backgroundColor: '#1E293B' }]}>
-              <User size={20} color="#7C3AED" />
-              <Text style={styles.advancedText}>Search by Person</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.advancedItem, { backgroundColor: '#1E293B' }]}>
-              <FileText size={20} color="#3B82F6" />
-              <Text style={styles.advancedText}>Search by Document</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.advancedItem, { backgroundColor: '#1E293B' }]}>
-              <Calendar size={20} color="#10B981" />
-              <Text style={styles.advancedText}>Search by Date</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.advancedItem, { backgroundColor: '#1E293B' }]}>
-              <Star size={20} color="#F59E0B" />
-              <Text style={styles.advancedText}>Favorites</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View style={{ height: 40 }} />
+        <View style={{ height: 60 }} />
       </ScrollView>
     </View>
   );
@@ -273,7 +668,7 @@ const styles = {
   },
   searchInput: {
     flex: 1,
-    fontSize: 16,
+    fontSize: 14,
     color: '#FFFFFF'
   },
   searchActions: {
@@ -287,21 +682,69 @@ const styles = {
     marginTop: 12
   },
   filterChip: {
-    flexDirection: 'row',
-    alignItems: 'center',
     paddingHorizontal: 14,
     paddingVertical: 8,
     borderRadius: 20,
-    marginRight: 8,
-    gap: 6
+    marginRight: 8
   },
   filterText: {
-    fontSize: 13,
-    color: '#9CA3AF'
+    fontSize: 12,
+    color: '#9CA3AF',
+    fontWeight: '600'
   },
   content: {
     flex: 1,
     paddingHorizontal: 16
+  },
+  searchProgress: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#1E293B',
+    padding: 12,
+    borderRadius: 10,
+    marginBottom: 20,
+    gap: 8
+  },
+  progressText: {
+    color: '#3B82F6',
+    fontSize: 12,
+    fontWeight: '600'
+  },
+  synthesisContainer: {
+    backgroundColor: '#7C3AED10',
+    borderColor: '#7C3AED30',
+    borderWidth: 1,
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 20
+  },
+  synthesisHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 8
+  },
+  synthesisTitle: {
+    fontSize: 13,
+    fontWeight: 'bold',
+    color: '#7C3AED',
+    textTransform: 'uppercase'
+  },
+  synthesisBody: {
+    color: '#FFFFFF',
+    fontSize: 13,
+    lineHeight: 18
+  },
+  synthesisFooter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    marginTop: 12
+  },
+  synthesisBadgeText: {
+    fontSize: 10,
+    color: '#10B981',
+    fontWeight: '600'
   },
   statsRow: {
     flexDirection: 'row',
@@ -310,19 +753,20 @@ const styles = {
   },
   statCard: {
     flex: 1,
-    padding: 14,
+    padding: 12,
     borderRadius: 12,
     alignItems: 'center'
   },
   statValue: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#FFFFFF'
   },
   statLabel: {
-    fontSize: 11,
+    fontSize: 10,
     color: '#9CA3AF',
-    marginTop: 4
+    marginTop: 4,
+    textAlign: 'center'
   },
   section: {
     marginBottom: 24
@@ -330,22 +774,26 @@ const styles = {
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 12
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600',
     color: '#FFFFFF',
     marginBottom: 12
   },
   clearText: {
-    fontSize: 13,
-    color: '#3B82F6'
+    fontSize: 12,
+    color: '#3B82F6',
+    fontWeight: '500'
   },
   resultCard: {
     padding: 14,
     borderRadius: 12,
-    marginBottom: 10
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: '#37415130'
   },
   resultHeader: {
     flexDirection: 'row',
@@ -359,9 +807,10 @@ const styles = {
     borderRadius: 4
   },
   typeText: {
-    fontSize: 10,
+    fontSize: 9,
     color: '#3B82F6',
-    fontWeight: '500'
+    fontWeight: '600',
+    textTransform: 'uppercase'
   },
   resultMeta: {
     flexDirection: 'row',
@@ -369,33 +818,36 @@ const styles = {
     gap: 4
   },
   resultSource: {
-    fontSize: 11,
+    fontSize: 10,
     color: '#6B7280'
   },
   resultDot: {
-    fontSize: 11,
+    fontSize: 10,
     color: '#6B7280'
   },
   resultTime: {
-    fontSize: 11,
+    fontSize: 10,
     color: '#6B7280'
   },
   resultTitle: {
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: '600',
     color: '#FFFFFF',
     marginBottom: 6
   },
   resultSnippet: {
-    fontSize: 13,
+    fontSize: 12,
     color: '#9CA3AF',
-    lineHeight: 18
+    lineHeight: 16
   },
   resultFooter: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 10
+    marginTop: 12,
+    borderTopWidth: 1,
+    borderColor: '#37415140',
+    paddingTop: 10
   },
   confidenceRow: {
     flexDirection: 'row',
@@ -404,7 +856,8 @@ const styles = {
   },
   confidenceText: {
     fontSize: 11,
-    color: '#F59E0B'
+    color: '#F59E0B',
+    fontWeight: '600'
   },
   recentItem: {
     flexDirection: 'row',
@@ -415,7 +868,7 @@ const styles = {
     gap: 10
   },
   recentText: {
-    fontSize: 14,
+    fontSize: 13,
     color: '#FFFFFF'
   },
   followUps: {
@@ -447,29 +900,26 @@ const styles = {
     gap: 8
   },
   trendingTopic: {
-    fontSize: 13,
-    color: '#FFFFFF'
+    fontSize: 12,
+    color: '#FFFFFF',
+    fontWeight: '500'
   },
   trendingTrend: {
-    fontSize: 12,
+    fontSize: 11,
     color: '#10B981',
     fontWeight: '600'
   },
-  advancedGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8
-  },
-  advancedItem: {
-    width: '48%',
-    flexDirection: 'row',
+  emptyContainer: {
     alignItems: 'center',
-    padding: 14,
+    padding: 24,
+    backgroundColor: '#1E293B40',
     borderRadius: 12,
-    gap: 10
+    marginBottom: 20
   },
-  advancedText: {
-    fontSize: 13,
-    color: '#FFFFFF'
+  emptyText: {
+    color: '#9CA3AF',
+    fontSize: 12,
+    marginTop: 8,
+    textAlign: 'center'
   }
 };

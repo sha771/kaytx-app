@@ -344,6 +344,18 @@ function RootLayoutNav() {
       <Stack.Screen name="privacy/privacy-dashboard" />
       {/* Compliance Routes */}
       <Stack.Screen name="compliance/compliance-dashboard" />
+      {/* Company Brain Routes */}
+      <Stack.Screen name="company-brain/index" />
+      <Stack.Screen name="company-brain/dashboard" />
+      <Stack.Screen name="company-brain/search" />
+      <Stack.Screen name="company-brain/documents" />
+      <Stack.Screen name="company-brain/graph" />
+      <Stack.Screen name="company-brain/node/[id]" />
+      <Stack.Screen name="company-brain/onboarding" />
+      <Stack.Screen name="company-brain/team" />
+      <Stack.Screen name="company-brain/analytics" />
+      <Stack.Screen name="company-brain/settings" />
+      <Stack.Screen name="company-brain/succession" />
     </Stack>
   );
 }

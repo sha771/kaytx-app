@@ -1,38 +1,80 @@
 import React from 'react';
+import { useLocalSearchParams } from 'expo-router';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
+import { completeAIWorkforce } from '@/constants/completeAIWorkforce_1108';
 import { Bot } from 'lucide-react-native';
 
 export default function AgentPage() {
-  const agent = {
-    id: '[agentId]',
-    name: '[agentId]',
-    title: '[agentId]',
-    description: '{agent.description}',
-    capabilities: ["Task Automation","Data Processing","Workflow Management"],
+  const { agentId } = useLocalSearchParams<{ agentId: string }>();
+  const rawId = agentId || '';
+
+  let subAgent: { id: string; name: string; title: string; description: string; capabilities: string[] } | undefined;
+  let parentColor = '#9C27B0';
+  let parentDept = 'Agent';
+
+  for (const main of completeAIWorkforce) {
+    const found = main.subAgents.find(sa => sa.id === rawId);
+    if (found) {
+      subAgent = found;
+      parentColor = main.color;
+      parentDept = main.department;
+      break;
+    }
+  }
+
+  const buildSubAgent = (data: {
+    id: string; name: string; title: string; description: string;
+    capabilities: string[]; color: string; department: string;
+  }) => ({
+    id: data.id,
+    name: data.name,
+    title: data.title,
+    description: data.description,
+    capabilities: data.capabilities,
     icon: Bot,
-    color: '#9C27B0',
+    color: data.color,
     type: 'agent' as const,
-    humanCost: '$98k/year',
-    aiCost: '$1k/year',
-    efficiency: '98x efficiency improvement',
-    replacesRole: '[agentId]',
+    humanCost: '$65k/year',
+    aiCost: '$990/mo',
+    efficiency: '95%',
+    replacesRole: data.title,
     infrastructure: {
-      status: 'online',
-      health: 98,
-      uptime: '99.9%',
-      lastActive: 'Now',
-      processingPower: 'standard',
+      status: 'online' as const,
+      health: 96,
+      uptime: '99.8%',
+      lastActive: 'Now' as const,
+      processingPower: 'standard' as const,
     },
     roiMetrics: {
-      savingsPerMonth: '$7',
-      tasksAutomatedDaily: 1139,
-      responseTime: '0.7s',
-      accuracyRate: '95.4%',
+      savingsPerMonth: `$${(Math.floor(Math.random() * 5) + 2).toFixed(1)}k`,
+      tasksAutomatedDaily: Math.floor(Math.random() * 600) + 300,
+      responseTime: `${(Math.random() * 2 + 0.5).toFixed(1)}s`,
+      accuracyRate: `${(Math.random() * 4 + 94).toFixed(1)}%`,
     },
     hierarchy: {
-      department: 'Agent',
+      department: data.department,
     },
-  };
+  });
 
-  return <AgentPageWrapper agent={agent} />;
+  if (!subAgent) {
+    return <AgentPageWrapper agent={buildSubAgent({
+      id: rawId || 'unknown',
+      name: rawId || 'Sub-Agent',
+      title: rawId || 'Sub-Agent',
+      description: 'AI sub-agent providing specialized support services.',
+      capabilities: ['Task Support', 'Data Processing', 'Reporting'],
+      color: '#9C27B0',
+      department: 'Agent',
+    })} />;
+  }
+
+  return <AgentPageWrapper agent={buildSubAgent({
+    id: subAgent.id,
+    name: subAgent.name,
+    title: subAgent.title,
+    description: subAgent.description,
+    capabilities: subAgent.capabilities,
+    color: parentColor,
+    department: parentDept,
+  })} />;
 }

@@ -24,21 +24,7 @@ import type { AIAgent } from '../aiAgentHierarchy';
 // ============================================
 
 export const DEFAULT_A2A_CONFIG = {
-  enabled: true,
-  canInitiateConsultation: true,
-  canRespondToConsultation: true,
-  canEscalate: true,
-  canDelegate: true,
-  maxConcurrentConsultations: 5,
-  averageResponseTime: 2, // seconds
-  counselingModes: ['hierarchical', 'peer', 'cross-functional'],
-  mentoringCapabilities: {
-    canMentorSubagents: true,
-    canMentorPeers: true,
-    canBeMentoredByMain: true,
-    canBeMentoredByPeers: true,
-  },
-  coordinationLevel: 'organization',
+  supportsA2A: true,
   a2aEndpoints: [] as string[],
   consultationStyle: 'collaborative' as const,
   canEscalateTo: [] as string[],
@@ -64,7 +50,7 @@ export const DEFAULT_D2D_CONFIG = {
     'engineering_development',
     'ai_personal_assistant',
   ],
-  communicationModes: ['broadcast', 'direct', 'collaborative', 'hierarchical'],
+  communicationModes: ['broadcast', 'direct', 'collaborative', 'hierarchical'] as ('broadcast' | 'direct' | 'collaborative' | 'hierarchical')[],
   canBroadcastToAll: true,
   canReceiveDepartmentUpdates: true,
   departmentChannels: [] as any[],
@@ -93,13 +79,13 @@ export const DEFAULT_SELF_IMPROVEMENT_CONFIG = {
     { metric: 'task_completion_rate', target: 98, current: 0 },
   ],
   feedbackLoop: true,
-  iterationCycle: 'daily',
+  iterationCycle: 'daily' as const,
   versionHistory: [] as any[],
 };
 
 export const DEFAULT_LEARNING_CONFIG = {
   enabled: true,
-  learningMode: 'self_supervised',
+  learningMode: 'self_supervised' as const,
   knowledgeSources: [
     'interactions',
     'feedback',
@@ -195,10 +181,10 @@ export const DEFAULT_INSIGHTS_CONFIG = {
 
 export const DEFAULT_MEMORY_CONFIG = {
   enabled: true,
-  memoryType: 'unlimited',
-  storageCapacity: 'unlimited',
+  memoryType: 'unlimited' as const,
+  storageCapacity: 'unlimited' as const,
   retentionPolicy: {
-    type: 'unlimited',
+    type: 'unlimited' as const,
   },
   memoryCompression: true,
   contextWindow: 100000, // tokens
