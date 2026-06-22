@@ -337,7 +337,7 @@ const department1Agents: MainAgent[] = [
     description: 'AI Chief Customer Officer leads strategic direction and executive decision-making for the Customer Experience department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Sentiment Analysis', 'Multi-channel Support', 'Churn Prediction', 'Loyalty Programs', 'Ticket Routing'],
     responsibilities: ['Define strategic vision and roadmap', 'Align cross-functional teams', 'Report to executive leadership', 'Drive organizational transformation'],
-    icon: 'Crown', color: '#00BCD4', route: '/ai-agent/customer-experience/chief-customer-officer',
+    icon: 'Crown', color: '#00BCD4', route: '/ai-agent/customer/chief-customer-officer',
     aiCost: '$2,400/mo', efficiency: '90%', isPremium: true,
     reportsTo: undefined,
     subAgents: [
@@ -352,7 +352,7 @@ const department1Agents: MainAgent[] = [
     description: 'AI VP Customer Success drives department strategy and oversees operations for the Customer Experience department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Knowledge Base Management', 'Customer Feedback Analysis', 'Customer Journey Mapping', 'Sentiment Analysis', 'Multi-channel Support'],
     responsibilities: ['Execute department strategy', 'Manage department budget', 'Lead management team', 'Optimize department KPIs'],
-    icon: 'Star', color: '#00BCD4', route: '/ai-agent/customer-experience/vp-customer-success',
+    icon: 'Star', color: '#00BCD4', route: '/ai-agent/customer/vp-customer-success',
     aiCost: '$1,800/mo', efficiency: '89%', isPremium: true,
     reportsTo: 'ai-chief-customer-officer',
     subAgents: [
@@ -367,7 +367,7 @@ const department1Agents: MainAgent[] = [
     description: 'AI VP Support drives department strategy and oversees operations for the Customer Experience department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Ticket Routing', 'Knowledge Base Management', 'Customer Feedback Analysis', 'Customer Journey Mapping', 'Sentiment Analysis'],
     responsibilities: ['Execute department strategy', 'Manage department budget', 'Lead management team', 'Optimize department KPIs'],
-    icon: 'Star', color: '#00BCD4', route: '/ai-agent/customer-experience/vp-support',
+    icon: 'Star', color: '#00BCD4', route: '/ai-agent/customer/vp-support',
     aiCost: '$1,800/mo', efficiency: '86%', isPremium: true,
     reportsTo: 'ai-chief-customer-officer',
     subAgents: [
@@ -382,7 +382,7 @@ const department1Agents: MainAgent[] = [
     description: 'AI VP Experience drives department strategy and oversees operations for the Customer Experience department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Customer Journey Mapping', 'Sentiment Analysis', 'Multi-channel Support', 'Churn Prediction', 'Loyalty Programs'],
     responsibilities: ['Execute department strategy', 'Manage department budget', 'Lead management team', 'Optimize department KPIs'],
-    icon: 'Star', color: '#00BCD4', route: '/ai-agent/customer-experience/vp-experience',
+    icon: 'Star', color: '#00BCD4', route: '/ai-agent/customer/vp-experience',
     aiCost: '$1,800/mo', efficiency: '87%', isPremium: true,
     reportsTo: 'ai-chief-customer-officer',
     subAgents: [
@@ -397,7 +397,7 @@ const department1Agents: MainAgent[] = [
     description: 'AI VP Retention drives department strategy and oversees operations for the Customer Experience department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Customer Feedback Analysis', 'Customer Journey Mapping', 'Sentiment Analysis', 'Multi-channel Support', 'Churn Prediction'],
     responsibilities: ['Execute department strategy', 'Manage department budget', 'Lead management team', 'Optimize department KPIs'],
-    icon: 'Star', color: '#00BCD4', route: '/ai-agent/customer-experience/vp-retention',
+    icon: 'Star', color: '#00BCD4', route: '/ai-agent/customer/vp-retention',
     aiCost: '$1,800/mo', efficiency: '80%', isPremium: true,
     reportsTo: 'ai-chief-customer-officer',
     subAgents: [
@@ -412,7 +412,7 @@ const department1Agents: MainAgent[] = [
     description: 'AI VP Loyalty drives department strategy and oversees operations for the Customer Experience department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Ticket Routing', 'Knowledge Base Management', 'Customer Feedback Analysis', 'Customer Journey Mapping', 'Sentiment Analysis'],
     responsibilities: ['Execute department strategy', 'Manage department budget', 'Lead management team', 'Optimize department KPIs'],
-    icon: 'Star', color: '#00BCD4', route: '/ai-agent/customer-experience/vp-loyalty',
+    icon: 'Star', color: '#00BCD4', route: '/ai-agent/customer/vp-loyalty',
     aiCost: '$1,800/mo', efficiency: '86%', isPremium: true,
     reportsTo: 'ai-chief-customer-officer',
     subAgents: [
@@ -427,7 +427,7 @@ const department1Agents: MainAgent[] = [
     description: 'AI Receptionist coordinates team activities and ensures quality output for the Customer Experience department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Customer Feedback Analysis', 'Customer Journey Mapping', 'Sentiment Analysis', 'Multi-channel Support', 'Churn Prediction'],
     responsibilities: ['Lead team projects', 'Coordinate daily workflows', 'Mentor junior team members', 'Ensure SLA compliance'],
-    icon: 'Zap', color: '#00BCD4', route: '/ai-agent/customer-experience/receptionist',
+    icon: 'Zap', color: '#00BCD4', route: '/ai-agent/customer/receptionist',
     aiCost: '$800/mo', efficiency: '80%', isPremium: false,
     reportsTo: 'ai-chief-customer-officer',
     subAgents: [
@@ -442,7 +442,7 @@ const department1Agents: MainAgent[] = [
     description: 'AI Customer Support Agent coordinates team activities and ensures quality output for the Customer Experience department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Sentiment Analysis', 'Multi-channel Support', 'Churn Prediction', 'Loyalty Programs', 'Ticket Routing'],
     responsibilities: ['Lead team projects', 'Coordinate daily workflows', 'Mentor junior team members', 'Ensure SLA compliance'],
-    icon: 'Zap', color: '#00BCD4', route: '/ai-agent/customer-experience/customer-support-agent',
+    icon: 'Zap', color: '#00BCD4', route: '/ai-agent/customer/customer-support-agent',
     aiCost: '$800/mo', efficiency: '90%', isPremium: false,
     reportsTo: 'ai-chief-customer-officer',
     subAgents: [
@@ -457,7 +457,7 @@ const department1Agents: MainAgent[] = [
     description: 'AI Ticket Resolution Agent coordinates team activities and ensures quality output for the Customer Experience department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Multi-channel Support', 'Churn Prediction', 'Loyalty Programs', 'Ticket Routing', 'Knowledge Base Management'],
     responsibilities: ['Lead team projects', 'Coordinate daily workflows', 'Mentor junior team members', 'Ensure SLA compliance'],
-    icon: 'Zap', color: '#00BCD4', route: '/ai-agent/customer-experience/ticket-resolution-agent',
+    icon: 'Zap', color: '#00BCD4', route: '/ai-agent/customer/ticket-resolution-agent',
     aiCost: '$800/mo', efficiency: '77%', isPremium: false,
     reportsTo: 'ai-chief-customer-officer',
     subAgents: [
@@ -472,7 +472,7 @@ const department1Agents: MainAgent[] = [
     description: 'AI Complaint Handling Agent coordinates team activities and ensures quality output for the Customer Experience department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Churn Prediction', 'Loyalty Programs', 'Ticket Routing', 'Knowledge Base Management', 'Customer Feedback Analysis'],
     responsibilities: ['Lead team projects', 'Coordinate daily workflows', 'Mentor junior team members', 'Ensure SLA compliance'],
-    icon: 'Zap', color: '#00BCD4', route: '/ai-agent/customer-experience/complaint-handling-agent',
+    icon: 'Zap', color: '#00BCD4', route: '/ai-agent/customer/complaint-handling-agent',
     aiCost: '$800/mo', efficiency: '84%', isPremium: false,
     reportsTo: 'ai-chief-customer-officer',
     subAgents: [
@@ -487,7 +487,7 @@ const department1Agents: MainAgent[] = [
     description: 'AI Retention Specialist coordinates team activities and ensures quality output for the Customer Experience department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Customer Feedback Analysis', 'Customer Journey Mapping', 'Sentiment Analysis', 'Multi-channel Support', 'Churn Prediction'],
     responsibilities: ['Lead team projects', 'Coordinate daily workflows', 'Mentor junior team members', 'Ensure SLA compliance'],
-    icon: 'Zap', color: '#00BCD4', route: '/ai-agent/customer-experience/retention-specialist',
+    icon: 'Zap', color: '#00BCD4', route: '/ai-agent/customer/retention-specialist',
     aiCost: '$800/mo', efficiency: '76%', isPremium: false,
     reportsTo: 'ai-chief-customer-officer',
     subAgents: [
@@ -502,7 +502,7 @@ const department1Agents: MainAgent[] = [
     description: 'AI Loyalty & Engagement Agent coordinates team activities and ensures quality output for the Customer Experience department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Ticket Routing', 'Knowledge Base Management', 'Customer Feedback Analysis', 'Customer Journey Mapping', 'Sentiment Analysis'],
     responsibilities: ['Lead team projects', 'Coordinate daily workflows', 'Mentor junior team members', 'Ensure SLA compliance'],
-    icon: 'Zap', color: '#00BCD4', route: '/ai-agent/customer-experience/loyalty-engagement-agent',
+    icon: 'Zap', color: '#00BCD4', route: '/ai-agent/customer/loyalty-engagement-agent',
     aiCost: '$800/mo', efficiency: '78%', isPremium: false,
     reportsTo: 'ai-chief-customer-officer',
     subAgents: [
@@ -517,7 +517,7 @@ const department1Agents: MainAgent[] = [
     description: 'AI Feedback & Survey Agent coordinates team activities and ensures quality output for the Customer Experience department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Multi-channel Support', 'Churn Prediction', 'Loyalty Programs', 'Ticket Routing', 'Knowledge Base Management'],
     responsibilities: ['Lead team projects', 'Coordinate daily workflows', 'Mentor junior team members', 'Ensure SLA compliance'],
-    icon: 'Zap', color: '#00BCD4', route: '/ai-agent/customer-experience/feedback-survey-agent',
+    icon: 'Zap', color: '#00BCD4', route: '/ai-agent/customer/feedback-survey-agent',
     aiCost: '$800/mo', efficiency: '77%', isPremium: false,
     reportsTo: 'ai-chief-customer-officer',
     subAgents: [
@@ -532,7 +532,7 @@ const department1Agents: MainAgent[] = [
     description: 'AI Billing Support Agent coordinates team activities and ensures quality output for the Customer Experience department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Customer Journey Mapping', 'Sentiment Analysis', 'Multi-channel Support', 'Churn Prediction', 'Loyalty Programs'],
     responsibilities: ['Lead team projects', 'Coordinate daily workflows', 'Mentor junior team members', 'Ensure SLA compliance'],
-    icon: 'Zap', color: '#00BCD4', route: '/ai-agent/customer-experience/billing-support-agent',
+    icon: 'Zap', color: '#00BCD4', route: '/ai-agent/customer/billing-support-agent',
     aiCost: '$800/mo', efficiency: '83%', isPremium: false,
     reportsTo: 'ai-chief-customer-officer',
     subAgents: [
@@ -1392,7 +1392,7 @@ const department6Agents: MainAgent[] = [
     description: 'AI Chief Technology Officer leads strategic direction and executive decision-making for the Technology & Engineering department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Performance Optimization', 'Security Scanning', 'API Management', 'Cloud Infrastructure', 'Technical Documentation'],
     responsibilities: ['Define strategic vision and roadmap', 'Align cross-functional teams', 'Report to executive leadership', 'Drive organizational transformation'],
-    icon: 'Crown', color: '#1565C0', route: '/ai-agent/technology/chief-technology-officer',
+    icon: 'Crown', color: '#1565C0', route: '/ai-agent/technologynology/chief-technology-officer',
     aiCost: '$2,400/mo', efficiency: '84%', isPremium: true,
     reportsTo: undefined,
     subAgents: [
@@ -1407,7 +1407,7 @@ const department6Agents: MainAgent[] = [
     description: 'AI VP Engineering drives department strategy and oversees operations for the Technology & Engineering department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['System Architecture', 'DevOps Automation', 'Performance Optimization', 'Security Scanning', 'API Management'],
     responsibilities: ['Execute department strategy', 'Manage department budget', 'Lead management team', 'Optimize department KPIs'],
-    icon: 'Star', color: '#1565C0', route: '/ai-agent/technology/vp-engineering',
+    icon: 'Star', color: '#1565C0', route: '/ai-agent/technologynology/vp-engineering',
     aiCost: '$1,800/mo', efficiency: '94%', isPremium: true,
     reportsTo: 'ai-chief-technology-officer',
     subAgents: [
@@ -1422,7 +1422,7 @@ const department6Agents: MainAgent[] = [
     description: 'AI VP Infrastructure drives department strategy and oversees operations for the Technology & Engineering department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Security Scanning', 'API Management', 'Cloud Infrastructure', 'Technical Documentation', 'Code Generation'],
     responsibilities: ['Execute department strategy', 'Manage department budget', 'Lead management team', 'Optimize department KPIs'],
-    icon: 'Star', color: '#1565C0', route: '/ai-agent/technology/vp-infrastructure',
+    icon: 'Star', color: '#1565C0', route: '/ai-agent/technologynology/vp-infrastructure',
     aiCost: '$1,800/mo', efficiency: '75%', isPremium: true,
     reportsTo: 'ai-chief-technology-officer',
     subAgents: [
@@ -1437,7 +1437,7 @@ const department6Agents: MainAgent[] = [
     description: 'AI VP AI/ML drives department strategy and oversees operations for the Technology & Engineering department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Performance Optimization', 'Security Scanning', 'API Management', 'Cloud Infrastructure', 'Technical Documentation'],
     responsibilities: ['Execute department strategy', 'Manage department budget', 'Lead management team', 'Optimize department KPIs'],
-    icon: 'Star', color: '#1565C0', route: '/ai-agent/technology/vp-aiml',
+    icon: 'Star', color: '#1565C0', route: '/ai-agent/technologynology/vp-aiml',
     aiCost: '$1,800/mo', efficiency: '92%', isPremium: true,
     reportsTo: 'ai-chief-technology-officer',
     subAgents: [
@@ -1452,7 +1452,7 @@ const department6Agents: MainAgent[] = [
     description: 'AI VP Security Technology drives department strategy and oversees operations for the Technology & Engineering department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['System Architecture', 'DevOps Automation', 'Performance Optimization', 'Security Scanning', 'API Management'],
     responsibilities: ['Execute department strategy', 'Manage department budget', 'Lead management team', 'Optimize department KPIs'],
-    icon: 'Star', color: '#1565C0', route: '/ai-agent/technology/vp-security-technology',
+    icon: 'Star', color: '#1565C0', route: '/ai-agent/technologynology/vp-security-technology',
     aiCost: '$1,800/mo', efficiency: '90%', isPremium: true,
     reportsTo: 'ai-chief-technology-officer',
     subAgents: [
@@ -1467,7 +1467,7 @@ const department6Agents: MainAgent[] = [
     description: 'AI Lead Architect manages team operations and ensures delivery excellence for the Technology & Engineering department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['System Architecture', 'DevOps Automation', 'Performance Optimization', 'Security Scanning', 'API Management'],
     responsibilities: ['Manage daily team operations', 'Ensure quality deliverables', 'Coach and develop team members', 'Track and report on metrics'],
-    icon: 'Settings', color: '#1565C0', route: '/ai-agent/technology/lead-architect',
+    icon: 'Settings', color: '#1565C0', route: '/ai-agent/technologynology/lead-architect',
     aiCost: '$1,200/mo', efficiency: '94%', isPremium: false,
     reportsTo: 'ai-chief-technology-officer',
     subAgents: [
@@ -1482,7 +1482,7 @@ const department6Agents: MainAgent[] = [
     description: 'AI DevOps Manager manages team operations and ensures delivery excellence for the Technology & Engineering department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['System Architecture', 'DevOps Automation', 'Performance Optimization', 'Security Scanning', 'API Management'],
     responsibilities: ['Manage daily team operations', 'Ensure quality deliverables', 'Coach and develop team members', 'Track and report on metrics'],
-    icon: 'Settings', color: '#1565C0', route: '/ai-agent/technology/devops-manager',
+    icon: 'Settings', color: '#1565C0', route: '/ai-agent/technologynology/devops-manager',
     aiCost: '$1,200/mo', efficiency: '94%', isPremium: false,
     reportsTo: 'ai-chief-technology-officer',
     subAgents: [
@@ -1497,7 +1497,7 @@ const department6Agents: MainAgent[] = [
     description: 'AI Frontend Lead coordinates team activities and ensures quality output for the Technology & Engineering department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Code Generation', 'System Architecture', 'DevOps Automation', 'Performance Optimization', 'Security Scanning'],
     responsibilities: ['Lead team projects', 'Coordinate daily workflows', 'Mentor junior team members', 'Ensure SLA compliance'],
-    icon: 'Zap', color: '#1565C0', route: '/ai-agent/technology/frontend-lead',
+    icon: 'Zap', color: '#1565C0', route: '/ai-agent/technologynology/frontend-lead',
     aiCost: '$800/mo', efficiency: '87%', isPremium: false,
     reportsTo: 'ai-chief-technology-officer',
     subAgents: [
@@ -1512,7 +1512,7 @@ const department6Agents: MainAgent[] = [
     description: 'AI Backend Lead coordinates team activities and ensures quality output for the Technology & Engineering department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Technical Documentation', 'Code Generation', 'System Architecture', 'DevOps Automation', 'Performance Optimization'],
     responsibilities: ['Lead team projects', 'Coordinate daily workflows', 'Mentor junior team members', 'Ensure SLA compliance'],
-    icon: 'Zap', color: '#1565C0', route: '/ai-agent/technology/backend-lead',
+    icon: 'Zap', color: '#1565C0', route: '/ai-agent/technologynology/backend-lead',
     aiCost: '$800/mo', efficiency: '80%', isPremium: false,
     reportsTo: 'ai-chief-technology-officer',
     subAgents: [
@@ -1527,7 +1527,7 @@ const department6Agents: MainAgent[] = [
     description: 'AI SRE Lead coordinates team activities and ensures quality output for the Technology & Engineering department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Performance Optimization', 'Security Scanning', 'API Management', 'Cloud Infrastructure', 'Technical Documentation'],
     responsibilities: ['Lead team projects', 'Coordinate daily workflows', 'Mentor junior team members', 'Ensure SLA compliance'],
-    icon: 'Zap', color: '#1565C0', route: '/ai-agent/technology/sre-lead',
+    icon: 'Zap', color: '#1565C0', route: '/ai-agent/technologynology/sre-lead',
     aiCost: '$800/mo', efficiency: '92%', isPremium: false,
     reportsTo: 'ai-chief-technology-officer',
     subAgents: [
@@ -1542,7 +1542,7 @@ const department6Agents: MainAgent[] = [
     description: 'AI Frontend Developer coordinates team activities and ensures quality output for the Technology & Engineering department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['API Management', 'Cloud Infrastructure', 'Technical Documentation', 'Code Generation', 'System Architecture'],
     responsibilities: ['Lead team projects', 'Coordinate daily workflows', 'Mentor junior team members', 'Ensure SLA compliance'],
-    icon: 'Zap', color: '#1565C0', route: '/ai-agent/technology/frontend-developer',
+    icon: 'Zap', color: '#1565C0', route: '/ai-agent/technologynology/frontend-developer',
     aiCost: '$800/mo', efficiency: '82%', isPremium: false,
     reportsTo: 'ai-chief-technology-officer',
     subAgents: [
@@ -1557,7 +1557,7 @@ const department6Agents: MainAgent[] = [
     description: 'AI Backend Developer coordinates team activities and ensures quality output for the Technology & Engineering department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Security Scanning', 'API Management', 'Cloud Infrastructure', 'Technical Documentation', 'Code Generation'],
     responsibilities: ['Lead team projects', 'Coordinate daily workflows', 'Mentor junior team members', 'Ensure SLA compliance'],
-    icon: 'Zap', color: '#1565C0', route: '/ai-agent/technology/backend-developer',
+    icon: 'Zap', color: '#1565C0', route: '/ai-agent/technologynology/backend-developer',
     aiCost: '$800/mo', efficiency: '75%', isPremium: false,
     reportsTo: 'ai-chief-technology-officer',
     subAgents: [
@@ -1572,7 +1572,7 @@ const department6Agents: MainAgent[] = [
     description: 'AI SRE Engineer coordinates team activities and ensures quality output for the Technology & Engineering department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Technical Documentation', 'Code Generation', 'System Architecture', 'DevOps Automation', 'Performance Optimization'],
     responsibilities: ['Lead team projects', 'Coordinate daily workflows', 'Mentor junior team members', 'Ensure SLA compliance'],
-    icon: 'Zap', color: '#1565C0', route: '/ai-agent/technology/sre-engineer',
+    icon: 'Zap', color: '#1565C0', route: '/ai-agent/technologynology/sre-engineer',
     aiCost: '$800/mo', efficiency: '80%', isPremium: false,
     reportsTo: 'ai-chief-technology-officer',
     subAgents: [
@@ -1587,7 +1587,7 @@ const department6Agents: MainAgent[] = [
     description: 'AI QA Automation Engineer coordinates team activities and ensures quality output for the Technology & Engineering department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['System Architecture', 'DevOps Automation', 'Performance Optimization', 'Security Scanning', 'API Management'],
     responsibilities: ['Lead team projects', 'Coordinate daily workflows', 'Mentor junior team members', 'Ensure SLA compliance'],
-    icon: 'Zap', color: '#1565C0', route: '/ai-agent/technology/qa-automation-engineer',
+    icon: 'Zap', color: '#1565C0', route: '/ai-agent/technologynology/qa-automation-engineer',
     aiCost: '$800/mo', efficiency: '90%', isPremium: false,
     reportsTo: 'ai-chief-technology-officer',
     subAgents: [
@@ -1602,7 +1602,7 @@ const department6Agents: MainAgent[] = [
     description: 'AI Data Engineer coordinates team activities and ensures quality output for the Technology & Engineering department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Code Generation', 'System Architecture', 'DevOps Automation', 'Performance Optimization', 'Security Scanning'],
     responsibilities: ['Lead team projects', 'Coordinate daily workflows', 'Mentor junior team members', 'Ensure SLA compliance'],
-    icon: 'Zap', color: '#1565C0', route: '/ai-agent/technology/data-engineer',
+    icon: 'Zap', color: '#1565C0', route: '/ai-agent/technologynology/data-engineer',
     aiCost: '$800/mo', efficiency: '87%', isPremium: false,
     reportsTo: 'ai-chief-technology-officer',
     subAgents: [
@@ -1617,7 +1617,7 @@ const department6Agents: MainAgent[] = [
     description: 'AI Security Engineer coordinates team activities and ensures quality output for the Technology & Engineering department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Security Scanning', 'API Management', 'Cloud Infrastructure', 'Technical Documentation', 'Code Generation'],
     responsibilities: ['Lead team projects', 'Coordinate daily workflows', 'Mentor junior team members', 'Ensure SLA compliance'],
-    icon: 'Zap', color: '#1565C0', route: '/ai-agent/technology/security-engineer',
+    icon: 'Zap', color: '#1565C0', route: '/ai-agent/technologynology/security-engineer',
     aiCost: '$800/mo', efficiency: '75%', isPremium: false,
     reportsTo: 'ai-chief-technology-officer',
     subAgents: [
@@ -1636,7 +1636,7 @@ const department7Agents: MainAgent[] = [
     description: 'AI Chief Human Resources Officer leads strategic direction and executive decision-making for the Human Resources department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Talent Acquisition', 'Employee Onboarding', 'Performance Reviews', 'Training Programs', 'Compensation Analysis'],
     responsibilities: ['Define strategic vision and roadmap', 'Align cross-functional teams', 'Report to executive leadership', 'Drive organizational transformation'],
-    icon: 'Crown', color: '#9C27B0', route: '/ai-agent/human-resources/chief-human-resources-officer',
+    icon: 'Crown', color: '#9C27B0', route: '/ai-agent/hr/chief-human-resources-officer',
     aiCost: '$2,400/mo', efficiency: '79%', isPremium: true,
     reportsTo: undefined,
     subAgents: [
@@ -1651,7 +1651,7 @@ const department7Agents: MainAgent[] = [
     description: 'AI VP Talent drives department strategy and oversees operations for the Human Resources department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Compensation Analysis', 'Culture Development', 'HR Compliance', 'Workforce Planning', 'Talent Acquisition'],
     responsibilities: ['Execute department strategy', 'Manage department budget', 'Lead management team', 'Optimize department KPIs'],
-    icon: 'Star', color: '#9C27B0', route: '/ai-agent/human-resources/vp-talent',
+    icon: 'Star', color: '#9C27B0', route: '/ai-agent/hr/vp-talent',
     aiCost: '$1,800/mo', efficiency: '79%', isPremium: true,
     reportsTo: 'ai-chief-human-resources-officer',
     subAgents: [
@@ -1666,7 +1666,7 @@ const department7Agents: MainAgent[] = [
     description: 'AI VP HR Operations drives department strategy and oversees operations for the Human Resources department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Training Programs', 'Compensation Analysis', 'Culture Development', 'HR Compliance', 'Workforce Planning'],
     responsibilities: ['Execute department strategy', 'Manage department budget', 'Lead management team', 'Optimize department KPIs'],
-    icon: 'Star', color: '#9C27B0', route: '/ai-agent/human-resources/vp-hr-operations',
+    icon: 'Star', color: '#9C27B0', route: '/ai-agent/hr/vp-hr-operations',
     aiCost: '$1,800/mo', efficiency: '88%', isPremium: true,
     reportsTo: 'ai-chief-human-resources-officer',
     subAgents: [
@@ -1681,7 +1681,7 @@ const department7Agents: MainAgent[] = [
     description: 'AI VP Learning drives department strategy and oversees operations for the Human Resources department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['HR Compliance', 'Workforce Planning', 'Talent Acquisition', 'Employee Onboarding', 'Performance Reviews'],
     responsibilities: ['Execute department strategy', 'Manage department budget', 'Lead management team', 'Optimize department KPIs'],
-    icon: 'Star', color: '#9C27B0', route: '/ai-agent/human-resources/vp-learning',
+    icon: 'Star', color: '#9C27B0', route: '/ai-agent/hr/vp-learning',
     aiCost: '$1,800/mo', efficiency: '93%', isPremium: true,
     reportsTo: 'ai-chief-human-resources-officer',
     subAgents: [
@@ -1696,7 +1696,7 @@ const department7Agents: MainAgent[] = [
     description: 'AI VP Culture drives department strategy and oversees operations for the Human Resources department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Culture Development', 'HR Compliance', 'Workforce Planning', 'Talent Acquisition', 'Employee Onboarding'],
     responsibilities: ['Execute department strategy', 'Manage department budget', 'Lead management team', 'Optimize department KPIs'],
-    icon: 'Star', color: '#9C27B0', route: '/ai-agent/human-resources/vp-culture',
+    icon: 'Star', color: '#9C27B0', route: '/ai-agent/hr/vp-culture',
     aiCost: '$1,800/mo', efficiency: '86%', isPremium: true,
     reportsTo: 'ai-chief-human-resources-officer',
     subAgents: [
@@ -1711,7 +1711,7 @@ const department7Agents: MainAgent[] = [
     description: 'AI VP Compensation drives department strategy and oversees operations for the Human Resources department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Performance Reviews', 'Training Programs', 'Compensation Analysis', 'Culture Development', 'HR Compliance'],
     responsibilities: ['Execute department strategy', 'Manage department budget', 'Lead management team', 'Optimize department KPIs'],
-    icon: 'Star', color: '#9C27B0', route: '/ai-agent/human-resources/vp-compensation',
+    icon: 'Star', color: '#9C27B0', route: '/ai-agent/hr/vp-compensation',
     aiCost: '$1,800/mo', efficiency: '81%', isPremium: true,
     reportsTo: 'ai-chief-human-resources-officer',
     subAgents: [
@@ -1726,7 +1726,7 @@ const department7Agents: MainAgent[] = [
     description: 'AI Recruiting Manager manages team operations and ensures delivery excellence for the Human Resources department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Culture Development', 'HR Compliance', 'Workforce Planning', 'Talent Acquisition', 'Employee Onboarding'],
     responsibilities: ['Manage daily team operations', 'Ensure quality deliverables', 'Coach and develop team members', 'Track and report on metrics'],
-    icon: 'Settings', color: '#9C27B0', route: '/ai-agent/human-resources/recruiting-manager',
+    icon: 'Settings', color: '#9C27B0', route: '/ai-agent/hr/recruiting-manager',
     aiCost: '$1,200/mo', efficiency: '82%', isPremium: false,
     reportsTo: 'ai-chief-human-resources-officer',
     subAgents: [
@@ -1741,7 +1741,7 @@ const department7Agents: MainAgent[] = [
     description: 'AI Recruiter coordinates team activities and ensures quality output for the Human Resources department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Compensation Analysis', 'Culture Development', 'HR Compliance', 'Workforce Planning', 'Talent Acquisition'],
     responsibilities: ['Lead team projects', 'Coordinate daily workflows', 'Mentor junior team members', 'Ensure SLA compliance'],
-    icon: 'Zap', color: '#9C27B0', route: '/ai-agent/human-resources/recruiter',
+    icon: 'Zap', color: '#9C27B0', route: '/ai-agent/hr/recruiter',
     aiCost: '$800/mo', efficiency: '79%', isPremium: false,
     reportsTo: 'ai-chief-human-resources-officer',
     subAgents: [
@@ -1756,7 +1756,7 @@ const department7Agents: MainAgent[] = [
     description: 'AI HR Operations Specialist coordinates team activities and ensures quality output for the Human Resources department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Training Programs', 'Compensation Analysis', 'Culture Development', 'HR Compliance', 'Workforce Planning'],
     responsibilities: ['Lead team projects', 'Coordinate daily workflows', 'Mentor junior team members', 'Ensure SLA compliance'],
-    icon: 'Zap', color: '#9C27B0', route: '/ai-agent/human-resources/hr-operations-specialist',
+    icon: 'Zap', color: '#9C27B0', route: '/ai-agent/hr/hr-operations-specialist',
     aiCost: '$800/mo', efficiency: '84%', isPremium: false,
     reportsTo: 'ai-chief-human-resources-officer',
     subAgents: [
@@ -1771,7 +1771,7 @@ const department7Agents: MainAgent[] = [
     description: 'AI Learning Specialist coordinates team activities and ensures quality output for the Human Resources department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['HR Compliance', 'Workforce Planning', 'Talent Acquisition', 'Employee Onboarding', 'Performance Reviews'],
     responsibilities: ['Lead team projects', 'Coordinate daily workflows', 'Mentor junior team members', 'Ensure SLA compliance'],
-    icon: 'Zap', color: '#9C27B0', route: '/ai-agent/human-resources/learning-specialist',
+    icon: 'Zap', color: '#9C27B0', route: '/ai-agent/hr/learning-specialist',
     aiCost: '$800/mo', efficiency: '89%', isPremium: false,
     reportsTo: 'ai-chief-human-resources-officer',
     subAgents: [
@@ -1786,7 +1786,7 @@ const department7Agents: MainAgent[] = [
     description: 'AI Compensation Analyst coordinates team activities and ensures quality output for the Human Resources department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Workforce Planning', 'Talent Acquisition', 'Employee Onboarding', 'Performance Reviews', 'Training Programs'],
     responsibilities: ['Lead team projects', 'Coordinate daily workflows', 'Mentor junior team members', 'Ensure SLA compliance'],
-    icon: 'Zap', color: '#9C27B0', route: '/ai-agent/human-resources/compensation-analyst',
+    icon: 'Zap', color: '#9C27B0', route: '/ai-agent/hr/compensation-analyst',
     aiCost: '$800/mo', efficiency: '76%', isPremium: false,
     reportsTo: 'ai-chief-human-resources-officer',
     subAgents: [
@@ -2635,7 +2635,7 @@ const department13Agents: MainAgent[] = [
     description: 'AI Chief Administrative Officer leads strategic direction and executive decision-making for the Administrative department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Administrative Reporting', 'Document Management', 'Scheduling', 'Office Management', 'Records Keeping'],
     responsibilities: ['Define strategic vision and roadmap', 'Align cross-functional teams', 'Report to executive leadership', 'Drive organizational transformation'],
-    icon: 'Crown', color: '#795548', route: '/ai-agent/administrative/chief-administrative-officer',
+    icon: 'Crown', color: '#795548', route: '/ai-agent/admin/chief-administrative-officer',
     aiCost: '$2,400/mo', efficiency: '92%', isPremium: true,
     reportsTo: undefined,
     subAgents: [
@@ -2650,7 +2650,7 @@ const department13Agents: MainAgent[] = [
     description: 'AI VP Admin Operations drives department strategy and oversees operations for the Administrative department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Meeting Facilitation', 'Administrative Reporting', 'Document Management', 'Scheduling', 'Office Management'],
     responsibilities: ['Execute department strategy', 'Manage department budget', 'Lead management team', 'Optimize department KPIs'],
-    icon: 'Star', color: '#795548', route: '/ai-agent/administrative/vp-admin-operations',
+    icon: 'Star', color: '#795548', route: '/ai-agent/admin/vp-admin-operations',
     aiCost: '$1,800/mo', efficiency: '89%', isPremium: true,
     reportsTo: 'ai-chief-administrative-officer',
     subAgents: [
@@ -2665,7 +2665,7 @@ const department13Agents: MainAgent[] = [
     description: 'AI VP Facilities drives department strategy and oversees operations for the Administrative department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Document Management', 'Scheduling', 'Office Management', 'Records Keeping', 'Communication Coordination'],
     responsibilities: ['Execute department strategy', 'Manage department budget', 'Lead management team', 'Optimize department KPIs'],
-    icon: 'Star', color: '#795548', route: '/ai-agent/administrative/vp-facilities',
+    icon: 'Star', color: '#795548', route: '/ai-agent/admin/vp-facilities',
     aiCost: '$1,800/mo', efficiency: '87%', isPremium: true,
     reportsTo: 'ai-chief-administrative-officer',
     subAgents: [
@@ -2680,7 +2680,7 @@ const department13Agents: MainAgent[] = [
     description: 'AI Admin Manager manages team operations and ensures delivery excellence for the Administrative department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Document Management', 'Scheduling', 'Office Management', 'Records Keeping', 'Communication Coordination'],
     responsibilities: ['Manage daily team operations', 'Ensure quality deliverables', 'Coach and develop team members', 'Track and report on metrics'],
-    icon: 'Settings', color: '#795548', route: '/ai-agent/administrative/admin-manager',
+    icon: 'Settings', color: '#795548', route: '/ai-agent/admin/admin-manager',
     aiCost: '$1,200/mo', efficiency: '87%', isPremium: false,
     reportsTo: 'ai-chief-administrative-officer',
     subAgents: [
@@ -2695,7 +2695,7 @@ const department13Agents: MainAgent[] = [
     description: 'AI Office Manager manages team operations and ensures delivery excellence for the Administrative department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Scheduling', 'Office Management', 'Records Keeping', 'Communication Coordination', 'Travel Planning'],
     responsibilities: ['Manage daily team operations', 'Ensure quality deliverables', 'Coach and develop team members', 'Track and report on metrics'],
-    icon: 'Settings', color: '#795548', route: '/ai-agent/administrative/office-manager',
+    icon: 'Settings', color: '#795548', route: '/ai-agent/admin/office-manager',
     aiCost: '$1,200/mo', efficiency: '94%', isPremium: false,
     reportsTo: 'ai-chief-administrative-officer',
     subAgents: [
@@ -2710,7 +2710,7 @@ const department13Agents: MainAgent[] = [
     description: 'AI Executive Assistant coordinates team activities and ensures quality output for the Administrative department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Meeting Facilitation', 'Administrative Reporting', 'Document Management', 'Scheduling', 'Office Management'],
     responsibilities: ['Lead team projects', 'Coordinate daily workflows', 'Mentor junior team members', 'Ensure SLA compliance'],
-    icon: 'Zap', color: '#795548', route: '/ai-agent/administrative/executive-assistant',
+    icon: 'Zap', color: '#795548', route: '/ai-agent/admin/executive-assistant',
     aiCost: '$800/mo', efficiency: '89%', isPremium: false,
     reportsTo: 'ai-chief-administrative-officer',
     subAgents: [
@@ -2725,7 +2725,7 @@ const department13Agents: MainAgent[] = [
     description: 'AI Facilities Coordinator leads strategic direction and executive decision-making for the Administrative department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Scheduling', 'Office Management', 'Records Keeping', 'Communication Coordination', 'Travel Planning'],
     responsibilities: ['Define strategic vision and roadmap', 'Align cross-functional teams', 'Report to executive leadership', 'Drive organizational transformation'],
-    icon: 'Crown', color: '#795548', route: '/ai-agent/administrative/facilities-coordinator',
+    icon: 'Crown', color: '#795548', route: '/ai-agent/admin/facilities-coordinator',
     aiCost: '$2,400/mo', efficiency: '90%', isPremium: true,
     reportsTo: undefined,
     subAgents: [
@@ -2740,7 +2740,7 @@ const department13Agents: MainAgent[] = [
     description: 'AI Travel Coordinator leads strategic direction and executive decision-making for the Administrative department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Travel Planning', 'Meeting Facilitation', 'Administrative Reporting', 'Document Management', 'Scheduling'],
     responsibilities: ['Define strategic vision and roadmap', 'Align cross-functional teams', 'Report to executive leadership', 'Drive organizational transformation'],
-    icon: 'Crown', color: '#795548', route: '/ai-agent/administrative/travel-coordinator',
+    icon: 'Crown', color: '#795548', route: '/ai-agent/admin/travel-coordinator',
     aiCost: '$2,400/mo', efficiency: '82%', isPremium: true,
     reportsTo: undefined,
     subAgents: [
@@ -2755,7 +2755,7 @@ const department13Agents: MainAgent[] = [
     description: 'AI Document Controller coordinates team activities and ensures quality output for the Administrative department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
     capabilities: ['Meeting Facilitation', 'Administrative Reporting', 'Document Management', 'Scheduling', 'Office Management'],
     responsibilities: ['Lead team projects', 'Coordinate daily workflows', 'Mentor junior team members', 'Ensure SLA compliance'],
-    icon: 'Zap', color: '#795548', route: '/ai-agent/administrative/document-controller',
+    icon: 'Zap', color: '#795548', route: '/ai-agent/admin/document-controller',
     aiCost: '$800/mo', efficiency: '89%', isPremium: false,
     reportsTo: 'ai-chief-administrative-officer',
     subAgents: [

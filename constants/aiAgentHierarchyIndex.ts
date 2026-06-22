@@ -74,7 +74,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-chief-customer-officer/chat', '/api/agents/ai-chief-customer-officer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'directive',
-    route: '/ai-agent/customer-experience/chief-customer-officer', apiEndpoint: '/api/agents/ai-chief-customer-officer',
+    route: '/ai-agent/customer/chief-customer-officer', apiEndpoint: '/api/agents/ai-chief-customer-officer',
     status: 'active', isPremium: true, dangerLevel: 'high',
   },
   {
@@ -90,7 +90,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-vp-customer-success/chat', '/api/agents/ai-vp-customer-success/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'advisory',
-    route: '/ai-agent/customer-experience/vp-customer-success', apiEndpoint: '/api/agents/ai-vp-customer-success',
+    route: '/ai-agent/customer/vp-customer-success', apiEndpoint: '/api/agents/ai-vp-customer-success',
     status: 'active', isPremium: true, dangerLevel: 'medium',
   },
   {
@@ -106,7 +106,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-vp-support/chat', '/api/agents/ai-vp-support/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'advisory',
-    route: '/ai-agent/customer-experience/vp-support', apiEndpoint: '/api/agents/ai-vp-support',
+    route: '/ai-agent/customer/vp-support', apiEndpoint: '/api/agents/ai-vp-support',
     status: 'active', isPremium: true, dangerLevel: 'medium',
   },
   {
@@ -122,7 +122,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-vp-experience/chat', '/api/agents/ai-vp-experience/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'advisory',
-    route: '/ai-agent/customer-experience/vp-experience', apiEndpoint: '/api/agents/ai-vp-experience',
+    route: '/ai-agent/customer/vp-experience', apiEndpoint: '/api/agents/ai-vp-experience',
     status: 'active', isPremium: true, dangerLevel: 'medium',
   },
   {
@@ -138,7 +138,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-vp-retention/chat', '/api/agents/ai-vp-retention/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'advisory',
-    route: '/ai-agent/customer-experience/vp-retention', apiEndpoint: '/api/agents/ai-vp-retention',
+    route: '/ai-agent/customer/vp-retention', apiEndpoint: '/api/agents/ai-vp-retention',
     status: 'active', isPremium: true, dangerLevel: 'medium',
   },
   {
@@ -154,7 +154,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-vp-loyalty/chat', '/api/agents/ai-vp-loyalty/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'advisory',
-    route: '/ai-agent/customer-experience/vp-loyalty', apiEndpoint: '/api/agents/ai-vp-loyalty',
+    route: '/ai-agent/customer/vp-loyalty', apiEndpoint: '/api/agents/ai-vp-loyalty',
     status: 'active', isPremium: true, dangerLevel: 'medium',
   },
   {
@@ -170,7 +170,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-receptionist/chat', '/api/agents/ai-receptionist/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/customer-experience/receptionist', apiEndpoint: '/api/agents/ai-receptionist',
+    route: '/ai-agent/customer/receptionist', apiEndpoint: '/api/agents/ai-receptionist',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -186,7 +186,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-customer-support-agent/chat', '/api/agents/ai-customer-support-agent/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/customer-experience/customer-support-agent', apiEndpoint: '/api/agents/ai-customer-support-agent',
+    route: '/ai-agent/customer/customer-support-agent', apiEndpoint: '/api/agents/ai-customer-support-agent',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -202,7 +202,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-ticket-resolution-agent/chat', '/api/agents/ai-ticket-resolution-agent/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/customer-experience/ticket-resolution-agent', apiEndpoint: '/api/agents/ai-ticket-resolution-agent',
+    route: '/ai-agent/customer/ticket-resolution-agent', apiEndpoint: '/api/agents/ai-ticket-resolution-agent',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -218,7 +218,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-complaint-handling-agent/chat', '/api/agents/ai-complaint-handling-agent/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/customer-experience/complaint-handling-agent', apiEndpoint: '/api/agents/ai-complaint-handling-agent',
+    route: '/ai-agent/customer/complaint-handling-agent', apiEndpoint: '/api/agents/ai-complaint-handling-agent',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -234,7 +234,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-retention-specialist/chat', '/api/agents/ai-retention-specialist/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/customer-experience/retention-specialist', apiEndpoint: '/api/agents/ai-retention-specialist',
+    route: '/ai-agent/customer/retention-specialist', apiEndpoint: '/api/agents/ai-retention-specialist',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -250,7 +250,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-loyalty-engagement-agent/chat', '/api/agents/ai-loyalty-engagement-agent/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/customer-experience/loyalty-engagement-agent', apiEndpoint: '/api/agents/ai-loyalty-engagement-agent',
+    route: '/ai-agent/customer/loyalty-engagement-agent', apiEndpoint: '/api/agents/ai-loyalty-engagement-agent',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -266,7 +266,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-feedback-survey-agent/chat', '/api/agents/ai-feedback-survey-agent/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/customer-experience/feedback-survey-agent', apiEndpoint: '/api/agents/ai-feedback-survey-agent',
+    route: '/ai-agent/customer/feedback-survey-agent', apiEndpoint: '/api/agents/ai-feedback-survey-agent',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -282,7 +282,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-billing-support-agent/chat', '/api/agents/ai-billing-support-agent/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/customer-experience/billing-support-agent', apiEndpoint: '/api/agents/ai-billing-support-agent',
+    route: '/ai-agent/customer/billing-support-agent', apiEndpoint: '/api/agents/ai-billing-support-agent',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -298,7 +298,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-cx-strategy-analyst/chat', '/api/agents/ai-cx-strategy-analyst/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/cx-strategy-analyst', apiEndpoint: '/api/agents/ai-cx-strategy-analyst',
+    route: '/ai-agent/customer/cx-strategy-analyst', apiEndpoint: '/api/agents/ai-cx-strategy-analyst',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -314,7 +314,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-customer-journey-mapper/chat', '/api/agents/ai-customer-journey-mapper/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/customer-journey-mapper', apiEndpoint: '/api/agents/ai-customer-journey-mapper',
+    route: '/ai-agent/customer/customer-journey-mapper', apiEndpoint: '/api/agents/ai-customer-journey-mapper',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -330,7 +330,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-cx-metrics-tracker/chat', '/api/agents/ai-cx-metrics-tracker/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/cx-metrics-tracker', apiEndpoint: '/api/agents/ai-cx-metrics-tracker',
+    route: '/ai-agent/customer/cx-metrics-tracker', apiEndpoint: '/api/agents/ai-cx-metrics-tracker',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -346,7 +346,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-onboarding-specialist/chat', '/api/agents/ai-onboarding-specialist/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/onboarding-specialist', apiEndpoint: '/api/agents/ai-onboarding-specialist',
+    route: '/ai-agent/customer/onboarding-specialist', apiEndpoint: '/api/agents/ai-onboarding-specialist',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -362,7 +362,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-account-health-monitor/chat', '/api/agents/ai-account-health-monitor/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/account-health-monitor', apiEndpoint: '/api/agents/ai-account-health-monitor',
+    route: '/ai-agent/customer/account-health-monitor', apiEndpoint: '/api/agents/ai-account-health-monitor',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -378,7 +378,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-success-plan-coordinator/chat', '/api/agents/ai-success-plan-coordinator/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'directive',
-    route: '/ai-agent/customer-experience/success-plan-coordinator', apiEndpoint: '/api/agents/ai-success-plan-coordinator',
+    route: '/ai-agent/customer/success-plan-coordinator', apiEndpoint: '/api/agents/ai-success-plan-coordinator',
     status: 'active', isPremium: true, dangerLevel: 'high',
   },
   {
@@ -394,7 +394,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-escalation-manager/chat', '/api/agents/ai-escalation-manager/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/customer-experience/escalation-manager', apiEndpoint: '/api/agents/ai-escalation-manager',
+    route: '/ai-agent/customer/escalation-manager', apiEndpoint: '/api/agents/ai-escalation-manager',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -410,7 +410,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-knowledge-base-curator/chat', '/api/agents/ai-knowledge-base-curator/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/knowledge-base-curator', apiEndpoint: '/api/agents/ai-knowledge-base-curator',
+    route: '/ai-agent/customer/knowledge-base-curator', apiEndpoint: '/api/agents/ai-knowledge-base-curator',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -426,7 +426,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-support-quality-auditor/chat', '/api/agents/ai-support-quality-auditor/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/support-quality-auditor', apiEndpoint: '/api/agents/ai-support-quality-auditor',
+    route: '/ai-agent/customer/support-quality-auditor', apiEndpoint: '/api/agents/ai-support-quality-auditor',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -442,7 +442,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-ux-feedback-analyst/chat', '/api/agents/ai-ux-feedback-analyst/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/ux-feedback-analyst', apiEndpoint: '/api/agents/ai-ux-feedback-analyst',
+    route: '/ai-agent/customer/ux-feedback-analyst', apiEndpoint: '/api/agents/ai-ux-feedback-analyst',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -458,7 +458,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-experience-benchmark-analyst/chat', '/api/agents/ai-experience-benchmark-analyst/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/experience-benchmark-analyst', apiEndpoint: '/api/agents/ai-experience-benchmark-analyst',
+    route: '/ai-agent/customer/experience-benchmark-analyst', apiEndpoint: '/api/agents/ai-experience-benchmark-analyst',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -474,7 +474,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-personalization-engine/chat', '/api/agents/ai-personalization-engine/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/personalization-engine', apiEndpoint: '/api/agents/ai-personalization-engine',
+    route: '/ai-agent/customer/personalization-engine', apiEndpoint: '/api/agents/ai-personalization-engine',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -490,7 +490,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-churn-predictor/chat', '/api/agents/ai-churn-predictor/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'directive',
-    route: '/ai-agent/customer-experience/churn-predictor', apiEndpoint: '/api/agents/ai-churn-predictor',
+    route: '/ai-agent/customer/churn-predictor', apiEndpoint: '/api/agents/ai-churn-predictor',
     status: 'active', isPremium: true, dangerLevel: 'high',
   },
   {
@@ -506,7 +506,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-win-back-campaign-specialist/chat', '/api/agents/ai-win-back-campaign-specialist/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/win-back-campaign-specialist', apiEndpoint: '/api/agents/ai-win-back-campaign-specialist',
+    route: '/ai-agent/customer/win-back-campaign-specialist', apiEndpoint: '/api/agents/ai-win-back-campaign-specialist',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -522,7 +522,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-retention-metrics-analyst/chat', '/api/agents/ai-retention-metrics-analyst/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/retention-metrics-analyst', apiEndpoint: '/api/agents/ai-retention-metrics-analyst',
+    route: '/ai-agent/customer/retention-metrics-analyst', apiEndpoint: '/api/agents/ai-retention-metrics-analyst',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -538,7 +538,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-rewards-program-designer/chat', '/api/agents/ai-rewards-program-designer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/rewards-program-designer', apiEndpoint: '/api/agents/ai-rewards-program-designer',
+    route: '/ai-agent/customer/rewards-program-designer', apiEndpoint: '/api/agents/ai-rewards-program-designer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -554,7 +554,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-loyalty-tier-analyst/chat', '/api/agents/ai-loyalty-tier-analyst/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/loyalty-tier-analyst', apiEndpoint: '/api/agents/ai-loyalty-tier-analyst',
+    route: '/ai-agent/customer/loyalty-tier-analyst', apiEndpoint: '/api/agents/ai-loyalty-tier-analyst',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -570,7 +570,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-engagement-scoring-agent/chat', '/api/agents/ai-engagement-scoring-agent/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/engagement-scoring-agent', apiEndpoint: '/api/agents/ai-engagement-scoring-agent',
+    route: '/ai-agent/customer/engagement-scoring-agent', apiEndpoint: '/api/agents/ai-engagement-scoring-agent',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -586,7 +586,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-call-router/chat', '/api/agents/ai-call-router/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/call-router', apiEndpoint: '/api/agents/ai-call-router',
+    route: '/ai-agent/customer/call-router', apiEndpoint: '/api/agents/ai-call-router',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -602,7 +602,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-visitor-logger/chat', '/api/agents/ai-visitor-logger/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/visitor-logger', apiEndpoint: '/api/agents/ai-visitor-logger',
+    route: '/ai-agent/customer/visitor-logger', apiEndpoint: '/api/agents/ai-visitor-logger',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -618,7 +618,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-appointment-scheduler/chat', '/api/agents/ai-appointment-scheduler/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/appointment-scheduler', apiEndpoint: '/api/agents/ai-appointment-scheduler',
+    route: '/ai-agent/customer/appointment-scheduler', apiEndpoint: '/api/agents/ai-appointment-scheduler',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -634,7 +634,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-faq-responder/chat', '/api/agents/ai-faq-responder/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/faq-responder', apiEndpoint: '/api/agents/ai-faq-responder',
+    route: '/ai-agent/customer/faq-responder', apiEndpoint: '/api/agents/ai-faq-responder',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -650,7 +650,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-troubleshooting-guide/chat', '/api/agents/ai-troubleshooting-guide/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/troubleshooting-guide', apiEndpoint: '/api/agents/ai-troubleshooting-guide',
+    route: '/ai-agent/customer/troubleshooting-guide', apiEndpoint: '/api/agents/ai-troubleshooting-guide',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -666,7 +666,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-live-chat-handler/chat', '/api/agents/ai-live-chat-handler/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/live-chat-handler', apiEndpoint: '/api/agents/ai-live-chat-handler',
+    route: '/ai-agent/customer/live-chat-handler', apiEndpoint: '/api/agents/ai-live-chat-handler',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -682,7 +682,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-ticket-classifier/chat', '/api/agents/ai-ticket-classifier/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/ticket-classifier', apiEndpoint: '/api/agents/ai-ticket-classifier',
+    route: '/ai-agent/customer/ticket-classifier', apiEndpoint: '/api/agents/ai-ticket-classifier',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -698,7 +698,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-solution-matcher/chat', '/api/agents/ai-solution-matcher/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/solution-matcher', apiEndpoint: '/api/agents/ai-solution-matcher',
+    route: '/ai-agent/customer/solution-matcher', apiEndpoint: '/api/agents/ai-solution-matcher',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -714,7 +714,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-escalation-router/chat', '/api/agents/ai-escalation-router/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/escalation-router', apiEndpoint: '/api/agents/ai-escalation-router',
+    route: '/ai-agent/customer/escalation-router', apiEndpoint: '/api/agents/ai-escalation-router',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -730,7 +730,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-complaint-categorizer/chat', '/api/agents/ai-complaint-categorizer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/complaint-categorizer', apiEndpoint: '/api/agents/ai-complaint-categorizer',
+    route: '/ai-agent/customer/complaint-categorizer', apiEndpoint: '/api/agents/ai-complaint-categorizer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -746,7 +746,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-resolution-tracker/chat', '/api/agents/ai-resolution-tracker/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/resolution-tracker', apiEndpoint: '/api/agents/ai-resolution-tracker',
+    route: '/ai-agent/customer/resolution-tracker', apiEndpoint: '/api/agents/ai-resolution-tracker',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -762,7 +762,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-sentiment-analyzer/chat', '/api/agents/ai-sentiment-analyzer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/sentiment-analyzer', apiEndpoint: '/api/agents/ai-sentiment-analyzer',
+    route: '/ai-agent/customer/sentiment-analyzer', apiEndpoint: '/api/agents/ai-sentiment-analyzer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -778,7 +778,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-at-risk-identifier/chat', '/api/agents/ai-at-risk-identifier/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/at-risk-identifier', apiEndpoint: '/api/agents/ai-at-risk-identifier',
+    route: '/ai-agent/customer/at-risk-identifier', apiEndpoint: '/api/agents/ai-at-risk-identifier',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -794,7 +794,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-offer-optimizer/chat', '/api/agents/ai-offer-optimizer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/offer-optimizer', apiEndpoint: '/api/agents/ai-offer-optimizer',
+    route: '/ai-agent/customer/offer-optimizer', apiEndpoint: '/api/agents/ai-offer-optimizer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -810,7 +810,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-follow-up-scheduler/chat', '/api/agents/ai-follow-up-scheduler/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/follow-up-scheduler', apiEndpoint: '/api/agents/ai-follow-up-scheduler',
+    route: '/ai-agent/customer/follow-up-scheduler', apiEndpoint: '/api/agents/ai-follow-up-scheduler',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -826,7 +826,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-points-calculator/chat', '/api/agents/ai-points-calculator/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/points-calculator', apiEndpoint: '/api/agents/ai-points-calculator',
+    route: '/ai-agent/customer/points-calculator', apiEndpoint: '/api/agents/ai-points-calculator',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -842,7 +842,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-reward-recommender/chat', '/api/agents/ai-reward-recommender/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/reward-recommender', apiEndpoint: '/api/agents/ai-reward-recommender',
+    route: '/ai-agent/customer/reward-recommender', apiEndpoint: '/api/agents/ai-reward-recommender',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -858,7 +858,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-engagement-tracker/chat', '/api/agents/ai-engagement-tracker/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/engagement-tracker', apiEndpoint: '/api/agents/ai-engagement-tracker',
+    route: '/ai-agent/customer/engagement-tracker', apiEndpoint: '/api/agents/ai-engagement-tracker',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -874,7 +874,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-survey-designer/chat', '/api/agents/ai-survey-designer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/survey-designer', apiEndpoint: '/api/agents/ai-survey-designer',
+    route: '/ai-agent/customer/survey-designer', apiEndpoint: '/api/agents/ai-survey-designer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -890,7 +890,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-response-analyzer/chat', '/api/agents/ai-response-analyzer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/response-analyzer', apiEndpoint: '/api/agents/ai-response-analyzer',
+    route: '/ai-agent/customer/response-analyzer', apiEndpoint: '/api/agents/ai-response-analyzer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -906,7 +906,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-insight-reporter/chat', '/api/agents/ai-insight-reporter/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/insight-reporter', apiEndpoint: '/api/agents/ai-insight-reporter',
+    route: '/ai-agent/customer/insight-reporter', apiEndpoint: '/api/agents/ai-insight-reporter',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -922,7 +922,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-payment-processor/chat', '/api/agents/ai-payment-processor/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/payment-processor', apiEndpoint: '/api/agents/ai-payment-processor',
+    route: '/ai-agent/customer/payment-processor', apiEndpoint: '/api/agents/ai-payment-processor',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -938,7 +938,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-invoice-explainer/chat', '/api/agents/ai-invoice-explainer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/invoice-explainer', apiEndpoint: '/api/agents/ai-invoice-explainer',
+    route: '/ai-agent/customer/invoice-explainer', apiEndpoint: '/api/agents/ai-invoice-explainer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -954,7 +954,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-dispute-resolver/chat', '/api/agents/ai-dispute-resolver/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/customer-experience/dispute-resolver', apiEndpoint: '/api/agents/ai-dispute-resolver',
+    route: '/ai-agent/customer/dispute-resolver', apiEndpoint: '/api/agents/ai-dispute-resolver',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4490,7 +4490,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-chief-technology-officer/chat', '/api/agents/ai-chief-technology-officer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'directive',
-    route: '/ai-agent/technology/chief-technology-officer', apiEndpoint: '/api/agents/ai-chief-technology-officer',
+    route: '/ai-agent/technologynology/chief-technology-officer', apiEndpoint: '/api/agents/ai-chief-technology-officer',
     status: 'active', isPremium: true, dangerLevel: 'high',
   },
   {
@@ -4506,7 +4506,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-vp-engineering/chat', '/api/agents/ai-vp-engineering/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'advisory',
-    route: '/ai-agent/technology/vp-engineering', apiEndpoint: '/api/agents/ai-vp-engineering',
+    route: '/ai-agent/technologynology/vp-engineering', apiEndpoint: '/api/agents/ai-vp-engineering',
     status: 'active', isPremium: true, dangerLevel: 'medium',
   },
   {
@@ -4522,7 +4522,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-vp-infrastructure/chat', '/api/agents/ai-vp-infrastructure/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'advisory',
-    route: '/ai-agent/technology/vp-infrastructure', apiEndpoint: '/api/agents/ai-vp-infrastructure',
+    route: '/ai-agent/technologynology/vp-infrastructure', apiEndpoint: '/api/agents/ai-vp-infrastructure',
     status: 'active', isPremium: true, dangerLevel: 'medium',
   },
   {
@@ -4538,7 +4538,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-vp-aiml/chat', '/api/agents/ai-vp-aiml/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'advisory',
-    route: '/ai-agent/technology/vp-aiml', apiEndpoint: '/api/agents/ai-vp-aiml',
+    route: '/ai-agent/technologynology/vp-aiml', apiEndpoint: '/api/agents/ai-vp-aiml',
     status: 'active', isPremium: true, dangerLevel: 'medium',
   },
   {
@@ -4554,7 +4554,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-vp-security-technology/chat', '/api/agents/ai-vp-security-technology/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'advisory',
-    route: '/ai-agent/technology/vp-security-technology', apiEndpoint: '/api/agents/ai-vp-security-technology',
+    route: '/ai-agent/technologynology/vp-security-technology', apiEndpoint: '/api/agents/ai-vp-security-technology',
     status: 'active', isPremium: true, dangerLevel: 'medium',
   },
   {
@@ -4570,7 +4570,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-lead-architect/chat', '/api/agents/ai-lead-architect/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/technology/lead-architect', apiEndpoint: '/api/agents/ai-lead-architect',
+    route: '/ai-agent/technologynology/lead-architect', apiEndpoint: '/api/agents/ai-lead-architect',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4586,7 +4586,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-devops-manager/chat', '/api/agents/ai-devops-manager/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/technology/devops-manager', apiEndpoint: '/api/agents/ai-devops-manager',
+    route: '/ai-agent/technologynology/devops-manager', apiEndpoint: '/api/agents/ai-devops-manager',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4602,7 +4602,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-frontend-lead/chat', '/api/agents/ai-frontend-lead/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/technology/frontend-lead', apiEndpoint: '/api/agents/ai-frontend-lead',
+    route: '/ai-agent/technologynology/frontend-lead', apiEndpoint: '/api/agents/ai-frontend-lead',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4618,7 +4618,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-backend-lead/chat', '/api/agents/ai-backend-lead/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/technology/backend-lead', apiEndpoint: '/api/agents/ai-backend-lead',
+    route: '/ai-agent/technologynology/backend-lead', apiEndpoint: '/api/agents/ai-backend-lead',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4634,7 +4634,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-sre-lead/chat', '/api/agents/ai-sre-lead/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/technology/sre-lead', apiEndpoint: '/api/agents/ai-sre-lead',
+    route: '/ai-agent/technologynology/sre-lead', apiEndpoint: '/api/agents/ai-sre-lead',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4650,7 +4650,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-frontend-developer/chat', '/api/agents/ai-frontend-developer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/technology/frontend-developer', apiEndpoint: '/api/agents/ai-frontend-developer',
+    route: '/ai-agent/technologynology/frontend-developer', apiEndpoint: '/api/agents/ai-frontend-developer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4666,7 +4666,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-backend-developer/chat', '/api/agents/ai-backend-developer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/technology/backend-developer', apiEndpoint: '/api/agents/ai-backend-developer',
+    route: '/ai-agent/technologynology/backend-developer', apiEndpoint: '/api/agents/ai-backend-developer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4682,7 +4682,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-sre-engineer/chat', '/api/agents/ai-sre-engineer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/technology/sre-engineer', apiEndpoint: '/api/agents/ai-sre-engineer',
+    route: '/ai-agent/technologynology/sre-engineer', apiEndpoint: '/api/agents/ai-sre-engineer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4698,7 +4698,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-qa-automation-engineer/chat', '/api/agents/ai-qa-automation-engineer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/technology/qa-automation-engineer', apiEndpoint: '/api/agents/ai-qa-automation-engineer',
+    route: '/ai-agent/technologynology/qa-automation-engineer', apiEndpoint: '/api/agents/ai-qa-automation-engineer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4714,7 +4714,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-data-engineer/chat', '/api/agents/ai-data-engineer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/technology/data-engineer', apiEndpoint: '/api/agents/ai-data-engineer',
+    route: '/ai-agent/technologynology/data-engineer', apiEndpoint: '/api/agents/ai-data-engineer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4730,7 +4730,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-security-engineer/chat', '/api/agents/ai-security-engineer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/technology/security-engineer', apiEndpoint: '/api/agents/ai-security-engineer',
+    route: '/ai-agent/technologynology/security-engineer', apiEndpoint: '/api/agents/ai-security-engineer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4746,7 +4746,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-tech-strategy-advisor/chat', '/api/agents/ai-tech-strategy-advisor/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/tech-strategy-advisor', apiEndpoint: '/api/agents/ai-tech-strategy-advisor',
+    route: '/ai-agent/technologynology/tech-strategy-advisor', apiEndpoint: '/api/agents/ai-tech-strategy-advisor',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4762,7 +4762,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-innovation-scout/chat', '/api/agents/ai-innovation-scout/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/innovation-scout', apiEndpoint: '/api/agents/ai-innovation-scout',
+    route: '/ai-agent/technologynology/innovation-scout', apiEndpoint: '/api/agents/ai-innovation-scout',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4778,7 +4778,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-architecture-reviewer/chat', '/api/agents/ai-architecture-reviewer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/architecture-reviewer', apiEndpoint: '/api/agents/ai-architecture-reviewer',
+    route: '/ai-agent/technologynology/architecture-reviewer', apiEndpoint: '/api/agents/ai-architecture-reviewer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4794,7 +4794,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-sprint-capacity-planner/chat', '/api/agents/ai-sprint-capacity-planner/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/sprint-capacity-planner', apiEndpoint: '/api/agents/ai-sprint-capacity-planner',
+    route: '/ai-agent/technologynology/sprint-capacity-planner', apiEndpoint: '/api/agents/ai-sprint-capacity-planner',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4810,7 +4810,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-engineering-metrics-tracker/chat', '/api/agents/ai-engineering-metrics-tracker/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/engineering-metrics-tracker', apiEndpoint: '/api/agents/ai-engineering-metrics-tracker',
+    route: '/ai-agent/technologynology/engineering-metrics-tracker', apiEndpoint: '/api/agents/ai-engineering-metrics-tracker',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4826,7 +4826,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-tech-debt-prioritizer/chat', '/api/agents/ai-tech-debt-prioritizer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/tech-debt-prioritizer', apiEndpoint: '/api/agents/ai-tech-debt-prioritizer',
+    route: '/ai-agent/technologynology/tech-debt-prioritizer', apiEndpoint: '/api/agents/ai-tech-debt-prioritizer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4842,7 +4842,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-cloud-cost-optimizer/chat', '/api/agents/ai-cloud-cost-optimizer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'directive',
-    route: '/ai-agent/technology/cloud-cost-optimizer', apiEndpoint: '/api/agents/ai-cloud-cost-optimizer',
+    route: '/ai-agent/technologynology/cloud-cost-optimizer', apiEndpoint: '/api/agents/ai-cloud-cost-optimizer',
     status: 'active', isPremium: true, dangerLevel: 'high',
   },
   {
@@ -4858,7 +4858,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-uptime-monitor/chat', '/api/agents/ai-uptime-monitor/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/uptime-monitor', apiEndpoint: '/api/agents/ai-uptime-monitor',
+    route: '/ai-agent/technologynology/uptime-monitor', apiEndpoint: '/api/agents/ai-uptime-monitor',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4874,7 +4874,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-scalability-planner/chat', '/api/agents/ai-scalability-planner/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/scalability-planner', apiEndpoint: '/api/agents/ai-scalability-planner',
+    route: '/ai-agent/technologynology/scalability-planner', apiEndpoint: '/api/agents/ai-scalability-planner',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4890,7 +4890,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-model-performance-monitor/chat', '/api/agents/ai-model-performance-monitor/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/model-performance-monitor', apiEndpoint: '/api/agents/ai-model-performance-monitor',
+    route: '/ai-agent/technologynology/model-performance-monitor', apiEndpoint: '/api/agents/ai-model-performance-monitor',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4906,7 +4906,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-training-data-curator/chat', '/api/agents/ai-training-data-curator/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/training-data-curator', apiEndpoint: '/api/agents/ai-training-data-curator',
+    route: '/ai-agent/technologynology/training-data-curator', apiEndpoint: '/api/agents/ai-training-data-curator',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4922,7 +4922,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-ethics-reviewer/chat', '/api/agents/ai-ethics-reviewer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/ethics-reviewer', apiEndpoint: '/api/agents/ai-ethics-reviewer',
+    route: '/ai-agent/technologynology/ethics-reviewer', apiEndpoint: '/api/agents/ai-ethics-reviewer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4938,7 +4938,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-security-tool-evaluator/chat', '/api/agents/ai-security-tool-evaluator/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/security-tool-evaluator', apiEndpoint: '/api/agents/ai-security-tool-evaluator',
+    route: '/ai-agent/technologynology/security-tool-evaluator', apiEndpoint: '/api/agents/ai-security-tool-evaluator',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4954,7 +4954,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-threat-intelligence-aggregator/chat', '/api/agents/ai-threat-intelligence-aggregator/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/threat-intelligence-aggregator', apiEndpoint: '/api/agents/ai-threat-intelligence-aggregator',
+    route: '/ai-agent/technologynology/threat-intelligence-aggregator', apiEndpoint: '/api/agents/ai-threat-intelligence-aggregator',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4970,7 +4970,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-vulnerability-scanner/chat', '/api/agents/ai-vulnerability-scanner/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/vulnerability-scanner', apiEndpoint: '/api/agents/ai-vulnerability-scanner',
+    route: '/ai-agent/technologynology/vulnerability-scanner', apiEndpoint: '/api/agents/ai-vulnerability-scanner',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -4986,7 +4986,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-design-pattern-advisor/chat', '/api/agents/ai-design-pattern-advisor/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/design-pattern-advisor', apiEndpoint: '/api/agents/ai-design-pattern-advisor',
+    route: '/ai-agent/technologynology/design-pattern-advisor', apiEndpoint: '/api/agents/ai-design-pattern-advisor',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5002,7 +5002,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-integration-planner/chat', '/api/agents/ai-integration-planner/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/integration-planner', apiEndpoint: '/api/agents/ai-integration-planner',
+    route: '/ai-agent/technologynology/integration-planner', apiEndpoint: '/api/agents/ai-integration-planner',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5018,7 +5018,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-tech-standard-enforcer/chat', '/api/agents/ai-tech-standard-enforcer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/tech-standard-enforcer', apiEndpoint: '/api/agents/ai-tech-standard-enforcer',
+    route: '/ai-agent/technologynology/tech-standard-enforcer', apiEndpoint: '/api/agents/ai-tech-standard-enforcer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5034,7 +5034,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-cicd-pipeline-optimizer/chat', '/api/agents/ai-cicd-pipeline-optimizer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/cicd-pipeline-optimizer', apiEndpoint: '/api/agents/ai-cicd-pipeline-optimizer',
+    route: '/ai-agent/technologynology/cicd-pipeline-optimizer', apiEndpoint: '/api/agents/ai-cicd-pipeline-optimizer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5050,7 +5050,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-deployment-coordinator/chat', '/api/agents/ai-deployment-coordinator/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'directive',
-    route: '/ai-agent/technology/deployment-coordinator', apiEndpoint: '/api/agents/ai-deployment-coordinator',
+    route: '/ai-agent/technologynology/deployment-coordinator', apiEndpoint: '/api/agents/ai-deployment-coordinator',
     status: 'active', isPremium: true, dangerLevel: 'high',
   },
   {
@@ -5066,7 +5066,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-incident-commander/chat', '/api/agents/ai-incident-commander/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/incident-commander', apiEndpoint: '/api/agents/ai-incident-commander',
+    route: '/ai-agent/technologynology/incident-commander', apiEndpoint: '/api/agents/ai-incident-commander',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5082,7 +5082,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-ui-component-librarian/chat', '/api/agents/ai-ui-component-librarian/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/ui-component-librarian', apiEndpoint: '/api/agents/ai-ui-component-librarian',
+    route: '/ai-agent/technologynology/ui-component-librarian', apiEndpoint: '/api/agents/ai-ui-component-librarian',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5098,7 +5098,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-performance-profiler/chat', '/api/agents/ai-performance-profiler/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/performance-profiler', apiEndpoint: '/api/agents/ai-performance-profiler',
+    route: '/ai-agent/technologynology/performance-profiler', apiEndpoint: '/api/agents/ai-performance-profiler',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5114,7 +5114,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-accessibility-auditor/chat', '/api/agents/ai-accessibility-auditor/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/accessibility-auditor', apiEndpoint: '/api/agents/ai-accessibility-auditor',
+    route: '/ai-agent/technologynology/accessibility-auditor', apiEndpoint: '/api/agents/ai-accessibility-auditor',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5130,7 +5130,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-api-design-reviewer/chat', '/api/agents/ai-api-design-reviewer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/api-design-reviewer', apiEndpoint: '/api/agents/ai-api-design-reviewer',
+    route: '/ai-agent/technologynology/api-design-reviewer', apiEndpoint: '/api/agents/ai-api-design-reviewer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5146,7 +5146,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-database-query-optimizer/chat', '/api/agents/ai-database-query-optimizer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/database-query-optimizer', apiEndpoint: '/api/agents/ai-database-query-optimizer',
+    route: '/ai-agent/technologynology/database-query-optimizer', apiEndpoint: '/api/agents/ai-database-query-optimizer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5162,7 +5162,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-service-mesh-coordinator/chat', '/api/agents/ai-service-mesh-coordinator/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'directive',
-    route: '/ai-agent/technology/service-mesh-coordinator', apiEndpoint: '/api/agents/ai-service-mesh-coordinator',
+    route: '/ai-agent/technologynology/service-mesh-coordinator', apiEndpoint: '/api/agents/ai-service-mesh-coordinator',
     status: 'active', isPremium: true, dangerLevel: 'high',
   },
   {
@@ -5178,7 +5178,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-sla-calculator/chat', '/api/agents/ai-sla-calculator/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/sla-calculator', apiEndpoint: '/api/agents/ai-sla-calculator',
+    route: '/ai-agent/technologynology/sla-calculator', apiEndpoint: '/api/agents/ai-sla-calculator',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5194,7 +5194,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-incident-post-mortem-facilitator/chat', '/api/agents/ai-incident-post-mortem-facilitator/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/incident-post-mortem-facilitator', apiEndpoint: '/api/agents/ai-incident-post-mortem-facilitator',
+    route: '/ai-agent/technologynology/incident-post-mortem-facilitator', apiEndpoint: '/api/agents/ai-incident-post-mortem-facilitator',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5210,7 +5210,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-chaos-engineering-planner/chat', '/api/agents/ai-chaos-engineering-planner/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/chaos-engineering-planner', apiEndpoint: '/api/agents/ai-chaos-engineering-planner',
+    route: '/ai-agent/technologynology/chaos-engineering-planner', apiEndpoint: '/api/agents/ai-chaos-engineering-planner',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5226,7 +5226,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-component-builder/chat', '/api/agents/ai-component-builder/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/component-builder', apiEndpoint: '/api/agents/ai-component-builder',
+    route: '/ai-agent/technologynology/component-builder', apiEndpoint: '/api/agents/ai-component-builder',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5242,7 +5242,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-style-enforcer/chat', '/api/agents/ai-style-enforcer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/style-enforcer', apiEndpoint: '/api/agents/ai-style-enforcer',
+    route: '/ai-agent/technologynology/style-enforcer', apiEndpoint: '/api/agents/ai-style-enforcer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5258,7 +5258,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-cross-browser-tester/chat', '/api/agents/ai-cross-browser-tester/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'directive',
-    route: '/ai-agent/technology/cross-browser-tester', apiEndpoint: '/api/agents/ai-cross-browser-tester',
+    route: '/ai-agent/technologynology/cross-browser-tester', apiEndpoint: '/api/agents/ai-cross-browser-tester',
     status: 'active', isPremium: true, dangerLevel: 'high',
   },
   {
@@ -5274,7 +5274,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-api-endpoint-developer/chat', '/api/agents/ai-api-endpoint-developer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/api-endpoint-developer', apiEndpoint: '/api/agents/ai-api-endpoint-developer',
+    route: '/ai-agent/technologynology/api-endpoint-developer', apiEndpoint: '/api/agents/ai-api-endpoint-developer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5290,7 +5290,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-data-validator/chat', '/api/agents/ai-data-validator/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/data-validator', apiEndpoint: '/api/agents/ai-data-validator',
+    route: '/ai-agent/technologynology/data-validator', apiEndpoint: '/api/agents/ai-data-validator',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5306,7 +5306,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-service-integrator/chat', '/api/agents/ai-service-integrator/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/service-integrator', apiEndpoint: '/api/agents/ai-service-integrator',
+    route: '/ai-agent/technologynology/service-integrator', apiEndpoint: '/api/agents/ai-service-integrator',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5322,7 +5322,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-alert-tuner/chat', '/api/agents/ai-alert-tuner/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/alert-tuner', apiEndpoint: '/api/agents/ai-alert-tuner',
+    route: '/ai-agent/technologynology/alert-tuner', apiEndpoint: '/api/agents/ai-alert-tuner',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5338,7 +5338,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-runbook-author/chat', '/api/agents/ai-runbook-author/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/runbook-author', apiEndpoint: '/api/agents/ai-runbook-author',
+    route: '/ai-agent/technologynology/runbook-author', apiEndpoint: '/api/agents/ai-runbook-author',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5354,7 +5354,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-capacity-monitor/chat', '/api/agents/ai-capacity-monitor/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/capacity-monitor', apiEndpoint: '/api/agents/ai-capacity-monitor',
+    route: '/ai-agent/technologynology/capacity-monitor', apiEndpoint: '/api/agents/ai-capacity-monitor',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5370,7 +5370,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-test-framework-maintainer/chat', '/api/agents/ai-test-framework-maintainer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/test-framework-maintainer', apiEndpoint: '/api/agents/ai-test-framework-maintainer',
+    route: '/ai-agent/technologynology/test-framework-maintainer', apiEndpoint: '/api/agents/ai-test-framework-maintainer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5386,7 +5386,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-e2e-test-writer/chat', '/api/agents/ai-e2e-test-writer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/e2e-test-writer', apiEndpoint: '/api/agents/ai-e2e-test-writer',
+    route: '/ai-agent/technologynology/e2e-test-writer', apiEndpoint: '/api/agents/ai-e2e-test-writer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5402,7 +5402,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-flaky-test-detector/chat', '/api/agents/ai-flaky-test-detector/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'directive',
-    route: '/ai-agent/technology/flaky-test-detector', apiEndpoint: '/api/agents/ai-flaky-test-detector',
+    route: '/ai-agent/technologynology/flaky-test-detector', apiEndpoint: '/api/agents/ai-flaky-test-detector',
     status: 'active', isPremium: true, dangerLevel: 'high',
   },
   {
@@ -5418,7 +5418,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-pipeline-builder/chat', '/api/agents/ai-pipeline-builder/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/pipeline-builder', apiEndpoint: '/api/agents/ai-pipeline-builder',
+    route: '/ai-agent/technologynology/pipeline-builder', apiEndpoint: '/api/agents/ai-pipeline-builder',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5434,7 +5434,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-data-quality-checker/chat', '/api/agents/ai-data-quality-checker/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/data-quality-checker', apiEndpoint: '/api/agents/ai-data-quality-checker',
+    route: '/ai-agent/technologynology/data-quality-checker', apiEndpoint: '/api/agents/ai-data-quality-checker',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5450,7 +5450,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-schema-migration-planner/chat', '/api/agents/ai-schema-migration-planner/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/schema-migration-planner', apiEndpoint: '/api/agents/ai-schema-migration-planner',
+    route: '/ai-agent/technologynology/schema-migration-planner', apiEndpoint: '/api/agents/ai-schema-migration-planner',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5466,7 +5466,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-security-patch-tracker/chat', '/api/agents/ai-security-patch-tracker/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/security-patch-tracker', apiEndpoint: '/api/agents/ai-security-patch-tracker',
+    route: '/ai-agent/technologynology/security-patch-tracker', apiEndpoint: '/api/agents/ai-security-patch-tracker',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5482,7 +5482,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-pen-test-script-writer/chat', '/api/agents/ai-pen-test-script-writer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/pen-test-script-writer', apiEndpoint: '/api/agents/ai-pen-test-script-writer',
+    route: '/ai-agent/technologynology/pen-test-script-writer', apiEndpoint: '/api/agents/ai-pen-test-script-writer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5498,7 +5498,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-access-policy-implementer/chat', '/api/agents/ai-access-policy-implementer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/technology/access-policy-implementer', apiEndpoint: '/api/agents/ai-access-policy-implementer',
+    route: '/ai-agent/technologynology/access-policy-implementer', apiEndpoint: '/api/agents/ai-access-policy-implementer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5514,7 +5514,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-chief-human-resources-officer/chat', '/api/agents/ai-chief-human-resources-officer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'directive',
-    route: '/ai-agent/human-resources/chief-human-resources-officer', apiEndpoint: '/api/agents/ai-chief-human-resources-officer',
+    route: '/ai-agent/hr/chief-human-resources-officer', apiEndpoint: '/api/agents/ai-chief-human-resources-officer',
     status: 'active', isPremium: true, dangerLevel: 'high',
   },
   {
@@ -5530,7 +5530,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-vp-talent/chat', '/api/agents/ai-vp-talent/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'advisory',
-    route: '/ai-agent/human-resources/vp-talent', apiEndpoint: '/api/agents/ai-vp-talent',
+    route: '/ai-agent/hr/vp-talent', apiEndpoint: '/api/agents/ai-vp-talent',
     status: 'active', isPremium: true, dangerLevel: 'medium',
   },
   {
@@ -5546,7 +5546,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-vp-hr-operations/chat', '/api/agents/ai-vp-hr-operations/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'advisory',
-    route: '/ai-agent/human-resources/vp-hr-operations', apiEndpoint: '/api/agents/ai-vp-hr-operations',
+    route: '/ai-agent/hr/vp-hr-operations', apiEndpoint: '/api/agents/ai-vp-hr-operations',
     status: 'active', isPremium: true, dangerLevel: 'medium',
   },
   {
@@ -5562,7 +5562,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-vp-learning/chat', '/api/agents/ai-vp-learning/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'advisory',
-    route: '/ai-agent/human-resources/vp-learning', apiEndpoint: '/api/agents/ai-vp-learning',
+    route: '/ai-agent/hr/vp-learning', apiEndpoint: '/api/agents/ai-vp-learning',
     status: 'active', isPremium: true, dangerLevel: 'medium',
   },
   {
@@ -5578,7 +5578,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-vp-culture/chat', '/api/agents/ai-vp-culture/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'advisory',
-    route: '/ai-agent/human-resources/vp-culture', apiEndpoint: '/api/agents/ai-vp-culture',
+    route: '/ai-agent/hr/vp-culture', apiEndpoint: '/api/agents/ai-vp-culture',
     status: 'active', isPremium: true, dangerLevel: 'medium',
   },
   {
@@ -5594,7 +5594,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-vp-compensation/chat', '/api/agents/ai-vp-compensation/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'advisory',
-    route: '/ai-agent/human-resources/vp-compensation', apiEndpoint: '/api/agents/ai-vp-compensation',
+    route: '/ai-agent/hr/vp-compensation', apiEndpoint: '/api/agents/ai-vp-compensation',
     status: 'active', isPremium: true, dangerLevel: 'medium',
   },
   {
@@ -5610,7 +5610,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-recruiting-manager/chat', '/api/agents/ai-recruiting-manager/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/human-resources/recruiting-manager', apiEndpoint: '/api/agents/ai-recruiting-manager',
+    route: '/ai-agent/hr/recruiting-manager', apiEndpoint: '/api/agents/ai-recruiting-manager',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5626,7 +5626,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-recruiter/chat', '/api/agents/ai-recruiter/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/human-resources/recruiter', apiEndpoint: '/api/agents/ai-recruiter',
+    route: '/ai-agent/hr/recruiter', apiEndpoint: '/api/agents/ai-recruiter',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5642,7 +5642,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-hr-operations-specialist/chat', '/api/agents/ai-hr-operations-specialist/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/human-resources/hr-operations-specialist', apiEndpoint: '/api/agents/ai-hr-operations-specialist',
+    route: '/ai-agent/hr/hr-operations-specialist', apiEndpoint: '/api/agents/ai-hr-operations-specialist',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5658,7 +5658,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-learning-specialist/chat', '/api/agents/ai-learning-specialist/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/human-resources/learning-specialist', apiEndpoint: '/api/agents/ai-learning-specialist',
+    route: '/ai-agent/hr/learning-specialist', apiEndpoint: '/api/agents/ai-learning-specialist',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5674,7 +5674,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-compensation-analyst/chat', '/api/agents/ai-compensation-analyst/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/human-resources/compensation-analyst', apiEndpoint: '/api/agents/ai-compensation-analyst',
+    route: '/ai-agent/hr/compensation-analyst', apiEndpoint: '/api/agents/ai-compensation-analyst',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5690,7 +5690,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-hr-strategy-advisor/chat', '/api/agents/ai-hr-strategy-advisor/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/hr-strategy-advisor', apiEndpoint: '/api/agents/ai-hr-strategy-advisor',
+    route: '/ai-agent/hr/hr-strategy-advisor', apiEndpoint: '/api/agents/ai-hr-strategy-advisor',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5706,7 +5706,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-workforce-planner/chat', '/api/agents/ai-workforce-planner/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/workforce-planner', apiEndpoint: '/api/agents/ai-workforce-planner',
+    route: '/ai-agent/hr/workforce-planner', apiEndpoint: '/api/agents/ai-workforce-planner',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5722,7 +5722,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-culture-health-monitor/chat', '/api/agents/ai-culture-health-monitor/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/culture-health-monitor', apiEndpoint: '/api/agents/ai-culture-health-monitor',
+    route: '/ai-agent/hr/culture-health-monitor', apiEndpoint: '/api/agents/ai-culture-health-monitor',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5738,7 +5738,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-talent-pipeline-analyst/chat', '/api/agents/ai-talent-pipeline-analyst/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/talent-pipeline-analyst', apiEndpoint: '/api/agents/ai-talent-pipeline-analyst',
+    route: '/ai-agent/hr/talent-pipeline-analyst', apiEndpoint: '/api/agents/ai-talent-pipeline-analyst',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5754,7 +5754,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-employer-brand-strategist/chat', '/api/agents/ai-employer-brand-strategist/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/employer-brand-strategist', apiEndpoint: '/api/agents/ai-employer-brand-strategist',
+    route: '/ai-agent/hr/employer-brand-strategist', apiEndpoint: '/api/agents/ai-employer-brand-strategist',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5770,7 +5770,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-hiring-forecast-planner/chat', '/api/agents/ai-hiring-forecast-planner/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/hiring-forecast-planner', apiEndpoint: '/api/agents/ai-hiring-forecast-planner',
+    route: '/ai-agent/hr/hiring-forecast-planner', apiEndpoint: '/api/agents/ai-hiring-forecast-planner',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5786,7 +5786,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-hr-process-automator/chat', '/api/agents/ai-hr-process-automator/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/hr-process-automator', apiEndpoint: '/api/agents/ai-hr-process-automator',
+    route: '/ai-agent/hr/hr-process-automator', apiEndpoint: '/api/agents/ai-hr-process-automator',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5802,7 +5802,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-hr-compliance-tracker/chat', '/api/agents/ai-hr-compliance-tracker/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/hr-compliance-tracker', apiEndpoint: '/api/agents/ai-hr-compliance-tracker',
+    route: '/ai-agent/hr/hr-compliance-tracker', apiEndpoint: '/api/agents/ai-hr-compliance-tracker',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5818,7 +5818,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-employee-data-manager/chat', '/api/agents/ai-employee-data-manager/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/human-resources/employee-data-manager', apiEndpoint: '/api/agents/ai-employee-data-manager',
+    route: '/ai-agent/hr/employee-data-manager', apiEndpoint: '/api/agents/ai-employee-data-manager',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5834,7 +5834,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-ld-curriculum-designer/chat', '/api/agents/ai-ld-curriculum-designer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/ld-curriculum-designer', apiEndpoint: '/api/agents/ai-ld-curriculum-designer',
+    route: '/ai-agent/hr/ld-curriculum-designer', apiEndpoint: '/api/agents/ai-ld-curriculum-designer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5850,7 +5850,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-skill-gap-analyzer/chat', '/api/agents/ai-skill-gap-analyzer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/skill-gap-analyzer', apiEndpoint: '/api/agents/ai-skill-gap-analyzer',
+    route: '/ai-agent/hr/skill-gap-analyzer', apiEndpoint: '/api/agents/ai-skill-gap-analyzer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5866,7 +5866,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-training-effectiveness-evaluator/chat', '/api/agents/ai-training-effectiveness-evaluator/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/training-effectiveness-evaluator', apiEndpoint: '/api/agents/ai-training-effectiveness-evaluator',
+    route: '/ai-agent/hr/training-effectiveness-evaluator', apiEndpoint: '/api/agents/ai-training-effectiveness-evaluator',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5882,7 +5882,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-culture-survey-analyst/chat', '/api/agents/ai-culture-survey-analyst/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/culture-survey-analyst', apiEndpoint: '/api/agents/ai-culture-survey-analyst',
+    route: '/ai-agent/hr/culture-survey-analyst', apiEndpoint: '/api/agents/ai-culture-survey-analyst',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5898,7 +5898,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-engagement-booster/chat', '/api/agents/ai-engagement-booster/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/engagement-booster', apiEndpoint: '/api/agents/ai-engagement-booster',
+    route: '/ai-agent/hr/engagement-booster', apiEndpoint: '/api/agents/ai-engagement-booster',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5914,7 +5914,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-values-alignment-checker/chat', '/api/agents/ai-values-alignment-checker/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/values-alignment-checker', apiEndpoint: '/api/agents/ai-values-alignment-checker',
+    route: '/ai-agent/hr/values-alignment-checker', apiEndpoint: '/api/agents/ai-values-alignment-checker',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5930,7 +5930,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-market-compensation-researcher/chat', '/api/agents/ai-market-compensation-researcher/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/market-compensation-researcher', apiEndpoint: '/api/agents/ai-market-compensation-researcher',
+    route: '/ai-agent/hr/market-compensation-researcher', apiEndpoint: '/api/agents/ai-market-compensation-researcher',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5946,7 +5946,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-pay-equity-auditor/chat', '/api/agents/ai-pay-equity-auditor/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/pay-equity-auditor', apiEndpoint: '/api/agents/ai-pay-equity-auditor',
+    route: '/ai-agent/hr/pay-equity-auditor', apiEndpoint: '/api/agents/ai-pay-equity-auditor',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5962,7 +5962,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-incentive-plan-designer/chat', '/api/agents/ai-incentive-plan-designer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/incentive-plan-designer', apiEndpoint: '/api/agents/ai-incentive-plan-designer',
+    route: '/ai-agent/hr/incentive-plan-designer', apiEndpoint: '/api/agents/ai-incentive-plan-designer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5978,7 +5978,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-requisition-prioritizer/chat', '/api/agents/ai-requisition-prioritizer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/requisition-prioritizer', apiEndpoint: '/api/agents/ai-requisition-prioritizer',
+    route: '/ai-agent/hr/requisition-prioritizer', apiEndpoint: '/api/agents/ai-requisition-prioritizer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -5994,7 +5994,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-recruiter-performance-tracker/chat', '/api/agents/ai-recruiter-performance-tracker/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/recruiter-performance-tracker', apiEndpoint: '/api/agents/ai-recruiter-performance-tracker',
+    route: '/ai-agent/hr/recruiter-performance-tracker', apiEndpoint: '/api/agents/ai-recruiter-performance-tracker',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -6010,7 +6010,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-hiring-budget-manager/chat', '/api/agents/ai-hiring-budget-manager/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/human-resources/hiring-budget-manager', apiEndpoint: '/api/agents/ai-hiring-budget-manager',
+    route: '/ai-agent/hr/hiring-budget-manager', apiEndpoint: '/api/agents/ai-hiring-budget-manager',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -6026,7 +6026,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-candidate-sourcer/chat', '/api/agents/ai-candidate-sourcer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/candidate-sourcer', apiEndpoint: '/api/agents/ai-candidate-sourcer',
+    route: '/ai-agent/hr/candidate-sourcer', apiEndpoint: '/api/agents/ai-candidate-sourcer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -6042,7 +6042,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-interview-scheduler/chat', '/api/agents/ai-interview-scheduler/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/interview-scheduler', apiEndpoint: '/api/agents/ai-interview-scheduler',
+    route: '/ai-agent/hr/interview-scheduler', apiEndpoint: '/api/agents/ai-interview-scheduler',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -6058,7 +6058,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-reference-checker/chat', '/api/agents/ai-reference-checker/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/reference-checker', apiEndpoint: '/api/agents/ai-reference-checker',
+    route: '/ai-agent/hr/reference-checker', apiEndpoint: '/api/agents/ai-reference-checker',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -6074,7 +6074,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-benefits-administrator/chat', '/api/agents/ai-benefits-administrator/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/benefits-administrator', apiEndpoint: '/api/agents/ai-benefits-administrator',
+    route: '/ai-agent/hr/benefits-administrator', apiEndpoint: '/api/agents/ai-benefits-administrator',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -6090,7 +6090,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-policy-update-communicator/chat', '/api/agents/ai-policy-update-communicator/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/policy-update-communicator', apiEndpoint: '/api/agents/ai-policy-update-communicator',
+    route: '/ai-agent/hr/policy-update-communicator', apiEndpoint: '/api/agents/ai-policy-update-communicator',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -6106,7 +6106,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-hr-ticket-resolver/chat', '/api/agents/ai-hr-ticket-resolver/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/hr-ticket-resolver', apiEndpoint: '/api/agents/ai-hr-ticket-resolver',
+    route: '/ai-agent/hr/hr-ticket-resolver', apiEndpoint: '/api/agents/ai-hr-ticket-resolver',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -6122,7 +6122,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-course-catalog-curator/chat', '/api/agents/ai-course-catalog-curator/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/course-catalog-curator', apiEndpoint: '/api/agents/ai-course-catalog-curator',
+    route: '/ai-agent/hr/course-catalog-curator', apiEndpoint: '/api/agents/ai-course-catalog-curator',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -6138,7 +6138,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-certification-tracker/chat', '/api/agents/ai-certification-tracker/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/certification-tracker', apiEndpoint: '/api/agents/ai-certification-tracker',
+    route: '/ai-agent/hr/certification-tracker', apiEndpoint: '/api/agents/ai-certification-tracker',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -6154,7 +6154,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-mentorship-matcher/chat', '/api/agents/ai-mentorship-matcher/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/mentorship-matcher', apiEndpoint: '/api/agents/ai-mentorship-matcher',
+    route: '/ai-agent/hr/mentorship-matcher', apiEndpoint: '/api/agents/ai-mentorship-matcher',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -6170,7 +6170,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-salary-benchmarking-agent/chat', '/api/agents/ai-salary-benchmarking-agent/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/salary-benchmarking-agent', apiEndpoint: '/api/agents/ai-salary-benchmarking-agent',
+    route: '/ai-agent/hr/salary-benchmarking-agent', apiEndpoint: '/api/agents/ai-salary-benchmarking-agent',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -6186,7 +6186,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-bonus-calculator/chat', '/api/agents/ai-bonus-calculator/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/bonus-calculator', apiEndpoint: '/api/agents/ai-bonus-calculator',
+    route: '/ai-agent/hr/bonus-calculator', apiEndpoint: '/api/agents/ai-bonus-calculator',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -6202,7 +6202,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-equity-plan-administrator/chat', '/api/agents/ai-equity-plan-administrator/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/human-resources/equity-plan-administrator', apiEndpoint: '/api/agents/ai-equity-plan-administrator',
+    route: '/ai-agent/hr/equity-plan-administrator', apiEndpoint: '/api/agents/ai-equity-plan-administrator',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -9674,7 +9674,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-chief-administrative-officer/chat', '/api/agents/ai-chief-administrative-officer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'directive',
-    route: '/ai-agent/administrative/chief-administrative-officer', apiEndpoint: '/api/agents/ai-chief-administrative-officer',
+    route: '/ai-agent/admin/chief-administrative-officer', apiEndpoint: '/api/agents/ai-chief-administrative-officer',
     status: 'active', isPremium: true, dangerLevel: 'high',
   },
   {
@@ -9690,7 +9690,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-vp-admin-operations/chat', '/api/agents/ai-vp-admin-operations/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'advisory',
-    route: '/ai-agent/administrative/vp-admin-operations', apiEndpoint: '/api/agents/ai-vp-admin-operations',
+    route: '/ai-agent/admin/vp-admin-operations', apiEndpoint: '/api/agents/ai-vp-admin-operations',
     status: 'active', isPremium: true, dangerLevel: 'medium',
   },
   {
@@ -9706,7 +9706,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-vp-facilities/chat', '/api/agents/ai-vp-facilities/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'advisory',
-    route: '/ai-agent/administrative/vp-facilities', apiEndpoint: '/api/agents/ai-vp-facilities',
+    route: '/ai-agent/admin/vp-facilities', apiEndpoint: '/api/agents/ai-vp-facilities',
     status: 'active', isPremium: true, dangerLevel: 'medium',
   },
   {
@@ -9722,7 +9722,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-admin-manager/chat', '/api/agents/ai-admin-manager/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/administrative/admin-manager', apiEndpoint: '/api/agents/ai-admin-manager',
+    route: '/ai-agent/admin/admin-manager', apiEndpoint: '/api/agents/ai-admin-manager',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -9738,7 +9738,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-office-manager/chat', '/api/agents/ai-office-manager/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/administrative/office-manager', apiEndpoint: '/api/agents/ai-office-manager',
+    route: '/ai-agent/admin/office-manager', apiEndpoint: '/api/agents/ai-office-manager',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -9754,7 +9754,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-executive-assistant/chat', '/api/agents/ai-executive-assistant/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/administrative/executive-assistant', apiEndpoint: '/api/agents/ai-executive-assistant',
+    route: '/ai-agent/admin/executive-assistant', apiEndpoint: '/api/agents/ai-executive-assistant',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -9770,7 +9770,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-facilities-coordinator/chat', '/api/agents/ai-facilities-coordinator/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'directive',
-    route: '/ai-agent/administrative/facilities-coordinator', apiEndpoint: '/api/agents/ai-facilities-coordinator',
+    route: '/ai-agent/admin/facilities-coordinator', apiEndpoint: '/api/agents/ai-facilities-coordinator',
     status: 'active', isPremium: true, dangerLevel: 'high',
   },
   {
@@ -9786,7 +9786,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-travel-coordinator/chat', '/api/agents/ai-travel-coordinator/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'directive',
-    route: '/ai-agent/administrative/travel-coordinator', apiEndpoint: '/api/agents/ai-travel-coordinator',
+    route: '/ai-agent/admin/travel-coordinator', apiEndpoint: '/api/agents/ai-travel-coordinator',
     status: 'active', isPremium: true, dangerLevel: 'high',
   },
   {
@@ -9802,7 +9802,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-document-controller/chat', '/api/agents/ai-document-controller/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/administrative/document-controller', apiEndpoint: '/api/agents/ai-document-controller',
+    route: '/ai-agent/admin/document-controller', apiEndpoint: '/api/agents/ai-document-controller',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -9818,7 +9818,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-admin-strategy-planner/chat', '/api/agents/ai-admin-strategy-planner/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/administrative/admin-strategy-planner', apiEndpoint: '/api/agents/ai-admin-strategy-planner',
+    route: '/ai-agent/admin/admin-strategy-planner', apiEndpoint: '/api/agents/ai-admin-strategy-planner',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -9834,7 +9834,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-cost-reduction-analyst/chat', '/api/agents/ai-cost-reduction-analyst/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/administrative/cost-reduction-analyst', apiEndpoint: '/api/agents/ai-cost-reduction-analyst',
+    route: '/ai-agent/admin/cost-reduction-analyst', apiEndpoint: '/api/agents/ai-cost-reduction-analyst',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -9850,7 +9850,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-policy-overseer/chat', '/api/agents/ai-policy-overseer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/administrative/policy-overseer', apiEndpoint: '/api/agents/ai-policy-overseer',
+    route: '/ai-agent/admin/policy-overseer', apiEndpoint: '/api/agents/ai-policy-overseer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -9866,7 +9866,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-process-standardizer/chat', '/api/agents/ai-process-standardizer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/administrative/process-standardizer', apiEndpoint: '/api/agents/ai-process-standardizer',
+    route: '/ai-agent/admin/process-standardizer', apiEndpoint: '/api/agents/ai-process-standardizer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -9882,7 +9882,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-vendor-manager/chat', '/api/agents/ai-vendor-manager/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/administrative/vendor-manager', apiEndpoint: '/api/agents/ai-vendor-manager',
+    route: '/ai-agent/admin/vendor-manager', apiEndpoint: '/api/agents/ai-vendor-manager',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -9898,7 +9898,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-office-budget-controller/chat', '/api/agents/ai-office-budget-controller/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/administrative/office-budget-controller', apiEndpoint: '/api/agents/ai-office-budget-controller',
+    route: '/ai-agent/admin/office-budget-controller', apiEndpoint: '/api/agents/ai-office-budget-controller',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -9914,7 +9914,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-space-planner/chat', '/api/agents/ai-space-planner/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/administrative/space-planner', apiEndpoint: '/api/agents/ai-space-planner',
+    route: '/ai-agent/admin/space-planner', apiEndpoint: '/api/agents/ai-space-planner',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -9930,7 +9930,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-maintenance-scheduler/chat', '/api/agents/ai-maintenance-scheduler/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/administrative/maintenance-scheduler', apiEndpoint: '/api/agents/ai-maintenance-scheduler',
+    route: '/ai-agent/admin/maintenance-scheduler', apiEndpoint: '/api/agents/ai-maintenance-scheduler',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -9946,7 +9946,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-safety-compliance-checker/chat', '/api/agents/ai-safety-compliance-checker/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/administrative/safety-compliance-checker', apiEndpoint: '/api/agents/ai-safety-compliance-checker',
+    route: '/ai-agent/admin/safety-compliance-checker', apiEndpoint: '/api/agents/ai-safety-compliance-checker',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -9962,7 +9962,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-task-delegator/chat', '/api/agents/ai-task-delegator/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/administrative/task-delegator', apiEndpoint: '/api/agents/ai-task-delegator',
+    route: '/ai-agent/admin/task-delegator', apiEndpoint: '/api/agents/ai-task-delegator',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -9978,7 +9978,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-schedule-coordinator/chat', '/api/agents/ai-schedule-coordinator/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'directive',
-    route: '/ai-agent/administrative/schedule-coordinator', apiEndpoint: '/api/agents/ai-schedule-coordinator',
+    route: '/ai-agent/admin/schedule-coordinator', apiEndpoint: '/api/agents/ai-schedule-coordinator',
     status: 'active', isPremium: true, dangerLevel: 'high',
   },
   {
@@ -9994,7 +9994,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-inventory-manager/chat', '/api/agents/ai-inventory-manager/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/administrative/inventory-manager', apiEndpoint: '/api/agents/ai-inventory-manager',
+    route: '/ai-agent/admin/inventory-manager', apiEndpoint: '/api/agents/ai-inventory-manager',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -10010,7 +10010,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-meeting-room-booker/chat', '/api/agents/ai-meeting-room-booker/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/administrative/meeting-room-booker', apiEndpoint: '/api/agents/ai-meeting-room-booker',
+    route: '/ai-agent/admin/meeting-room-booker', apiEndpoint: '/api/agents/ai-meeting-room-booker',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -10026,7 +10026,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-supply-orderer/chat', '/api/agents/ai-supply-orderer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/administrative/supply-orderer', apiEndpoint: '/api/agents/ai-supply-orderer',
+    route: '/ai-agent/admin/supply-orderer', apiEndpoint: '/api/agents/ai-supply-orderer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -10042,7 +10042,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-visitor-host/chat', '/api/agents/ai-visitor-host/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/administrative/visitor-host', apiEndpoint: '/api/agents/ai-visitor-host',
+    route: '/ai-agent/admin/visitor-host', apiEndpoint: '/api/agents/ai-visitor-host',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -10058,7 +10058,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-calendar-optimizer/chat', '/api/agents/ai-calendar-optimizer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/administrative/calendar-optimizer', apiEndpoint: '/api/agents/ai-calendar-optimizer',
+    route: '/ai-agent/admin/calendar-optimizer', apiEndpoint: '/api/agents/ai-calendar-optimizer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -10074,7 +10074,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-travel-booker/chat', '/api/agents/ai-travel-booker/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/administrative/travel-booker', apiEndpoint: '/api/agents/ai-travel-booker',
+    route: '/ai-agent/admin/travel-booker', apiEndpoint: '/api/agents/ai-travel-booker',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -10090,7 +10090,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-correspondence-drafter/chat', '/api/agents/ai-correspondence-drafter/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/administrative/correspondence-drafter', apiEndpoint: '/api/agents/ai-correspondence-drafter',
+    route: '/ai-agent/admin/correspondence-drafter', apiEndpoint: '/api/agents/ai-correspondence-drafter',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -10106,7 +10106,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-work-order-manager/chat', '/api/agents/ai-work-order-manager/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/administrative/work-order-manager', apiEndpoint: '/api/agents/ai-work-order-manager',
+    route: '/ai-agent/admin/work-order-manager', apiEndpoint: '/api/agents/ai-work-order-manager',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -10122,7 +10122,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-vendor-liaison/chat', '/api/agents/ai-vendor-liaison/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/administrative/vendor-liaison', apiEndpoint: '/api/agents/ai-vendor-liaison',
+    route: '/ai-agent/admin/vendor-liaison', apiEndpoint: '/api/agents/ai-vendor-liaison',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -10138,7 +10138,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-inspection-scheduler/chat', '/api/agents/ai-inspection-scheduler/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/administrative/inspection-scheduler', apiEndpoint: '/api/agents/ai-inspection-scheduler',
+    route: '/ai-agent/admin/inspection-scheduler', apiEndpoint: '/api/agents/ai-inspection-scheduler',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -10154,7 +10154,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-itinerary-planner/chat', '/api/agents/ai-itinerary-planner/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/administrative/itinerary-planner', apiEndpoint: '/api/agents/ai-itinerary-planner',
+    route: '/ai-agent/admin/itinerary-planner', apiEndpoint: '/api/agents/ai-itinerary-planner',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -10170,7 +10170,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-expense-reporter/chat', '/api/agents/ai-expense-reporter/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/administrative/expense-reporter', apiEndpoint: '/api/agents/ai-expense-reporter',
+    route: '/ai-agent/admin/expense-reporter', apiEndpoint: '/api/agents/ai-expense-reporter',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -10186,7 +10186,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-visa-documenter/chat', '/api/agents/ai-visa-documenter/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/administrative/visa-documenter', apiEndpoint: '/api/agents/ai-visa-documenter',
+    route: '/ai-agent/admin/visa-documenter', apiEndpoint: '/api/agents/ai-visa-documenter',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -10202,7 +10202,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-version-manager/chat', '/api/agents/ai-version-manager/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'collaborative',
-    route: '/ai-agent/administrative/version-manager', apiEndpoint: '/api/agents/ai-version-manager',
+    route: '/ai-agent/admin/version-manager', apiEndpoint: '/api/agents/ai-version-manager',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -10218,7 +10218,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-archive-organizer/chat', '/api/agents/ai-archive-organizer/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/administrative/archive-organizer', apiEndpoint: '/api/agents/ai-archive-organizer',
+    route: '/ai-agent/admin/archive-organizer', apiEndpoint: '/api/agents/ai-archive-organizer',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -10234,7 +10234,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     a2aEndpoints: ['/api/agents/ai-access-controller/chat', '/api/agents/ai-access-controller/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'analytical',
-    route: '/ai-agent/administrative/access-controller', apiEndpoint: '/api/agents/ai-access-controller',
+    route: '/ai-agent/admin/access-controller', apiEndpoint: '/api/agents/ai-access-controller',
     status: 'active', isPremium: false, dangerLevel: 'low',
   },
   {
@@ -11431,7 +11431,7 @@ export const allHierarchyAgents: AIEmployeeProfile[] = [
     capabilities: ['Investment Analysis', 'Zoning Compliance', 'Real Estate Marketing', 'Property Valuation', 'Lease Management'],
     keyMetrics: ['Tasks Completed', 'Response Time', 'Accuracy Rate', 'Efficiency Score'],
     humanCostEquivalent: '$120k/year', aiCost: '$1,800/mo', efficiency: '78%',
-    a2aEndpoints: ['/api/agents/ai-vp-real-estate-development/chat', '/api/agents/ai-vp-real-estate-development/tasks'],
+    a2aEndpoints: ['/api/agents/ai-vp-real-estate/chat', '/api/agents/ai-vp-real-estate/tasks'],
     canEscalateTo: [], canReceiveEscalationFrom: [],
     consultationStyle: 'advisory',
     route: '/ai-agent/real-estate/vp-real-estate-development', apiEndpoint: '/api/agents/ai-vp-real-estate-development',

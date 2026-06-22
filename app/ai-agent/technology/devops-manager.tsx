@@ -16,9 +16,9 @@ export default function AgentPage() {
     efficiency: '94% efficiency',
     replacesRole: 'AI DevOps Manager',
     subAgents: [
-      { id: 'ai-cloud-cost-optimizer', uid: 'ktx-06-cloud-cost-optimizer', name: 'AI Cloud Cost Optimizer', title: 'AI Cloud Cost Optimizer', route: '/ai-agent/technology/cloud-cost-optimizer' },
-      { id: 'ai-performance-profiler', uid: 'ktx-06-performance-profiler', name: 'AI Performance Profiler', title: 'AI Performance Profiler', route: '/ai-agent/technology/performance-profiler' },
-      { id: 'ai-capacity-monitor', uid: 'ktx-06-capacity-monitor', name: 'AI Capacity Monitor', title: 'AI Capacity Monitor', route: '/ai-agent/technology/capacity-monitor' }
+      { id: 'ai-cloud-cost-optimizer', uid: 'ktx-06-cloud-cost-optimizer', name: 'AI Cloud Cost Optimizer', title: 'AI Cloud Cost Optimizer', route: '/ai-agent/technologynology/cloud-cost-optimizer' },
+      { id: 'ai-performance-profiler', uid: 'ktx-06-performance-profiler', name: 'AI Performance Profiler', title: 'AI Performance Profiler', route: '/ai-agent/technologynology/performance-profiler' },
+      { id: 'ai-capacity-monitor', uid: 'ktx-06-capacity-monitor', name: 'AI Capacity Monitor', title: 'AI Capacity Monitor', route: '/ai-agent/technologynology/capacity-monitor' }
     ],
     infrastructure: {
       status: 'online',

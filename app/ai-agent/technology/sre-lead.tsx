@@ -16,9 +16,9 @@ export default function AgentPage() {
     efficiency: '92% efficiency',
     replacesRole: 'AI SRE Lead',
     subAgents: [
-      { id: 'ai-model-performance-monitor', uid: 'ktx-06-model-performance-monitor', name: 'AI Model Performance Monitor', title: 'AI Model Performance Monitor', route: '/ai-agent/technology/model-performance-monitor' },
-      { id: 'ai-database-query-optimizer', uid: 'ktx-06-database-query-optimizer', name: 'AI Database Query Optimizer', title: 'AI Database Query Optimizer', route: '/ai-agent/technology/database-query-optimizer' },
-      { id: 'ai-flaky-test-detector', uid: 'ktx-06-flaky-test-detector', name: 'AI Flaky Test Detector', title: 'AI Flaky Test Detector', route: '/ai-agent/technology/flaky-test-detector' }
+      { id: 'ai-model-performance-monitor', uid: 'ktx-06-model-performance-monitor', name: 'AI Model Performance Monitor', title: 'AI Model Performance Monitor', route: '/ai-agent/technologynology/model-performance-monitor' },
+      { id: 'ai-database-query-optimizer', uid: 'ktx-06-database-query-optimizer', name: 'AI Database Query Optimizer', title: 'AI Database Query Optimizer', route: '/ai-agent/technologynology/database-query-optimizer' },
+      { id: 'ai-flaky-test-detector', uid: 'ktx-06-flaky-test-detector', name: 'AI Flaky Test Detector', title: 'AI Flaky Test Detector', route: '/ai-agent/technologynology/flaky-test-detector' }
     ],
     infrastructure: {
       status: 'online',

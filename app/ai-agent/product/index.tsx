@@ -66,13 +66,17 @@ const agents = [
   { id: 'ai-product-lifecycle-manager', uid: 'ktx-10-product-lifecycle-manager', title: 'AI Product Lifecycle Manager', route: '/ai-agent/product/product-lifecycle-manager', color: '#FF5722', level: 'team_lead', efficiency: '84%' },
   { id: 'ai-product-portfolio-manager', uid: 'ktx-10-product-portfolio-manager', title: 'AI Product Portfolio Manager', route: '/ai-agent/product/product-portfolio-manager', color: '#FF5722', level: 'team_lead', efficiency: '85%' },
   { id: 'ai-product-strategy-director', uid: 'ktx-10-product-strategy-director', title: 'AI Product Strategy Director', route: '/ai-agent/product/product-strategy-director', color: '#FF5722', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-product-launch-specialist', uid: 'ktx-10-product-launch-specialist', title: 'AI Product Launch Specialist', route: '/ai-agent/product/product-launch-specialist', color: '#FF5722', level: 'team_lead', efficiency: '90%' },
+  { id: 'ai-product-adoption-specialist', uid: 'ktx-10-product-adoption-specialist', title: 'AI Product Adoption Specialist', route: '/ai-agent/product/product-adoption-specialist', color: '#FF5722', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-product-feedback-analyst', uid: 'ktx-10-product-feedback-analyst', title: 'AI Product Feedback Analyst', route: '/ai-agent/product/product-feedback-analyst', color: '#FF5722', level: 'team_lead', efficiency: '91%' },
+  { id: 'ai-product-research-coordinator', uid: 'ktx-10-product-research-coordinator', title: 'AI Product Research Coordinator', route: '/ai-agent/product/product-research-coordinator', color: '#FF5722', level: 'team_lead', efficiency: '89%' },
 ];
 export default function DepartmentIndex() {
   const router = useRouter();
   return (
     <ScrollView style={s.container}>
       <Text style={s.title}>Product Management - AI Agents</Text>
-      <Text style={s.sub}>60 AI Agents & Employees</Text>
+      <Text style={s.sub}>120 AI Agents & Employees</Text>
       <View style={s.grid}>
         {agents.map((a) => (
           <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>

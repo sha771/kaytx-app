@@ -16,9 +16,9 @@ export default function AgentPage() {
     efficiency: '84% efficiency',
     replacesRole: 'AI Chief Technology Officer',
     subAgents: [
-      { id: 'ai-tech-strategy-advisor', uid: 'ktx-06-tech-strategy-advisor', name: 'AI Tech Strategy Advisor', title: 'AI Tech Strategy Advisor', route: '/ai-agent/technology/tech-strategy-advisor' },
-      { id: 'ai-integration-planner', uid: 'ktx-06-integration-planner', name: 'AI Integration Planner', title: 'AI Integration Planner', route: '/ai-agent/technology/integration-planner' },
-      { id: 'ai-cross-browser-tester', uid: 'ktx-06-cross-browser-tester', name: 'AI Cross-browser Tester', title: 'AI Cross-browser Tester', route: '/ai-agent/technology/cross-browser-tester' }
+      { id: 'ai-tech-strategy-advisor', uid: 'ktx-06-tech-strategy-advisor', name: 'AI Tech Strategy Advisor', title: 'AI Tech Strategy Advisor', route: '/ai-agent/technologynology/tech-strategy-advisor' },
+      { id: 'ai-integration-planner', uid: 'ktx-06-integration-planner', name: 'AI Integration Planner', title: 'AI Integration Planner', route: '/ai-agent/technologynology/integration-planner' },
+      { id: 'ai-cross-browser-tester', uid: 'ktx-06-cross-browser-tester', name: 'AI Cross-browser Tester', title: 'AI Cross-browser Tester', route: '/ai-agent/technologynology/cross-browser-tester' }
     ],
     infrastructure: {
       status: 'online',

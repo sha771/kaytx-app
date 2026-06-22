@@ -142,7 +142,7 @@ app/
 │   ├── operations/                  # Operations agents
 │   ├── performance/                 # Performance agents
 │   ├── product/                     # Product agents
-│   ├── realestate/                  # Real estate agents
+│   ├── real-estate/                  # Real estate agents
 │   ├── research/                    # Research agents
 │   ├── sales/                       # Sales agents
 │   ├── security/                    # Security agents

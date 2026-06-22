@@ -16,9 +16,9 @@ export default function AgentPage() {
     efficiency: '90% efficiency',
     replacesRole: 'AI QA Automation Engineer',
     subAgents: [
-      { id: 'ai-threat-intelligence-aggregator', uid: 'ktx-06-threat-intelligence-aggregator', name: 'AI Threat Intelligence Aggregator', title: 'AI Threat Intelligence Aggregator', route: '/ai-agent/technology/threat-intelligence-aggregator' },
-      { id: 'ai-chaos-engineering-planner', uid: 'ktx-06-chaos-engineering-planner', name: 'AI Chaos Engineering Planner', title: 'AI Chaos Engineering Planner', route: '/ai-agent/technology/chaos-engineering-planner' },
-      { id: 'ai-security-patch-tracker', uid: 'ktx-06-security-patch-tracker', name: 'AI Security Patch Tracker', title: 'AI Security Patch Tracker', route: '/ai-agent/technology/security-patch-tracker' }
+      { id: 'ai-threat-intelligence-aggregator', uid: 'ktx-06-threat-intelligence-aggregator', name: 'AI Threat Intelligence Aggregator', title: 'AI Threat Intelligence Aggregator', route: '/ai-agent/technologynology/threat-intelligence-aggregator' },
+      { id: 'ai-chaos-engineering-planner', uid: 'ktx-06-chaos-engineering-planner', name: 'AI Chaos Engineering Planner', title: 'AI Chaos Engineering Planner', route: '/ai-agent/technologynology/chaos-engineering-planner' },
+      { id: 'ai-security-patch-tracker', uid: 'ktx-06-security-patch-tracker', name: 'AI Security Patch Tracker', title: 'AI Security Patch Tracker', route: '/ai-agent/technologynology/security-patch-tracker' }
     ],
     infrastructure: {
       status: 'online',

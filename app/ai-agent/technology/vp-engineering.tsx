@@ -16,9 +16,9 @@ export default function AgentPage() {
     efficiency: '94% efficiency',
     replacesRole: 'AI VP Engineering',
     subAgents: [
-      { id: 'ai-innovation-scout', uid: 'ktx-06-innovation-scout', name: 'AI Innovation Scout', title: 'AI Innovation Scout', route: '/ai-agent/technology/innovation-scout' },
-      { id: 'ai-tech-standard-enforcer', uid: 'ktx-06-tech-standard-enforcer', name: 'AI Tech Standard Enforcer', title: 'AI Tech Standard Enforcer', route: '/ai-agent/technology/tech-standard-enforcer' },
-      { id: 'ai-api-endpoint-developer', uid: 'ktx-06-api-endpoint-developer', name: 'AI API Endpoint Developer', title: 'AI API Endpoint Developer', route: '/ai-agent/technology/api-endpoint-developer' }
+      { id: 'ai-innovation-scout', uid: 'ktx-06-innovation-scout', name: 'AI Innovation Scout', title: 'AI Innovation Scout', route: '/ai-agent/technologynology/innovation-scout' },
+      { id: 'ai-tech-standard-enforcer', uid: 'ktx-06-tech-standard-enforcer', name: 'AI Tech Standard Enforcer', title: 'AI Tech Standard Enforcer', route: '/ai-agent/technologynology/tech-standard-enforcer' },
+      { id: 'ai-api-endpoint-developer', uid: 'ktx-06-api-endpoint-developer', name: 'AI API Endpoint Developer', title: 'AI API Endpoint Developer', route: '/ai-agent/technologynology/api-endpoint-developer' }
     ],
     infrastructure: {
       status: 'online',

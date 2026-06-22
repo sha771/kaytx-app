@@ -15,7 +15,7 @@ interface SubAgentLinksProps {
   color?: string;
 }
 
-export default function SubAgentLinks({ subAgents, basePath = '/ai-agent/realestate/sub-agents', color = '#33691E' }: SubAgentLinksProps) {
+export default function SubAgentLinks({ subAgents, basePath = '/ai-agent/real-estate/sub-agents', color = '#33691E' }: SubAgentLinksProps) {
   const { theme } = useTheme();
   const router = useRouter();
 

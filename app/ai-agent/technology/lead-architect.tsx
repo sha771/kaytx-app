@@ -16,9 +16,9 @@ export default function AgentPage() {
     efficiency: '94% efficiency',
     replacesRole: 'AI Lead Architect',
     subAgents: [
-      { id: 'ai-tech-debt-prioritizer', uid: 'ktx-06-tech-debt-prioritizer', name: 'AI Tech Debt Prioritizer', title: 'AI Tech Debt Prioritizer', route: '/ai-agent/technology/tech-debt-prioritizer' },
-      { id: 'ai-ui-component-librarian', uid: 'ktx-06-ui-component-librarian', name: 'AI UI Component Librarian', title: 'AI UI Component Librarian', route: '/ai-agent/technology/ui-component-librarian' },
-      { id: 'ai-runbook-author', uid: 'ktx-06-runbook-author', name: 'AI Runbook Author', title: 'AI Runbook Author', route: '/ai-agent/technology/runbook-author' }
+      { id: 'ai-tech-debt-prioritizer', uid: 'ktx-06-tech-debt-prioritizer', name: 'AI Tech Debt Prioritizer', title: 'AI Tech Debt Prioritizer', route: '/ai-agent/technologynology/tech-debt-prioritizer' },
+      { id: 'ai-ui-component-librarian', uid: 'ktx-06-ui-component-librarian', name: 'AI UI Component Librarian', title: 'AI UI Component Librarian', route: '/ai-agent/technologynology/ui-component-librarian' },
+      { id: 'ai-runbook-author', uid: 'ktx-06-runbook-author', name: 'AI Runbook Author', title: 'AI Runbook Author', route: '/ai-agent/technologynology/runbook-author' }
     ],
     infrastructure: {
       status: 'online',

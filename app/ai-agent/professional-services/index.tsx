@@ -12,13 +12,14 @@ const agents = [
   { id: 'ai-project-manager-prof', uid: 'ktx-25-project-manager-prof', title: 'AI Project Manager (Prof)', route: '/ai-agent/professional-services/project-manager-prof', color: '#9333EA', level: 'manager', efficiency: '87%' },
   { id: 'ai-client-success-manager', uid: 'ktx-25-client-success-manager', title: 'AI Client Success Manager', route: '/ai-agent/professional-services/client-success-manager', color: '#9333EA', level: 'team_lead', efficiency: '89%' },
   { id: 'ai-business-consultant', uid: 'ktx-25-business-consultant', title: 'AI Business Consultant', route: '/ai-agent/professional-services/business-consultant', color: '#9333EA', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-consulting-integration-specialist', uid: 'ktx-25-consulting-integration-specialist', title: 'AI Consulting Integration Specialist', route: '/ai-agent/professional-services/consulting-integration-specialist', color: '#9333EA', level: 'team_lead', efficiency: '90%' },
 ];
 export default function DepartmentIndex() {
   const router = useRouter();
   return (
     <ScrollView style={s.container}>
       <Text style={s.title}>Professional Services - AI Agents</Text>
-      <Text style={s.sub}>60 AI Agents & Employees</Text>
+      <Text style={s.sub}>120 AI Agents & Employees</Text>
       <View style={s.grid}>
         {agents.map((a) => (
           <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>

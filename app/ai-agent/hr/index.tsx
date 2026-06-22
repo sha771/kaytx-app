@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Users, Activity, Star, UserPlus, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, GraduationCap, Heart, Award } from 'lucide-react-native';
+import { Users, Activity, Star, UserPlus, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, GraduationCap, Heart, Award, Settings, FileText, Layers } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { useRouter } from 'expo-router';
 
@@ -23,7 +23,53 @@ const DEPARTMENT_AGENTS = [
   { id: 'vp-culture', name: 'VP Culture', description: 'VP Culture AI Agent', icon: Users, color: '#880E4F' },
   { id: 'vp-hr-ops', name: 'VP HR Operations', description: 'VP HR Operations AI Agent', icon: Users, color: '#880E4F' },
   { id: 'vp-learning', name: 'VP Learning & Development', description: 'VP Learning & Development AI Agent', icon: Users, color: '#880E4F' },
-  { id: 'vp-talent', name: 'VP Talent', description: 'VP Talent AI Agent', icon: Users, color: '#880E4F' }
+  { id: 'vp-talent', name: 'VP Talent', description: 'VP Talent AI Agent', icon: Users, color: '#880E4F' },
+  { id: 'director-hr-1', name: 'Director of HR - North America', description: 'Director of HR North America AI Agent', icon: Users, color: '#E91E63' },
+  { id: 'director-hr-2', name: 'Director of HR - Europe', description: 'Director of HR Europe AI Agent', icon: Users, color: '#E91E63' },
+  { id: 'director-hr-3', name: 'Director of HR - Asia Pacific', description: 'Director of HR Asia Pacific AI Agent', icon: Users, color: '#E91E63' },
+  { id: 'director-hr-4', name: 'Director of HR - Latin America', description: 'Director of HR Latin America AI Agent', icon: Users, color: '#E91E63' },
+  { id: 'director-hr-5', name: 'Director of HR - Global Operations', description: 'Director of HR Global Operations AI Agent', icon: Users, color: '#E91E63' },
+  { id: 'director-talent-acquisition-1', name: 'Director of Talent Acquisition - Technical', description: 'Director of Talent Acquisition Technical AI Agent', icon: UserPlus, color: '#2196F3' },
+  { id: 'director-talent-acquisition-2', name: 'Director of Talent Acquisition - Sales & Marketing', description: 'Director of Talent Acquisition Sales Marketing AI Agent', icon: UserPlus, color: '#2196F3' },
+  { id: 'director-talent-acquisition-3', name: 'Director of Talent Acquisition - Executive', description: 'Director of Talent Acquisition Executive AI Agent', icon: UserPlus, color: '#2196F3' },
+  { id: 'director-talent-acquisition-4', name: 'Director of Talent Acquisition - Campus & Early Career', description: 'Director of Talent Acquisition Campus AI Agent', icon: UserPlus, color: '#2196F3' },
+  { id: 'director-learning-development-1', name: 'Director of L&D - Leadership', description: 'Director of L&D Leadership AI Agent', icon: GraduationCap, color: '#9C27B0' },
+  { id: 'director-learning-development-2', name: 'Director of L&D - Technical Skills', description: 'Director of L&D Technical Skills AI Agent', icon: GraduationCap, color: '#9C27B0' },
+  { id: 'director-learning-development-3', name: 'Director of L&D - Compliance & Professional', description: 'Director of L&D Compliance Professional AI Agent', icon: GraduationCap, color: '#9C27B0' },
+  { id: 'director-compensation-1', name: 'Director of Compensation - Executive', description: 'Director of Compensation Executive AI Agent', icon: Award, color: '#FF9800' },
+  { id: 'director-compensation-2', name: 'Director of Compensation - Sales & Revenue', description: 'Director of Compensation Sales Revenue AI Agent', icon: Award, color: '#FF9800' },
+  { id: 'director-compensation-3', name: 'Director of Compensation - Broad-Based', description: 'Director of Compensation Broad-Based AI Agent', icon: Award, color: '#FF9800' },
+  { id: 'director-benefits-1', name: 'Director of Benefits - Health & Wellness', description: 'Director of Benefits Health Wellness AI Agent', icon: Heart, color: '#E91E63' },
+  { id: 'director-benefits-2', name: 'Director of Benefits - Retirement & Financial', description: 'Director of Benefits Retirement Financial AI Agent', icon: Heart, color: '#E91E63' },
+  { id: 'director-benefits-3', name: 'Director of Benefits - Total Rewards & Perks', description: 'Director of Benefits Total Rewards Perks AI Agent', icon: Heart, color: '#E91E63' },
+  { id: 'director-hr-analytics-1', name: 'Director of HR Analytics - Workforce Intelligence', description: 'Director of HR Analytics Workforce Intelligence AI Agent', icon: ChartBarBig, color: '#2196F3' },
+  { id: 'director-hr-analytics-2', name: 'Director of HR Analytics - Talent Intelligence', description: 'Director of HR Analytics Talent Intelligence AI Agent', icon: ChartBarBig, color: '#2196F3' },
+  { id: 'director-hr-analytics-3', name: 'Director of HR Analytics - People Analytics', description: 'Director of HR Analytics People Analytics AI Agent', icon: ChartBarBig, color: '#2196F3' },
+  { id: 'director-employee-relations-1', name: 'Director of Employee Relations - Conflict Resolution', description: 'Director of Employee Relations Conflict Resolution AI Agent', icon: MessageSquare, color: '#9C27B0' },
+  { id: 'director-employee-relations-2', name: 'Director of Employee Relations - Policy & Compliance', description: 'Director of Employee Relations Policy Compliance AI Agent', icon: MessageSquare, color: '#9C27B0' },
+  { id: 'director-employee-relations-3', name: 'Director of Employee Relations - Engagement & Culture', description: 'Director of Employee Relations Engagement Culture AI Agent', icon: MessageSquare, color: '#9C27B0' },
+  { id: 'director-diversity-inclusion-1', name: 'Director of D&I - Strategy & Programs', description: 'Director of D&I Strategy Programs AI Agent', icon: Users, color: '#FF5722' },
+  { id: 'director-diversity-inclusion-2', name: 'Director of D&I - Analytics & Reporting', description: 'Director of D&I Analytics Reporting AI Agent', icon: Users, color: '#FF5722' },
+  { id: 'director-organizational-development-1', name: 'Director of OD - Change Management', description: 'Director of OD Change Management AI Agent', icon: Target, color: '#3F51B5' },
+  { id: 'director-organizational-development-2', name: 'Director of OD - Design & Structure', description: 'Director of OD Design Structure AI Agent', icon: Target, color: '#3F51B5' },
+  { id: 'director-hr-operations-1', name: 'Director of HR Operations - Service Delivery', description: 'Director of HR Operations Service Delivery AI Agent', icon: Settings, color: '#607D8B' },
+  { id: 'director-hr-operations-2', name: 'Director of HR Operations - Process & Systems', description: 'Director of HR Operations Process Systems AI Agent', icon: Settings, color: '#607D8B' },
+  { id: 'director-hr-operations-3', name: 'Director of HR Operations - Shared Services', description: 'Director of HR Operations Shared Services AI Agent', icon: Settings, color: '#607D8B' },
+  { id: 'director-hr-technology-1', name: 'Director of HR Technology - Systems & Platforms', description: 'Director of HR Technology Systems Platforms AI Agent', icon: Shield, color: '#00BCD4' },
+  { id: 'director-hr-technology-2', name: 'Director of HR Technology - Digital Transformation', description: 'Director of HR Technology Digital Transformation AI Agent', icon: Shield, color: '#00BCD4' },
+  { id: 'director-workforce-planning-1', name: 'Director of Workforce Planning - Strategic', description: 'Director of Workforce Planning Strategic AI Agent', icon: Target, color: '#4CAF50' },
+  { id: 'director-workforce-planning-2', name: 'Director of Workforce Planning - Operational', description: 'Director of Workforce Planning Operational AI Agent', icon: Target, color: '#4CAF50' },
+  { id: 'director-hr-project-1', name: 'Director of HR Projects - Transformation', description: 'Director of HR Projects Transformation AI Agent', icon: Calendar, color: '#673AB7' },
+  { id: 'director-hr-project-2', name: 'Director of HR Projects - Program Management', description: 'Director of HR Projects Program Management AI Agent', icon: Calendar, color: '#673AB7' },
+  { id: 'director-hr-project-3', name: 'Director of HR Projects - Continuous Improvement', description: 'Director of HR Projects Continuous Improvement AI Agent', icon: Calendar, color: '#673AB7' },
+  { id: 'director-shared-services-1', name: 'Director of Shared Services - Global Operations', description: 'Director of Shared Services Global Operations AI Agent', icon: Users, color: '#009688' },
+  { id: 'director-shared-services-2', name: 'Director of Shared Services - Centers of Expertise', description: 'Director of Shared Services COE AI Agent', icon: Users, color: '#009688' },
+  { id: 'director-centers-of-excellence-1', name: 'Director of COE - Talent & Culture', description: 'Director of COE Talent Culture AI Agent', icon: Star, color: '#FFC107' },
+  { id: 'director-centers-of-excellence-2', name: 'Director of COE - Learning & Analytics', description: 'Director of COE Learning Analytics AI Agent', icon: Star, color: '#FFC107' },
+  { id: 'director-hr-compliance-1', name: 'Director of HR Compliance - Regulatory', description: 'Director of HR Compliance Regulatory AI Agent', icon: Shield, color: '#795548' },
+  { id: 'director-hr-compliance-2', name: 'Director of HR Compliance - Internal Controls', description: 'Director of HR Compliance Internal Controls AI Agent', icon: Shield, color: '#795548' },
+  { id: 'director-hr-policy-1', name: 'Director of HR Policy - Policy Development', description: 'Director of HR Policy Policy Development AI Agent', icon: FileText, color: '#607D8B' },
+  { id: 'director-hr-policy-2', name: 'Director of HR Policy - Communication & Education', description: 'Director of HR Policy Communication Education AI Agent', icon: FileText, color: '#607D8B' }
 ];;
 
 export default function HRDepartment() {

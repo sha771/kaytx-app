@@ -16,9 +16,9 @@ export default function AgentPage() {
     efficiency: '82% efficiency',
     replacesRole: 'AI Frontend Developer',
     subAgents: [
-      { id: 'ai-training-data-curator', uid: 'ktx-06-training-data-curator', name: 'AI Training Data Curator', title: 'AI Training Data Curator', route: '/ai-agent/technology/training-data-curator' },
-      { id: 'ai-service-mesh-coordinator', uid: 'ktx-06-service-mesh-coordinator', name: 'AI Service Mesh Coordinator', title: 'AI Service Mesh Coordinator', route: '/ai-agent/technology/service-mesh-coordinator' },
-      { id: 'ai-pipeline-builder', uid: 'ktx-06-pipeline-builder', name: 'AI Pipeline Builder', title: 'AI Pipeline Builder', route: '/ai-agent/technology/pipeline-builder' }
+      { id: 'ai-training-data-curator', uid: 'ktx-06-training-data-curator', name: 'AI Training Data Curator', title: 'AI Training Data Curator', route: '/ai-agent/technologynology/training-data-curator' },
+      { id: 'ai-service-mesh-coordinator', uid: 'ktx-06-service-mesh-coordinator', name: 'AI Service Mesh Coordinator', title: 'AI Service Mesh Coordinator', route: '/ai-agent/technologynology/service-mesh-coordinator' },
+      { id: 'ai-pipeline-builder', uid: 'ktx-06-pipeline-builder', name: 'AI Pipeline Builder', title: 'AI Pipeline Builder', route: '/ai-agent/technologynology/pipeline-builder' }
     ],
     infrastructure: {
       status: 'online',

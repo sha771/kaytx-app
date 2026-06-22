@@ -65,13 +65,23 @@ const agents = [
   { id: 'ai-tooling-engineer', uid: 'ktx-18-tooling-engineer', title: 'AI Tooling Engineer', route: '/ai-agent/manufacturing/tooling-engineer', color: '#5C6BC0', level: 'team_lead', efficiency: '85%' },
   { id: 'ai-die-setter', uid: 'ktx-18-die-setter', title: 'AI Die Setter', route: '/ai-agent/manufacturing/die-setter', color: '#5C6BC0', level: 'team_lead', efficiency: '84%' },
   { id: 'ai-setup-technician', uid: 'ktx-18-setup-technician', title: 'AI Setup Technician', route: '/ai-agent/manufacturing/setup-technician', color: '#5C6BC0', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-production-director-1', uid: 'ktx-18-production-director-1', title: 'AI Production Director I', route: '/ai-agent/manufacturing/production-director-1', color: '#5C6BC0', level: 'vp_director', efficiency: '93%' },
+  { id: 'ai-production-director-2', uid: 'ktx-18-production-director-2', title: 'AI Production Director II', route: '/ai-agent/manufacturing/production-director-2', color: '#5C6BC0', level: 'vp_director', efficiency: '94%' },
+  { id: 'ai-quality-director-1', uid: 'ktx-18-quality-director-1', title: 'AI Quality Director I', route: '/ai-agent/manufacturing/quality-director-1', color: '#5C6BC0', level: 'vp_director', efficiency: '92%' },
+  { id: 'ai-quality-director-2', uid: 'ktx-18-quality-director-2', title: 'AI Quality Director II', route: '/ai-agent/manufacturing/quality-director-2', color: '#5C6BC0', level: 'vp_director', efficiency: '93%' },
+  { id: 'ai-engineering-manager-1', uid: 'ktx-18-engineering-manager-1', title: 'AI Engineering Manager I', route: '/ai-agent/manufacturing/engineering-manager-1', color: '#5C6BC0', level: 'manager', efficiency: '91%' },
+  { id: 'ai-engineering-manager-2', uid: 'ktx-18-engineering-manager-2', title: 'AI Engineering Manager II', route: '/ai-agent/manufacturing/engineering-manager-2', color: '#5C6BC0', level: 'manager', efficiency: '92%' },
+  { id: 'ai-safety-director-1', uid: 'ktx-18-safety-director-1', title: 'AI Safety Director I', route: '/ai-agent/manufacturing/safety-director-1', color: '#5C6BC0', level: 'vp_director', efficiency: '90%' },
+  { id: 'ai-safety-director-2', uid: 'ktx-18-safety-director-2', title: 'AI Safety Director II', route: '/ai-agent/manufacturing/safety-director-2', color: '#5C6BC0', level: 'vp_director', efficiency: '91%' },
+  { id: 'ai-continuous-improvement-manager-1', uid: 'ktx-18-continuous-improvement-manager-1', title: 'AI Continuous Improvement Manager I', route: '/ai-agent/manufacturing/continuous-improvement-manager-1', color: '#5C6BC0', level: 'manager', efficiency: '94%' },
+  { id: 'ai-continuous-improvement-manager-2', uid: 'ktx-18-continuous-improvement-manager-2', title: 'AI Continuous Improvement Manager II', route: '/ai-agent/manufacturing/continuous-improvement-manager-2', color: '#5C6BC0', level: 'manager', efficiency: '95%' },
 ];
 export default function DepartmentIndex() {
   const router = useRouter();
   return (
     <ScrollView style={s.container}>
       <Text style={s.title}>Manufacturing & Production - AI Agents</Text>
-      <Text style={s.sub}>60 AI Agents & Employees</Text>
+      <Text style={s.sub}>120 AI Agents & Employees</Text>
       <View style={s.grid}>
         {agents.map((a) => (
           <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>

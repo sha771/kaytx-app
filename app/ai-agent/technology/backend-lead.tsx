@@ -16,9 +16,9 @@ export default function AgentPage() {
     efficiency: '80% efficiency',
     replacesRole: 'AI Backend Lead',
     subAgents: [
-      { id: 'ai-scalability-planner', uid: 'ktx-06-scalability-planner', name: 'AI Scalability Planner', title: 'AI Scalability Planner', route: '/ai-agent/technology/scalability-planner' },
-      { id: 'ai-api-design-reviewer', uid: 'ktx-06-api-design-reviewer', name: 'AI API Design Reviewer', title: 'AI API Design Reviewer', route: '/ai-agent/technology/api-design-reviewer' },
-      { id: 'ai-e2e-test-writer', uid: 'ktx-06-e2e-test-writer', name: 'AI E2E Test Writer', title: 'AI E2E Test Writer', route: '/ai-agent/technology/e2e-test-writer' }
+      { id: 'ai-scalability-planner', uid: 'ktx-06-scalability-planner', name: 'AI Scalability Planner', title: 'AI Scalability Planner', route: '/ai-agent/technologynology/scalability-planner' },
+      { id: 'ai-api-design-reviewer', uid: 'ktx-06-api-design-reviewer', name: 'AI API Design Reviewer', title: 'AI API Design Reviewer', route: '/ai-agent/technologynology/api-design-reviewer' },
+      { id: 'ai-e2e-test-writer', uid: 'ktx-06-e2e-test-writer', name: 'AI E2E Test Writer', title: 'AI E2E Test Writer', route: '/ai-agent/technologynology/e2e-test-writer' }
     ],
     infrastructure: {
       status: 'online',

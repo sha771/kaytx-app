@@ -16,9 +16,9 @@ export default function AgentPage() {
     efficiency: '90% efficiency',
     replacesRole: 'AI VP Security Technology',
     subAgents: [
-      { id: 'ai-engineering-metrics-tracker', uid: 'ktx-06-engineering-metrics-tracker', name: 'AI Engineering Metrics Tracker', title: 'AI Engineering Metrics Tracker', route: '/ai-agent/technology/engineering-metrics-tracker' },
-      { id: 'ai-incident-commander', uid: 'ktx-06-incident-commander', name: 'AI Incident Commander', title: 'AI Incident Commander', route: '/ai-agent/technology/incident-commander' },
-      { id: 'ai-alert-tuner', uid: 'ktx-06-alert-tuner', name: 'AI Alert Tuner', title: 'AI Alert Tuner', route: '/ai-agent/technology/alert-tuner' }
+      { id: 'ai-engineering-metrics-tracker', uid: 'ktx-06-engineering-metrics-tracker', name: 'AI Engineering Metrics Tracker', title: 'AI Engineering Metrics Tracker', route: '/ai-agent/technologynology/engineering-metrics-tracker' },
+      { id: 'ai-incident-commander', uid: 'ktx-06-incident-commander', name: 'AI Incident Commander', title: 'AI Incident Commander', route: '/ai-agent/technologynology/incident-commander' },
+      { id: 'ai-alert-tuner', uid: 'ktx-06-alert-tuner', name: 'AI Alert Tuner', title: 'AI Alert Tuner', route: '/ai-agent/technologynology/alert-tuner' }
     ],
     infrastructure: {
       status: 'online',

@@ -16,9 +16,9 @@ export default function AgentPage() {
     efficiency: '75% efficiency',
     replacesRole: 'AI VP Infrastructure',
     subAgents: [
-      { id: 'ai-architecture-reviewer', uid: 'ktx-06-architecture-reviewer', name: 'AI Architecture Reviewer', title: 'AI Architecture Reviewer', route: '/ai-agent/technology/architecture-reviewer' },
-      { id: 'ai-cicd-pipeline-optimizer', uid: 'ktx-06-cicd-pipeline-optimizer', name: 'AI CI/CD Pipeline Optimizer', title: 'AI CI/CD Pipeline Optimizer', route: '/ai-agent/technology/cicd-pipeline-optimizer' },
-      { id: 'ai-data-validator', uid: 'ktx-06-data-validator', name: 'AI Data Validator', title: 'AI Data Validator', route: '/ai-agent/technology/data-validator' }
+      { id: 'ai-architecture-reviewer', uid: 'ktx-06-architecture-reviewer', name: 'AI Architecture Reviewer', title: 'AI Architecture Reviewer', route: '/ai-agent/technologynology/architecture-reviewer' },
+      { id: 'ai-cicd-pipeline-optimizer', uid: 'ktx-06-cicd-pipeline-optimizer', name: 'AI CI/CD Pipeline Optimizer', title: 'AI CI/CD Pipeline Optimizer', route: '/ai-agent/technologynology/cicd-pipeline-optimizer' },
+      { id: 'ai-data-validator', uid: 'ktx-06-data-validator', name: 'AI Data Validator', title: 'AI Data Validator', route: '/ai-agent/technologynology/data-validator' }
     ],
     infrastructure: {
       status: 'online',

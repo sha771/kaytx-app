@@ -16,9 +16,9 @@ export default function AgentPage() {
     efficiency: '75% efficiency',
     replacesRole: 'AI Backend Developer',
     subAgents: [
-      { id: 'ai-ethics-reviewer', uid: 'ktx-06-ethics-reviewer', name: 'AI Ethics Reviewer', title: 'AI Ethics Reviewer', route: '/ai-agent/technology/ethics-reviewer' },
-      { id: 'ai-sla-calculator', uid: 'ktx-06-sla-calculator', name: 'AI SLA Calculator', title: 'AI SLA Calculator', route: '/ai-agent/technology/sla-calculator' },
-      { id: 'ai-data-quality-checker', uid: 'ktx-06-data-quality-checker', name: 'AI Data Quality Checker', title: 'AI Data Quality Checker', route: '/ai-agent/technology/data-quality-checker' }
+      { id: 'ai-ethics-reviewer', uid: 'ktx-06-ethics-reviewer', name: 'AI Ethics Reviewer', title: 'AI Ethics Reviewer', route: '/ai-agent/technologynology/ethics-reviewer' },
+      { id: 'ai-sla-calculator', uid: 'ktx-06-sla-calculator', name: 'AI SLA Calculator', title: 'AI SLA Calculator', route: '/ai-agent/technologynology/sla-calculator' },
+      { id: 'ai-data-quality-checker', uid: 'ktx-06-data-quality-checker', name: 'AI Data Quality Checker', title: 'AI Data Quality Checker', route: '/ai-agent/technologynology/data-quality-checker' }
     ],
     infrastructure: {
       status: 'online',

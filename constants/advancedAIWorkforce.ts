@@ -376,7 +376,7 @@ const department1Agents: MainAgent[] = [
     description: 'Advanced neural network-based customer intelligence system using deep learning for comprehensive customer behavior analysis, prediction, and personalization across all touchpoints.',
     capabilities: ['Deep Learning Analytics', 'Customer Behavior Prediction', 'Personalization Engine', 'Journey Optimization', 'Real-Time Insights'],
     responsibilities: ['Lead customer intelligence initiatives', 'Coordinate behavioral analytics', 'Implement personalization engines', 'Optimize customer journeys'],
-    icon: 'Brain', color: '#00BCD4', route: '/ai-agent/customer-experience/neural-customer-intelligence-hub',
+    icon: 'Brain', color: '#00BCD4', route: '/ai-agent/customer/neural-customer-intelligence-hub',
     aiCost: '$3,200/mo', efficiency: '95%', isPremium: true,
     reportsTo: undefined,
     subAgents: [

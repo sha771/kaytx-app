@@ -16,9 +16,9 @@ export default function AgentPage() {
     efficiency: '80% efficiency',
     replacesRole: 'AI SRE Engineer',
     subAgents: [
-      { id: 'ai-security-tool-evaluator', uid: 'ktx-06-security-tool-evaluator', name: 'AI Security Tool Evaluator', title: 'AI Security Tool Evaluator', route: '/ai-agent/technology/security-tool-evaluator' },
-      { id: 'ai-incident-post-mortem-facilitator', uid: 'ktx-06-incident-post-mortem-facilitator', name: 'AI Incident Post-mortem Facilitator', title: 'AI Incident Post-mortem Facilitator', route: '/ai-agent/technology/incident-post-mortem-facilitator' },
-      { id: 'ai-schema-migration-planner', uid: 'ktx-06-schema-migration-planner', name: 'AI Schema Migration Planner', title: 'AI Schema Migration Planner', route: '/ai-agent/technology/schema-migration-planner' }
+      { id: 'ai-security-tool-evaluator', uid: 'ktx-06-security-tool-evaluator', name: 'AI Security Tool Evaluator', title: 'AI Security Tool Evaluator', route: '/ai-agent/technologynology/security-tool-evaluator' },
+      { id: 'ai-incident-post-mortem-facilitator', uid: 'ktx-06-incident-post-mortem-facilitator', name: 'AI Incident Post-mortem Facilitator', title: 'AI Incident Post-mortem Facilitator', route: '/ai-agent/technologynology/incident-post-mortem-facilitator' },
+      { id: 'ai-schema-migration-planner', uid: 'ktx-06-schema-migration-planner', name: 'AI Schema Migration Planner', title: 'AI Schema Migration Planner', route: '/ai-agent/technologynology/schema-migration-planner' }
     ],
     infrastructure: {
       status: 'online',

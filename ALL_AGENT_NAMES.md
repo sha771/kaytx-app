@@ -1,0 +1,331 @@
+# COMPLETE AI AGENT NAMES LIST
+# Total: 6,517 Agents across 83 Departments
+# Generated: June 23, 2026
+
+## ACCOUNTING (148 agents)
+- accounting-manager
+- accounting-policy-specialist
+- accounting-project-manager
+- accounting-systems-administrator
+- accounts-payable-manager
+- accounts-payable-specialist
+- accounts-receivable-manager
+- accounts-receivable-specialist
+- advanced-financial-analyst
+- assistant-controller
+- audit-manager
+- auditor
+- billing-specialist
+- bookkeeper
+- budget-analyst
+- budget-manager
+- business-intelligence-analyst
+- capital-allocation-specialist
+- cash-flow-analyst
+- cash-management-specialist
+- cfo
+- collections-specialist
+- compliance-auditor
+- controller
+- corporate-controller
+- corporate-tax-expert
+- cost-accountant
+- cost-control-analyst
+- credit-manager
+- debt-analyst
+- depreciation-specialist
+- deputy-controller
+- divisional-controller
+- dynamics-365-specialist
+- erp-implementation-specialist
+- erpfusion-analyst
+- estate-tax-specialist
+- exempt-organizations-specialist
+- expense-analyst
+- expense-manager
+- expenses
+- external-audit-manager
+- federal-tax-expert
+- finance-analyst
+- finance-manager
+- finance-operations-manager
+- financial-advisor
+- financial-compliance-officer
+- financial-consultant
+- financial-controller
+- financial-data-analyst
+- financial-modeling-specialist
+- financial-planner
+- financial-planning-analyst
+- financial-planning-manager
+- financial-reporting-manager
+- financial-reporting-specialist
+- financial-systems-analyst
+- financial-transformation-specialist
+- fixed-asset-accountant
+- forecasting-specialist
+- forensic-auditor
+- gaap-specialist
+- general-ledger-accountant
+- gl-accountant-senior
+- hedging-specialist
+- ifrs-specialist
+- internal-audit-manager
+- internal-auditor
+- internal-control-specialist
+- international-tax-expert
+- investment-analyst
+- investor-relations-analyst
+- invoice-processor
+- it-auditor
+- junior-financial-analyst
+- lead-financial-analyst
+- liquidity-manager
+- ma-analyst
+- management-accountant
+- margin-analyst
+- netsuite-specialist
+- oracle-specialist
+- payroll-administrator
+- payroll-manager
+- payroll-specialist
+- payroll-tax-specialist
+- procurement-analyst
+- profitability-analyst
+- quickbooks-specialist
+- r-and-tax-credit-specialist
+- regulatory-reporting-specialist
+- revenue-analyst
+- revenue-recognition-specialist
+- risk-management-analyst
+- s4hana-specialist
+- sage-specialist
+- sap-specialist
+- sec-reporting-specialist
+- senior-audit-specialist
+- senior-financial-analyst
+- senior-financial-analyst-10
+- senior-financial-analyst-2
+- senior-financial-analyst-3
+- senior-financial-analyst-4
+- senior-financial-analyst-5
+- senior-financial-analyst-6
+- senior-financial-analyst-7
+- senior-financial-analyst-8
+- senior-financial-analyst-9
+- shared-services-manager
+- sox-compliance-specialist
+- state-tax-specialist
+- strategic-finance-analyst
+- supply-chain-finance-analyst
+- tax-analyst
+- tax-compliance-specialist
+- tax-manager-1
+- tax-manager-2
+- tax-manager-3
+- tax-manager-4
+- tax-manager-5
+- tax-planning-specialist
+- tax-specialist
+- tax-specialist-1
+- tax-specialist-10
+- tax-specialist-2
+- tax-specialist-3
+- tax-specialist-4
+- tax-specialist-5
+- tax-specialist-6
+- tax-specialist-7
+- tax-specialist-8
+- tax-specialist-9
+- transfer-pricing-specialist
+- treasury-analyst
+- treasury-manager
+- treasury-specialist
+- valuation-specialist
+- variance-analyst
+- vat-specialist
+- vp-accounting
+- vp-finance
+- vp-investor-relations
+- vp-treasury
+- workday-financials-specialist
+- working-capital-manager
+- xero-specialist
+
+## ADMIN (10 agents)
+- administrative-support-specialist
+- audit-logs
+- cao-admin
+- document-management-specialist
+- executive-support-coordinator
+- facilities-support-coordinator
+- office-operations-specialist
+- process-administrator
+- supply-chain-administrator
+- system-settings
+
+## AGENT (1 agent)
+- [agentId]
+
+## AGRICULTURE (70 agents)
+- agricultural-consultant
+- agricultural-technology-specialist
+- agronomist
+- agronomy-specialist
+- assistant-farm-manager
+- breeding-specialist
+- business-development-director
+- buyer
+- chief-agriculture-officer
+- commodities-trader
+- commodity-trading-director
+- compliance-officer
+- crop-manager
+- crop-specialist
+- crop-yield-specialist
+- data-analyst
+- environmental-specialist
+- equipment-manager
+- farm-equipment-operator
+- farm-management-specialist
+- farm-manager
+- farming-operations-director
+- field-supervisor
+- finance-director
+- harvest-coordinator
+- horticulturist
+- hr-manager
+- human-resources-director
+- irrigation-specialist
+- lab-technician
+- livestock-manager
+- logistics-coordinator
+- maintenance-technician
+- nutritionist
+- packaging-specialist
+- pest-management-specialist
+- precision-farming-specialist
+- processing-director
+- processing-technician
+- procurement-specialist
+- quality-control-inspector
+- quality-control-specialist
+- quality-director
+- regulatory-affairs-director
+- regulatory-specialist
+- research-director
+- research-scientist
+- research-specialist
+- risk-manager
+- safety-director
+- safety-inspector
+- soil-scientist
+- supply-chain-director
+- supply-chain-specialist
+- sustainability-coordinator
+- sustainability-director
+- sustainability-manager
+- sustainability-specialist
+- technology-director
+- veterinary-technician
+- vp-agriculture-technology
+- vp-crop-production
+- vp-farm-operations
+- vp-farming-operations
+- vp-livestock-management
+- vp-processing
+- vp-research--development
+- vp-supply-chain
+- vp-sustainability
+- warehouse-manager
+
+[Note: This file continues with all 83 departments...]
+Total file size would be approximately 50,000+ lines with all agent names.
+
+For the complete detailed list, refer to the dynamically generated output from: scripts/list-all-agents.ps1
+
+## DEPARTMENT SUMMARY
+- accounting: 148 agents
+- admin: 10 agents
+- agent: 1 agent
+- agriculture: 70 agents
+- ai-assistant: 0 agents
+- ai-governance: 149 agents
+- ai-management-governance: 61 agents
+- ai-mgmt: 65 agents
+- analysis: 1 agent
+- analytics: 5 agents
+- analytics-insights: 178 agents
+- architecture-design: 192 agents
+- assistant: 7 agents
+- banking-finance: 120 agents
+- billing: 1 agent
+- category: 1 agent
+- collaboration: 4 agents
+- company-brain: 9 agents
+- consulting-advisory: 120 agents
+- counseling: 1 agent
+- counseling-progress: 1 agent
+- cross-department: 29 agents
+- customer: 68 agents
+- customer-experience: 13 agents
+- cx: 2 agents
+- data: 126 agents
+- e-commerce: 63 agents
+- education: 76 agents
+- employees: 5 agents
+- energy-utilities: 120 agents
+- engineering: 137 agents
+- event-management: 117 agents
+- executive: 130 agents
+- executive-strategy: 112 agents
+- fashion-luxury: 111 agents
+- features: 8 agents
+- finance: 120 agents
+- finance-accounting: 60 agents
+- gaming-esports: 112 agents
+- goals: 1 agent
+- government: 130 agents
+- healthcare: 120 agents
+- help: 1 agent
+- hierarchy: 12 agents
+- hr: 123 agents
+- human-resources: 20 agents
+- industries: 13 agents
+- insights: 3 agents
+- insurance: 128 agents
+- it: 7 agents
+- legal: 176 agents
+- logistics-warehousing: 250 agents
+- manufacturing: 183 agents
+- marketing: 154 agents
+- marketplace: 3 agents
+- media-entertainment: 110 agents
+- operations: 218 agents
+- ops: 2 agents
+- options: 4 agents
+- performance: 13 agents
+- predictor: 92 agents
+- product: 120 agents
+- professional-services: 120 agents
+- real-estate: 297 agents
+- reports: 1 agent
+- research: 144 agents
+- restaurants: 112 agents
+- retail-stores: 109 agents
+- sales: 121 agents
+- security: 130 agents
+- security-risk: 60 agents
+- simulation: 1 agent
+- social-crm: 6 agents
+- social-media: 9 agents
+- standalone: 27 agents
+- supply-chain: 216 agents
+- team-management: 3 agents
+- technology: 181 agents
+- trading: 148 agents
+- training: 1 agent
+- transportation: 183 agents
+- travel-tourism: 129 agents
+
+**GRAND TOTAL: 6,517 AGENTS**

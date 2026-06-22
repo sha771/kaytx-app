@@ -397,7 +397,7 @@ All 45 sub-agents exist in `marketing/sub-agents/` folder ✅
 **DEPT 6 Status: 16/16 Main Agents (100%) ✅**
 
 ### Sub-Agents - Status
-49 sub-agents exist in `tech/sub-agents/` folder ✅
+49 sub-agents exist in `technology/sub-agents/` folder ✅
 
 ---
 
@@ -562,7 +562,7 @@ All 45 sub-agents exist in `marketing/sub-agents/` folder ✅
 **DEPT 13 Status: 9/9 Main Agents (100%) ✅**
 
 ### Sub-Agents - Status
-All 27 sub-agents created in `administrative/sub-agents/` folder ✅
+All 27 sub-agents created in `admin/sub-agents/` folder ✅
 
 **Chief Admin Officer (3):**
 - admin-strategy-planner.tsx, cost-reduction-analyst.tsx, policy-overseer.tsx
@@ -647,7 +647,7 @@ All 27 sub-agents created in `administrative/sub-agents/` folder ✅
 **DEPT 15 Status: 14/14 Main Agents (100%) ✅**
 
 ### Sub-Agents - Status
-43 sub-agents exist in `realestate/sub-agents/` folder ✅
+43 sub-agents exist in `real-estate/sub-agents/` folder ✅
 
 ---
 
@@ -984,7 +984,7 @@ All 36 sub-agents exist in `education/sub-agents/` folder ✅
 ## ✅ ALL COMPONENTS CREATED
 
 ### Administrative Sub-Agents (27 agents) - ✅ COMPLETE
-Location: `app/ai-agent/administrative/sub-agents/`
+Location: `app/ai-agent/admin/sub-agents/`
 
 | # | Sub-Agent Name | File | Status |
 |---|----------------|------|--------|

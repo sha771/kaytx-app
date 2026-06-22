@@ -16,9 +16,9 @@ export default function AgentPage() {
     efficiency: '92% efficiency',
     replacesRole: 'AI VP AI/ML',
     subAgents: [
-      { id: 'ai-sprint-capacity-planner', uid: 'ktx-06-sprint-capacity-planner', name: 'AI Sprint Capacity Planner', title: 'AI Sprint Capacity Planner', route: '/ai-agent/technology/sprint-capacity-planner' },
-      { id: 'ai-deployment-coordinator', uid: 'ktx-06-deployment-coordinator', name: 'AI Deployment Coordinator', title: 'AI Deployment Coordinator', route: '/ai-agent/technology/deployment-coordinator' },
-      { id: 'ai-service-integrator', uid: 'ktx-06-service-integrator', name: 'AI Service Integrator', title: 'AI Service Integrator', route: '/ai-agent/technology/service-integrator' }
+      { id: 'ai-sprint-capacity-planner', uid: 'ktx-06-sprint-capacity-planner', name: 'AI Sprint Capacity Planner', title: 'AI Sprint Capacity Planner', route: '/ai-agent/technologynology/sprint-capacity-planner' },
+      { id: 'ai-deployment-coordinator', uid: 'ktx-06-deployment-coordinator', name: 'AI Deployment Coordinator', title: 'AI Deployment Coordinator', route: '/ai-agent/technologynology/deployment-coordinator' },
+      { id: 'ai-service-integrator', uid: 'ktx-06-service-integrator', name: 'AI Service Integrator', title: 'AI Service Integrator', route: '/ai-agent/technologynology/service-integrator' }
     ],
     infrastructure: {
       status: 'online',

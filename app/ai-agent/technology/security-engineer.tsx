@@ -16,9 +16,9 @@ export default function AgentPage() {
     efficiency: '75% efficiency',
     replacesRole: 'AI Security Engineer',
     subAgents: [
-      { id: 'ai-design-pattern-advisor', uid: 'ktx-06-design-pattern-advisor', name: 'AI Design Pattern Advisor', title: 'AI Design Pattern Advisor', route: '/ai-agent/technology/design-pattern-advisor' },
-      { id: 'ai-style-enforcer', uid: 'ktx-06-style-enforcer', name: 'AI Style Enforcer', title: 'AI Style Enforcer', route: '/ai-agent/technology/style-enforcer' },
-      { id: 'ai-access-policy-implementer', uid: 'ktx-06-access-policy-implementer', name: 'AI Access Policy Implementer', title: 'AI Access Policy Implementer', route: '/ai-agent/technology/access-policy-implementer' }
+      { id: 'ai-design-pattern-advisor', uid: 'ktx-06-design-pattern-advisor', name: 'AI Design Pattern Advisor', title: 'AI Design Pattern Advisor', route: '/ai-agent/technologynology/design-pattern-advisor' },
+      { id: 'ai-style-enforcer', uid: 'ktx-06-style-enforcer', name: 'AI Style Enforcer', title: 'AI Style Enforcer', route: '/ai-agent/technologynology/style-enforcer' },
+      { id: 'ai-access-policy-implementer', uid: 'ktx-06-access-policy-implementer', name: 'AI Access Policy Implementer', title: 'AI Access Policy Implementer', route: '/ai-agent/technologynology/access-policy-implementer' }
     ],
     infrastructure: {
       status: 'online',

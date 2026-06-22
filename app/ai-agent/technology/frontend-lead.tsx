@@ -16,9 +16,9 @@ export default function AgentPage() {
     efficiency: '87% efficiency',
     replacesRole: 'AI Frontend Lead',
     subAgents: [
-      { id: 'ai-uptime-monitor', uid: 'ktx-06-uptime-monitor', name: 'AI Uptime Monitor', title: 'AI Uptime Monitor', route: '/ai-agent/technology/uptime-monitor' },
-      { id: 'ai-accessibility-auditor', uid: 'ktx-06-accessibility-auditor', name: 'AI Accessibility Auditor', title: 'AI Accessibility Auditor', route: '/ai-agent/technology/accessibility-auditor' },
-      { id: 'ai-test-framework-maintainer', uid: 'ktx-06-test-framework-maintainer', name: 'AI Test Framework Maintainer', title: 'AI Test Framework Maintainer', route: '/ai-agent/technology/test-framework-maintainer' }
+      { id: 'ai-uptime-monitor', uid: 'ktx-06-uptime-monitor', name: 'AI Uptime Monitor', title: 'AI Uptime Monitor', route: '/ai-agent/technologynology/uptime-monitor' },
+      { id: 'ai-accessibility-auditor', uid: 'ktx-06-accessibility-auditor', name: 'AI Accessibility Auditor', title: 'AI Accessibility Auditor', route: '/ai-agent/technologynology/accessibility-auditor' },
+      { id: 'ai-test-framework-maintainer', uid: 'ktx-06-test-framework-maintainer', name: 'AI Test Framework Maintainer', title: 'AI Test Framework Maintainer', route: '/ai-agent/technologynology/test-framework-maintainer' }
     ],
     infrastructure: {
       status: 'online',

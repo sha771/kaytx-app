@@ -159,11 +159,11 @@ const departmentCategories: SidebarCategory[] = [
   // Mind Map Visualization
   { id: 'mind-map', label: 'AI Workforce Map', icon: GitBranch, color: '#7C4DFF', route: '/ai-agent/mind-map', count: 1108 },
   // DEPT 1: Customer Experience (56 agents)
-  { id: 'customer-experience', label: 'Customer Experience', icon: Headphones, color: '#00BCD4', route: '/ai-agent/customer-experience', count: 56 },
+  { id: 'customer-experience', label: 'Customer Experience', icon: Headphones, color: '#00BCD4', route: '/ai-agent/customer', count: 56 },
   // DEPT 2: Sales & Revenue (56 agents)
-  { id: 'sales-revenue', label: 'Sales & Revenue', icon: Target, color: '#FFA000', route: '/ai-agent/sales-revenue', count: 56 },
+  { id: 'sales-revenue', label: 'Sales & Revenue', icon: Target, color: '#FFA000', route: '/ai-agent/sales', count: 56 },
   // DEPT 3: Marketing & Growth (60 agents)
-  { id: 'marketing-growth', label: 'Marketing & Growth', icon: Megaphone, color: '#E91E63', route: '/ai-agent/marketing-growth', count: 60 },
+  { id: 'marketing-growth', label: 'Marketing & Growth', icon: Megaphone, color: '#E91E63', route: '/ai-agent/marketing', count: 60 },
   // DEPT 4: Operations & Management (52 agents)
   { id: 'operations-management', label: 'Operations & Management', icon: Settings, color: '#607D8B', route: '/ai-agent/operations', count: 52 },
   // DEPT 5: Finance & Accounting (52 agents)
@@ -183,11 +183,11 @@ const departmentCategories: SidebarCategory[] = [
   // DEPT 12: Research & Development (36 agents)
   { id: 'research-development', label: 'Research & Development', icon: FlaskConical, color: '#009688', route: '/ai-agent/research', count: 36 },
   // DEPT 13: Administrative (36 agents)
-  { id: 'administrative', label: 'Administrative', icon: Clipboard, color: '#795548', route: '/ai-agent/administrative', count: 36 },
+  { id: 'administrative', label: 'Administrative', icon: Clipboard, color: '#795548', route: '/ai-agent/admin', count: 36 },
   // DEPT 14: Trading & Investments (72 agents)
   { id: 'trading-investments', label: 'Trading & Investments', icon: TrendingUp, color: '#10B981', route: '/ai-agent/trading', count: 72 },
   // DEPT 15: Real Estate & Property (56 agents)
-  { id: 'real-estate', label: 'Real Estate & Property', icon: Building, color: '#8D6E63', route: '/ai-agent/realestate', count: 56 },
+  { id: 'real-estate', label: 'Real Estate & Property', icon: Building, color: '#8D6E63', route: '/ai-agent/real-estate', count: 56 },
   // DEPT 16: Insurance & Risk (64 agents)
   { id: 'insurance-risk', label: 'Insurance & Risk', icon: ShieldCheck, color: '#FF7043', route: '/ai-agent/insurance', count: 64 },
   // DEPT 17: Healthcare & Medical (56 agents)
@@ -207,28 +207,28 @@ const departmentCategories: SidebarCategory[] = [
 // Legacy categories for backwards compatibility
 const categories: SidebarCategory[] = [
   { id: 'executive-leadership', label: 'Executive & Leadership AI', icon: Briefcase, color: '#1E3A5F', route: '/ai-agent/executive-leadership-ai', count: 9 },
-  { id: 'accounting-finance', label: 'Accounting & Finance AI', icon: Landmark, color: '#10B981', route: '/ai-agent/accounting-finance-ai', count: 10 },
-  { id: 'customer-experience-ai', label: 'Customer Experience AI', icon: Headphones, color: '#007AFF', route: '/ai-agent/customer-experience-ai', count: 8 },
-  { id: 'sales-revenue-ai', label: 'Sales & Revenue AI', icon: Target, color: '#34C759', route: '/ai-agent/sales-revenue-ai', count: 10 },
-  { id: 'marketing-growth-ai', label: 'Marketing & Growth AI', icon: Megaphone, color: '#FF2D55', route: '/ai-agent/marketing-growth-ai', count: 10 },
+  { id: 'accounting-finance', label: 'Accounting & Finance AI', icon: Landmark, color: '#10B981', route: '/ai-agent/accounting-ai', count: 10 },
+  { id: 'customer-experience-ai', label: 'Customer Experience AI', icon: Headphones, color: '#007AFF', route: '/ai-agent/customer-ai', count: 8 },
+  { id: 'sales-revenue-ai', label: 'Sales & Revenue AI', icon: Target, color: '#34C759', route: '/ai-agent/sales-ai', count: 10 },
+  { id: 'marketing-growth-ai', label: 'Marketing & Growth AI', icon: Megaphone, color: '#FF2D55', route: '/ai-agent/marketing-ai', count: 10 },
   { id: 'product-rnd-ai', label: 'Product & R&D AI', icon: FlaskConical, color: '#7B1FA2', route: '/ai-agent/product-rnd-ai', count: 6 },
-  { id: 'operations-management-ai', label: 'Operations & Management AI', icon: Settings, color: '#FF6B35', route: '/ai-agent/operations-management-ai', count: 10 },
+  { id: 'operations-management-ai', label: 'Operations & Management AI', icon: Settings, color: '#FF6B35', route: '/ai-agent/operations-ai', count: 10 },
   { id: 'social-media-management-ai', label: 'Social Media Management AI', icon: Share2, color: '#E1306C', route: '/ai-agent/social-media-management-ai', count: 8 },
-  { id: 'data-intelligence-ai', label: 'Data & Intelligence AI', icon: ChartBarBig, color: '#9B59B6', route: '/ai-agent/data-intelligence-ai', count: 8 },
+  { id: 'data-intelligence-ai', label: 'Data & Intelligence AI', icon: ChartBarBig, color: '#9B59B6', route: '/ai-agent/data-ai', count: 8 },
   { id: 'analysis-performance-ai', label: 'Analysis, Insights & Performance AI', icon: Gauge, color: '#E74C3C', route: '/ai-agent/analysis-performance-ai', count: 9 },
-  { id: 'human-resources-ai', label: 'Human Resources AI', icon: Users, color: '#00897B', route: '/ai-agent/human-resources-ai', count: 7 },
+  { id: 'human-resources-ai', label: 'Human Resources AI', icon: Users, color: '#00897B', route: '/ai-agent/hr-ai', count: 7 },
   { id: 'it-technology-ai', label: 'IT & Technology AI', icon: Monitor, color: '#0288D1', route: '/ai-agent/it-technology-ai', count: 6 },
-  { id: 'legal-compliance-ai', label: 'Legal & Compliance AI', icon: Scale, color: '#4E342E', route: '/ai-agent/legal-compliance-ai', count: 6 },
+  { id: 'legal-compliance-ai', label: 'Legal & Compliance AI', icon: Scale, color: '#4E342E', route: '/ai-agent/legal-ai', count: 6 },
   { id: 'engineering-development-ai', label: 'Engineering & Development AI', icon: SquareCode, color: '#1565C0', route: '/ai-agent/engineering-development-ai', count: 7 },
   { id: 'ai-personal-assistant', label: 'AI Personal Assistant', icon: CircleUser, color: '#1976D2', route: '/ai-agent/ai-personal-assistant-ai', count: 7 },
-  { id: 'trading-investment-ai', label: 'Trading & Investment AI', icon: TrendingUp, color: '#00C853', route: '/ai-agent/trading-investment-ai', count: 16 },
+  { id: 'trading-investment-ai', label: 'Trading & Investment AI', icon: TrendingUp, color: '#00C853', route: '/ai-agent/trading-ai', count: 16 },
 ];
 
 // New CX Sub-Agent Categories - Line 4
 const cxSubAgentCategories: SidebarCategory[] = [
-  { id: 'loyalty-engagement', label: 'AI Loyalty & Engagement', icon: Gift, color: '#AF52DE', route: '/ai-agent/customer-experience/loyalty-engagement', count: 3 },
-  { id: 'feedback-survey', label: 'AI Feedback & Survey', icon: ClipboardList, color: '#5856D6', route: '/ai-agent/customer-experience/feedback-survey', count: 3 },
-  { id: 'billing-support', label: 'AI Billing Support', icon: CreditCard, color: '#007AFF', route: '/ai-agent/customer-experience/billing-support', count: 3 },
+  { id: 'loyalty-engagement', label: 'AI Loyalty & Engagement', icon: Gift, color: '#AF52DE', route: '/ai-agent/customer/loyalty-engagement', count: 3 },
+  { id: 'feedback-survey', label: 'AI Feedback & Survey', icon: ClipboardList, color: '#5856D6', route: '/ai-agent/customer/feedback-survey', count: 3 },
+  { id: 'billing-support', label: 'AI Billing Support', icon: CreditCard, color: '#007AFF', route: '/ai-agent/customer/billing-support', count: 3 },
 ];
 
 // Sales & Revenue Sub-Agents - Agents 21-25 with 3-line entries
@@ -309,17 +309,17 @@ const financeVPHierarchy: SidebarCategory[] = [
 
 // Tech VP & Lead Hierarchy - Agents 70-80
 const techVPHierarchy: SidebarCategory[] = [
-  { id: 'cto', label: 'AI CTO', icon: Monitor, color: '#1565C0', route: '/ai-agent/tech/cto', count: 3 },
-  { id: 'vp-engineering', label: 'AI VP Engineering', icon: SquareCode, color: '#0288D1', route: '/ai-agent/tech/vp-engineering', count: 3 },
-  { id: 'vp-infrastructure', label: 'AI VP Infrastructure', icon: Cloud, color: '#00897B', route: '/ai-agent/tech/vp-infrastructure', count: 3 },
-  { id: 'vp-ai-ml', label: 'AI VP AI/ML', icon: Brain, color: '#7B1FA2', route: '/ai-agent/tech/vp-ai-ml', count: 3 },
-  { id: 'vp-security-tech', label: 'AI VP Security Tech', icon: Shield, color: '#C62828', route: '/ai-agent/tech/vp-security-tech', count: 3 },
-  { id: 'lead-architect', label: 'AI Lead Architect', icon: LayoutIcon, color: '#E65100', route: '/ai-agent/tech/lead-architect', count: 3 },
-  { id: 'devops-manager', label: 'AI DevOps Manager', icon: Settings, color: '#FF6B35', route: '/ai-agent/tech/devops-manager', count: 3 },
-  { id: 'frontend-lead', label: 'AI Frontend Lead', icon: Palette, color: '#9C27B0', route: '/ai-agent/tech/frontend-lead', count: 3 },
-  { id: 'backend-lead', label: 'AI Backend Lead', icon: Database, color: '#2E7D32', route: '/ai-agent/tech/backend-lead', count: 3 },
-  { id: 'sre-lead', label: 'AI SRE Lead', icon: Activity, color: '#FF9500', route: '/ai-agent/tech/sre-lead', count: 3 },
-  { id: 'frontend-developer', label: 'AI Frontend Developer', icon: Palette, color: '#AF52DE', route: '/ai-agent/tech/ai-frontend-developer', count: 3 },
+  { id: 'cto', label: 'AI CTO', icon: Monitor, color: '#1565C0', route: '/ai-agent/technology/cto', count: 3 },
+  { id: 'vp-engineering', label: 'AI VP Engineering', icon: SquareCode, color: '#0288D1', route: '/ai-agent/technology/vp-engineering', count: 3 },
+  { id: 'vp-infrastructure', label: 'AI VP Infrastructure', icon: Cloud, color: '#00897B', route: '/ai-agent/technology/vp-infrastructure', count: 3 },
+  { id: 'vp-ai-ml', label: 'AI VP AI/ML', icon: Brain, color: '#7B1FA2', route: '/ai-agent/technology/vp-ai-ml', count: 3 },
+  { id: 'vp-security-tech', label: 'AI VP Security Tech', icon: Shield, color: '#C62828', route: '/ai-agent/technology/vp-security-tech', count: 3 },
+  { id: 'lead-architect', label: 'AI Lead Architect', icon: LayoutIcon, color: '#E65100', route: '/ai-agent/technology/lead-architect', count: 3 },
+  { id: 'devops-manager', label: 'AI DevOps Manager', icon: Settings, color: '#FF6B35', route: '/ai-agent/technology/devops-manager', count: 3 },
+  { id: 'frontend-lead', label: 'AI Frontend Lead', icon: Palette, color: '#9C27B0', route: '/ai-agent/technology/frontend-lead', count: 3 },
+  { id: 'backend-lead', label: 'AI Backend Lead', icon: Database, color: '#2E7D32', route: '/ai-agent/technology/backend-lead', count: 3 },
+  { id: 'sre-lead', label: 'AI SRE Lead', icon: Activity, color: '#FF9500', route: '/ai-agent/technology/sre-lead', count: 3 },
+  { id: 'frontend-developer', label: 'AI Frontend Developer', icon: Palette, color: '#AF52DE', route: '/ai-agent/technology/ai-frontend-developer', count: 3 },
 ];
 
 // Operations Sub-Agents - Resource Planner & QA sub-agents
@@ -470,18 +470,18 @@ const legalGovVPAgents: SidebarCategory[] = [
 // Administrative Division Hierarchy - Agents 151-159
 const administrativeHierarchy: SidebarCategory[] = [
   // Executive Level (151)
-  { id: 'chief-administrative-officer', label: 'AI Chief Administrative Officer', icon: Crown, color: '#5D4037', route: '/ai-agent/administrative/chief-administrative-officer', count: 3 },
+  { id: 'chief-administrative-officer', label: 'AI Chief Administrative Officer', icon: Crown, color: '#5D4037', route: '/ai-agent/admin/chief-administrative-officer', count: 3 },
   // VP Level (152-153)
-  { id: 'vp-admin-operations', label: 'AI VP Admin Operations', icon: Settings, color: '#6D4C41', route: '/ai-agent/administrative/vp-admin-operations', count: 3 },
-  { id: 'vp-facilities', label: 'AI VP Facilities', icon: Building2, color: '#795548', route: '/ai-agent/administrative/vp-facilities', count: 3 },
+  { id: 'vp-admin-operations', label: 'AI VP Admin Operations', icon: Settings, color: '#6D4C41', route: '/ai-agent/admin/vp-admin-operations', count: 3 },
+  { id: 'vp-facilities', label: 'AI VP Facilities', icon: Building2, color: '#795548', route: '/ai-agent/admin/vp-facilities', count: 3 },
   // Manager Level (154)
-  { id: 'admin-manager', label: 'AI Admin Manager', icon: Users, color: '#8D6E63', route: '/ai-agent/administrative/admin-manager', count: 3 },
+  { id: 'admin-manager', label: 'AI Admin Manager', icon: Users, color: '#8D6E63', route: '/ai-agent/admin/admin-manager', count: 3 },
   // Specialist Level (155-159)
-  { id: 'ai-office-manager', label: 'AI Office Manager', icon: Briefcase, color: '#A1887F', route: '/ai-agent/administrative/ai-office-manager', count: 3 },
-  { id: 'ai-executive-assistant', label: 'AI Executive Assistant', icon: Star, color: '#8D6E63', route: '/ai-agent/administrative/ai-executive-assistant', count: 3 },
-  { id: 'ai-facilities-coordinator', label: 'AI Facilities Coordinator', icon: Shield, color: '#9E9E9E', route: '/ai-agent/administrative/ai-facilities-coordinator', count: 3 },
-  { id: 'ai-travel-coordinator', label: 'AI Travel Coordinator', icon: TrendingUp, color: '#BDBDBD', route: '/ai-agent/administrative/ai-travel-coordinator', count: 3 },
-  { id: 'ai-document-controller', label: 'AI Document Controller', icon: Clipboard, color: '#78909C', route: '/ai-agent/administrative/ai-document-controller', count: 3 },
+  { id: 'ai-office-manager', label: 'AI Office Manager', icon: Briefcase, color: '#A1887F', route: '/ai-agent/admin/ai-office-manager', count: 3 },
+  { id: 'ai-executive-assistant', label: 'AI Executive Assistant', icon: Star, color: '#8D6E63', route: '/ai-agent/admin/ai-executive-assistant', count: 3 },
+  { id: 'ai-facilities-coordinator', label: 'AI Facilities Coordinator', icon: Shield, color: '#9E9E9E', route: '/ai-agent/admin/ai-facilities-coordinator', count: 3 },
+  { id: 'ai-travel-coordinator', label: 'AI Travel Coordinator', icon: TrendingUp, color: '#BDBDBD', route: '/ai-agent/admin/ai-travel-coordinator', count: 3 },
+  { id: 'ai-document-controller', label: 'AI Document Controller', icon: Clipboard, color: '#78909C', route: '/ai-agent/admin/ai-document-controller', count: 3 },
 ];
 
 // Data & AI Leadership Agents - Agents 107-109
@@ -982,122 +982,122 @@ const settlementSubAgents: SidebarCategory[] = [
 // Real Estate & Property Hierarchy - Agents 178-191
 const realestateHierarchy: SidebarCategory[] = [
   // C-Suite (178)
-  { id: 'creo', label: 'AI Chief Real Estate Officer', icon: Briefcase, color: '#33691E', route: '/ai-agent/realestate/creo', count: 3 },
+  { id: 'creo', label: 'AI Chief Real Estate Officer', icon: Briefcase, color: '#33691E', route: '/ai-agent/real-estate/creo', count: 3 },
   // VP Level (179-180)
-  { id: 'vp-property-management', label: 'AI VP Property Management', icon: Building, color: '#33691E', route: '/ai-agent/realestate/vp-property-management', count: 3 },
-  { id: 'vp-real-estate-development', label: 'AI VP Real Estate Development', icon: Building2, color: '#33691E', route: '/ai-agent/realestate/vp-real-estate-development', count: 3 },
+  { id: 'vp-property-management', label: 'AI VP Property Management', icon: Building, color: '#33691E', route: '/ai-agent/real-estate/vp-property-management', count: 3 },
+  { id: 'vp-real-estate-development', label: 'AI VP Real Estate Development', icon: Building2, color: '#33691E', route: '/ai-agent/real-estate/vp-real-estate-development', count: 3 },
   // Manager Level (181-183)
-  { id: 'property-manager', label: 'AI Property Manager', icon: Settings, color: '#33691E', route: '/ai-agent/realestate/property-manager', count: 3 },
-  { id: 'leasing-manager', label: 'AI Leasing Manager', icon: Users, color: '#33691E', route: '/ai-agent/realestate/leasing-manager', count: 3 },
-  { id: 'facilities-manager', label: 'AI Facilities Manager', icon: Shield, color: '#33691E', route: '/ai-agent/realestate/facilities-manager', count: 3 },
+  { id: 'property-manager', label: 'AI Property Manager', icon: Settings, color: '#33691E', route: '/ai-agent/real-estate/property-manager', count: 3 },
+  { id: 'leasing-manager', label: 'AI Leasing Manager', icon: Users, color: '#33691E', route: '/ai-agent/real-estate/leasing-manager', count: 3 },
+  { id: 'facilities-manager', label: 'AI Facilities Manager', icon: Shield, color: '#33691E', route: '/ai-agent/real-estate/facilities-manager', count: 3 },
   // Specialist Level (184-187)
-  { id: 'property-analyst', label: 'AI Property Analyst', icon: Search, color: '#33691E', route: '/ai-agent/realestate/property-analyst', count: 3 },
-  { id: 'lease-administrator', label: 'AI Lease Administrator', icon: FileText, color: '#33691E', route: '/ai-agent/realestate/lease-administrator', count: 3 },
-  { id: 'tenant-relations', label: 'AI Tenant Relations Specialist', icon: MessageSquare, color: '#33691E', route: '/ai-agent/realestate/tenant-relations', count: 3 },
-  { id: 'maintenance-coordinator', label: 'AI Maintenance Coordinator', icon: Wrench, color: '#33691E', route: '/ai-agent/realestate/maintenance-coordinator', count: 3 },
+  { id: 'property-analyst', label: 'AI Property Analyst', icon: Search, color: '#33691E', route: '/ai-agent/real-estate/property-analyst', count: 3 },
+  { id: 'lease-administrator', label: 'AI Lease Administrator', icon: FileText, color: '#33691E', route: '/ai-agent/real-estate/lease-administrator', count: 3 },
+  { id: 'tenant-relations', label: 'AI Tenant Relations Specialist', icon: MessageSquare, color: '#33691E', route: '/ai-agent/real-estate/tenant-relations', count: 3 },
+  { id: 'maintenance-coordinator', label: 'AI Maintenance Coordinator', icon: Wrench, color: '#33691E', route: '/ai-agent/real-estate/maintenance-coordinator', count: 3 },
   // Analyst/Coordinator Level (188-191)
-  { id: 'acquisition-analyst', label: 'AI Acquisition Analyst', icon: Target, color: '#33691E', route: '/ai-agent/realestate/acquisition-analyst', count: 3 },
-  { id: 'asset-manager', label: 'AI Asset Manager', icon: TrendingUp, color: '#33691E', route: '/ai-agent/realestate/asset-manager', count: 3 },
-  { id: 'development-coordinator', label: 'AI Development Coordinator', icon: Calendar, color: '#33691E', route: '/ai-agent/realestate/development-coordinator', count: 3 },
-  { id: 'property-marketing', label: 'AI Property Marketing', icon: Megaphone, color: '#33691E', route: '/ai-agent/realestate/property-marketing', count: 3 },
+  { id: 'acquisition-analyst', label: 'AI Acquisition Analyst', icon: Target, color: '#33691E', route: '/ai-agent/real-estate/acquisition-analyst', count: 3 },
+  { id: 'asset-manager', label: 'AI Asset Manager', icon: TrendingUp, color: '#33691E', route: '/ai-agent/real-estate/asset-manager', count: 3 },
+  { id: 'development-coordinator', label: 'AI Development Coordinator', icon: Calendar, color: '#33691E', route: '/ai-agent/real-estate/development-coordinator', count: 3 },
+  { id: 'property-marketing', label: 'AI Property Marketing', icon: Megaphone, color: '#33691E', route: '/ai-agent/real-estate/property-marketing', count: 3 },
 ];
 
 // 178. CREO Sub-Agents
 const creoSubAgents: SidebarCategory[] = [
-  { id: 'portfolio-strategy-advisor', label: 'AI Portfolio Strategy Advisor', icon: Briefcase, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/portfolio-strategy-advisor', count: 1 },
-  { id: 'market-cycle-analyst', label: 'AI Market Cycle Analyst', icon: TrendingUp, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/market-cycle-analyst', count: 1 },
-  { id: 'capital-deployment-planner', label: 'AI Capital Deployment Planner', icon: DollarSign, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/capital-deployment-planner', count: 1 },
+  { id: 'portfolio-strategy-advisor', label: 'AI Portfolio Strategy Advisor', icon: Briefcase, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/portfolio-strategy-advisor', count: 1 },
+  { id: 'market-cycle-analyst', label: 'AI Market Cycle Analyst', icon: TrendingUp, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/market-cycle-analyst', count: 1 },
+  { id: 'capital-deployment-planner', label: 'AI Capital Deployment Planner', icon: DollarSign, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/capital-deployment-planner', count: 1 },
 ];
 
 // 179. VP Property Management Sub-Agents
 const vpPropertyMgmtSubAgents: SidebarCategory[] = [
-  { id: 'property-performance-monitor', label: 'AI Property Performance Monitor', icon: Activity, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/property-performance-monitor', count: 1 },
-  { id: 'noi-optimizer', label: 'AI NOI Optimizer', icon: TrendingUp, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/noi-optimizer', count: 1 },
-  { id: 'tenant-retention-strategist', label: 'AI Tenant Retention Strategist', icon: Users, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/tenant-retention-strategist', count: 1 },
+  { id: 'property-performance-monitor', label: 'AI Property Performance Monitor', icon: Activity, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/property-performance-monitor', count: 1 },
+  { id: 'noi-optimizer', label: 'AI NOI Optimizer', icon: TrendingUp, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/noi-optimizer', count: 1 },
+  { id: 'tenant-retention-strategist', label: 'AI Tenant Retention Strategist', icon: Users, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/tenant-retention-strategist', count: 1 },
 ];
 
 // 180. VP Real Estate Development Sub-Agents
 const vpRealEstateDevSubAgents: SidebarCategory[] = [
-  { id: 'development-pipeline-manager', label: 'AI Development Pipeline Manager', icon: GitBranch, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/development-pipeline-manager', count: 1 },
-  { id: 'feasibility-analyst', label: 'AI Feasibility Analyst', icon: Search, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/feasibility-analyst', count: 1 },
-  { id: 'permit-tracker', label: 'AI Permit Tracker', icon: ClipboardCheck, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/permit-tracker', count: 1 },
+  { id: 'development-pipeline-manager', label: 'AI Development Pipeline Manager', icon: GitBranch, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/development-pipeline-manager', count: 1 },
+  { id: 'feasibility-analyst', label: 'AI Feasibility Analyst', icon: Search, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/feasibility-analyst', count: 1 },
+  { id: 'permit-tracker', label: 'AI Permit Tracker', icon: ClipboardCheck, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/permit-tracker', count: 1 },
 ];
 
 // 181. Property Manager Sub-Agents
 const propertyManagerSubAgents: SidebarCategory[] = [
-  { id: 'rent-collector', label: 'AI Rent Collector', icon: DollarSign, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/rent-collector', count: 1 },
-  { id: 'maintenance-dispatcher', label: 'AI Maintenance Dispatcher', icon: Wrench, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/maintenance-dispatcher', count: 1 },
-  { id: 'lease-enforcer', label: 'AI Lease Enforcer', icon: Shield, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/lease-enforcer', count: 1 },
+  { id: 'rent-collector', label: 'AI Rent Collector', icon: DollarSign, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/rent-collector', count: 1 },
+  { id: 'maintenance-dispatcher', label: 'AI Maintenance Dispatcher', icon: Wrench, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/maintenance-dispatcher', count: 1 },
+  { id: 'lease-enforcer', label: 'AI Lease Enforcer', icon: Shield, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/lease-enforcer', count: 1 },
 ];
 
 // 182. Leasing Manager Sub-Agents
 const leasingManagerSubAgents: SidebarCategory[] = [
-  { id: 'vacancy-minimizer', label: 'AI Vacancy Minimizer', icon: TrendingDown, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/vacancy-minimizer', count: 1 },
-  { id: 'lease-negotiator', label: 'AI Lease Negotiator', icon: Handshake, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/lease-negotiator', count: 1 },
-  { id: 'tenant-qualifier', label: 'AI Tenant Qualifier', icon: UserCheck, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/tenant-qualifier', count: 1 },
+  { id: 'vacancy-minimizer', label: 'AI Vacancy Minimizer', icon: TrendingDown, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/vacancy-minimizer', count: 1 },
+  { id: 'lease-negotiator', label: 'AI Lease Negotiator', icon: Handshake, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/lease-negotiator', count: 1 },
+  { id: 'tenant-qualifier', label: 'AI Tenant Qualifier', icon: UserCheck, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/tenant-qualifier', count: 1 },
 ];
 
 // 183. Facilities Manager Sub-Agents
 const facilitiesManagerSubAgents: SidebarCategory[] = [
-  { id: 'building-systems-monitor', label: 'AI Building Systems Monitor', icon: Monitor, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/building-systems-monitor', count: 1 },
-  { id: 'energy-manager', label: 'AI Energy Manager', icon: Zap, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/energy-manager', count: 1 },
-  { id: 'space-optimizer', label: 'AI Space Optimizer', icon: LayoutGrid, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/space-optimizer', count: 1 },
+  { id: 'building-systems-monitor', label: 'AI Building Systems Monitor', icon: Monitor, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/building-systems-monitor', count: 1 },
+  { id: 'energy-manager', label: 'AI Energy Manager', icon: Zap, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/energy-manager', count: 1 },
+  { id: 'space-optimizer', label: 'AI Space Optimizer', icon: LayoutGrid, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/space-optimizer', count: 1 },
 ];
 
 // 184. Property Analyst Sub-Agents
 const propertyAnalystSubAgents: SidebarCategory[] = [
-  { id: 'comparable-analyzer', label: 'AI Comparable Analyzer', icon: Search, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/comparable-analyzer', count: 1 },
-  { id: 'value-estimator', label: 'AI Value Estimator', icon: Calculator, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/value-estimator', count: 1 },
-  { id: 'market-trend-reporter', label: 'AI Market Trend Reporter', icon: BarChart3, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/market-trend-reporter', count: 1 },
+  { id: 'comparable-analyzer', label: 'AI Comparable Analyzer', icon: Search, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/comparable-analyzer', count: 1 },
+  { id: 'value-estimator', label: 'AI Value Estimator', icon: Calculator, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/value-estimator', count: 1 },
+  { id: 'market-trend-reporter', label: 'AI Market Trend Reporter', icon: BarChart3, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/market-trend-reporter', count: 1 },
 ];
 
 // 185. Lease Administrator Sub-Agents
 const leaseAdminSubAgents: SidebarCategory[] = [
-  { id: 'lease-abstractor', label: 'AI Lease Abstractor', icon: FileText, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/lease-abstractor', count: 1 },
-  { id: 'critical-date-tracker', label: 'AI Critical Date Tracker', icon: Calendar, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/critical-date-tracker', count: 1 },
-  { id: 'rent-escalation-calculator', label: 'AI Rent Escalation Calculator', icon: Calculator, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/rent-escalation-calculator', count: 1 },
+  { id: 'lease-abstractor', label: 'AI Lease Abstractor', icon: FileText, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/lease-abstractor', count: 1 },
+  { id: 'critical-date-tracker', label: 'AI Critical Date Tracker', icon: Calendar, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/critical-date-tracker', count: 1 },
+  { id: 'rent-escalation-calculator', label: 'AI Rent Escalation Calculator', icon: Calculator, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/rent-escalation-calculator', count: 1 },
 ];
 
 // 186. Tenant Relations Sub-Agents
 const tenantRelationsSubAgents: SidebarCategory[] = [
-  { id: 'issue-resolver', label: 'AI Issue Resolver', icon: Wrench, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/issue-resolver', count: 1 },
-  { id: 'communication-coordinator', label: 'AI Communication Coordinator', icon: MessageSquare, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/communication-coordinator', count: 1 },
-  { id: 'satisfaction-surveyor', label: 'AI Satisfaction Surveyor', icon: ClipboardList, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/satisfaction-surveyor', count: 1 },
+  { id: 'issue-resolver', label: 'AI Issue Resolver', icon: Wrench, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/issue-resolver', count: 1 },
+  { id: 'communication-coordinator', label: 'AI Communication Coordinator', icon: MessageSquare, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/communication-coordinator', count: 1 },
+  { id: 'satisfaction-surveyor', label: 'AI Satisfaction Surveyor', icon: ClipboardList, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/satisfaction-surveyor', count: 1 },
 ];
 
 // 187. Maintenance Coordinator Sub-Agents
 const maintenanceCoordSubAgents: SidebarCategory[] = [
-  { id: 'work-order-prioritizer', label: 'AI Work Order Prioritizer', icon: ListFilter, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/work-order-prioritizer', count: 1 },
-  { id: 'vendor-dispatcher', label: 'AI Vendor Dispatcher', icon: Truck, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/vendor-dispatcher', count: 1 },
-  { id: 'cost-estimator', label: 'AI Cost Estimator', icon: Calculator, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/cost-estimator', count: 1 },
+  { id: 'work-order-prioritizer', label: 'AI Work Order Prioritizer', icon: ListFilter, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/work-order-prioritizer', count: 1 },
+  { id: 'vendor-dispatcher', label: 'AI Vendor Dispatcher', icon: Truck, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/vendor-dispatcher', count: 1 },
+  { id: 'cost-estimator', label: 'AI Cost Estimator', icon: Calculator, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/cost-estimator', count: 1 },
 ];
 
 // 188. Acquisition Analyst Sub-Agents
 const acquisitionAnalystSubAgents: SidebarCategory[] = [
-  { id: 'deal-screener', label: 'AI Deal Screener', icon: Search, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/deal-screener', count: 1 },
-  { id: 'due-diligence-coordinator', label: 'AI Due Diligence Coordinator', icon: ClipboardCheck, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/due-diligence-coordinator', count: 1 },
-  { id: 'underwriting-assistant', label: 'AI Underwriting Assistant', icon: FileText, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/underwriting-assistant', count: 1 },
+  { id: 'deal-screener', label: 'AI Deal Screener', icon: Search, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/deal-screener', count: 1 },
+  { id: 'due-diligence-coordinator', label: 'AI Due Diligence Coordinator', icon: ClipboardCheck, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/due-diligence-coordinator', count: 1 },
+  { id: 'underwriting-assistant', label: 'AI Underwriting Assistant', icon: FileText, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/underwriting-assistant', count: 1 },
 ];
 
 // 189. Asset Manager Sub-Agents
 const assetManagerSubAgents: SidebarCategory[] = [
-  { id: 'asset-performance-tracker', label: 'AI Asset Performance Tracker', icon: Activity, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/asset-performance-tracker', count: 1 },
-  { id: 'disposition-advisor', label: 'AI Disposition Advisor', icon: TrendingDown, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/disposition-advisor', count: 1 },
-  { id: 'return-calculator', label: 'AI Return Calculator', icon: Calculator, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/return-calculator', count: 1 },
+  { id: 'asset-performance-tracker', label: 'AI Asset Performance Tracker', icon: Activity, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/asset-performance-tracker', count: 1 },
+  { id: 'disposition-advisor', label: 'AI Disposition Advisor', icon: TrendingDown, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/disposition-advisor', count: 1 },
+  { id: 'return-calculator', label: 'AI Return Calculator', icon: Calculator, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/return-calculator', count: 1 },
 ];
 
 // 190. Development Coordinator Sub-Agents
 const developmentCoordSubAgents: SidebarCategory[] = [
-  { id: 'timeline-manager', label: 'AI Timeline Manager', icon: Calendar, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/timeline-manager', count: 1 },
-  { id: 'contractor-coordinator', label: 'AI Contractor Coordinator', icon: Users, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/contractor-coordinator', count: 1 },
-  { id: 'budget-tracker', label: 'AI Budget Tracker', icon: DollarSign, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/budget-tracker', count: 1 },
+  { id: 'timeline-manager', label: 'AI Timeline Manager', icon: Calendar, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/timeline-manager', count: 1 },
+  { id: 'contractor-coordinator', label: 'AI Contractor Coordinator', icon: Users, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/contractor-coordinator', count: 1 },
+  { id: 'budget-tracker', label: 'AI Budget Tracker', icon: DollarSign, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/budget-tracker', count: 1 },
 ];
 
 // 191. Property Marketing Sub-Agents
 const propertyMarketingSubAgents: SidebarCategory[] = [
-  { id: 'listing-creator', label: 'AI Listing Creator', icon: FileText, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/listing-creator', count: 1 },
-  { id: 'virtual-tour-builder', label: 'AI Virtual Tour Builder', icon: ImageIcon, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/virtual-tour-builder', count: 1 },
-  { id: 'lead-qualifier', label: 'AI Lead Qualifier', icon: Target, color: '#558B2F', route: '/ai-agent/realestate/sub-agents/lead-qualifier', count: 1 },
+  { id: 'listing-creator', label: 'AI Listing Creator', icon: FileText, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/listing-creator', count: 1 },
+  { id: 'virtual-tour-builder', label: 'AI Virtual Tour Builder', icon: ImageIcon, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/virtual-tour-builder', count: 1 },
+  { id: 'lead-qualifier', label: 'AI Lead Qualifier', icon: Target, color: '#558B2F', route: '/ai-agent/real-estate/sub-agents/lead-qualifier', count: 1 },
 ];
 
 // Insurance & Risk VP & Executive Hierarchy - Agents 192-195

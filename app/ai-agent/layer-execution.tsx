@@ -22,7 +22,7 @@ const layerData = {
   flow: 'Execute',
   features: ['Department-Specific Tasks', 'Day-to-Day Operations', 'Cross-Functional Coordination', 'Process Execution', 'Service Delivery', 'Performance Tracking'],
   components: [
-    { id: 'customer-experience', name: 'Customer Experience', description: 'Support, success, CX', icon: 'Users', route: '/ai-agent/customer-experience' },
+    { id: 'customer-experience', name: 'Customer Experience', description: 'Support, success, CX', icon: 'Users', route: '/ai-agent/customer' },
     { id: 'sales', name: 'Sales', description: 'Sales and revenue generation', icon: 'TrendingUp', route: '/ai-agent/sales' },
     { id: 'marketing', name: 'Marketing', description: 'Marketing and growth', icon: 'Target', route: '/ai-agent/marketing' },
     { id: 'finance', name: 'Finance', description: 'Financial operations', icon: 'TrendingUp', route: '/ai-agent/accounting' },
@@ -30,7 +30,7 @@ const layerData = {
     { id: 'operations', name: 'Operations', description: 'Operations management', icon: 'Settings', route: '/ai-agent/operations' },
     { id: 'hr', name: 'Human Resources', description: 'HR and talent', icon: 'Users', route: '/ai-agent/hr' },
     { id: 'legal', name: 'Legal & Compliance', description: 'Legal and compliance', icon: 'Scale', route: '/ai-agent/legal' },
-    { id: 'data-intelligence', name: 'Data & Intelligence', description: 'Data and analytics', icon: 'BarChart3', route: '/ai-agent/data-intelligence' },
+    { id: 'data-intelligence', name: 'Data & Intelligence', description: 'Data and analytics', icon: 'BarChart3', route: '/ai-agent/data' },
     { id: 'product', name: 'Product', description: 'Product development', icon: 'Zap', route: '/ai-agent/product' },
     { id: 'security', name: 'Security', description: 'Security and risk', icon: 'Shield', route: '/ai-agent/security' },
     { id: 'research', name: 'Research & Innovation', description: 'R&D and innovation', icon: 'Lightbulb', route: '/ai-agent/research' },

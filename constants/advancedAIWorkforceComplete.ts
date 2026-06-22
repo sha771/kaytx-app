@@ -1932,7 +1932,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#00BCD4",
-    "route": "/ai-agent/customer-experience/neural-customer-intelligence-hub",
+    "route": "/ai-agent/customer/neural-customer-intelligence-hub",
     "subAgents": [
       {
         "id": "ai-neural-customer-intelligence-hub-sub-0",
@@ -2000,7 +2000,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#00BCD4",
-    "route": "/ai-agent/customer-experience/predictive-customer-journey-mapper",
+    "route": "/ai-agent/customer/predictive-customer-journey-mapper",
     "subAgents": [
       {
         "id": "ai-predictive-customer-journey-mapper-sub-0",
@@ -2068,7 +2068,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#00BCD4",
-    "route": "/ai-agent/customer-experience/real-time-personalization-engine",
+    "route": "/ai-agent/customer/real-time-personalization-engine",
     "subAgents": [
       {
         "id": "ai-real-time-personalization-engine-sub-0",
@@ -2136,7 +2136,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#00BCD4",
-    "route": "/ai-agent/customer-experience/cognitive-sentiment-analyzer",
+    "route": "/ai-agent/customer/cognitive-sentiment-analyzer",
     "subAgents": [
       {
         "id": "ai-cognitive-sentiment-analyzer-sub-0",
@@ -2204,7 +2204,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#00BCD4",
-    "route": "/ai-agent/customer-experience/adaptive-retention-predictor",
+    "route": "/ai-agent/customer/adaptive-retention-predictor",
     "subAgents": [
       {
         "id": "ai-adaptive-retention-predictor-sub-0",
@@ -2272,7 +2272,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#00BCD4",
-    "route": "/ai-agent/customer-experience/neural-loyalty-optimizer",
+    "route": "/ai-agent/customer/neural-loyalty-optimizer",
     "subAgents": [
       {
         "id": "ai-neural-loyalty-optimizer-sub-0",
@@ -2340,7 +2340,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#00BCD4",
-    "route": "/ai-agent/customer-experience/intelligent-customer-success-platform",
+    "route": "/ai-agent/customer/intelligent-customer-success-platform",
     "subAgents": [
       {
         "id": "ai-intelligent-customer-success-platform-sub-0",
@@ -2408,7 +2408,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#00BCD4",
-    "route": "/ai-agent/customer-experience/automated-engagement-scorer",
+    "route": "/ai-agent/customer/automated-engagement-scorer",
     "subAgents": [
       {
         "id": "ai-automated-engagement-scorer-sub-0",
@@ -2476,7 +2476,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#00BCD4",
-    "route": "/ai-agent/customer-experience/deep-learning-support-resolver",
+    "route": "/ai-agent/customer/deep-learning-support-resolver",
     "subAgents": [
       {
         "id": "ai-deep-learning-support-resolver-sub-0",
@@ -2544,7 +2544,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#00BCD4",
-    "route": "/ai-agent/customer-experience/predictive-churn-prevention",
+    "route": "/ai-agent/customer/predictive-churn-prevention",
     "subAgents": [
       {
         "id": "ai-predictive-churn-prevention-sub-0",
@@ -2612,7 +2612,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#00BCD4",
-    "route": "/ai-agent/customer-experience/neural-experience-orchestrator",
+    "route": "/ai-agent/customer/neural-experience-orchestrator",
     "subAgents": [
       {
         "id": "ai-neural-experience-orchestrator-sub-0",
@@ -2680,7 +2680,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#00BCD4",
-    "route": "/ai-agent/customer-experience/real-time-feedback-analyzer",
+    "route": "/ai-agent/customer/real-time-feedback-analyzer",
     "subAgents": [
       {
         "id": "ai-real-time-feedback-analyzer-sub-0",
@@ -2748,7 +2748,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#00BCD4",
-    "route": "/ai-agent/customer-experience/cognitive-ticket-classifier",
+    "route": "/ai-agent/customer/cognitive-ticket-classifier",
     "subAgents": [
       {
         "id": "ai-cognitive-ticket-classifier-sub-0",
@@ -2816,7 +2816,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#00BCD4",
-    "route": "/ai-agent/customer-experience/automated-quality-assurance",
+    "route": "/ai-agent/customer/automated-quality-assurance",
     "subAgents": [
       {
         "id": "ai-automated-quality-assurance-sub-0",
@@ -2884,7 +2884,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#00BCD4",
-    "route": "/ai-agent/customer-experience/intelligent-knowledge-base",
+    "route": "/ai-agent/customer/intelligent-knowledge-base",
     "subAgents": [
       {
         "id": "ai-intelligent-knowledge-base-sub-0",
@@ -2952,7 +2952,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#00BCD4",
-    "route": "/ai-agent/customer-experience/neural-routing-engine",
+    "route": "/ai-agent/customer/neural-routing-engine",
     "subAgents": [
       {
         "id": "ai-neural-routing-engine-sub-0",
@@ -3020,7 +3020,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#00BCD4",
-    "route": "/ai-agent/customer-experience/adaptive-self-service",
+    "route": "/ai-agent/customer/adaptive-self-service",
     "subAgents": [
       {
         "id": "ai-adaptive-self-service-sub-0",
@@ -3088,7 +3088,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#00BCD4",
-    "route": "/ai-agent/customer-experience/predictive-customer-lifetime-value",
+    "route": "/ai-agent/customer/predictive-customer-lifetime-value",
     "subAgents": [
       {
         "id": "ai-predictive-customer-lifetime-value-sub-0",
@@ -3156,7 +3156,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#00BCD4",
-    "route": "/ai-agent/customer-experience/real-time-behavioral-analytics",
+    "route": "/ai-agent/customer/real-time-behavioral-analytics",
     "subAgents": [
       {
         "id": "ai-real-time-behavioral-analytics-sub-0",
@@ -3224,7 +3224,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#00BCD4",
-    "route": "/ai-agent/customer-experience/cognitive-voice-of-customer",
+    "route": "/ai-agent/customer/cognitive-voice-of-customer",
     "subAgents": [
       {
         "id": "ai-cognitive-voice-of-customer-sub-0",
@@ -3292,7 +3292,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#00BCD4",
-    "route": "/ai-agent/customer-experience/automated-campaign-optimizer",
+    "route": "/ai-agent/customer/automated-campaign-optimizer",
     "subAgents": [
       {
         "id": "ai-automated-campaign-optimizer-sub-0",
@@ -8800,7 +8800,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#1565C0",
-    "route": "/ai-agent/technology-and-engineering/neural-technology-intelligence-hub",
+    "route": "/ai-agent/technologynology-and-engineering/neural-technology-intelligence-hub",
     "subAgents": [
       {
         "id": "ai-neural-technology-intelligence-hub-sub-0",
@@ -8868,7 +8868,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#1565C0",
-    "route": "/ai-agent/technology-and-engineering/predictive-system-architect",
+    "route": "/ai-agent/technologynology-and-engineering/predictive-system-architect",
     "subAgents": [
       {
         "id": "ai-predictive-system-architect-sub-0",
@@ -8936,7 +8936,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#1565C0",
-    "route": "/ai-agent/technology-and-engineering/real-time-performance-monitor",
+    "route": "/ai-agent/technologynology-and-engineering/real-time-performance-monitor",
     "subAgents": [
       {
         "id": "ai-real-time-performance-monitor-sub-0",
@@ -9004,7 +9004,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#1565C0",
-    "route": "/ai-agent/technology-and-engineering/cognitive-devops-orchestrator",
+    "route": "/ai-agent/technologynology-and-engineering/cognitive-devops-orchestrator",
     "subAgents": [
       {
         "id": "ai-cognitive-devops-orchestrator-sub-0",
@@ -9072,7 +9072,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#1565C0",
-    "route": "/ai-agent/technology-and-engineering/adaptive-security-engineer",
+    "route": "/ai-agent/technologynology-and-engineering/adaptive-security-engineer",
     "subAgents": [
       {
         "id": "ai-adaptive-security-engineer-sub-0",
@@ -9140,7 +9140,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#1565C0",
-    "route": "/ai-agent/technology-and-engineering/intelligent-cloud-architect",
+    "route": "/ai-agent/technologynology-and-engineering/intelligent-cloud-architect",
     "subAgents": [
       {
         "id": "ai-intelligent-cloud-architect-sub-0",
@@ -9208,7 +9208,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#1565C0",
-    "route": "/ai-agent/technology-and-engineering/neural-ml-platform-manager",
+    "route": "/ai-agent/technologynology-and-engineering/neural-ml-platform-manager",
     "subAgents": [
       {
         "id": "ai-neural-ml-platform-manager-sub-0",
@@ -9276,7 +9276,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#1565C0",
-    "route": "/ai-agent/technology-and-engineering/predictive-capacity-planner",
+    "route": "/ai-agent/technologynology-and-engineering/predictive-capacity-planner",
     "subAgents": [
       {
         "id": "ai-predictive-capacity-planner-sub-0",
@@ -9344,7 +9344,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#1565C0",
-    "route": "/ai-agent/technology-and-engineering/real-time-incident-responder",
+    "route": "/ai-agent/technologynology-and-engineering/real-time-incident-responder",
     "subAgents": [
       {
         "id": "ai-real-time-incident-responder-sub-0",
@@ -9412,7 +9412,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#1565C0",
-    "route": "/ai-agent/technology-and-engineering/cognitive-code-reviewer",
+    "route": "/ai-agent/technologynology-and-engineering/cognitive-code-reviewer",
     "subAgents": [
       {
         "id": "ai-cognitive-code-reviewer-sub-0",
@@ -9480,7 +9480,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#1565C0",
-    "route": "/ai-agent/technology-and-engineering/automated-testing-platform",
+    "route": "/ai-agent/technologynology-and-engineering/automated-testing-platform",
     "subAgents": [
       {
         "id": "ai-automated-testing-platform-sub-0",
@@ -9548,7 +9548,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#1565C0",
-    "route": "/ai-agent/technology-and-engineering/neural-database-optimizer",
+    "route": "/ai-agent/technologynology-and-engineering/neural-database-optimizer",
     "subAgents": [
       {
         "id": "ai-neural-database-optimizer-sub-0",
@@ -9616,7 +9616,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#1565C0",
-    "route": "/ai-agent/technology-and-engineering/adaptive-network-engineer",
+    "route": "/ai-agent/technologynology-and-engineering/adaptive-network-engineer",
     "subAgents": [
       {
         "id": "ai-adaptive-network-engineer-sub-0",
@@ -9684,7 +9684,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#1565C0",
-    "route": "/ai-agent/technology-and-engineering/intelligent-api-gateway",
+    "route": "/ai-agent/technologynology-and-engineering/intelligent-api-gateway",
     "subAgents": [
       {
         "id": "ai-intelligent-api-gateway-sub-0",
@@ -9752,7 +9752,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#1565C0",
-    "route": "/ai-agent/technology-and-engineering/predictive-failure-predictor",
+    "route": "/ai-agent/technologynology-and-engineering/predictive-failure-predictor",
     "subAgents": [
       {
         "id": "ai-predictive-failure-predictor-sub-0",
@@ -9820,7 +9820,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#1565C0",
-    "route": "/ai-agent/technology-and-engineering/real-time-log-analyzer",
+    "route": "/ai-agent/technologynology-and-engineering/real-time-log-analyzer",
     "subAgents": [
       {
         "id": "ai-real-time-log-analyzer-sub-0",
@@ -9888,7 +9888,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#1565C0",
-    "route": "/ai-agent/technology-and-engineering/cognitive-container-orchestrator",
+    "route": "/ai-agent/technologynology-and-engineering/cognitive-container-orchestrator",
     "subAgents": [
       {
         "id": "ai-cognitive-container-orchestrator-sub-0",
@@ -9956,7 +9956,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#1565C0",
-    "route": "/ai-agent/technology-and-engineering/automated-deployment-system",
+    "route": "/ai-agent/technologynology-and-engineering/automated-deployment-system",
     "subAgents": [
       {
         "id": "ai-automated-deployment-system-sub-0",
@@ -10024,7 +10024,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#1565C0",
-    "route": "/ai-agent/technology-and-engineering/neural-microservices-architect",
+    "route": "/ai-agent/technologynology-and-engineering/neural-microservices-architect",
     "subAgents": [
       {
         "id": "ai-neural-microservices-architect-sub-0",
@@ -10092,7 +10092,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#1565C0",
-    "route": "/ai-agent/technology-and-engineering/adaptive-sre-platform",
+    "route": "/ai-agent/technologynology-and-engineering/adaptive-sre-platform",
     "subAgents": [
       {
         "id": "ai-adaptive-sre-platform-sub-0",
@@ -10160,7 +10160,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#9C27B0",
-    "route": "/ai-agent/human-resources/neural-hr-intelligence-hub",
+    "route": "/ai-agent/hr/neural-hr-intelligence-hub",
     "subAgents": [
       {
         "id": "ai-neural-hr-intelligence-hub-sub-0",
@@ -10228,7 +10228,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#9C27B0",
-    "route": "/ai-agent/human-resources/predictive-talent-acquisition",
+    "route": "/ai-agent/hr/predictive-talent-acquisition",
     "subAgents": [
       {
         "id": "ai-predictive-talent-acquisition-sub-0",
@@ -10296,7 +10296,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#9C27B0",
-    "route": "/ai-agent/human-resources/real-time-employee-engagement",
+    "route": "/ai-agent/hr/real-time-employee-engagement",
     "subAgents": [
       {
         "id": "ai-real-time-employee-engagement-sub-0",
@@ -10364,7 +10364,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#9C27B0",
-    "route": "/ai-agent/human-resources/cognitive-learning-platform",
+    "route": "/ai-agent/hr/cognitive-learning-platform",
     "subAgents": [
       {
         "id": "ai-cognitive-learning-platform-sub-0",
@@ -10432,7 +10432,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#9C27B0",
-    "route": "/ai-agent/human-resources/adaptive-compensation-manager",
+    "route": "/ai-agent/hr/adaptive-compensation-manager",
     "subAgents": [
       {
         "id": "ai-adaptive-compensation-manager-sub-0",
@@ -10500,7 +10500,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#9C27B0",
-    "route": "/ai-agent/human-resources/intelligent-performance-analyzer",
+    "route": "/ai-agent/hr/intelligent-performance-analyzer",
     "subAgents": [
       {
         "id": "ai-intelligent-performance-analyzer-sub-0",
@@ -10568,7 +10568,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#9C27B0",
-    "route": "/ai-agent/human-resources/neural-diversity-monitor",
+    "route": "/ai-agent/hr/neural-diversity-monitor",
     "subAgents": [
       {
         "id": "ai-neural-diversity-monitor-sub-0",
@@ -10636,7 +10636,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#9C27B0",
-    "route": "/ai-agent/human-resources/predictive-retention-model",
+    "route": "/ai-agent/hr/predictive-retention-model",
     "subAgents": [
       {
         "id": "ai-predictive-retention-model-sub-0",
@@ -10704,7 +10704,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#9C27B0",
-    "route": "/ai-agent/human-resources/real-time-skill-analyzer",
+    "route": "/ai-agent/hr/real-time-skill-analyzer",
     "subAgents": [
       {
         "id": "ai-real-time-skill-analyzer-sub-0",
@@ -10772,7 +10772,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#9C27B0",
-    "route": "/ai-agent/human-resources/cognitive-career-path-advisor",
+    "route": "/ai-agent/hr/cognitive-career-path-advisor",
     "subAgents": [
       {
         "id": "ai-cognitive-career-path-advisor-sub-0",
@@ -10840,7 +10840,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#9C27B0",
-    "route": "/ai-agent/human-resources/automated-recruiting-platform",
+    "route": "/ai-agent/hr/automated-recruiting-platform",
     "subAgents": [
       {
         "id": "ai-automated-recruiting-platform-sub-0",
@@ -10908,7 +10908,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#9C27B0",
-    "route": "/ai-agent/human-resources/neural-onboarding-orchestrator",
+    "route": "/ai-agent/hr/neural-onboarding-orchestrator",
     "subAgents": [
       {
         "id": "ai-neural-onboarding-orchestrator-sub-0",
@@ -10976,7 +10976,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#9C27B0",
-    "route": "/ai-agent/human-resources/adaptive-wellness-coach",
+    "route": "/ai-agent/hr/adaptive-wellness-coach",
     "subAgents": [
       {
         "id": "ai-adaptive-wellness-coach-sub-0",
@@ -11044,7 +11044,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#9C27B0",
-    "route": "/ai-agent/human-resources/intelligent-benefits-optimizer",
+    "route": "/ai-agent/hr/intelligent-benefits-optimizer",
     "subAgents": [
       {
         "id": "ai-intelligent-benefits-optimizer-sub-0",
@@ -11112,7 +11112,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#9C27B0",
-    "route": "/ai-agent/human-resources/predictive-succession-planner",
+    "route": "/ai-agent/hr/predictive-succession-planner",
     "subAgents": [
       {
         "id": "ai-predictive-succession-planner-sub-0",
@@ -11180,7 +11180,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#9C27B0",
-    "route": "/ai-agent/human-resources/real-time-feedback-analyzer",
+    "route": "/ai-agent/hr/real-time-feedback-analyzer",
     "subAgents": [
       {
         "id": "ai-real-time-feedback-analyzer-sub-0",
@@ -11248,7 +11248,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#9C27B0",
-    "route": "/ai-agent/human-resources/cognitive-culture-monitor",
+    "route": "/ai-agent/hr/cognitive-culture-monitor",
     "subAgents": [
       {
         "id": "ai-cognitive-culture-monitor-sub-0",
@@ -11316,7 +11316,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#9C27B0",
-    "route": "/ai-agent/human-resources/automated-compliance-tracker",
+    "route": "/ai-agent/hr/automated-compliance-tracker",
     "subAgents": [
       {
         "id": "ai-automated-compliance-tracker-sub-0",
@@ -11384,7 +11384,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#9C27B0",
-    "route": "/ai-agent/human-resources/neural-workforce-planner",
+    "route": "/ai-agent/hr/neural-workforce-planner",
     "subAgents": [
       {
         "id": "ai-neural-workforce-planner-sub-0",
@@ -11452,7 +11452,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#9C27B0",
-    "route": "/ai-agent/human-resources/adaptive-hr-analytics",
+    "route": "/ai-agent/hr/adaptive-hr-analytics",
     "subAgents": [
       {
         "id": "ai-adaptive-hr-analytics-sub-0",
@@ -14240,7 +14240,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#FF5722",
-    "route": "/ai-agent/product-management/neural-product-intelligence-hub",
+    "route": "/ai-agent/product/neural-product-intelligence-hub",
     "subAgents": [
       {
         "id": "ai-neural-product-intelligence-hub-sub-0",
@@ -14308,7 +14308,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#FF5722",
-    "route": "/ai-agent/product-management/predictive-market-analyzer",
+    "route": "/ai-agent/product/predictive-market-analyzer",
     "subAgents": [
       {
         "id": "ai-predictive-market-analyzer-sub-0",
@@ -14376,7 +14376,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#FF5722",
-    "route": "/ai-agent/product-management/real-time-user-feedback",
+    "route": "/ai-agent/product/real-time-user-feedback",
     "subAgents": [
       {
         "id": "ai-real-time-user-feedback-sub-0",
@@ -14444,7 +14444,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#FF5722",
-    "route": "/ai-agent/product-management/cognitive-roadmap-optimizer",
+    "route": "/ai-agent/product/cognitive-roadmap-optimizer",
     "subAgents": [
       {
         "id": "ai-cognitive-roadmap-optimizer-sub-0",
@@ -14512,7 +14512,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#FF5722",
-    "route": "/ai-agent/product-management/adaptive-feature-prioritizer",
+    "route": "/ai-agent/product/adaptive-feature-prioritizer",
     "subAgents": [
       {
         "id": "ai-adaptive-feature-prioritizer-sub-0",
@@ -14580,7 +14580,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#FF5722",
-    "route": "/ai-agent/product-management/intelligent-user-researcher",
+    "route": "/ai-agent/product/intelligent-user-researcher",
     "subAgents": [
       {
         "id": "ai-intelligent-user-researcher-sub-0",
@@ -14648,7 +14648,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#FF5722",
-    "route": "/ai-agent/product-management/neural-growth-engine",
+    "route": "/ai-agent/product/neural-growth-engine",
     "subAgents": [
       {
         "id": "ai-neural-growth-engine-sub-0",
@@ -14716,7 +14716,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#FF5722",
-    "route": "/ai-agent/product-management/predictive-churn-analyzer",
+    "route": "/ai-agent/product/predictive-churn-analyzer",
     "subAgents": [
       {
         "id": "ai-predictive-churn-analyzer-sub-0",
@@ -14784,7 +14784,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#FF5722",
-    "route": "/ai-agent/product-management/real-time-experimentation-platform",
+    "route": "/ai-agent/product/real-time-experimentation-platform",
     "subAgents": [
       {
         "id": "ai-real-time-experimentation-platform-sub-0",
@@ -14852,7 +14852,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#FF5722",
-    "route": "/ai-agent/product-management/cognitive-design-system",
+    "route": "/ai-agent/product/cognitive-design-system",
     "subAgents": [
       {
         "id": "ai-cognitive-design-system-sub-0",
@@ -14920,7 +14920,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#FF5722",
-    "route": "/ai-agent/product-management/automated-user-testing",
+    "route": "/ai-agent/product/automated-user-testing",
     "subAgents": [
       {
         "id": "ai-automated-user-testing-sub-0",
@@ -14988,7 +14988,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#FF5722",
-    "route": "/ai-agent/product-management/neural-product-analytics",
+    "route": "/ai-agent/product/neural-product-analytics",
     "subAgents": [
       {
         "id": "ai-neural-product-analytics-sub-0",
@@ -15056,7 +15056,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#FF5722",
-    "route": "/ai-agent/product-management/adaptive-pricing-engine",
+    "route": "/ai-agent/product/adaptive-pricing-engine",
     "subAgents": [
       {
         "id": "ai-adaptive-pricing-engine-sub-0",
@@ -15124,7 +15124,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#FF5722",
-    "route": "/ai-agent/product-management/intelligent-competitive-intelligence",
+    "route": "/ai-agent/product/intelligent-competitive-intelligence",
     "subAgents": [
       {
         "id": "ai-intelligent-competitive-intelligence-sub-0",
@@ -15192,7 +15192,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#FF5722",
-    "route": "/ai-agent/product-management/predictive-success-metric",
+    "route": "/ai-agent/product/predictive-success-metric",
     "subAgents": [
       {
         "id": "ai-predictive-success-metric-sub-0",
@@ -15260,7 +15260,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#FF5722",
-    "route": "/ai-agent/product-management/real-time-adoption-tracker",
+    "route": "/ai-agent/product/real-time-adoption-tracker",
     "subAgents": [
       {
         "id": "ai-real-time-adoption-tracker-sub-0",
@@ -15328,7 +15328,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#FF5722",
-    "route": "/ai-agent/product-management/cognitive-backlog-manager",
+    "route": "/ai-agent/product/cognitive-backlog-manager",
     "subAgents": [
       {
         "id": "ai-cognitive-backlog-manager-sub-0",
@@ -15396,7 +15396,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#FF5722",
-    "route": "/ai-agent/product-management/automated-release-coordinator",
+    "route": "/ai-agent/product/automated-release-coordinator",
     "subAgents": [
       {
         "id": "ai-automated-release-coordinator-sub-0",
@@ -15464,7 +15464,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#FF5722",
-    "route": "/ai-agent/product-management/neural-innovation-engine",
+    "route": "/ai-agent/product/neural-innovation-engine",
     "subAgents": [
       {
         "id": "ai-neural-innovation-engine-sub-0",
@@ -15532,7 +15532,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#FF5722",
-    "route": "/ai-agent/product-management/adaptive-product-operations",
+    "route": "/ai-agent/product/adaptive-product-operations",
     "subAgents": [
       {
         "id": "ai-adaptive-product-operations-sub-0",
@@ -18592,7 +18592,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#795548",
-    "route": "/ai-agent/administrative/neural-administrative-intelligence-hub",
+    "route": "/ai-agent/admin/neural-administrative-intelligence-hub",
     "subAgents": [
       {
         "id": "ai-neural-administrative-intelligence-hub-sub-0",
@@ -18660,7 +18660,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#795548",
-    "route": "/ai-agent/administrative/cognitive-administrative-intelligence-hub",
+    "route": "/ai-agent/admin/cognitive-administrative-intelligence-hub",
     "subAgents": [
       {
         "id": "ai-cognitive-administrative-intelligence-hub-sub-0",
@@ -18728,7 +18728,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#795548",
-    "route": "/ai-agent/administrative/quantum-administrative-intelligence-hub",
+    "route": "/ai-agent/admin/quantum-administrative-intelligence-hub",
     "subAgents": [
       {
         "id": "ai-quantum-administrative-intelligence-hub-sub-0",
@@ -18796,7 +18796,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#795548",
-    "route": "/ai-agent/administrative/autonomous-administrative-intelligence-hub",
+    "route": "/ai-agent/admin/autonomous-administrative-intelligence-hub",
     "subAgents": [
       {
         "id": "ai-autonomous-administrative-intelligence-hub-sub-0",
@@ -18864,7 +18864,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#795548",
-    "route": "/ai-agent/administrative/generative-administrative-intelligence-hub",
+    "route": "/ai-agent/admin/generative-administrative-intelligence-hub",
     "subAgents": [
       {
         "id": "ai-generative-administrative-intelligence-hub-sub-0",
@@ -18932,7 +18932,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#795548",
-    "route": "/ai-agent/administrative/adaptive-administrative-intelligence-hub",
+    "route": "/ai-agent/admin/adaptive-administrative-intelligence-hub",
     "subAgents": [
       {
         "id": "ai-adaptive-administrative-intelligence-hub-sub-0",
@@ -19000,7 +19000,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#795548",
-    "route": "/ai-agent/administrative/predictive-administrative-intelligence-hub",
+    "route": "/ai-agent/admin/predictive-administrative-intelligence-hub",
     "subAgents": [
       {
         "id": "ai-predictive-administrative-intelligence-hub-sub-0",
@@ -19068,7 +19068,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#795548",
-    "route": "/ai-agent/administrative/real-time-administrative-intelligence-hub",
+    "route": "/ai-agent/admin/real-time-administrative-intelligence-hub",
     "subAgents": [
       {
         "id": "ai-real-time-administrative-intelligence-hub-sub-0",
@@ -19136,7 +19136,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#795548",
-    "route": "/ai-agent/administrative/intelligent-intelligence-hub",
+    "route": "/ai-agent/admin/intelligent-intelligence-hub",
     "subAgents": [
       {
         "id": "ai-intelligent-intelligence-hub-sub-0",
@@ -19204,7 +19204,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#795548",
-    "route": "/ai-agent/administrative/automated-intelligence-hub",
+    "route": "/ai-agent/admin/automated-intelligence-hub",
     "subAgents": [
       {
         "id": "ai-automated-intelligence-hub-sub-0",
@@ -19272,7 +19272,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#795548",
-    "route": "/ai-agent/administrative/deep-learning-intelligence-hub",
+    "route": "/ai-agent/admin/deep-learning-intelligence-hub",
     "subAgents": [
       {
         "id": "ai-deep-learning-intelligence-hub-sub-0",
@@ -19340,7 +19340,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#795548",
-    "route": "/ai-agent/administrative/self-learning-intelligence-hub",
+    "route": "/ai-agent/admin/self-learning-intelligence-hub",
     "subAgents": [
       {
         "id": "ai-self-learning-intelligence-hub-sub-0",
@@ -19408,7 +19408,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#795548",
-    "route": "/ai-agent/administrative/distributed-intelligence-hub",
+    "route": "/ai-agent/admin/distributed-intelligence-hub",
     "subAgents": [
       {
         "id": "ai-distributed-intelligence-hub-sub-0",
@@ -19476,7 +19476,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#795548",
-    "route": "/ai-agent/administrative/cloud-native-intelligence-hub",
+    "route": "/ai-agent/admin/cloud-native-intelligence-hub",
     "subAgents": [
       {
         "id": "ai-cloud-native-intelligence-hub-sub-0",
@@ -19544,7 +19544,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#795548",
-    "route": "/ai-agent/administrative/smart-administrative-intelligence-hub",
+    "route": "/ai-agent/admin/smart-administrative-intelligence-hub",
     "subAgents": [
       {
         "id": "ai-smart-administrative-intelligence-hub-sub-0",
@@ -19612,7 +19612,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#795548",
-    "route": "/ai-agent/administrative/neural-administrative-manager",
+    "route": "/ai-agent/admin/neural-administrative-manager",
     "subAgents": [
       {
         "id": "ai-neural-administrative-manager-sub-0",
@@ -19680,7 +19680,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#795548",
-    "route": "/ai-agent/administrative/cognitive-administrative-manager",
+    "route": "/ai-agent/admin/cognitive-administrative-manager",
     "subAgents": [
       {
         "id": "ai-cognitive-administrative-manager-sub-0",
@@ -19748,7 +19748,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#795548",
-    "route": "/ai-agent/administrative/quantum-administrative-manager",
+    "route": "/ai-agent/admin/quantum-administrative-manager",
     "subAgents": [
       {
         "id": "ai-quantum-administrative-manager-sub-0",
@@ -19816,7 +19816,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#795548",
-    "route": "/ai-agent/administrative/autonomous-administrative-manager",
+    "route": "/ai-agent/admin/autonomous-administrative-manager",
     "subAgents": [
       {
         "id": "ai-autonomous-administrative-manager-sub-0",
@@ -19884,7 +19884,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#795548",
-    "route": "/ai-agent/administrative/generative-administrative-manager",
+    "route": "/ai-agent/admin/generative-administrative-manager",
     "subAgents": [
       {
         "id": "ai-generative-administrative-manager-sub-0",
@@ -19952,7 +19952,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#795548",
-    "route": "/ai-agent/administrative/adaptive-administrative-manager",
+    "route": "/ai-agent/admin/adaptive-administrative-manager",
     "subAgents": [
       {
         "id": "ai-adaptive-administrative-manager-sub-0",
@@ -20020,7 +20020,7 @@ export const allAgents: MainAgent[] = [
     ],
     "icon": "Brain",
     "color": "#795548",
-    "route": "/ai-agent/administrative/predictive-administrative-manager",
+    "route": "/ai-agent/admin/predictive-administrative-manager",
     "subAgents": [
       {
         "id": "ai-predictive-administrative-manager-sub-0",

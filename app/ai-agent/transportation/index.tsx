@@ -66,13 +66,24 @@ const agents = [
   { id: 'ai-service-level-analyst', uid: 'ktx-19-service-level-analyst', title: 'AI Service Level Analyst', route: '/ai-agent/transportation/service-level-analyst', color: '#26A69A', level: 'team_lead', efficiency: '84%' },
   { id: 'ai-customer-service-transport', uid: 'ktx-19-customer-service-transport', title: 'AI Customer Service Transport', route: '/ai-agent/transportation/customer-service-transport', color: '#26A69A', level: 'team_lead', efficiency: '88%' },
   { id: 'ai-claims-specialist', uid: 'ktx-19-claims-specialist', title: 'AI Claims Specialist', route: '/ai-agent/transportation/claims-specialist', color: '#26A69A', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-logistics-director-1', uid: 'ktx-19-logistics-director-1', title: 'AI Logistics Director I', route: '/ai-agent/transportation/logistics-director-1', color: '#26A69A', level: 'vp_director', efficiency: '94%' },
+  { id: 'ai-logistics-director-2', uid: 'ktx-19-logistics-director-2', title: 'AI Logistics Director II', route: '/ai-agent/transportation/logistics-director-2', color: '#26A69A', level: 'vp_director', efficiency: '95%' },
+  { id: 'ai-fleet-director-1', uid: 'ktx-19-fleet-director-1', title: 'AI Fleet Director I', route: '/ai-agent/transportation/fleet-director-1', color: '#26A69A', level: 'vp_director', efficiency: '92%' },
+  { id: 'ai-fleet-director-2', uid: 'ktx-19-fleet-director-2', title: 'AI Fleet Director II', route: '/ai-agent/transportation/fleet-director-2', color: '#26A69A', level: 'vp_director', efficiency: '93%' },
+  { id: 'ai-route-optimization-manager-1', uid: 'ktx-19-route-optimization-manager-1', title: 'AI Route Optimization Manager I', route: '/ai-agent/transportation/route-optimization-manager-1', color: '#26A69A', level: 'manager', efficiency: '91%' },
+  { id: 'ai-route-optimization-manager-2', uid: 'ktx-19-route-optimization-manager-2', title: 'AI Route Optimization Manager II', route: '/ai-agent/transportation/route-optimization-manager-2', color: '#26A69A', level: 'manager', efficiency: '92%' },
+  { id: 'ai-transportation-analyst-1', uid: 'ktx-19-transportation-analyst-1', title: 'AI Transportation Analyst I', route: '/ai-agent/transportation/transportation-analyst-1', color: '#26A69A', level: 'team_lead', efficiency: '89%' },
+  { id: 'ai-transportation-analyst-2', uid: 'ktx-19-transportation-analyst-2', title: 'AI Transportation Analyst II', route: '/ai-agent/transportation/transportation-analyst-2', color: '#26A69A', level: 'team_lead', efficiency: '90%' },
+  { id: 'ai-transportation-analyst-3', uid: 'ktx-19-transportation-analyst-3', title: 'AI Transportation Analyst III', route: '/ai-agent/transportation/transportation-analyst-3', color: '#26A69A', level: 'team_lead', efficiency: '91%' },
+  { id: 'ai-compliance-manager-1', uid: 'ktx-19-compliance-manager-1', title: 'AI Compliance Manager I', route: '/ai-agent/transportation/compliance-manager-1', color: '#26A69A', level: 'manager', efficiency: '90%' },
+  { id: 'ai-compliance-manager-2', uid: 'ktx-19-compliance-manager-2', title: 'AI Compliance Manager II', route: '/ai-agent/transportation/compliance-manager-2', color: '#26A69A', level: 'manager', efficiency: '91%' },
 ];
 export default function DepartmentIndex() {
   const router = useRouter();
   return (
     <ScrollView style={s.container}>
       <Text style={s.title}>Transportation & Logistics - AI Agents</Text>
-      <Text style={s.sub}>60 AI Agents & Employees</Text>
+      <Text style={s.sub}>120 AI Agents & Employees</Text>
       <View style={s.grid}>
         {agents.map((a) => (
           <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>

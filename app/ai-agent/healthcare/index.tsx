@@ -62,13 +62,21 @@ const agents = [
   { id: 'ai-pharmacy-technician', uid: 'ktx-17-pharmacy-technician', title: 'AI Pharmacy Technician', route: '/ai-agent/healthcare/pharmacy-technician', color: '#EC407A', level: 'team_lead', efficiency: '85%' },
   { id: 'ai-medication-reconciliation-specialist', uid: 'ktx-17-medication-reconciliation-specialist', title: 'AI Medication Reconciliation Specialist', route: '/ai-agent/healthcare/medication-reconciliation-specialist', color: '#EC407A', level: 'team_lead', efficiency: '87%' },
   { id: 'ai-drug-interaction-specialist', uid: 'ktx-17-drug-interaction-specialist', title: 'AI Drug Interaction Specialist', route: '/ai-agent/healthcare/drug-interaction-specialist', color: '#EC407A', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-healthcare-operations-manager-1', uid: 'ktx-17-healthcare-operations-manager-1', title: 'AI Healthcare Operations Manager I', route: '/ai-agent/healthcare/healthcare-operations-manager-1', color: '#EC407A', level: 'manager', efficiency: '90%' },
+  { id: 'ai-healthcare-operations-manager-2', uid: 'ktx-17-healthcare-operations-manager-2', title: 'AI Healthcare Operations Manager II', route: '/ai-agent/healthcare/healthcare-operations-manager-2', color: '#EC407A', level: 'manager', efficiency: '91%' },
+  { id: 'ai-healthcare-quality-director-1', uid: 'ktx-17-healthcare-quality-director-1', title: 'AI Healthcare Quality Director I', route: '/ai-agent/healthcare/healthcare-quality-director-1', color: '#EC407A', level: 'vp_director', efficiency: '92%' },
+  { id: 'ai-healthcare-quality-director-2', uid: 'ktx-17-healthcare-quality-director-2', title: 'AI Healthcare Quality Director II', route: '/ai-agent/healthcare/healthcare-quality-director-2', color: '#EC407A', level: 'vp_director', efficiency: '93%' },
+  { id: 'ai-healthcare-safety-specialist-1', uid: 'ktx-17-healthcare-safety-specialist-1', title: 'AI Healthcare Safety Specialist I', route: '/ai-agent/healthcare/healthcare-safety-specialist-1', color: '#EC407A', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-healthcare-safety-specialist-2', uid: 'ktx-17-healthcare-safety-specialist-2', title: 'AI Healthcare Safety Specialist II', route: '/ai-agent/healthcare/healthcare-safety-specialist-2', color: '#EC407A', level: 'team_lead', efficiency: '89%' },
+  { id: 'ai-healthcare-analytics-manager-1', uid: 'ktx-17-healthcare-analytics-manager-1', title: 'AI Healthcare Analytics Manager I', route: '/ai-agent/healthcare/healthcare-analytics-manager-1', color: '#EC407A', level: 'manager', efficiency: '94%' },
+  { id: 'ai-healthcare-analytics-manager-2', uid: 'ktx-17-healthcare-analytics-manager-2', title: 'AI Healthcare Analytics Manager II', route: '/ai-agent/healthcare/healthcare-analytics-manager-2', color: '#EC407A', level: 'manager', efficiency: '95%' },
 ];
 export default function DepartmentIndex() {
   const router = useRouter();
   return (
     <ScrollView style={s.container}>
       <Text style={s.title}>Healthcare & Medical - AI Agents</Text>
-      <Text style={s.sub}>60 AI Agents & Employees</Text>
+      <Text style={s.sub}>120 AI Agents & Employees</Text>
       <View style={s.grid}>
         {agents.map((a) => (
           <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>

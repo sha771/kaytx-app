@@ -16,9 +16,9 @@ export default function AgentPage() {
     efficiency: '87% efficiency',
     replacesRole: 'AI Data Engineer',
     subAgents: [
-      { id: 'ai-vulnerability-scanner', uid: 'ktx-06-vulnerability-scanner', name: 'AI Vulnerability Scanner', title: 'AI Vulnerability Scanner', route: '/ai-agent/technology/vulnerability-scanner' },
-      { id: 'ai-component-builder', uid: 'ktx-06-component-builder', name: 'AI Component Builder', title: 'AI Component Builder', route: '/ai-agent/technology/component-builder' },
-      { id: 'ai-pen-test-script-writer', uid: 'ktx-06-pen-test-script-writer', name: 'AI Pen-test Script Writer', title: 'AI Pen-test Script Writer', route: '/ai-agent/technology/pen-test-script-writer' }
+      { id: 'ai-vulnerability-scanner', uid: 'ktx-06-vulnerability-scanner', name: 'AI Vulnerability Scanner', title: 'AI Vulnerability Scanner', route: '/ai-agent/technologynology/vulnerability-scanner' },
+      { id: 'ai-component-builder', uid: 'ktx-06-component-builder', name: 'AI Component Builder', title: 'AI Component Builder', route: '/ai-agent/technologynology/component-builder' },
+      { id: 'ai-pen-test-script-writer', uid: 'ktx-06-pen-test-script-writer', name: 'AI Pen-test Script Writer', title: 'AI Pen-test Script Writer', route: '/ai-agent/technologynology/pen-test-script-writer' }
     ],
     infrastructure: {
       status: 'online',
