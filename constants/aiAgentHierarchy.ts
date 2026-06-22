@@ -10,6 +10,7 @@ import type { AIEmployee } from './aiEmployeesEnhanced';
 import { enhanceAllAIAgents } from './utils/agent-capability-enhancer';
 import {
   Settings, Zap, MessagesSquare, Target, Megaphone, Crown, Shield, ChartBarBig,
+  Briefcase, Video,
 } from 'lucide-react-native';
 import {
   allPrivacyAgents,
@@ -129,6 +130,14 @@ export const supplyChainLogisticsSubAgents: AIAgent[] = generatedAgents.subAgent
 export const aiManagementGovernanceMainAgents: AIAgent[] = generatedAgents.mainAgents['ai-management-governance'];
 export const aiManagementGovernanceSubAgents: AIAgent[] = generatedAgents.subAgents['ai-management-governance'];
 
+// Department 23: Professional Services (10 Main + 30 Sub)
+export const professionalServicesMainAgents: AIAgent[] = generatedAgents.mainAgents['professional-services'];
+export const professionalServicesSubAgents: AIAgent[] = generatedAgents.subAgents['professional-services'];
+
+// Department 24: Media & Entertainment (12 Main + 36 Sub)
+export const mediaEntertainmentMainAgents: AIAgent[] = generatedAgents.mainAgents['media-entertainment'];
+export const mediaEntertainmentSubAgents: AIAgent[] = generatedAgents.subAgents['media-entertainment'];
+
 // Legacy placeholder arrays (for backward compatibility)
 export const accountingFinanceSubAgents: AIAgent[] = financeAccountingSubAgents;
 export const analysisInsightsPerformanceSubAgents: AIAgent[] = [];
@@ -162,6 +171,8 @@ export const allSubAgents: AIAgent[] = [
   ...governmentPublicSectorSubAgents,
   ...supplyChainLogisticsSubAgents,
   ...aiManagementGovernanceSubAgents,
+  ...professionalServicesSubAgents,
+  ...mediaEntertainmentSubAgents,
 ];
 
 export const allMainAgents: AIAgent[] = [
@@ -187,6 +198,8 @@ export const allMainAgents: AIAgent[] = [
   ...governmentPublicSectorMainAgents,
   ...supplyChainLogisticsMainAgents,
   ...aiManagementGovernanceMainAgents,
+  ...professionalServicesMainAgents,
+  ...mediaEntertainmentMainAgents,
 ];
 
 // Privacy Layer Agents (9 total)
@@ -196,7 +209,7 @@ export const privacyAgents: AIAgent[] = allPrivacyAgents;
 export const allAgents: AIAgent[] = enhanceAllAIAgents([...allMainAgents, ...allSubAgents, ...privacyAgents]);
 
 // ============================================
-// AGENT CATEGORIES - ALL 22 DEPARTMENTS
+// AGENT CATEGORIES - ALL 24 DEPARTMENTS
 // ============================================
 export const agentCategories = [
   { id: 'customer-experience', label: 'Customer Experience AI', icon: MessagesSquare, color: '#007AFF' },
@@ -222,10 +235,12 @@ export const agentCategories = [
   { id: 'supply-chain-logistics', label: 'Supply Chain & Logistics AI', icon: Target, color: '#34C759' },
   { id: 'ai-management-governance', label: 'AI Management & Governance AI', icon: Shield, color: '#FF5252' },
   { id: 'privacy-security', label: 'Privacy & Security AI', icon: Shield, color: '#FF5252' },
+  { id: 'professional-services', label: 'Professional Services AI', icon: Briefcase, color: '#0D9488' },
+  { id: 'media-entertainment', label: 'Media & Entertainment AI', icon: Video, color: '#EC4899' },
 ];
 
 // ============================================
-// NAVIGATION HIERARCHY - ALL 22 DEPARTMENTS
+// NAVIGATION HIERARCHY - ALL 24 DEPARTMENTS
 // ============================================
 export const navigationHierarchy = {
   'customer-experience': {
@@ -469,6 +484,28 @@ export const navigationHierarchy = {
     subAgents: aiManagementGovernanceSubAgents,
     description: 'AI agents for automation governance, process excellence, and AI operations',
     stats: { main: 6, sub: 18, total: 24 }
+  },
+  'professional-services': {
+    id: 'professional-services',
+    label: 'Professional Services AI',
+    icon: Briefcase,
+    color: '#0D9488',
+    path: '/ai-agent/professional-services',
+    mainAgents: professionalServicesMainAgents,
+    subAgents: professionalServicesSubAgents,
+    description: 'AI agents for consulting, project management, and business services',
+    stats: { main: 10, sub: 30, total: 40 }
+  },
+  'media-entertainment': {
+    id: 'media-entertainment',
+    label: 'Media & Entertainment AI',
+    icon: Video,
+    color: '#EC4899',
+    path: '/ai-agent/media-entertainment',
+    mainAgents: mediaEntertainmentMainAgents,
+    subAgents: mediaEntertainmentSubAgents,
+    description: 'AI agents for content creation, media production, and entertainment management',
+    stats: { main: 12, sub: 36, total: 48 }
   },
 };
 

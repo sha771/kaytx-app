@@ -1,0 +1,131 @@
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
+import { useRouter } from 'expo-router';
+const agents = [
+  { id: 'ai-chief-automation-officer', uid: 'ktx-22-chief-automation-officer', title: 'AI Chief Automation Officer', route: '/ai-agent/ai-governance/chief-automation-officer', color: '#6366F1', level: 'c_level', efficiency: '84%' },
+  { id: 'ai-vp-automation', uid: 'ktx-22-vp-automation', title: 'AI VP Automation', route: '/ai-agent/ai-governance/vp-automation', color: '#6366F1', level: 'vp_director', efficiency: '87%' },
+  { id: 'ai-vp-process-excellence', uid: 'ktx-22-vp-process-excellence', title: 'AI VP Process Excellence', route: '/ai-agent/ai-governance/vp-process-excellence', color: '#6366F1', level: 'vp_director', efficiency: '83%' },
+  { id: 'ai-automation-operations-director-lead', uid: 'ktx-22-automation-operations-director-lead', title: 'AI Automation Operations Director Lead', route: '/ai-agent/ai-governance/automation-operations-director-lead', color: '#6366F1', level: 'c_level', efficiency: '81%' },
+  { id: 'ai-rpa-manager', uid: 'ktx-22-rpa-manager', title: 'AI RPA Manager', route: '/ai-agent/ai-governance/rpa-manager', color: '#6366F1', level: 'manager', efficiency: '93%' },
+  { id: 'ai-workflow-specialist', uid: 'ktx-22-workflow-specialist', title: 'AI Workflow Specialist', route: '/ai-agent/ai-governance/workflow-specialist', color: '#6366F1', level: 'team_lead', efficiency: '89%' },
+  { id: 'ai-ethics-specialist', uid: 'ktx-22-ai-ethics-specialist', title: 'AI Ethics Specialist', route: '/ai-agent/ai-governance/ai-ethics-specialist', color: '#3B82F6', level: 'vp_director', efficiency: '91%' },
+  { id: 'ai-compliance-officer', uid: 'ktx-22-ai-compliance-officer', title: 'AI Compliance Officer', route: '/ai-agent/ai-governance/ai-compliance-officer', color: '#8B5CF6', level: 'vp_director', efficiency: '92%' },
+  { id: 'ai-policy-advisor', uid: 'ktx-22-ai-policy-advisor', title: 'AI Policy Advisor', route: '/ai-agent/ai-governance/ai-policy-advisor', color: '#10B981', level: 'vp_director', efficiency: '88%' },
+  { id: 'ai-risk-assessor', uid: 'ktx-22-ai-risk-assessor', title: 'AI Risk Assessor', route: '/ai-agent/ai-governance/ai-risk-assessor', color: '#F59E0B', level: 'vp_director', efficiency: '90%' },
+  { id: 'ai-governance-analyst', uid: 'ktx-22-ai-governance-analyst', title: 'AI Governance Analyst', route: '/ai-agent/ai-governance/ai-governance-analyst', color: '#06B6D4', level: 'manager', efficiency: '93%' },
+  { id: 'ai-auditor', uid: 'ktx-22-ai-auditor', title: 'AI Auditor', route: '/ai-agent/ai-governance/ai-auditor', color: '#EF4444', level: 'manager', efficiency: '91%' },
+  { id: 'ai-quality-assurance-specialist', uid: 'ktx-22-ai-quality-assurance-specialist', title: 'AI Quality Assurance Specialist', route: '/ai-agent/ai-governance/ai-quality-assurance-specialist', color: '#8B5CF6', level: 'manager', efficiency: '92%' },
+  { id: 'ai-security-governance-specialist', uid: 'ktx-22-ai-security-governance-specialist', title: 'AI Security Governance Specialist', route: '/ai-agent/ai-governance/ai-security-governance-specialist', color: '#DC2626', level: 'vp_director', efficiency: '90%' },
+  { id: 'ai-privacy-officer', uid: 'ktx-22-ai-privacy-officer', title: 'AI Privacy Officer', route: '/ai-agent/ai-governance/ai-privacy-officer', color: '#7C3AED', level: 'vp_director', efficiency: '91%' },
+  { id: 'ai-transparency-specialist', uid: 'ktx-22-ai-transparency-specialist', title: 'AI Transparency Specialist', route: '/ai-agent/ai-governance/ai-transparency-specialist', color: '#0EA5E9', level: 'manager', efficiency: '89%' },
+  { id: 'ai-accountability-specialist', uid: 'ktx-22-ai-accountability-specialist', title: 'AI Accountability Specialist', route: '/ai-agent/ai-governance/ai-accountability-specialist', color: '#6366F1', level: 'manager', efficiency: '90%' },
+  { id: 'ai-regulatory-specialist', uid: 'ktx-22-ai-regulatory-specialist', title: 'AI Regulatory Specialist', route: '/ai-agent/ai-governance/ai-regulatory-specialist', color: '#3B82F6', level: 'manager', efficiency: '92%' },
+  { id: 'ai-standards-specialist', uid: 'ktx-22-ai-standards-specialist', title: 'AI Standards Specialist', route: '/ai-agent/ai-governance/ai-standards-specialist', color: '#059669', level: 'manager', efficiency: '91%' },
+  { id: 'ai-framework-specialist', uid: 'ktx-22-ai-framework-specialist', title: 'AI Framework Specialist', route: '/ai-agent/ai-governance/ai-framework-specialist', color: '#8B5CF6', level: 'vp_director', efficiency: '90%' },
+  { id: 'ai-governance-operations', uid: 'ktx-22-ai-governance-operations', title: 'AI Governance Operations', route: '/ai-agent/ai-governance/ai-governance-operations', color: '#64748B', level: 'manager', efficiency: '94%' },
+  { id: 'ai-monitoring-specialist', uid: 'ktx-22-ai-monitoring-specialist', title: 'AI Monitoring Specialist', route: '/ai-agent/ai-governance/ai-monitoring-specialist', color: '#0EA5E9', level: 'team_lead', efficiency: '93%' },
+  { id: 'ai-reporting-specialist', uid: 'ktx-22-ai-reporting-specialist', title: 'AI Reporting Specialist', route: '/ai-agent/ai-governance/ai-reporting-specialist', color: '#6366F1', level: 'team_lead', efficiency: '92%' },
+  { id: 'ai-documentation-specialist', uid: 'ktx-22-ai-documentation-specialist', title: 'AI Documentation Specialist', route: '/ai-agent/ai-governance/ai-documentation-specialist', color: '#475569', level: 'team_lead', efficiency: '94%' },
+  { id: 'ai-training-governance', uid: 'ktx-22-ai-training-governance', title: 'AI Training Governance', route: '/ai-agent/ai-governance/ai-training-governance', color: '#8B5CF6', level: 'manager', efficiency: '91%' },
+  { id: 'ai-deployment-governance', uid: 'ktx-22-ai-deployment-governance', title: 'AI Deployment Governance', route: '/ai-agent/ai-governance/ai-deployment-governance', color: '#059669', level: 'vp_director', efficiency: '93%' },
+  { id: 'ai-lifecycle-management', uid: 'ktx-22-ai-lifecycle-management', title: 'AI Lifecycle Management', route: '/ai-agent/ai-governance/ai-lifecycle-management', color: '#3B82F6', level: 'vp_director', efficiency: '92%' },
+  { id: 'ai-impact-assessment-specialist', uid: 'ktx-22-ai-impact-assessment-specialist', title: 'AI Impact Assessment Specialist', route: '/ai-agent/ai-governance/ai-impact-assessment-specialist', color: '#F59E0B', level: 'manager', efficiency: '90%' },
+  { id: 'ai-bias-detection-specialist', uid: 'ktx-22-ai-bias-detection-specialist', title: 'AI Bias Detection Specialist', route: '/ai-agent/ai-governance/ai-bias-detection-specialist', color: '#EF4444', level: 'manager', efficiency: '91%' },
+  { id: 'ai-fairness-specialist', uid: 'ktx-22-ai-fairness-specialist', title: 'AI Fairness Specialist', route: '/ai-agent/ai-governance/ai-fairness-specialist', color: '#10B981', level: 'manager', efficiency: '92%' },
+  { id: 'ai-explainability-specialist', uid: 'ktx-22-ai-explainability-specialist', title: 'AI Explainability Specialist', route: '/ai-agent/ai-governance/ai-explainability-specialist', color: '#6366F1', level: 'manager', efficiency: '90%' },
+  { id: 'ai-validation-specialist', uid: 'ktx-22-ai-validation-specialist', title: 'AI Validation Specialist', route: '/ai-agent/ai-governance/ai-validation-specialist', color: '#059669', level: 'manager', efficiency: '93%' },
+  { id: 'ai-verification-specialist', uid: 'ktx-22-ai-verification-specialist', title: 'AI Verification Specialist', route: '/ai-agent/ai-governance/ai-verification-specialist', color: '#0EA5E9', level: 'manager', efficiency: '92%' },
+  { id: 'ai-certification-specialist', uid: 'ktx-22-ai-certification-specialist', title: 'AI Certification Specialist', route: '/ai-agent/ai-governance/ai-certification-specialist', color: '#8B5CF6', level: 'manager', efficiency: '91%' },
+  { id: 'ai-accreditation-specialist', uid: 'ktx-22-ai-accreditation-specialist', title: 'AI Accreditation Specialist', route: '/ai-agent/ai-governance/ai-accreditation-specialist', color: '#7C3AED', level: 'manager', efficiency: '90%' },
+  { id: 'ai-governance-strategy', uid: 'ktx-22-ai-governance-strategy', title: 'AI Governance Strategy', route: '/ai-agent/ai-governance/ai-governance-strategy', color: '#1E40AF', level: 'c_level', efficiency: '89%' },
+  { id: 'ai-governance-implementation', uid: 'ktx-22-ai-governance-implementation', title: 'AI Governance Implementation', route: '/ai-agent/ai-governance/ai-governance-implementation', color: '#2563EB', level: 'vp_director', efficiency: '92%' },
+  { id: 'ai-governance-monitoring', uid: 'ktx-22-ai-governance-monitoring', title: 'AI Governance Monitoring', route: '/ai-agent/ai-governance/ai-governance-monitoring', color: '#0891B2', level: 'vp_director', efficiency: '93%' },
+  { id: 'ai-governance-reporting', uid: 'ktx-22-ai-governance-reporting', title: 'AI Governance Reporting', route: '/ai-agent/ai-governance/ai-governance-reporting', color: '#4338CA', level: 'manager', efficiency: '92%' },
+  { id: 'ai-stakeholder-management', uid: 'ktx-22-ai-stakeholder-management', title: 'AI Stakeholder Management', route: '/ai-agent/ai-governance/ai-stakeholder-management', color: '#9333EA', level: 'manager', efficiency: '90%' },
+  { id: 'ai-cross-functional-governance', uid: 'ktx-22-ai-cross-functional-governance', title: 'AI Cross-functional Governance', route: '/ai-agent/ai-governance/ai-cross-functional-governance', color: '#7C3AED', level: 'manager', efficiency: '91%' },
+  { id: 'ai-governance-technology', uid: 'ktx-22-ai-governance-technology', title: 'AI Governance Technology', route: '/ai-agent/ai-governance/ai-governance-technology', color: '#0891B2', level: 'vp_director', efficiency: '92%' },
+  { id: 'ai-governance-processes', uid: 'ktx-22-ai-governance-processes', title: 'AI Governance Processes', route: '/ai-agent/ai-governance/ai-governance-processes', color: '#059669', level: 'manager', efficiency: '93%' },
+  { id: 'ai-governance-frameworks', uid: 'ktx-22-ai-governance-frameworks', title: 'AI Governance Frameworks', route: '/ai-agent/ai-governance/ai-governance-frameworks', color: '#4338CA', level: 'vp_director', efficiency: '91%' },
+  { id: 'ai-governance-standards', uid: 'ktx-22-ai-governance-standards', title: 'AI Governance Standards', route: '/ai-agent/ai-governance/ai-governance-standards', color: '#1E40AF', level: 'manager', efficiency: '92%' },
+  { id: 'ai-governance-best-practices', uid: 'ktx-22-ai-governance-best-practices', title: 'AI Governance Best Practices', route: '/ai-agent/ai-governance/ai-governance-best-practices', color: '#059669', level: 'team_lead', efficiency: '93%' },
+  { id: 'ai-governance-compliance', uid: 'ktx-22-ai-governance-compliance', title: 'AI Governance Compliance', route: '/ai-agent/ai-governance/ai-governance-compliance', color: '#DC2626', level: 'vp_director', efficiency: '92%' },
+  { id: 'ai-governance-risk-management', uid: 'ktx-22-ai-governance-risk-management', title: 'AI Governance Risk Management', route: '/ai-agent/ai-governance/ai-governance-risk-management', color: '#F59E0B', level: 'vp_director', efficiency: '91%' },
+  { id: 'ai-governance-quality-management', uid: 'ktx-22-ai-governance-quality-management', title: 'AI Governance Quality Management', route: '/ai-agent/ai-governance/ai-governance-quality-management', color: '#8B5CF6', level: 'manager', efficiency: '93%' },
+  { id: 'ai-governance-performance-management', uid: 'ktx-22-ai-governance-performance-management', title: 'AI Governance Performance Management', route: '/ai-agent/ai-governance/ai-governance-performance-management', color: '#3B82F6', level: 'manager', efficiency: '94%' },
+  { id: 'ai-governance-continuous-improvement', uid: 'ktx-22-ai-governance-continuous-improvement', title: 'AI Governance Continuous Improvement', route: '/ai-agent/ai-governance/ai-governance-continuous-improvement', color: '#10B981', level: 'team_lead', efficiency: '93%' },
+  { id: 'ai-model-registry-manager', uid: 'ktx-22-ai-model-registry-manager', title: 'AI Model Registry Manager', route: '/ai-agent/ai-governance/ai-model-registry-manager', color: '#6366F1', level: 'manager', efficiency: '92%' },
+  { id: 'ai-data-governance-specialist', uid: 'ktx-22-ai-data-governance-specialist', title: 'AI Data Governance Specialist', route: '/ai-agent/ai-governance/ai-data-governance-specialist', color: '#0EA5E9', level: 'manager', efficiency: '91%' },
+  { id: 'ai-external-auditor', uid: 'ktx-22-ai-external-auditor', title: 'AI External Auditor', route: '/ai-agent/ai-governance/ai-external-auditor', color: '#DC2626', level: 'vp_director', efficiency: '90%' },
+  { id: 'ai-internal-auditor', uid: 'ktx-22-ai-internal-auditor', title: 'AI Internal Auditor', route: '/ai-agent/ai-governance/ai-internal-auditor', color: '#EF4444', level: 'manager', efficiency: '92%' },
+  { id: 'ai-third-party-risk-manager', uid: 'ktx-22-ai-third-party-risk-manager', title: 'AI Third-party Risk Manager', route: '/ai-agent/ai-governance/ai-third-party-risk-manager', color: '#F59E0B', level: 'manager', efficiency: '91%' },
+  { id: 'ai-incident-response-coordinator', uid: 'ktx-22-ai-incident-response-coordinator', title: 'AI Incident Response Coordinator', route: '/ai-agent/ai-governance/ai-incident-response-coordinator', color: '#DC2626', level: 'vp_director', efficiency: '90%' },
+  { id: 'ai-policy-enforcement-officer', uid: 'ktx-22-ai-policy-enforcement-officer', title: 'AI Policy Enforcement Officer', route: '/ai-agent/ai-governance/ai-policy-enforcement-officer', color: '#8B5CF6', level: 'manager', efficiency: '93%' },
+  { id: 'ai-change-management-specialist', uid: 'ktx-22-ai-change-management-specialist', title: 'AI Change Management Specialist', route: '/ai-agent/ai-governance/ai-change-management-specialist', color: '#6366F1', level: 'manager', efficiency: '92%' },
+  { id: 'ai-vendor-governance-manager', uid: 'ktx-22-ai-vendor-governance-manager', title: 'AI Vendor Governance Manager', route: '/ai-agent/ai-governance/ai-vendor-governance-manager', color: '#059669', level: 'manager', efficiency: '91%' },
+  { id: 'ai-capability-assessment-specialist', uid: 'ktx-22-ai-capability-assessment-specialist', title: 'AI Capability Assessment Specialist', route: '/ai-agent/ai-governance/ai-capability-assessment-specialist', color: '#3B82F6', level: 'manager', efficiency: '90%' },
+  { id: 'ai-governance-training-coordinator', uid: 'ktx-22-ai-governance-training-coordinator', title: 'AI Governance Training Coordinator', route: '/ai-agent/ai-governance/ai-governance-training-coordinator', color: '#8B5CF6', level: 'team_lead', efficiency: '93%' },
+  { id: 'ai-governance-communications', uid: 'ktx-22-ai-governance-communications', title: 'AI Governance Communications', route: '/ai-agent/ai-governance/ai-governance-communications', color: '#06B6D4', level: 'team_lead', efficiency: '94%' },
+  { id: 'ai-governance-architecture', uid: 'ktx-22-ai-governance-architecture', title: 'AI Governance Architecture', route: '/ai-agent/ai-governance/ai-governance-architecture', color: '#4338CA', level: 'vp_director', efficiency: '91%' },
+  { id: 'ai-governance-analytics', uid: 'ktx-22-ai-governance-analytics', title: 'AI Governance Analytics', route: '/ai-agent/ai-governance/ai-governance-analytics', color: '#0EA5E9', level: 'vp_director', efficiency: '92%' },
+  { id: 'ai-legal-compliance-specialist', uid: 'ktx-22-ai-legal-compliance-specialist', title: 'AI Legal Compliance Specialist', route: '/ai-agent/ai-governance/ai-legal-compliance-specialist', color: '#1E40AF', level: 'vp_director', efficiency: '90%' },
+  { id: 'ai-ethics-board-liaison', uid: 'ktx-22-ai-ethics-board-liaison', title: 'AI Ethics Board Liaison', route: '/ai-agent/ai-governance/ai-ethics-board-liaison', color: '#8B5CF6', level: 'manager', efficiency: '91%' },
+  { id: 'ai-governance-escalation-manager', uid: 'ktx-22-ai-governance-escalation-manager', title: 'AI Governance Escalation Manager', route: '/ai-agent/ai-governance/ai-governance-escalation-manager', color: '#EF4444', level: 'manager', efficiency: '93%' },
+  { id: 'ai-governance-advisory', uid: 'ktx-22-ai-governance-advisory', title: 'AI Governance Advisory', route: '/ai-agent/ai-governance/ai-governance-advisory', color: '#6366F1', level: 'c_level', efficiency: '89%' },
+  { id: 'ai-governance-program-manager', uid: 'ktx-22-ai-governance-program-manager', title: 'AI Governance Program Manager', route: '/ai-agent/ai-governance/ai-governance-program-manager', color: '#059669', level: 'vp_director', efficiency: '92%' },
+  { id: 'ai-governance-metrics-manager', uid: 'ktx-22-ai-governance-metrics-manager', title: 'AI Governance Metrics Manager', route: '/ai-agent/ai-governance/ai-governance-metrics-manager', color: '#06B6D4', level: 'manager', efficiency: '93%' },
+  { id: 'ai-governance-knowledge-manager', uid: 'ktx-22-ai-governance-knowledge-manager', title: 'AI Governance Knowledge Manager', route: '/ai-agent/ai-governance/ai-governance-knowledge-manager', color: '#64748B', level: 'team_lead', efficiency: '94%' },
+  { id: 'ai-governance-research', uid: 'ktx-22-ai-governance-research', title: 'AI Governance Research', route: '/ai-agent/ai-governance/ai-governance-research', color: '#3B82F6', level: 'manager', efficiency: '91%' },
+  { id: 'ai-governance-innovation', uid: 'ktx-22-ai-governance-innovation', title: 'AI Governance Innovation', route: '/ai-agent/ai-governance/ai-governance-innovation', color: '#8B5CF6', level: 'vp_director', efficiency: '90%' },
+  { id: 'ai-governance-integration', uid: 'ktx-22-ai-governance-integration', title: 'AI Governance Integration', route: '/ai-agent/ai-governance/ai-governance-integration', color: '#059669', level: 'manager', efficiency: '92%' },
+  { id: 'ai-governance-automation', uid: 'ktx-22-ai-governance-automation', title: 'AI Governance Automation', route: '/ai-agent/ai-governance/ai-governance-automation', color: '#10B981', level: 'manager', efficiency: '94%' },
+  { id: 'ai-governance-relationship-manager', uid: 'ktx-22-ai-governance-relationship-manager', title: 'AI Governance Relationship Manager', route: '/ai-agent/ai-governance/ai-governance-relationship-manager', color: '#4338CA', level: 'vp_director', efficiency: '91%' },
+  { id: 'ai-governance-budget-manager', uid: 'ktx-22-ai-governance-budget-manager', title: 'AI Governance Budget Manager', route: '/ai-agent/ai-governance/ai-governance-budget-manager', color: '#059669', level: 'manager', efficiency: '93%' },
+  { id: 'ai-governance-resource-manager', uid: 'ktx-22-ai-governance-resource-manager', title: 'AI Governance Resource Manager', route: '/ai-agent/ai-governance/ai-governance-resource-manager', color: '#6366F1', level: 'manager', efficiency: '92%' },
+  { id: 'ai-governance-talent-manager', uid: 'ktx-22-ai-governance-talent-manager', title: 'AI Governance Talent Manager', route: '/ai-agent/ai-governance/ai-governance-talent-manager', color: '#8B5CF6', level: 'manager', efficiency: '91%' },
+  { id: 'ai-governance-culture', uid: 'ktx-22-ai-governance-culture', title: 'AI Governance Culture', route: '/ai-agent/ai-governance/ai-governance-culture', color: '#EC4899', level: 'team_lead', efficiency: '90%' },
+  { id: 'ai-governance-collaboration', uid: 'ktx-22-ai-governance-collaboration', title: 'AI Governance Collaboration', route: '/ai-agent/ai-governance/ai-governance-collaboration', color: '#06B6D4', level: 'team_lead', efficiency: '94%' },
+  { id: 'ai-governance-sustainability', uid: 'ktx-22-ai-governance-sustainability', title: 'AI Governance Sustainability', route: '/ai-agent/ai-governance/ai-governance-sustainability', color: '#10B981', level: 'manager', efficiency: '91%' },
+  { id: 'ai-governance-scalability', uid: 'ktx-22-ai-governance-scalability', title: 'AI Governance Scalability', route: '/ai-agent/ai-governance/ai-governance-scalability', color: '#3B82F6', level: 'vp_director', efficiency: '92%' },
+  { id: 'ai-governance-agility', uid: 'ktx-22-ai-governance-agility', title: 'AI Governance Agility', route: '/ai-agent/ai-governance/ai-governance-agility', color: '#F59E0B', level: 'manager', efficiency: '93%' },
+  { id: 'ai-governance-resilience', uid: 'ktx-22-ai-governance-resilience', title: 'AI Governance Resilience', route: '/ai-agent/ai-governance/ai-governance-resilience', color: '#DC2626', level: 'vp_director', efficiency: '92%' },
+  { id: 'ai-governance-transformation', uid: 'ktx-22-ai-governance-transformation', title: 'AI Governance Transformation', route: '/ai-agent/ai-governance/ai-governance-transformation', color: '#8B5CF6', level: 'vp_director', efficiency: '90%' },
+  { id: 'ai-governance-optimization', uid: 'ktx-22-ai-governance-optimization', title: 'AI Governance Optimization', route: '/ai-agent/ai-governance/ai-governance-optimization', color: '#10B981', level: 'manager', efficiency: '94%' },
+  { id: 'ai-governance-standardization', uid: 'ktx-22-ai-governance-standardization', title: 'AI Governance Standardization', route: '/ai-agent/ai-governance/ai-governance-standardization', color: '#1E40AF', level: 'manager', efficiency: '93%' },
+  { id: 'ai-governance-harmonization', uid: 'ktx-22-ai-governance-harmonization', title: 'AI Governance Harmonization', route: '/ai-agent/ai-governance/ai-governance-harmonization', color: '#4338CA', level: 'manager', efficiency: '91%' },
+  { id: 'ai-governance-configuration', uid: 'ktx-22-ai-governance-configuration', title: 'AI Governance Configuration', route: '/ai-agent/ai-governance/ai-governance-configuration', color: '#059669', level: 'team_lead', efficiency: '93%' },
+  { id: 'ai-governance-valuation', uid: 'ktx-22-ai-governance-valuation', title: 'AI Governance Valuation', route: '/ai-agent/ai-governance/ai-governance-valuation', color: '#F59E0B', level: 'manager', efficiency: '92%' },
+  { id: 'ai-governance-benchmarking', uid: 'ktx-22-ai-governance-benchmarking', title: 'AI Governance Benchmarking', route: '/ai-agent/ai-governance/ai-governance-benchmarking', color: '#6366F1', level: 'manager', efficiency: '91%' },
+  { id: 'ai-governance-maturity', uid: 'ktx-22-ai-governance-maturity', title: 'AI Governance Maturity', route: '/ai-agent/ai-governance/ai-governance-maturity', color: '#8B5CF6', level: 'manager', efficiency: '92%' },
+  { id: 'ai-governance-evaluation', uid: 'ktx-22-ai-governance-evaluation', title: 'AI Governance Evaluation', route: '/ai-agent/ai-governance/ai-governance-evaluation', color: '#3B82F6', level: 'manager', efficiency: '93%' },
+  { id: 'ai-governance-review', uid: 'ktx-22-ai-governance-review', title: 'AI Governance Review', route: '/ai-agent/ai-governance/ai-governance-review', color: '#0EA5E9', level: 'manager', efficiency: '94%' },
+  { id: 'ai-governance-assurance', uid: 'ktx-22-ai-governance-assurance', title: 'AI Governance Assurance', route: '/ai-agent/ai-governance/ai-governance-assurance', color: '#059669', level: 'manager', efficiency: '93%' },
+  { id: 'ai-governance-oversight', uid: 'ktx-22-ai-governance-oversight', title: 'AI Governance Oversight', route: '/ai-agent/ai-governance/ai-governance-oversight', color: '#1E40AF', level: 'vp_director', efficiency: '91%' },
+  { id: 'ai-governance-coordination', uid: 'ktx-22-ai-governance-coordination', title: 'AI Governance Coordination', route: '/ai-agent/ai-governance/ai-governance-coordination', color: '#6366F1', level: 'manager', efficiency: '94%' },
+  { id: 'ai-governance-enablement', uid: 'ktx-22-ai-governance-enablement', title: 'AI Governance Enablement', route: '/ai-agent/ai-governance/ai-governance-enablement', color: '#8B5CF6', level: 'manager', efficiency: '93%' },
+  { id: 'ai-governance-excellence', uid: 'ktx-22-ai-governance-excellence', title: 'AI Governance Excellence', route: '/ai-agent/ai-governance/ai-governance-excellence', color: '#10B981', level: 'vp_director', efficiency: '94%' },
+];
+export default function DepartmentIndex() {
+  const router = useRouter();
+  return (
+    <ScrollView style={s.container}>
+      <Text style={s.title}>AI Management & Governance - AI Agents</Text>
+      <Text style={s.sub}>{agents.length} AI Agents & Employees</Text>
+      <View style={s.grid}>
+        {agents.map((a) => (
+          <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>
+            <Text style={s.at}>{a.title}</Text>
+            <Text style={s.al}>{a.level.replace('_',' ').toUpperCase()}</Text>
+            <Text style={s.ae}>{a.efficiency}</Text>
+          </Pressable>
+        ))}
+      </View>
+    </ScrollView>
+  );
+}
+const s = StyleSheet.create({
+  container:{flex:1,backgroundColor:'#0a0a0a',padding:16},title:{color:'#fff',fontSize:24,fontWeight:'bold',marginBottom:4},
+  sub:{color:'#888',fontSize:14,marginBottom:16},grid:{flexDirection:'row',flexWrap:'wrap',gap:12},
+  card:{backgroundColor:'#1a1a2e',borderRadius:12,padding:16,width:'48%',borderLeftWidth:3},
+  at:{color:'#fff',fontSize:14,fontWeight:'600',marginBottom:4},al:{color:'#888',fontSize:11,marginBottom:2},
+  ae:{color:'#10B981',fontSize:12},
+});

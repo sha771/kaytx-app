@@ -31,7 +31,7 @@ export default function SubAgentsIndex() {
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Helper & Sub-Agent Workforce</Text>
         <View style={styles.badgesRow}>
           <View style={[styles.badge, { backgroundColor: '#34C75922' }]}><Activity size={12} color="#34C759" /><Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#6366F422' }]}><Briefcase size={12} color="#6366F1" /><Text style={[styles.badgeText, { color: '#6366F1' }]}>15 Agents</Text></View>
+          <View style={[styles.badge, { backgroundColor: '#6366F422' }]}><Briefcase size={12} color="#6366F1" /><Text style={[styles.badgeText, { color: '#6366F1' }]}>51 Agents</Text></View>
         </View>
       </View>
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
@@ -153,6 +153,198 @@ export default function SubAgentsIndex() {
           <View style={styles.agentInfo}>
             <Text style={[styles.agentName, { color: theme.colors.text }]}>Access Controller</Text>
             <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Document Controller - Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="asset-tracker" onPress={() => router.push('/ai-agent/administrative/sub-agents/asset-tracker')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Asset Tracker</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="contract-manager" onPress={() => router.push('/ai-agent/administrative/sub-agents/contract-manager')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Contract Manager</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="compliance-officer" onPress={() => router.push('/ai-agent/administrative/sub-agents/compliance-officer')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Compliance Officer</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="event-planner" onPress={() => router.push('/ai-agent/administrative/sub-agents/event-planner')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Event Planner</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="facility-auditor" onPress={() => router.push('/ai-agent/administrative/sub-agents/facility-auditor')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Facility Auditor</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="file-manager" onPress={() => router.push('/ai-agent/administrative/sub-agents/file-manager')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>File Manager</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="front-desk" onPress={() => router.push('/ai-agent/administrative/sub-agents/front-desk')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Front Desk</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="help-desk" onPress={() => router.push('/ai-agent/administrative/sub-agents/help-desk')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Help Desk</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="key-manager" onPress={() => router.push('/ai-agent/administrative/sub-agents/key-manager')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Key Manager</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="mailroom" onPress={() => router.push('/ai-agent/administrative/sub-agents/mailroom')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Mailroom</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="record-keeper" onPress={() => router.push('/ai-agent/administrative/sub-agents/record-keeper')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Record Keeper</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="receptionist" onPress={() => router.push('/ai-agent/administrative/sub-agents/receptionist')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Receptionist</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="security-badge" onPress={() => router.push('/ai-agent/administrative/sub-agents/security-badge')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Security Badge</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="staff-coordinator" onPress={() => router.push('/ai-agent/administrative/sub-agents/staff-coordinator')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Staff Coordinator</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="supplies-manager" onPress={() => router.push('/ai-agent/administrative/sub-agents/supplies-manager')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Supplies Manager</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="timekeeper" onPress={() => router.push('/ai-agent/administrative/sub-agents/timekeeper')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Timekeeper</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="training-coordinator" onPress={() => router.push('/ai-agent/administrative/sub-agents/training-coordinator')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Training Coordinator</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="utility-manager" onPress={() => router.push('/ai-agent/administrative/sub-agents/utility-manager')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Utility Manager</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="vehicle-coordinator" onPress={() => router.push('/ai-agent/administrative/sub-agents/vehicle-coordinator')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Vehicle Coordinator</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="waste-manager" onPress={() => router.push('/ai-agent/administrative/sub-agents/waste-manager')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Waste Manager</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="workspace-planner" onPress={() => router.push('/ai-agent/administrative/sub-agents/workspace-planner')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Workspace Planner</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="parking-manager" onPress={() => router.push('/ai-agent/administrative/sub-agents/parking-manager')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Parking Manager</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="cafeteria" onPress={() => router.push('/ai-agent/administrative/sub-agents/cafeteria')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Cafeteria</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="cleaning" onPress={() => router.push('/ai-agent/administrative/sub-agents/cleaning')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#79554820' }]}><Briefcase size={28} color="#795548" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Cleaning</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
           </View>
           <ArrowRight size={20} color={theme.colors.textSecondary} />
         </TouchableOpacity>

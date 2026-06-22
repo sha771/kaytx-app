@@ -1,124 +1,89 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { useTheme } from '@/providers/ThemeProvider';
-import { Settings, Briefcase, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, TrendingUp, Gauge, Truck, ShieldCheck, Building2, ListTodo, Zap, Workflow } from 'lucide-react-native';
-import AgentFeatures from '@/components/ai-agent/AgentFeatures';
+import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
-
-const HIERARCHY = {
-  cSuite: [
-    { id: 'coo', name: 'AI Chief Operating Officer', icon: Briefcase, color: '#4E342E', subCount: 3, subs: ['Operational Efficiency Analyst','Cross-dept Coordinator','Strategic Initiative Tracker'] },
-  ],
-  vp: [
-    { id: 'vp-operations', name: 'AI VP Operations', icon: Settings, color: '#5D4037', subCount: 3, subs: ['Process Auditor','SLA Monitor','Capacity Planner'] },
-    { id: 'vp-supply-chain', name: 'AI VP Supply Chain', icon: Truck, color: '#33691E', subCount: 3, subs: ['Supplier Risk Assessor','Inventory Optimizer','Logistics Cost Analyzer'] },
-    { id: 'vp-quality', name: 'AI VP Quality', icon: ShieldCheck, color: '#1B5E20', subCount: 3, subs: ['Quality Standards Enforcer','Defect Pattern Analyzer','Compliance Tracker'] },
-    { id: 'vp-facilities', name: 'AI VP Facilities', icon: Building2, color: '#455A64', subCount: 3, subs: ['Space Utilization Analyst','Maintenance Scheduler','Energy Efficiency Monitor'] },
-    { id: 'vp-project-management', name: 'AI VP Project Management', icon: Briefcase, color: '#283593', subCount: 3, subs: ['Milestone Tracker','Resource Allocator','Risk Identifier'] },
-  ],
-  manager: [
-    { id: 'ai-operations-manager', name: 'AI Operations Manager', icon: Settings, color: '#4E342E', subCount: 3, subs: ['Daily Operations Coordinator','Escalation Handler','Performance Reporter'] },
-    { id: 'ai-operations-manager-sub', name: 'AI Operations Manager (Sub)', icon: Settings, color: '#5D4037', subCount: 3, subs: ['Workflow Monitor','Bottleneck Detector','Efficiency Reporter'] },
-  ],
-  specialist: [
-    { id: 'ai-workflow-automation', name: 'AI Workflow Automation Agent', icon: Workflow, color: '#0097A7', subCount: 3, subs: ['Process Mapper','Automation Rule Builder','Exception Handler'] },
-    { id: 'ai-task-coordinator', name: 'AI Task Coordinator', icon: ListTodo, color: '#455A64', subCount: 3, subs: ['Task Prioritizer','Deadline Enforcer','Dependency Tracker'] },
-    { id: 'ai-process-optimization', name: 'AI Process Optimization Agent', icon: TrendingUp, color: '#2E7D32', subCount: 3, subs: ['Lean Analyst','Waste Identifier','Improvement Recommender'] },
-    { id: 'ai-resource-planner', name: 'AI Resource Planner', icon: Users, color: '#5D4037', subCount: 3, subs: ['Demand Forecaster','Allocation Optimizer','Utilization Tracker'] },
-    { id: 'ai-quality-assurance', name: 'AI Quality Assurance Agent', icon: ShieldCheck, color: '#1B5E20', subCount: 3, subs: ['Test Case Generator','Defect Logger','Regression Tracker'] },
-  ],
-};
-
-export default function OperationsDepartment() {
-  const { theme } = useTheme();
+const agents = [
+  { id: 'ai-chief-operating-officer', uid: 'ktx-04-chief-operating-officer', title: 'AI Chief Operating Officer', route: '/ai-agent/operations/chief-operating-officer', color: '#607D8B', level: 'c_level', efficiency: '77%' },
+  { id: 'ai-vp-operations', uid: 'ktx-04-vp-operations', title: 'AI VP Operations', route: '/ai-agent/operations/vp-operations', color: '#607D8B', level: 'vp_director', efficiency: '87%' },
+  { id: 'ai-vp-supply-chain', uid: 'ktx-04-vp-supply-chain', title: 'AI VP Supply Chain', route: '/ai-agent/operations/vp-supply-chain', color: '#607D8B', level: 'vp_director', efficiency: '81%' },
+  { id: 'ai-vp-quality', uid: 'ktx-04-vp-quality', title: 'AI VP Quality', route: '/ai-agent/operations/vp-quality', color: '#607D8B', level: 'vp_director', efficiency: '86%' },
+  { id: 'ai-vp-facilities', uid: 'ktx-04-vp-facilities', title: 'AI VP Facilities', route: '/ai-agent/operations/vp-facilities', color: '#607D8B', level: 'vp_director', efficiency: '87%' },
+  { id: 'ai-vp-project-management', uid: 'ktx-04-vp-project-management', title: 'AI VP Project Management', route: '/ai-agent/operations/vp-project-management', color: '#607D8B', level: 'vp_director', efficiency: '83%' },
+  { id: 'ai-vp-continuous-improvement', uid: 'ktx-04-vp-continuous-improvement', title: 'AI VP Continuous Improvement', route: '/ai-agent/operations/vp-continuous-improvement', color: '#607D8B', level: 'vp_director', efficiency: '84%' },
+  { id: 'ai-vp-risk-management-operations', uid: 'ktx-04-vp-risk-management-operations', title: 'AI VP Risk Management Operations', route: '/ai-agent/operations/vp-risk-management-operations', color: '#607D8B', level: 'vp_director', efficiency: '82%' },
+  { id: 'ai-vp-change-management', uid: 'ktx-04-vp-change-management', title: 'AI VP Change Management', route: '/ai-agent/operations/vp-change-management', color: '#607D8B', level: 'vp_director', efficiency: '85%' },
+  { id: 'ai-operations-director', uid: 'ktx-04-operations-director', title: 'AI Operations Director', route: '/ai-agent/operations/operations-director', color: '#607D8B', level: 'vp_director', efficiency: '86%' },
+  { id: 'ai-operations-manager', uid: 'ktx-04-operations-manager', title: 'AI Operations Manager', route: '/ai-agent/operations/operations-manager', color: '#607D8B', level: 'manager', efficiency: '82%' },
+  { id: 'ai-operations-manager-sub', uid: 'ktx-04-operations-manager-sub', title: 'AI Operations Manager (sub)', route: '/ai-agent/operations/operations-manager-sub', color: '#607D8B', level: 'manager', efficiency: '84%' },
+  { id: 'ai-process-improvement-manager', uid: 'ktx-04-process-improvement-manager', title: 'AI Process Improvement Manager', route: '/ai-agent/operations/process-improvement-manager', color: '#607D8B', level: 'manager', efficiency: '83%' },
+  { id: 'ai-quality-manager', uid: 'ktx-04-quality-manager', title: 'AI Quality Manager', route: '/ai-agent/operations/quality-manager', color: '#607D8B', level: 'manager', efficiency: '85%' },
+  { id: 'ai-facilities-manager', uid: 'ktx-04-facilities-manager', title: 'AI Facilities Manager', route: '/ai-agent/operations/facilities-manager', color: '#607D8B', level: 'manager', efficiency: '84%' },
+  { id: 'ai-project-management-office', uid: 'ktx-04-project-management-office', title: 'AI Project Management Office', route: '/ai-agent/operations/project-management-office', color: '#607D8B', level: 'manager', efficiency: '82%' },
+  { id: 'ai-change-management-lead', uid: 'ktx-04-change-management-lead', title: 'AI Change Management Lead', route: '/ai-agent/operations/change-management-lead', color: '#607D8B', level: 'manager', efficiency: '83%' },
+  { id: 'ai-workflow-automation-agent', uid: 'ktx-04-workflow-automation-agent', title: 'AI Workflow Automation Agent', route: '/ai-agent/operations/workflow-automation-agent', color: '#607D8B', level: 'team_lead', efficiency: '91%' },
+  { id: 'ai-business-process-automation-specialist', uid: 'ktx-04-business-process-automation-specialist', title: 'AI Business Process Automation Specialist', route: '/ai-agent/operations/business-process-automation-specialist', color: '#607D8B', level: 'team_lead', efficiency: '89%' },
+  { id: 'ai-rpa-developer', uid: 'ktx-04-rpa-developer', title: 'AI RPA Developer', route: '/ai-agent/operations/rpa-developer', color: '#607D8B', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-task-coordinator', uid: 'ktx-04-task-coordinator', title: 'AI Task Coordinator', route: '/ai-agent/operations/task-coordinator', color: '#607D8B', level: 'c_level', efficiency: '88%' },
+  { id: 'ai-workflow-orchestrator', uid: 'ktx-04-workflow-orchestrator', title: 'AI Workflow Orchestrator', route: '/ai-agent/operations/workflow-orchestrator', color: '#607D8B', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-scheduler', uid: 'ktx-04-scheduler', title: 'AI Scheduler', route: '/ai-agent/operations/scheduler', color: '#607D8B', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-resource-allocator', uid: 'ktx-04-resource-allocator', title: 'AI Resource Allocator', route: '/ai-agent/operations/resource-allocator', color: '#607D8B', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-process-optimization-agent', uid: 'ktx-04-process-optimization-agent', title: 'AI Process Optimization Agent', route: '/ai-agent/operations/process-optimization-agent', color: '#607D8B', level: 'team_lead', efficiency: '78%' },
+  { id: 'ai-lean-manufacturing-specialist', uid: 'ktx-04-lean-manufacturing-specialist', title: 'AI Lean Manufacturing Specialist', route: '/ai-agent/operations/lean-manufacturing-specialist', color: '#607D8B', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-six-sigma-specialist', uid: 'ktx-04-six-sigma-specialist', title: 'AI Six Sigma Specialist', route: '/ai-agent/operations/six-sigma-specialist', color: '#607D8B', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-continuous-improvement-specialist', uid: 'ktx-04-continuous-improvement-specialist', title: 'AI Continuous Improvement Specialist', route: '/ai-agent/operations/continuous-improvement-specialist', color: '#607D8B', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-resource-planner', uid: 'ktx-04-resource-planner', title: 'AI Resource Planner', route: '/ai-agent/operations/resource-planner', color: '#607D8B', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-capacity-planner', uid: 'ktx-04-capacity-planner', title: 'AI Capacity Planner', route: '/ai-agent/operations/capacity-planner', color: '#607D8B', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-demand-planner-ops', uid: 'ktx-04-demand-planner-ops', title: 'AI Demand Planner (Ops)', route: '/ai-agent/operations/demand-planner-ops', color: '#607D8B', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-inventory-optimizer', uid: 'ktx-04-inventory-optimizer', title: 'AI Inventory Optimizer', route: '/ai-agent/operations/inventory-optimizer', color: '#607D8B', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-quality-assurance-agent', uid: 'ktx-04-quality-assurance-agent', title: 'AI Quality Assurance Agent', route: '/ai-agent/operations/quality-assurance-agent', color: '#607D8B', level: 'team_lead', efficiency: '77%' },
+  { id: 'ai-quality-control-inspector', uid: 'ktx-04-quality-control-inspector', title: 'AI Quality Control Inspector', route: '/ai-agent/operations/quality-control-inspector', color: '#607D8B', level: 'team_lead', efficiency: '80%' },
+  { id: 'ai-iso-compliance-specialist', uid: 'ktx-04-iso-compliance-specialist', title: 'AI ISO Compliance Specialist', route: '/ai-agent/operations/iso-compliance-specialist', color: '#607D8B', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-audit-specialist', uid: 'ktx-04-audit-specialist', title: 'AI Audit Specialist', route: '/ai-agent/operations/audit-specialist', color: '#607D8B', level: 'team_lead', efficiency: '81%' },
+  { id: 'ai-facilities-coordinator', uid: 'ktx-04-facilities-coordinator', title: 'AI Facilities Coordinator', route: '/ai-agent/operations/facilities-coordinator', color: '#607D8B', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-maintenance-coordinator', uid: 'ktx-04-maintenance-coordinator', title: 'AI Maintenance Coordinator', route: '/ai-agent/operations/maintenance-coordinator', color: '#607D8B', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-space-planner', uid: 'ktx-04-space-planner', title: 'AI Space Planner', route: '/ai-agent/operations/space-planner', color: '#607D8B', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-utilities-manager', uid: 'ktx-04-utilities-manager', title: 'AI Utilities Manager', route: '/ai-agent/operations/utilities-manager', color: '#607D8B', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-project-manager-ops', uid: 'ktx-04-project-manager-ops', title: 'AI Project Manager (Ops)', route: '/ai-agent/operations/project-manager-ops', color: '#607D8B', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-scrum-master', uid: 'ktx-04-scrum-master', title: 'AI Scrum Master', route: '/ai-agent/operations/scrum-master', color: '#607D8B', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-agile-coach', uid: 'ktx-04-agile-coach', title: 'AI Agile Coach', route: '/ai-agent/operations/agile-coach', color: '#607D8B', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-program-manager', uid: 'ktx-04-program-manager', title: 'AI Program Manager', route: '/ai-agent/operations/program-manager', color: '#607D8B', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-portfolio-manager-ops', uid: 'ktx-04-portfolio-manager-ops', title: 'AI Portfolio Manager (Ops)', route: '/ai-agent/operations/portfolio-manager-ops', color: '#607D8B', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-change-management-specialist', uid: 'ktx-04-change-management-specialist', title: 'AI Change Management Specialist', route: '/ai-agent/operations/change-management-specialist', color: '#607D8B', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-communication-specialist', uid: 'ktx-04-communication-specialist', title: 'AI Communication Specialist', route: '/ai-agent/operations/communication-specialist', color: '#607D8B', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-stakeholder-manager', uid: 'ktx-04-stakeholder-manager', title: 'AI Stakeholder Manager', route: '/ai-agent/operations/stakeholder-manager', color: '#607D8B', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-training-coordinator-ops', uid: 'ktx-04-training-coordinator-ops', title: 'AI Training Coordinator (Ops)', route: '/ai-agent/operations/training-coordinator-ops', color: '#607D8B', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-documentation-specialist', uid: 'ktx-04-documentation-specialist', title: 'AI Documentation Specialist', route: '/ai-agent/operations/documentation-specialist', color: '#607D8B', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-policy-developer', uid: 'ktx-04-policy-developer', title: 'AI Policy Developer', route: '/ai-agent/operations/policy-developer', color: '#607D8B', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-compliance-officer-ops', uid: 'ktx-04-compliance-officer-ops', title: 'AI Compliance Officer (Ops)', route: '/ai-agent/operations/compliance-officer-ops', color: '#607D8B', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-risk-assessment-specialist', uid: 'ktx-04-risk-assessment-specialist', title: 'AI Risk Assessment Specialist', route: '/ai-agent/operations/risk-assessment-specialist', color: '#607D8B', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-business-continuity-planner', uid: 'ktx-04-business-continuity-planner', title: 'AI Business Continuity Planner', route: '/ai-agent/operations/business-continuity-planner', color: '#607D8B', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-disaster-recovery-specialist', uid: 'ktx-04-disaster-recovery-specialist', title: 'AI Disaster Recovery Specialist', route: '/ai-agent/operations/disaster-recovery-specialist', color: '#607D8B', level: 'team_lead', efficiency: '81%' },
+  { id: 'ai-operations-analyst', uid: 'ktx-04-operations-analyst', title: 'AI Operations Analyst', route: '/ai-agent/operations/operations-analyst', color: '#607D8B', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-performance-analyst', uid: 'ktx-04-performance-analyst', title: 'AI Performance Analyst', route: '/ai-agent/operations/performance-analyst', color: '#607D8B', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-kpi-manager', uid: 'ktx-04-kpi-manager', title: 'AI KPI Manager', route: '/ai-agent/operations/kpi-manager', color: '#607D8B', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-benchmarking-specialist', uid: 'ktx-04-benchmarking-specialist', title: 'AI Benchmarking Specialist', route: '/ai-agent/operations/benchmarking-specialist', color: '#607D8B', level: 'team_lead', efficiency: '83%' },
+];
+export default function DepartmentIndex() {
   const router = useRouter();
-
-  const renderGroup = (agents: any[], title: string) => (
-    <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-      <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>{title}</Text>
-      {agents.map((agent: any) => {
-        const AgentIcon = agent.icon;
-        return (
-          <TouchableOpacity key={agent.id} onPress={() => router.push('/ai-agent/operations/' + agent.id)} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
-            <View style={[styles.agentIcon, { backgroundColor: agent.color + '20' }]}><AgentIcon size={28} color={agent.color} /></View>
-            <View style={styles.agentInfo}>
-              <Text style={[styles.agentName, { color: theme.colors.text }]}>{agent.name}</Text>
-              <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>{agent.subCount} Sub-Agents: {agent.subs.join(', ')}</Text>
-            </View>
-            <ArrowRight size={20} color={theme.colors.textSecondary} />
-          </TouchableOpacity>
-        );
-      })}
-    </View>
-  );
-
   return (
-    <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#607D8B20' }]}><Settings size={48} color="#607D8B" /></View>
-        <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Operations & Management</Text>
-        <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>AI Agents & Employees — Enterprise Workforce</Text>
-        <View style={styles.badgesRow}>
-          <View style={[styles.badge, { backgroundColor: '#34C75922' }]}><Activity size={12} color="#34C759" /><Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#607D8B22' }]}><Star size={12} color="#607D8B" /><Text style={[styles.badgeText, { color: '#607D8B' }]}>Department</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#FF950022' }]}><Users size={12} color="#FF9500" /><Text style={[styles.badgeText, { color: '#FF9500' }]}>13 Agents</Text></View>
-        </View>
+    <ScrollView style={s.container}>
+      <Text style={s.title}>Operations & Management - AI Agents</Text>
+      <Text style={s.sub}>60 AI Agents & Employees</Text>
+      <View style={s.grid}>
+        {agents.map((a) => (
+          <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>
+            <Text style={s.at}>{a.title}</Text>
+            <Text style={s.al}>{a.level.replace('_',' ').toUpperCase()}</Text>
+            <Text style={s.ae}>{a.efficiency}</Text>
+          </Pressable>
+        ))}
       </View>
-      <View style={styles.statsContainer}>
-        {[{label:'Main Agents',value:'13',icon:CircleCheckBig,color:'#34C759'},{label:'Sub-Agents',value:'39',icon:Users,color:'#007AFF'},{label:'Uptime',value:'99.9%',icon:Clock,color:'#FF9500'},{label:'Efficiency',value:'20x',icon:Target,color:'#607D8B'}].map((stat,i)=>(<View key={i} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><stat.icon size={22} color={stat.color} /><Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text><Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text></View>))}
-      </View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Overview</Text>
-        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>The Operations & Management department operates through a structured hierarchy of AI agents — from C-Suite leadership down to specialist workers. Each agent manages dedicated sub-agents for granular task execution, ensuring enterprise-grade performance at every level.</Text>
-      </View>
-      {renderGroup(HIERARCHY.cSuite, 'C-Suite Leadership')}
-      {renderGroup(HIERARCHY.vp, 'VP Level')}
-      {renderGroup(HIERARCHY.manager, 'Manager Level')}
-      {renderGroup(HIERARCHY.specialist, 'Specialist Level')}
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents Hub</Text>
-        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>39 helper and sub-agent AI workers supporting the main agents.</Text>
-        <TouchableOpacity onPress={() => router.push('/ai-agent/operations/sub-agents')} style={[styles.subAgentButton, { backgroundColor: '#607D8B15' }]}>
-          <Settings size={20} color="#607D8B" />
-          <Text style={[styles.subAgentButtonText, { color: '#607D8B' }]}>View All 39 Sub-Agents</Text>
-          <ArrowRight size={18} color="#607D8B" />
-        </TouchableOpacity>
-      </View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
-        <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#607D8B12' }]}><act.icon size={24} color="#607D8B" /><Text style={[styles.actionText, { color: '#607D8B' }]}>{act.label}</Text></TouchableOpacity>))}
-        </View>
-      </View>
-      <AgentFeatures agentId="operations-index" agentName="Operations & Management Department" />
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container:{flex:1},
-  hero:{alignItems:'center',paddingVertical:32,paddingHorizontal:20,borderBottomWidth:1},
-  heroIconWrap:{width:88,height:88,borderRadius:44,justifyContent:'center',alignItems:'center',marginBottom:16},
-  heroTitle:{fontSize:26,fontWeight:'bold'},
-  heroSubtitle:{fontSize:15,marginTop:4,fontWeight:'500'},
-  badgesRow:{flexDirection:'row',gap:10,marginTop:16},
-  badge:{flexDirection:'row',alignItems:'center',paddingHorizontal:10,paddingVertical:5,borderRadius:20,gap:4},
-  badgeText:{fontSize:12,fontWeight:'600'},
-  statsContainer:{flexDirection:'row',flexWrap:'wrap',padding:16,gap:12},
-  statCard:{flex:1,minWidth:'22%',alignItems:'center',padding:14,borderRadius:12},
-  statValue:{fontSize:18,fontWeight:'bold',marginTop:8},
-  statLabel:{fontSize:11,marginTop:4},
-  section:{marginHorizontal:16,marginBottom:16,padding:20,borderRadius:16},
-  sectionTitle:{fontSize:18,fontWeight:'700',marginBottom:14},
-  description:{fontSize:14,lineHeight:22},
-  agentCard:{flexDirection:'row',alignItems:'center',padding:16,borderRadius:12,marginBottom:12},
-  agentIcon:{width:48,height:48,borderRadius:12,alignItems:'center',justifyContent:'center'},
-  agentInfo:{flex:1,marginLeft:12},
-  agentName:{fontSize:16,fontWeight:'600'},
-  agentDesc:{fontSize:12,marginTop:2},
-  subAgentButton:{flexDirection:'row',alignItems:'center',padding:16,borderRadius:12,marginTop:12,gap:10},
-  subAgentButtonText:{fontSize:15,fontWeight:'600',flex:1},
-  actionsGrid:{flexDirection:'row',flexWrap:'wrap',gap:12},
-  actionButton:{flex:1,minWidth:'45%',alignItems:'center',padding:16,borderRadius:12},
-  actionText:{fontSize:13,fontWeight:'600',marginTop:8}
+const s = StyleSheet.create({
+  container:{flex:1,backgroundColor:'#0a0a0a',padding:16},title:{color:'#fff',fontSize:24,fontWeight:'bold',marginBottom:4},
+  sub:{color:'#888',fontSize:14,marginBottom:16},grid:{flexDirection:'row',flexWrap:'wrap',gap:12},
+  card:{backgroundColor:'#1a1a2e',borderRadius:12,padding:16,width:'48%',borderLeftWidth:3},
+  at:{color:'#fff',fontSize:14,fontWeight:'600',marginBottom:4},al:{color:'#888',fontSize:11,marginBottom:2},
+  ae:{color:'#10B981',fontSize:12},
 });

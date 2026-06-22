@@ -63,323 +63,8 @@ export default function BulkConfigurationScreen() {
       newSelected.add(agentId);
     }
     setSelectedAgents(newSelected);
-    comprehensiveFeatures: {
-  "communicationChannels": {
-    "call": {
-      "enabled": true,
-      "provider": "Twilio",
-      "features": [
-        "PBX Integration",
-        "IVR Menu",
-        "Call Routing",
-        "Call Recording",
-        "Transcriptions"
-      ],
-      "recordingRetention": "90 days",
-      "consentLogging": true
-    },
-    "chatSystem": {
-      "enabled": true,
-      "platforms": [
-        "Web Widget",
-        "Slack",
-        "Intercom",
-        "Microsoft Teams"
-      ],
-      "persistentThreads": true,
-      "transcriptExport": true
-    },
-    "sms": {
-      "enabled": true,
-      "provider": "Twilio",
-      "features": [
-        "Templated Messages",
-        "Two-Way Support",
-        "Opt-Out Handling"
-      ],
-      "number": "TBD"
-    },
-    "voice": {
-      "enabled": true,
-      "primaryDID": "TBD",
-      "ttsVoice": "default",
-      "failoverNumbers": [],
-      "geoRouting": true
-    },
-    "recording": {
-      "enabled": true,
-      "autoRecording": true,
-      "consentLogging": true,
-      "transcriptGeneration": true,
-      "scriptTemplates": []
-    },
-    "location": {
-      "allowedRegions": [
-        "Global"
-      ],
-      "timezoneAware": true,
-      "localeFormats": [
-        "en-US",
-        "en-GB",
-        "es-ES",
-        "fr-FR",
-        "de-DE"
-      ]
-    }
-  },
-  "companySetup": {
-    "profile": {
-      "enabled": true,
-      "fields": [
-        "Company Name",
-        "Industry",
-        "Size",
-        "Location"
-      ]
-    },
-    "products": {
-      "enabled": true,
-      "catalog": true,
-      "pricingTiers": true
-    },
-    "negotiationRules": {
-      "enabled": true,
-      "templates": true,
-      "maxConcession": "10%"
-    }
-  },
-  "generalInfo": {
-    "name": "",
-    "role": "",
-    "availability": "24/7",
-    "personality": "professional",
-    "tone": "conversational",
-    "voice": "neutral"
-  },
-  "modelConfig": {
-    "modelName": "LLM-X v2",
-    "modelFamily": "GPT-4",
-    "version": "latest",
-    "primaryLanguage": "en-US",
-    "fallbackLanguages": [
-      "es",
-      "fr",
-      "de"
-    ],
-    "multilingualSupport": true
-  },
-  "timing": {
-    "businessHours": {
-      "enabled": true,
-      "schedule": "Mon-Fri 09:00-18:00 local",
-      "timezone": "UTC",
-      "holidays": []
-    },
-    "waitingDuration": {
-      "call": 120,
-      "chat": 30,
-      "sms": 0
-    },
-    "appointmentScheduling": {
-      "enabled": true,
-      "calendars": [
-        "Google",
-        "Outlook"
-      ],
-      "timezoneHandling": "automatic"
-    }
-  },
-  "pricing": {
-    "pricingModel": "fixed monthly",
-    "priceLimit": "TBD",
-    "negotiationRules": {
-      "enabled": true,
-      "maxConcession": "10%",
-      "autoNegotiation": false
-    }
-  },
-  "integrations": {
-    "crm": [
-      "Salesforce",
-      "HubSpot",
-      "Zendesk"
-    ],
-    "ticketing": [
-      "Zendesk",
-      "Freshdesk",
-      "Jira"
-    ],
-    "calendar": [
-      "Google Calendar",
-      "Outlook Calendar"
-    ],
-    "telephony": [
-      "Twilio",
-      "Vonage",
-      "RingCentral"
-    ],
-    "analytics": [
-      "Google Analytics",
-      "Mixpanel",
-      "Amplitude"
-    ],
-    "mcpConnectors": []
-  },
-  "responsibilities": {
-    "taskRouting": {
-      "method": "intent-based",
-      "escalationPath": "human after 3 failed handoffs",
-      "slaEnforcement": true
-    },
-    "appointmentScheduling": {
-      "enabled": true,
-      "rules": []
-    }
-  },
-  "taskManagement": {
-    "assignedTasks": {
-      "queue": true,
-      "slaTimers": true,
-      "dependencies": true
-    },
-    "progressTracking": {
-      "enabled": true,
-      "metrics": [
-        "completion percentage",
-        "time remaining"
-      ]
-    }
-  },
-  "behaviour": {
-    "safetyFilters": {
-      "enabled": true,
-      "restrictedDomains": [
-        "legal",
-        "medical",
-        "financial advice"
-      ]
-    },
-    "refusalTemplates": {
-      "enabled": true
-    },
-    "rateLimits": {
-      "enabled": true,
-      "requestsPerMinute": 60
-    }
-  },
-  "performance": {
-    "metrics": {
-      "latency": true,
-      "accuracy": true,
-      "successRate": true,
-      "userSatisfaction": true
-    },
-    "reporting": {
-      "dashboards": true,
-      "scheduledReports": true,
-      "cadence": [
-        "daily",
-        "weekly",
-        "monthly"
-      ]
-    }
-  },
-  "summary": {
-    "enabled": true,
-    "adminNotes": "",
-    "handoverContext": true
-  },
-  "predictive": {
-    "forecasting": {
-      "enabled": true,
-      "models": []
-    },
-    "anomalyDetection": {
-      "enabled": true,
-      "triggers": []
-    }
-  },
-  "regulations": {
-    "compliance": {
-      "gdpr": true,
-      "hipaa": false,
-      "soc2": false,
-      "regional": true
-    },
-    "dataResidency": {
-      "enabled": true,
-      "regions": []
-    },
-    "consentPolicies": {
-      "enabled": true
-    }
-  },
-  "memory": {
-    "session": {
-      "duration": "30 minutes",
-      "retention": true
-    },
-    "longTerm": {
-      "duration": "365 days",
-      "retention": true
-    },
-    "piiRedaction": {
-      "enabled": true
-    },
-    "purgeSchedule": "quarterly"
-  },
-  "detailedSetup": {
-    "onboardingFlow": true,
-    "productPricingSetup": true,
-    "negotiationRulesSetup": true,
-    "trainingPlan": true,
-    "knowledgeBaseImport": true,
-    "voicePersonalityTuning": true,
-    "businessHoursSetup": true,
-    "additionalConfigs": []
-  },
-  "twoStepVerification": {
-    "enabled": true,
-    "criticalActions": [
-      "billing",
-      "admin modifications",
-      "data export"
-    ],
-    "deviceCheck": true
-  },
-  "importExport": {
-    "endpoints": [
-      "CSV",
-      "JSON"
-    ],
-    "scheduledExports": true,
-    "retentionPolicy": true,
-    "complianceControls": true
-  },
-  "reports": {
-    "types": [
-      "performance",
-      "usage",
-      "errors",
-      "compliance"
-    ],
-    "cadence": [
-      "daily",
-      "weekly",
-      "monthly"
-    ],
-    "deliveryChannels": [
-      "email",
-      "dashboard",
-      "webhook"
-    ]
-  },
-  "mcpIntegrations": {
-    "connectors": [],
-    "apiSpecs": [],
-    "mapping": []
-  }
-}};
+
+  };
 
   const selectAll = () => {
     if (selectedAgents.size === filteredAgents.length) {
@@ -453,6 +138,7 @@ export default function BulkConfigurationScreen() {
           </TouchableOpacity>
           {agentCategories.map(cat => {
             const count = allAgents.filter(a => a.category === cat.id).length;
+
             return (
               <TouchableOpacity
                 key={cat.id}
@@ -604,73 +290,216 @@ export default function BulkConfigurationScreen() {
 
         {/* Agent List */}
         <Text style={[styles.sectionTitle, { color: colors.text }]}>Select Agents</Text>
-        {filteredAgents.map((agent, index) => (
-          <Animated.View entering={FadeInUp.delay(index * 30)} key={agent.id}>
-            <TouchableOpacity
-              style={[styles.agentRow, { backgroundColor: colors.card, borderColor: colors.border }]}
-              onPress={() => toggleAgent(agent.id)}
-            >
-              <View style={[styles.checkbox, selectedAgents.has(agent.id) && { backgroundColor: colors.primary, borderColor: colors.primary }]}>
-                {selectedAgents.has(agent.id) && <Check size={14} color="#fff" />}
-              </View>
-              <View style={[styles.agentIcon, { backgroundColor: agent.color + '15' }]}>
-                <agent.icon size={22} color={agent.color} />
-              </View>
-              <View style={styles.agentInfo}>
-                <Text style={[styles.agentName, { color: colors.text }]}>{agent.name}</Text>
-                <Text style={[styles.agentTitle, { color: colors.text + '60' }]} numberOfLines={1}>
-                  {agent.title}
-                </Text>
-                <View style={styles.agentBadges}>
-                  <View style={[styles.typeBadge, { backgroundColor: agent.type === 'main_agent' ? '#8B5CF6' : '#3B82F6' }]}>
-                    <Text style={styles.typeText}>{agent.type === 'main_agent' ? 'Main' : 'Sub'}</Text>
-                  </View>
-                  {agent.configuration?.voice.enabled && (
-                    <Mic size={12} color="#10B981" />
-                  )}
+        {filteredAgents.map((agent, index) => {
+          const Icon = agent.icon;
+          return (
+            <Animated.View entering={FadeInUp.delay(index * 30)} key={agent.id}>
+              <TouchableOpacity
+                style={[styles.agentRow, { backgroundColor: colors.card, borderColor: colors.border }]}
+                onPress={() => toggleAgent(agent.id)}
+              >
+                <View style={[styles.checkbox, selectedAgents.has(agent.id) && { backgroundColor: colors.primary, borderColor: colors.primary }]}>
+                  {selectedAgents.has(agent.id) && <Check size={14} color="#fff" />}
                 </View>
-              </View>
-            </TouchableOpacity>
-          </Animated.View>
-        ))}
+                <View style={[styles.agentIcon, { backgroundColor: agent.color + '15' }]}>
+                  <Icon size={22} color={agent.color} />
+                </View>
+                <View style={styles.agentInfo}>
+                  <Text style={[styles.agentName, { color: colors.text }]}>{agent.name}</Text>
+                  <Text style={[styles.agentTitle, { color: colors.text + '60' }]} numberOfLines={1}>
+                    {agent.title}
+                  </Text>
+                  <View style={styles.agentBadges}>
+                    <View style={[styles.typeBadge, { backgroundColor: agent.type === 'main_agent' ? '#8B5CF6' : '#3B82F6' }]}>
+                      <Text style={styles.typeText}>{agent.type === 'main_agent' ? 'Main' : 'Sub'}</Text>
+                    </View>
+                    {agent.configuration?.voice.enabled && (
+                      <Mic size={12} color="#10B981" />
+                    )}
+                  </View>
+                </View>
+              </TouchableOpacity>
+            </Animated.View>
+          );
+        })}
       </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  header: { borderBottomWidth: 1 },
-  headerTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 16 },
-  backButton: { padding: 4 },
-  headerTitleContainer: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  headerTitle: { fontSize: 18, fontWeight: '600' },
-  saveButton: { padding: 8, borderRadius: 8 },
-  categoryScroll: { paddingHorizontal: 16, marginTop: 8 },
-  categoryChip: { paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20, marginRight: 8 },
-  categoryText: { fontSize: 13, fontWeight: '500' },
-  selectAllBar: { flexDirection: 'row', alignItems: 'center', padding: 16, borderTopWidth: 1, borderTopColor: '#00000010', marginTop: 8 },
-  checkbox: { width: 22, height: 22, borderRadius: 6, borderWidth: 2, borderColor: '#00000030', justifyContent: 'center', alignItems: 'center', marginRight: 12 },
-  selectAllText: { fontSize: 15, fontWeight: '500' },
-  content: { padding: 16 },
-  configSection: { borderRadius: 16, borderWidth: 1, padding: 16, marginBottom: 20 },
-  configTitle: { fontSize: 16, fontWeight: '600', marginBottom: 16 },
-  configItem: { marginBottom: 16 },
-  configItemHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 10 },
-  configLabel: { fontSize: 14, fontWeight: '500' },
-  optionScroll: { flexDirection: 'row' },
-  optionChip: { paddingHorizontal: 12, paddingVertical: 8, borderRadius: 8, marginRight: 8, backgroundColor: '#00000008' },
-  optionText: { fontSize: 13, fontWeight: '500' },
-  toggleGroup: { flexDirection: 'row', gap: 8 },
-  toggleChip: { paddingHorizontal: 16, paddingVertical: 8, borderRadius: 8, backgroundColor: '#00000008' },
-  toggleText: { fontSize: 13, fontWeight: '500' },
-  sectionTitle: { fontSize: 16, fontWeight: '600', marginBottom: 12 },
-  agentRow: { flexDirection: 'row', alignItems: 'center', padding: 12, borderRadius: 12, borderWidth: 1, marginBottom: 8 },
-  agentIcon: { width: 44, height: 44, borderRadius: 10, justifyContent: 'center', alignItems: 'center', marginLeft: 12 },
-  agentInfo: { flex: 1, marginLeft: 12 },
-  agentName: { fontSize: 15, fontWeight: '600' },
-  agentTitle: { fontSize: 12, marginTop: 2 },
-  agentBadges: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 6 },
-  typeBadge: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 4 },
-  typeText: { color: '#fff', fontSize: 10, fontWeight: '600' },
+  container: {
+    flex: 1,
+  },
+  header: {
+    paddingBottom: 16,
+  },
+  headerTop: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
+  backButton: {
+    padding: 8,
+  },
+  headerTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+  },
+  saveButton: {
+    padding: 8,
+    borderRadius: 8,
+  },
+  categoryScroll: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    gap: 8,
+  },
+  categoryChip: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    borderWidth: 1,
+  },
+  categoryText: {
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  selectAllBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    gap: 8,
+  },
+  checkbox: {
+    width: 22,
+    height: 22,
+    borderRadius: 6,
+    borderWidth: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  selectAllText: {
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  content: {
+    flex: 1,
+    paddingHorizontal: 16,
+  },
+  configSection: {
+    padding: 16,
+    borderRadius: 16,
+    borderWidth: 1,
+    marginBottom: 20,
+  },
+  configTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    marginBottom: 16,
+  },
+  configItem: {
+    marginBottom: 20,
+  },
+  configItemHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 12,
+  },
+  configLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  optionScroll: {
+    gap: 8,
+  },
+  optionChip: {
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    minWidth: 100,
+    alignItems: 'center',
+  },
+  optionText: {
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  toggleGroup: {
+    flexDirection: 'row',
+    gap: 8,
+    flexWrap: 'wrap',
+  },
+  toggleChip: {
+    flex: 1,
+    minWidth: 80,
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  toggleText: {
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  sectionTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    marginBottom: 12,
+  },
+  agentRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 14,
+    borderRadius: 12,
+    borderWidth: 1,
+    marginBottom: 8,
+    gap: 12,
+  },
+  agentIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  agentInfo: {
+    flex: 1,
+    minWidth: 0,
+  },
+  agentName: {
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  agentTitle: {
+    fontSize: 12,
+    marginTop: 2,
+  },
+  agentBadges: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginTop: 8,
+  },
+  typeBadge: {
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 4,
+  },
+  typeText: {
+    color: '#fff',
+    fontSize: 10,
+    fontWeight: '600',
+  },
 });
+

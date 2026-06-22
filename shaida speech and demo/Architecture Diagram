@@ -1,0 +1,699 @@
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                           KAYTX AI WORKFLOW SYSTEM                          │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  🔒 PRIVACY INPUT GATE                                                        │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐                     │
+│  │ Data Classifier│ │Purpose Validator│ │Access Controller│               │
+│  └──────────────┘  └──────────────┘  └──────────────┘                     │
+│           │                  │                  │                          │
+│           └──────────────────┼──────────────────┘                          │
+│                              ▼                                             │
+│  📥 INPUT SOURCES                                                           │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐                   │
+│  │ Customer │  │ Manager  │  │  System  │  │   API    │                   │
+│  │ Request  │  │ Directive│  │  Alert   │  │ Webhook  │                   │
+│  └──────────┘  └──────────┘  └──────────┘  └──────────┘                   │
+│           │              │              │              │                   │
+│           └──────────────┼──────────────┴──────────────┘                   │
+│                          ▼                                                 │
+│  👔 LAYER 1: EXECUTIVE & LEADERSHIP (15 C-Suite)                          │
+│  ┌──────────────────────────────────────────────────────────┐            │
+│  │  👑 CEO → CFO/COO/CTO/CMO/CHRO/CCO/CIO/CREO/CRO/etc.    │            │
+│  └──────────────────────────┬───────────────────────────────┘            │
+│                             │                                                 │
+│                          🌉 LAYER BRIDGE                                       │
+│                             │                                                 │
+│  🎮 LAYER 2: COMMAND CENTER                                                   │
+│  ┌──────────────────────────────────────────────────────────┐            │
+│  │  🎯 CDOO → DDO/WOL/AOD → Department Heads                │            │
+│  └──────────────────────────┬───────────────────────────────┘            │
+│                             │                                                 │
+│  🔐 PRIVACY AGENT GATE                                                       │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐                     │
+│  │ Data Masker  │ │Context Filter│ │Permission    │                    │
+│  │              │ │              │ │Enforcer      │                    │
+│  └──────────────┘  └──────────────┘  └──────────────┘                     │
+│           │                  │                  │                          │
+│           └──────────────────┼──────────────────┘                          │
+│                              ▼                                             │
+│  🤖 AI AGENTS LAYER (199+ Agents)                                           │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐                   │
+│  │    CX    │  │  Sales   │  │ Marketing│  │   Ops    │                   │
+│  │  Agents  │  │  Agents  │  │  Agents  │  │  Agents  │                   │
+│  └──────────┘  └──────────┘  └──────────┘  └──────────┘                   │
+│           │              │              │              │                   │
+│           └──────────────┼──────────────┴──────────────┘                   │
+│                          ▼                                                 │
+│  🔏 PRIVACY OUTPUT GATE                                                      │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐                     │
+│  │Output        │ │Compliance    │ │Audit Logger   │                    │
+│  │Sanitizer     │ │Checker       │ │               │                    │
+│  └──────────────┘  └──────────────┘  └──────────────┘                     │
+│           │                  │                  │                          │
+│           └──────────────────┼──────────────────┘                          │
+│                              ▼                                             │
+│  ✅ OUTPUT                                                                  │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐                   │
+│  │ Customer│  │ Manager  │  │  System  │  │  API     │                   │
+│  │Response │  │  Report  │  │ Updated  │  │ Response │                   │
+│  └──────────┘  └──────────┘  └──────────┘  └──────────┘                   │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Practical Example: Customer Support Request
+
+
+📥 STEP 1: INPUT RECEIVAL
+┌─────────────────────────────────────────────────────────┐
+│ Customer submits: "I was charged twice for my subscription" │
+│ Input Source: Customer Request via Chat Widget              │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+🔒 STEP 2: PRIVACY INPUT GATE
+┌─────────────────────────────────────────────────────────┐
+│ 🔍 Data Classifier:                                      │
+│   - Classification: CONFIDENTIAL (billing data)           │
+│   - Data Type: FINANCIAL + PII                          │
+│   - Risk Level: MEDIUM                                   │
+│                                                          │
+│ ✅ Purpose Validator:                                   │
+│   - Purpose: Customer Service                           │
+│   - Valid: YES (current ticket resolution)               │
+│                                                          │
+│ 🛡️ Access Controller:                                   │
+│   - Role: CX Agent                                       │
+│   - Permission: Billing data access for support         │
+│   - Granted: YES                                        │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+👔 STEP 3: EXECUTIVE LAYER (Strategic Approval)
+┌─────────────────────────────────────────────────────────┐
+│ CEO: Overall customer satisfaction strategy              │
+│   ↓                                                       │
+│ CCO (Chief Customer Officer): CX policy approval        │
+│   ↓                                                       │
+│ Executive Council: Service level standards               │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+🌉 STEP 4: LAYER BRIDGE (Translation)
+┌─────────────────────────────────────────────────────────┐
+│ 🌉 Layer Bridge:                                        │
+│   - Business Request: "Resolve billing dispute"         │
+│   - AI Translation: "Analyze transaction history,        │
+│                     identify duplicate charge,          │
+│                     process refund if validated"         │
+│   - Route to: CX Department → Billing Specialist Agent  │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+🎮 STEP 5: COMMAND CENTER (Orchestration)
+┌─────────────────────────────────────────────────────────┐
+| 🎯 CDOO: Digital operations oversight                    │
+|   ↓                                                       │
+| 🔧 DDO: Directs to CX department                         │
+|   ↓                                                       │
+| 👷 WOL: Workforce operations - assigns billing specialist │
+|   ↓                                                       │
+| 🤖 AOD: Automation - checks for auto-refund eligibility   │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+🔐 STEP 6: PRIVACY AGENT GATE
+┌─────────────────────────────────────────────────────────┐
+| 🎭 Data Masker:                                          │
+|   - Masks: Full credit card number                       │
+|   - Shows: ****-****-****-1234                          │
+|                                                          │
+| 🔎 Context Filter:                                       │
+|   - Agent sees: Relevant billing history only           │
+|   - Hidden: Other customers' data                       │
+|                                                          │
+| ⚖️ Permission Enforcer:                                 │
+|   - Agent can: Process refund                           │
+|   - Agent cannot: Modify subscription terms              │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+🤖 STEP 7: AI AGENT EXECUTION
+┌─────────────────────────────────────────────────────────┐
+| 🤖 Billing Specialist Agent:                             │
+|   1. Accesses transaction history                        │
+|   2. Identifies duplicate charge ($49.99 x 2)           │
+|   3. Checks refund policy (within 30 days = YES)       │
+|   4. Processes refund for $49.99                        │
+|   5. Updates customer account                           │
+|   6. Generates response message                         │
+│                                                          │
+| 🧠 Agent Brain Access:                                   │
+|   - Queries: "Refund policy for duplicate charges"       │
+|   - Token savings: 90% (wiki vs raw policy documents)   │
+|   - Response time: 600ms                                │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+🔏 STEP 8: PRIVACY OUTPUT GATE
+┌─────────────────────────────────────────────────────────┐
+| 🧹 Output Sanitizer:                                    │
+|   - Removes: Internal transaction IDs                   │
+|   - Removes: Agent decision logs                        │
+|                                                          │
+| 📋 Compliance Checker:                                   │
+|   - Validates: GDPR compliance                          │
+|   - Checks: Refund notification sent                     │
+|                                                          │
+| 📝 Audit Logger:                                         │
+|   - Logs: Agent action, timestamp, approval chain        │
+|   - Stores: For 365 days (compliance requirement)       │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+✅ STEP 9: OUTPUT DELIVERY
+┌─────────────────────────────────────────────────────────┐
+| Customer Response:                                      │
+| "I've reviewed your account and found the duplicate     │
+|  charge. I've processed a refund of $49.99 which should  │
+|  appear on your statement within 3-5 business days."    │
+|                                                          │
+| Manager Report:                                          │
+| "Billing refund processed: $49.99 for customer #12345    │
+|  by Billing Agent - Auto-approved (confidence: 0.92)"   │
+└─────────────────────────────────────────────────────────┘
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+🏢 Complete Hierarchy Structure
+
+
+TIER 0: GOVERNANCE & ETHICS
+═══════════════════════════════════════════════════════════════════════════════
+                              ┌─────────────┐
+                              │   🛡️        │
+                              │ AI ETHICS   │
+                              │   BOARD     │
+                              │             │
+                              │ • Bias Audit│
+                              │ • Compliance│
+                              │ • Fairness  │
+                              └──────┬──────┘
+                                     │
+                              ┌─────────────┐
+                              │   🔒        │
+                              │ CISO-AI     │
+                              │             │
+                              │ • Security  │
+                              │ • Privacy   │
+                              │ • Risk Mgmt │
+                              └──────┬──────┘
+                                     │
+
+TIER 1: C-SUITE EXECUTIVES (15 Agents)
+═══════════════════════════════════════════════════════════════════════════════
+                                     ▼
+                              ┌─────────────────┐
+                              │        👑        │
+                              │       CEO        │
+                              │ Chief Executive  │
+                              │     Officer      │
+                              │                  │
+                              │ • Vision         │
+                              │ • Strategy       │
+                              │ • Final Decisions│
+                              └────────┬─────────┘
+                                       │
+        ┌──────────┬──────────┬──────────┼──────────┬──────────┐
+        │          │          │          │          │          │
+        ▼          ▼          ▼          ▼          ▼          ▼
+     ┌──────┐  ┌──────┐  ┌──────┐  ┌──────┐  ┌──────┐  ┌──────┐
+     │  💰  │  │  ⚙️  │  │  💻  │  │  📢  │  │  👥  │  │  🎧  │
+     │  CFO │  │  COO │  │  CTO │  │  CMO │  │ CHRO │  │  CCO │
+     │Finance│ │  Ops  │  │ Tech  │  │Marketing│ │  HR   │ │  CX   │
+     └──┬───┘  └──┬───┘  └──┬───┘  └──┬───┘  └──┬───┘  └──┬───┘
+        │         │         │         │         │         │
+        └─────────┴─────────┴─────────┴─────────┴─────────┘
+                                       │
+        ┌──────────┬──────────┬──────────┼──────────┬──────────┐
+        │          │          │          │          │          │
+        ▼          ▼          ▼          ▼          ▼          ▼
+     ┌──────┐  ┌──────┐  ┌──────┐  ┌──────┐  ┌──────┐  ┌──────┐
+     │  📊  │  │  🏛️  │  │  🎲  │  │  🏥  │  │  🔒  │  │  ⚖️  │
+     │  CIO │  │ CREO │  │  CRO │  │CMO-HC│ │ CISO │  │  CLO │
+     │Trading│ │ Real  │ │ Risk │ │Health│ │Security│ │ Legal │
+     └──┬───┘  └──┬───┘  └──┬───┘  └──┬───┘  └──┬───┘  └──┬───┘
+        │         │         │         │         │         │
+        └─────────┴─────────┴─────────┴─────────┴─────────┘
+                                       │
+
+TIER 2: INTELLIGENCE LAYER (3 Components)
+═══════════════════════════════════════════════════════════════════════════════
+                                     ▼
+        ┌──────────────────────────────────────────────────┐
+        │           🔮 PREDICTIVE ENGINE                    │
+        │  • Demand Forecasting    • Churn Prediction      │
+        │  • Trend Analysis         • Revenue Prediction    │
+        └──────────────────────────────────────────────────┘
+        ┌──────────────────────────────────────────────────┐
+        │           😊 SENTIMENT CORE                        │
+        │  • Emotion Detection      • Satisfaction Tracking │
+        │  • Mood-based Routing     • Empathy Scoring       │
+        └──────────────────────────────────────────────────┘
+        ┌──────────────────────────────────────────────────┐
+        │           ⚡ ANOMALY DETECTOR                      │
+        │  • Fraud Detection        • Security Threats      │
+        │  • Pattern Breaks         • Risk Warnings         │
+        └──────────────────────────────────────────────────┘
+                                       │
+
+TIER 3: LAYER BRIDGE
+═══════════════════════════════════════════════════════════════════════════════
+                                     ▼
+                              ┌─────────────┐
+                              │   🌉        │
+                              │LAYER BRIDGE │
+                              │             │
+                              │ Translation  │
+                              │ Filtering    │
+                              │ Routing      │
+                              │ Alignment    │
+                              └──────┬──────┘
+
+TIER 4: ADVANCED COMMAND CENTER (7 Components)
+═══════════════════════════════════════════════════════════════════════════════
+                                     ▼
+                              ┌─────────────┐
+                              │   🎯        │
+                              │   CDOO       │
+                              │ Chief Digital│
+                              │ & Ops Officer│
+                              └──────┬──────┘
+                                     │
+        ┌──────────┬──────────┬──────────┼──────────┬──────────┐
+        │          │          │          │          │          │
+        ▼          ▼          ▼          ▼          ▼          ▼
+     ┌──────┐  ┌──────┐  ┌──────┐  ┌──────┐  ┌──────┐  ┌──────┐
+     │  🔧  │  │  👷  │  │  🤖  │  │  🔮  │  │  🐝  │  │  📚  │
+     │  DDO │  │  WOL │  │  AOD │  │ PRED │  │SWARM │  │LEARN │
+     │Digital│ │Workforce│ │Auto  │ │Predictive│ │Swarm │ │Learning│
+     │Director│ │Ops Lead│ │Ops   │ │Ops     │ │Intel │ │Engine │
+     └──┬───┘  └──┬───┘  └──┬───┘  └──┬───┘  └──┬───┘  └──┬───┘
+        │         │         │         │         │         │
+        └─────────┴─────────┴─────────┴─────────┴─────────┘
+                                       │
+
+TIER 5: DEPARTMENTS (21 Teams)
+═══════════════════════════════════════════════════════════════════════════════
+                                     ▼
+    Finance  Technology  Marketing  Sales  Customer  Operations  HR  Legal
+    ───────  ─────────  ────────  ────  ────────  ─────────  ──  ────
+       │         │          │        │        │          │        │    │
+       └─────────┴──────────┴────────┴────────┴──────────┴────────┴────┘
+                                       │
+
+TIER 6: AI AGENT WORKFORCE (199+ Agents)
+═══════════════════════════════════════════════════════════════════════════════
+                                     ▼
+    ┌─────────────────────────────────────────────────────────┐
+    │                    🤖 AI AGENTS                          │
+    │  • REACTIVE Agents (199) - 24/7 availability             │
+    │  • LEARNING Agents (120) - 60% of workforce             │
+    │  • SWARM Agents (Unlimited) - On-demand scaling         │
+    └─────────────────────────────────────────────────────────┘
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    🧠 Agent Brain System Workflow
+
+
+📚 STEP 1: BRAIN INITIALIZATION
+┌─────────────────────────────────────────────────────────┐
+| import { createAgentBrainContext } from '@/lib/agents-brain/agent-integration';
+|                                                          │
+| const brain = createAgentBrainContext('marketing-agent-1', 'marketing');
+| await brain.initialize();
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+📄 STEP 2: DOCUMENT INGESTION (One-Time)
+┌─────────────────────────────────────────────────────────┐
+| 📥 Raw Sources:                                          │
+|   • ./documents/q4-strategy.pdf (10,000 tokens)         │
+|   • ./documents/budget.xlsx (8,000 tokens)             │
+|   • ./documents/campaign-plans.docx (12,000 tokens)    │
+|                                                          │
+| 🤖 LLM Processing:                                       │
+|   • Analyzes documents with chain-of-thought            │
+|   • Extracts key concepts, entities, relationships      │
+|   • Generates structured wiki pages                     │
+|                                                          │
+| 📝 Generated Wiki Pages:                                 │
+|   • q4-strategy.md (500 tokens) - 95% reduction         │
+|   • budget-allocation.md (400 tokens) - 95% reduction  │
+|   • campaign-timeline.md (450 tokens) - 96% reduction  │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+🔍 STEP 3: QUERY PROCESSING
+┌─────────────────────────────────────────────────────────┐
+| Agent Query: "What is our Q4 marketing strategy?"       │
+|                                                          │
+| 🔎 Brain Query Process:                                  │
+|   1. Searches wiki pages (not raw files)                │
+|   2. Finds: q4-strategy.md, campaign-timeline.md       │
+|   3. Calculates relevance scores                        │
+|   4. Returns: Structured knowledge                      │
+|                                                          │
+| 💰 Token Usage:                                          │
+|   • Without Brain: 30,000 tokens (raw files)             │
+|   • With Brain: 1,350 tokens (wiki pages)                │
+|   • Savings: 28,650 tokens (95.5% savings)              │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+✅ STEP 4: KNOWLEDGE DELIVERY
+┌─────────────────────────────────────────────────────────┐
+| Agent Response:                                          │
+| "Our Q4 strategy focuses on:                             │
+|  1. Digital channel expansion (40% budget increase)     │
+|  2. Holiday season campaign (Nov-Dec)                   │
+|  3. Customer retention program (15% budget)             │
+|  4. New product launch marketing (25% budget)"           │
+|                                                          │
+| 📊 Statistics:                                           │
+|   • Query time: 150ms                                   │
+|   • Confidence: 0.94                                    │
+|   • Sources: 3 wiki pages                               │
+│   • Token savings: 28,650                               │
+└─────────────────────────────────────────────────────────┘
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+🤖 Agent-to-Agent Collaboration Example
+
+🎯 STEP 1: INITIAL REQUEST
+┌─────────────────────────────────────────────────────────┐
+| Sales Agent receives: "$500K enterprise deal inquiry"   │
+| Requires: Pricing approval + Marketing collateral + Legal review
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+🤝 STEP 2: A2A CONSULTATION
+┌─────────────────────────────────────────────────────────┐
+| 🤖 Sales Agent initiates consultation:                  │
+|                                                          │
+| 💬 To Marketing Agent:                                  │
+|   "Need enterprise marketing collateral for $500K deal"  │
+|   • Domain: proposal_creation                           │
+|   • Priority: HIGH                                      │
+|   • Expertise needed: enterprise_marketing               │
+│                                                          │
+| 💬 To Finance Agent:                                    │
+|   "Request pricing approval for $500K enterprise deal"   │
+|   • Domain: pricing_integration                          │
+|   • Priority: CRITICAL                                  │
+|   • Expertise needed: enterprise_pricing                 │
+│                                                          │
+| 💬 To Legal Agent:                                      │
+|   "Need contract review for enterprise agreement"        │
+|   • Domain: contract_review                              │
+|   • Priority: HIGH                                      │
+|   • Expertise needed: enterprise_contracts               │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+🧠 STEP 3: PARALLEL PROCESSING
+┌─────────────────────────────────────────────────────────┐
+| 📊 Marketing Agent:                                     │
+|   • Queries brain for enterprise collateral templates     │
+|   • Customizes for client industry                      │
+|   • Generates proposal materials                        │
+|   • Response time: 2.3 seconds                          │
+│                                                          │
+| 💰 Finance Agent:                                       │
+|   • Analyzes deal profitability                          │
+|   • Checks discount approval limits                      │
+|   • Calculates commission structure                       │
+|   • Approves pricing: 15% discount                      │
+|   • Response time: 1.8 seconds                          │
+│                                                          │
+| ⚖️ Legal Agent:                                         │
+|   • Reviews standard enterprise agreement                │
+|   • Checks compliance requirements                       │
+|   • Identifies custom clauses needed                     │
+|   • Flags: 2 clauses need executive approval           │
+|   • Response time: 3.1 seconds                          │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+🔄 STEP 4: COLLABORATION & COORDINATION
+┌─────────────────────────────────────────────────────────┐
+| 🤖 Sales Agent compiles responses:                      │
+|                                                          │
+| ✅ Marketing: Collateral ready                          │
+| ✅ Finance: Pricing approved (15% discount)            │
+| ⚠️  Legal: 2 clauses need CEO approval                  │
+│                                                          │
+| 🔄 Escalation to CEO:                                   │
+|   "Legal flagged 2 custom clauses requiring approval:    │
+|    1. Extended payment terms (60 days vs 30)             │
+|    2. Custom SLA requirements                           │
+|    Please advise on approval."                           │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+👑 STEP 5: EXECUTIVE APPROVAL
+┌─────────────────────────────────────────────────────────┐
+| CEO reviews:                                             │
+|   • Deal value: $500K                                    │
+|   • Client: Strategic prospect                          │
+|   • Risk assessment: LOW                                │
+|                                                          │
+| CEO Decision:                                           │
+|   "Approve custom clauses with conditions:              │
+|    - Payment terms: 45 days (compromise)                 │
+|    - SLA: Include performance penalties"                 │
+|   Confidence: 0.92                                       │
+|   Auto-approved within CEO autonomy limits              │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+✅ STEP 6: FINAL RESPONSE
+┌─────────────────────────────────────────────────────────┐
+| Sales Agent delivers complete package:                  │
+|                                                          │
+| ✅ Enterprise proposal (customized by Marketing)        │
+| ✅ Pricing schedule (approved by Finance)               │
+| ✅ Contract with approved clauses (reviewed by Legal)   │
+| ✅ CEO approval confirmation                            │
+|                                                          │
+| 📊 Performance Metrics:                                 │
+|   • Total processing time: 8.2 seconds                   │
+|   • Human intervention: 0 (fully autonomous)            │
+|   • Agents involved: 4 (Sales, Marketing, Finance, Legal) │
+|   • Token usage: 3,200 (optimized via hierarchy)         │
+└─────────────────────────────────────────────────────────┘
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+🛡️ Privacy Layer Example
+
+🔒 PRIVACY LAYER WORKFLOW
+═══════════════════════════════════════════════════════════════════════════════
+
+📥 INPUT: Doctor requests patient history for "John Smith"
+                         │
+                         ▼
+🔍 STEP 1: DATA CLASSIFICATION
+┌─────────────────────────────────────────────────────────┐
+| 🔍 Data Classifier Analysis:                           │
+|   • Data Type: HEALTH + PII (Protected Health Info)     │
+|   • Classification: RESTRICTED                          │
+|   • Sensitivity: HIGH                                   │
+|   • Compliance: HIPAA required                         │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+✅ STEP 2: PURPOSE VALIDATION
+┌─────────────────────────────────────────────────────────┐
+| ✅ Purpose Validator:                                   │
+|   • Request purpose: Medical treatment                  │
+|   • Requester role: Healthcare Provider                 │
+|   • Valid purpose: YES (direct care)                    │
+|   • Consent: Verified (patient on file)                 │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+🛡️ STEP 3: ACCESS CONTROL
+┌─────────────────────────────────────────────────────────┐
+| 🛡️ Access Controller:                                  │
+|   • User: Dr. Sarah Johnson (authenticated)             │
+|   • Role: Healthcare Provider                           │
+|   • Permission: Patient records for active patients     │
+|   • Scope: John Smith (verified patient relationship)   │
+|   • Access: GRANTED                                     │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+🎭 STEP 4: DATA MASKING (Agent Gate)
+┌─────────────────────────────────────────────────────────┐
+| 🎭 Data Masker:                                         │
+|   BEFORE:                                                │
+|     John Smith                                          │
+|     SSN: 123-45-6789                                    │
+|     Address: 123 Main St, Anytown, USA                  │
+|                                                          │
+|   AFTER:                                                 │
+|     John S***                                           │
+|     SSN: ***-**-6789                                    │
+|     Address: 123 M*** St, A******, USA                 │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+🔎 STEP 5: CONTEXT FILTERING
+┌─────────────────────────────────────────────────────────┐
+| 🔎 Context Filter:                                      │
+|   • Agent sees: Relevant medical history only          │
+|   • Hidden: Financial information, other patients      │
+|   • Scope: Treatment-relevant data (last 2 years)       │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+🤖 STEP 6: AGENT PROCESSING
+┌─────────────────────────────────────────────────────────┐
+| 🤖 Healthcare Agent:                                    │
+|   • Accesses masked patient records                     │
+|   • Reviews medical history                             │
+|   • Identifies relevant conditions                     │
+|   • Generates treatment recommendations                 │
+│   • Never sees unmasked PII                             │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+🧹 STEP 7: OUTPUT SANITIZATION
+┌─────────────────────────────────────────────────────────┐
+| 🧹 Output Sanitizer:                                    │
+|   • Removes: Internal system IDs                        │
+|   • Removes: Agent decision logs                        │
+|   • Ensures: No PII in external communications          │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+📋 STEP 8: COMPLIANCE CHECKING
+┌─────────────────────────────────────────────────────────┐
+| 📋 Compliance Checker:                                  │
+|   • HIPAA: Compliant                                     │
+|   • Data minimization: Applied                          │
+|   • Access logging: Complete                            │
+|   • Audit trail: Maintained                             │
+└─────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+📝 STEP 9: AUDIT LOGGING
+┌─────────────────────────────────────────────────────────┐
+| 📝 Audit Logger:                                        │
+|   • Timestamp: 2026-06-13 14:32:15 UTC                  │
+|   • User: Dr. Sarah Johnson                             │
+|   • Patient: John S*** (masked)                         │
+|   • Purpose: Medical treatment                          │
+|   • Data accessed: Medical history (masked)              │
+|   • Retention: 7 years (HIPAA requirement)              │
+└─────────────────────────────────────────────────────────┘
+
+
+
+
+
+
+
+
+
+
+🎯 Key Takeaways
+How It Works:
+Input → Privacy Gate → Executive Layer → Command Center → Privacy Gate → Agents → Privacy Gate → Output
+12-Layer Architecture provides sophisticated governance, intelligence, and execution
+Agent Brain System reduces token costs by 90%+ through structured knowledge
+Human-on-the-Loop enables autonomous operation with safety guarantees
+Multi-Agent Collaboration allows complex tasks through agent-to-agent consultation
+Privacy Layer ensures compliance at every stage of data processing
+
+Performance Benefits:
+3x faster response times (600ms vs 2s)
+89% cost reduction through optimization
+98% accuracy through hierarchical intelligence
+Zero human intervention for 94% of tasks
+Complete audit trail for compliance

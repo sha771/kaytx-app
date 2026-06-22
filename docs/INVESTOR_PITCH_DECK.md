@@ -161,7 +161,7 @@
 
 **AI Services**
 - Multi-provider AI model abstraction (OpenAI, Anthropic, Local)
-- 600+ pre-built AI agents across 22 departments
+- 6,184 pre-built AI agents across 100 directories
 - Context-aware conversations with persistent memory
 - Custom AI agent workflows
 - Real-time AI calling with voice transcription
@@ -357,7 +357,7 @@
 **Advanced AI Features**
 
 **Multi-Agent Coordination**
-- 600+ pre-built agents across 22 departments
+- 6,184 pre-built agents across 100 directories
 - Hierarchical agent relationships
 - Parallel and sequential execution
 - Dynamic strategy selection

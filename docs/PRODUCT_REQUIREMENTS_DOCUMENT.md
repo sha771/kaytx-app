@@ -188,7 +188,7 @@ Kaytx provides a unified, AI-native enterprise platform that:
 #### Custom AI Agent Workflows
 - **Description**: Configurable automation pipelines with AI agents
 - **Capabilities**:
-  - 600+ pre-built AI agents across 22 departments
+  - 6,184 pre-built AI agents across 100 directories
   - Custom agent creation and configuration
   - Agent coordination and orchestration
   - Workflow templates and blueprints
@@ -418,7 +418,7 @@ Kaytx provides a unified, AI-native enterprise platform that:
 #### FR-2.2 AI Agent Management
 - **Description**: Users can manage AI agents and workflows
 - **Requirements**:
-  - Browse 600+ pre-built agents
+  - Browse 6,184 pre-built agents
   - Create custom agents
   - Configure agent parameters
   - Monitor agent performance

@@ -181,6 +181,17 @@ export default function AgentActivityScreen() {
     setTimeout(() => setRefreshing(false), 1500);
   }, []);
 
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'online': return CircleCheck;
+      case 'busy': return Activity;
+      case 'idle': return Clock;
+      case 'offline': return CircleX;
+      case 'error': return TriangleAlert;
+      case 'maintenance': return Settings;
+      default: return Circle;
+    }
+  };
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'online': return '#34C759';
@@ -190,7 +201,9 @@ export default function AgentActivityScreen() {
       case 'error': return '#FF3B30';
       case 'maintenance': return '#AF52DE';
       default: return '#8E8E93';
-}
+    }
+  };
+
 
   const getActivityStatusIcon = (status: string) => {
     switch (status) {
@@ -530,7 +543,7 @@ export default function AgentActivityScreen() {
       <View style={styles.filterRow}>
         {(['all', 'main', 'sub'] as const).map((Filter) => (
           <TouchableOpacity
-            key={Funnel}
+            key={Filter}
             style={[
               styles.filterBtn,
               selectedFilter === Filter && { backgroundColor: theme.colors.primary },

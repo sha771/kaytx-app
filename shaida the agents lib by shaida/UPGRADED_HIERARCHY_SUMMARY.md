@@ -4,6 +4,8 @@
 
 The Kaytx AI Workforce hierarchy has been **fully upgraded** with advanced intelligence layers, new C-Suite roles, token optimization, and enhanced agent capabilities.
 
+**Platform Scale Update (June 21, 2026):** The platform has significantly expanded to **6,230 agents across 39 main departments**, representing a 2.8x growth from the previously documented scale. This hierarchy summary describes the organizational structure that now supports this enterprise-scale AI workforce with a unified department structure.
+
 ---
 
 ## **📁 Files Created/Updated**
@@ -85,33 +87,53 @@ Tier 4: ADVANCED COMMAND CENTER (7 components)  ← UPGRADED
 ├── 🐝 SWARM (Swarm Intelligence Controller)      ← NEW
 └── 📚 LEARN (Learning & Adaptation Engine)     ← NEW
 
-Tier 5: DEPARTMENTS (21 teams)
-├── Finance
-├── Technology
-├── Marketing
-├── Sales
-├── Customer Experience
-├── Operations
-├── Human Resources
-├── Legal & Compliance
-├── Data & Intelligence
-├── Product
-├── Security
-├── Research
-├── Administrative
-├── Trading & Investments
-├── Real Estate & Property
-├── Insurance & Risk
-├── Healthcare & Medical
-├── Manufacturing & Production
-├── Transportation & Logistics
-└── Government & Public
+Tier 5: DEPARTMENTS (39 main departments with equal status)
+├── Customer Experience (176 agents)
+├── Sales & Revenue (182 agents)
+├── Marketing (215 agents)
+├── Operations (218 agents)
+├── Finance (171 agents)
+├── Human Resources (134 agents)
+├── Legal (236 agents)
+├── Data & Intelligence (186 agents)
+├── Product (176 agents)
+├── Security (190 agents)
+├── Research & Development (144 agents)
+├── Administrative (113 agents)
+├── Trading & Investments (213 agents)
+├── Real Estate (127 agents)
+├── Banking & Finance (112 agents)
+├── E-Commerce (173 agents)
+├── Professional Services (112 agents)
+├── Media & Entertainment (110 agents)
+├── Gaming & Esports (112 agents)
+├── Education (76 agents)
+├── Retail (109 agents)
+├── Travel & Tourism (129 agents)
+├── Energy & Utilities (111 agents)
+├── Event Management (117 agents)
+├── Healthcare (172 agents)
+├── Manufacturing (173 agents)
+├── Transportation (172 agents)
+├── Insurance (188 agents)
+├── Agriculture (110 agents)
+├── Fashion & Luxury (111 agents)
+├── Restaurants (112 agents)
+├── Supply Chain (216 agents)
+├── Executive Strategy (171 agents)
+├── Technology (140 agents)
+├── AI Management (125 agents)
+├── Government (126 agents)
+├── Cross-Department Integration (29 agents)
+├── Predictive Analytics (92 agents)
+└── Engineering (90 agents)
 
-Tier 6: AI AGENT WORKFORCE (199 agents)         ← UPGRADED
-├── REACTIVE Agents (199) - 24/7 availability
-├── PROACTIVE Agents (80) - 40% of workforce
-├── LEARNING Agents (120) - 60% of workforce
+Tier 6: AI AGENT WORKFORCE (6,230 agents)         ← UPGRADED
+├── REACTIVE Agents (3,700+) - 24/7 availability
+├── PROACTIVE Agents (2,470+) - 40% of workforce
+├── LEARNING Agents (3,700+) - 60% of workforce
 └── SWARM Agents (Unlimited) - On-demand scaling
+**Note:** Current platform features 6,230 agents across 39 main departments
 ```
 
 ---

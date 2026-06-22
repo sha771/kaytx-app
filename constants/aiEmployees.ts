@@ -318,7 +318,7 @@ export interface AIEmployee {
   capabilities: string[];
   route: string;
   category: 'sales' | 'marketing' | 'operations' | 'support' | 'analytics' | 'executive' | 'accounting' | 'customer-experience' | 'product-rnd' | 'social-media' | 'data-intelligence' | 'analysis-insights' | 'hr' | 'it-tech' | 'legal-compliance' | 'engineering-dev' | 'personal-assistant' | 'trading-investment' | 'finance';
-  type: 'employee' | 'agent';
+  type: 'employee' | 'agent' | 'enterprise-agent';
   replacesRole: string;
   infrastructure: AIInfrastructure;
   roiMetrics: AIROIMetrics;

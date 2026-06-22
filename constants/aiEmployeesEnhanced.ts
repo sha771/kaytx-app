@@ -632,6 +632,205 @@ export interface AnalyticsConfiguration {
 }
 
 // ============================================
+// HUMAN ON THE LOOP - AUTONOMY CONFIGURATION
+// ============================================
+
+export type AutonomyLevel = 'manual' | 'supervised' | 'autonomous' | 'fully_autonomous';
+
+export interface AutonomyConfig {
+  level: AutonomyLevel;
+  requiresApprovalFor: string[]; // Action types requiring approval
+  autoApproveThreshold: number; // Confidence threshold for auto-approval (0-1)
+  oversightMode: 'monitoring' | 'audit' | 'intervention';
+  interventionTriggers: {
+    confidenceBelow: number;
+    riskLevel: 'low' | 'medium' | 'high' | 'critical';
+    anomalyDetected: boolean;
+  };
+  monitoringInterval: number; // Seconds between oversight checks
+  auditLogRetention: number; // Days to keep audit logs
+}
+
+export interface InterventionCapability {
+  canPause: boolean;
+  canOverride: boolean;
+  canModify: boolean;
+  canRollback: boolean;
+  emergencyStop: boolean;
+}
+
+// ============================================
+// AGENT CONFIGURATION
+// ============================================
+
+export interface AgentConfiguration {
+  model: {
+    primary: string;
+    fallback?: string;
+    temperature: number;
+    maxTokens: number;
+    reasoning: 'none' | 'low' | 'medium' | 'high';
+  };
+  voice: {
+    enabled: boolean;
+    gender: 'male' | 'female' | 'neutral';
+    style: 'professional' | 'friendly' | 'casual' | 'formal' | 'energetic' | 'calm' | 'authoritative';
+    speed: 'slow' | 'normal' | 'fast';
+    tone: 'warm' | 'neutral' | 'bright' | 'deep' | 'soft';
+    pitch?: number;
+  };
+  language: {
+    primary: string;
+    secondary?: string;
+    translationEnabled: boolean;
+  };
+  personality: {
+    expertise: string;
+    communicationStyle: string;
+    responseLength: 'concise' | 'balanced' | 'detailed' | 'comprehensive';
+    age: 'young' | 'adult' | 'mature' | 'senior';
+  };
+  training: {
+    enabled: boolean;
+    schedule: 'manual' | 'daily' | 'weekly' | 'monthly';
+    dataRetention: number;
+    feedbackLearning: boolean;
+  };
+  dataUpload: {
+    enabled: boolean;
+    processingSchedule: 'immediate' | 'hourly' | 'daily' | 'weekly';
+    maxFileSize: number;
+    allowedFormats: string[];
+  };
+  advanced: {
+    responseCache: boolean;
+    priorityQueue: boolean;
+    rateLimiting: boolean;
+  };
+  security: {
+    privacyLevel: 'standard' | 'high' | 'maximum';
+    piiHandling: 'block' | 'mask' | 'anonymize' | 'allow';
+    encryptionEnabled: boolean;
+  };
+  // Human on the Loop Configuration
+  autonomy: AutonomyConfig;
+  interventionCapabilities: InterventionCapability;
+}
+
+// ============================================
+// DEFAULT AGENT CONFIGURATION
+// ============================================
+
+export const defaultAgentConfiguration: AgentConfiguration = {
+  model: {
+    primary: 'gpt-4o-mini',
+    fallback: 'gpt-4o',
+    temperature: 0.7,
+    maxTokens: 2048,
+    reasoning: 'medium',
+  },
+  voice: {
+    enabled: false,
+    gender: 'neutral',
+    style: 'professional',
+    speed: 'normal',
+    tone: 'neutral',
+    pitch: 1.0,
+  },
+  language: {
+    primary: 'en',
+    secondary: undefined,
+    translationEnabled: false,
+  },
+  personality: {
+    expertise: 'intermediate',
+    communicationStyle: 'professional',
+    responseLength: 'balanced',
+    age: 'adult',
+  },
+  training: {
+    enabled: false,
+    schedule: 'weekly',
+    dataRetention: 30,
+    feedbackLearning: true,
+  },
+  dataUpload: {
+    enabled: false,
+    processingSchedule: 'daily',
+    maxFileSize: 10485760, // 10MB
+    allowedFormats: ['pdf', 'docx', 'txt', 'csv', 'json'],
+  },
+  advanced: {
+    responseCache: true,
+    priorityQueue: false,
+    rateLimiting: true,
+  },
+  security: {
+    privacyLevel: 'standard',
+    piiHandling: 'mask',
+    encryptionEnabled: true,
+  },
+  // Human on the Loop - Default to supervised mode
+  autonomy: {
+    level: 'supervised',
+    requiresApprovalFor: ['high_risk', 'critical_actions', 'data_modification'],
+    autoApproveThreshold: 0.85,
+    oversightMode: 'monitoring',
+    interventionTriggers: {
+      confidenceBelow: 0.7,
+      riskLevel: 'medium',
+      anomalyDetected: true,
+    },
+    monitoringInterval: 60,
+    auditLogRetention: 180,
+  },
+  interventionCapabilities: {
+    canPause: true,
+    canOverride: true,
+    canModify: true,
+    canRollback: true,
+    emergencyStop: true,
+  },
+};
+
+export const createAgentConfiguration = (category: string): AgentConfiguration => {
+  const baseConfig = { ...defaultAgentConfiguration };
+  
+  // Customize based on category
+  switch (category) {
+    case 'security':
+    case 'legal-compliance':
+      baseConfig.autonomy.level = 'manual';
+      baseConfig.autonomy.requiresApprovalFor = ['*'];
+      baseConfig.autonomy.autoApproveThreshold = 1.0;
+      break;
+    case 'finance-accounting':
+    case 'trading-investments':
+      baseConfig.autonomy.level = 'supervised';
+      baseConfig.autonomy.requiresApprovalFor = ['high_risk', 'critical_actions', 'financial_transactions'];
+      baseConfig.autonomy.autoApproveThreshold = 0.9;
+      break;
+    case 'customer-experience':
+    case 'marketing-growth':
+      baseConfig.autonomy.level = 'autonomous';
+      baseConfig.autonomy.requiresApprovalFor = ['critical_actions'];
+      baseConfig.autonomy.autoApproveThreshold = 0.7;
+      break;
+    case 'technology-engineering':
+    case 'operations-management':
+      baseConfig.autonomy.level = 'autonomous';
+      baseConfig.autonomy.requiresApprovalFor = ['critical_actions', 'system_changes'];
+      baseConfig.autonomy.autoApproveThreshold = 0.75;
+      break;
+    default:
+      // Keep default supervised mode
+      break;
+  }
+  
+  return baseConfig;
+};
+
+// ============================================
 // HELPER FUNCTIONS FOR AGENT CONFIGURATION
 // ============================================
 

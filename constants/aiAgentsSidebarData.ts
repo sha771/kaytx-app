@@ -16,7 +16,7 @@ import {
   Network, Bitcoin, Leaf, Plane, ShoppingCart, Wrench, Construction, Key,
   Cloud, Grid3X3, ListOrdered, Ruler, Hammer, Undo2, UserCheck, User,
   Play, Map, BadgeCheck, CreditCard, Folder, ArrowRight,
-  CheckCircle, TestTube,
+  CheckCircle, TestTube, Camera, Music, Mic, SearchCheck, HeartHandshake,
 } from 'lucide-react-native';
 
 export const aiAgentsSidebarSections = [
@@ -660,7 +660,7 @@ export const aiAgentsSidebarSections = [
         icon: Bot,
         items: [
           { id: '9-ai-data-strategy-advisor', title: 'AI Data Strategy Advisor', icon: Brain },
-          { id: '9-ai-ai-governance-enforcer', title: 'AI AI Governance Enforcer', icon: ShieldCheck },
+          { id: '9-ai-ai-governance-enforcer', title: 'AI Governance Enforcer', icon: ShieldCheck },
           { id: '9-ai-data-monetization-planner', title: 'AI Data Monetization Planner', icon: DollarSign },
           { id: '9-ai-research-direction-setter', title: 'AI Research Direction Setter', icon: Target },
           { id: '9-ai-model-validation-overseer', title: 'AI Model Validation Overseer', icon: CheckCircle },
@@ -1629,6 +1629,220 @@ export const aiAgentsSidebarSections = [
           { id: '22-ai-workflow-designer', title: 'AI Workflow Designer', icon: Workflow },
           { id: '22-ai-integration-builder', title: 'AI Integration Builder', icon: Link },
           { id: '22-ai-trigger-configurator', title: 'AI Trigger Configurator', icon: Settings },
+        ]
+      },
+    ]
+  },
+
+  // DEPT 0: CROSS-DEPARTMENT AGENTS (27 Total)
+  // Intelligence, Governance, Command, Bridge & Enterprise-wide agents
+  // These agents serve all departments and connect the entire AI workforce
+  // Unique IDs assigned via aiAgentRegistry.ts (ktx-00-* format)
+  {
+    id: 'dept0-cross-department',
+    title: '0: Cross-Department (27)',
+    icon: Network,
+    subSections: [
+      {
+        id: 'dept0-intelligence',
+        title: 'Intelligence Layer (3)',
+        icon: Brain,
+        items: [
+          { id: '0-ai-predictive-engine', title: 'AI Predictive Engine', icon: Brain },
+          { id: '0-ai-sentiment-core', title: 'AI Sentiment Core', icon: Heart },
+          { id: '0-ai-anomaly-detector', title: 'AI Anomaly Detector', icon: AlertTriangle },
+        ]
+      },
+      {
+        id: 'dept0-command',
+        title: 'Command & Orchestration (3)',
+        icon: Zap,
+        items: [
+          { id: '0-ai-swarm-controller', title: 'AI Swarm Controller', icon: Network },
+          { id: '0-ai-learn-engine', title: 'AI Learn Engine', icon: Brain },
+          { id: '0-ai-orchestrator', title: 'AI Orchestrator', icon: Layers },
+        ]
+      },
+      {
+        id: 'dept0-governance',
+        title: 'Governance & Oversight (4)',
+        icon: Shield,
+        items: [
+          { id: '0-ai-governance-overseer', title: 'AI Governance Overseer', icon: Shield },
+          { id: '0-ai-compliance-guardian', title: 'AI Compliance Guardian', icon: ShieldCheck },
+          { id: '0-ai-ethics-monitor', title: 'AI Ethics Monitor', icon: Scale },
+          { id: '0-ai-bias-detector', title: 'AI Bias Detector', icon: Eye },
+        ]
+      },
+      {
+        id: 'dept0-bridge',
+        title: 'Bridge Agents (3)',
+        icon: Link,
+        items: [
+          { id: '0-ai-layer-bridge', title: 'AI Layer Bridge', icon: Link },
+          { id: '0-ai-dept-liaison', title: 'AI Department Liaison', icon: Users },
+          { id: '0-ai-cross-functional-coordinator', title: 'AI Cross-Functional Coordinator', icon: Network },
+        ]
+      },
+      {
+        id: 'dept0-enterprise',
+        title: 'Enterprise Services (10)',
+        icon: Building,
+        items: [
+          { id: '0-ai-enterprise-architect', title: 'AI Enterprise Architect', icon: Building2 },
+          { id: '0-ai-innovation-catalyst', title: 'AI Innovation Catalyst', icon: Lightbulb },
+          { id: '0-ai-change-management-agent', title: 'AI Change Management Agent', icon: RefreshCw },
+          { id: '0-ai-crisis-response-coordinator', title: 'AI Crisis Response Coordinator', icon: AlertTriangle },
+          { id: '0-ai-knowledge-synthesizer', title: 'AI Knowledge Synthesizer', icon: BookOpen },
+          { id: '0-ai-performance-benchmark', title: 'AI Performance Benchmark', icon: Target },
+          { id: '0-ai-resource-optimizer', title: 'AI Resource Optimizer', icon: Zap },
+          { id: '0-ai-strategy-simulator', title: 'AI Strategy Simulator', icon: FlaskConical },
+          { id: '0-ai-talent-mobility-agent', title: 'AI Talent Mobility Agent', icon: UserPlus },
+          { id: '0-ai-vendor-management-agent', title: 'AI Vendor Management Agent', icon: Handshake },
+        ]
+      },
+      {
+        id: 'dept0-sub',
+        title: 'Sub-Agents (4)',
+        icon: Bot,
+        items: [
+          { id: '0-ai-model-validator', title: 'AI Model Validator', icon: ShieldCheck },
+          { id: '0-ai-audit-trail-agent', title: 'AI Audit Trail Agent', icon: Clipboard },
+          { id: '0-ai-data-lineage-tracker', title: 'AI Data Lineage Tracker', icon: GitBranch },
+          { id: '0-ai-feedback-loop-agent', title: 'AI Feedback Loop Agent', icon: RefreshCw },
+        ]
+      },
+    ]
+  },
+  // DEPT 23: PROFESSIONAL SERVICES (10 Main + 30 Sub = 40 Total)
+  {
+    id: 'dept23-professional-services',
+    title: '23: Professional Services (40)',
+    icon: Briefcase,
+    subSections: [
+      {
+        id: 'dept23-main',
+        title: 'Main Agents (10)',
+        icon: Briefcase,
+        items: [
+          { id: 'consulting-manager', title: 'AI Consulting Manager', icon: Briefcase },
+          { id: 'project-manager', title: 'AI Project Manager', icon: LayoutDashboard },
+          { id: 'business-analyst', title: 'AI Business Analyst', icon: ChartBarBig },
+          { id: 'solutions-architect', title: 'AI Solutions Architect', icon: Building2 },
+          { id: 'change-management-lead', title: 'AI Change Management Lead', icon: RefreshCw },
+          { id: 'quality-assurance-lead', title: 'AI Quality Assurance Lead', icon: ShieldCheck },
+          { id: 'training-coordinator', title: 'AI Training Coordinator', icon: GraduationCap },
+          { id: 'client-success-manager', title: 'AI Client Success Manager', icon: Users },
+          { id: 'proposal-writer', title: 'AI Proposal Writer', icon: FileText },
+          { id: 'contract-manager', title: 'AI Contract Manager', icon: FileCheck },
+        ]
+      },
+      {
+        id: 'dept23-sub',
+        title: 'Sub-Agents (30)',
+        icon: Bot,
+        items: [
+          { id: 'solution-architect', title: 'AI Solution Architect', icon: Building2 },
+          { id: 'project-coordinator', title: 'AI Project Coordinator', icon: LayoutDashboard },
+          { id: 'resource-scheduler', title: 'AI Resource Scheduler', icon: Calendar },
+          { id: 'quality-assurance-specialist', title: 'AI Quality Assurance Specialist', icon: ShieldCheck },
+          { id: 'business-process-optimizer', title: 'AI Business Process Optimizer', icon: Workflow },
+          { id: 'change-management-specialist', title: 'AI Change Management Specialist', icon: RefreshCw },
+          { id: 'training-developer', title: 'AI Training Developer', icon: GraduationCap },
+          { id: 'client-onboarding-specialist', title: 'AI Client Onboarding Specialist', icon: UserPlus },
+          { id: 'proposal-specialist', title: 'AI Proposal Specialist', icon: FileText },
+          { id: 'contract-specialist', title: 'AI Contract Specialist', icon: FileCheck },
+          { id: 'requirements-analyst', title: 'AI Requirements Analyst', icon: Search },
+          { id: 'risk-assessment-specialist', title: 'AI Risk Assessment Specialist', icon: AlertTriangle },
+          { id: 'stakeholder-manager', title: 'AI Stakeholder Manager', icon: Users },
+          { id: 'delivery-coordinator', title: 'AI Delivery Coordinator', icon: Truck },
+          { id: 'performance-analyst', title: 'AI Performance Analyst', icon: BarChart3 },
+          { id: 'knowledge-manager', title: 'AI Knowledge Manager', icon: BookOpen },
+          { id: 'compliance-specialist', title: 'AI Compliance Specialist', icon: Shield },
+          { id: 'audit-specialist', title: 'AI Audit Specialist', icon: Clipboard },
+          { id: 'vendor-manager', title: 'AI Vendor Manager', icon: Handshake },
+          { id: 'budget-analyst', title: 'AI Budget Analyst', icon: DollarSign },
+          { id: 'capacity-planner', title: 'AI Capacity Planner', icon: Gauge },
+          { id: 'service-desk-agent', title: 'AI Service Desk Agent', icon: Headphones },
+          { id: 'documentation-specialist', title: 'AI Documentation Specialist', icon: FileText },
+          { id: 'testing-coordinator', title: 'AI Testing Coordinator', icon: TestTube },
+          { id: 'deployment-specialist', title: 'AI Deployment Specialist', icon: Rocket },
+          { id: 'support-analyst', title: 'AI Support Analyst', icon: MessageSquare },
+          { id: 'reporting-specialist', title: 'AI Reporting Specialist', icon: ChartPie },
+          { id: 'workflow-optimizer', title: 'AI Workflow Optimizer', icon: Workflow },
+          { id: 'process-mapper', title: 'AI Process Mapper', icon: Map },
+          { id: 'service-catalog-manager', title: 'AI Service Catalog Manager', icon: ListOrdered },
+        ]
+      },
+    ]
+  },
+  // DEPT 24: MEDIA & ENTERTAINMENT (12 Main + 36 Sub = 48 Total)
+  {
+    id: 'dept24-media-entertainment',
+    title: '24: Media & Entertainment (48)',
+    icon: Video,
+    subSections: [
+      {
+        id: 'dept24-main',
+        title: 'Main Agents (12)',
+        icon: Video,
+        items: [
+          { id: 'content-director', title: 'AI Content Director', icon: Video },
+          { id: 'media-producer', title: 'AI Media Producer', icon: Radio },
+          { id: 'creative-director', title: 'AI Creative Director', icon: Palette },
+          { id: 'entertainment-manager', title: 'AI Entertainment Manager', icon: Star },
+          { id: 'broadcast-coordinator', title: 'AI Broadcast Coordinator', icon: Radio },
+          { id: 'streaming-manager', title: 'AI Streaming Manager', icon: Play },
+          { id: 'content-strategist', title: 'AI Content Strategist', icon: Lightbulb },
+          { id: 'media-planner', title: 'AI Media Planner', icon: Calendar },
+          { id: 'audience-manager', title: 'AI Audience Manager', icon: Users },
+          { id: 'distribution-manager', title: 'AI Distribution Manager', icon: Share2 },
+          { id: 'licensing-manager', title: 'AI Licensing Manager', icon: Shield },
+          { id: 'analytics-director', title: 'AI Analytics Director', icon: BarChart3 },
+        ]
+      },
+      {
+        id: 'dept24-sub',
+        title: 'Sub-Agents (36)',
+        icon: Bot,
+        items: [
+          { id: 'content-editor', title: 'AI Content Editor', icon: Edit3 },
+          { id: 'media-planner', title: 'AI Media Planner', icon: Calendar },
+          { id: 'media-buyer', title: 'AI Media Buyer', icon: ShoppingCart },
+          { id: 'audience-analyst', title: 'AI Audience Analyst', icon: Users },
+          { id: 'campaign-manager', title: 'AI Campaign Manager', icon: Megaphone },
+          { id: 'video-producer', title: 'AI Video Producer', icon: Video },
+          { id: 'audio-producer', title: 'AI Audio Producer', icon: Radio },
+          { id: 'graphics-designer', title: 'AI Graphics Designer', icon: ImageIcon },
+          { id: 'motion-graphics', title: 'AI Motion Graphics', icon: Play },
+          { id: 'photographer', title: 'AI Photographer', icon: Camera },
+          { id: 'copywriter', title: 'AI Copywriter', icon: PenTool },
+          { id: 'seo-specialist', title: 'AI SEO Specialist', icon: Search },
+          { id: 'analytics-specialist', title: 'AI Analytics Specialist', icon: BarChart3 },
+          { id: 'content-researcher', title: 'AI Content Researcher', icon: SearchCheck },
+          { id: 'rights-manager', title: 'AI Rights Manager', icon: ShieldCheck },
+          { id: 'format-specialist', title: 'AI Format Specialist', icon: FileText },
+          { id: 'engagement-coordinator', title: 'AI Engagement Coordinator', icon: HeartHandshake },
+          { id: 'performance-tracker', title: 'AI Performance Tracker', icon: TrendingUp },
+          { id: 'social-media-manager', title: 'AI Social Media Manager', icon: Share2 },
+          { id: 'influencer-coordinator', title: 'AI Influencer Coordinator', icon: Star },
+          { id: 'content-scheduler', title: 'AI Content Scheduler', icon: CalendarClock },
+          { id: 'brand-manager', title: 'AI Brand Manager', icon: BadgeCheck },
+          { id: 'creative-writer', title: 'AI Creative Writer', icon: PenTool },
+          { id: 'script-writer', title: 'AI Script Writer', icon: FileText },
+          { id: 'story-editor', title: 'AI Story Editor', icon: Edit3 },
+          { id: 'visual-effects-artist', title: 'AI Visual Effects Artist', icon: ImageIcon },
+          { id: 'sound-engineer', title: 'AI Sound Engineer', icon: Radio },
+          { id: 'music-producer', title: 'AI Music Producer', icon: Music },
+          { id: 'podcast-producer', title: 'AI Podcast Producer', icon: Mic },
+          { id: 'live-stream-producer', title: 'AI Live Stream Producer', icon: Video },
+          { id: 'virtual-event-producer', title: 'AI Virtual Event Producer', icon: Monitor },
+          { id: 'content-moderator', title: 'AI Content Moderator', icon: Shield },
+          { id: 'copyright-specialist', title: 'AI Copyright Specialist', icon: FileCheck },
+          { id: 'distribution-specialist', title: 'AI Distribution Specialist', icon: Share2 },
+          { id: 'monetization-manager', title: 'AI Monetization Manager', icon: DollarSign },
+          { id: 'audience-insights-analyst', title: 'AI Audience Insights Analyst', icon: Eye },
+          { id: 'trend-analyst', title: 'AI Trend Analyst', icon: TrendingUp },
         ]
       },
     ]

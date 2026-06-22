@@ -57,7 +57,7 @@ import {
   createAgentConfiguration,
 } from '@/constants/aiAgentHierarchy';
 
-type ConfigSection = 'model' | 'voice' | 'language' | 'personality' | 'training' | 'data' | 'advanced' | 'security';
+type ConfigSection = 'model' | 'voice' | 'language' | 'personality' | 'training' | 'data' | 'advanced' | 'security' | 'autonomy';
 
 const modelOptions: { value: AIModelType; label: string; description: string; cost: string }[] = [
   { value: 'gpt-4o', label: 'GPT-4o', description: 'Most capable multimodal model', cost: 'High' },
@@ -226,328 +226,13 @@ export default function AgentConfigurationScreen() {
     } finally {
       setSaving(false);
     }
-    comprehensiveFeatures: {
-  "communicationChannels": {
-    "call": {
-      "enabled": true,
-      "provider": "Twilio",
-      "features": [
-        "PBX Integration",
-        "IVR Menu",
-        "Call Routing",
-        "Call Recording",
-        "Transcriptions"
-      ],
-      "recordingRetention": "90 days",
-      "consentLogging": true
-    },
-    "chatSystem": {
-      "enabled": true,
-      "platforms": [
-        "Web Widget",
-        "Slack",
-        "Intercom",
-        "Microsoft Teams"
-      ],
-      "persistentThreads": true,
-      "transcriptExport": true
-    },
-    "sms": {
-      "enabled": true,
-      "provider": "Twilio",
-      "features": [
-        "Templated Messages",
-        "Two-Way Support",
-        "Opt-Out Handling"
-      ],
-      "number": "TBD"
-    },
-    "voice": {
-      "enabled": true,
-      "primaryDID": "TBD",
-      "ttsVoice": "default",
-      "failoverNumbers": [],
-      "geoRouting": true
-    },
-    "recording": {
-      "enabled": true,
-      "autoRecording": true,
-      "consentLogging": true,
-      "transcriptGeneration": true,
-      "scriptTemplates": []
-    },
-    "location": {
-      "allowedRegions": [
-        "Global"
-      ],
-      "timezoneAware": true,
-      "localeFormats": [
-        "en-US",
-        "en-GB",
-        "es-ES",
-        "fr-FR",
-        "de-DE"
-      ]
-    }
-  },
-  "companySetup": {
-    "profile": {
-      "enabled": true,
-      "fields": [
-        "Company Name",
-        "Industry",
-        "Size",
-        "Location"
-      ]
-    },
-    "products": {
-      "enabled": true,
-      "catalog": true,
-      "pricingTiers": true
-    },
-    "negotiationRules": {
-      "enabled": true,
-      "templates": true,
-      "maxConcession": "10%"
-    }
-  },
-  "generalInfo": {
-    "name": "",
-    "role": "",
-    "availability": "24/7",
-    "personality": "professional",
-    "tone": "conversational",
-    "voice": "neutral"
-  },
-  "modelConfig": {
-    "modelName": "LLM-X v2",
-    "modelFamily": "GPT-4",
-    "version": "latest",
-    "primaryLanguage": "en-US",
-    "fallbackLanguages": [
-      "es",
-      "fr",
-      "de"
-    ],
-    "multilingualSupport": true
-  },
-  "timing": {
-    "businessHours": {
-      "enabled": true,
-      "schedule": "Mon-Fri 09:00-18:00 local",
-      "timezone": "UTC",
-      "holidays": []
-    },
-    "waitingDuration": {
-      "call": 120,
-      "chat": 30,
-      "sms": 0
-    },
-    "appointmentScheduling": {
-      "enabled": true,
-      "calendars": [
-        "Google",
-        "Outlook"
-      ],
-      "timezoneHandling": "automatic"
-    }
-  },
-  "pricing": {
-    "pricingModel": "fixed monthly",
-    "priceLimit": "TBD",
-    "negotiationRules": {
-      "enabled": true,
-      "maxConcession": "10%",
-      "autoNegotiation": false
-    }
-  },
-  "integrations": {
-    "crm": [
-      "Salesforce",
-      "HubSpot",
-      "Zendesk"
-    ],
-    "ticketing": [
-      "Zendesk",
-      "Freshdesk",
-      "Jira"
-    ],
-    "calendar": [
-      "Google Calendar",
-      "Outlook Calendar"
-    ],
-    "telephony": [
-      "Twilio",
-      "Vonage",
-      "RingCentral"
-    ],
-    "analytics": [
-      "Google Analytics",
-      "Mixpanel",
-      "Amplitude"
-    ],
-    "mcpConnectors": []
-  },
-  "responsibilities": {
-    "taskRouting": {
-      "method": "intent-based",
-      "escalationPath": "human after 3 failed handoffs",
-      "slaEnforcement": true
-    },
-    "appointmentScheduling": {
-      "enabled": true,
-      "rules": []
-    }
-  },
-  "taskManagement": {
-    "assignedTasks": {
-      "queue": true,
-      "slaTimers": true,
-      "dependencies": true
-    },
-    "progressTracking": {
-      "enabled": true,
-      "metrics": [
-        "completion percentage",
-        "time remaining"
-      ]
-    }
-  },
-  "behaviour": {
-    "safetyFilters": {
-      "enabled": true,
-      "restrictedDomains": [
-        "legal",
-        "medical",
-        "financial advice"
-      ]
-    },
-    "refusalTemplates": {
-      "enabled": true
-    },
-    "rateLimits": {
-      "enabled": true,
-      "requestsPerMinute": 60
-    }
-  },
-  "performance": {
-    "metrics": {
-      "latency": true,
-      "accuracy": true,
-      "successRate": true,
-      "userSatisfaction": true
-    },
-    "reporting": {
-      "dashboards": true,
-      "scheduledReports": true,
-      "cadence": [
-        "daily",
-        "weekly",
-        "monthly"
-      ]
-    }
-  },
-  "summary": {
-    "enabled": true,
-    "adminNotes": "",
-    "handoverContext": true
-  },
-  "predictive": {
-    "forecasting": {
-      "enabled": true,
-      "models": []
-    },
-    "anomalyDetection": {
-      "enabled": true,
-      "triggers": []
-    }
-  },
-  "regulations": {
-    "compliance": {
-      "gdpr": true,
-      "hipaa": false,
-      "soc2": false,
-      "regional": true
-    },
-    "dataResidency": {
-      "enabled": true,
-      "regions": []
-    },
-    "consentPolicies": {
-      "enabled": true
-    }
-  },
-  "memory": {
-    "session": {
-      "duration": "30 minutes",
-      "retention": true
-    },
-    "longTerm": {
-      "duration": "365 days",
-      "retention": true
-    },
-    "piiRedaction": {
-      "enabled": true
-    },
-    "purgeSchedule": "quarterly"
-  },
-  "detailedSetup": {
-    "onboardingFlow": true,
-    "productPricingSetup": true,
-    "negotiationRulesSetup": true,
-    "trainingPlan": true,
-    "knowledgeBaseImport": true,
-    "voicePersonalityTuning": true,
-    "businessHoursSetup": true,
-    "additionalConfigs": []
-  },
-  "twoStepVerification": {
-    "enabled": true,
-    "criticalActions": [
-      "billing",
-      "admin modifications",
-      "data export"
-    ],
-    "deviceCheck": true
-  },
-  "importExport": {
-    "endpoints": [
-      "CSV",
-      "JSON"
-    ],
-    "scheduledExports": true,
-    "retentionPolicy": true,
-    "complianceControls": true
-  },
-  "reports": {
-    "types": [
-      "performance",
-      "usage",
-      "errors",
-      "compliance"
-    ],
-    "cadence": [
-      "daily",
-      "weekly",
-      "monthly"
-    ],
-    "deliveryChannels": [
-      "email",
-      "dashboard",
-      "webhook"
-    ]
-  },
-  "mcpIntegrations": {
-    "connectors": [],
-    "apiSpecs": [],
-    "mapping": []
-  }
-}};
+  };
 
   const updateConfig = (updates: Partial<AgentConfiguration>) => {
     setConfig(prev => ({ ...prev, ...updates }));
     setUnsavedChanges(true);
   };
+
 
   const updateModelConfig = (updates: Partial<AgentConfiguration['model']>) => {
     setConfig(prev => ({
@@ -679,6 +364,7 @@ export default function AgentConfigurationScreen() {
     { id: 'data', label: 'Data Upload', icon: <Upload size={20} color={activeSection === 'data' ? '#fff' : colors.text} /> },
     { id: 'advanced', label: 'Advanced', icon: <Settings size={20} color={activeSection === 'advanced' ? '#fff' : colors.text} /> },
     { id: 'security', label: 'Security', icon: <Shield size={20} color={activeSection === 'security' ? '#fff' : colors.text} /> },
+    { id: 'autonomy', label: 'Autonomy', icon: <Zap size={20} color={activeSection === 'autonomy' ? '#fff' : colors.text} /> },
   ];
 
   return (
@@ -831,6 +517,14 @@ export default function AgentConfigurationScreen() {
 
           {activeSection === 'security' && (
             <SecurityConfiguration
+              config={config}
+              updateConfig={updateConfig}
+              colors={colors}
+            />
+          )}
+
+          {activeSection === 'autonomy' && (
+            <AutonomyConfiguration
               config={config}
               updateConfig={updateConfig}
               colors={colors}
@@ -2602,4 +2296,238 @@ const styles = StyleSheet.create({
     height: 40,
   },
 });
+
+// Autonomy Configuration Component
+function AutonomyConfiguration({
+  config,
+  updateConfig,
+  colors,
+}: {
+  config: AgentConfiguration;
+  updateConfig: (updates: Partial<AgentConfiguration>) => void;
+  colors: any;
+}) {
+  const autonomyLevels = [
+    { value: 'manual', label: 'Manual', description: 'All actions require human approval' },
+    { value: 'supervised', label: 'Supervised', description: 'High-risk actions require approval' },
+    { value: 'autonomous', label: 'Autonomous', description: 'Only critical actions require approval' },
+    { value: 'fully_autonomous', label: 'Fully Autonomous', description: 'Agent operates independently with oversight' },
+  ] as const;
+
+  const oversightModes = [
+    { value: 'monitoring', label: 'Monitoring', description: 'Real-time monitoring of all actions' },
+    { value: 'audit', label: 'Audit', description: 'Periodic review of actions and decisions' },
+    { value: 'intervention', label: 'Intervention', description: 'Active intervention when needed' },
+  ] as const;
+
+  return (
+    <View style={styles.section}>
+      <Text style={[styles.sectionTitle, { color: colors.text }]}>Human on the Loop - Autonomy Settings</Text>
+
+      {/* Autonomy Level */}
+      <View style={styles.configCard}>
+        <Text style={[styles.configLabel, { color: colors.text }]}>Autonomy Level</Text>
+        <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+          Determines how much human oversight the agent requires
+        </Text>
+        <View style={styles.optionsGrid}>
+          {autonomyLevels.map((level) => (
+            <TouchableOpacity
+              key={level.value}
+              style={[
+                styles.optionChip,
+                {
+                  backgroundColor: config.autonomy?.level === level.value ? colors.primary : colors.border + '30',
+                  borderColor: config.autonomy?.level === level.value ? colors.primary : colors.border,
+                },
+              ]}
+              onPress={() => updateConfig({ autonomy: { ...config.autonomy, level: level.value as any } })}
+            >
+              <Text
+                style={[
+                  styles.optionChipText,
+                  { color: config.autonomy?.level === level.value ? '#fff' : colors.text },
+                ]}
+              >
+                {level.label}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
+
+      {/* Auto-Approval Threshold */}
+      <ConfigSlider
+        label="Auto-Approval Threshold"
+        value={config.autonomy?.autoApproveThreshold || 0.7}
+        min={0}
+        max={1}
+        step={0.05}
+        onValueChange={(value) => updateConfig({ autonomy: { ...config.autonomy, autoApproveThreshold: value } })}
+        description="Confidence threshold for automatic action approval"
+        formatValue={(v) => `${(v * 100).toFixed(0)}%`}
+        colors={colors}
+      />
+
+      {/* Oversight Mode */}
+      <View style={styles.configCard}>
+        <Text style={[styles.configLabel, { color: colors.text }]}>Oversight Mode</Text>
+        <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+          How humans monitor and intervene in agent operations
+        </Text>
+        <View style={styles.buttonGroup}>
+          {oversightModes.map((mode) => (
+            <TouchableOpacity
+              key={mode.value}
+              style={[
+                styles.buttonGroupItem,
+                {
+                  backgroundColor: config.autonomy?.oversightMode === mode.value ? colors.primary : colors.border + '30',
+                },
+              ]}
+              onPress={() => updateConfig({ autonomy: { ...config.autonomy, oversightMode: mode.value as any } })}
+            >
+              <Text
+                style={[
+                  styles.buttonGroupText,
+                  { color: config.autonomy?.oversightMode === mode.value ? '#fff' : colors.text },
+                ]}
+              >
+                {mode.label}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
+
+      {/* Monitoring Interval */}
+      <ConfigSlider
+        label="Monitoring Interval"
+        value={config.autonomy?.monitoringInterval || 60}
+        min={0}
+        max={600}
+        step={30}
+        onValueChange={(value) => updateConfig({ autonomy: { ...config.autonomy, monitoringInterval: value } })}
+        description="Seconds between oversight checks (0 = continuous)"
+        formatValue={(v) => v === 0 ? 'Continuous' : `${v}s`}
+        colors={colors}
+      />
+
+      {/* Intervention Capabilities */}
+      <View style={styles.configCard}>
+        <Text style={[styles.configLabel, { color: colors.text }]}>Intervention Capabilities</Text>
+        <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+          What humans can do when intervening
+        </Text>
+        
+        <View style={styles.switchRow}>
+          <View style={styles.switchInfo}>
+            <Text style={[styles.switchLabel, { color: colors.text }]}>Pause Agent</Text>
+            <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+              Allow humans to pause agent operations
+            </Text>
+          </View>
+          <Switch
+            value={config.interventionCapabilities?.canPause ?? true}
+            onValueChange={(enabled) => 
+              updateConfig({ 
+                interventionCapabilities: { 
+                  ...config.interventionCapabilities, 
+                  canPause: enabled 
+                } 
+              })
+            }
+          />
+        </View>
+
+        <View style={styles.switchRow}>
+          <View style={styles.switchInfo}>
+            <Text style={[styles.switchLabel, { color: colors.text }]}>Override Decisions</Text>
+            <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+              Allow humans to override agent decisions
+            </Text>
+          </View>
+          <Switch
+            value={config.interventionCapabilities?.canOverride ?? true}
+            onValueChange={(enabled) => 
+              updateConfig({ 
+                interventionCapabilities: { 
+                  ...config.interventionCapabilities, 
+                  canOverride: enabled 
+                } 
+              })
+            }
+          />
+        </View>
+
+        <View style={styles.switchRow}>
+          <View style={styles.switchInfo}>
+            <Text style={[styles.switchLabel, { color: colors.text }]}>Emergency Stop</Text>
+            <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+              Allow immediate emergency stop
+            </Text>
+          </View>
+          <Switch
+            value={config.interventionCapabilities?.emergencyStop ?? true}
+            onValueChange={(enabled) => 
+              updateConfig({ 
+                interventionCapabilities: { 
+                  ...config.interventionCapabilities, 
+                  emergencyStop: enabled 
+                } 
+              })
+            }
+          />
+        </View>
+      </View>
+
+      {/* Risk Level Trigger */}
+      <View style={styles.configCard}>
+        <Text style={[styles.configLabel, { color: colors.text }]}>Risk Level Trigger</Text>
+        <Text style={[styles.configDescription, { color: colors.text + '60' }]}>
+          Minimum risk level that triggers intervention
+        </Text>
+        <View style={styles.buttonGroup}>
+          {(['low', 'medium', 'high', 'critical'] as const).map((level) => (
+            <TouchableOpacity
+              key={level}
+              style={[
+                styles.buttonGroupItem,
+                {
+                  backgroundColor: config.autonomy?.interventionTriggers?.riskLevel === level 
+                    ? colors.primary 
+                    : colors.border + '30',
+                },
+              ]}
+              onPress={() => 
+                updateConfig({ 
+                  autonomy: { 
+                    ...config.autonomy, 
+                    interventionTriggers: { 
+                      ...config.autonomy?.interventionTriggers, 
+                      riskLevel: level 
+                    } 
+                  } 
+                })
+              }
+            >
+              <Text
+                style={[
+                  styles.buttonGroupText,
+                  { 
+                    color: config.autonomy?.interventionTriggers?.riskLevel === level 
+                      ? '#fff' 
+                      : colors.text 
+                  },
+                ]}
+              >
+                {level.charAt(0).toUpperCase() + level.slice(1)}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
+    </View>
+  );
+}
 

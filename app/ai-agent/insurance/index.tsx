@@ -1,237 +1,98 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { useTheme } from '@/providers/ThemeProvider';
-import { Shield, ShieldAlert, ShieldCheck, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, TrendingUp, Calculator, ClipboardList, UserCheck, Search, FileText, BookOpen, PenTool, Eye, Zap, DollarSign, Scale, Gavel, Brain, AlertTriangle, Handshake, Gauge, BarChart3, PieChart, RefreshCw, GitBranch, RotateCcw, Landmark, UserPlus, SquareCheck, CalendarClock } from 'lucide-react-native';
-import AgentFeatures from '@/components/ai-agent/AgentFeatures';
+import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
-
-const VP_EXECUTIVE_AGENTS = [
-  { id: 'cro', name: 'AI Chief Risk Officer', icon: ShieldAlert, color: '#FF7043', subAgents: [
-    { id: 'enterprise-risk-strategy-advisor', name: 'AI Enterprise Risk Strategy Advisor', icon: Shield },
-    { id: 'risk-appetite-definer', name: 'AI Risk Appetite Definer', icon: Gauge },
-    { id: 'board-risk-reporter', name: 'AI Board Risk Reporter', icon: FileText },
-  ]},
-  { id: 'vp-underwriting', name: 'AI VP Underwriting', icon: ShieldCheck, color: '#FF5722', subAgents: [
-    { id: 'underwriting-guidelines-enforcer', name: 'AI Underwriting Guidelines Enforcer', icon: BookOpen },
-    { id: 'portfolio-mix-manager', name: 'AI Portfolio Mix Manager', icon: PieChart },
-    { id: 'pricing-strategy-advisor', name: 'AI Pricing Strategy Advisor', icon: DollarSign },
-  ]},
-  { id: 'vp-claims', name: 'AI VP Claims', icon: FileText, color: '#E64A19', subAgents: [
-    { id: 'claims-process-optimizer', name: 'AI Claims Process Optimizer', icon: Zap },
-    { id: 'settlement-authority-manager', name: 'AI Settlement Authority Manager', icon: Gavel },
-    { id: 'litigation-coordinator', name: 'AI Litigation Coordinator', icon: Scale },
-  ]},
-  { id: 'vp-risk-assessment', name: 'AI VP Risk Assessment', icon: ShieldAlert, color: '#BF360C', subAgents: [
-    { id: 'risk-model-overseer', name: 'AI Risk Model Overseer', icon: Brain },
-    { id: 'assessment-standards-enforcer', name: 'AI Assessment Standards Enforcer', icon: SquareCheck },
-    { id: 'emerging-risk-spotter', name: 'AI Emerging Risk Spotter', icon: Eye },
-  ]},
+const agents = [
+  { id: 'ai-chief-risk-officer', uid: 'ktx-16-chief-risk-officer', title: 'AI Chief Risk Officer', route: '/ai-agent/insurance/chief-risk-officer', color: '#FF7043', level: 'c_level', efficiency: '82%' },
+  { id: 'ai-vp-underwriting', uid: 'ktx-16-vp-underwriting', title: 'AI VP Underwriting', route: '/ai-agent/insurance/vp-underwriting', color: '#FF7043', level: 'vp_director', efficiency: '81%' },
+  { id: 'ai-vp-claims', uid: 'ktx-16-vp-claims', title: 'AI VP Claims', route: '/ai-agent/insurance/vp-claims', color: '#FF7043', level: 'vp_director', efficiency: '79%' },
+  { id: 'ai-vp-risk-assessment', uid: 'ktx-16-vp-risk-assessment', title: 'AI VP Risk Assessment', route: '/ai-agent/insurance/vp-risk-assessment', color: '#FF7043', level: 'vp_director', efficiency: '82%' },
+  { id: 'ai-vp-actuarial', uid: 'ktx-16-vp-actuarial', title: 'AI VP Actuarial', route: '/ai-agent/insurance/vp-actuarial', color: '#FF7043', level: 'vp_director', efficiency: '84%' },
+  { id: 'ai-vp-reinsurance', uid: 'ktx-16-vp-reinsurance', title: 'AI VP Reinsurance', route: '/ai-agent/insurance/vp-reinsurance', color: '#FF7043', level: 'vp_director', efficiency: '83%' },
+  { id: 'ai-vp-compliance-insurance', uid: 'ktx-16-vp-compliance-insurance', title: 'AI VP Compliance (Insurance)', route: '/ai-agent/insurance/vp-compliance-insurance', color: '#FF7043', level: 'vp_director', efficiency: '85%' },
+  { id: 'ai-vp-insurance-operations', uid: 'ktx-16-vp-insurance-operations', title: 'AI VP Insurance Operations', route: '/ai-agent/insurance/vp-insurance-operations', color: '#FF7043', level: 'vp_director', efficiency: '82%' },
+  { id: 'ai-underwriting-manager', uid: 'ktx-16-underwriting-manager', title: 'AI Underwriting Manager', route: '/ai-agent/insurance/underwriting-manager', color: '#FF7043', level: 'manager', efficiency: '76%' },
+  { id: 'ai-claims-manager', uid: 'ktx-16-claims-manager', title: 'AI Claims Manager', route: '/ai-agent/insurance/claims-manager', color: '#FF7043', level: 'manager', efficiency: '94%' },
+  { id: 'ai-policy-manager', uid: 'ktx-16-policy-manager', title: 'AI Policy Manager', route: '/ai-agent/insurance/policy-manager', color: '#FF7043', level: 'manager', efficiency: '94%' },
+  { id: 'ai-actuarial-manager', uid: 'ktx-16-actuarial-manager', title: 'AI Actuarial Manager', route: '/ai-agent/insurance/actuarial-manager', color: '#FF7043', level: 'manager', efficiency: '87%' },
+  { id: 'ai-risk-management-manager', uid: 'ktx-16-risk-management-manager', title: 'AI Risk Management Manager', route: '/ai-agent/insurance/risk-management-manager', color: '#FF7043', level: 'manager', efficiency: '85%' },
+  { id: 'ai-underwriter', uid: 'ktx-16-underwriter', title: 'AI Underwriter', route: '/ai-agent/insurance/underwriter', color: '#FF7043', level: 'team_lead', efficiency: '93%' },
+  { id: 'ai-senior-underwriter', uid: 'ktx-16-senior-underwriter', title: 'AI Senior Underwriter', route: '/ai-agent/insurance/senior-underwriter', color: '#FF7043', level: 'team_lead', efficiency: '91%' },
+  { id: 'ai-life-underwriter', uid: 'ktx-16-life-underwriter', title: 'AI Life Underwriter', route: '/ai-agent/insurance/life-underwriter', color: '#FF7043', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-property-underwriter', uid: 'ktx-16-property-underwriter', title: 'AI Property Underwriter', route: '/ai-agent/insurance/property-underwriter', color: '#FF7043', level: 'team_lead', efficiency: '89%' },
+  { id: 'ai-casualty-underwriter', uid: 'ktx-16-casualty-underwriter', title: 'AI Casualty Underwriter', route: '/ai-agent/insurance/casualty-underwriter', color: '#FF7043', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-health-underwriter', uid: 'ktx-16-health-underwriter', title: 'AI Health Underwriter', route: '/ai-agent/insurance/health-underwriter', color: '#FF7043', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-auto-underwriter', uid: 'ktx-16-auto-underwriter', title: 'AI Auto Underwriter', route: '/ai-agent/insurance/auto-underwriter', color: '#FF7043', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-claims-adjuster', uid: 'ktx-16-claims-adjuster', title: 'AI Claims Adjuster', route: '/ai-agent/insurance/claims-adjuster', color: '#FF7043', level: 'team_lead', efficiency: '81%' },
+  { id: 'ai-senior-claims-adjuster', uid: 'ktx-16-senior-claims-adjuster', title: 'AI Senior Claims Adjuster', route: '/ai-agent/insurance/senior-claims-adjuster', color: '#FF7043', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-field-adjuster', uid: 'ktx-16-field-adjuster', title: 'AI Field Adjuster', route: '/ai-agent/insurance/field-adjuster', color: '#FF7043', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-desk-adjuster', uid: 'ktx-16-desk-adjuster', title: 'AI Desk Adjuster', route: '/ai-agent/insurance/desk-adjuster', color: '#FF7043', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-catastrophe-adjuster', uid: 'ktx-16-catastrophe-adjuster', title: 'AI Catastrophe Adjuster', route: '/ai-agent/insurance/catastrophe-adjuster', color: '#FF7043', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-fraud-detection-agent', uid: 'ktx-16-fraud-detection-agent', title: 'AI Fraud Detection Agent', route: '/ai-agent/insurance/fraud-detection-agent', color: '#FF7043', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-siu-investigator', uid: 'ktx-16-siu-investigator', title: 'AI SIU Investigator', route: '/ai-agent/insurance/siu-investigator', color: '#FF7043', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-claims-analyst', uid: 'ktx-16-claims-analyst', title: 'AI Claims Analyst', route: '/ai-agent/insurance/claims-analyst', color: '#FF7043', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-actuary-analyst', uid: 'ktx-16-actuary-analyst', title: 'AI Actuary Analyst', route: '/ai-agent/insurance/actuary-analyst', color: '#FF7043', level: 'team_lead', efficiency: '81%' },
+  { id: 'ai-actuary', uid: 'ktx-16-actuary', title: 'AI Actuary', route: '/ai-agent/insurance/actuary', color: '#FF7043', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-pricing-actuary', uid: 'ktx-16-pricing-actuary', title: 'AI Pricing Actuary', route: '/ai-agent/insurance/pricing-actuary', color: '#FF7043', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-reserving-actuary', uid: 'ktx-16-reserving-actuary', title: 'AI Reserving Actuary', route: '/ai-agent/insurance/reserving-actuary', color: '#FF7043', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-valuation-actuary', uid: 'ktx-16-valuation-actuary', title: 'AI Valuation Actuary', route: '/ai-agent/insurance/valuation-actuary', color: '#FF7043', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-risk-modeler', uid: 'ktx-16-risk-modeler', title: 'AI Risk Modeler', route: '/ai-agent/insurance/risk-modeler', color: '#FF7043', level: 'team_lead', efficiency: '80%' },
+  { id: 'ai-quantitative-analyst-insurance', uid: 'ktx-16-quantitative-analyst-insurance', title: 'AI Quantitative Analyst (Insurance)', route: '/ai-agent/insurance/quantitative-analyst-insurance', color: '#FF7043', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-data-scientist-insurance', uid: 'ktx-16-data-scientist-insurance', title: 'AI Data Scientist (Insurance)', route: '/ai-agent/insurance/data-scientist-insurance', color: '#FF7043', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-policy-administrator', uid: 'ktx-16-policy-administrator', title: 'AI Policy Administrator', route: '/ai-agent/insurance/policy-administrator', color: '#FF7043', level: 'team_lead', efficiency: '76%' },
+  { id: 'ai-policy-processor', uid: 'ktx-16-policy-processor', title: 'AI Policy Processor', route: '/ai-agent/insurance/policy-processor', color: '#FF7043', level: 'team_lead', efficiency: '78%' },
+  { id: 'ai-billing-specialist-insurance', uid: 'ktx-16-billing-specialist-insurance', title: 'AI Billing Specialist (Insurance)', route: '/ai-agent/insurance/billing-specialist-insurance', color: '#FF7043', level: 'team_lead', efficiency: '79%' },
+  { id: 'ai-collections-specialist-insurance', uid: 'ktx-16-collections-specialist-insurance', title: 'AI Collections Specialist (Insurance)', route: '/ai-agent/insurance/collections-specialist-insurance', color: '#FF7043', level: 'team_lead', efficiency: '77%' },
+  { id: 'ai-customer-risk-analyst', uid: 'ktx-16-customer-risk-analyst', title: 'AI Customer Risk Analyst', route: '/ai-agent/insurance/customer-risk-analyst', color: '#FF7043', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-catastrophe-modeler', uid: 'ktx-16-catastrophe-modeler', title: 'AI Catastrophe Modeler', route: '/ai-agent/insurance/catastrophe-modeler', color: '#FF7043', level: 'team_lead', efficiency: '89%' },
+  { id: 'ai-disaster-recovery-specialist', uid: 'ktx-16-disaster-recovery-specialist', title: 'AI Disaster Recovery Specialist', route: '/ai-agent/insurance/disaster-recovery-specialist', color: '#FF7043', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-emergency-response-coordinator', uid: 'ktx-16-emergency-response-coordinator', title: 'AI Emergency Response Coordinator', route: '/ai-agent/insurance/emergency-response-coordinator', color: '#FF7043', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-reinsurance-specialist', uid: 'ktx-16-reinsurance-specialist', title: 'AI Reinsurance Specialist', route: '/ai-agent/insurance/reinsurance-specialist', color: '#FF7043', level: 'team_lead', efficiency: '90%' },
+  { id: 'ai-reinsurance-underwriter', uid: 'ktx-16-reinsurance-underwriter', title: 'AI Reinsurance Underwriter', route: '/ai-agent/insurance/reinsurance-underwriter', color: '#FF7043', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-reinsurance-broker', uid: 'ktx-16-reinsurance-broker', title: 'AI Reinsurance Broker', route: '/ai-agent/insurance/reinsurance-broker', color: '#FF7043', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-cedent-relationship-manager', uid: 'ktx-16-cedent-relationship-manager', title: 'AI Cedent Relationship Manager', route: '/ai-agent/insurance/cedent-relationship-manager', color: '#FF7043', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-compliance-specialist-insurance', uid: 'ktx-16-compliance-specialist-insurance', title: 'AI Compliance Specialist (Insurance)', route: '/ai-agent/insurance/compliance-specialist-insurance', color: '#FF7043', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-regulatory-affairs-insurance', uid: 'ktx-16-regulatory-affairs-insurance', title: 'AI Regulatory Affairs (Insurance)', route: '/ai-agent/insurance/regulatory-affairs-insurance', color: '#FF7043', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-licensing-specialist-insurance', uid: 'ktx-16-licensing-specialist-insurance', title: 'AI Licensing Specialist (Insurance)', route: '/ai-agent/insurance/licensing-specialist-insurance', color: '#FF7043', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-audit-specialist-insurance', uid: 'ktx-16-audit-specialist-insurance', title: 'AI Audit Specialist (Insurance)', route: '/ai-agent/insurance/audit-specialist-insurance', color: '#FF7043', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-claims-operations-manager', uid: 'ktx-16-claims-operations-manager', title: 'AI Claims Operations Manager', route: '/ai-agent/insurance/claims-operations-manager', color: '#FF7043', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-first-notice-of-loss-specialist', uid: 'ktx-16-first-notice-of-loss-specialist', title: 'AI First Notice of Loss Specialist', route: '/ai-agent/insurance/first-notice-of-loss-specialist', color: '#FF7043', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-claims-service-representative', uid: 'ktx-16-claims-service-representative', title: 'AI Claims Service Representative', route: '/ai-agent/insurance/claims-service-representative', color: '#FF7043', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-legal-counsel-insurance', uid: 'ktx-16-legal-counsel-insurance', title: 'AI Legal Counsel (Insurance)', route: '/ai-agent/insurance/legal-counsel-insurance', color: '#FF7043', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-settlement-specialist', uid: 'ktx-16-settlement-specialist', title: 'AI Settlement Specialist', route: '/ai-agent/insurance/settlement-specialist', color: '#FF7043', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-subrogation-specialist', uid: 'ktx-16-subrogation-specialist', title: 'AI Subrogation Specialist', route: '/ai-agent/insurance/subrogation-specialist', color: '#FF7043', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-medical-reviewer', uid: 'ktx-16-medical-reviewer', title: 'AI Medical Reviewer', route: '/ai-agent/insurance/medical-reviewer', color: '#FF7043', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-nurse-case-manager', uid: 'ktx-16-nurse-case-manager', title: 'AI Nurse Case Manager', route: '/ai-agent/insurance/nurse-case-manager', color: '#FF7043', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-rehabilitation-specialist', uid: 'ktx-16-rehabilitation-specialist', title: 'AI Rehabilitation Specialist', route: '/ai-agent/insurance/rehabilitation-specialist', color: '#FF7043', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-disability-specialist', uid: 'ktx-16-disability-specialist', title: 'AI Disability Specialist', route: '/ai-agent/insurance/disability-specialist', color: '#FF7043', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-workers-comp-specialist', uid: 'ktx-16-workers-comp-specialist', title: 'AI Workers Comp Specialist', route: '/ai-agent/insurance/workers-comp-specialist', color: '#FF7043', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-benefits-administrator', uid: 'ktx-16-benefits-administrator', title: 'AI Benefits Administrator', route: '/ai-agent/insurance/benefits-administrator', color: '#FF7043', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-customer-service-insurance', uid: 'ktx-16-customer-service-insurance', title: 'AI Customer Service (Insurance)', route: '/ai-agent/insurance/customer-service-insurance', color: '#FF7043', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-sales-support-insurance', uid: 'ktx-16-sales-support-insurance', title: 'AI Sales Support (Insurance)', route: '/ai-agent/insurance/sales-support-insurance', color: '#FF7043', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-agent-support', uid: 'ktx-16-agent-support', title: 'AI Agent Support', route: '/ai-agent/insurance/agent-support', color: '#FF7043', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-broker-support', uid: 'ktx-16-broker-support', title: 'AI Broker Support', route: '/ai-agent/insurance/broker-support', color: '#FF7043', level: 'team_lead', efficiency: '83%' },
 ];
-
-const MANAGER_AGENT_GROUPS = [
-  { id: 'underwriting-manager', name: 'AI Underwriting Manager', icon: BookOpen, color: '#FF7043', subAgents: [
-    { id: 'workflow-prioritizer', name: 'AI Workflow Prioritizer', icon: ClipboardList },
-    { id: 'quality-reviewer', name: 'AI Quality Reviewer', icon: SquareCheck },
-    { id: 'exception-approver', name: 'AI Exception Approver', icon: ShieldCheck },
-  ]},
-  { id: 'claims-manager', name: 'AI Claims Manager', icon: ClipboardList, color: '#FF5722', subAgents: [
-    { id: 'claims-assigner', name: 'AI Claims Assigner', icon: UserPlus },
-    { id: 'reserve-reviewer', name: 'AI Reserve Reviewer', icon: DollarSign },
-    { id: 'fraud-flag-coordinator', name: 'AI Fraud Flag Coordinator', icon: AlertTriangle },
-  ]},
-  { id: 'policy-manager', name: 'AI Policy Manager', icon: FileText, color: '#E64A19', subAgents: [
-    { id: 'policy-lifecycle-manager', name: 'AI Policy Lifecycle Manager', icon: RefreshCw },
-    { id: 'renewal-tracker', name: 'AI Renewal Tracker', icon: CalendarClock },
-    { id: 'endorsement-processor', name: 'AI Endorsement Processor', icon: FileText },
-  ]},
-];
-
-const SPECIALIST_AGENT_GROUPS = [
-  { id: 'underwriter-1', name: 'AI Underwriter', icon: PenTool, color: '#FF7043', subAgents: [
-    { id: 'risk-evaluator', name: 'AI Risk Evaluator', icon: Search },
-    { id: 'premium-calculator', name: 'AI Premium Calculator', icon: Calculator },
-    { id: 'coverage-analyzer', name: 'AI Coverage Analyzer', icon: Eye },
-  ]},
-  { id: 'claims-adjuster', name: 'AI Claims Adjuster', icon: ClipboardList, color: '#FF5722', subAgents: [
-    { id: 'damage-assessor', name: 'AI Damage Assessor', icon: ClipboardList },
-    { id: 'liability-determiner', name: 'AI Liability Determiner', icon: Scale },
-    { id: 'settlement-negotiator', name: 'AI Settlement Negotiator', icon: Handshake },
-  ]},
-  { id: 'fraud-detector', name: 'AI Fraud Detection Agent', icon: Search, color: '#E64A19', subAgents: [
-    { id: 'pattern-detector', name: 'AI Pattern Detector', icon: Search },
-    { id: 'anomaly-scorer', name: 'AI Anomaly Scorer', icon: Activity },
-    { id: 'investigation-coordinator', name: 'AI Investigation Coordinator', icon: Eye },
-  ]},
-  { id: 'actuary-analyst', name: 'AI Actuary Analyst', icon: Calculator, color: '#FF7043', subAgents: [
-    { id: 'loss-development-tracker', name: 'AI Loss Development Tracker', icon: TrendingUp },
-    { id: 'frequencyseverity-modeler', name: 'AI Frequency/Severity Modeler', icon: BarChart3 },
-    { id: 'rate-filing-preparer', name: 'AI Rate Filing Preparer', icon: FileText },
-  ]},
-  { id: 'risk-modeler', name: 'AI Risk Modeler', icon: ChartBarBig, color: '#FF5722', subAgents: [
-    { id: 'scenario-builder', name: 'AI Scenario Builder', icon: GitBranch },
-    { id: 'correlation-analyst', name: 'AI Correlation Analyst', icon: BarChart3 },
-    { id: 'capital-requirement-calculator', name: 'AI Capital Requirement Calculator', icon: Landmark },
-  ]},
-  { id: 'policy-admin', name: 'AI Policy Administrator', icon: FileText, color: '#E64A19', subAgents: [
-    { id: 'policy-issuer', name: 'AI Policy Issuer', icon: FileText },
-    { id: 'document-generator', name: 'AI Document Generator', icon: FileText },
-    { id: 'compliance-checker', name: 'AI Compliance Checker', icon: ShieldCheck },
-  ]},
-  { id: 'customer-risk-analyst', name: 'AI Customer Risk Analyst', icon: UserCheck, color: '#FF7043', subAgents: [
-    { id: 'risk-profiler', name: 'AI Risk Profiler', icon: UserCheck },
-    { id: 'behavioral-scorer', name: 'AI Behavioral Scorer', icon: Brain },
-    { id: 'segmentation-analyst', name: 'AI Segmentation Analyst', icon: PieChart },
-  ]},
-  { id: 'catastrophe-modeler', name: 'AI Catastrophe Modeler', icon: AlertTriangle, color: '#FF5722', subAgents: [
-    { id: 'event-simulator', name: 'AI Event Simulator', icon: Zap },
-    { id: 'exposure-aggregator', name: 'AI Exposure Aggregator', icon: Eye },
-    { id: 'loss-estimator', name: 'AI Loss Estimator', icon: Calculator },
-  ]},
-  { id: 'reinsurance-specialist', name: 'AI Reinsurance Specialist', icon: ShieldCheck, color: '#E64A19', subAgents: [
-    { id: 'treaty-negotiator', name: 'AI Treaty Negotiator', icon: Handshake },
-    { id: 'ceding-calculator', name: 'AI Ceding Calculator', icon: DollarSign },
-    { id: 'recoveries-tracker', name: 'AI Recoveries Tracker', icon: RotateCcw },
-  ]},
-];
-
-const ALL_AGENTS = [...VP_EXECUTIVE_AGENTS, ...MANAGER_AGENT_GROUPS, ...SPECIALIST_AGENT_GROUPS];
-
-export default function InsuranceDepartment() {
-  const { theme } = useTheme();
+export default function DepartmentIndex() {
   const router = useRouter();
   return (
-    <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#FF704320' }]}><Shield size={48} color="#FF7043" /></View>
-        <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Insurance & Risk</Text>
-        <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>16 AI Agents · 48 Sub-Agents · Enterprise Operations</Text>
-        <View style={styles.badgesRow}>
-          <View style={[styles.badge, { backgroundColor: '#34C75922' }]}><Activity size={12} color="#34C759" /><Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#FF704322' }]}><Star size={12} color="#FF7043" /><Text style={[styles.badgeText, { color: '#FF7043' }]}>Department</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#FF950022' }]}><Users size={12} color="#FF9500" /><Text style={[styles.badgeText, { color: '#FF9500' }]}>64 Agents</Text></View>
-        </View>
-      </View>
-      <View style={styles.statsContainer}>
-        {[{label:'Main Agents',value:'16',icon:CircleCheckBig,color:'#34C759'},{label:'Sub-Agents',value:'48',icon:Users,color:'#FF7043'},{label:'Uptime',value:'99.9%',icon:Clock,color:'#007AFF'},{label:'Accuracy',value:'99.8%',icon:Target,color:'#FF9500'}].map((stat,i)=>(<View key={i} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><stat.icon size={22} color={stat.color} /><Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text><Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text></View>))}
-      </View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Overview</Text>
-        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>The Insurance & Risk department operates 16 specialized AI agents and 48 sub-agents covering underwriting, claims processing, fraud detection, actuarial analysis, risk modeling, policy administration, catastrophe modeling, and reinsurance management. Each agent operates with enterprise-grade performance metrics and A2A collaboration endpoints.</Text>
-      </View>
-
-      {/* VP & Executive Agents */}
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>VP & Executive Agents (192-195)</Text>
-        {VP_EXECUTIVE_AGENTS.map((agent) => (
-          <View key={agent.id} style={styles.agentGroup}>
-            <TouchableOpacity onPress={()=>router.push('/ai-agent/insurance/'+agent.id)} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
-              <View style={[styles.agentIcon, { backgroundColor: agent.color + '20' }]}><agent.icon size={28} color={agent.color} /></View>
-              <View style={styles.agentInfo}>
-                <Text style={[styles.agentName, { color: theme.colors.text }]}>{agent.name}</Text>
-                <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>{agent.subAgents.length} sub-agents</Text>
-              </View>
-              <ArrowRight size={20} color={theme.colors.textSecondary} />
-            </TouchableOpacity>
-            <View style={styles.subAgentRow}>
-              {agent.subAgents.map((sub) => (
-                <TouchableOpacity key={sub.id} onPress={()=>router.push('/ai-agent/insurance/sub-agents/'+sub.id)} style={[styles.subAgentChip, { backgroundColor: agent.color + '15' }]}>
-                  <sub.icon size={14} color={agent.color} />
-                  <Text style={[styles.subAgentChipText, { color: agent.color }]}>{sub.name.replace('AI ', '')}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
+    <ScrollView style={s.container}>
+      <Text style={s.title}>Insurance & Risk - AI Agents</Text>
+      <Text style={s.sub}>60 AI Agents & Employees</Text>
+      <View style={s.grid}>
+        {agents.map((a) => (
+          <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>
+            <Text style={s.at}>{a.title}</Text>
+            <Text style={s.al}>{a.level.replace('_',' ').toUpperCase()}</Text>
+            <Text style={s.ae}>{a.efficiency}</Text>
+          </Pressable>
         ))}
       </View>
-
-      {/* Manager Agents */}
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Manager Agents (196-198)</Text>
-        {MANAGER_AGENT_GROUPS.map((agent) => (
-          <View key={agent.id} style={styles.agentGroup}>
-            <TouchableOpacity onPress={()=>router.push('/ai-agent/insurance/'+agent.id)} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
-              <View style={[styles.agentIcon, { backgroundColor: agent.color + '20' }]}><agent.icon size={28} color={agent.color} /></View>
-              <View style={styles.agentInfo}>
-                <Text style={[styles.agentName, { color: theme.colors.text }]}>{agent.name}</Text>
-                <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>{agent.subAgents.length} sub-agents</Text>
-              </View>
-              <ArrowRight size={20} color={theme.colors.textSecondary} />
-            </TouchableOpacity>
-            <View style={styles.subAgentRow}>
-              {agent.subAgents.map((sub) => (
-                <TouchableOpacity key={sub.id} onPress={()=>router.push('/ai-agent/insurance/sub-agents/'+sub.id)} style={[styles.subAgentChip, { backgroundColor: agent.color + '15' }]}>
-                  <sub.icon size={14} color={agent.color} />
-                  <Text style={[styles.subAgentChipText, { color: agent.color }]}>{sub.name.replace('AI ', '')}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-        ))}
-      </View>
-
-      {/* Specialist Agents */}
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Specialist Agents (199-207)</Text>
-        {SPECIALIST_AGENT_GROUPS.map((agent) => (
-          <View key={agent.id} style={styles.agentGroup}>
-            <TouchableOpacity onPress={()=>router.push('/ai-agent/insurance/'+agent.id)} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
-              <View style={[styles.agentIcon, { backgroundColor: agent.color + '20' }]}><agent.icon size={28} color={agent.color} /></View>
-              <View style={styles.agentInfo}>
-                <Text style={[styles.agentName, { color: theme.colors.text }]}>{agent.name}</Text>
-                <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>{agent.subAgents.length} sub-agents</Text>
-              </View>
-              <ArrowRight size={20} color={theme.colors.textSecondary} />
-            </TouchableOpacity>
-            <View style={styles.subAgentRow}>
-              {agent.subAgents.map((sub) => (
-                <TouchableOpacity key={sub.id} onPress={()=>router.push('/ai-agent/insurance/sub-agents/'+sub.id)} style={[styles.subAgentChip, { backgroundColor: agent.color + '15' }]}>
-                  <sub.icon size={14} color={agent.color} />
-                  <Text style={[styles.subAgentChipText, { color: agent.color }]}>{sub.name.replace('AI ', '')}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-        ))}
-      </View>
-
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
-        <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#FF704312' }]}><act.icon size={24} color="#FF7043" /><Text style={[styles.actionText, { color: '#FF7043' }]}>{act.label}</Text></TouchableOpacity>))}
-        </View>
-      </View>
-
-      <AgentFeatures agentId="insurance-index" agentName="Insurance Department" />
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container:{flex:1},
-  hero:{alignItems:'center',paddingVertical:32,paddingHorizontal:20,borderBottomWidth:1},
-  heroIconWrap:{width:88,height:88,borderRadius:44,justifyContent:'center',alignItems:'center',marginBottom:16},
-  heroTitle:{fontSize:26,fontWeight:'bold'},
-  heroSubtitle:{fontSize:15,marginTop:4,fontWeight:'500'},
-  badgesRow:{flexDirection:'row',gap:10,marginTop:16},
-  badge:{flexDirection:'row',alignItems:'center',paddingHorizontal:10,paddingVertical:5,borderRadius:20,gap:4},
-  badgeText:{fontSize:12,fontWeight:'600'},
-  statsContainer:{flexDirection:'row',flexWrap:'wrap',padding:16,gap:12},
-  statCard:{flex:1,minWidth:'22%',alignItems:'center',padding:14,borderRadius:12},
-  statValue:{fontSize:18,fontWeight:'bold',marginTop:8},
-  statLabel:{fontSize:11,marginTop:4},
-  section:{marginHorizontal:16,marginBottom:16,padding:20,borderRadius:16},
-  sectionTitle:{fontSize:18,fontWeight:'700',marginBottom:14},
-  description:{fontSize:14,lineHeight:22},
-  agentGroup:{marginBottom:16},
-  agentCard:{flexDirection:'row',alignItems:'center',padding:16,borderRadius:12,marginBottom:8},
-  agentIcon:{width:48,height:48,borderRadius:12,alignItems:'center',justifyContent:'center'},
-  agentInfo:{flex:1,marginLeft:12},
-  agentName:{fontSize:16,fontWeight:'600'},
-  agentDesc:{fontSize:12,marginTop:2},
-  subAgentRow:{flexDirection:'row',flexWrap:'wrap',gap:8,marginLeft:12},
-  subAgentChip:{flexDirection:'row',alignItems:'center',paddingHorizontal:10,paddingVertical:6,borderRadius:16,gap:4},
-  subAgentChipText:{fontSize:11,fontWeight:'600'},
-  actionsGrid:{flexDirection:'row',flexWrap:'wrap',gap:12},
-  actionButton:{flex:1,minWidth:'45%',alignItems:'center',padding:16,borderRadius:12},
-  actionText:{fontSize:13,fontWeight:'600',marginTop:8}
+const s = StyleSheet.create({
+  container:{flex:1,backgroundColor:'#0a0a0a',padding:16},title:{color:'#fff',fontSize:24,fontWeight:'bold',marginBottom:4},
+  sub:{color:'#888',fontSize:14,marginBottom:16},grid:{flexDirection:'row',flexWrap:'wrap',gap:12},
+  card:{backgroundColor:'#1a1a2e',borderRadius:12,padding:16,width:'48%',borderLeftWidth:3},
+  at:{color:'#fff',fontSize:14,fontWeight:'600',marginBottom:4},al:{color:'#888',fontSize:11,marginBottom:2},
+  ae:{color:'#10B981',fontSize:12},
 });

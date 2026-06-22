@@ -203,6 +203,8 @@ const COST_COMPARISON_DATA: CostComparison[] = [
 
 export interface IntelligenceLayerComponent {
   id: string;
+  /** Unified unique ID from aiAgentRegistry.ts */
+  uid?: string;
   name: string;
   title: string;
   icon: LucideIcon;
@@ -215,6 +217,7 @@ export interface IntelligenceLayerComponent {
 const INTELLIGENCE_LAYER_DATA: IntelligenceLayerComponent[] = [
   {
     id: 'predictive-engine',
+    uid: 'ktx-00-predictive-engine',
     name: 'Predictive Engine',
     title: '🔮 PRED - Predictive Operations',
     icon: Brain,
@@ -231,6 +234,7 @@ const INTELLIGENCE_LAYER_DATA: IntelligenceLayerComponent[] = [
   },
   {
     id: 'sentiment-core',
+    uid: 'ktx-00-sentiment-core',
     name: 'Sentiment Core',
     title: '😊 SENTIMENT - Emotion & Experience',
     icon: Heart,
@@ -247,6 +251,7 @@ const INTELLIGENCE_LAYER_DATA: IntelligenceLayerComponent[] = [
   },
   {
     id: 'anomaly-detector',
+    uid: 'ktx-00-anomaly-detector',
     name: 'Anomaly Detector',
     title: '⚡ ANOMALY - Security & Fraud',
     icon: Shield,
@@ -269,6 +274,8 @@ const INTELLIGENCE_LAYER_DATA: IntelligenceLayerComponent[] = [
 
 export interface CommandCenterComponent {
   id: string;
+  /** Unified unique ID from aiAgentRegistry.ts */
+  uid?: string;
   acronym: string;
   fullName: string;
   title: string;
@@ -282,6 +289,7 @@ export interface CommandCenterComponent {
 const COMMAND_CENTER_DATA: CommandCenterComponent[] = [
   {
     id: 'cdoo',
+    uid: 'ktx-00-orchestrator',
     acronym: 'CDOO',
     fullName: 'Chief Digital & Operations Officer',
     title: '🎯 CDOO',
@@ -293,6 +301,7 @@ const COMMAND_CENTER_DATA: CommandCenterComponent[] = [
   },
   {
     id: 'ddo',
+    uid: 'ktx-00-orchestrator',
     acronym: 'DDO',
     fullName: 'Digital Deployment Officer',
     title: '🔧 DDO',
@@ -304,6 +313,7 @@ const COMMAND_CENTER_DATA: CommandCenterComponent[] = [
   },
   {
     id: 'wol',
+    uid: 'ktx-00-orchestrator',
     acronym: 'WOL',
     fullName: 'Workforce Optimization Lead',
     title: '👷 WOL',
@@ -315,6 +325,7 @@ const COMMAND_CENTER_DATA: CommandCenterComponent[] = [
   },
   {
     id: 'aod',
+    uid: 'ktx-00-orchestrator',
     acronym: 'AOD',
     fullName: 'Automation Operations Director',
     title: '🤖 AOD',
@@ -326,6 +337,7 @@ const COMMAND_CENTER_DATA: CommandCenterComponent[] = [
   },
   {
     id: 'pred-ops',
+    uid: 'ktx-00-predictive-engine',
     acronym: 'PRED',
     fullName: 'Predictive Operations Controller',
     title: '🔮 PRED',
@@ -337,6 +349,7 @@ const COMMAND_CENTER_DATA: CommandCenterComponent[] = [
   },
   {
     id: 'swarm-controller',
+    uid: 'ktx-00-swarm-controller',
     acronym: 'SWARM',
     fullName: 'Swarm Intelligence Controller',
     title: '🐝 SWARM',
@@ -348,6 +361,7 @@ const COMMAND_CENTER_DATA: CommandCenterComponent[] = [
   },
   {
     id: 'learn-engine',
+    uid: 'ktx-00-learn-engine',
     acronym: 'LEARN',
     fullName: 'Learning & Adaptation Engine',
     title: '📚 LEARN',
@@ -375,6 +389,7 @@ export interface LayerBridgeConfig {
 
 const LAYER_BRIDGE_DATA: LayerBridgeConfig = {
   id: 'layer-bridge',
+  uid: 'ktx-00-layer-bridge',
   name: 'Layer Bridge',
   title: '🌉 LAYER BRIDGE - Digital Interface',
   icon: Network,
@@ -395,6 +410,8 @@ const LAYER_BRIDGE_DATA: LayerBridgeConfig = {
 
 export interface AIEmployeeProfile {
   id: string;
+  /** Unified unique ID from aiAgentRegistry.ts (ktx-XX-slug format) */
+  uid?: string;
   name: string;
   title: string;
   level: HierarchyLevel;
@@ -430,6 +447,7 @@ export const cSuiteExecutives: AIEmployeeProfile[] = [
   // 1. CEO
   {
     id: 'ceo',
+    uid: 'ktx-00-chief-executive-officer',
     name: 'AI Chief Executive Officer',
     title: 'CEO - Chief Executive Officer',
     level: 'c_level',
@@ -478,6 +496,7 @@ export const cSuiteExecutives: AIEmployeeProfile[] = [
   // 2. CFO
   {
     id: 'cfo',
+    uid: 'ktx-05-chief-financial-officer',
     name: 'AI Chief Financial Officer',
     title: 'CFO - Chief Financial Officer',
     level: 'c_level',
@@ -526,6 +545,7 @@ export const cSuiteExecutives: AIEmployeeProfile[] = [
   // 3. CTO
   {
     id: 'cto',
+    uid: 'ktx-06-chief-technology-officer',
     name: 'AI Chief Technology Officer',
     title: 'CTO - Chief Technology Officer',
     level: 'c_level',
@@ -575,6 +595,7 @@ export const cSuiteExecutives: AIEmployeeProfile[] = [
   // 4. CMO
   {
     id: 'cmo',
+    uid: 'ktx-03-chief-marketing-officer',
     name: 'AI Chief Marketing Officer',
     title: 'CMO - Chief Marketing Officer',
     level: 'c_level',
@@ -624,6 +645,7 @@ export const cSuiteExecutives: AIEmployeeProfile[] = [
   // 5. CCO
   {
     id: 'cco',
+    uid: 'ktx-01-chief-customer-officer',
     name: 'AI Chief Customer Officer',
     title: 'CCO - Chief Customer Officer',
     level: 'c_level',
@@ -673,6 +695,7 @@ export const cSuiteExecutives: AIEmployeeProfile[] = [
   // 6. COO
   {
     id: 'coo',
+    uid: 'ktx-04-chief-operating-officer',
     name: 'AI Chief Operating Officer',
     title: 'COO - Chief Operating Officer',
     level: 'c_level',
@@ -722,6 +745,7 @@ export const cSuiteExecutives: AIEmployeeProfile[] = [
   // 7. CHRO
   {
     id: 'chro',
+    uid: 'ktx-07-chief-human-resources-officer',
     name: 'AI Chief Human Resources Officer',
     title: 'CHRO - Chief Human Resources Officer',
     level: 'c_level',
@@ -770,6 +794,7 @@ export const cSuiteExecutives: AIEmployeeProfile[] = [
   // 8. CLO
   {
     id: 'clo',
+    uid: 'ktx-08-chief-legal-officer',
     name: 'AI Chief Legal Officer',
     title: 'CLO - Chief Legal Officer',
     level: 'c_level',
@@ -818,6 +843,7 @@ export const cSuiteExecutives: AIEmployeeProfile[] = [
   // 9. CISO
   {
     id: 'ciso',
+    uid: 'ktx-11-chief-information-security-officer',
     name: 'AI Chief Information Security Officer',
     title: 'CISO - Chief Information Security Officer',
     level: 'c_level',
@@ -867,6 +893,7 @@ export const cSuiteExecutives: AIEmployeeProfile[] = [
   // 10. CDAO (NEW)
   {
     id: 'cdao',
+    uid: 'ktx-09-chief-data-analytics-officer',
     name: 'AI Chief Data & AI Officer',
     title: 'CDAO - Chief Data & AI Officer (NEW)',
     level: 'c_level',
@@ -916,6 +943,7 @@ export const cSuiteExecutives: AIEmployeeProfile[] = [
   // 11. CAO-Automation (NEW)
   {
     id: 'cao-automation',
+    uid: 'ktx-04-chief-automation-officer',
     name: 'AI Chief Automation Officer',
     title: 'CAO - Chief Automation Officer (NEW)',
     level: 'c_level',
@@ -965,6 +993,7 @@ export const cSuiteExecutives: AIEmployeeProfile[] = [
   // 12. CIO (Chief Investment Officer)
   {
     id: 'cio',
+    uid: 'ktx-06-chief-information-officer',
     name: 'AI Chief Investment Officer',
     title: 'CIO - Chief Investment Officer',
     level: 'c_level',
@@ -1014,6 +1043,7 @@ export const cSuiteExecutives: AIEmployeeProfile[] = [
   // 13. CREO (Chief Real Estate Officer)
   {
     id: 'creo',
+    uid: 'ktx-12-chief-research-officer',
     name: 'AI Chief Real Estate Officer',
     title: 'CREO - Chief Real Estate Officer',
     level: 'c_level',
@@ -1062,6 +1092,7 @@ export const cSuiteExecutives: AIEmployeeProfile[] = [
   // 14. CRO (Chief Risk Officer)
   {
     id: 'cro',
+    uid: 'ktx-02-chief-revenue-officer',
     name: 'AI Chief Risk Officer',
     title: 'CRO - Chief Risk Officer',
     level: 'c_level',
@@ -1111,6 +1142,7 @@ export const cSuiteExecutives: AIEmployeeProfile[] = [
   // 15. CMO-Healthcare (Chief Medical Officer)
   {
     id: 'cmo-healthcare',
+    uid: 'ktx-17-chief-medical-officer',
     name: 'AI Chief Medical Officer',
     title: 'CMO - Chief Medical Officer',
     level: 'c_level',
@@ -1159,6 +1191,7 @@ export const cSuiteExecutives: AIEmployeeProfile[] = [
   // 16. CPO (Chief Production Officer)
   {
     id: 'cpo',
+    uid: 'ktx-10-chief-product-officer',
     name: 'AI Chief Production Officer',
     title: 'CPO - Chief Production Officer',
     level: 'c_level',
@@ -1208,6 +1241,7 @@ export const cSuiteExecutives: AIEmployeeProfile[] = [
   // 17. CLO-Logistics (Chief Logistics Officer)
   {
     id: 'clo-logistics',
+    uid: 'ktx-19-chief-logistics-officer',
     name: 'AI Chief Logistics Officer',
     title: 'CLO - Chief Logistics Officer',
     level: 'c_level',
@@ -1264,6 +1298,7 @@ export const vpDirectors: AIEmployeeProfile[] = [
   // Finance Department
   {
     id: 'vp-finance',
+    uid: 'ktx-05-vp-finance',
     name: 'AI VP of Finance',
     title: 'VP Finance',
     level: 'department',
@@ -1291,6 +1326,7 @@ export const vpDirectors: AIEmployeeProfile[] = [
   },
   {
     id: 'vp-accounting',
+    uid: 'ktx-05-vp-accounting',
     name: 'AI VP of Accounting',
     title: 'VP Accounting',
     level: 'department',
@@ -1319,6 +1355,7 @@ export const vpDirectors: AIEmployeeProfile[] = [
   // Technology Department
   {
     id: 'vp-engineering',
+    uid: 'ktx-06-vp-engineering',
     name: 'AI VP of Engineering',
     title: 'VP Engineering',
     level: 'department',
@@ -1347,6 +1384,7 @@ export const vpDirectors: AIEmployeeProfile[] = [
   },
   {
     id: 'vp-infrastructure',
+    uid: 'ktx-06-vp-infrastructure',
     name: 'AI VP of Infrastructure',
     title: 'VP Infrastructure',
     level: 'department',
@@ -1376,6 +1414,7 @@ export const vpDirectors: AIEmployeeProfile[] = [
   // Marketing Department
   {
     id: 'vp-marketing',
+    uid: 'ktx-03-vp-marketing',
     name: 'AI VP of Marketing',
     title: 'VP Marketing',
     level: 'department',
@@ -1404,6 +1443,7 @@ export const vpDirectors: AIEmployeeProfile[] = [
   },
   {
     id: 'vp-brand',
+    uid: 'ktx-03-vp-brand',
     name: 'AI VP of Brand',
     title: 'VP Brand',
     level: 'department',
@@ -1432,6 +1472,7 @@ export const vpDirectors: AIEmployeeProfile[] = [
   // Sales Department
   {
     id: 'vp-sales',
+    uid: 'ktx-02-vp-sales',
     name: 'AI VP of Sales',
     title: 'VP Sales',
     level: 'department',
@@ -1461,6 +1502,7 @@ export const vpDirectors: AIEmployeeProfile[] = [
   // Customer Experience Department
   {
     id: 'vp-customer-success',
+    uid: 'ktx-01-vp-customer-success',
     name: 'AI VP of Customer Success',
     title: 'VP Customer Success',
     level: 'department',
@@ -1489,6 +1531,7 @@ export const vpDirectors: AIEmployeeProfile[] = [
   },
   {
     id: 'vp-support',
+    uid: 'ktx-01-vp-support',
     name: 'AI VP of Support',
     title: 'VP Support',
     level: 'department',
@@ -1518,6 +1561,7 @@ export const vpDirectors: AIEmployeeProfile[] = [
   // Operations Department
   {
     id: 'vp-operations',
+    uid: 'ktx-04-vp-operations',
     name: 'AI VP of Operations',
     title: 'VP Operations',
     level: 'department',
@@ -1546,6 +1590,7 @@ export const vpDirectors: AIEmployeeProfile[] = [
   // HR Department
   {
     id: 'vp-talent',
+    uid: 'ktx-07-vp-talent',
     name: 'AI VP of Talent',
     title: 'VP Talent',
     level: 'department',
@@ -1573,6 +1618,7 @@ export const vpDirectors: AIEmployeeProfile[] = [
   },
   {
     id: 'vp-hr-ops',
+    uid: 'ktx-07-vp-hr-operations',
     name: 'AI VP of HR Operations',
     title: 'VP HR Operations',
     level: 'department',
@@ -1601,6 +1647,7 @@ export const vpDirectors: AIEmployeeProfile[] = [
   // Legal Department
   {
     id: 'vp-legal',
+    uid: 'ktx-08-vp-legal',
     name: 'AI VP of Legal',
     title: 'VP Legal',
     level: 'department',
@@ -1629,6 +1676,7 @@ export const vpDirectors: AIEmployeeProfile[] = [
   // Security Department
   {
     id: 'vp-security-ops',
+    uid: 'ktx-06-vp-security-technology',
     name: 'AI VP of Security Operations',
     title: 'VP Security Ops',
     level: 'department',
@@ -1658,6 +1706,7 @@ export const vpDirectors: AIEmployeeProfile[] = [
   // Data Intelligence Department
   {
     id: 'vp-data-science',
+    uid: 'ktx-09-vp-data-science',
     name: 'AI VP of Data Science',
     title: 'VP Data Science',
     level: 'department',
@@ -1687,6 +1736,7 @@ export const vpDirectors: AIEmployeeProfile[] = [
   // Product Department
   {
     id: 'vp-product',
+    uid: 'ktx-10-vp-product',
     name: 'AI VP of Product',
     title: 'VP Product',
     level: 'department',
@@ -1723,6 +1773,7 @@ export const managers: AIEmployeeProfile[] = [
   // Finance Managers
   {
     id: 'finance-manager-1',
+    uid: 'ktx-05-finance-manager',
     name: 'AI Finance Planning Manager',
     title: 'Finance Planning Manager',
     level: 'department',
@@ -1807,6 +1858,7 @@ export const managers: AIEmployeeProfile[] = [
   // Marketing Managers
   {
     id: 'marketing-manager-1',
+    uid: 'ktx-03-marketing-manager',
     name: 'AI Digital Marketing Manager',
     title: 'Digital Marketing Manager',
     level: 'department',
@@ -1836,6 +1888,7 @@ export const managers: AIEmployeeProfile[] = [
   // Sales Managers
   {
     id: 'sales-manager-1',
+    uid: 'ktx-02-sales-operations-manager',
     name: 'AI Enterprise Sales Manager',
     title: 'Enterprise Sales Manager',
     level: 'department',
@@ -1894,6 +1947,7 @@ export const managers: AIEmployeeProfile[] = [
   // Operations Managers
   {
     id: 'ops-manager-1',
+    uid: 'ktx-06-devops-manager',
     name: 'AI Business Operations Manager',
     title: 'Business Operations Manager',
     level: 'department',
@@ -1979,6 +2033,7 @@ export const managers: AIEmployeeProfile[] = [
   // Product Managers
   {
     id: 'product-manager-1',
+    uid: 'ktx-10-product-manager',
     name: 'AI Core Product Manager',
     title: 'Core Product Manager',
     level: 'department',
@@ -2014,6 +2069,7 @@ export const managers: AIEmployeeProfile[] = [
 export const teamLeads: AIEmployeeProfile[] = [
   {
     id: 'frontend-lead-1',
+    uid: 'ktx-06-frontend-lead',
     name: 'AI Frontend Team Lead',
     title: 'Frontend Lead',
     level: 'agent',
@@ -2041,6 +2097,7 @@ export const teamLeads: AIEmployeeProfile[] = [
   },
   {
     id: 'backend-lead-1',
+    uid: 'ktx-06-backend-lead',
     name: 'AI Backend Team Lead',
     title: 'Backend Lead',
     level: 'agent',
@@ -2158,6 +2215,7 @@ export const specialists: AIEmployeeProfile[] = [
   },
   {
     id: 'frontend-dev-1',
+    uid: 'ktx-06-frontend-developer',
     name: 'AI Frontend Developer',
     title: 'Frontend Developer',
     level: 'agent',
@@ -2185,6 +2243,7 @@ export const specialists: AIEmployeeProfile[] = [
   },
   {
     id: 'backend-dev-1',
+    uid: 'ktx-06-backend-developer',
     name: 'AI Backend Developer',
     title: 'Backend Developer',
     level: 'agent',
@@ -2212,6 +2271,7 @@ export const specialists: AIEmployeeProfile[] = [
   },
   {
     id: 'seo-specialist-1',
+    uid: 'ktx-03-seo-specialist',
     name: 'AI SEO Specialist',
     title: 'SEO Specialist',
     level: 'agent',
@@ -2294,6 +2354,7 @@ export const specialists: AIEmployeeProfile[] = [
   },
   {
     id: 'recruiter-1',
+    uid: 'ktx-07-recruiter',
     name: 'AI Recruiter',
     title: 'Recruiter',
     level: 'agent',
@@ -2321,6 +2382,7 @@ export const specialists: AIEmployeeProfile[] = [
   },
   {
     id: 'security-engineer-1',
+    uid: 'ktx-06-security-engineer',
     name: 'AI Security Engineer',
     title: 'Security Engineer',
     level: 'agent',
@@ -2349,6 +2411,7 @@ export const specialists: AIEmployeeProfile[] = [
   },
   {
     id: 'product-owner-1',
+    uid: 'ktx-10-product-owner',
     name: 'AI Product Owner',
     title: 'Product Owner',
     level: 'agent',

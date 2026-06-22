@@ -1,6 +1,6 @@
 /**
  * KAYTX AI WORKFORCE - DEPARTMENT 2: SALES & REVENUE
- * 14 Main Agents + 42 Sub-Agents = 56 Total Agents
+ * 30 Main Agents + 30 Sub-Agents = 60 Total Agents
  */
 
 import React, { useState, useMemo } from 'react';
@@ -26,16 +26,36 @@ const salesRevenueAgents = [
   { id: 'vp-revenue', name: 'AI VP Revenue', title: 'VP Revenue', level: 'vp_director', efficiency: '93%', cost: '$249/mo', subAgents: 3, capabilities: ['Revenue Optimization', 'Pricing Strategy', 'Forecasting'] },
   { id: 'vp-business-dev', name: 'AI VP Business Development', title: 'VP Business Development', level: 'vp_director', efficiency: '92%', cost: '$229/mo', subAgents: 3, capabilities: ['Partnership Development', 'Market Expansion', 'Strategic Alliances'] },
   { id: 'vp-channel-partners', name: 'AI VP Channel Partners', title: 'VP Channel Partners', level: 'vp_director', efficiency: '91%', cost: '$219/mo', subAgents: 3, capabilities: ['Channel Strategy', 'Partner Management', 'Co-marketing'] },
+  { id: 'vp-territory-management', name: 'AI VP Territory Management', title: 'VP Territory Management', level: 'vp_director', efficiency: '90%', cost: '$229/mo', subAgents: 3, capabilities: ['Territory Planning', 'Quota Management', 'Regional Strategy'] },
+  { id: 'vp-sales-operations', name: 'AI VP Sales Operations', title: 'VP Sales Operations', level: 'vp_director', efficiency: '89%', cost: '$239/mo', subAgents: 3, capabilities: ['Operations Strategy', 'Process Optimization', 'Technology Integration'] },
+  { id: 'vp-sales-analytics', name: 'AI VP Sales Analytics', title: 'VP Sales Analytics', level: 'vp_director', efficiency: '91%', cost: '$219/mo', subAgents: 3, capabilities: ['Data Strategy', 'Performance Analysis', 'Predictive Insights'] },
   { id: 'sales-ops-manager', name: 'AI Sales Operations Manager', title: 'Sales Operations Manager', level: 'manager', efficiency: '90%', cost: '$149/mo', subAgents: 3, capabilities: ['CRM Management', 'Process Optimization', 'Analytics'] },
+  { id: 'sales-manager', name: 'AI Sales Manager', title: 'Sales Manager', level: 'manager', efficiency: '88%', cost: '$159/mo', subAgents: 3, capabilities: ['Team Leadership', 'Performance Management', 'Coaching'] },
+  { id: 'inside-sales-manager', name: 'AI Inside Sales Manager', title: 'Inside Sales Manager', level: 'manager', efficiency: '87%', cost: '$139/mo', subAgents: 3, capabilities: ['Inside Sales Strategy', 'Team Coordination', 'Pipeline Management'] },
+  { id: 'field-sales-manager', name: 'AI Field Sales Manager', title: 'Field Sales Manager', level: 'manager', efficiency: '86%', cost: '$169/mo', subAgents: 3, capabilities: ['Field Operations', 'Account Management', 'Regional Coverage'] },
+  { id: 'key-account-manager', name: 'AI Key Account Manager', title: 'Key Account Manager', level: 'manager', efficiency: '91%', cost: '$179/mo', subAgents: 3, capabilities: ['Strategic Accounts', 'Relationship Management', 'Revenue Growth'] },
   { id: 'sdr', name: 'AI Lead Development Rep', title: 'Lead Development Rep (SDR)', level: 'specialist', efficiency: '88%', cost: '$79/mo', subAgents: 3, capabilities: ['Lead Qualification', 'Outreach', 'Prospecting'] },
+  { id: 'sdr-lead', name: 'AI Lead Development Rep Lead', title: 'Lead Development Rep Lead', level: 'specialist', efficiency: '89%', cost: '$89/mo', subAgents: 3, capabilities: ['Lead Team Leadership', 'Quality Assurance', 'Process Improvement'] },
+  { id: 'inbound-sales-specialist', name: 'AI Inbound Sales Specialist', title: 'Inbound Sales Specialist', level: 'specialist', efficiency: '90%', cost: '$84/mo', subAgents: 3, capabilities: ['Inbound Lead Handling', 'Response Management', 'Qualification'] },
+  { id: 'outbound-sales-specialist', name: 'AI Outbound Sales Specialist', title: 'Outbound Sales Specialist', level: 'specialist', efficiency: '87%', cost: '$84/mo', subAgents: 3, capabilities: ['Cold Outreach', 'Prospecting', 'Appointment Setting'] },
   { id: 'sales-rep', name: 'AI Sales Rep', title: 'Sales Rep', level: 'specialist', efficiency: '89%', cost: '$99/mo', subAgents: 3, capabilities: ['Deal Closing', 'Relationship Building', 'Product Demo'] },
+  { id: 'enterprise-sales-rep', name: 'AI Enterprise Sales Rep', title: 'Enterprise Sales Rep', level: 'specialist', efficiency: '90%', cost: '$119/mo', subAgents: 3, capabilities: ['Enterprise Deals', 'Complex Sales', 'Multi-threading'] },
+  { id: 'smb-sales-rep', name: 'AI SMB Sales Rep', title: 'SMB Sales Rep', level: 'specialist', efficiency: '88%', cost: '$89/mo', subAgents: 3, capabilities: ['SMB Sales', 'Quick Cycles', 'Volume Sales'] },
   { id: 'sales-executive', name: 'AI Sales Executive', title: 'Sales Executive', level: 'specialist', efficiency: '92%', cost: '$129/mo', subAgents: 3, capabilities: ['Enterprise Sales', 'Strategic Accounts', 'Negotiation'] },
   { id: 'crm-assistant', name: 'AI CRM Assistant', title: 'CRM Assistant', level: 'specialist', efficiency: '95%', cost: '$69/mo', subAgents: 3, capabilities: ['Data Entry', 'Pipeline Updates', 'Activity Tracking'] },
+  { id: 'sales-coordinator', name: 'AI Sales Coordinator', title: 'Sales Coordinator', level: 'specialist', efficiency: '87%', cost: '$74/mo', subAgents: 3, capabilities: ['Deal Coordination', 'Admin Support', 'Communication'] },
   { id: 'proposal-generator', name: 'AI Proposal Generator', title: 'Proposal Generator', level: 'specialist', efficiency: '91%', cost: '$89/mo', subAgents: 3, capabilities: ['Proposal Creation', 'Pricing', 'Template Management'] },
+  { id: 'rfp-specialist', name: 'AI RFP Specialist', title: 'RFP Specialist', level: 'specialist', efficiency: '88%', cost: '$99/mo', subAgents: 3, capabilities: ['RFP Response', 'Document Preparation', 'Deadline Management'] },
+  { id: 'contract-specialist', name: 'AI Contract Specialist', title: 'Contract Specialist', level: 'specialist', efficiency: '86%', cost: '$94/mo', subAgents: 3, capabilities: ['Contract Preparation', 'Terms Negotiation', 'Compliance'] },
   { id: 'negotiator', name: 'AI Negotiator', title: 'Negotiator', level: 'specialist', efficiency: '93%', cost: '$119/mo', subAgents: 3, capabilities: ['Deal Negotiation', 'Terms Analysis', 'Conflict Resolution'] },
   { id: 'pricing-analyst', name: 'AI Pricing Analyst', title: 'Pricing Analyst', level: 'specialist', efficiency: '90%', cost: '$109/mo', subAgents: 3, capabilities: ['Price Analysis', 'Competitor Tracking', 'Margin Optimization'] },
+  { id: 'revenue-operations-specialist', name: 'AI Revenue Operations Specialist', title: 'Revenue Operations Specialist', level: 'specialist', efficiency: '89%', cost: '$99/mo', subAgents: 3, capabilities: ['Revenue Recognition', 'Billing Coordination', 'Reporting'] },
   { id: 'sales-forecasting', name: 'AI Sales Forecasting', title: 'Sales Forecasting', level: 'specialist', efficiency: '92%', cost: '$99/mo', subAgents: 3, capabilities: ['Trend Analysis', 'Pipeline Weighting', 'Predictive Analytics'] },
+  { id: 'quota-specialist', name: 'AI Quota Specialist', title: 'Quota Specialist', level: 'specialist', efficiency: '88%', cost: '$84/mo', subAgents: 3, capabilities: ['Quota Setting', 'Performance Tracking', 'Incentive Planning'] },
   { id: 'sales-enablement', name: 'AI Sales Enablement', title: 'Sales Enablement', level: 'specialist', efficiency: '88%', cost: '$79/mo', subAgents: 3, capabilities: ['Content Management', 'Training', 'Playbook Updates'] },
+  { id: 'sales-trainer', name: 'AI Sales Trainer', title: 'Sales Trainer', level: 'specialist', efficiency: '86%', cost: '$89/mo', subAgents: 3, capabilities: ['Sales Training', 'Onboarding', 'Skill Development'] },
+  { id: 'competitive-intelligence-specialist', name: 'AI Competitive Intelligence Specialist', title: 'Competitive Intelligence Specialist', level: 'specialist', efficiency: '87%', cost: '$94/mo', subAgents: 3, capabilities: ['Competitor Analysis', 'Market Intelligence', 'Positioning Strategy'] },
+  { id: 'sales-content-specialist', name: 'AI Sales Content Specialist', title: 'Sales Content Specialist', level: 'specialist', efficiency: '85%', cost: '$84/mo', subAgents: 3, capabilities: ['Content Creation', 'Sales Collateral', 'Messaging'] },
 ];
 
 export default function SalesRevenueDepartment() {

@@ -1,109 +1,90 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { useTheme } from '@/providers/ThemeProvider';
-import { Heart, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, TrendingUp, DollarSign, Stethoscope, ShieldCheck, FileText, CreditCard, Code, Monitor, Settings, HeartPulse, FolderOpen, GitBranch, HeartHandshake } from 'lucide-react-native';
-import AgentFeatures from '@/components/ai-agent/AgentFeatures';
+import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
-
-const DEPARTMENT_AGENTS = [
-  { id: 'chief-medical-officer', name: 'AI Chief Medical Officer', description: 'Clinical Strategy & Medical Leadership', icon: Stethoscope, color: '#B71C1C' },
-  { id: 'vp-healthcare-operations', name: 'AI VP Healthcare Operations', description: 'Operational Excellence & Workflow Optimization', icon: Settings, color: '#B71C1C' },
-  { id: 'vp-patient-experience', name: 'AI VP Patient Experience', description: 'Patient Satisfaction & Service Excellence', icon: HeartPulse, color: '#B71C1C' },
-  { id: 'patient-services-manager', name: 'AI Patient Services Manager', description: 'Patient Intake & Service Navigation', icon: Users, color: '#B71C1C' },
-  { id: 'medical-billing-manager', name: 'AI Medical Billing Manager', description: 'Revenue Cycle & Claims Management', icon: DollarSign, color: '#B71C1C' },
-  { id: 'scheduling-manager', name: 'AI Scheduling Manager', description: 'Appointment Optimization & Provider Scheduling', icon: Calendar, color: '#B71C1C' },
-  { id: 'patient-coordinator', name: 'AI Patient Coordinator', description: 'Referrals & Pre-Authorization Management', icon: GitBranch, color: '#B71C1C' },
-  { id: 'medical-coder', name: 'AI Medical Coder', description: 'Code Assignment & Coding Compliance', icon: Code, color: '#B71C1C' },
-  { id: 'billing-specialist', name: 'AI Billing Specialist', description: 'Charge Capture & Payment Processing', icon: CreditCard, color: '#B71C1C' },
-  { id: 'care-coordinator', name: 'AI Care Coordinator', description: 'Care Planning & Outcome Tracking', icon: HeartHandshake, color: '#B71C1C' },
-  { id: 'health-records-specialist', name: 'AI Health Records Specialist', description: 'Record Management & Data Integrity', icon: FolderOpen, color: '#B71C1C' },
-  { id: 'telehealth-support', name: 'AI Telehealth Support', description: 'Virtual Visits & Remote Monitoring', icon: Monitor, color: '#B71C1C' },
-  { id: 'healthcare-compliance', name: 'AI Healthcare Compliance', description: 'Regulatory Tracking & Audit Preparation', icon: ShieldCheck, color: '#B71C1C' },
-  { id: 'quality-improvement-specialist', name: 'AI Quality Improvement Specialist', description: 'Metric Analysis & Benchmark Reporting', icon: TrendingUp, color: '#B71C1C' }
+const agents = [
+  { id: 'ai-chief-medical-officer', uid: 'ktx-17-chief-medical-officer', title: 'AI Chief Medical Officer', route: '/ai-agent/healthcare/chief-medical-officer', color: '#EC407A', level: 'c_level', efficiency: '83%' },
+  { id: 'ai-vp-healthcare-operations', uid: 'ktx-17-vp-healthcare-operations', title: 'AI VP Healthcare Operations', route: '/ai-agent/healthcare/vp-healthcare-operations', color: '#EC407A', level: 'vp_director', efficiency: '84%' },
+  { id: 'ai-vp-patient-experience', uid: 'ktx-17-vp-patient-experience', title: 'AI VP Patient Experience', route: '/ai-agent/healthcare/vp-patient-experience', color: '#EC407A', level: 'vp_director', efficiency: '83%' },
+  { id: 'ai-vp-clinical-services', uid: 'ktx-17-vp-clinical-services', title: 'AI VP Clinical Services', route: '/ai-agent/healthcare/vp-clinical-services', color: '#EC407A', level: 'vp_director', efficiency: '85%' },
+  { id: 'ai-vp-medical-affairs', uid: 'ktx-17-vp-medical-affairs', title: 'AI VP Medical Affairs', route: '/ai-agent/healthcare/vp-medical-affairs', color: '#EC407A', level: 'vp_director', efficiency: '86%' },
+  { id: 'ai-vp-nursing-services', uid: 'ktx-17-vp-nursing-services', title: 'AI VP Nursing Services', route: '/ai-agent/healthcare/vp-nursing-services', color: '#EC407A', level: 'vp_director', efficiency: '84%' },
+  { id: 'ai-vp-revenue-cycle', uid: 'ktx-17-vp-revenue-cycle', title: 'AI VP Revenue Cycle', route: '/ai-agent/healthcare/vp-revenue-cycle', color: '#EC407A', level: 'vp_director', efficiency: '82%' },
+  { id: 'ai-vp-health-information', uid: 'ktx-17-vp-health-information', title: 'AI VP Health Information', route: '/ai-agent/healthcare/vp-health-information', color: '#EC407A', level: 'vp_director', efficiency: '87%' },
+  { id: 'ai-vp-quality-safety', uid: 'ktx-17-vp-quality-safety', title: 'AI VP Quality & Safety', route: '/ai-agent/healthcare/vp-quality-safety', color: '#EC407A', level: 'vp_director', efficiency: '88%' },
+  { id: 'ai-vp-pharmacy-services', uid: 'ktx-17-vp-pharmacy-services', title: 'AI VP Pharmacy Services', route: '/ai-agent/healthcare/vp-pharmacy-services', color: '#EC407A', level: 'vp_director', efficiency: '85%' },
+  { id: 'ai-vp-laboratory-services', uid: 'ktx-17-vp-laboratory-services', title: 'AI VP Laboratory Services', route: '/ai-agent/healthcare/vp-laboratory-services', color: '#EC407A', level: 'vp_director', efficiency: '83%' },
+  { id: 'ai-patient-services-manager', uid: 'ktx-17-patient-services-manager', title: 'AI Patient Services Manager', route: '/ai-agent/healthcare/patient-services-manager', color: '#EC407A', level: 'manager', efficiency: '84%' },
+  { id: 'ai-medical-billing-manager', uid: 'ktx-17-medical-billing-manager', title: 'AI Medical Billing Manager', route: '/ai-agent/healthcare/medical-billing-manager', color: '#EC407A', level: 'manager', efficiency: '77%' },
+  { id: 'ai-scheduling-manager', uid: 'ktx-17-scheduling-manager', title: 'AI Scheduling Manager', route: '/ai-agent/healthcare/scheduling-manager', color: '#EC407A', level: 'manager', efficiency: '82%' },
+  { id: 'ai-clinical-manager', uid: 'ktx-17-clinical-manager', title: 'AI Clinical Manager', route: '/ai-agent/healthcare/clinical-manager', color: '#EC407A', level: 'manager', efficiency: '86%' },
+  { id: 'ai-nursing-manager', uid: 'ktx-17-nursing-manager', title: 'AI Nursing Manager', route: '/ai-agent/healthcare/nursing-manager', color: '#EC407A', level: 'manager', efficiency: '85%' },
+  { id: 'ai-pharmacy-manager', uid: 'ktx-17-pharmacy-manager', title: 'AI Pharmacy Manager', route: '/ai-agent/healthcare/pharmacy-manager', color: '#EC407A', level: 'manager', efficiency: '84%' },
+  { id: 'ai-laboratory-manager', uid: 'ktx-17-laboratory-manager', title: 'AI Laboratory Manager', route: '/ai-agent/healthcare/laboratory-manager', color: '#EC407A', level: 'manager', efficiency: '83%' },
+  { id: 'ai-patient-coordinator', uid: 'ktx-17-patient-coordinator', title: 'AI Patient Coordinator', route: '/ai-agent/healthcare/patient-coordinator', color: '#EC407A', level: 'c_level', efficiency: '89%' },
+  { id: 'ai-medical-coder', uid: 'ktx-17-medical-coder', title: 'AI Medical Coder', route: '/ai-agent/healthcare/medical-coder', color: '#EC407A', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-billing-specialist', uid: 'ktx-17-billing-specialist', title: 'AI Billing Specialist', route: '/ai-agent/healthcare/billing-specialist', color: '#EC407A', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-care-coordinator', uid: 'ktx-17-care-coordinator', title: 'AI Care Coordinator', route: '/ai-agent/healthcare/care-coordinator', color: '#EC407A', level: 'c_level', efficiency: '88%' },
+  { id: 'ai-health-records-specialist', uid: 'ktx-17-health-records-specialist', title: 'AI Health Records Specialist', route: '/ai-agent/healthcare/health-records-specialist', color: '#EC407A', level: 'team_lead', efficiency: '91%' },
+  { id: 'ai-telehealth-support', uid: 'ktx-17-telehealth-support', title: 'AI Telehealth Support', route: '/ai-agent/healthcare/telehealth-support', color: '#EC407A', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-healthcare-compliance', uid: 'ktx-17-healthcare-compliance', title: 'AI Healthcare Compliance', route: '/ai-agent/healthcare/healthcare-compliance', color: '#EC407A', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-quality-improvement-specialist', uid: 'ktx-17-quality-improvement-specialist', title: 'AI Quality Improvement Specialist', route: '/ai-agent/healthcare/quality-improvement-specialist', color: '#EC407A', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-claims-specialist', uid: 'ktx-17-claims-specialist', title: 'AI Claims Specialist', route: '/ai-agent/healthcare/claims-specialist', color: '#EC407A', level: 'team_lead', efficiency: '81%' },
+  { id: 'ai-claims-processor', uid: 'ktx-17-claims-processor', title: 'AI Claims Processor', route: '/ai-agent/healthcare/claims-processor', color: '#EC407A', level: 'team_lead', efficiency: '80%' },
+  { id: 'ai-charge-capture-specialist', uid: 'ktx-17-charge-capture-specialist', title: 'AI Charge Capture Specialist', route: '/ai-agent/healthcare/charge-capture-specialist', color: '#EC407A', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-denial-management-specialist', uid: 'ktx-17-denial-management-specialist', title: 'AI Denial Management Specialist', route: '/ai-agent/healthcare/denial-management-specialist', color: '#EC407A', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-patient-intake-specialist', uid: 'ktx-17-patient-intake-specialist', title: 'AI Patient Intake Specialist', route: '/ai-agent/healthcare/patient-intake-specialist', color: '#EC407A', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-registration-specialist', uid: 'ktx-17-registration-specialist', title: 'AI Registration Specialist', route: '/ai-agent/healthcare/registration-specialist', color: '#EC407A', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-insurance-verification-specialist', uid: 'ktx-17-insurance-verification-specialist', title: 'AI Insurance Verification Specialist', route: '/ai-agent/healthcare/insurance-verification-specialist', color: '#EC407A', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-prior-authorization-specialist', uid: 'ktx-17-prior-authorization-specialist', title: 'AI Prior Authorization Specialist', route: '/ai-agent/healthcare/prior-authorization-specialist', color: '#EC407A', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-scheduling-specialist', uid: 'ktx-17-scheduling-specialist', title: 'AI Scheduling Specialist', route: '/ai-agent/healthcare/scheduling-specialist', color: '#EC407A', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-appointment-coordinator', uid: 'ktx-17-appointment-coordinator', title: 'AI Appointment Coordinator', route: '/ai-agent/healthcare/appointment-coordinator', color: '#EC407A', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-clinical-documentation-specialist', uid: 'ktx-17-clinical-documentation-specialist', title: 'AI Clinical Documentation Specialist', route: '/ai-agent/healthcare/clinical-documentation-specialist', color: '#EC407A', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-health-information-technician', uid: 'ktx-17-health-information-technician', title: 'AI Health Information Technician', route: '/ai-agent/healthcare/health-information-technician', color: '#EC407A', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-release-of-information-specialist', uid: 'ktx-17-release-of-information-specialist', title: 'AI Release of Information Specialist', route: '/ai-agent/healthcare/release-of-information-specialist', color: '#EC407A', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-medical-records-clerk', uid: 'ktx-17-medical-records-clerk', title: 'AI Medical Records Clerk', route: '/ai-agent/healthcare/medical-records-clerk', color: '#EC407A', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-telehealth-coordinator', uid: 'ktx-17-telehealth-coordinator', title: 'AI Telehealth Coordinator', route: '/ai-agent/healthcare/telehealth-coordinator', color: '#EC407A', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-remote-patient-monitoring-specialist', uid: 'ktx-17-remote-patient-monitoring-specialist', title: 'AI Remote Patient Monitoring Specialist', route: '/ai-agent/healthcare/remote-patient-monitoring-specialist', color: '#EC407A', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-telemedicine-support-specialist', uid: 'ktx-17-telemedicine-support-specialist', title: 'AI Telemedicine Support Specialist', route: '/ai-agent/healthcare/telemedicine-support-specialist', color: '#EC407A', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-hipaa-compliance-specialist', uid: 'ktx-17-hipaa-compliance-specialist', title: 'AI HIPAA Compliance Specialist', route: '/ai-agent/healthcare/hipaa-compliance-specialist', color: '#EC407A', level: 'team_lead', efficiency: '89%' },
+  { id: 'ai-regulatory-compliance-specialist', uid: 'ktx-17-regulatory-compliance-specialist', title: 'AI Regulatory Compliance Specialist', route: '/ai-agent/healthcare/regulatory-compliance-specialist', color: '#EC407A', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-clinical-risk-specialist', uid: 'ktx-17-clinical-risk-specialist', title: 'AI Clinical Risk Specialist', route: '/ai-agent/healthcare/clinical-risk-specialist', color: '#EC407A', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-patient-safety-specialist', uid: 'ktx-17-patient-safety-specialist', title: 'AI Patient Safety Specialist', route: '/ai-agent/healthcare/patient-safety-specialist', color: '#EC407A', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-infection-control-specialist', uid: 'ktx-17-infection-control-specialist', title: 'AI Infection Control Specialist', route: '/ai-agent/healthcare/infection-control-specialist', color: '#EC407A', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-quality-assurance-analyst', uid: 'ktx-17-quality-assurance-analyst', title: 'AI Quality Assurance Analyst', route: '/ai-agent/healthcare/quality-assurance-analyst', color: '#EC407A', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-performance-improvement-coordinator', uid: 'ktx-17-performance-improvement-coordinator', title: 'AI Performance Improvement Coordinator', route: '/ai-agent/healthcare/performance-improvement-coordinator', color: '#EC407A', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-patient-satisfaction-specialist', uid: 'ktx-17-patient-satisfaction-specialist', title: 'AI Patient Satisfaction Specialist', route: '/ai-agent/healthcare/patient-satisfaction-specialist', color: '#EC407A', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-case-manager', uid: 'ktx-17-case-manager', title: 'AI Case Manager', route: '/ai-agent/healthcare/case-manager', color: '#EC407A', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-discharge-planner', uid: 'ktx-17-discharge-planner', title: 'AI Discharge Planner', route: '/ai-agent/healthcare/discharge-planner', color: '#EC407A', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-utilization-management-specialist', uid: 'ktx-17-utilization-management-specialist', title: 'AI Utilization Management Specialist', route: '/ai-agent/healthcare/utilization-management-specialist', color: '#EC407A', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-transitions-of-care-coordinator', uid: 'ktx-17-transitions-of-care-coordinator', title: 'AI Transitions of Care Coordinator', route: '/ai-agent/healthcare/transitions-of-care-coordinator', color: '#EC407A', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-medical-necessity-reviewer', uid: 'ktx-17-medical-necessity-reviewer', title: 'AI Medical Necessity Reviewer', route: '/ai-agent/healthcare/medical-necessity-reviewer', color: '#EC407A', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-care-pathway-coordinator', uid: 'ktx-17-care-pathway-coordinator', title: 'AI Care Pathway Coordinator', route: '/ai-agent/healthcare/care-pathway-coordinator', color: '#EC407A', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-pharmacy-technician', uid: 'ktx-17-pharmacy-technician', title: 'AI Pharmacy Technician', route: '/ai-agent/healthcare/pharmacy-technician', color: '#EC407A', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-medication-reconciliation-specialist', uid: 'ktx-17-medication-reconciliation-specialist', title: 'AI Medication Reconciliation Specialist', route: '/ai-agent/healthcare/medication-reconciliation-specialist', color: '#EC407A', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-drug-interaction-specialist', uid: 'ktx-17-drug-interaction-specialist', title: 'AI Drug Interaction Specialist', route: '/ai-agent/healthcare/drug-interaction-specialist', color: '#EC407A', level: 'team_lead', efficiency: '86%' },
 ];
-
-export default function HealthcareDepartment() {
-  const { theme } = useTheme();
+export default function DepartmentIndex() {
   const router = useRouter();
   return (
-    <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#B71C1C20' }]}><Heart size={48} color="#B71C1C" /></View>
-        <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Healthcare</Text>
-        <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>AI Agents for Healthcare Operations</Text>
-        <View style={styles.badgesRow}>
-          <View style={[styles.badge, { backgroundColor: '#34C75922' }]}><Activity size={12} color="#34C759" /><Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#B71C1C22' }]}><Star size={12} color="#B71C1C" /><Text style={[styles.badgeText, { color: '#B71C1C' }]}>Department</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#FF950022' }]}><Users size={12} color="#FF9500" /><Text style={[styles.badgeText, { color: '#FF9500' }]}>{DEPARTMENT_AGENTS.length} Agents</Text></View>
-        </View>
-      </View>
-      <View style={styles.statsContainer}>
-        {[{label:'Agents',value:DEPARTMENT_AGENTS.length.toString(),icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Clock,color:'#007AFF'},{label:'Accuracy',value:'99.8%',icon:Target,color:'#FF9500'},{label:'Processed',value:'10K+',icon:TrendingUp,color:'#B71C1C'}].map((stat,i)=>(<View key={i} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><stat.icon size={22} color={stat.color} /><Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text><Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text></View>))}
-      </View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Overview</Text>
-        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>{'"AI-powered department agents optimizing operations through intelligent automation."'}</Text>
-      </View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Department Agents</Text>
-        {DEPARTMENT_AGENTS.map((agent) => (
-          <TouchableOpacity key={agent.id} onPress={()=>router.push('/ai-agent/healthcare/'+agent.id)} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
-            <View style={[styles.agentIcon, { backgroundColor: agent.color + '20' }]}><agent.icon size={28} color={agent.color} /></View>
-            <View style={styles.agentInfo}>
-              <Text style={[styles.agentName, { color: theme.colors.text }]}>{agent.name}</Text>
-              <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>{agent.description}</Text>
-            </View>
-            <ArrowRight size={20} color={theme.colors.textSecondary} />
-          </TouchableOpacity>
+    <ScrollView style={s.container}>
+      <Text style={s.title}>Healthcare & Medical - AI Agents</Text>
+      <Text style={s.sub}>60 AI Agents & Employees</Text>
+      <View style={s.grid}>
+        {agents.map((a) => (
+          <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>
+            <Text style={s.at}>{a.title}</Text>
+            <Text style={s.al}>{a.level.replace('_',' ').toUpperCase()}</Text>
+            <Text style={s.ae}>{a.efficiency}</Text>
+          </Pressable>
         ))}
       </View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
-        <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#B71C1C12' }]}><act.icon size={24} color="#B71C1C" /><Text style={[styles.actionText, { color: '#B71C1C' }]}>{act.label}</Text></TouchableOpacity>))}
-        </View>
-      </View>
-      
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
-        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>42 helper and sub-agent AI workers supporting the main agents.</Text>
-        <TouchableOpacity onPress={() => router.push('/ai-agent/healthcare/sub-agents')} style={[styles.subAgentButton, { backgroundColor: '#EF444415' }]}>
-          <Heart size={20} color="#EF4444" />
-          <Text style={[styles.subAgentButtonText, { color: '#EF4444' }]}>View All 42 Sub-Agents</Text>
-          <ArrowRight size={18} color="#EF4444" />
-        </TouchableOpacity>
-      </View>
-
-      <AgentFeatures agentId="healthcare-index" agentName="Healthcare Department" />
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container:{flex:1},
-  hero:{alignItems:'center',paddingVertical:32,paddingHorizontal:20,borderBottomWidth:1},
-  heroIconWrap:{width:88,height:88,borderRadius:44,justifyContent:'center',alignItems:'center',marginBottom:16},
-  heroTitle:{fontSize:26,fontWeight:'bold'},
-  heroSubtitle:{fontSize:15,marginTop:4,fontWeight:'500'},
-  badgesRow:{flexDirection:'row',gap:10,marginTop:16},
-  badge:{flexDirection:'row',alignItems:'center',paddingHorizontal:10,paddingVertical:5,borderRadius:20,gap:4},
-  badgeText:{fontSize:12,fontWeight:'600'},
-  statsContainer:{flexDirection:'row',flexWrap:'wrap',padding:16,gap:12},
-  statCard:{flex:1,minWidth:'22%',alignItems:'center',padding:14,borderRadius:12},
-  statValue:{fontSize:18,fontWeight:'bold',marginTop:8},
-  statLabel:{fontSize:11,marginTop:4},
-  section:{marginHorizontal:16,marginBottom:16,padding:20,borderRadius:16},
-  sectionTitle:{fontSize:18,fontWeight:'700',marginBottom:14},
-  description:{fontSize:14,lineHeight:22},
-  agentCard:{flexDirection:'row',alignItems:'center',padding:16,borderRadius:12,marginBottom:12},
-  agentIcon:{width:48,height:48,borderRadius:12,alignItems:'center',justifyContent:'center'},
-  agentInfo:{flex:1,marginLeft:12},
-  agentName:{fontSize:16,fontWeight:'600'},
-  agentDesc:{fontSize:12,marginTop:2},
-  actionsGrid:{flexDirection:'row',flexWrap:'wrap',gap:12},
-  actionButton:{flex:1,minWidth:'45%',alignItems:'center',padding:16,borderRadius:12},
-  actionText:{fontSize:13,fontWeight:'600',marginTop:8},
-  subAgentButton:{flexDirection:'row',alignItems:'center',padding:16,borderRadius:12,gap:12,marginTop:12},
-  subAgentButtonText:{fontSize:15,fontWeight:'600',flex:1}
+const s = StyleSheet.create({
+  container:{flex:1,backgroundColor:'#0a0a0a',padding:16},title:{color:'#fff',fontSize:24,fontWeight:'bold',marginBottom:4},
+  sub:{color:'#888',fontSize:14,marginBottom:16},grid:{flexDirection:'row',flexWrap:'wrap',gap:12},
+  card:{backgroundColor:'#1a1a2e',borderRadius:12,padding:16,width:'48%',borderLeftWidth:3},
+  at:{color:'#fff',fontSize:14,fontWeight:'600',marginBottom:4},al:{color:'#888',fontSize:11,marginBottom:2},
+  ae:{color:'#10B981',fontSize:12},
 });
-

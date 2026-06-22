@@ -1,354 +1,43 @@
 import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
-import { Star } from 'lucide-react-native';
 
 export default function AgentPage() {
   const agent = {
-    id: 'quality-improvement-specialist',
-    name: 'quality-improvement-specialist',
-    title: 'quality-improvement-specialist',
-    description: 'The quality-improvement-specialist AI provides specialized services and automation within its department.',
-    capabilities: ["Task Automation","Data Processing","Workflow Management"],
-    icon: Star,
-    color: '#E91E63',
+    id: 'ai-quality-improvement-specialist',
+    uid: 'ktx-17-quality-improvement-specialist',
+    name: 'AI Quality Improvement Specialist',
+    title: 'AI Quality Improvement Specialist',
+    description: 'AI Quality Improvement Specialist coordinates team activities and ensures quality output for the Healthcare & Medical department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
+    capabilities: ['Medical Records Management', 'Clinical Decision Support', 'Health Monitoring', 'Treatment Planning', 'Telemedicine'],
+    color: '#EC407A',
     type: 'agent' as const,
-    humanCost: '$52k/year',
-    aiCost: '$1k/year',
-    efficiency: '52x efficiency improvement',
-    replacesRole: 'quality-improvement-specialist',
+    humanCost: '$65k/year',
+    aiCost: '$800/mo',
+    efficiency: '86% efficiency',
+    replacesRole: 'AI Quality Improvement Specialist',
+    subAgents: [
+      { id: 'ai-denial-manager', uid: 'ktx-17-denial-manager', name: 'AI Denial Manager', title: 'AI Denial Manager', route: '/ai-agent/healthcare/denial-manager' },
+      { id: 'ai-care-plan-manager', uid: 'ktx-17-care-plan-manager', name: 'AI Care Plan Manager', title: 'AI Care Plan Manager', route: '/ai-agent/healthcare/care-plan-manager' },
+      { id: 'ai-benchmark-reporter', uid: 'ktx-17-benchmark-reporter', name: 'AI Benchmark Reporter', title: 'AI Benchmark Reporter', route: '/ai-agent/healthcare/benchmark-reporter' }
+    ],
     infrastructure: {
       status: 'online',
-      health: 98,
-      uptime: '99.9%',
+      health: 94,
+      uptime: '99.7%',
       lastActive: 'Now',
       processingPower: 'standard',
     },
     roiMetrics: {
-      savingsPerMonth: '$3',
-      tasksAutomatedDaily: 790,
-      responseTime: '0.7s',
-      accuracyRate: '96.7%',
+      savingsPerMonth: '$4937',
+      tasksAutomatedDaily: 261,
+      responseTime: '0.8s',
+      accuracyRate: '96.1%',
     },
     hierarchy: {
-      department: 'Healthcare',
+      department: 'Healthcare & Medical',
+      level: 'team_lead',
+      departmentId: 17,
     },
-    comprehensiveFeatures: {
-  "communicationChannels": {
-    "call": {
-      "enabled": true,
-      "provider": "Twilio",
-      "features": [
-        "PBX Integration",
-        "IVR Menu",
-        "Call Routing",
-        "Call Recording",
-        "Transcriptions"
-      ],
-      "recordingRetention": "90 days",
-      "consentLogging": true
-    },
-    "chatSystem": {
-      "enabled": true,
-      "platforms": [
-        "Web Widget",
-        "Slack",
-        "Intercom",
-        "Microsoft Teams"
-      ],
-      "persistentThreads": true,
-      "transcriptExport": true
-    },
-    "sms": {
-      "enabled": true,
-      "provider": "Twilio",
-      "features": [
-        "Templated Messages",
-        "Two-Way Support",
-        "Opt-Out Handling"
-      ],
-      "number": "TBD"
-    },
-    "voice": {
-      "enabled": true,
-      "primaryDID": "TBD",
-      "ttsVoice": "default",
-      "failoverNumbers": [],
-      "geoRouting": true
-    },
-    "recording": {
-      "enabled": true,
-      "autoRecording": true,
-      "consentLogging": true,
-      "transcriptGeneration": true,
-      "scriptTemplates": []
-    },
-    "location": {
-      "allowedRegions": [
-        "Global"
-      ],
-      "timezoneAware": true,
-      "localeFormats": [
-        "en-US",
-        "en-GB",
-        "es-ES",
-        "fr-FR",
-        "de-DE"
-      ]
-    }
-  },
-  "companySetup": {
-    "profile": {
-      "enabled": true,
-      "fields": [
-        "Company Name",
-        "Industry",
-        "Size",
-        "Location"
-      ]
-    },
-    "products": {
-      "enabled": true,
-      "catalog": true,
-      "pricingTiers": true
-    },
-    "negotiationRules": {
-      "enabled": true,
-      "templates": true,
-      "maxConcession": "10%"
-    }
-  },
-  "generalInfo": {
-    "name": "",
-    "role": "",
-    "availability": "24/7",
-    "personality": "professional",
-    "tone": "conversational",
-    "voice": "neutral"
-  },
-  "modelConfig": {
-    "modelName": "LLM-X v2",
-    "modelFamily": "GPT-4",
-    "version": "latest",
-    "primaryLanguage": "en-US",
-    "fallbackLanguages": [
-      "es",
-      "fr",
-      "de"
-    ],
-    "multilingualSupport": true
-  },
-  "timing": {
-    "businessHours": {
-      "enabled": true,
-      "schedule": "Mon-Fri 09:00-18:00 local",
-      "timezone": "UTC",
-      "holidays": []
-    },
-    "waitingDuration": {
-      "call": 120,
-      "chat": 30,
-      "sms": 0
-    },
-    "appointmentScheduling": {
-      "enabled": true,
-      "calendars": [
-        "Google",
-        "Outlook"
-      ],
-      "timezoneHandling": "automatic"
-    }
-  },
-  "pricing": {
-    "pricingModel": "fixed monthly",
-    "priceLimit": "TBD",
-    "negotiationRules": {
-      "enabled": true,
-      "maxConcession": "10%",
-      "autoNegotiation": false
-    }
-  },
-  "integrations": {
-    "crm": [
-      "Salesforce",
-      "HubSpot",
-      "Zendesk"
-    ],
-    "ticketing": [
-      "Zendesk",
-      "Freshdesk",
-      "Jira"
-    ],
-    "calendar": [
-      "Google Calendar",
-      "Outlook Calendar"
-    ],
-    "telephony": [
-      "Twilio",
-      "Vonage",
-      "RingCentral"
-    ],
-    "analytics": [
-      "Google Analytics",
-      "Mixpanel",
-      "Amplitude"
-    ],
-    "mcpConnectors": []
-  },
-  "responsibilities": {
-    "taskRouting": {
-      "method": "intent-based",
-      "escalationPath": "human after 3 failed handoffs",
-      "slaEnforcement": true
-    },
-    "appointmentScheduling": {
-      "enabled": true,
-      "rules": []
-    }
-  },
-  "taskManagement": {
-    "assignedTasks": {
-      "queue": true,
-      "slaTimers": true,
-      "dependencies": true
-    },
-    "progressTracking": {
-      "enabled": true,
-      "metrics": [
-        "completion percentage",
-        "time remaining"
-      ]
-    }
-  },
-  "behaviour": {
-    "safetyFilters": {
-      "enabled": true,
-      "restrictedDomains": [
-        "legal",
-        "medical",
-        "financial advice"
-      ]
-    },
-    "refusalTemplates": {
-      "enabled": true
-    },
-    "rateLimits": {
-      "enabled": true,
-      "requestsPerMinute": 60
-    }
-  },
-  "performance": {
-    "metrics": {
-      "latency": true,
-      "accuracy": true,
-      "successRate": true,
-      "userSatisfaction": true
-    },
-    "reporting": {
-      "dashboards": true,
-      "scheduledReports": true,
-      "cadence": [
-        "daily",
-        "weekly",
-        "monthly"
-      ]
-    }
-  },
-  "summary": {
-    "enabled": true,
-    "adminNotes": "",
-    "handoverContext": true
-  },
-  "predictive": {
-    "forecasting": {
-      "enabled": true,
-      "models": []
-    },
-    "anomalyDetection": {
-      "enabled": true,
-      "triggers": []
-    }
-  },
-  "regulations": {
-    "compliance": {
-      "gdpr": true,
-      "hipaa": false,
-      "soc2": false,
-      "regional": true
-    },
-    "dataResidency": {
-      "enabled": true,
-      "regions": []
-    },
-    "consentPolicies": {
-      "enabled": true
-    }
-  },
-  "memory": {
-    "session": {
-      "duration": "30 minutes",
-      "retention": true
-    },
-    "longTerm": {
-      "duration": "365 days",
-      "retention": true
-    },
-    "piiRedaction": {
-      "enabled": true
-    },
-    "purgeSchedule": "quarterly"
-  },
-  "detailedSetup": {
-    "onboardingFlow": true,
-    "productPricingSetup": true,
-    "negotiationRulesSetup": true,
-    "trainingPlan": true,
-    "knowledgeBaseImport": true,
-    "voicePersonalityTuning": true,
-    "businessHoursSetup": true,
-    "additionalConfigs": []
-  },
-  "twoStepVerification": {
-    "enabled": true,
-    "criticalActions": [
-      "billing",
-      "admin modifications",
-      "data export"
-    ],
-    "deviceCheck": true
-  },
-  "importExport": {
-    "endpoints": [
-      "CSV",
-      "JSON"
-    ],
-    "scheduledExports": true,
-    "retentionPolicy": true,
-    "complianceControls": true
-  },
-  "reports": {
-    "types": [
-      "performance",
-      "usage",
-      "errors",
-      "compliance"
-    ],
-    "cadence": [
-      "daily",
-      "weekly",
-      "monthly"
-    ],
-    "deliveryChannels": [
-      "email",
-      "dashboard",
-      "webhook"
-    ]
-  },
-  "mcpIntegrations": {
-    "connectors": [],
-    "apiSpecs": [],
-    "mapping": []
-  }
-}};
-
+  };
   return <AgentPageWrapper agent={agent} />;
 }

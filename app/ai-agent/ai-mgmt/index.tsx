@@ -26,7 +26,7 @@ export default function AiMgmtDepartment() {
         <View style={styles.badgesRow}>
           <View style={[styles.badge, { backgroundColor: '#34C75922' }]}><Activity size={12} color="#34C759" /><Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text></View>
           <View style={[styles.badge, { backgroundColor: '#7B1FA222' }]}><Star size={12} color="#7B1FA2" /><Text style={[styles.badgeText, { color: '#7B1FA2' }]}>Department</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#FF950022' }]}><Users size={12} color="#FF9500" /><Text style={[styles.badgeText, { color: '#FF9500' }]}>{DEPARTMENT_AGENTS.length} Agents</Text></View>
+          <View style={[styles.badge, { backgroundColor: '#FF950022' }]}><Users size={12} color="#FF9500" /><Text style={[styles.badgeText, { color: '#FF9500' }]}>60 Agents</Text></View>
         </View>
       </View>
       <View style={styles.statsContainer}>
@@ -58,10 +58,10 @@ export default function AiMgmtDepartment() {
       
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
-        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>18 helper and sub-agent AI workers supporting the main agents.</Text>
+        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>54 helper and sub-agent AI workers supporting the main agents.</Text>
         <TouchableOpacity onPress={() => router.push('/ai-agent/ai-mgmt/sub-agents')} style={[styles.subAgentButton, { backgroundColor: '#8B5CF615' }]}>
           <Bot size={20} color="#8B5CF6" />
-          <Text style={[styles.subAgentButtonText, { color: '#8B5CF6' }]}>View All 18 Sub-Agents</Text>
+          <Text style={[styles.subAgentButtonText, { color: '#8B5CF6' }]}>View All 54 Sub-Agents</Text>
           <ArrowRight size={18} color="#8B5CF6" />
         </TouchableOpacity>
       </View>

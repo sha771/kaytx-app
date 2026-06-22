@@ -1,6 +1,8 @@
 # kaytx - Enterprise AI Platform
 
-> A production-ready enterprise-grade platform for AI-powered communication, automation, and business intelligence with comprehensive security, monitoring, and compliance features.
+> A production-ready enterprise-grade platform for AI-powered communication, automation, and business intelligence with comprehensive security, monitoring, and compliance features. 
+
+**Current Scale:** 6,184 AI agents across 100 specialized directories - Industry's most comprehensive AI agent ecosystem
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)

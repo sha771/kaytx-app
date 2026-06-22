@@ -1,14 +1,55 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
-import { Megaphone } from 'lucide-react-native';
+import { Megaphone, Brain, Search, Database } from 'lucide-react-native';
+import { createAgentBrainContext } from '@/lib/agents-brain/agent-integration';
+import { api } from '@/lib/trpc';
 
 export default function AgentPage() {
+  const [brainInitialized, setBrainInitialized] = useState(false);
+  const [brainStats, setBrainStats] = useState<any>(null);
+  const [query, setQuery] = useState('');
+  const [queryResults, setQueryResults] = useState<any>(null);
+  const [isQuerying, setIsQuerying] = useState(false);
+
+  // Initialize agent brain on mount
+  useEffect(() => {
+    initializeAgentBrain();
+  }, []);
+
+  const initializeAgentBrain = async () => {
+    try {
+      const brainContext = createAgentBrainContext('marketing-brand', 'marketing');
+      await brainContext.initialize();
+      const stats = await brainContext.getStatistics();
+      if (stats.success) {
+        setBrainStats(stats.statistics);
+        setBrainInitialized(true);
+      }
+    } catch (error) {
+      console.error('Failed to initialize agent brain:', error);
+    }
+  };
+
+  const handleQuery = async () => {
+    if (!query.trim()) return;
+    setIsQuerying(true);
+    try {
+      const brainContext = createAgentBrainContext('marketing-brand', 'marketing');
+      const result = await brainContext.query(query);
+      setQueryResults(result);
+    } catch (error) {
+      console.error('Query failed:', error);
+    } finally {
+      setIsQuerying(false);
+    }
+  };
+
   const agent = {
     id: 'marketing-brand',
     name: 'marketing-brand',
     title: 'marketing-brand',
-    description: 'The marketing-brand AI provides specialized services and automation within its department.',
-    capabilities: ["Task Automation","Data Processing","Workflow Management"],
+    description: 'The marketing-brand AI provides specialized services and automation within its department. Uses Agents Brain for efficient knowledge retrieval.',
+    capabilities: ["Task Automation","Data Processing","Workflow Management","Brain-Powered Knowledge"],
     icon: Megaphone,
     color: '#9C27B0',
     type: 'agent' as const,
@@ -32,323 +73,88 @@ export default function AgentPage() {
     hierarchy: {
       department: 'Marketing',
     },
-    comprehensiveFeatures: {
-  "communicationChannels": {
-    "call": {
-      "enabled": true,
-      "provider": "Twilio",
-      "features": [
-        "PBX Integration",
-        "IVR Menu",
-        "Call Routing",
-        "Call Recording",
-        "Transcriptions"
-      ],
-      "recordingRetention": "90 days",
-      "consentLogging": true
-    },
-    "chatSystem": {
-      "enabled": true,
-      "platforms": [
-        "Web Widget",
-        "Slack",
-        "Intercom",
-        "Microsoft Teams"
-      ],
-      "persistentThreads": true,
-      "transcriptExport": true
-    },
-    "sms": {
-      "enabled": true,
-      "provider": "Twilio",
-      "features": [
-        "Templated Messages",
-        "Two-Way Support",
-        "Opt-Out Handling"
-      ],
-      "number": "TBD"
-    },
-    "voice": {
-      "enabled": true,
-      "primaryDID": "TBD",
-      "ttsVoice": "default",
-      "failoverNumbers": [],
-      "geoRouting": true
-    },
-    "recording": {
-      "enabled": true,
-      "autoRecording": true,
-      "consentLogging": true,
-      "transcriptGeneration": true,
-      "scriptTemplates": []
-    },
-    "location": {
-      "allowedRegions": [
-        "Global"
-      ],
-      "timezoneAware": true,
-      "localeFormats": [
-        "en-US",
-        "en-GB",
-        "es-ES",
-        "fr-FR",
-        "de-DE"
-      ]
-    }
-  },
-  "companySetup": {
-    "profile": {
-      "enabled": true,
-      "fields": [
-        "Company Name",
-        "Industry",
-        "Size",
-        "Location"
-      ]
-    },
-    "products": {
-      "enabled": true,
-      "catalog": true,
-      "pricingTiers": true
-    },
-    "negotiationRules": {
-      "enabled": true,
-      "templates": true,
-      "maxConcession": "10%"
-    }
-  },
-  "generalInfo": {
-    "name": "",
-    "role": "",
-    "availability": "24/7",
-    "personality": "professional",
-    "tone": "conversational",
-    "voice": "neutral"
-  },
-  "modelConfig": {
-    "modelName": "LLM-X v2",
-    "modelFamily": "GPT-4",
-    "version": "latest",
-    "primaryLanguage": "en-US",
-    "fallbackLanguages": [
-      "es",
-      "fr",
-      "de"
-    ],
-    "multilingualSupport": true
-  },
-  "timing": {
-    "businessHours": {
-      "enabled": true,
-      "schedule": "Mon-Fri 09:00-18:00 local",
-      "timezone": "UTC",
-      "holidays": []
-    },
-    "waitingDuration": {
-      "call": 120,
-      "chat": 30,
-      "sms": 0
-    },
-    "appointmentScheduling": {
-      "enabled": true,
-      "calendars": [
-        "Google",
-        "Outlook"
-      ],
-      "timezoneHandling": "automatic"
-    }
-  },
-  "pricing": {
-    "pricingModel": "fixed monthly",
-    "priceLimit": "TBD",
-    "negotiationRules": {
-      "enabled": true,
-      "maxConcession": "10%",
-      "autoNegotiation": false
-    }
-  },
-  "integrations": {
-    "crm": [
-      "Salesforce",
-      "HubSpot",
-      "Zendesk"
-    ],
-    "ticketing": [
-      "Zendesk",
-      "Freshdesk",
-      "Jira"
-    ],
-    "calendar": [
-      "Google Calendar",
-      "Outlook Calendar"
-    ],
-    "telephony": [
-      "Twilio",
-      "Vonage",
-      "RingCentral"
-    ],
-    "analytics": [
-      "Google Analytics",
-      "Mixpanel",
-      "Amplitude"
-    ],
-    "mcpConnectors": []
-  },
-  "responsibilities": {
-    "taskRouting": {
-      "method": "intent-based",
-      "escalationPath": "human after 3 failed handoffs",
-      "slaEnforcement": true
-    },
-    "appointmentScheduling": {
-      "enabled": true,
-      "rules": []
-    }
-  },
-  "taskManagement": {
-    "assignedTasks": {
-      "queue": true,
-      "slaTimers": true,
-      "dependencies": true
-    },
-    "progressTracking": {
-      "enabled": true,
-      "metrics": [
-        "completion percentage",
-        "time remaining"
-      ]
-    }
-  },
-  "behaviour": {
-    "safetyFilters": {
-      "enabled": true,
-      "restrictedDomains": [
-        "legal",
-        "medical",
-        "financial advice"
-      ]
-    },
-    "refusalTemplates": {
-      "enabled": true
-    },
-    "rateLimits": {
-      "enabled": true,
-      "requestsPerMinute": 60
-    }
-  },
-  "performance": {
-    "metrics": {
-      "latency": true,
-      "accuracy": true,
-      "successRate": true,
-      "userSatisfaction": true
-    },
-    "reporting": {
-      "dashboards": true,
-      "scheduledReports": true,
-      "cadence": [
-        "daily",
-        "weekly",
-        "monthly"
-      ]
-    }
-  },
-  "summary": {
-    "enabled": true,
-    "adminNotes": "",
-    "handoverContext": true
-  },
-  "predictive": {
-    "forecasting": {
-      "enabled": true,
-      "models": []
-    },
-    "anomalyDetection": {
-      "enabled": true,
-      "triggers": []
-    }
-  },
-  "regulations": {
-    "compliance": {
-      "gdpr": true,
-      "hipaa": false,
-      "soc2": false,
-      "regional": true
-    },
-    "dataResidency": {
-      "enabled": true,
-      "regions": []
-    },
-    "consentPolicies": {
-      "enabled": true
-    }
-  },
-  "memory": {
-    "session": {
-      "duration": "30 minutes",
-      "retention": true
-    },
-    "longTerm": {
-      "duration": "365 days",
-      "retention": true
-    },
-    "piiRedaction": {
-      "enabled": true
-    },
-    "purgeSchedule": "quarterly"
-  },
-  "detailedSetup": {
-    "onboardingFlow": true,
-    "productPricingSetup": true,
-    "negotiationRulesSetup": true,
-    "trainingPlan": true,
-    "knowledgeBaseImport": true,
-    "voicePersonalityTuning": true,
-    "businessHoursSetup": true,
-    "additionalConfigs": []
-  },
-  "twoStepVerification": {
-    "enabled": true,
-    "criticalActions": [
-      "billing",
-      "admin modifications",
-      "data export"
-    ],
-    "deviceCheck": true
-  },
-  "importExport": {
-    "endpoints": [
-      "CSV",
-      "JSON"
-    ],
-    "scheduledExports": true,
-    "retentionPolicy": true,
-    "complianceControls": true
-  },
-  "reports": {
-    "types": [
-      "performance",
-      "usage",
-      "errors",
-      "compliance"
-    ],
-    "cadence": [
-      "daily",
-      "weekly",
-      "monthly"
-    ],
-    "deliveryChannels": [
-      "email",
-      "dashboard",
-      "webhook"
-    ]
-  },
-  "mcpIntegrations": {
-    "connectors": [],
-    "apiSpecs": [],
-    "mapping": []
-  }
-}};
 
-  return <AgentPageWrapper agent={agent} />;
+  return (
+    <div>
+      <AgentPageWrapper agent={agent} />
+      
+      {/* Agent Brain Integration Section */}
+      <div className="mt-8 p-6 bg-white rounded-lg shadow">
+        <div className="flex items-center gap-3 mb-4">
+          <Brain className="w-6 h-6 text-purple-600" />
+          <h2 className="text-xl font-bold">Agent Brain</h2>
+        </div>
+        
+        {brainInitialized ? (
+          <div className="space-y-4">
+            {/* Brain Statistics */}
+            <div className="grid grid-cols-3 gap-4 p-4 bg-purple-50 rounded-lg">
+              <div>
+                <div className="text-sm text-gray-600">Wiki Pages</div>
+                <div className="text-2xl font-bold">{brainStats?.totalWikiPages || 0}</div>
+              </div>
+              <div>
+                <div className="text-sm text-gray-600">Sources</div>
+                <div className="text-2xl font-bold">{brainStats?.totalSources || 0}</div>
+              </div>
+              <div>
+                <div className="text-sm text-gray-600">Token Savings</div>
+                <div className="text-2xl font-bold">{((brainStats?.tokenSavings || 0) / 1000).toFixed(1)}k</div>
+              </div>
+            </div>
+
+            {/* Brain Query */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Query Agent Brain
+              </label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleQuery()}
+                  placeholder="Search marketing knowledge..."
+                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+                <button
+                  onClick={handleQuery}
+                  disabled={isQuerying}
+                  className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50 flex items-center gap-2"
+                >
+                  <Search className="w-4 h-4" />
+                  {isQuerying ? 'Searching...' : 'Search'}
+                </button>
+              </div>
+            </div>
+
+            {/* Query Results */}
+            {queryResults && queryResults.success && (
+              <div className="space-y-2">
+                <div className="text-sm text-gray-600">
+                  Found {queryResults.pages.length} pages • Saved ~{queryResults.tokenSavings.toLocaleString()} tokens
+                </div>
+                {queryResults.pages.map((page: any, index: number) => (
+                  <div key={page.id} className="p-4 border border-gray-200 rounded-lg">
+                    <div className="flex justify-between items-start mb-2">
+                      <h3 className="font-semibold">{page.frontmatter.title}</h3>
+                      <span className="text-sm text-gray-500">
+                        Relevance: {(queryResults.relevanceScores[index] * 100).toFixed(0)}%
+                      </span>
+                    </div>
+                    <p className="text-gray-600 text-sm">{page.frontmatter.summary}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="text-center py-8">
+            <Database className="w-12 h-12 text-gray-400 mx-auto mb-2" />
+            <p className="text-gray-600">Initializing agent brain...</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }

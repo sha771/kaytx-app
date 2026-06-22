@@ -1,73 +1,95 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Crown, Users, UserCircle, User, Activity, ArrowRight, ChartBarBig, Network, Target, Zap, Briefcase, Award, GitBranch, Layers } from 'lucide-react-native';
+import { Crown, Users, UserCircle, User, Activity, ArrowRight, ChartBarBig, Network, Target, Zap, Briefcase, Award, GitBranch, Layers, Brain, Shield, Search, Filter } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 const HIERARCHY_LEVELS = [
   {
+    id: 'governance',
+    name: 'Governance & Ethics',
+    subtitle: 'Tier 0 - AI Ethics Board & Oversight',
+    count: 2,
+    icon: Shield,
+    color: '#DC2626',
+    description: 'AI Ethics Board and CISO-AI providing governance and ethical oversight',
+    route: '/ai-agent/hierarchy/governance',
+    agents: ['AI Ethics Board', 'CISO-AI']
+  },
+  {
     id: 'c-suite',
-    name: 'C-Suite Level',
-    subtitle: 'Executive Leadership',
-    count: 15,
+    name: 'C-Suite Executives',
+    subtitle: 'Tier 1 - Executive Leadership (17 agents)',
+    count: 17,
     icon: Crown,
     color: '#FFD700',
-    description: 'Chief-level executives responsible for enterprise strategy',
+    description: 'Chief-level executives responsible for enterprise strategy including CDAO & CAO',
     route: '/ai-agent/hierarchy/c-suite',
-    agents: ['CEO Advisor', 'CFO Analyst', 'CTO Advisor', 'CMO Advisor', 'COO Strategist', 'CHRO Advisor']
+    agents: ['CEO Advisor', 'CFO Analyst', 'CTO Advisor', 'CMO Advisor', 'COO Strategist', 'CDAO', 'CAO']
   },
   {
-    id: 'vp-directors',
-    name: 'VP & Directors',
-    subtitle: 'Vice Presidents & Directors',
-    count: 20,
-    icon: Users,
-    color: '#8B5CF6',
-    description: 'Senior leadership managing departmental operations',
-    route: '/ai-agent/hierarchy/vp-directors',
-    agents: ['VP Sales', 'VP Marketing', 'VP Engineering', 'VP Product', 'VP Operations']
+    id: 'intelligence',
+    name: 'Intelligence Layer',
+    subtitle: 'Tier 2 - Predictive & Analytical',
+    count: 3,
+    icon: Brain,
+    color: '#7C3AED',
+    description: 'Predictive Engine, Sentiment Core, and Anomaly Detector for advanced intelligence',
+    route: '/ai-agent/hierarchy/intelligence',
+    agents: ['Predictive Engine', 'Sentiment Core', 'Anomaly Detector']
   },
   {
-    id: 'managers',
-    name: 'Manager Level',
-    subtitle: 'Department & Team Managers',
-    count: 24,
-    icon: UserCircle,
+    id: 'bridge',
+    name: 'Layer Bridge',
+    subtitle: 'Tier 3 - Digital Interface',
+    count: 1,
+    icon: Network,
     color: '#3B82F6',
-    description: 'Mid-level leaders driving team execution',
-    route: '/ai-agent/hierarchy/managers',
-    agents: ['Sales Manager', 'Marketing Manager', 'Engineering Manager', 'Product Manager']
+    description: 'Digital Interface for seamless communication between layers',
+    route: '/ai-agent/hierarchy/bridge',
+    agents: ['Digital Interface']
   },
   {
-    id: 'team-leads',
-    name: 'Team Lead Level',
-    subtitle: 'Technical & Functional Leaders',
-    count: 24,
-    icon: Users,
-    color: '#10B981',
-    description: 'Leaders guiding daily team activities',
-    route: '/ai-agent/hierarchy/team-leads',
-    agents: ['Sales Lead', 'Engineering Lead', 'Scrum Master', 'QA Lead']
-  },
-  {
-    id: 'specialists',
-    name: 'Specialist Level',
-    subtitle: 'Individual Contributors',
-    count: 35,
-    icon: User,
+    id: 'command-center',
+    name: 'Advanced Command Center',
+    subtitle: 'Tier 4 - Strategic Operations (7 components)',
+    count: 7,
+    icon: Zap,
     color: '#F59E0B',
-    description: 'Domain experts executing specialized tasks',
-    route: '/ai-agent/hierarchy/specialists',
-    agents: ['Sales Rep', 'Developer', 'Designer', 'Analyst', 'Writer']
+    description: 'CDOO, DDO, WOL, AOD, PRED, SWARM, LEARN for strategic command',
+    route: '/ai-agent/hierarchy/command-center',
+    agents: ['CDOO', 'DDO', 'WOL', 'AOD', 'PRED', 'SWARM', 'LEARN']
+  },
+  {
+    id: 'departments',
+    name: 'Departments',
+    subtitle: 'Tier 5 - Business Functions (21 departments)',
+    count: 21,
+    icon: Briefcase,
+    color: '#10B981',
+    description: '21 major business functions and operational departments',
+    route: '/ai-agent/hierarchy/departments',
+    agents: ['Customer Experience', 'Sales', 'Marketing', 'Operations', 'Finance', 'Technology']
+  },
+  {
+    id: 'workforce',
+    name: 'AI Agent Workforce',
+    subtitle: 'Tier 6 - Specialized Agents (199+ agents)',
+    count: 199,
+    icon: Users,
+    color: '#EC4899',
+    description: '199 specialized AI agents with reactive, learning, and swarm capabilities',
+    route: '/ai-agent/hierarchy/workforce',
+    agents: ['VP & Directors', 'Managers', 'Team Leads', 'Specialists', 'Sub-agents']
   }
 ];
 
 const ORG_STATS = [
-  { label: 'Total Agents', value: '118+', icon: Layers, color: '#34C759' },
-  { label: 'Departments', value: '16', icon: Briefcase, color: '#007AFF' },
-  { label: 'Active Now', value: '118', icon: Activity, color: '#FF9500' },
-  { label: 'Hierarchy Depth', value: '5', icon: GitBranch, color: '#8B5CF6' },
+  { label: 'Total Agents', value: '199+', icon: Layers, color: '#34C759' },
+  { label: 'Hierarchy Tiers', value: '7', icon: GitBranch, color: '#007AFF' },
+  { label: 'Departments', value: '21', icon: Briefcase, color: '#FF9500' },
+  { label: 'Active Now', value: '199', icon: Activity, color: '#8B5CF6' },
 ];
 
 const QUICK_ACTIONS = [
@@ -80,6 +102,9 @@ const QUICK_ACTIONS = [
 export default function HierarchyIndexPage() {
   const { theme } = useTheme();
   const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterActive, setFilterActive] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
 
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
@@ -99,14 +124,72 @@ export default function HierarchyIndexPage() {
           </View>
           <View style={[styles.badge, { backgroundColor: '#8B5CF622' }]}>
             <GitBranch size={12} color="#8B5CF6" />
-            <Text style={[styles.badgeText, { color: '#8B5CF6' }]}>5 Levels</Text>
+            <Text style={[styles.badgeText, { color: '#8B5CF6' }]}>7 Tiers</Text>
           </View>
           <View style={[styles.badge, { backgroundColor: '#FF950022' }]}>
             <Layers size={12} color="#FF9500" />
-            <Text style={[styles.badgeText, { color: '#FF9500' }]}>118+ Agents</Text>
+            <Text style={[styles.badgeText, { color: '#FF9500' }]}>199+ Agents</Text>
+          </View>
+          <View style={[styles.badge, { backgroundColor: '#10B98122' }]}>
+            <Brain size={12} color="#10B981" />
+            <Text style={[styles.badgeText, { color: '#10B981' }]}>Upgraded</Text>
           </View>
         </View>
       </View>
+
+      {/* Search and Filter Bar */}
+      <View style={[styles.searchBarContainer, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+        <View style={[styles.searchInputWrapper, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <Search size={20} color={theme.colors.textSecondary} />
+          <TextInput
+            style={[styles.searchInput, { color: theme.colors.text }]}
+            placeholder="Search hierarchy levels..."
+            placeholderTextColor={theme.colors.textSecondary}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+          />
+        </View>
+        <TouchableOpacity 
+          style={[styles.filterButton, { backgroundColor: filterActive ? '#8B5CF6' : '#E5E5EA' }]}
+          onPress={() => setFilterActive(!filterActive)}
+        >
+          <Filter size={20} color={filterActive ? 'white' : '#666'} />
+        </TouchableOpacity>
+      </View>
+
+      {/* Active Filters */}
+      {filterActive && (
+        <View style={[styles.activeFiltersContainer, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
+          <Text style={[styles.filtersTitle, { color: theme.colors.text }]}>Quick Filters:</Text>
+          <View style={styles.filtersGrid}>
+            {['Executive', 'Operations', 'Technical', 'Support'].map((filter) => (
+              <TouchableOpacity
+                key={filter}
+                onPress={() => {
+                  setSelectedFilters(prev =>
+                    prev.includes(filter)
+                      ? prev.filter(f => f !== filter)
+                      : [...prev, filter]
+                  );
+                }}
+                style={[
+                  styles.filterChip,
+                  {
+                    backgroundColor: selectedFilters.includes(filter) ? '#8B5CF6' : '#E5E5EA',
+                  }
+                ]}
+              >
+                <Text style={[
+                  styles.filterChipText,
+                  { color: selectedFilters.includes(filter) ? 'white' : '#666' }
+                ]}>
+                  {filter}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+      )}
 
       {/* Stats Grid */}
       <View style={styles.statsContainer}>
@@ -123,16 +206,28 @@ export default function HierarchyIndexPage() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Organizational Structure</Text>
         <Text style={[styles.description, { color: theme.colors.textSecondary }]}>
-          The AI workforce is organized into a 5-tier hierarchical structure, from C-Suite executives 
-          down to specialist individual contributors. Each level has distinct responsibilities, 
-          authority, and scope of influence within the organization.
+          The AI workforce is organized into a 7-tier hierarchical structure, from Governance & Ethics 
+          down to specialized AI agents. Each tier has distinct responsibilities, authority, and 
+          scope of influence within the organization, enabling intelligent routing, token optimization,
+          and advanced agent capabilities.
         </Text>
       </View>
 
       {/* Hierarchy Levels */}
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Hierarchy Levels</Text>
-        {HIERARCHY_LEVELS.map((level) => (
+        {HIERARCHY_LEVELS
+          .filter(level => {
+            const matchesSearch = level.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                 level.description.toLowerCase().includes(searchQuery.toLowerCase());
+            const matchesFilters = selectedFilters.length === 0 || 
+                                   selectedFilters.some(filter => 
+                                     level.name.toLowerCase().includes(filter.toLowerCase()) ||
+                                     level.description.toLowerCase().includes(filter.toLowerCase())
+                                   );
+            return matchesSearch && matchesFilters;
+          })
+          .map((level) => (
           <TouchableOpacity
             key={level.id}
             onPress={() => router.push(level.route)}
@@ -248,4 +343,13 @@ const styles = StyleSheet.create({
   reportingContent: { flex: 1, paddingBottom: 16 },
   reportingName: { fontSize: 15, fontWeight: '600' },
   reportingCount: { fontSize: 12, marginTop: 2 },
+  searchBarContainer: { flexDirection: 'row', alignItems: 'center', padding: 16, marginTop: 8, gap: 12 },
+  searchInputWrapper: { flex: 1, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 12, paddingVertical: 10, borderRadius: 10, gap: 8 },
+  searchInput: { flex: 1, fontSize: 14 },
+  filterButton: { width: 44, height: 44, borderRadius: 10, justifyContent: 'center', alignItems: 'center' },
+  activeFiltersContainer: { padding: 16, marginTop: 8 },
+  filtersTitle: { fontSize: 14, fontWeight: '600', marginBottom: 12 },
+  filtersGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  filterChip: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 16 },
+  filterChipText: { fontSize: 12, fontWeight: '500' },
 });

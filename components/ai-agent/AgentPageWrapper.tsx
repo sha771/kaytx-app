@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Pressable, ScrollView, TextInput } from 'react-native';
 import { AgentShell } from './AgentShell';
 import { AgentChat } from './AgentChat';
@@ -9,11 +9,12 @@ import { AIEmployee } from '@/constants/aiEmployees';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useAgentCounseling } from '@/hooks/useAgentCounseling';
 import { getAgentHierarchy, navigationHierarchy, getAllNavigationHierarchies } from '@/constants/aiAgentHierarchy';
+import { createAgentBrainContext } from '@/lib/agents-brain/agent-integration';
 import {
   MessageSquare, Brain, LayoutDashboard, BarChart3, ChartBarBig, Target,
   Clock, FileText, Activity, Settings, Bot, CircleCheckBig, TriangleAlert,
   TrendingUp, Gauge, Network, Cpu, Database, Shield, Zap, Award, Sparkles,
-  RefreshCw, TreeStructure, ArrowRight, Users, Building2
+  RefreshCw, TreeStructure, ArrowRight, Users, Building2, Search
 } from 'lucide-react-native';
 
 interface AgentPageWrapperProps {
@@ -70,6 +71,13 @@ export const AgentPageWrapper: React.FC<AgentPageWrapperProps> = ({
   const [hierarchySearchQuery, setHierarchySearchQuery] = useState('');
   const [hierarchySortBy, setHierarchySortBy] = useState<'name' | 'total' | 'main'>('total');
   const [expandedDepartments, setExpandedDepartments] = useState<Set<string>>(new Set());
+  
+  // Agent Brain State
+  const [brainInitialized, setBrainInitialized] = useState(false);
+  const [brainStats, setBrainStats] = useState<any>(null);
+  const [brainQuery, setBrainQuery] = useState('');
+  const [brainQueryResults, setBrainQueryResults] = useState<any>(null);
+  const [isBrainQuerying, setIsBrainQuerying] = useState(false);
 
   const {
     sessions: counselingSessions,
@@ -86,6 +94,43 @@ export const AgentPageWrapper: React.FC<AgentPageWrapperProps> = ({
     if (!agent?.id) return { mainAgent: undefined, subAgents: [] as any[] };
     return getAgentHierarchy(agent.id);
   }, [agent?.id]);
+
+  // Initialize agent brain on mount
+  useEffect(() => {
+    if (agent?.id) {
+      initializeAgentBrain();
+    }
+  }, [agent?.id]);
+
+  const initializeAgentBrain = async () => {
+    try {
+      const agentType = agent.hierarchy?.department || agent.category || 'general';
+      const brainContext = createAgentBrainContext(agent.id, agentType);
+      await brainContext.initialize();
+      const stats = await brainContext.getStatistics();
+      if (stats.success) {
+        setBrainStats(stats.statistics);
+        setBrainInitialized(true);
+      }
+    } catch (error) {
+      console.error('Failed to initialize agent brain:', error);
+    }
+  };
+
+  const handleBrainQuery = async () => {
+    if (!brainQuery.trim()) return;
+    setIsBrainQuerying(true);
+    try {
+      const agentType = agent.hierarchy?.department || agent.category || 'general';
+      const brainContext = createAgentBrainContext(agent.id, agentType);
+      const result = await brainContext.query(brainQuery);
+      setBrainQueryResults(result);
+    } catch (error) {
+      console.error('Brain query failed:', error);
+    } finally {
+      setIsBrainQuerying(false);
+    }
+  };
 
   // Generate contextual data for tabs
   const generateAnalyticsData = useMemo(() => {
@@ -269,6 +314,92 @@ export const AgentPageWrapper: React.FC<AgentPageWrapperProps> = ({
   const renderDashboardTab = () => <AgentDashboard agent={agent} />;
 
   const renderSummaryNotesTab = () => <AgentSummaryNotes agent={agent} />;
+
+  const renderBrainTab = () => (
+    <ScrollView style={styles.tabContent}>
+      <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+        <View style={styles.cardHeader}>
+          <Brain size={20} color={agent.color || '#007AFF'} />
+          <Text style={[styles.cardTitle, { color: theme.colors.text }]}>Agent Brain</Text>
+        </View>
+        <Text style={[styles.cardText, { color: theme.colors.secondaryText }]}>
+          Structured knowledge base for efficient token usage. AI agents scan raw data once and create a structured brain, then read only the structured version to save tokens.
+        </Text>
+
+        {brainInitialized ? (
+          <View style={{ marginTop: 16 }}>
+            {/* Brain Statistics */}
+            <View style={styles.kpiRow}>
+              <View style={styles.kpiItem}>
+                <Text style={[styles.kpiValue, { color: agent.color || '#007AFF' }]}>{brainStats?.totalWikiPages || 0}</Text>
+                <Text style={[styles.kpiLabel, { color: theme.colors.secondaryText }]}>Wiki Pages</Text>
+              </View>
+              <View style={styles.kpiItem}>
+                <Text style={[styles.kpiValue, { color: '#34C759' }]}>{brainStats?.totalSources || 0}</Text>
+                <Text style={[styles.kpiLabel, { color: theme.colors.secondaryText }]}>Sources</Text>
+              </View>
+              <View style={styles.kpiItem}>
+                <Text style={[styles.kpiValue, { color: '#FF9500' }]}>{((brainStats?.tokenSavings || 0) / 1000).toFixed(1)}k</Text>
+                <Text style={[styles.kpiLabel, { color: theme.colors.secondaryText }]}>Tokens Saved</Text>
+              </View>
+            </View>
+
+            <View style={[styles.sectionDivider, { borderBottomColor: theme.colors.border }]} />
+
+            {/* Brain Query */}
+            <View style={{ marginTop: 16 }}>
+              <Text style={[styles.cardTitle, { color: theme.colors.text, marginBottom: 8 }]}>Query Agent Brain</Text>
+              <View style={[styles.searchBar, { backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}>
+                <TextInput
+                  style={[styles.searchInput, { color: theme.colors.text, flex: 1 }]}
+                  placeholder="Search knowledge base..."
+                  placeholderTextColor={theme.colors.secondaryText}
+                  value={brainQuery}
+                  onChangeText={setBrainQuery}
+                />
+                <Pressable
+                  onPress={handleBrainQuery}
+                  disabled={isBrainQuerying}
+                  style={[styles.counselingButton, { backgroundColor: agent.color || '#007AFF' }]}
+                >
+                  <Text style={[styles.counselingButtonText, { color: '#FFFFFF' }]}>
+                    {isBrainQuerying ? 'Searching...' : 'Search'}
+                  </Text>
+                </Pressable>
+              </View>
+            </View>
+
+            {/* Query Results */}
+            {brainQueryResults && brainQueryResults.success && (
+              <View style={{ marginTop: 16 }}>
+                <Text style={[styles.cardText, { color: theme.colors.secondaryText, marginBottom: 8 }]}>
+                  Found {brainQueryResults.pages.length} pages • Saved ~{brainQueryResults.tokenSavings.toLocaleString()} tokens
+                </Text>
+                {brainQueryResults.pages.map((page: any, index: number) => (
+                  <View key={page.id} style={[styles.counselingAgentCard, { backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}>
+                    <View style={styles.counselingAgentHeader}>
+                      <Text style={[styles.counselingAgentName, { color: theme.colors.text }]}>{page.frontmatter.title}</Text>
+                      <Text style={[styles.counselingAgentRole, { color: theme.colors.secondaryText }]}>
+                        Relevance: {(brainQueryResults.relevanceScores[index] * 100).toFixed(0)}%
+                      </Text>
+                    </View>
+                    <Text style={[styles.cardText, { color: theme.colors.secondaryText }]}>{page.frontmatter.summary}</Text>
+                  </View>
+                ))}
+              </View>
+            )}
+          </View>
+        ) : (
+          <View style={{ marginTop: 16, alignItems: 'center', paddingVertical: 24 }}>
+            <Database size={48} color={theme.colors.secondaryText} />
+            <Text style={[styles.cardText, { color: theme.colors.secondaryText, marginTop: 12 }]}>
+              Initializing agent brain...
+            </Text>
+          </View>
+        )}
+      </View>
+    </ScrollView>
+  );
 
   const renderOverviewTab = () => (
     <View style={styles.tabContent}>

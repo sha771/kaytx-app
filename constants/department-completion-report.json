@@ -1,0 +1,254 @@
+{
+  "customer-experience": {
+    "name": "Customer Experience",
+    "current": 107,
+    "target": 60,
+    "missing": -47,
+    "status": "complete"
+  },
+  "sales-revenue": {
+    "name": "Sales & Revenue",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "marketing-growth": {
+    "name": "Marketing & Growth",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "operations-management": {
+    "name": "Operations & Management",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "finance-accounting": {
+    "name": "Finance & Accounting",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "technology-engineering": {
+    "name": "Technology & Engineering",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "human-resources": {
+    "name": "Human Resources",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "legal-compliance": {
+    "name": "Legal & Compliance",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "data-intelligence": {
+    "name": "Data & Intelligence",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "product-management": {
+    "name": "Product Management",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "security-risk": {
+    "name": "Security & Risk",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "research-development": {
+    "name": "Research & Development",
+    "current": 63,
+    "target": 60,
+    "missing": -3,
+    "status": "complete"
+  },
+  "administrative": {
+    "name": "Administrative",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "trading-investments": {
+    "name": "Trading & Investments",
+    "current": 65,
+    "target": 60,
+    "missing": -5,
+    "status": "complete"
+  },
+  "real-estate-property": {
+    "name": "Real Estate & Property",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "insurance-risk": {
+    "name": "Insurance & Risk",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "healthcare-medical": {
+    "name": "Healthcare & Medical",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "manufacturing-production": {
+    "name": "Manufacturing & Production",
+    "current": 63,
+    "target": 60,
+    "missing": -3,
+    "status": "complete"
+  },
+  "transportation-logistics": {
+    "name": "Transportation & Logistics",
+    "current": 63,
+    "target": 60,
+    "missing": -3,
+    "status": "complete"
+  },
+  "government-public-sector": {
+    "name": "Government & Public Sector",
+    "current": 63,
+    "target": 60,
+    "missing": -3,
+    "status": "complete"
+  },
+  "supply-chain-logistics": {
+    "name": "Supply Chain & Logistics",
+    "current": 67,
+    "target": 60,
+    "missing": -7,
+    "status": "complete"
+  },
+  "ai-management-governance": {
+    "name": "AI Management & Governance",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "banking-finance": {
+    "name": "Banking & Finance",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "ecommerce": {
+    "name": "E-Commerce",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "professional-services": {
+    "name": "Professional Services",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "media-entertainment": {
+    "name": "Media & Entertainment",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "gaming-esports": {
+    "name": "Gaming & Esports",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "education": {
+    "name": "Education",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "retail-stores": {
+    "name": "Retail & Stores",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "travel-tourism": {
+    "name": "Travel & Tourism",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "energy-utilities": {
+    "name": "Energy & Utilities",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "executive-strategy": {
+    "name": "Executive & Strategy",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "event-management": {
+    "name": "Event Management",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "agriculture": {
+    "name": "Agriculture",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "fashion-luxury": {
+    "name": "Fashion & Luxury",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  },
+  "restaurants": {
+    "name": "Restaurants",
+    "current": 60,
+    "target": 60,
+    "missing": 0,
+    "status": "complete"
+  }
+}

@@ -1,0 +1,714 @@
+{
+  "timestamp": "2026-06-19T21:54:25.377Z",
+  "summary": {
+    "totalDepartments": 99,
+    "departmentsWith60Plus": 51,
+    "totalAgents": 4117,
+    "targetTotal": 5940,
+    "excessAgents": -1823,
+    "coreAgents": 1391,
+    "industryAgents": 840,
+    "averageAgentsPerDepartment": 41.58585858585859
+  },
+  "departmentStats": [
+    {
+      "id": "legal",
+      "name": "Legal",
+      "agentCount": 123,
+      "meetsTarget": true,
+      "excess": 63
+    },
+    {
+      "id": "operations",
+      "name": "Operations",
+      "agentCount": 117,
+      "meetsTarget": true,
+      "excess": 57
+    },
+    {
+      "id": "customer-experience",
+      "name": "Customer Experience",
+      "agentCount": 107,
+      "meetsTarget": true,
+      "excess": 47
+    },
+    {
+      "id": "marketing",
+      "name": "Marketing",
+      "agentCount": 107,
+      "meetsTarget": true,
+      "excess": 47
+    },
+    {
+      "id": "supply-chain",
+      "name": "Supply Chain",
+      "agentCount": 98,
+      "meetsTarget": true,
+      "excess": 38
+    },
+    {
+      "id": "trading",
+      "name": "Trading",
+      "agentCount": 92,
+      "meetsTarget": true,
+      "excess": 32
+    },
+    {
+      "id": "data",
+      "name": "Data",
+      "agentCount": 85,
+      "meetsTarget": true,
+      "excess": 25
+    },
+    {
+      "id": "security",
+      "name": "Security",
+      "agentCount": 85,
+      "meetsTarget": true,
+      "excess": 25
+    },
+    {
+      "id": "technology",
+      "name": "Technology",
+      "agentCount": 79,
+      "meetsTarget": true,
+      "excess": 19
+    },
+    {
+      "id": "insurance",
+      "name": "Insurance",
+      "agentCount": 78,
+      "meetsTarget": true,
+      "excess": 18
+    },
+    {
+      "id": "sales",
+      "name": "Sales",
+      "agentCount": 77,
+      "meetsTarget": true,
+      "excess": 17
+    },
+    {
+      "id": "finance",
+      "name": "Finance",
+      "agentCount": 70,
+      "meetsTarget": true,
+      "excess": 10
+    },
+    {
+      "id": "healthcare",
+      "name": "Healthcare",
+      "agentCount": 68,
+      "meetsTarget": true,
+      "excess": 8
+    },
+    {
+      "id": "supply-chain-logistics",
+      "name": "Supply Chain Logistics",
+      "agentCount": 67,
+      "meetsTarget": true,
+      "excess": 7
+    },
+    {
+      "id": "manufacturing",
+      "name": "Manufacturing",
+      "agentCount": 66,
+      "meetsTarget": true,
+      "excess": 6
+    },
+    {
+      "id": "product",
+      "name": "Product",
+      "agentCount": 65,
+      "meetsTarget": true,
+      "excess": 5
+    },
+    {
+      "id": "trading-investments",
+      "name": "Trading Investments",
+      "agentCount": 65,
+      "meetsTarget": true,
+      "excess": 5
+    },
+    {
+      "id": "transportation",
+      "name": "Transportation",
+      "agentCount": 65,
+      "meetsTarget": true,
+      "excess": 5
+    },
+    {
+      "id": "government-public-sector",
+      "name": "Government Public Sector",
+      "agentCount": 63,
+      "meetsTarget": true,
+      "excess": 3
+    },
+    {
+      "id": "manufacturing-production",
+      "name": "Manufacturing Production",
+      "agentCount": 63,
+      "meetsTarget": true,
+      "excess": 3
+    },
+    {
+      "id": "research-development",
+      "name": "Research Development",
+      "agentCount": 63,
+      "meetsTarget": true,
+      "excess": 3
+    },
+    {
+      "id": "transportation-logistics",
+      "name": "Transportation Logistics",
+      "agentCount": 63,
+      "meetsTarget": true,
+      "excess": 3
+    },
+    {
+      "id": "administrative",
+      "name": "Administrative",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "agriculture",
+      "name": "Agriculture",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "ai-management-governance",
+      "name": "Ai Management Governance",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "banking-finance",
+      "name": "Banking Finance",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "data-intelligence",
+      "name": "Data Intelligence",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "ecommerce",
+      "name": "Ecommerce",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "education",
+      "name": "Education",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "energy-utilities",
+      "name": "Energy Utilities",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "event-management",
+      "name": "Event Management",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "executive-strategy",
+      "name": "Executive Strategy",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "fashion-luxury",
+      "name": "Fashion Luxury",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "finance-accounting",
+      "name": "Finance Accounting",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "gaming-esports",
+      "name": "Gaming Esports",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "healthcare-medical",
+      "name": "Healthcare Medical",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "human-resources",
+      "name": "Human Resources",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "insurance-risk",
+      "name": "Insurance Risk",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "legal-compliance",
+      "name": "Legal Compliance",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "marketing-growth",
+      "name": "Marketing Growth",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "media-entertainment",
+      "name": "Media Entertainment",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "operations-management",
+      "name": "Operations Management",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "product-management",
+      "name": "Product Management",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "professional-services",
+      "name": "Professional Services",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "real-estate-property",
+      "name": "Real Estate Property",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "restaurants",
+      "name": "Restaurants",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "retail-stores",
+      "name": "Retail Stores",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "sales-revenue",
+      "name": "Sales Revenue",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "security-risk",
+      "name": "Security Risk",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "technology-engineering",
+      "name": "Technology Engineering",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "travel-tourism",
+      "name": "Travel Tourism",
+      "agentCount": 60,
+      "meetsTarget": true,
+      "excess": 0
+    },
+    {
+      "id": "real-estate",
+      "name": "Real Estate",
+      "agentCount": 56,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "government",
+      "name": "Government",
+      "agentCount": 55,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "research",
+      "name": "Research",
+      "agentCount": 53,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "engineering",
+      "name": "Engineering",
+      "agentCount": 43,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "executive",
+      "name": "Executive",
+      "agentCount": 39,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "hr",
+      "name": "Hr",
+      "agentCount": 38,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "cross-department",
+      "name": "Cross Department",
+      "agentCount": 28,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "standalone",
+      "name": "Standalone",
+      "agentCount": 27,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "accounting",
+      "name": "Accounting",
+      "agentCount": 24,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "ai-governance",
+      "name": "Ai Governance",
+      "agentCount": 24,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "realestate",
+      "name": "Realestate",
+      "agentCount": 24,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "customer",
+      "name": "Customer",
+      "agentCount": 23,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "e-commerce",
+      "name": "E Commerce",
+      "agentCount": 21,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "tech",
+      "name": "Tech",
+      "agentCount": 16,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "trading-investment",
+      "name": "Trading Investment",
+      "agentCount": 16,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "accounting-finance",
+      "name": "Accounting Finance",
+      "agentCount": 14,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "industries",
+      "name": "Industries",
+      "agentCount": 12,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "performance",
+      "name": "Performance",
+      "agentCount": 12,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "hierarchy",
+      "name": "Hierarchy",
+      "agentCount": 11,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "features",
+      "name": "Features",
+      "agentCount": 8,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "social-media",
+      "name": "Social Media",
+      "agentCount": 8,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "assistant",
+      "name": "Assistant",
+      "agentCount": 7,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "ai-mgmt",
+      "name": "Ai Mgmt",
+      "agentCount": 6,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "it",
+      "name": "It",
+      "agentCount": 6,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "company-brain",
+      "name": "Company Brain",
+      "agentCount": 5,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "social-crm",
+      "name": "Social Crm",
+      "agentCount": 5,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "analytics",
+      "name": "Analytics",
+      "agentCount": 4,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "admin",
+      "name": "Admin",
+      "agentCount": 3,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "collaboration",
+      "name": "Collaboration",
+      "agentCount": 3,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "insights",
+      "name": "Insights",
+      "agentCount": 3,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "options",
+      "name": "Options",
+      "agentCount": 3,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "cx",
+      "name": "Cx",
+      "agentCount": 2,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "marketplace",
+      "name": "Marketplace",
+      "agentCount": 2,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "ops",
+      "name": "Ops",
+      "agentCount": 2,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "team-management",
+      "name": "Team Management",
+      "agentCount": 2,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "agent",
+      "name": "Agent",
+      "agentCount": 1,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "category",
+      "name": "Category",
+      "agentCount": 1,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "counseling",
+      "name": "Counseling",
+      "agentCount": 1,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "counseling-progress",
+      "name": "Counseling Progress",
+      "agentCount": 1,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "employees",
+      "name": "Employees",
+      "agentCount": 1,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "simulation",
+      "name": "Simulation",
+      "agentCount": 1,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "ai-assistant",
+      "name": "Ai Assistant",
+      "agentCount": 0,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "analysis",
+      "name": "Analysis",
+      "agentCount": 0,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "billing",
+      "name": "Billing",
+      "agentCount": 0,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "goals",
+      "name": "Goals",
+      "agentCount": 0,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "help",
+      "name": "Help",
+      "agentCount": 0,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "reports",
+      "name": "Reports",
+      "agentCount": 0,
+      "meetsTarget": false,
+      "excess": 0
+    },
+    {
+      "id": "training",
+      "name": "Training",
+      "agentCount": 0,
+      "meetsTarget": false,
+      "excess": 0
+    }
+  ],
+  "breakdown": {
+    "coreDepartments": 22,
+    "coreAgents": 1391,
+    "industryDepartments": 14,
+    "industryAgents": 840
+  }
+}

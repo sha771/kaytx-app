@@ -344,10 +344,10 @@ npx expo start --web
 
 | Scene | Time | Focus | Key Visual |
 |-------|------|-------|------------|
-| 1A | 0:00-0:10 | Hook | "1,108 AI employees?" |
+| 1A | 0:00-0:10 | Hook | "6,184 AI employees?" |
 | 1B | 0:10-0:20 | Dashboard | Agent count animation |
 | 2A | 0:20-0:30 | C-Suite | 17 executives |
-| 2B | 0:30-0:40 | Departments | 22+ departments |
+| 2B | 0:30-0:40 | Departments | 100 directories |
 | 3A | 0:40-0:50 | Agent Profile | Individual agent view |
 | 3B | 0:50-1:00 | Deployment | One-click deploy |
 | 4A | 1:00-1:10 | Hierarchy | Org chart visualization |
@@ -368,13 +368,13 @@ npx expo start --web
 > "Meet your C-Suite. Seventeen AI executives setting strategy, making decisions, leading your organization."
 
 **Departments (0:30-0:40):**
-> "Twenty-two business departments. Finance, Sales, Marketing, HR, Operations, Technology. Every function covered."
+> "One hundred business directories across three tiers. Finance, Sales, Marketing, HR, Operations, Technology. Every function covered at enterprise scale."
 
 **Deployment (0:50-1:00):**
 > "Deploy in seconds. One click. No hiring process. No training. No onboarding."
 
 **ROI (1:30-1:40):**
-> "A human employee costs $60,000 per year. An AI employee costs $49 per month. 1,108 employees for the price of one."
+> "A human employee costs $60,000 per year. An AI employee costs $49 per month. 6,184 employees for the price of one."
 
 ---
 

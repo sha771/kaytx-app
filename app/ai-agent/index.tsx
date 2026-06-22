@@ -145,8 +145,8 @@ const { width: SCREEN_WIDTH } = Dimensions.get('window');
 // ============================================
 
 const HIERARCHY_STATS = {
-  totalAgents: 199,
-  totalDepartments: 21,
+  totalAgents: 773,
+  totalDepartments: 25,
   cSuiteCount: 17,
   commandCenterRoles: 7,
   efficiency: '20x',
@@ -503,6 +503,10 @@ const DEPARTMENTS = [
   { id: 'manufacturing', name: 'Manufacturing & Production', icon: Factory, color: '#F97316', agentCount: 10, description: 'Production planning and quality control', isNew: true },
   { id: 'logistics', name: 'Transportation & Logistics', icon: Truck, color: '#06B6D4', agentCount: 11, description: 'Logistics and supply chain management', isNew: true },
   { id: 'government', name: 'Government & Public Sector', icon: Landmark, color: '#1E40AF', agentCount: 7, description: 'Public sector and government operations', isNew: true },
+  { id: 'consulting_advisory', name: 'Consulting & Advisory', icon: Briefcase, color: '#1E40AF', agentCount: 101, description: 'Management consulting, strategy consulting, IT consulting, HR consulting, financial advisory, transformation consulting', isNew: true },
+  { id: 'logistics_warehousing', name: 'Logistics & Warehousing', icon: Truck, color: '#F97316', agentCount: 249, description: 'Dedicated logistics operations, warehouse management, freight forwarding, customs brokerage, last-mile delivery, inventory optimization', isNew: true },
+  { id: 'architecture_design', name: 'Architecture & Design', icon: PenTool, color: '#8B5CF6', agentCount: 103, description: 'Web Design, Architectural design, interior design, urban design, landscape architecture, project management, BIM', isNew: true },
+  { id: 'analytics_insights', name: 'Analytics & Insights', icon: ChartBarBig, color: '#0EA5E9', agentCount: 121, description: 'Data analytics, business intelligence, predictive analytics, performance metrics, reporting automation, insights generation', isNew: true },
 ];
 
 // Tier 4: AI Agent Workforce Types
@@ -643,6 +647,10 @@ export default function AIAgentsIndex() {
       'manufacturing': '/ai-agent/product',
       'logistics': '/ai-agent',
       'government': '/ai-agent',
+      'consulting_advisory': '/ai-agent/consulting-advisory',
+      'logistics_warehousing': '/ai-agent/logistics-warehousing',
+      'architecture_design': '/ai-agent/architecture-design',
+      'analytics_insights': '/ai-agent/analytics-insights',
     };
     const route = deptRouteMap[deptId];
     if (route) {

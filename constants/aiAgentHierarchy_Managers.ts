@@ -157,6 +157,7 @@ export const managers: AIEmployeeProfile[] = [
   // ========== FINANCE DEPARTMENT MANAGERS (4) ==========
   {
     id: 'finance-manager',
+    uid: 'ktx-05-finance-manager',
     name: 'AI Finance Manager',
     title: 'Manager - Financial Planning',
     level: 'manager',
@@ -166,6 +167,7 @@ export const managers: AIEmployeeProfile[] = [
     color: '#4CAF50',
     orgChart: {
       id: 'finance-manager',
+      uid: 'ktx-05-finance-manager',
       level: 'manager',
       department: 'finance',
       title: 'Finance Manager',
@@ -205,6 +207,7 @@ export const managers: AIEmployeeProfile[] = [
   },
   {
     id: 'accounting-manager',
+    uid: 'ktx-05-accounting-manager',
     name: 'AI Accounting Manager',
     title: 'Manager - Accounting Operations',
     level: 'manager',
@@ -214,6 +217,7 @@ export const managers: AIEmployeeProfile[] = [
     color: '#388E3C',
     orgChart: {
       id: 'accounting-manager',
+      uid: 'ktx-05-accounting-manager',
       level: 'manager',
       department: 'finance',
       title: 'Accounting Manager',
@@ -301,6 +305,7 @@ export const managers: AIEmployeeProfile[] = [
   },
   {
     id: 'audit-manager',
+    uid: 'ktx-05-audit-manager',
     name: 'AI Audit Manager',
     title: 'Manager - Internal Audit',
     level: 'manager',
@@ -310,6 +315,7 @@ export const managers: AIEmployeeProfile[] = [
     color: '#1B5E20',
     orgChart: {
       id: 'audit-manager',
+      uid: 'ktx-05-audit-manager',
       level: 'manager',
       department: 'finance',
       title: 'Audit Manager',
@@ -399,6 +405,7 @@ export const managers: AIEmployeeProfile[] = [
   },
   {
     id: 'devops-manager',
+    uid: 'ktx-06-devops-manager',
     name: 'AI DevOps Manager',
     title: 'Manager - DevOps & SRE',
     level: 'manager',
@@ -408,6 +415,7 @@ export const managers: AIEmployeeProfile[] = [
     color: '#1565C0',
     orgChart: {
       id: 'devops-manager',
+      uid: 'ktx-06-devops-manager',
       level: 'manager',
       department: 'technology',
       title: 'DevOps Manager',
@@ -593,6 +601,7 @@ export const managers: AIEmployeeProfile[] = [
   },
   {
     id: 'brand-manager',
+    uid: 'ktx-03-brand-manager',
     name: 'AI Brand Manager',
     title: 'Manager - Brand Strategy',
     level: 'manager',
@@ -602,6 +611,7 @@ export const managers: AIEmployeeProfile[] = [
     color: '#AD1457',
     orgChart: {
       id: 'brand-manager',
+      uid: 'ktx-03-brand-manager',
       level: 'manager',
       department: 'marketing',
       title: 'Brand Manager',
@@ -739,6 +749,7 @@ export const managers: AIEmployeeProfile[] = [
   // ========== SALES DEPARTMENT MANAGERS (3) ==========
   {
     id: 'sales-manager',
+    uid: 'ktx-02-sales-operations-manager',
     name: 'AI Sales Manager',
     title: 'Manager - Sales Operations',
     level: 'manager',
@@ -748,6 +759,7 @@ export const managers: AIEmployeeProfile[] = [
     color: '#FFA000',
     orgChart: {
       id: 'sales-manager',
+      uid: 'ktx-02-sales-operations-manager',
       level: 'manager',
       department: 'sales',
       title: 'Sales Manager',
@@ -933,6 +945,7 @@ export const managers: AIEmployeeProfile[] = [
   },
   {
     id: 'cs-manager',
+    uid: 'ktx-09-analytics-manager',
     name: 'AI Customer Success Manager',
     title: 'Manager - Customer Success',
     level: 'manager',
@@ -942,6 +955,7 @@ export const managers: AIEmployeeProfile[] = [
     color: '#0097A7',
     orgChart: {
       id: 'cs-manager',
+      uid: 'ktx-09-analytics-manager',
       level: 'manager',
       department: 'customer_experience',
       title: 'Customer Success Manager',
@@ -1031,6 +1045,7 @@ export const managers: AIEmployeeProfile[] = [
   // ========== OPERATIONS MANAGERS (3) ==========
   {
     id: 'ops-manager',
+    uid: 'ktx-06-devops-manager',
     name: 'AI Operations Manager',
     title: 'Manager - Business Operations',
     level: 'manager',
@@ -1040,6 +1055,7 @@ export const managers: AIEmployeeProfile[] = [
     color: '#546E7A',
     orgChart: {
       id: 'ops-manager',
+      uid: 'ktx-06-devops-manager',
       level: 'manager',
       department: 'operations',
       title: 'Operations Manager',
@@ -1079,6 +1095,7 @@ export const managers: AIEmployeeProfile[] = [
   },
   {
     id: 'procurement-manager',
+    uid: 'ktx-21-procurement-manager',
     name: 'AI Procurement Manager',
     title: 'Manager - Procurement & Sourcing',
     level: 'manager',
@@ -1088,6 +1105,7 @@ export const managers: AIEmployeeProfile[] = [
     color: '#455A64',
     orgChart: {
       id: 'procurement-manager',
+      uid: 'ktx-21-procurement-manager',
       level: 'manager',
       department: 'operations',
       title: 'Procurement Manager',
@@ -1127,6 +1145,7 @@ export const managers: AIEmployeeProfile[] = [
   },
   {
     id: 'logistics-manager',
+    uid: 'ktx-21-logistics-manager',
     name: 'AI Logistics Manager',
     title: 'Manager - Logistics & Fulfillment',
     level: 'manager',
@@ -1136,6 +1155,7 @@ export const managers: AIEmployeeProfile[] = [
     color: '#37474F',
     orgChart: {
       id: 'logistics-manager',
+      uid: 'ktx-21-logistics-manager',
       level: 'manager',
       department: 'operations',
       title: 'Logistics Manager',
@@ -1177,6 +1197,7 @@ export const managers: AIEmployeeProfile[] = [
   // ========== HR MANAGERS (2) ==========
   {
     id: 'recruiting-manager',
+    uid: 'ktx-07-recruiting-manager',
     name: 'AI Recruiting Manager',
     title: 'Manager - Talent Acquisition',
     level: 'manager',
@@ -1186,6 +1207,7 @@ export const managers: AIEmployeeProfile[] = [
     color: '#8E24AA',
     orgChart: {
       id: 'recruiting-manager',
+      uid: 'ktx-07-recruiting-manager',
       level: 'manager',
       department: 'human_resources',
       title: 'Recruiting Manager',
@@ -1275,6 +1297,7 @@ export const managers: AIEmployeeProfile[] = [
   // ========== DATA & ANALYTICS MANAGERS (2) ==========
   {
     id: 'analytics-manager',
+    uid: 'ktx-09-analytics-manager',
     name: 'AI Analytics Manager',
     title: 'Manager - Business Analytics',
     level: 'manager',
@@ -1284,6 +1307,7 @@ export const managers: AIEmployeeProfile[] = [
     color: '#5E35B1',
     orgChart: {
       id: 'analytics-manager',
+      uid: 'ktx-09-analytics-manager',
       level: 'manager',
       department: 'data_intelligence',
       title: 'Analytics Manager',
@@ -1323,6 +1347,7 @@ export const managers: AIEmployeeProfile[] = [
   },
   {
     id: 'bi-manager',
+    uid: 'ktx-17-medical-billing-manager',
     name: 'AI BI Manager',
     title: 'Manager - Business Intelligence',
     level: 'manager',
@@ -1332,6 +1357,7 @@ export const managers: AIEmployeeProfile[] = [
     color: '#512DA8',
     orgChart: {
       id: 'bi-manager',
+      uid: 'ktx-17-medical-billing-manager',
       level: 'manager',
       department: 'data_intelligence',
       title: 'BI Manager',
@@ -1373,6 +1399,7 @@ export const managers: AIEmployeeProfile[] = [
   // ========== SECURITY MANAGERS (1) ==========
   {
     id: 'soc-manager',
+    uid: 'ktx-11-soc-manager',
     name: 'AI SOC Manager',
     title: 'Manager - Security Operations Center',
     level: 'manager',
@@ -1382,6 +1409,7 @@ export const managers: AIEmployeeProfile[] = [
     color: '#D32F2F',
     orgChart: {
       id: 'soc-manager',
+      uid: 'ktx-11-soc-manager',
       level: 'manager',
       department: 'security',
       title: 'SOC Manager',

@@ -31,6 +31,47 @@ export interface BuilderTab {
 
 export type AgentType = 'reactive' | 'learning' | 'swarm';
 
+// ============================================
+// HUMAN ON THE LOOP - AUTONOMY LEVELS
+// ============================================
+
+export type AutonomyLevel = 'manual' | 'supervised' | 'autonomous' | 'fully_autonomous';
+
+export interface AutonomyConfig {
+  level: AutonomyLevel;
+  requiresApprovalFor: string[]; // Action types requiring approval
+  autoApproveThreshold: number; // Confidence threshold for auto-approval (0-1)
+  oversightMode: 'monitoring' | 'audit' | 'intervention';
+  interventionTriggers: {
+    confidenceBelow: number;
+    riskLevel: 'low' | 'medium' | 'high' | 'critical';
+    anomalyDetected: boolean;
+  };
+  monitoringInterval: number; // Seconds between oversight checks
+  auditLogRetention: number; // Days to keep audit logs
+}
+
+export interface OversightEvent {
+  id: string;
+  agentId: string;
+  timestamp: string;
+  actionType: string;
+  decision: 'approved' | 'rejected' | 'auto_approved' | 'flagged' | 'intervened';
+  confidence: number;
+  riskLevel: 'low' | 'medium' | 'high' | 'critical';
+  humanReviewer?: string;
+  reason?: string;
+  metadata: Record<string, any>;
+}
+
+export interface InterventionCapability {
+  canPause: boolean;
+  canOverride: boolean;
+  canModify: boolean;
+  canRollback: boolean;
+  emergencyStop: boolean;
+}
+
 export interface AgentTypeConfig {
   id: AgentType;
   name: string;
@@ -81,6 +122,10 @@ export interface CustomAgent {
   skills: AgentSkill[];
   personality: AgentPersonality[];
   intelligenceFeatures: IntelligenceFeature[];
+  
+  // Human on the Loop Configuration
+  autonomy: AutonomyConfig;
+  interventionCapabilities: InterventionCapability;
   
   // Hierarchy Position
   reportsTo: string; // Department Head ID

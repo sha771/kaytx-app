@@ -16,59 +16,11 @@ export default function SubAgentsIndex() {
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Helper & Sub-Agent Workforce</Text>
         <View style={styles.badgesRow}>
           <View style={[styles.badge, { backgroundColor: '#34C75922' }]}><Activity size={12} color="#34C759" /><Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#10B98122' }]}><Users size={12} color="#10B981" /><Text style={[styles.badgeText, { color: '#10B981' }]}>27 Agents</Text></View>
+          <View style={[styles.badge, { backgroundColor: '#10B98122' }]}><Users size={12} color="#10B981" /><Text style={[styles.badgeText, { color: '#10B981' }]}>21 Agents</Text></View>
         </View>
       </View>
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
-        <TouchableOpacity key="demo-builder" onPress={() => router.push('/ai-agent/research/sub-agents/demo-builder')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
-          <View style={[styles.agentIcon, { backgroundColor: '#10B98120' }]}><Telescope size={28} color="#10B981" /></View>
-          <View style={styles.agentInfo}>
-            <Text style={[styles.agentName, { color: theme.colors.text }]}>Demo Builder</Text>
-            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
-          </View>
-          <ArrowRight size={20} color={theme.colors.textSecondary} />
-        </TouchableOpacity>
-        <TouchableOpacity key="experiment-executor" onPress={() => router.push('/ai-agent/research/sub-agents/experiment-executor')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
-          <View style={[styles.agentIcon, { backgroundColor: '#10B98120' }]}><Telescope size={28} color="#10B981" /></View>
-          <View style={styles.agentInfo}>
-            <Text style={[styles.agentName, { color: theme.colors.text }]}>Experiment Executor</Text>
-            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
-          </View>
-          <ArrowRight size={20} color={theme.colors.textSecondary} />
-        </TouchableOpacity>
-        <TouchableOpacity key="experiment-tracker" onPress={() => router.push('/ai-agent/research/sub-agents/experiment-tracker')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
-          <View style={[styles.agentIcon, { backgroundColor: '#10B98120' }]}><Telescope size={28} color="#10B981" /></View>
-          <View style={styles.agentInfo}>
-            <Text style={[styles.agentName, { color: theme.colors.text }]}>Experiment Tracker</Text>
-            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
-          </View>
-          <ArrowRight size={20} color={theme.colors.textSecondary} />
-        </TouchableOpacity>
-        <TouchableOpacity key="feasibility-assessor" onPress={() => router.push('/ai-agent/research/sub-agents/feasibility-assessor')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
-          <View style={[styles.agentIcon, { backgroundColor: '#10B98120' }]}><Telescope size={28} color="#10B981" /></View>
-          <View style={styles.agentInfo}>
-            <Text style={[styles.agentName, { color: theme.colors.text }]}>Feasibility Assessor</Text>
-            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
-          </View>
-          <ArrowRight size={20} color={theme.colors.textSecondary} />
-        </TouchableOpacity>
-        <TouchableOpacity key="filing-tracker" onPress={() => router.push('/ai-agent/research/sub-agents/filing-tracker')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
-          <View style={[styles.agentIcon, { backgroundColor: '#10B98120' }]}><Telescope size={28} color="#10B981" /></View>
-          <View style={styles.agentInfo}>
-            <Text style={[styles.agentName, { color: theme.colors.text }]}>Filing Tracker</Text>
-            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
-          </View>
-          <ArrowRight size={20} color={theme.colors.textSecondary} />
-        </TouchableOpacity>
-        <TouchableOpacity key="grant-proposal-writer" onPress={() => router.push('/ai-agent/research/sub-agents/grant-proposal-writer')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
-          <View style={[styles.agentIcon, { backgroundColor: '#10B98120' }]}><Telescope size={28} color="#10B981" /></View>
-          <View style={styles.agentInfo}>
-            <Text style={[styles.agentName, { color: theme.colors.text }]}>Grant Proposal Writer</Text>
-            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
-          </View>
-          <ArrowRight size={20} color={theme.colors.textSecondary} />
-        </TouchableOpacity>
         <TouchableOpacity key="hackathon-organizer" onPress={() => router.push('/ai-agent/research/sub-agents/hackathon-organizer')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
           <View style={[styles.agentIcon, { backgroundColor: '#10B98120' }]}><Telescope size={28} color="#10B981" /></View>
           <View style={styles.agentInfo}>

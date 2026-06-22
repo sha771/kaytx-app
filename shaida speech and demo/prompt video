@@ -1,6 +1,6 @@
 
 [0:00-0:10] HOOK
-"What if your company had 1108 AI employees working 24/7? That's KAYTX - the world's most comprehensive Enterprise AI Operating System."
+"What if your company had 6,184 AI employees working 24/7? That's KAYTX - the world's most comprehensive Enterprise AI Operating System."
 
 
 [0:10-0:30] UNIFIED INBOX
@@ -16,7 +16,7 @@ AI summary pills on messages
 
 [0:30-1:00] AI AGENTS & EMPLOYEES
 "Your AI workforce is organized like a real company. 15 C-Suite executives set strategy. 23 VPs oversee departments. 180+ specialists handle execution. From Finance to Healthcare, every business function has specialized AI agents."
-and 1108 ai agents and employees 
+and 6,184 ai agents and employees 
 
 Visual: @/app/home.tsx + @/app/ai-agents-employees-builder.tsx
 
@@ -56,7 +56,7 @@ Activity feed
 
 
 
-Hook (0-3s): "1108 AI employees working 24/7 for your company" Quick cuts (3-15s): Inbox → Agents → Social Media → CRM → Dashboard End (15-30s): "$49/month vs $60,000/year" + "Link in bio"
+Hook (0-3s): "6,184 AI employees working 24/7 for your company" Quick cuts (3-15s): Inbox → Agents → Social Media → CRM → Dashboard End (15-30s): "$49/month vs $60,000/year" + "Link in bio"
 
 
 
@@ -126,7 +126,7 @@ ALTERNATIVE - SINGLE CONTINUOUS HOOK
 
 [0:18-0:28] - AI WORKFORCE
 
-"What if you could deploy 1,100+ specialized AI employees overnight? Organized like a real company - C-Suite for strategy, VPs for execution, specialists for every function. Finance, Sales, Marketing, Operations, Healthcare, Trading - all working in parallel."
+"What if you could deploy 6,000+ specialized AI employees overnight? Organized like a real company - C-Suite for strategy, VPs for execution, specialists for every function. Finance, Sales, Marketing, Operations, Healthcare, Trading - all working in parallel."
 
 [0:28-0:38] - SOCIAL MEDIA + CRM
 
@@ -141,7 +141,7 @@ ALTERNATIVE - SINGLE CONTINUOUS HOOK
 "This isn't a chatbot. This isn't a tool. This is an Operating System for your entire enterprise. I'm building the company of the future. Welcome to KAYTX."
 
 ALTERNATIVE - TIGHTER VERSION (30 sec)
-"The old way: fragmented tools, slow teams, manual everything. The new way: one AI Operating System. 1,100+ AI agents across every department. Unified inbox. Automated social. 360° customer intelligence. Human-AI collaboration at scale. This is KAYTX - the Enterprise AI Operating System. The future of work starts here."
+"The old way: fragmented tools, slow teams, manual everything. The new way: one AI Operating System. 6,000+ AI agents across every department. Unified inbox. Automated social. 360° customer intelligence. Human-AI collaboration at scale. This is KAYTX - the Enterprise AI Operating System. The future of work starts here."
 
 
 
@@ -197,9 +197,9 @@ Show hierarchy visualization
 Quick pan through 20+ department sections
 Voiceover:
 
-"This is where it gets powerful. Your AI workforce - 1,100+ specialized agents organized like a real company. 15 C-Suite executives set strategy. 23 VPs and Directors oversee operations. Hundreds of specialists execute across every function. Finance. Sales. Marketing. Healthcare. Trading. Government. Manufacturing. All working in parallel, 24/7. No hiring. No training. Just deploy."
+"This is where it gets powerful. Your AI workforce - 6,000+ specialized agents organized like a real company. 15 C-Suite executives set strategy. 23 VPs and Directors oversee operations. Hundreds of specialists execute across every function. Finance. Sales. Marketing. Healthcare. Trading. Government. Manufacturing. All working in parallel, 24/7. No hiring. No training. Just deploy."
 
-Text Overlay: "1,100+ AI Agents • 21 Departments • Real Corporate Hierarchy"
+Text Overlay: "6,000+ AI Agents • 21 Departments • Real Corporate Hierarchy"
 
 SCENE 3: SOCIAL MEDIA MANAGEMENT (1:30-2:00)
 Visual: @/app/social-media/dashboard.tsx + @/app/social-media/content-calendar.tsx
@@ -248,7 +248,7 @@ Text Overlay: "Human-AI Teams • Kanban Workflow • Real-time Coordination"
 SCENE 6: ENTERPRISE DASHBOARD (3:00-3:20)
 Visual: @/app/enterprise-dashboard.tsx
 
-Key metrics: $2.4M tracked, 99.9% uptime, 1,100+ active agents
+Key metrics: $2.4M tracked, 99.9% uptime, 6,000+ active agents
 System status: all green
 Quick actions grid
 Recent activity feed
@@ -518,7 +518,7 @@ Shot 3E (1:35-1:45): Hierarchy visualization
 Show organizational chart view
 CEO at top → C-Suite below → VPs → Managers → Specialists
 Animate connections (lines drawing between levels)
-Final shot: Full hierarchy with all 1,100+ agents visible
+Final shot: Full hierarchy with all 6,000+ agents visible
 Voiceover:
 
 "This is where it gets powerful. Your AI workforce - 1,100 specialized agents organized like a real company. 15 C-Suite executives set strategy. 23 VPs and Directors oversee operations. Hundreds of specialists execute across every function. Finance. Sales. Marketing. Healthcare. Trading. Government. Manufacturing. Real Estate. All working in parallel, 24/7. No hiring. No training. No burnout. Just deploy. And scale. Instantly."
@@ -527,7 +527,7 @@ Text Overlay:
 
 "👔 15 C-Suite AI Executives"
 "📊 23 VP & Directors"
-"🎯 1,100+ Specialized Agents"
+"🎯 6,000+ Specialized Agents"
 "🏢 21 Business Departments"
 "⚡ Real Corporate Hierarchy"
 SCENE 4: SOCIAL MEDIA MANAGEMENT (1:45-2:15)
@@ -662,7 +662,7 @@ Shot 7A (3:15-3:25): Key metrics
 Show metric cards in grid (2x2):
 💰 Revenue: $2.4M MRR
 ⏱️ Uptime: 99.9%
-🤖 Active Agents: 1,100+
+🤖 Active Agents: 6,000+
 👥 Team Members: 45
 Show trend indicators: ↑ 12% | ↑ 0.1% | ↑ 25 | ↑ 5
 Shot 7B (3:25-3:35): System status

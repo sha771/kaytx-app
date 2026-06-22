@@ -154,7 +154,8 @@ export const EnhancedAgentShell: React.FC<EnhancedAgentShellProps> = ({ agent, c
         { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
         { id: 'analytics', label: 'Analytics', icon: ChartBar },
         { id: 'performance', label: 'Performance', icon: TrendingUp },
-        { id: 'capabilities', label: 'Capabilities', icon: Brain },
+        { id: 'capabilities', label: 'Capabilities', icon: Target },
+        { id: 'brain', label: 'Brain', icon: Database },
         { id: 'activity', label: 'Live Activity', icon: Activity },
         { id: 'history', label: 'History', icon: Clock },
         { id: 'summary', label: 'Summary & Notes', icon: FileText },
@@ -752,6 +753,46 @@ export const EnhancedAgentShell: React.FC<EnhancedAgentShellProps> = ({ agent, c
                 {activeTab === 'chat' && <AgentChat agent={agent} />}
                 {activeTab === 'dashboard' && <AgentDashboard agent={agent} />}
                 {activeTab === 'summary' && <AgentSummaryNotes agent={agent} />}
+                {activeTab === 'brain' && (
+                    <View style={styles.tabContent}>
+                        <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+                            <View style={styles.sectionHeader}>
+                                <Database size={24} color={agent.color} />
+                                <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Agent Brain</Text>
+                            </View>
+                            <Text style={[styles.description, { color: theme.colors.secondaryText }]}>
+                                Structured knowledge base for efficient token usage. AI agents scan raw data once and create a structured brain, then read only the structured version to save tokens.
+                            </Text>
+                            <View style={styles.divider} />
+                            <View style={styles.quickStatsGrid}>
+                                <View style={[styles.quickStatCard, { backgroundColor: theme.colors.background }]}>
+                                    <Text style={[styles.quickStatValue, { color: theme.colors.text }]}>0</Text>
+                                    <Text style={[styles.quickStatLabel, { color: theme.colors.secondaryText }]}>Wiki Pages</Text>
+                                </View>
+                                <View style={[styles.quickStatCard, { backgroundColor: theme.colors.background }]}>
+                                    <Text style={[styles.quickStatValue, { color: theme.colors.text }]}>0</Text>
+                                    <Text style={[styles.quickStatLabel, { color: theme.colors.secondaryText }]}>Sources</Text>
+                                </View>
+                                <View style={[styles.quickStatCard, { backgroundColor: theme.colors.background }]}>
+                                    <Text style={[styles.quickStatValue, { color: '#34C759' }]}>0k</Text>
+                                    <Text style={[styles.quickStatLabel, { color: theme.colors.secondaryText }]}>Tokens Saved</Text>
+                                </View>
+                            </View>
+                            <View style={styles.divider} />
+                            <Text style={[styles.subsectionTitle, { color: theme.colors.text }]}>Query Agent Brain</Text>
+                            <View style={[styles.searchBar, { backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}>
+                                <TextInput
+                                    style={[styles.searchInput, { color: theme.colors.text, flex: 1 }]}
+                                    placeholder="Search knowledge base..."
+                                    placeholderTextColor={theme.colors.secondaryText}
+                                />
+                                <TouchableOpacity style={[styles.searchButton, { backgroundColor: agent.color }]}>
+                                    <Text style={styles.searchButtonText}>Search</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                )}
                 {activeTab === 'settings' && <AgentSettings agent={agent} />}
                 {activeTab === 'config' && (
                     <View style={styles.tabContent}>

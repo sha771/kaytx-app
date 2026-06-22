@@ -1,0 +1,102 @@
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
+import { useRouter } from 'expo-router';
+const agents = [
+  { id: 'ai-chief-real-estate-officer', uid: 'ktx-15-chief-real-estate-officer', title: 'AI Chief Real Estate Officer', route: '/ai-agent/real-estate/chief-real-estate-officer', color: '#8D6E63', level: 'c_level', efficiency: '91%' },
+  { id: 'ai-vp-property-management', uid: 'ktx-15-vp-property-management', title: 'AI VP Property Management', route: '/ai-agent/real-estate/vp-property-management', color: '#8D6E63', level: 'vp_director', efficiency: '90%' },
+  { id: 'ai-vp-real-estate-development', uid: 'ktx-15-vp-real-estate-development', title: 'AI VP Real Estate Development', route: '/ai-agent/real-estate/vp-real-estate-development', color: '#8D6E63', level: 'vp_director', efficiency: '78%' },
+  { id: 'ai-vp-leasing', uid: 'ktx-15-vp-leasing', title: 'AI VP Leasing', route: '/ai-agent/real-estate/vp-leasing', color: '#8D6E63', level: 'vp_director', efficiency: '89%' },
+  { id: 'ai-vp-acquisitions', uid: 'ktx-15-vp-acquisitions', title: 'AI VP Acquisitions', route: '/ai-agent/real-estate/vp-acquisitions', color: '#8D6E63', level: 'vp_director', efficiency: '87%' },
+  { id: 'ai-vp-asset-management', uid: 'ktx-15-vp-asset-management', title: 'AI VP Asset Management', route: '/ai-agent/real-estate/vp-asset-management', color: '#8D6E63', level: 'vp_director', efficiency: '88%' },
+  { id: 'ai-vp-property-marketing', uid: 'ktx-15-vp-property-marketing', title: 'AI VP Property Marketing', route: '/ai-agent/real-estate/vp-property-marketing', color: '#8D6E63', level: 'vp_director', efficiency: '86%' },
+  { id: 'ai-vp-facilities', uid: 'ktx-15-vp-facilities', title: 'AI VP Facilities (Real Estate)', route: '/ai-agent/real-estate/vp-facilities', color: '#8D6E63', level: 'vp_director', efficiency: '85%' },
+  { id: 'ai-property-manager', uid: 'ktx-15-property-manager', title: 'AI Property Manager', route: '/ai-agent/real-estate/property-manager', color: '#8D6E63', level: 'manager', efficiency: '88%' },
+  { id: 'ai-senior-property-manager', uid: 'ktx-15-senior-property-manager', title: 'AI Senior Property Manager', route: '/ai-agent/real-estate/senior-property-manager', color: '#8D6E63', level: 'manager', efficiency: '87%' },
+  { id: 'ai-regional-property-manager', uid: 'ktx-15-regional-property-manager', title: 'AI Regional Property Manager', route: '/ai-agent/real-estate/regional-property-manager', color: '#8D6E63', level: 'manager', efficiency: '89%' },
+  { id: 'ai-leasing-manager', uid: 'ktx-15-leasing-manager', title: 'AI Leasing Manager', route: '/ai-agent/real-estate/leasing-manager', color: '#8D6E63', level: 'manager', efficiency: '81%' },
+  { id: 'ai-senior-leasing-manager', uid: 'ktx-15-senior-leasing-manager', title: 'AI Senior Leasing Manager', route: '/ai-agent/real-estate/senior-leasing-manager', color: '#8D6E63', level: 'manager', efficiency: '84%' },
+  { id: 'ai-facilities-manager', uid: 'ktx-15-facilities-manager', title: 'AI Facilities Manager', route: '/ai-agent/real-estate/facilities-manager', color: '#8D6E63', level: 'manager', efficiency: '82%' },
+  { id: 'ai-property-analyst', uid: 'ktx-15-property-analyst', title: 'AI Property Analyst', route: '/ai-agent/real-estate/property-analyst', color: '#8D6E63', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-market-analyst-real-estate', uid: 'ktx-15-market-analyst-real-estate', title: 'AI Market Analyst (Real Estate)', route: '/ai-agent/real-estate/market-analyst-real-estate', color: '#8D6E63', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-valuation-specialist', uid: 'ktx-15-valuation-specialist', title: 'AI Valuation Specialist', route: '/ai-agent/real-estate/valuation-specialist', color: '#8D6E63', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-appraiser', uid: 'ktx-15-appraiser', title: 'AI Appraiser', route: '/ai-agent/real-estate/appraiser', color: '#8D6E63', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-lease-administrator', uid: 'ktx-15-lease-administrator', title: 'AI Lease Administrator', route: '/ai-agent/real-estate/lease-administrator', color: '#8D6E63', level: 'team_lead', efficiency: '89%' },
+  { id: 'ai-lease-specialist', uid: 'ktx-15-lease-specialist', title: 'AI Lease Specialist', route: '/ai-agent/real-estate/lease-specialist', color: '#8D6E63', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-tenant-relations-specialist', uid: 'ktx-15-tenant-relations-specialist', title: 'AI Tenant Relations Specialist', route: '/ai-agent/real-estate/tenant-relations-specialist', color: '#8D6E63', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-tenant-coordinator', uid: 'ktx-15-tenant-coordinator', title: 'AI Tenant Coordinator', route: '/ai-agent/real-estate/tenant-coordinator', color: '#8D6E63', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-concierge-property', uid: 'ktx-15-concierge-property', title: 'AI Concierge (Property)', route: '/ai-agent/real-estate/concierge-property', color: '#8D6E63', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-maintenance-coordinator', uid: 'ktx-15-maintenance-coordinator', title: 'AI Maintenance Coordinator', route: '/ai-agent/real-estate/maintenance-coordinator', color: '#8D6E63', level: 'team_lead', efficiency: '77%' },
+  { id: 'ai-maintenance-supervisor', uid: 'ktx-15-maintenance-supervisor', title: 'AI Maintenance Supervisor', route: '/ai-agent/real-estate/maintenance-supervisor', color: '#8D6E63', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-building-services-coordinator', uid: 'ktx-15-building-services-coordinator', title: 'AI Building Services Coordinator', route: '/ai-agent/real-estate/building-services-coordinator', color: '#8D6E63', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-cleaning-services-coordinator', uid: 'ktx-15-cleaning-services-coordinator', title: 'AI Cleaning Services Coordinator', route: '/ai-agent/real-estate/cleaning-services-coordinator', color: '#8D6E63', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-security-coordinator-property', uid: 'ktx-15-security-coordinator-property', title: 'AI Security Coordinator (Property)', route: '/ai-agent/real-estate/security-coordinator-property', color: '#8D6E63', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-acquisition-analyst', uid: 'ktx-15-acquisition-analyst', title: 'AI Acquisition Analyst', route: '/ai-agent/real-estate/acquisition-analyst', color: '#8D6E63', level: 'team_lead', efficiency: '89%' },
+  { id: 'ai-disposition-analyst', uid: 'ktx-15-disposition-analyst', title: 'AI Disposition Analyst', route: '/ai-agent/real-estate/disposition-analyst', color: '#8D6E63', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-asset-manager', uid: 'ktx-15-asset-manager', title: 'AI Asset Manager', route: '/ai-agent/real-estate/asset-manager', color: '#8D6E63', level: 'manager', efficiency: '87%' },
+  { id: 'ai-portfolio-manager-real-estate', uid: 'ktx-15-portfolio-manager-real-estate', title: 'AI Portfolio Manager (Real Estate)', route: '/ai-agent/real-estate/portfolio-manager-real-estate', color: '#8D6E63', level: 'manager', efficiency: '86%' },
+  { id: 'ai-investment-analyst-real-estate', uid: 'ktx-15-investment-analyst-real-estate', title: 'AI Investment Analyst (Real Estate)', route: '/ai-agent/real-estate/investment-analyst-real-estate', color: '#8D6E63', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-development-coordinator', uid: 'ktx-15-development-coordinator', title: 'AI Development Coordinator', route: '/ai-agent/real-estate/development-coordinator', color: '#8D6E63', level: 'team_lead', efficiency: '77%' },
+  { id: 'ai-construction-manager', uid: 'ktx-15-construction-manager', title: 'AI Construction Manager', route: '/ai-agent/real-estate/construction-manager', color: '#8D6E63', level: 'manager', efficiency: '84%' },
+  { id: 'ai-project-manager-real-estate', uid: 'ktx-15-project-manager-real-estate', title: 'AI Project Manager (Real Estate)', route: '/ai-agent/real-estate/project-manager-real-estate', color: '#8D6E63', level: 'manager', efficiency: '83%' },
+  { id: 'ai-architect-real-estate', uid: 'ktx-15-architect-real-estate', title: 'AI Architect (Real Estate)', route: '/ai-agent/real-estate/architect-real-estate', color: '#8D6E63', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-engineer-real-estate', uid: 'ktx-15-engineer-real-estate', title: 'AI Engineer (Real Estate)', route: '/ai-agent/real-estate/engineer-real-estate', color: '#8D6E63', level: 'team_lead', efficiency: '81%' },
+  { id: 'ai-permitting-specialist', uid: 'ktx-15-permitting-specialist', title: 'AI Permitting Specialist', route: '/ai-agent/real-estate/permitting-specialist', color: '#8D6E63', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-zoning-specialist', uid: 'ktx-15-zoning-specialist', title: 'AI Zoning Specialist', route: '/ai-agent/real-estate/zoning-specialist', color: '#8D6E63', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-land-acquisition-specialist', uid: 'ktx-15-land-acquisition-specialist', title: 'AI Land Acquisition Specialist', route: '/ai-agent/real-estate/land-acquisition-specialist', color: '#8D6E63', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-property-marketing', uid: 'ktx-15-property-marketing', title: 'AI Property Marketing', route: '/ai-agent/real-estate/property-marketing', color: '#8D6E63', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-real-estate-marketer', uid: 'ktx-15-real-estate-marketer', title: 'AI Real Estate Marketer', route: '/ai-agent/real-estate/real-estate-marketer', color: '#8D6E63', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-digital-marketing-property', uid: 'ktx-15-digital-marketing-property', title: 'AI Digital Marketing (Property)', route: '/ai-agent/real-estate/digital-marketing-property', color: '#8D6E63', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-photographer-property', uid: 'ktx-15-photographer-property', title: 'AI Photographer (Property)', route: '/ai-agent/real-estate/photographer-property', color: '#8D6E63', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-videographer-property', uid: 'ktx-15-videographer-property', title: 'AI Videographer (Property)', route: '/ai-agent/real-estate/videographer-property', color: '#8D6E63', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-virtual-tour-specialist', uid: 'ktx-15-virtual-tour-specialist', title: 'AI Virtual Tour Specialist', route: '/ai-agent/real-estate/virtual-tour-specialist', color: '#8D6E63', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-showcase-specialist', uid: 'ktx-15-showcase-specialist', title: 'AI Showcase Specialist', route: '/ai-agent/real-estate/showcase-specialist', color: '#8D6E63', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-real-estate-agent', uid: 'ktx-15-real-estate-agent', title: 'AI Real Estate Agent', route: '/ai-agent/real-estate/real-estate-agent', color: '#8D6E63', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-real-estate-broker', uid: 'ktx-15-real-estate-broker', title: 'AI Real Estate Broker', route: '/ai-agent/real-estate/real-estate-broker', color: '#8D6E63', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-sales-agent-real-estate', uid: 'ktx-15-sales-agent-real-estate', title: 'AI Sales Agent (Real Estate)', route: '/ai-agent/real-estate/sales-agent-real-estate', color: '#8D6E63', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-buyer-representative', uid: 'ktx-15-buyer-representative', title: 'AI Buyer Representative', route: '/ai-agent/real-estate/buyer-representative', color: '#8D6E63', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-seller-representative', uid: 'ktx-15-seller-representative', title: 'AI Seller Representative', route: '/ai-agent/real-estate/seller-representative', color: '#8D6E63', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-transaction-coordinator', uid: 'ktx-15-transaction-coordinator', title: 'AI Transaction Coordinator', route: '/ai-agent/real-estate/transaction-coordinator', color: '#8D6E63', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-escrow-coordinator', uid: 'ktx-15-escrow-coordinator', title: 'AI Escrow Coordinator', route: '/ai-agent/real-estate/escrow-coordinator', color: '#8D6E63', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-closing-coordinator', uid: 'ktx-15-closing-coordinator', title: 'AI Closing Coordinator', route: '/ai-agent/real-estate/closing-coordinator', color: '#8D6E63', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-title-specialist', uid: 'ktx-15-title-specialist', title: 'AI Title Specialist', route: '/ai-agent/real-estate/title-specialist', color: '#8D6E63', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-legal-counsel-real-estate', uid: 'ktx-15-legal-counsel-real-estate', title: 'AI Legal Counsel (Real Estate)', route: '/ai-agent/real-estate/legal-counsel-real-estate', color: '#8D6E63', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-property-inspector', uid: 'ktx-15-property-inspector', title: 'AI Property Inspector', route: '/ai-agent/real-estate/property-inspector', color: '#8D6E63', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-home-inspector', uid: 'ktx-15-home-inspector', title: 'AI Home Inspector', route: '/ai-agent/real-estate/home-inspector', color: '#8D6E63', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-commercial-inspector', uid: 'ktx-15-commercial-inspector', title: 'AI Commercial Inspector', route: '/ai-agent/real-estate/commercial-inspector', color: '#8D6E63', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-environmental-assessor', uid: 'ktx-15-environmental-assessor', title: 'AI Environmental Assessor', route: '/ai-agent/real-estate/environmental-assessor', color: '#8D6E63', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-surveyor', uid: 'ktx-15-surveyor', title: 'AI Surveyor', route: '/ai-agent/real-estate/surveyor', color: '#8D6E63', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-cost-estimator', uid: 'ktx-15-cost-estimator', title: 'AI Cost Estimator', route: '/ai-agent/real-estate/cost-estimator', color: '#8D6E63', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-budget-analyst-real-estate', uid: 'ktx-15-budget-analyst-real-estate', title: 'AI Budget Analyst (Real Estate)', route: '/ai-agent/real-estate/budget-analyst-real-estate', color: '#8D6E63', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-property-tax-specialist', uid: 'ktx-15-property-tax-specialist', title: 'AI Property Tax Specialist', route: '/ai-agent/real-estate/property-tax-specialist', color: '#8D6E63', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-insurance-specialist-property', uid: 'ktx-15-insurance-specialist-property', title: 'AI Insurance Specialist (Property)', route: '/ai-agent/real-estate/insurance-specialist-property', color: '#8D6E63', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-risk-manager-real-estate', uid: 'ktx-15-risk-manager-real-estate', title: 'AI Risk Manager (Real Estate)', route: '/ai-agent/real-estate/risk-manager-real-estate', color: '#8D6E63', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-compliance-specialist-real-estate', uid: 'ktx-15-compliance-specialist-real-estate', title: 'AI Compliance Specialist (Real Estate)', route: '/ai-agent/real-estate/compliance-specialist-real-estate', color: '#8D6E63', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-sustainability-manager', uid: 'ktx-15-sustainability-manager', title: 'AI Sustainability Manager', route: '/ai-agent/real-estate/sustainability-manager', color: '#8D6E63', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-green-building-specialist', uid: 'ktx-15-green-building-specialist', title: 'AI Green Building Specialist', route: '/ai-agent/real-estate/green-building-specialist', color: '#8D6E63', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-energy-manager-property', uid: 'ktx-15-energy-manager-property', title: 'AI Energy Manager (Property)', route: '/ai-agent/real-estate/energy-manager-property', color: '#8D6E63', level: 'team_lead', efficiency: '83%' },
+];
+export default function DepartmentIndex() {
+  const router = useRouter();
+  return (
+    <ScrollView style={s.container}>
+      <Text style={s.title}>Real Estate & Property - AI Agents</Text>
+      <Text style={s.sub}>60 AI Agents & Employees</Text>
+      <View style={s.grid}>
+        {agents.map((a) => (
+          <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>
+            <Text style={s.at}>{a.title}</Text>
+            <Text style={s.al}>{a.level.replace('_',' ').toUpperCase()}</Text>
+            <Text style={s.ae}>{a.efficiency}</Text>
+          </Pressable>
+        ))}
+      </View>
+    </ScrollView>
+  );
+}
+const s = StyleSheet.create({
+  container:{flex:1,backgroundColor:'#0a0a0a',padding:16},title:{color:'#fff',fontSize:24,fontWeight:'bold',marginBottom:4},
+  sub:{color:'#888',fontSize:14,marginBottom:16},grid:{flexDirection:'row',flexWrap:'wrap',gap:12},
+  card:{backgroundColor:'#1a1a2e',borderRadius:12,padding:16,width:'48%',borderLeftWidth:3},
+  at:{color:'#fff',fontSize:14,fontWeight:'600',marginBottom:4},al:{color:'#888',fontSize:11,marginBottom:2},
+  ae:{color:'#10B981',fontSize:12},
+});

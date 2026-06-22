@@ -206,6 +206,7 @@ export const teamLeads: AIEmployeeProfile[] = [
   },
   {
     id: 'ar-lead',
+    uid: 'ktx-06-lead-architect',
     name: 'AI AR Team Lead',
     title: 'Team Lead - Accounts Receivable',
     level: 'team_lead',
@@ -215,6 +216,7 @@ export const teamLeads: AIEmployeeProfile[] = [
     color: '#2E7D32',
     orgChart: {
       id: 'ar-lead',
+      uid: 'ktx-06-lead-architect',
       level: 'team_lead',
       department: 'finance',
       title: 'AR Team Lead',
@@ -352,6 +354,7 @@ export const teamLeads: AIEmployeeProfile[] = [
   // ========== TECHNOLOGY TEAM LEADS (5) ==========
   {
     id: 'frontend-lead',
+    uid: 'ktx-06-frontend-lead',
     name: 'AI Frontend Team Lead',
     title: 'Team Lead - Frontend Engineering',
     level: 'team_lead',
@@ -361,6 +364,7 @@ export const teamLeads: AIEmployeeProfile[] = [
     color: '#1976D2',
     orgChart: {
       id: 'frontend-lead',
+      uid: 'ktx-06-frontend-lead',
       level: 'team_lead',
       department: 'technology',
       title: 'Frontend Team Lead',
@@ -400,6 +404,7 @@ export const teamLeads: AIEmployeeProfile[] = [
   },
   {
     id: 'backend-lead',
+    uid: 'ktx-06-backend-lead',
     name: 'AI Backend Team Lead',
     title: 'Team Lead - Backend Engineering',
     level: 'team_lead',
@@ -409,6 +414,7 @@ export const teamLeads: AIEmployeeProfile[] = [
     color: '#1565C0',
     orgChart: {
       id: 'backend-lead',
+      uid: 'ktx-06-backend-lead',
       level: 'team_lead',
       department: 'technology',
       title: 'Backend Team Lead',
@@ -448,6 +454,7 @@ export const teamLeads: AIEmployeeProfile[] = [
   },
   {
     id: 'sre-lead',
+    uid: 'ktx-06-sre-lead',
     name: 'AI SRE Team Lead',
     title: 'Team Lead - Site Reliability Engineering',
     level: 'team_lead',
@@ -457,6 +464,7 @@ export const teamLeads: AIEmployeeProfile[] = [
     color: '#0D47A1',
     orgChart: {
       id: 'sre-lead',
+      uid: 'ktx-06-sre-lead',
       level: 'team_lead',
       department: 'technology',
       title: 'SRE Team Lead',
@@ -496,6 +504,7 @@ export const teamLeads: AIEmployeeProfile[] = [
   },
   {
     id: 'automation-lead',
+    uid: 'ktx-22-automation-operations-director-lead',
     name: 'AI Test Automation Lead',
     title: 'Team Lead - Test Automation',
     level: 'team_lead',
@@ -505,6 +514,7 @@ export const teamLeads: AIEmployeeProfile[] = [
     color: '#0D47A1',
     orgChart: {
       id: 'automation-lead',
+      uid: 'ktx-22-automation-operations-director-lead',
       level: 'team_lead',
       department: 'technology',
       title: 'Test Automation Lead',
@@ -884,6 +894,7 @@ export const teamLeads: AIEmployeeProfile[] = [
   },
   {
     id: 'sdr-lead',
+    uid: 'ktx-02-lead-development-rep-sdr',
     name: 'AI SDR Team Lead',
     title: 'Team Lead - Sales Development',
     level: 'team_lead',
@@ -893,6 +904,7 @@ export const teamLeads: AIEmployeeProfile[] = [
     color: '#FF8F00',
     orgChart: {
       id: 'sdr-lead',
+      uid: 'ktx-02-lead-development-rep-sdr',
       level: 'team_lead',
       department: 'sales',
       title: 'SDR Team Lead',
@@ -1320,6 +1332,7 @@ export const teamLeads: AIEmployeeProfile[] = [
   },
   {
     id: 'warehouse-lead',
+    uid: 'ktx-21-warehouse-lead',
     name: 'AI Warehouse Lead',
     title: 'Team Lead - Warehouse Operations',
     level: 'team_lead',
@@ -1329,6 +1342,7 @@ export const teamLeads: AIEmployeeProfile[] = [
     color: '#37474F',
     orgChart: {
       id: 'warehouse-lead',
+      uid: 'ktx-21-warehouse-lead',
       level: 'team_lead',
       department: 'operations',
       title: 'Warehouse Lead',
@@ -1957,6 +1971,7 @@ export const specialists: AIEmployeeProfile[] = [
   },
   {
     id: 'tax-specialist',
+    uid: 'ktx-05-tax-specialist',
     name: 'AI Tax Specialist',
     title: 'Specialist - Tax Compliance',
     level: 'specialist',
@@ -1966,6 +1981,7 @@ export const specialists: AIEmployeeProfile[] = [
     color: '#2E7D32',
     orgChart: {
       id: 'tax-specialist',
+      uid: 'ktx-05-tax-specialist',
       level: 'specialist',
       department: 'finance',
       title: 'Tax Specialist',
@@ -2004,6 +2020,7 @@ export const specialists: AIEmployeeProfile[] = [
   },
   {
     id: 'compliance-specialist',
+    uid: 'ktx-11-security-compliance-specialist',
     name: 'AI Compliance Specialist',
     title: 'Specialist - Financial Compliance',
     level: 'specialist',
@@ -2013,6 +2030,7 @@ export const specialists: AIEmployeeProfile[] = [
     color: '#1B5E20',
     orgChart: {
       id: 'compliance-specialist',
+      uid: 'ktx-11-security-compliance-specialist',
       level: 'specialist',
       department: 'finance',
       title: 'Compliance Specialist',
@@ -2100,6 +2118,7 @@ export const specialists: AIEmployeeProfile[] = [
   // ========== TECHNOLOGY SPECIALISTS (5) ==========
   {
     id: 'frontend-dev-1',
+    uid: 'ktx-06-frontend-developer',
     name: 'AI Frontend Developer',
     title: 'Specialist - Frontend Development',
     level: 'specialist',
@@ -2109,6 +2128,7 @@ export const specialists: AIEmployeeProfile[] = [
     color: '#1976D2',
     orgChart: {
       id: 'frontend-dev-1',
+      uid: 'ktx-06-frontend-developer',
       level: 'specialist',
       department: 'technology',
       title: 'Frontend Developer',
@@ -2148,6 +2168,7 @@ export const specialists: AIEmployeeProfile[] = [
   },
   {
     id: 'backend-dev-1',
+    uid: 'ktx-06-backend-developer',
     name: 'AI Backend Developer',
     title: 'Specialist - Backend Development',
     level: 'specialist',
@@ -2157,6 +2178,7 @@ export const specialists: AIEmployeeProfile[] = [
     color: '#1565C0',
     orgChart: {
       id: 'backend-dev-1',
+      uid: 'ktx-06-backend-developer',
       level: 'specialist',
       department: 'technology',
       title: 'Backend Developer',
@@ -2196,6 +2218,7 @@ export const specialists: AIEmployeeProfile[] = [
   },
   {
     id: 'sre-engineer-1',
+    uid: 'ktx-06-sre-engineer',
     name: 'AI SRE Engineer',
     title: 'Specialist - Site Reliability',
     level: 'specialist',
@@ -2205,6 +2228,7 @@ export const specialists: AIEmployeeProfile[] = [
     color: '#0D47A1',
     orgChart: {
       id: 'sre-engineer-1',
+      uid: 'ktx-06-sre-engineer',
       level: 'specialist',
       department: 'technology',
       title: 'SRE Engineer',
@@ -2244,6 +2268,7 @@ export const specialists: AIEmployeeProfile[] = [
   },
   {
     id: 'data-engineer-1',
+    uid: 'ktx-06-data-engineer',
     name: 'AI Data Engineer',
     title: 'Specialist - Data Engineering',
     level: 'specialist',
@@ -2253,6 +2278,7 @@ export const specialists: AIEmployeeProfile[] = [
     color: '#5E35B1',
     orgChart: {
       id: 'data-engineer-1',
+      uid: 'ktx-06-data-engineer',
       level: 'specialist',
       department: 'data_intelligence',
       title: 'Data Engineer',
@@ -2292,6 +2318,7 @@ export const specialists: AIEmployeeProfile[] = [
   },
   {
     id: 'qa-automation-1',
+    uid: 'ktx-06-qa-automation-engineer',
     name: 'AI QA Automation Engineer',
     title: 'Specialist - Test Automation',
     level: 'specialist',
@@ -2301,6 +2328,7 @@ export const specialists: AIEmployeeProfile[] = [
     color: '#0D47A1',
     orgChart: {
       id: 'qa-automation-1',
+      uid: 'ktx-06-qa-automation-engineer',
       level: 'specialist',
       department: 'technology',
       title: 'QA Automation Engineer',
@@ -2342,6 +2370,7 @@ export const specialists: AIEmployeeProfile[] = [
   // ========== MARKETING SPECIALISTS (5) ==========
   {
     id: 'seo-specialist',
+    uid: 'ktx-03-seo-specialist',
     name: 'AI SEO Specialist',
     title: 'Specialist - Search Optimization',
     level: 'specialist',
@@ -2351,6 +2380,7 @@ export const specialists: AIEmployeeProfile[] = [
     color: '#D81B60',
     orgChart: {
       id: 'seo-specialist',
+      uid: 'ktx-03-seo-specialist',
       level: 'specialist',
       department: 'marketing',
       title: 'SEO Specialist',
@@ -2438,6 +2468,7 @@ export const specialists: AIEmployeeProfile[] = [
   },
   {
     id: 'designer-1',
+    uid: 'ktx-01-rewards-program-designer',
     name: 'AI Graphic Designer',
     title: 'Specialist - Visual Design',
     level: 'specialist',
@@ -2447,6 +2478,7 @@ export const specialists: AIEmployeeProfile[] = [
     color: '#C2185B',
     orgChart: {
       id: 'designer-1',
+      uid: 'ktx-01-rewards-program-designer',
       level: 'specialist',
       department: 'marketing',
       title: 'Graphic Designer',
@@ -2486,6 +2518,7 @@ export const specialists: AIEmployeeProfile[] = [
   },
   {
     id: 'writer-1',
+    uid: 'ktx-03-blog-writer',
     name: 'AI Content Writer',
     title: 'Specialist - Content Writing',
     level: 'specialist',
@@ -2495,6 +2528,7 @@ export const specialists: AIEmployeeProfile[] = [
     color: '#E91E63',
     orgChart: {
       id: 'writer-1',
+      uid: 'ktx-03-blog-writer',
       level: 'specialist',
       department: 'marketing',
       title: 'Content Writer',
@@ -2632,6 +2666,7 @@ export const specialists: AIEmployeeProfile[] = [
   },
   {
     id: 'sdr-1',
+    uid: 'ktx-02-lead-development-rep-sdr',
     name: 'AI Sales Development Rep',
     title: 'Specialist - Lead Development',
     level: 'specialist',
@@ -2641,6 +2676,7 @@ export const specialists: AIEmployeeProfile[] = [
     color: '#FF8F00',
     orgChart: {
       id: 'sdr-1',
+      uid: 'ktx-02-lead-development-rep-sdr',
       level: 'specialist',
       department: 'sales',
       title: 'SDR',
@@ -2826,6 +2862,7 @@ export const specialists: AIEmployeeProfile[] = [
   },
   {
     id: 'cs-specialist-1',
+    uid: 'ktx-09-analytics-specialist',
     name: 'AI Customer Success Specialist',
     title: 'Specialist - Customer Success',
     level: 'specialist',
@@ -2835,6 +2872,7 @@ export const specialists: AIEmployeeProfile[] = [
     color: '#0097A7',
     orgChart: {
       id: 'cs-specialist-1',
+      uid: 'ktx-09-analytics-specialist',
       level: 'specialist',
       department: 'customer_experience',
       title: 'CS Specialist',
@@ -2922,6 +2960,7 @@ export const specialists: AIEmployeeProfile[] = [
   },
   {
     id: 'retention-specialist-1',
+    uid: 'ktx-01-retention-specialist',
     name: 'AI Retention Specialist',
     title: 'Specialist - Churn Prevention',
     level: 'specialist',
@@ -2931,6 +2970,7 @@ export const specialists: AIEmployeeProfile[] = [
     color: '#006064',
     orgChart: {
       id: 'retention-specialist-1',
+      uid: 'ktx-01-retention-specialist',
       level: 'specialist',
       department: 'customer_experience',
       title: 'Retention Specialist',
@@ -3020,6 +3060,7 @@ export const specialists: AIEmployeeProfile[] = [
   },
   {
     id: 'buyer-1',
+    uid: 'ktx-21-procurement-buyer',
     name: 'AI Procurement Buyer',
     title: 'Specialist - Procurement Buying',
     level: 'specialist',
@@ -3029,6 +3070,7 @@ export const specialists: AIEmployeeProfile[] = [
     color: '#455A64',
     orgChart: {
       id: 'buyer-1',
+      uid: 'ktx-21-procurement-buyer',
       level: 'specialist',
       department: 'operations',
       title: 'Buyer',
@@ -3068,6 +3110,7 @@ export const specialists: AIEmployeeProfile[] = [
   },
   {
     id: 'inventory-specialist',
+    uid: 'ktx-21-inventory-specialist',
     name: 'AI Inventory Specialist',
     title: 'Specialist - Inventory Management',
     level: 'specialist',
@@ -3077,6 +3120,7 @@ export const specialists: AIEmployeeProfile[] = [
     color: '#37474F',
     orgChart: {
       id: 'inventory-specialist',
+      uid: 'ktx-21-inventory-specialist',
       level: 'specialist',
       department: 'operations',
       title: 'Inventory Specialist',
@@ -3118,6 +3162,7 @@ export const specialists: AIEmployeeProfile[] = [
   // ========== HR SPECIALISTS (2) ==========
   {
     id: 'recruiter-1',
+    uid: 'ktx-07-recruiter',
     name: 'AI Recruiter',
     title: 'Specialist - Talent Acquisition',
     level: 'specialist',
@@ -3127,6 +3172,7 @@ export const specialists: AIEmployeeProfile[] = [
     color: '#8E24AA',
     orgChart: {
       id: 'recruiter-1',
+      uid: 'ktx-07-recruiter',
       level: 'specialist',
       department: 'human_resources',
       title: 'Recruiter',
@@ -3264,6 +3310,7 @@ export const specialists: AIEmployeeProfile[] = [
   },
   {
     id: 'segmentation-analyst',
+    uid: 'ktx-16-segmentation-analyst',
     name: 'AI Segmentation Analyst',
     title: 'Specialist - Customer Segmentation',
     level: 'specialist',
@@ -3273,6 +3320,7 @@ export const specialists: AIEmployeeProfile[] = [
     color: '#EC4899',
     orgChart: {
       id: 'segmentation-analyst',
+      uid: 'ktx-16-segmentation-analyst',
       level: 'specialist',
       department: 'customer_insights_analytics',
       title: 'Segmentation Analyst',

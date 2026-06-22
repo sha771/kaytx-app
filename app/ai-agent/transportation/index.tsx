@@ -1,120 +1,94 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { useTheme } from '@/providers/ThemeProvider';
-import { Truck, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, TrendingUp, Briefcase, Settings, Package, MapPin, Route, Zap, Layers, Eye, DollarSign, Map, Gauge, Wrench, LayoutGrid } from 'lucide-react-native';
-import AgentFeatures from '@/components/ai-agent/AgentFeatures';
+import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
-
-const DEPARTMENT_AGENTS = [
-  { id: 'clo-logistics', name: 'AI Chief Logistics Officer', description: 'C-Suite logistics strategy & network design', icon: Briefcase, color: '#26A69A' },
-  { id: 'vp-transportation', name: 'AI VP Transportation', description: 'Fleet strategy & route network leadership', icon: Truck, color: '#26A69A' },
-  { id: 'vp-logistics-operations', name: 'AI VP Logistics Operations', description: 'Hub operations & throughput management', icon: Settings, color: '#26A69A' },
-  { id: 'fleet-manager', name: 'AI Fleet Manager', description: 'Vehicle scheduling & maintenance planning', icon: Truck, color: '#26A69A' },
-  { id: 'warehouse-manager', name: 'AI Warehouse Manager', description: 'Slot optimization & labor scheduling', icon: Package, color: '#26A69A' },
-  { id: 'distribution-manager', name: 'AI Distribution Manager', description: 'Zone planning & carrier allocation', icon: MapPin, color: '#26A69A' },
-  { id: 'ai-route-optimizer', name: 'AI Route Optimizer', description: 'Traffic prediction & multi-stop planning', icon: Route, color: '#26A69A' },
-  { id: 'ai-fleet-coordinator', name: 'AI Fleet Coordinator', description: 'Dispatch optimization & vehicle tracking', icon: Zap, color: '#26A69A' },
-  { id: 'ai-warehouse-operator', name: 'AI Warehouse Operator', description: 'Put-away & pick-pack coordination', icon: Package, color: '#26A69A' },
-  { id: 'ai-dispatcher', name: 'AI Dispatcher', description: 'Load matching & driver communication', icon: Layers, color: '#26A69A' },
-  { id: 'ai-tracking-specialist', name: 'AI Tracking Specialist', description: 'Shipment monitoring & ETA prediction', icon: Eye, color: '#26A69A' },
-  { id: 'ai-last-mile-coordinator', name: 'AI Last Mile Coordinator', description: 'Delivery window & POD management', icon: MapPin, color: '#26A69A' },
-  { id: 'ai-freight-broker', name: 'AI Freight Broker', description: 'Rate negotiation & carrier qualification', icon: DollarSign, color: '#26A69A' },
-  { id: 'ai-customs-specialist', name: 'AI Customs Specialist', description: 'Duty calculation & compliance checking', icon: Shield, color: '#26A69A' },
+const agents = [
+  { id: 'ai-chief-logistics-officer', uid: 'ktx-19-chief-logistics-officer', title: 'AI Chief Logistics Officer', route: '/ai-agent/transportation/chief-logistics-officer', color: '#26A69A', level: 'c_level', efficiency: '77%' },
+  { id: 'ai-vp-transportation', uid: 'ktx-19-vp-transportation', title: 'AI VP Transportation', route: '/ai-agent/transportation/vp-transportation', color: '#26A69A', level: 'vp_director', efficiency: '75%' },
+  { id: 'ai-vp-logistics-operations', uid: 'ktx-19-vp-logistics-operations', title: 'AI VP Logistics Operations', route: '/ai-agent/transportation/vp-logistics-operations', color: '#26A69A', level: 'vp_director', efficiency: '77%' },
+  { id: 'ai-vp-fleet-operations', uid: 'ktx-19-vp-fleet-operations', title: 'AI VP Fleet Operations', route: '/ai-agent/transportation/vp-fleet-operations', color: '#26A69A', level: 'vp_director', efficiency: '82%' },
+  { id: 'ai-vp-warehouse-operations', uid: 'ktx-19-vp-warehouse-operations', title: 'AI VP Warehouse Operations', route: '/ai-agent/transportation/vp-warehouse-operations', color: '#26A69A', level: 'vp_director', efficiency: '80%' },
+  { id: 'ai-vp-distribution', uid: 'ktx-19-vp-distribution', title: 'AI VP Distribution', route: '/ai-agent/transportation/vp-distribution', color: '#26A69A', level: 'vp_director', efficiency: '78%' },
+  { id: 'ai-vp-freight-operations', uid: 'ktx-19-vp-freight-operations', title: 'AI VP Freight Operations', route: '/ai-agent/transportation/vp-freight-operations', color: '#26A69A', level: 'vp_director', efficiency: '81%' },
+  { id: 'ai-vp-supply-chain', uid: 'ktx-19-vp-supply-chain', title: 'AI VP Supply Chain', route: '/ai-agent/transportation/vp-supply-chain', color: '#26A69A', level: 'vp_director', efficiency: '83%' },
+  { id: 'ai-vp-last-mile', uid: 'ktx-19-vp-last-mile', title: 'AI VP Last Mile', route: '/ai-agent/transportation/vp-last-mile', color: '#26A69A', level: 'vp_director', efficiency: '84%' },
+  { id: 'ai-vp-global-logistics', uid: 'ktx-19-vp-global-logistics', title: 'AI VP Global Logistics', route: '/ai-agent/transportation/vp-global-logistics', color: '#26A69A', level: 'vp_director', efficiency: '79%' },
+  { id: 'ai-vp-customs-compliance', uid: 'ktx-19-vp-customs-compliance', title: 'AI VP Customs & Compliance', route: '/ai-agent/transportation/vp-customs-compliance', color: '#26A69A', level: 'vp_director', efficiency: '85%' },
+  { id: 'ai-fleet-manager', uid: 'ktx-19-fleet-manager', title: 'AI Fleet Manager', route: '/ai-agent/transportation/fleet-manager', color: '#26A69A', level: 'manager', efficiency: '87%' },
+  { id: 'ai-warehouse-manager', uid: 'ktx-19-warehouse-manager', title: 'AI Warehouse Manager', route: '/ai-agent/transportation/warehouse-manager', color: '#26A69A', level: 'manager', efficiency: '75%' },
+  { id: 'ai-distribution-manager', uid: 'ktx-19-distribution-manager', title: 'AI Distribution Manager', route: '/ai-agent/transportation/distribution-manager', color: '#26A69A', level: 'manager', efficiency: '76%' },
+  { id: 'ai-dispatch-manager', uid: 'ktx-19-dispatch-manager', title: 'AI Dispatch Manager', route: '/ai-agent/transportation/dispatch-manager', color: '#26A69A', level: 'manager', efficiency: '84%' },
+  { id: 'ai-freight-manager', uid: 'ktx-19-freight-manager', title: 'AI Freight Manager', route: '/ai-agent/transportation/freight-manager', color: '#26A69A', level: 'manager', efficiency: '82%' },
+  { id: 'ai-cross-dock-manager', uid: 'ktx-19-cross-dock-manager', title: 'AI Cross-Dock Manager', route: '/ai-agent/transportation/cross-dock-manager', color: '#26A69A', level: 'manager', efficiency: '83%' },
+  { id: 'ai-route-optimizer', uid: 'ktx-19-route-optimizer', title: 'AI Route Optimizer', route: '/ai-agent/transportation/route-optimizer', color: '#26A69A', level: 'team_lead', efficiency: '81%' },
+  { id: 'ai-fleet-coordinator', uid: 'ktx-19-fleet-coordinator', title: 'AI Fleet Coordinator', route: '/ai-agent/transportation/fleet-coordinator', color: '#26A69A', level: 'c_level', efficiency: '75%' },
+  { id: 'ai-warehouse-operator', uid: 'ktx-19-warehouse-operator', title: 'AI Warehouse Operator', route: '/ai-agent/transportation/warehouse-operator', color: '#26A69A', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-dispatcher', uid: 'ktx-19-dispatcher', title: 'AI Dispatcher', route: '/ai-agent/transportation/dispatcher', color: '#26A69A', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-tracking-specialist', uid: 'ktx-19-tracking-specialist', title: 'AI Tracking Specialist', route: '/ai-agent/transportation/tracking-specialist', color: '#26A69A', level: 'team_lead', efficiency: '89%' },
+  { id: 'ai-last-mile-coordinator', uid: 'ktx-19-last-mile-coordinator', title: 'AI Last Mile Coordinator', route: '/ai-agent/transportation/last-mile-coordinator', color: '#26A69A', level: 'c_level', efficiency: '83%' },
+  { id: 'ai-freight-broker', uid: 'ktx-19-freight-broker', title: 'AI Freight Broker', route: '/ai-agent/transportation/freight-broker', color: '#26A69A', level: 'team_lead', efficiency: '94%' },
+  { id: 'ai-customs-specialist', uid: 'ktx-19-customs-specialist', title: 'AI Customs Specialist', route: '/ai-agent/transportation/customs-specialist', color: '#26A69A', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-load-planner', uid: 'ktx-19-load-planner', title: 'AI Load Planner', route: '/ai-agent/transportation/load-planner', color: '#26A69A', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-route-planner', uid: 'ktx-19-route-planner', title: 'AI Route Planner', route: '/ai-agent/transportation/route-planner', color: '#26A69A', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-delivery-coordinator', uid: 'ktx-19-delivery-coordinator', title: 'AI Delivery Coordinator', route: '/ai-agent/transportation/delivery-coordinator', color: '#26A69A', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-shipment-tracker', uid: 'ktx-19-shipment-tracker', title: 'AI Shipment Tracker', route: '/ai-agent/transportation/shipment-tracker', color: '#26A69A', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-eta-predictor', uid: 'ktx-19-eta-predictor', title: 'AI ETA Predictor', route: '/ai-agent/transportation/eta-predictor', color: '#26A69A', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-exception-handler', uid: 'ktx-19-exception-handler', title: 'AI Exception Handler', route: '/ai-agent/transportation/exception-handler', color: '#26A69A', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-capacity-planner', uid: 'ktx-19-capacity-planner', title: 'AI Capacity Planner', route: '/ai-agent/transportation/capacity-planner', color: '#26A69A', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-carrier-relations-specialist', uid: 'ktx-19-carrier-relations-specialist', title: 'AI Carrier Relations Specialist', route: '/ai-agent/transportation/carrier-relations-specialist', color: '#26A69A', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-rate-analyst', uid: 'ktx-19-rate-analyst', title: 'AI Rate Analyst', route: '/ai-agent/transportation/rate-analyst', color: '#26A69A', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-freight-auditor', uid: 'ktx-19-freight-auditor', title: 'AI Freight Auditor', route: '/ai-agent/transportation/freight-auditor', color: '#26A69A', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-inventory-coordinator', uid: 'ktx-19-inventory-coordinator', title: 'AI Inventory Coordinator', route: '/ai-agent/transportation/inventory-coordinator', color: '#26A69A', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-pick-pack-lead', uid: 'ktx-19-pick-pack-lead', title: 'AI Pick/Pack Lead', route: '/ai-agent/transportation/pick-pack-lead', color: '#26A69A', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-warehouse-supervisor', uid: 'ktx-19-warehouse-supervisor', title: 'AI Warehouse Supervisor', route: '/ai-agent/transportation/warehouse-supervisor', color: '#26A69A', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-forklift-operator', uid: 'ktx-19-forklift-operator', title: 'AI Forklift Operator', route: '/ai-agent/transportation/forklift-operator', color: '#26A69A', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-receiving-clerk', uid: 'ktx-19-receiving-clerk', title: 'AI Receiving Clerk', route: '/ai-agent/transportation/receiving-clerk', color: '#26A69A', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-shipping-clerk', uid: 'ktx-19-shipping-clerk', title: 'AI Shipping Clerk', route: '/ai-agent/transportation/shipping-clerk', color: '#26A69A', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-quality-control-inspector', uid: 'ktx-19-quality-control-inspector', title: 'AI Quality Control Inspector', route: '/ai-agent/transportation/quality-control-inspector', color: '#26A69A', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-fleet-maintenance-coordinator', uid: 'ktx-19-fleet-maintenance-coordinator', title: 'AI Fleet Maintenance Coordinator', route: '/ai-agent/transportation/fleet-maintenance-coordinator', color: '#26A69A', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-vehicle-inspector', uid: 'ktx-19-vehicle-inspector', title: 'AI Vehicle Inspector', route: '/ai-agent/transportation/vehicle-inspector', color: '#26A69A', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-fuel-manager', uid: 'ktx-19-fuel-manager', title: 'AI Fuel Manager', route: '/ai-agent/transportation/fuel-manager', color: '#26A69A', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-driver-coordinator', uid: 'ktx-19-driver-coordinator', title: 'AI Driver Coordinator', route: '/ai-agent/transportation/driver-coordinator', color: '#26A69A', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-driver-scheduler', uid: 'ktx-19-driver-scheduler', title: 'AI Driver Scheduler', route: '/ai-agent/transportation/driver-scheduler', color: '#26A69A', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-compliance-officer', uid: 'ktx-19-compliance-officer', title: 'AI Compliance Officer', route: '/ai-agent/transportation/compliance-officer', color: '#26A69A', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-documents-specialist', uid: 'ktx-19-documents-specialist', title: 'AI Documents Specialist', route: '/ai-agent/transportation/documents-specialist', color: '#26A69A', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-bill-of-lading-specialist', uid: 'ktx-19-bill-of-lading-specialist', title: 'AI Bill of Lading Specialist', route: '/ai-agent/transportation/bill-of-lading-specialist', color: '#26A69A', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-import-export-coordinator', uid: 'ktx-19-import-export-coordinator', title: 'AI Import/Export Coordinator', route: '/ai-agent/transportation/import-export-coordinator', color: '#26A69A', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-trade-compliance-specialist', uid: 'ktx-19-trade-compliance-specialist', title: 'AI Trade Compliance Specialist', route: '/ai-agent/transportation/trade-compliance-specialist', color: '#26A69A', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-cross-border-specialist', uid: 'ktx-19-cross-border-specialist', title: 'AI Cross Border Specialist', route: '/ai-agent/transportation/cross-border-specialist', color: '#26A69A', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-terminal-coordinator', uid: 'ktx-19-terminal-coordinator', title: 'AI Terminal Coordinator', route: '/ai-agent/transportation/terminal-coordinator', color: '#26A69A', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-yard-manager', uid: 'ktx-19-yard-manager', title: 'AI Yard Manager', route: '/ai-agent/transportation/yard-manager', color: '#26A69A', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-appointment-scheduler', uid: 'ktx-19-appointment-scheduler', title: 'AI Appointment Scheduler', route: '/ai-agent/transportation/appointment-scheduler', color: '#26A69A', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-dock-scheduler', uid: 'ktx-19-dock-scheduler', title: 'AI Dock Scheduler', route: '/ai-agent/transportation/dock-scheduler', color: '#26A69A', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-labor-planner', uid: 'ktx-19-labor-planner', title: 'AI Labor Planner', route: '/ai-agent/transportation/labor-planner', color: '#26A69A', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-performance-analyst', uid: 'ktx-19-performance-analyst', title: 'AI Performance Analyst', route: '/ai-agent/transportation/performance-analyst', color: '#26A69A', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-kpi-tracker', uid: 'ktx-19-kpi-tracker', title: 'AI KPI Tracker', route: '/ai-agent/transportation/kpi-tracker', color: '#26A69A', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-cost-analyst', uid: 'ktx-19-cost-analyst', title: 'AI Cost Analyst', route: '/ai-agent/transportation/cost-analyst', color: '#26A69A', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-service-level-analyst', uid: 'ktx-19-service-level-analyst', title: 'AI Service Level Analyst', route: '/ai-agent/transportation/service-level-analyst', color: '#26A69A', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-customer-service-transport', uid: 'ktx-19-customer-service-transport', title: 'AI Customer Service Transport', route: '/ai-agent/transportation/customer-service-transport', color: '#26A69A', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-claims-specialist', uid: 'ktx-19-claims-specialist', title: 'AI Claims Specialist', route: '/ai-agent/transportation/claims-specialist', color: '#26A69A', level: 'team_lead', efficiency: '83%' },
 ];
-
-const HIERARCHY_LEVELS = [
-  { title: 'C-Suite & VP Level (236-238)', agents: DEPARTMENT_AGENTS.slice(0, 3) },
-  { title: 'Manager Level (239-241)', agents: DEPARTMENT_AGENTS.slice(3, 6) },
-  { title: 'Specialist Level (242-249)', agents: DEPARTMENT_AGENTS.slice(6) },
-];
-
-export default function TransportationDepartment() {
-  const { theme } = useTheme();
+export default function DepartmentIndex() {
   const router = useRouter();
   return (
-    <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#6D4C4120' }]}><Truck size={48} color="#6D4C41" /></View>
-        <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Transportation</Text>
-        <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>AI Agents for Transportation Operations</Text>
-        <View style={styles.badgesRow}>
-          <View style={[styles.badge, { backgroundColor: '#34C75922' }]}><Activity size={12} color="#34C759" /><Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#6D4C4122' }]}><Star size={12} color="#6D4C41" /><Text style={[styles.badgeText, { color: '#6D4C41' }]}>Department</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#FF950022' }]}><Users size={12} color="#FF9500" /><Text style={[styles.badgeText, { color: '#FF9500' }]}>{DEPARTMENT_AGENTS.length} Agents</Text></View>
-        </View>
-      </View>
-      <View style={styles.statsContainer}>
-        {[{label:'Agents',value:DEPARTMENT_AGENTS.length.toString(),icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Clock,color:'#007AFF'},{label:'Accuracy',value:'99.8%',icon:Target,color:'#FF9500'},{label:'Processed',value:'10K+',icon:TrendingUp,color:'#6D4C41'}].map((stat,i)=>(<View key={i} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><stat.icon size={22} color={stat.color} /><Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text><Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text></View>))}
-      </View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Overview</Text>
-        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>{'"AI-powered department agents optimizing operations through intelligent automation."'}</Text>
-      </View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Department Agents</Text>
-        {DEPARTMENT_AGENTS.map((agent) => (
-          <TouchableOpacity key={agent.id} onPress={()=>router.push('/ai-agent/transportation/'+agent.id)} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
-            <View style={[styles.agentIcon, { backgroundColor: agent.color + '20' }]}><agent.icon size={28} color={agent.color} /></View>
-            <View style={styles.agentInfo}>
-              <Text style={[styles.agentName, { color: theme.colors.text }]}>{agent.name}</Text>
-              <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>{agent.description}</Text>
-            </View>
-            <ArrowRight size={20} color={theme.colors.textSecondary} />
-          </TouchableOpacity>
+    <ScrollView style={s.container}>
+      <Text style={s.title}>Transportation & Logistics - AI Agents</Text>
+      <Text style={s.sub}>60 AI Agents & Employees</Text>
+      <View style={s.grid}>
+        {agents.map((a) => (
+          <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>
+            <Text style={s.at}>{a.title}</Text>
+            <Text style={s.al}>{a.level.replace('_',' ').toUpperCase()}</Text>
+            <Text style={s.ae}>{a.efficiency}</Text>
+          </Pressable>
         ))}
       </View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
-        <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(
-            <TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#6D4C4112' }]}>
-              <act.icon size={24} color="#6D4C41" />
-              <Text style={[styles.actionText, { color: '#6D4C41' }]}>{act.label}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </View>
-      
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
-        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>42 helper and sub-agent AI workers supporting the main agents.</Text>
-        <TouchableOpacity onPress={() => router.push('/ai-agent/transportation/sub-agents')} style={[styles.subAgentButton, { backgroundColor: '#0EA5E915' }]}>
-          <Truck size={20} color="#0EA5E9" />
-          <Text style={[styles.subAgentButtonText, { color: '#0EA5E9' }]}>View All 42 Sub-Agents</Text>
-          <ArrowRight size={18} color="#0EA5E9" />
-        </TouchableOpacity>
-      </View>
-
-      <AgentFeatures agentId="transportation-index" agentName="Transportation Department" />
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container:{flex:1},
-  hero:{alignItems:'center',paddingVertical:32,paddingHorizontal:20,borderBottomWidth:1},
-  heroIconWrap:{width:88,height:88,borderRadius:44,justifyContent:'center',alignItems:'center',marginBottom:16},
-  heroTitle:{fontSize:26,fontWeight:'bold'},
-  heroSubtitle:{fontSize:15,marginTop:4,fontWeight:'500'},
-  badgesRow:{flexDirection:'row',gap:10,marginTop:16},
-  badge:{flexDirection:'row',alignItems:'center',paddingHorizontal:10,paddingVertical:5,borderRadius:20,gap:4},
-  badgeText:{fontSize:12,fontWeight:'600'},
-  statsContainer:{flexDirection:'row',flexWrap:'wrap',padding:16,gap:12},
-  statCard:{flex:1,minWidth:'22%',alignItems:'center',padding:14,borderRadius:12},
-  statValue:{fontSize:18,fontWeight:'bold',marginTop:8},
-  statLabel:{fontSize:11,marginTop:4},
-  section:{marginHorizontal:16,marginBottom:16,padding:20,borderRadius:16},
-  sectionTitle:{fontSize:18,fontWeight:'700',marginBottom:14},
-  description:{fontSize:14,lineHeight:22},
-  agentCard:{flexDirection:'row',alignItems:'center',padding:16,borderRadius:12,marginBottom:12},
-  agentIcon:{width:48,height:48,borderRadius:12,alignItems:'center',justifyContent:'center'},
-  agentInfo:{flex:1,marginLeft:12},
-  agentName:{fontSize:16,fontWeight:'600'},
-  agentDesc:{fontSize:12,marginTop:2},
-  actionsGrid:{flexDirection:'row',flexWrap:'wrap',gap:12},
-  actionButton:{flex:1,minWidth:'45%',alignItems:'center',padding:16,borderRadius:12},
-  actionText:{fontSize:13,fontWeight:'600',marginTop:8},
-  subAgentButton:{flexDirection:'row',alignItems:'center',padding:16,borderRadius:12,marginTop:12,gap:12},
-  subAgentButtonText:{fontSize:15,fontWeight:'600',flex:1}
+const s = StyleSheet.create({
+  container:{flex:1,backgroundColor:'#0a0a0a',padding:16},title:{color:'#fff',fontSize:24,fontWeight:'bold',marginBottom:4},
+  sub:{color:'#888',fontSize:14,marginBottom:16},grid:{flexDirection:'row',flexWrap:'wrap',gap:12},
+  card:{backgroundColor:'#1a1a2e',borderRadius:12,padding:16,width:'48%',borderLeftWidth:3},
+  at:{color:'#fff',fontSize:14,fontWeight:'600',marginBottom:4},al:{color:'#888',fontSize:11,marginBottom:2},
+  ae:{color:'#10B981',fontSize:12},
 });
-

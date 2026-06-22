@@ -1,107 +1,88 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { useTheme } from '@/providers/ThemeProvider';
-import { Landmark, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, TrendingUp, Briefcase, FileText, Handshake, ClipboardList, DollarSign, BarChart3, FileCheck, MessageCircle, UsersRound, Eye, BookOpen } from 'lucide-react-native';
-import AgentFeatures from '@/components/ai-agent/AgentFeatures';
+import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
-
-const DEPARTMENT_AGENTS = [
-  { id: 'chief-admin-officer', name: 'AI Chief Administrative Officer (Gov)', description: 'Executive leadership for government operations', icon: Briefcase, color: '#1B5E20', route: '/ai-agent/government/chief-admin-officer' },
-  { id: 'vp-public-policy', name: 'AI VP Public Policy', description: 'Public policy strategy and government relations', icon: Landmark, color: '#2E7D32', route: '/ai-agent/government/vp-public-policy' },
-  { id: 'vp-regulatory-affairs', name: 'AI VP Regulatory Affairs', description: 'Regulatory compliance and affairs management', icon: FileCheck, color: '#388E3C', route: '/ai-agent/government/vp-regulatory-affairs' },
-  { id: 'vp-public-engagement', name: 'AI VP Public Engagement', description: 'Public engagement and community relations', icon: Users, color: '#43A047', route: '/ai-agent/government/vp-public-engagement' },
-  { id: 'policy-manager', name: 'AI Policy Manager', description: 'Policy development and implementation', icon: FileText, color: '#4CAF50', route: '/ai-agent/government/policy-manager' },
-  { id: 'grants-manager', name: 'AI Grants Manager', description: 'Grant management and compliance', icon: DollarSign, color: '#66BB6A', route: '/ai-agent/government/grants-manager' },
-  { id: 'policy-analyst', name: 'AI Policy Analyst', description: 'Policy analysis and research', icon: BarChart3, color: '#81C784', route: '/ai-agent/government/ai-policy-analyst' },
-  { id: 'regulatory-specialist', name: 'AI Regulatory Specialist', description: 'Regulatory compliance and tracking', icon: ClipboardList, color: '#A5D6A7', route: '/ai-agent/government/ai-regulatory-specialist' },
-  { id: 'public-affairs', name: 'AI Public Affairs Specialist', description: 'Public affairs and communications', icon: MessageCircle, color: '#C8E6C9', route: '/ai-agent/government/ai-public-affairs' },
-  { id: 'grants-specialist', name: 'AI Grants Specialist', description: 'Grant writing and management', icon: Handshake, color: '#1B5E20', route: '/ai-agent/government/ai-grants-specialist' },
-  { id: 'government-compliance', name: 'AI Government Compliance', description: 'Government compliance and ethics', icon: BookOpen, color: '#2E7D32', route: '/ai-agent/government/ai-government-compliance' },
-  { id: 'transparency-officer', name: 'AI Transparency Officer', description: 'Transparency and accountability', icon: Eye, color: '#388E3C', route: '/ai-agent/government/ai-transparency-officer' },
+const agents = [
+  { id: 'ai-chief-administrative-officer-gov', uid: 'ktx-20-chief-administrative-officer-gov', title: 'AI Chief Administrative Officer (Gov)', route: '/ai-agent/government/chief-administrative-officer-gov', color: '#78909C', level: 'c_level', efficiency: '94%' },
+  { id: 'ai-vp-public-policy', uid: 'ktx-20-vp-public-policy', title: 'AI VP Public Policy', route: '/ai-agent/government/vp-public-policy', color: '#78909C', level: 'vp_director', efficiency: '88%' },
+  { id: 'ai-vp-regulatory-affairs', uid: 'ktx-20-vp-regulatory-affairs', title: 'AI VP Regulatory Affairs', route: '/ai-agent/government/vp-regulatory-affairs', color: '#78909C', level: 'vp_director', efficiency: '83%' },
+  { id: 'ai-vp-public-engagement', uid: 'ktx-20-vp-public-engagement', title: 'AI VP Public Engagement', route: '/ai-agent/government/vp-public-engagement', color: '#78909C', level: 'vp_director', efficiency: '76%' },
+  { id: 'ai-vp-government-operations', uid: 'ktx-20-vp-government-operations', title: 'AI VP Government Operations', route: '/ai-agent/government/vp-government-operations', color: '#78909C', level: 'vp_director', efficiency: '85%' },
+  { id: 'ai-vp-intergovernmental-affairs', uid: 'ktx-20-vp-intergovernmental-affairs', title: 'AI VP Intergovernmental Affairs', route: '/ai-agent/government/vp-intergovernmental-affairs', color: '#78909C', level: 'vp_director', efficiency: '87%' },
+  { id: 'ai-vp-civic-services', uid: 'ktx-20-vp-civic-services', title: 'AI VP Civic Services', route: '/ai-agent/government/vp-civic-services', color: '#78909C', level: 'vp_director', efficiency: '84%' },
+  { id: 'ai-vp-public-safety', uid: 'ktx-20-vp-public-safety', title: 'AI VP Public Safety', route: '/ai-agent/government/vp-public-safety', color: '#78909C', level: 'vp_director', efficiency: '89%' },
+  { id: 'ai-vp-urban-planning', uid: 'ktx-20-vp-urban-planning', title: 'AI VP Urban Planning', route: '/ai-agent/government/vp-urban-planning', color: '#78909C', level: 'vp_director', efficiency: '86%' },
+  { id: 'ai-vp-environmental-services', uid: 'ktx-20-vp-environmental-services', title: 'AI VP Environmental Services', route: '/ai-agent/government/vp-environmental-services', color: '#78909C', level: 'vp_director', efficiency: '88%' },
+  { id: 'ai-vp-social-services', uid: 'ktx-20-vp-social-services', title: 'AI VP Social Services', route: '/ai-agent/government/vp-social-services', color: '#78909C', level: 'vp_director', efficiency: '85%' },
+  { id: 'ai-vp-technology-innovation', uid: 'ktx-20-vp-technology-innovation', title: 'AI VP Technology & Innovation', route: '/ai-agent/government/vp-technology-innovation', color: '#78909C', level: 'vp_director', efficiency: '90%' },
+  { id: 'ai-policy-manager', uid: 'ktx-20-policy-manager', title: 'AI Policy Manager', route: '/ai-agent/government/policy-manager', color: '#78909C', level: 'manager', efficiency: '94%' },
+  { id: 'ai-grants-manager', uid: 'ktx-20-grants-manager', title: 'AI Grants Manager', route: '/ai-agent/government/grants-manager', color: '#78909C', level: 'manager', efficiency: '94%' },
+  { id: 'ai-regulatory-manager', uid: 'ktx-20-regulatory-manager', title: 'AI Regulatory Manager', route: '/ai-agent/government/regulatory-manager', color: '#78909C', level: 'manager', efficiency: '87%' },
+  { id: 'ai-public-engagement-manager', uid: 'ktx-20-public-engagement-manager', title: 'AI Public Engagement Manager', route: '/ai-agent/government/public-engagement-manager', color: '#78909C', level: 'manager', efficiency: '86%' },
+  { id: 'ai-civic-services-manager', uid: 'ktx-20-civic-services-manager', title: 'AI Civic Services Manager', route: '/ai-agent/government/civic-services-manager', color: '#78909C', level: 'manager', efficiency: '85%' },
+  { id: 'ai-urban-planning-manager', uid: 'ktx-20-urban-planning-manager', title: 'AI Urban Planning Manager', route: '/ai-agent/government/urban-planning-manager', color: '#78909C', level: 'manager', efficiency: '88%' },
+  { id: 'ai-policy-analyst', uid: 'ktx-20-policy-analyst', title: 'AI Policy Analyst', route: '/ai-agent/government/policy-analyst', color: '#78909C', level: 'team_lead', efficiency: '94%' },
+  { id: 'ai-regulatory-specialist', uid: 'ktx-20-regulatory-specialist', title: 'AI Regulatory Specialist', route: '/ai-agent/government/regulatory-specialist', color: '#78909C', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-public-affairs-specialist', uid: 'ktx-20-public-affairs-specialist', title: 'AI Public Affairs Specialist', route: '/ai-agent/government/public-affairs-specialist', color: '#78909C', level: 'team_lead', efficiency: '91%' },
+  { id: 'ai-grants-specialist', uid: 'ktx-20-grants-specialist', title: 'AI Grants Specialist', route: '/ai-agent/government/grants-specialist', color: '#78909C', level: 'team_lead', efficiency: '75%' },
+  { id: 'ai-government-compliance', uid: 'ktx-20-government-compliance', title: 'AI Government Compliance', route: '/ai-agent/government/government-compliance', color: '#78909C', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-transparency-officer', uid: 'ktx-20-transparency-officer', title: 'AI Transparency Officer', route: '/ai-agent/government/transparency-officer', color: '#78909C', level: 'team_lead', efficiency: '76%' },
+  { id: 'ai-legislative-analyst', uid: 'ktx-20-legislative-analyst', title: 'AI Legislative Analyst', route: '/ai-agent/government/legislative-analyst', color: '#78909C', level: 'team_lead', efficiency: '89%' },
+  { id: 'ai-budget-analyst', uid: 'ktx-20-budget-analyst', title: 'AI Budget Analyst', route: '/ai-agent/government/budget-analyst', color: '#78909C', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-program-evaluator', uid: 'ktx-20-program-evaluator', title: 'AI Program Evaluator', route: '/ai-agent/government/program-evaluator', color: '#78909C', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-performance-auditor', uid: 'ktx-20-performance-auditor', title: 'AI Performance Auditor', route: '/ai-agent/government/performance-auditor', color: '#78909C', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-public-communications', uid: 'ktx-20-public-communications', title: 'AI Public Communications', route: '/ai-agent/government/public-communications', color: '#78909C', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-media-relations', uid: 'ktx-20-media-relations', title: 'AI Media Relations', route: '/ai-agent/government/media-relations', color: '#78909C', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-community-outreach', uid: 'ktx-20-community-outreach', title: 'AI Community Outreach', route: '/ai-agent/government/community-outreach', color: '#78909C', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-stakeholder-engagement', uid: 'ktx-20-stakeholder-engagement', title: 'AI Stakeholder Engagement', route: '/ai-agent/government/stakeholder-engagement', color: '#78909C', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-citizen-services-specialist', uid: 'ktx-20-citizen-services-specialist', title: 'AI Citizen Services Specialist', route: '/ai-agent/government/citizen-services-specialist', color: '#78909C', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-permit-specialist', uid: 'ktx-20-permit-specialist', title: 'AI Permit Specialist', route: '/ai-agent/government/permit-specialist', color: '#78909C', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-licensing-specialist', uid: 'ktx-20-licensing-specialist', title: 'AI Licensing Specialist', route: '/ai-agent/government/licensing-specialist', color: '#78909C', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-inspections-coordinator', uid: 'ktx-20-inspections-coordinator', title: 'AI Inspections Coordinator', route: '/ai-agent/government/inspections-coordinator', color: '#78909C', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-zoning-specialist', uid: 'ktx-20-zoning-specialist', title: 'AI Zoning Specialist', route: '/ai-agent/government/zoning-specialist', color: '#78909C', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-land-use-planner', uid: 'ktx-20-land-use-planner', title: 'AI Land Use Planner', route: '/ai-agent/government/land-use-planner', color: '#78909C', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-transportation-planner', uid: 'ktx-20-transportation-planner', title: 'AI Transportation Planner', route: '/ai-agent/government/transportation-planner', color: '#78909C', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-infrastructure-coordinator', uid: 'ktx-20-infrastructure-coordinator', title: 'AI Infrastructure Coordinator', route: '/ai-agent/government/infrastructure-coordinator', color: '#78909C', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-environmental-analyst', uid: 'ktx-20-environmental-analyst', title: 'AI Environmental Analyst', route: '/ai-agent/government/environmental-analyst', color: '#78909C', level: 'team_lead', efficiency: '89%' },
+  { id: 'ai-sustainability-coordinator', uid: 'ktx-20-sustainability-coordinator', title: 'AI Sustainability Coordinator', route: '/ai-agent/government/sustainability-coordinator', color: '#78909C', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-climate-action-specialist', uid: 'ktx-20-climate-action-specialist', title: 'AI Climate Action Specialist', route: '/ai-agent/government/climate-action-specialist', color: '#78909C', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-emergency-management', uid: 'ktx-20-emergency-management', title: 'AI Emergency Management', route: '/ai-agent/government/emergency-management', color: '#78909C', level: 'team_lead', efficiency: '90%' },
+  { id: 'ai-public-safety-analyst', uid: 'ktx-20-public-safety-analyst', title: 'AI Public Safety Analyst', route: '/ai-agent/government/public-safety-analyst', color: '#78909C', level: 'team_lead', efficiency: '89%' },
+  { id: 'ai-social-services-coordinator', uid: 'ktx-20-social-services-coordinator', title: 'AI Social Services Coordinator', route: '/ai-agent/government/social-services-coordinator', color: '#78909C', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-benefits-administrator', uid: 'ktx-20-benefits-administrator', title: 'AI Benefits Administrator', route: '/ai-agent/government/benefits-administrator', color: '#78909C', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-case-manager', uid: 'ktx-20-case-manager', title: 'AI Case Manager', route: '/ai-agent/government/case-manager', color: '#78909C', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-technology-specialist', uid: 'ktx-20-technology-specialist', title: 'AI Technology Specialist', route: '/ai-agent/government/technology-specialist', color: '#78909C', level: 'team_lead', efficiency: '91%' },
+  { id: 'ai-digital-services', uid: 'ktx-20-digital-services', title: 'AI Digital Services', route: '/ai-agent/government/digital-services', color: '#78909C', level: 'team_lead', efficiency: '90%' },
+  { id: 'ai-open-data-coordinator', uid: 'ktx-20-open-data-coordinator', title: 'AI Open Data Coordinator', route: '/ai-agent/government/open-data-coordinator', color: '#78909C', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-cybersecurity-analyst', uid: 'ktx-20-cybersecurity-analyst', title: 'AI Cybersecurity Analyst', route: '/ai-agent/government/cybersecurity-analyst', color: '#78909C', level: 'team_lead', efficiency: '89%' },
+  { id: 'ai-records-manager', uid: 'ktx-20-records-manager', title: 'AI Records Manager', route: '/ai-agent/government/records-manager', color: '#78909C', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-foia-specialist', uid: 'ktx-20-foia-specialist', title: 'AI FOIA Specialist', route: '/ai-agent/government/foia-specialist', color: '#78909C', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-ethics-officer', uid: 'ktx-20-ethics-officer', title: 'AI Ethics Officer', route: '/ai-agent/government/ethics-officer', color: '#78909C', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-integrity-officer', uid: 'ktx-20-integrity-officer', title: 'AI Integrity Officer', route: '/ai-agent/government/integrity-officer', color: '#78909C', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-audit-specialist', uid: 'ktx-20-audit-specialist', title: 'AI Audit Specialist', route: '/ai-agent/government/audit-specialist', color: '#78909C', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-risk-assessment-specialist', uid: 'ktx-20-risk-assessment-specialist', title: 'AI Risk Assessment Specialist', route: '/ai-agent/government/risk-assessment-specialist', color: '#78909C', level: 'team_lead', efficiency: '84%' },
 ];
-
-export default function GovernmentDepartment() {
-  const { theme } = useTheme();
+export default function DepartmentIndex() {
   const router = useRouter();
   return (
-    <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#1B5E2020' }]}><Landmark size={48} color="#1B5E20" /></View>
-        <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Government Affairs</Text>
-        <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>AI Agents for Government Affairs Operations</Text>
-        <View style={styles.badgesRow}>
-          <View style={[styles.badge, { backgroundColor: '#34C75922' }]}><Activity size={12} color="#34C759" /><Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#1B5E2022' }]}><Star size={12} color="#1B5E20" /><Text style={[styles.badgeText, { color: '#1B5E20' }]}>Department</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#FF950022' }]}><Users size={12} color="#FF9500" /><Text style={[styles.badgeText, { color: '#FF9500' }]}>{DEPARTMENT_AGENTS.length} Agents</Text></View>
-        </View>
-      </View>
-      <View style={styles.statsContainer}>
-        {[{label:'Agents',value:DEPARTMENT_AGENTS.length.toString(),icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Clock,color:'#007AFF'},{label:'Accuracy',value:'99.8%',icon:Target,color:'#FF9500'},{label:'Processed',value:'10K+',icon:TrendingUp,color:'#1B5E20'}].map((stat,i)=>(<View key={i} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><stat.icon size={22} color={stat.color} /><Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text><Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text></View>))}
-      </View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Overview</Text>
-        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>{'"AI-powered department agents optimizing operations through intelligent automation."'}</Text>
-      </View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Department Agents</Text>
-        {DEPARTMENT_AGENTS.map((agent) => (
-          <TouchableOpacity key={agent.id} onPress={()=>router.push(agent.route)} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
-            <View style={[styles.agentIcon, { backgroundColor: agent.color + '20' }]}><agent.icon size={28} color={agent.color} /></View>
-            <View style={styles.agentInfo}>
-              <Text style={[styles.agentName, { color: theme.colors.text }]}>{agent.name}</Text>
-              <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>{agent.description}</Text>
-            </View>
-            <ArrowRight size={20} color={theme.colors.textSecondary} />
-          </TouchableOpacity>
+    <ScrollView style={s.container}>
+      <Text style={s.title}>Government & Public Sector - AI Agents</Text>
+      <Text style={s.sub}>60 AI Agents & Employees</Text>
+      <View style={s.grid}>
+        {agents.map((a) => (
+          <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>
+            <Text style={s.at}>{a.title}</Text>
+            <Text style={s.al}>{a.level.replace('_',' ').toUpperCase()}</Text>
+            <Text style={s.ae}>{a.efficiency}</Text>
+          </Pressable>
         ))}
       </View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
-        <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#1B5E2012' }]}><act.icon size={24} color="#1B5E20" /><Text style={[styles.actionText, { color: '#1B5E20' }]}>{act.label}</Text></TouchableOpacity>))}
-        </View>
-      </View>
-      
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
-        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>36 helper and sub-agent AI workers supporting the main agents.</Text>
-        <TouchableOpacity onPress={() => router.push('/ai-agent/government/sub-agents')} style={[styles.subAgentButton, { backgroundColor: '#47556915' }]}>
-          <Landmark size={20} color="#475569" />
-          <Text style={[styles.subAgentButtonText, { color: '#475569' }]}>View All 36 Sub-Agents</Text>
-          <ArrowRight size={18} color="#475569" />
-        </TouchableOpacity>
-      </View>
-
-      <AgentFeatures agentId="government-index" agentName="Government Affairs Department" />
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container:{flex:1},
-  hero:{alignItems:'center',paddingVertical:32,paddingHorizontal:20,borderBottomWidth:1},
-  heroIconWrap:{width:88,height:88,borderRadius:44,justifyContent:'center',alignItems:'center',marginBottom:16},
-  heroTitle:{fontSize:26,fontWeight:'bold'},
-  heroSubtitle:{fontSize:15,marginTop:4,fontWeight:'500'},
-  badgesRow:{flexDirection:'row',gap:10,marginTop:16},
-  badge:{flexDirection:'row',alignItems:'center',paddingHorizontal:10,paddingVertical:5,borderRadius:20,gap:4},
-  badgeText:{fontSize:12,fontWeight:'600'},
-  statsContainer:{flexDirection:'row',flexWrap:'wrap',padding:16,gap:12},
-  statCard:{flex:1,minWidth:'22%',alignItems:'center',padding:14,borderRadius:12},
-  statValue:{fontSize:18,fontWeight:'bold',marginTop:8},
-  statLabel:{fontSize:11,marginTop:4},
-  section:{marginHorizontal:16,marginBottom:16,padding:20,borderRadius:16},
-  sectionTitle:{fontSize:18,fontWeight:'700',marginBottom:14},
-  description:{fontSize:14,lineHeight:22},
-  agentCard:{flexDirection:'row',alignItems:'center',padding:16,borderRadius:12,marginBottom:12},
-  agentIcon:{width:48,height:48,borderRadius:12,alignItems:'center',justifyContent:'center'},
-  agentInfo:{flex:1,marginLeft:12},
-  agentName:{fontSize:16,fontWeight:'600'},
-  agentDesc:{fontSize:12,marginTop:2},
-  actionsGrid:{flexDirection:'row',flexWrap:'wrap',gap:12},
-  actionButton:{flex:1,minWidth:'45%',alignItems:'center',padding:16,borderRadius:12},
-  actionText:{fontSize:13,fontWeight:'600',marginTop:8},
-  subAgentButton:{flexDirection:'row',alignItems:'center',justifyContent:'center',padding:16,borderRadius:12,gap:8},
-  subAgentButtonText:{fontSize:14,fontWeight:'600'}
+const s = StyleSheet.create({
+  container:{flex:1,backgroundColor:'#0a0a0a',padding:16},title:{color:'#fff',fontSize:24,fontWeight:'bold',marginBottom:4},
+  sub:{color:'#888',fontSize:14,marginBottom:16},grid:{flexDirection:'row',flexWrap:'wrap',gap:12},
+  card:{backgroundColor:'#1a1a2e',borderRadius:12,padding:16,width:'48%',borderLeftWidth:3},
+  at:{color:'#fff',fontSize:14,fontWeight:'600',marginBottom:4},al:{color:'#888',fontSize:11,marginBottom:2},
+  ae:{color:'#10B981',fontSize:12},
 });
-

@@ -1,0 +1,264 @@
+{
+  "timestamp": "2026-06-19T21:30:20.118Z",
+  "summary": {
+    "totalDepartments": 36,
+    "totalMainAgents": 660,
+    "totalSubAgents": 1500,
+    "totalAgents": 2160,
+    "targetAgentsPerDepartment": 60
+  },
+  "departments": {
+    "customer-experience": {
+      "id": "customer-experience",
+      "name": "Customer Experience",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    },
+    "sales-revenue": {
+      "id": "sales-revenue",
+      "name": "Sales Revenue",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    },
+    "marketing-growth": {
+      "id": "marketing-growth",
+      "name": "Marketing Growth",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    },
+    "operations-management": {
+      "id": "operations-management",
+      "name": "Operations Management",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    },
+    "finance-accounting": {
+      "id": "finance-accounting",
+      "name": "Finance Accounting",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    },
+    "technology-engineering": {
+      "id": "technology-engineering",
+      "name": "Technology Engineering",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    },
+    "human-resources": {
+      "id": "human-resources",
+      "name": "Human Resources",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    },
+    "legal-compliance": {
+      "id": "legal-compliance",
+      "name": "Legal Compliance",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    },
+    "data-intelligence": {
+      "id": "data-intelligence",
+      "name": "Data Intelligence",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    },
+    "product-management": {
+      "id": "product-management",
+      "name": "Product Management",
+      "mainAgents": 15,
+      "subAgents": 45,
+      "totalAgents": 60
+    },
+    "security-risk": {
+      "id": "security-risk",
+      "name": "Security Risk",
+      "mainAgents": 15,
+      "subAgents": 45,
+      "totalAgents": 60
+    },
+    "research-development": {
+      "id": "research-development",
+      "name": "Research Development",
+      "mainAgents": 15,
+      "subAgents": 45,
+      "totalAgents": 60
+    },
+    "administrative": {
+      "id": "administrative",
+      "name": "Administrative",
+      "mainAgents": 15,
+      "subAgents": 45,
+      "totalAgents": 60
+    },
+    "trading-investments": {
+      "id": "trading-investments",
+      "name": "Trading Investments",
+      "mainAgents": 15,
+      "subAgents": 45,
+      "totalAgents": 60
+    },
+    "real-estate-property": {
+      "id": "real-estate-property",
+      "name": "Real Estate Property",
+      "mainAgents": 15,
+      "subAgents": 45,
+      "totalAgents": 60
+    },
+    "insurance-risk": {
+      "id": "insurance-risk",
+      "name": "Insurance Risk",
+      "mainAgents": 15,
+      "subAgents": 45,
+      "totalAgents": 60
+    },
+    "healthcare-medical": {
+      "id": "healthcare-medical",
+      "name": "Healthcare Medical",
+      "mainAgents": 15,
+      "subAgents": 45,
+      "totalAgents": 60
+    },
+    "manufacturing-production": {
+      "id": "manufacturing-production",
+      "name": "Manufacturing Production",
+      "mainAgents": 15,
+      "subAgents": 45,
+      "totalAgents": 60
+    },
+    "transportation-logistics": {
+      "id": "transportation-logistics",
+      "name": "Transportation Logistics",
+      "mainAgents": 15,
+      "subAgents": 45,
+      "totalAgents": 60
+    },
+    "government-public-sector": {
+      "id": "government-public-sector",
+      "name": "Government Public Sector",
+      "mainAgents": 15,
+      "subAgents": 45,
+      "totalAgents": 60
+    },
+    "supply-chain-logistics": {
+      "id": "supply-chain-logistics",
+      "name": "Supply Chain Logistics",
+      "mainAgents": 15,
+      "subAgents": 45,
+      "totalAgents": 60
+    },
+    "ai-management-governance": {
+      "id": "ai-management-governance",
+      "name": "Ai Management Governance",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    },
+    "banking-finance": {
+      "id": "banking-finance",
+      "name": "Banking Finance",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    },
+    "ecommerce": {
+      "id": "ecommerce",
+      "name": "Ecommerce",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    },
+    "professional-services": {
+      "id": "professional-services",
+      "name": "Professional Services",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    },
+    "media-entertainment": {
+      "id": "media-entertainment",
+      "name": "Media Entertainment",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    },
+    "gaming-esports": {
+      "id": "gaming-esports",
+      "name": "Gaming Esports",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    },
+    "education": {
+      "id": "education",
+      "name": "Education",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    },
+    "retail-stores": {
+      "id": "retail-stores",
+      "name": "Retail Stores",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    },
+    "travel-tourism": {
+      "id": "travel-tourism",
+      "name": "Travel Tourism",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    },
+    "energy-utilities": {
+      "id": "energy-utilities",
+      "name": "Energy Utilities",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    },
+    "executive-strategy": {
+      "id": "executive-strategy",
+      "name": "Executive Strategy",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    },
+    "event-management": {
+      "id": "event-management",
+      "name": "Event Management",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    },
+    "agriculture": {
+      "id": "agriculture",
+      "name": "Agriculture",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    },
+    "fashion-luxury": {
+      "id": "fashion-luxury",
+      "name": "Fashion Luxury",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    },
+    "restaurants": {
+      "id": "restaurants",
+      "name": "Restaurants",
+      "mainAgents": 20,
+      "subAgents": 40,
+      "totalAgents": 60
+    }
+  }
+}

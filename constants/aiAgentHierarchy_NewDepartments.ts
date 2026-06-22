@@ -100,6 +100,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
   // C-Suite (1)
   {
     id: 'cio',
+    uid: 'ktx-06-chief-information-officer',
     name: 'AI Chief Investment Officer',
     title: 'CIO - Chief Investment Officer',
     level: 'c_level',
@@ -109,6 +110,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
     color: '#10B981',
     orgChart: {
       id: 'cio',
+      uid: 'ktx-06-chief-information-officer',
       level: 'c_level',
       department: 'trading_investments',
       title: 'Chief Investment Officer',
@@ -161,6 +163,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
   // VP/Directors (2)
   {
     id: 'vp-trading',
+    uid: 'ktx-14-vp-trading',
     name: 'AI VP Trading Operations',
     title: 'VP of Trading Operations',
     level: 'vp_director',
@@ -170,6 +173,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
     color: '#10B981',
     orgChart: {
       id: 'vp-trading',
+      uid: 'ktx-14-vp-trading',
       level: 'vp_director',
       department: 'trading_investments',
       title: 'VP Trading Operations',
@@ -210,6 +214,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'vp-investments',
+    uid: 'ktx-14-vp-investments',
     name: 'AI VP Investment Strategy',
     title: 'VP of Investment Strategy',
     level: 'vp_director',
@@ -219,6 +224,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
     color: '#10B981',
     orgChart: {
       id: 'vp-investments',
+      uid: 'ktx-14-vp-investments',
       level: 'vp_director',
       department: 'trading_investments',
       title: 'VP Investment Strategy',
@@ -260,6 +266,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
   // Managers (3)
   {
     id: 'trading-desk-manager',
+    uid: 'ktx-14-trading-desk-manager',
     name: 'AI Trading Desk Manager',
     title: 'Trading Operations Manager',
     level: 'manager',
@@ -269,6 +276,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
     color: '#10B981',
     orgChart: {
       id: 'trading-desk-manager',
+      uid: 'ktx-14-trading-desk-manager',
       level: 'manager',
       department: 'trading_investments',
       title: 'Trading Desk Manager',
@@ -308,6 +316,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'portfolio-manager',
+    uid: 'ktx-14-portfolio-manager',
     name: 'AI Portfolio Manager',
     title: 'Portfolio Management Lead',
     level: 'manager',
@@ -317,6 +326,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
     color: '#10B981',
     orgChart: {
       id: 'portfolio-manager',
+      uid: 'ktx-14-portfolio-manager',
       level: 'manager',
       department: 'trading_investments',
       title: 'Portfolio Manager',
@@ -600,6 +610,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
   // Specialists (6)
   {
     id: 'equity-trader',
+    uid: 'ktx-14-equity-trader',
     name: 'AI Equity Trader',
     title: 'Stock Trading Specialist',
     level: 'specialist',
@@ -609,6 +620,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
     color: '#10B981',
     orgChart: {
       id: 'equity-trader',
+      uid: 'ktx-14-equity-trader',
       level: 'specialist',
       department: 'trading_investments',
       title: 'Equity Trader',
@@ -648,6 +660,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'crypto-trader',
+    uid: 'ktx-14-crypto-trader',
     name: 'AI Crypto Trader',
     title: 'Crypto Trading Specialist',
     level: 'specialist',
@@ -657,6 +670,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
     color: '#10B981',
     orgChart: {
       id: 'crypto-trader',
+      uid: 'ktx-14-crypto-trader',
       level: 'specialist',
       department: 'trading_investments',
       title: 'Crypto Trader',
@@ -696,6 +710,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'forex-trader',
+    uid: 'ktx-14-forex-trader',
     name: 'AI Forex Trader',
     title: 'FX Trading Specialist',
     level: 'specialist',
@@ -705,6 +720,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
     color: '#10B981',
     orgChart: {
       id: 'forex-trader',
+      uid: 'ktx-14-forex-trader',
       level: 'specialist',
       department: 'trading_investments',
       title: 'Forex Trader',
@@ -792,6 +808,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'portfolio-analyst',
+    uid: 'ktx-14-portfolio-analyst',
     name: 'AI Portfolio Analyst',
     title: 'Investment Analyst',
     level: 'specialist',
@@ -801,6 +818,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
     color: '#10B981',
     orgChart: {
       id: 'portfolio-analyst',
+      uid: 'ktx-14-portfolio-analyst',
       level: 'specialist',
       department: 'trading_investments',
       title: 'Portfolio Analyst',
@@ -896,6 +914,7 @@ export const realEstatePropertyAgents: AIEmployeeProfile[] = [
   // C-Suite (1)
   {
     id: 'creo',
+    uid: 'ktx-12-chief-research-officer',
     name: 'AI Chief Real Estate Officer',
     title: 'CREO - Chief Real Estate Officer',
     level: 'c_level',
@@ -905,6 +924,7 @@ export const realEstatePropertyAgents: AIEmployeeProfile[] = [
     color: '#8B5CF6',
     orgChart: {
       id: 'creo',
+      uid: 'ktx-12-chief-research-officer',
       level: 'c_level',
       department: 'real_estate_property',
       title: 'Chief Real Estate Officer',
@@ -946,6 +966,7 @@ export const realEstatePropertyAgents: AIEmployeeProfile[] = [
   // VP/Directors (1)
   {
     id: 'vp-real-estate',
+    uid: 'ktx-15-vp-real-estate-development',
     name: 'AI VP Real Estate',
     title: 'VP of Real Estate Operations',
     level: 'vp_director',
@@ -955,6 +976,7 @@ export const realEstatePropertyAgents: AIEmployeeProfile[] = [
     color: '#8B5CF6',
     orgChart: {
       id: 'vp-real-estate',
+      uid: 'ktx-15-vp-real-estate-development',
       level: 'vp_director',
       department: 'real_estate_property',
       title: 'VP Real Estate',
@@ -996,6 +1018,7 @@ export const realEstatePropertyAgents: AIEmployeeProfile[] = [
   // Managers (3)
   {
     id: 'property-manager',
+    uid: 'ktx-15-property-manager',
     name: 'AI Property Manager',
     title: 'Property Management Manager',
     level: 'manager',
@@ -1005,6 +1028,7 @@ export const realEstatePropertyAgents: AIEmployeeProfile[] = [
     color: '#8B5CF6',
     orgChart: {
       id: 'property-manager',
+      uid: 'ktx-15-property-manager',
       level: 'manager',
       department: 'real_estate_property',
       title: 'Property Manager',
@@ -1044,6 +1068,7 @@ export const realEstatePropertyAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'leasing-manager',
+    uid: 'ktx-15-leasing-manager',
     name: 'AI Leasing Manager',
     title: 'Leasing Operations Manager',
     level: 'manager',
@@ -1053,6 +1078,7 @@ export const realEstatePropertyAgents: AIEmployeeProfile[] = [
     color: '#8B5CF6',
     orgChart: {
       id: 'leasing-manager',
+      uid: 'ktx-15-leasing-manager',
       level: 'manager',
       department: 'real_estate_property',
       title: 'Leasing Manager',
@@ -1336,6 +1362,7 @@ export const realEstatePropertyAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'tenant-relations',
+    uid: 'ktx-15-tenant-relations-specialist',
     name: 'AI Tenant Relations Agent',
     title: 'Tenant Relations Specialist',
     level: 'specialist',
@@ -1345,6 +1372,7 @@ export const realEstatePropertyAgents: AIEmployeeProfile[] = [
     color: '#8B5CF6',
     orgChart: {
       id: 'tenant-relations',
+      uid: 'ktx-15-tenant-relations-specialist',
       level: 'specialist',
       department: 'real_estate_property',
       title: 'Tenant Relations',
@@ -1384,6 +1412,7 @@ export const realEstatePropertyAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'maintenance-coordinator',
+    uid: 'ktx-15-maintenance-coordinator',
     name: 'AI Maintenance Coordinator',
     title: 'Maintenance Coordinator',
     level: 'specialist',
@@ -1393,6 +1422,7 @@ export const realEstatePropertyAgents: AIEmployeeProfile[] = [
     color: '#8B5CF6',
     orgChart: {
       id: 'maintenance-coordinator',
+      uid: 'ktx-15-maintenance-coordinator',
       level: 'specialist',
       department: 'real_estate_property',
       title: 'Maintenance Coordinator',
@@ -1488,6 +1518,7 @@ export const insuranceRiskAgents: AIEmployeeProfile[] = [
   // C-Suite (1)
   {
     id: 'cro',
+    uid: 'ktx-02-chief-revenue-officer',
     name: 'AI Chief Risk Officer',
     title: 'CRO - Chief Risk Officer',
     level: 'c_level',
@@ -1497,6 +1528,7 @@ export const insuranceRiskAgents: AIEmployeeProfile[] = [
     color: '#F59E0B',
     orgChart: {
       id: 'cro',
+      uid: 'ktx-02-chief-revenue-officer',
       level: 'c_level',
       department: 'insurance_risk',
       title: 'Chief Risk Officer',
@@ -1538,6 +1570,7 @@ export const insuranceRiskAgents: AIEmployeeProfile[] = [
   // VP/Directors (2)
   {
     id: 'vp-underwriting',
+    uid: 'ktx-16-vp-underwriting',
     name: 'AI VP Underwriting',
     title: 'VP of Underwriting Operations',
     level: 'vp_director',
@@ -1547,6 +1580,7 @@ export const insuranceRiskAgents: AIEmployeeProfile[] = [
     color: '#F59E0B',
     orgChart: {
       id: 'vp-underwriting',
+      uid: 'ktx-16-vp-underwriting',
       level: 'vp_director',
       department: 'insurance_risk',
       title: 'VP Underwriting',
@@ -1586,6 +1620,7 @@ export const insuranceRiskAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'vp-claims',
+    uid: 'ktx-16-vp-claims',
     name: 'AI VP Claims',
     title: 'VP of Claims Management',
     level: 'vp_director',
@@ -1595,6 +1630,7 @@ export const insuranceRiskAgents: AIEmployeeProfile[] = [
     color: '#F59E0B',
     orgChart: {
       id: 'vp-claims',
+      uid: 'ktx-16-vp-claims',
       level: 'vp_director',
       department: 'insurance_risk',
       title: 'VP Claims',
@@ -1636,6 +1672,7 @@ export const insuranceRiskAgents: AIEmployeeProfile[] = [
   // Managers (3)
   {
     id: 'underwriting-manager',
+    uid: 'ktx-16-underwriting-manager',
     name: 'AI Underwriting Manager',
     title: 'Underwriting Operations Manager',
     level: 'manager',
@@ -1645,6 +1682,7 @@ export const insuranceRiskAgents: AIEmployeeProfile[] = [
     color: '#F59E0B',
     orgChart: {
       id: 'underwriting-manager',
+      uid: 'ktx-16-underwriting-manager',
       level: 'manager',
       department: 'insurance_risk',
       title: 'Underwriting Manager',
@@ -1684,6 +1722,7 @@ export const insuranceRiskAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'claims-manager',
+    uid: 'ktx-16-claims-manager',
     name: 'AI Claims Manager',
     title: 'Claims Operations Manager',
     level: 'manager',
@@ -1693,6 +1732,7 @@ export const insuranceRiskAgents: AIEmployeeProfile[] = [
     color: '#F59E0B',
     orgChart: {
       id: 'claims-manager',
+      uid: 'ktx-16-claims-manager',
       level: 'manager',
       department: 'insurance_risk',
       title: 'Claims Manager',
@@ -1732,6 +1772,7 @@ export const insuranceRiskAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'policy-manager',
+    uid: 'ktx-16-policy-manager',
     name: 'AI Policy Manager',
     title: 'Policy Administration Manager',
     level: 'manager',
@@ -1741,6 +1782,7 @@ export const insuranceRiskAgents: AIEmployeeProfile[] = [
     color: '#F59E0B',
     orgChart: {
       id: 'policy-manager',
+      uid: 'ktx-16-policy-manager',
       level: 'manager',
       department: 'insurance_risk',
       title: 'Policy Manager',
@@ -1976,6 +2018,7 @@ export const insuranceRiskAgents: AIEmployeeProfile[] = [
   // Specialists (4)
   {
     id: 'underwriter',
+    uid: 'ktx-16-underwriter',
     name: 'AI Insurance Underwriter',
     title: 'Underwriting Specialist',
     level: 'specialist',
@@ -1985,6 +2028,7 @@ export const insuranceRiskAgents: AIEmployeeProfile[] = [
     color: '#F59E0B',
     orgChart: {
       id: 'underwriter',
+      uid: 'ktx-16-underwriter',
       level: 'specialist',
       department: 'insurance_risk',
       title: 'Underwriter',
@@ -2072,6 +2116,7 @@ export const insuranceRiskAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'claims-adjuster',
+    uid: 'ktx-16-claims-adjuster',
     name: 'AI Claims Adjuster',
     title: 'Claims Adjustment Specialist',
     level: 'specialist',
@@ -2081,6 +2126,7 @@ export const insuranceRiskAgents: AIEmployeeProfile[] = [
     color: '#F59E0B',
     orgChart: {
       id: 'claims-adjuster',
+      uid: 'ktx-16-claims-adjuster',
       level: 'specialist',
       department: 'insurance_risk',
       title: 'Claims Adjuster',
@@ -2120,6 +2166,7 @@ export const insuranceRiskAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'risk-assessor',
+    uid: 'ktx-18-risk-assessor',
     name: 'AI Risk Assessor',
     title: 'Risk Assessment Specialist',
     level: 'specialist',
@@ -2129,6 +2176,7 @@ export const insuranceRiskAgents: AIEmployeeProfile[] = [
     color: '#F59E0B',
     orgChart: {
       id: 'risk-assessor',
+      uid: 'ktx-18-risk-assessor',
       level: 'specialist',
       department: 'insurance_risk',
       title: 'Risk Assessor',
@@ -2176,6 +2224,7 @@ export const healthcareMedicalAgents: AIEmployeeProfile[] = [
   // C-Suite (1)
   {
     id: 'cmo-healthcare',
+    uid: 'ktx-17-chief-medical-officer',
     name: 'AI Chief Medical Officer',
     title: 'CMO - Chief Medical Officer',
     level: 'c_level',
@@ -2185,6 +2234,7 @@ export const healthcareMedicalAgents: AIEmployeeProfile[] = [
     color: '#EF4444',
     orgChart: {
       id: 'cmo-healthcare',
+      uid: 'ktx-17-chief-medical-officer',
       level: 'c_level',
       department: 'healthcare_medical',
       title: 'Chief Medical Officer',
@@ -2274,6 +2324,7 @@ export const healthcareMedicalAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'vp-patient-experience',
+    uid: 'ktx-17-vp-patient-experience',
     name: 'AI VP Patient Experience',
     title: 'VP of Patient Experience',
     level: 'vp_director',
@@ -2283,6 +2334,7 @@ export const healthcareMedicalAgents: AIEmployeeProfile[] = [
     color: '#EF4444',
     orgChart: {
       id: 'vp-patient-experience',
+      uid: 'ktx-17-vp-patient-experience',
       level: 'vp_director',
       department: 'healthcare_medical',
       title: 'VP Patient Experience',
@@ -2324,6 +2376,7 @@ export const healthcareMedicalAgents: AIEmployeeProfile[] = [
   // Managers (3)
   {
     id: 'patient-services-manager',
+    uid: 'ktx-17-patient-services-manager',
     name: 'AI Patient Services Manager',
     title: 'Patient Services Manager',
     level: 'manager',
@@ -2333,6 +2386,7 @@ export const healthcareMedicalAgents: AIEmployeeProfile[] = [
     color: '#EF4444',
     orgChart: {
       id: 'patient-services-manager',
+      uid: 'ktx-17-patient-services-manager',
       level: 'manager',
       department: 'healthcare_medical',
       title: 'Patient Services Manager',
@@ -2372,6 +2426,7 @@ export const healthcareMedicalAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'medical-billing-manager',
+    uid: 'ktx-17-medical-billing-manager',
     name: 'AI Medical Billing Manager',
     title: 'Medical Billing Manager',
     level: 'manager',
@@ -2381,6 +2436,7 @@ export const healthcareMedicalAgents: AIEmployeeProfile[] = [
     color: '#EF4444',
     orgChart: {
       id: 'medical-billing-manager',
+      uid: 'ktx-17-medical-billing-manager',
       level: 'manager',
       department: 'healthcare_medical',
       title: 'Medical Billing Manager',
@@ -2420,6 +2476,7 @@ export const healthcareMedicalAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'scheduling-manager',
+    uid: 'ktx-17-scheduling-manager',
     name: 'AI Scheduling Manager',
     title: 'Appointment Scheduling Manager',
     level: 'manager',
@@ -2429,6 +2486,7 @@ export const healthcareMedicalAgents: AIEmployeeProfile[] = [
     color: '#EF4444',
     orgChart: {
       id: 'scheduling-manager',
+      uid: 'ktx-17-scheduling-manager',
       level: 'manager',
       department: 'healthcare_medical',
       title: 'Scheduling Manager',
@@ -2712,6 +2770,7 @@ export const healthcareMedicalAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'patient-coordinator',
+    uid: 'ktx-17-patient-coordinator',
     name: 'AI Patient Coordinator',
     title: 'Patient Coordination Specialist',
     level: 'specialist',
@@ -2721,6 +2780,7 @@ export const healthcareMedicalAgents: AIEmployeeProfile[] = [
     color: '#EF4444',
     orgChart: {
       id: 'patient-coordinator',
+      uid: 'ktx-17-patient-coordinator',
       level: 'specialist',
       department: 'healthcare_medical',
       title: 'Patient Coordinator',
@@ -2856,6 +2916,7 @@ export const healthcareMedicalAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'appointment-scheduler',
+    uid: 'ktx-01-appointment-scheduler',
     name: 'AI Appointment Scheduler',
     title: 'Appointment Scheduling Specialist',
     level: 'specialist',
@@ -2865,6 +2926,7 @@ export const healthcareMedicalAgents: AIEmployeeProfile[] = [
     color: '#EF4444',
     orgChart: {
       id: 'appointment-scheduler',
+      uid: 'ktx-01-appointment-scheduler',
       level: 'specialist',
       department: 'healthcare_medical',
       title: 'Appointment Scheduler',
@@ -2912,6 +2974,7 @@ export const manufacturingProductionAgents: AIEmployeeProfile[] = [
   // C-Suite (1)
   {
     id: 'cpo',
+    uid: 'ktx-10-chief-product-officer',
     name: 'AI Chief Production Officer',
     title: 'CPO - Chief Production Officer',
     level: 'c_level',
@@ -2921,6 +2984,7 @@ export const manufacturingProductionAgents: AIEmployeeProfile[] = [
     color: '#6366F1',
     orgChart: {
       id: 'cpo',
+      uid: 'ktx-10-chief-product-officer',
       level: 'c_level',
       department: 'manufacturing_production',
       title: 'Chief Production Officer',
@@ -2962,6 +3026,7 @@ export const manufacturingProductionAgents: AIEmployeeProfile[] = [
   // VP/Directors (1)
   {
     id: 'vp-manufacturing',
+    uid: 'ktx-18-vp-manufacturing',
     name: 'AI VP Manufacturing',
     title: 'VP of Manufacturing Operations',
     level: 'vp_director',
@@ -2971,6 +3036,7 @@ export const manufacturingProductionAgents: AIEmployeeProfile[] = [
     color: '#6366F1',
     orgChart: {
       id: 'vp-manufacturing',
+      uid: 'ktx-18-vp-manufacturing',
       level: 'vp_director',
       department: 'manufacturing_production',
       title: 'VP Manufacturing',
@@ -3012,6 +3078,7 @@ export const manufacturingProductionAgents: AIEmployeeProfile[] = [
   // Managers (3)
   {
     id: 'production-manager',
+    uid: 'ktx-18-production-manager',
     name: 'AI Production Manager',
     title: 'Production Operations Manager',
     level: 'manager',
@@ -3021,6 +3088,7 @@ export const manufacturingProductionAgents: AIEmployeeProfile[] = [
     color: '#6366F1',
     orgChart: {
       id: 'production-manager',
+      uid: 'ktx-18-production-manager',
       level: 'manager',
       department: 'manufacturing_production',
       title: 'Production Manager',
@@ -3060,6 +3128,7 @@ export const manufacturingProductionAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'quality-manager',
+    uid: 'ktx-18-quality-manager',
     name: 'AI Quality Manager',
     title: 'Quality Assurance Manager',
     level: 'manager',
@@ -3069,6 +3138,7 @@ export const manufacturingProductionAgents: AIEmployeeProfile[] = [
     color: '#6366F1',
     orgChart: {
       id: 'quality-manager',
+      uid: 'ktx-18-quality-manager',
       level: 'manager',
       department: 'manufacturing_production',
       title: 'Quality Manager',
@@ -3304,6 +3374,7 @@ export const manufacturingProductionAgents: AIEmployeeProfile[] = [
   // Specialists (4)
   {
     id: 'production-planner',
+    uid: 'ktx-18-production-planner',
     name: 'AI Production Planner',
     title: 'Production Planning Specialist',
     level: 'specialist',
@@ -3313,6 +3384,7 @@ export const manufacturingProductionAgents: AIEmployeeProfile[] = [
     color: '#6366F1',
     orgChart: {
       id: 'production-planner',
+      uid: 'ktx-18-production-planner',
       level: 'specialist',
       department: 'manufacturing_production',
       title: 'Production Planner',
@@ -3352,6 +3424,7 @@ export const manufacturingProductionAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'quality-inspector',
+    uid: 'ktx-18-quality-inspector',
     name: 'AI Quality Inspector',
     title: 'Quality Inspection Specialist',
     level: 'specialist',
@@ -3361,6 +3434,7 @@ export const manufacturingProductionAgents: AIEmployeeProfile[] = [
     color: '#6366F1',
     orgChart: {
       id: 'quality-inspector',
+      uid: 'ktx-18-quality-inspector',
       level: 'specialist',
       department: 'manufacturing_production',
       title: 'Quality Inspector',
@@ -3400,6 +3474,7 @@ export const manufacturingProductionAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'inventory-controller',
+    uid: 'ktx-18-inventory-controller',
     name: 'AI Inventory Controller',
     title: 'Inventory Management Specialist',
     level: 'specialist',
@@ -3409,6 +3484,7 @@ export const manufacturingProductionAgents: AIEmployeeProfile[] = [
     color: '#6366F1',
     orgChart: {
       id: 'inventory-controller',
+      uid: 'ktx-18-inventory-controller',
       level: 'specialist',
       department: 'manufacturing_production',
       title: 'Inventory Controller',
@@ -3504,6 +3580,7 @@ export const transportationLogisticsAgents: AIEmployeeProfile[] = [
   // C-Suite (1)
   {
     id: 'clo-logistics',
+    uid: 'ktx-19-chief-logistics-officer',
     name: 'AI Chief Logistics Officer',
     title: 'CLO - Chief Logistics Officer',
     level: 'c_level',
@@ -3513,6 +3590,7 @@ export const transportationLogisticsAgents: AIEmployeeProfile[] = [
     color: '#0EA5E9',
     orgChart: {
       id: 'clo-logistics',
+      uid: 'ktx-19-chief-logistics-officer',
       level: 'c_level',
       department: 'transportation_logistics',
       title: 'Chief Logistics Officer',
@@ -3554,6 +3632,7 @@ export const transportationLogisticsAgents: AIEmployeeProfile[] = [
   // VP/Directors (2)
   {
     id: 'vp-transportation',
+    uid: 'ktx-19-vp-transportation',
     name: 'AI VP Transportation',
     title: 'VP of Transportation',
     level: 'vp_director',
@@ -3563,6 +3642,7 @@ export const transportationLogisticsAgents: AIEmployeeProfile[] = [
     color: '#0EA5E9',
     orgChart: {
       id: 'vp-transportation',
+      uid: 'ktx-19-vp-transportation',
       level: 'vp_director',
       department: 'transportation_logistics',
       title: 'VP Transportation',
@@ -3602,6 +3682,7 @@ export const transportationLogisticsAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'vp-logistics',
+    uid: 'ktx-19-vp-logistics-operations',
     name: 'AI VP Logistics Operations',
     title: 'VP of Logistics Operations',
     level: 'vp_director',
@@ -3611,6 +3692,7 @@ export const transportationLogisticsAgents: AIEmployeeProfile[] = [
     color: '#0EA5E9',
     orgChart: {
       id: 'vp-logistics',
+      uid: 'ktx-19-vp-logistics-operations',
       level: 'vp_director',
       department: 'transportation_logistics',
       title: 'VP Logistics Operations',
@@ -3652,6 +3734,7 @@ export const transportationLogisticsAgents: AIEmployeeProfile[] = [
   // Managers (3)
   {
     id: 'fleet-manager',
+    uid: 'ktx-19-fleet-manager',
     name: 'AI Fleet Manager',
     title: 'Fleet Operations Manager',
     level: 'manager',
@@ -3661,6 +3744,7 @@ export const transportationLogisticsAgents: AIEmployeeProfile[] = [
     color: '#0EA5E9',
     orgChart: {
       id: 'fleet-manager',
+      uid: 'ktx-19-fleet-manager',
       level: 'manager',
       department: 'transportation_logistics',
       title: 'Fleet Manager',
@@ -3700,6 +3784,7 @@ export const transportationLogisticsAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'warehouse-manager',
+    uid: 'ktx-19-warehouse-manager',
     name: 'AI Warehouse Manager',
     title: 'Warehouse Operations Manager',
     level: 'manager',
@@ -3709,6 +3794,7 @@ export const transportationLogisticsAgents: AIEmployeeProfile[] = [
     color: '#0EA5E9',
     orgChart: {
       id: 'warehouse-manager',
+      uid: 'ktx-19-warehouse-manager',
       level: 'manager',
       department: 'transportation_logistics',
       title: 'Warehouse Manager',
@@ -3992,6 +4078,7 @@ export const transportationLogisticsAgents: AIEmployeeProfile[] = [
   // Specialists (3)
   {
     id: 'dispatcher',
+    uid: 'ktx-19-dispatcher',
     name: 'AI Dispatcher',
     title: 'Fleet Dispatch Specialist',
     level: 'specialist',
@@ -4001,6 +4088,7 @@ export const transportationLogisticsAgents: AIEmployeeProfile[] = [
     color: '#0EA5E9',
     orgChart: {
       id: 'dispatcher',
+      uid: 'ktx-19-dispatcher',
       level: 'specialist',
       department: 'transportation_logistics',
       title: 'Dispatcher',
@@ -4088,6 +4176,7 @@ export const transportationLogisticsAgents: AIEmployeeProfile[] = [
   },
   {
     id: 'route-optimizer',
+    uid: 'ktx-19-route-optimizer',
     name: 'AI Route Optimizer',
     title: 'Route Optimization Specialist',
     level: 'specialist',
@@ -4097,6 +4186,7 @@ export const transportationLogisticsAgents: AIEmployeeProfile[] = [
     color: '#0EA5E9',
     orgChart: {
       id: 'route-optimizer',
+      uid: 'ktx-19-route-optimizer',
       level: 'specialist',
       department: 'transportation_logistics',
       title: 'Route Optimizer',

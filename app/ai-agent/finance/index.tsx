@@ -1,108 +1,99 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { useTheme } from '@/providers/ThemeProvider';
-import { DollarSign, Briefcase, Calculator, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, TrendingUp } from 'lucide-react-native';
-import AgentFeatures from '@/components/ai-agent/AgentFeatures';
+import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
-
-const HIERARCHY = {
-  cSuite: [
-    { id: 'cfo', name: 'AI Chief Financial Officer', icon: Briefcase, color: '#10B981', subCount: 3, subs: ['Financial Strategy Advisor','Capital Allocation Optimizer','Risk-Reward Analyst'] },
-  ],
-  vp: [
-    { id: 'vp-finance', name: 'AI VP Finance', icon: DollarSign, color: '#2E7D32', subCount: 3, subs: ['Financial Modeler','Cash Flow Forecaster','Investment Appraiser'] },
-    { id: 'vp-accounting', name: 'AI VP Accounting', icon: Calculator, color: '#0D47A1', subCount: 3, subs: ['Ledger Reconciler','Accounting Standards Enforcer','Close Process Coordinator'] },
-  ],
-};
-
-export default function FinanceDepartment() {
-  const { theme } = useTheme();
+const agents = [
+  { id: 'ai-chief-financial-officer', uid: 'ktx-05-chief-financial-officer', title: 'AI Chief Financial Officer', route: '/ai-agent/finance/chief-financial-officer', color: '#2E7D32', level: 'c_level', efficiency: '77%' },
+  { id: 'ai-vp-finance', uid: 'ktx-05-vp-finance', title: 'AI VP Finance', route: '/ai-agent/finance/vp-finance', color: '#2E7D32', level: 'vp_director', efficiency: '86%' },
+  { id: 'ai-vp-accounting', uid: 'ktx-05-vp-accounting', title: 'AI VP Accounting', route: '/ai-agent/finance/vp-accounting', color: '#2E7D32', level: 'vp_director', efficiency: '87%' },
+  { id: 'ai-vp-treasury', uid: 'ktx-05-vp-treasury', title: 'AI VP Treasury', route: '/ai-agent/finance/vp-treasury', color: '#2E7D32', level: 'vp_director', efficiency: '93%' },
+  { id: 'ai-vp-investor-relations', uid: 'ktx-05-vp-investor-relations', title: 'AI VP Investor Relations', route: '/ai-agent/finance/vp-investor-relations', color: '#2E7D32', level: 'vp_director', efficiency: '83%' },
+  { id: 'ai-vp-financial-planning', uid: 'ktx-05-vp-financial-planning', title: 'AI VP Financial Planning', route: '/ai-agent/finance/vp-financial-planning', color: '#2E7D32', level: 'vp_director', efficiency: '85%' },
+  { id: 'ai-vp-risk-management-finance', uid: 'ktx-05-vp-risk-management-finance', title: 'AI VP Risk Management (Finance)', route: '/ai-agent/finance/vp-risk-management-finance', color: '#2E7D32', level: 'vp_director', efficiency: '84%' },
+  { id: 'ai-vp-tax', uid: 'ktx-05-vp-tax', title: 'AI VP Tax', route: '/ai-agent/finance/vp-tax', color: '#2E7D32', level: 'vp_director', efficiency: '86%' },
+  { id: 'ai-controller', uid: 'ktx-05-controller', title: 'AI Controller', route: '/ai-agent/finance/controller', color: '#2E7D32', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-assistant-controller', uid: 'ktx-05-assistant-controller', title: 'AI Assistant Controller', route: '/ai-agent/finance/assistant-controller', color: '#2E7D32', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-finance-manager', uid: 'ktx-05-finance-manager', title: 'AI Finance Manager', route: '/ai-agent/finance/finance-manager', color: '#2E7D32', level: 'manager', efficiency: '81%' },
+  { id: 'ai-accounting-manager', uid: 'ktx-05-accounting-manager', title: 'AI Accounting Manager', route: '/ai-agent/finance/accounting-manager', color: '#2E7D32', level: 'manager', efficiency: '82%' },
+  { id: 'ai-treasury-manager', uid: 'ktx-05-treasury-manager', title: 'AI Treasury Manager', route: '/ai-agent/finance/treasury-manager', color: '#2E7D32', level: 'manager', efficiency: '85%' },
+  { id: 'ai-financial-planning-manager', uid: 'ktx-05-financial-planning-manager', title: 'AI Financial Planning Manager', route: '/ai-agent/finance/financial-planning-manager', color: '#2E7D32', level: 'manager', efficiency: '83%' },
+  { id: 'ai-investor-relations-manager', uid: 'ktx-05-investor-relations-manager', title: 'AI Investor Relations Manager', route: '/ai-agent/finance/investor-relations-manager', color: '#2E7D32', level: 'manager', efficiency: '82%' },
+  { id: 'ai-tax-manager', uid: 'ktx-05-tax-manager', title: 'AI Tax Manager', route: '/ai-agent/finance/tax-manager', color: '#2E7D32', level: 'manager', efficiency: '84%' },
+  { id: 'ai-financial-analyst', uid: 'ktx-05-financial-analyst', title: 'AI Financial Analyst', route: '/ai-agent/finance/financial-analyst', color: '#2E7D32', level: 'team_lead', efficiency: '75%' },
+  { id: 'ai-senior-financial-analyst', uid: 'ktx-05-senior-financial-analyst', title: 'AI Senior Financial Analyst', route: '/ai-agent/finance/senior-financial-analyst', color: '#2E7D32', level: 'team_lead', efficiency: '78%' },
+  { id: 'ai-budget-analyst', uid: 'ktx-05-budget-analyst', title: 'AI Budget Analyst', route: '/ai-agent/finance/budget-analyst', color: '#2E7D32', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-forecasting-analyst', uid: 'ktx-05-forecasting-analyst', title: 'AI Forecasting Analyst', route: '/ai-agent/finance/forecasting-analyst', color: '#2E7D32', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-variance-analyst', uid: 'ktx-05-variance-analyst', title: 'AI Variance Analyst', route: '/ai-agent/finance/variance-analyst', color: '#2E7D32', level: 'team_lead', efficiency: '81%' },
+  { id: 'ai-budget-manager', uid: 'ktx-05-budget-manager', title: 'AI Budget Manager', route: '/ai-agent/finance/budget-manager', color: '#2E7D32', level: 'manager', efficiency: '94%' },
+  { id: 'ai-cost-accountant', uid: 'ktx-05-cost-accountant', title: 'AI Cost Accountant', route: '/ai-agent/finance/cost-accountant', color: '#2E7D32', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-management-accountant', uid: 'ktx-05-management-accountant', title: 'AI Management Accountant', route: '/ai-agent/finance/management-accountant', color: '#2E7D32', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-tax-specialist', uid: 'ktx-05-tax-specialist', title: 'AI Tax Specialist', route: '/ai-agent/finance/tax-specialist', color: '#2E7D32', level: 'team_lead', efficiency: '94%' },
+  { id: 'ai-tax-compliance-specialist', uid: 'ktx-05-tax-compliance-specialist', title: 'AI Tax Compliance Specialist', route: '/ai-agent/finance/tax-compliance-specialist', color: '#2E7D32', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-tax-planner', uid: 'ktx-05-tax-planner', title: 'AI Tax Planner', route: '/ai-agent/finance/tax-planner', color: '#2E7D32', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-audit-manager', uid: 'ktx-05-audit-manager', title: 'AI Audit Manager', route: '/ai-agent/finance/audit-manager', color: '#2E7D32', level: 'manager', efficiency: '87%' },
+  { id: 'ai-internal-auditor', uid: 'ktx-05-internal-auditor', title: 'AI Internal Auditor', route: '/ai-agent/finance/internal-auditor', color: '#2E7D32', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-external-auditor', uid: 'ktx-05-external-auditor', title: 'AI External Auditor', route: '/ai-agent/finance/external-auditor', color: '#2E7D32', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-compliance-auditor', uid: 'ktx-05-compliance-auditor', title: 'AI Compliance Auditor', route: '/ai-agent/finance/compliance-auditor', color: '#2E7D32', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-treasury-analyst', uid: 'ktx-05-treasury-analyst', title: 'AI Treasury Analyst', route: '/ai-agent/finance/treasury-analyst', color: '#2E7D32', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-cash-manager', uid: 'ktx-05-cash-manager', title: 'AI Cash Manager', route: '/ai-agent/finance/cash-manager', color: '#2E7D32', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-liquidity-manager', uid: 'ktx-05-liquidity-manager', title: 'AI Liquidity Manager', route: '/ai-agent/finance/liquidity-manager', color: '#2E7D32', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-investment-analyst-finance', uid: 'ktx-05-investment-analyst-finance', title: 'AI Investment Analyst (Finance)', route: '/ai-agent/finance/investment-analyst-finance', color: '#2E7D32', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-accounts-payable-specialist', uid: 'ktx-05-accounts-payable-specialist', title: 'AI Accounts Payable Specialist', route: '/ai-agent/finance/accounts-payable-specialist', color: '#2E7D32', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-accounts-receivable-specialist', uid: 'ktx-05-accounts-receivable-specialist', title: 'AI Accounts Receivable Specialist', route: '/ai-agent/finance/accounts-receivable-specialist', color: '#2E7D32', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-general-ledger-accountant', uid: 'ktx-05-general-ledger-accountant', title: 'AI General Ledger Accountant', route: '/ai-agent/finance/general-ledger-accountant', color: '#2E7D32', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-payroll-accountant', uid: 'ktx-05-payroll-accountant', title: 'AI Payroll Accountant', route: '/ai-agent/finance/payroll-accountant', color: '#2E7D32', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-fixed-asset-accountant', uid: 'ktx-05-fixed-asset-accountant', title: 'AI Fixed Asset Accountant', route: '/ai-agent/finance/fixed-asset-accountant', color: '#2E7D32', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-financial-reporting-specialist', uid: 'ktx-05-financial-reporting-specialist', title: 'AI Financial Reporting Specialist', route: '/ai-agent/finance/financial-reporting-specialist', color: '#2E7D32', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-regulatory-reporting-specialist', uid: 'ktx-05-regulatory-reporting-specialist', title: 'AI Regulatory Reporting Specialist', route: '/ai-agent/finance/regulatory-reporting-specialist', color: '#2E7D32', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-sustainability-accountant', uid: 'ktx-05-sustainability-accountant', title: 'AI Sustainability Accountant', route: '/ai-agent/finance/sustainability-accountant', color: '#2E7D32', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-esg-reporting-specialist', uid: 'ktx-05-esg-reporting-specialist', title: 'AI ESG Reporting Specialist', route: '/ai-agent/finance/esg-reporting-specialist', color: '#2E7D32', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-financial-risk-analyst', uid: 'ktx-05-financial-risk-analyst', title: 'AI Financial Risk Analyst', route: '/ai-agent/finance/financial-risk-analyst', color: '#2E7D32', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-market-risk-analyst', uid: 'ktx-05-market-risk-analyst', title: 'AI Market Risk Analyst', route: '/ai-agent/finance/market-risk-analyst', color: '#2E7D32', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-credit-risk-analyst', uid: 'ktx-05-credit-risk-analyst', title: 'AI Credit Risk Analyst', route: '/ai-agent/finance/credit-risk-analyst', color: '#2E7D32', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-operational-risk-analyst', uid: 'ktx-05-operational-risk-analyst', title: 'AI Operational Risk Analyst', route: '/ai-agent/finance/operational-risk-analyst', color: '#2E7D32', level: 'team_lead', efficiency: '81%' },
+  { id: 'ai-mfp-analyst', uid: 'ktx-05-mfp-analyst', title: 'AI M&A Financial Analyst', route: '/ai-agent/finance/mfp-analyst', color: '#2E7D32', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-valuation-specialist', uid: 'ktx-05-valuation-specialist', title: 'AI Valuation Specialist', route: '/ai-agent/finance/valuation-specialist', color: '#2E7D32', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-due-diligence-analyst', uid: 'ktx-05-due-diligence-analyst', title: 'AI Due Diligence Analyst', route: '/ai-agent/finance/due-diligence-analyst', color: '#2E7D32', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-capital-structure-analyst', uid: 'ktx-05-capital-structure-analyst', title: 'AI Capital Structure Analyst', route: '/ai-agent/finance/capital-structure-analyst', color: '#2E7D32', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-working-capital-manager', uid: 'ktx-05-working-capital-manager', title: 'AI Working Capital Manager', route: '/ai-agent/finance/working-capital-manager', color: '#2E7D32', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-debt-manager', uid: 'ktx-05-debt-manager', title: 'AI Debt Manager', route: '/ai-agent/finance/debt-manager', color: '#2E7D32', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-equity-analyst', uid: 'ktx-05-equity-analyst', title: 'AI Equity Analyst', route: '/ai-agent/finance/equity-analyst', color: '#2E7D32', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-dividend-analyst', uid: 'ktx-05-dividend-analyst', title: 'AI Dividend Analyst', route: '/ai-agent/finance/dividend-analyst', color: '#2E7D32', level: 'team_lead', efficiency: '81%' },
+  { id: 'ai-shareholder-relations-specialist', uid: 'ktx-05-shareholder-relations-specialist', title: 'AI Shareholder Relations Specialist', route: '/ai-agent/finance/shareholder-relations-specialist', color: '#2E7D32', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-financial-modeler', uid: 'ktx-05-financial-modeler', title: 'AI Financial Modeler', route: '/ai-agent/finance/financial-modeler', color: '#2E7D32', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-database-administrator-finance', uid: 'ktx-05-database-administrator-finance', title: 'AI Database Administrator (Finance)', route: '/ai-agent/finance/database-administrator-finance', color: '#2E7D32', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-financial-systems-analyst', uid: 'ktx-05-financial-systems-analyst', title: 'AI Financial Systems Analyst', route: '/ai-agent/finance/financial-systems-analyst', color: '#2E7D32', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-capital-planning-specialist', uid: 'ktx-05-capital-planning-specialist', title: 'AI Capital Planning Specialist', route: '/ai-agent/finance/capital-planning-specialist', color: '#1B5E20', level: 'specialist', efficiency: '79%' },
+  { id: 'ai-treasury-supervisor', uid: 'ktx-05-treasury-supervisor', title: 'AI Treasury Supervisor', route: '/ai-agent/finance/treasury-supervisor', color: '#1565C0', level: 'supervisor', efficiency: '73%' },
+  { id: 'ai-cash-management-specialist', uid: 'ktx-05-cash-management-specialist', title: 'AI Cash Management Specialist', route: '/ai-agent/finance/cash-management-specialist', color: '#0277BD', level: 'specialist', efficiency: '77%' },
+  { id: 'ai-financial-modeling-expert', uid: 'ktx-05-financial-modeling-expert', title: 'AI Financial Modeling Expert', route: '/ai-agent/finance/financial-modeling-expert', color: '#2E7D32', level: 'expert', efficiency: '64%' },
+  { id: 'ai-corporate-valuation-specialist', uid: 'ktx-05-corporate-valuation-specialist', title: 'AI Corporate Valuation Specialist', route: '/ai-agent/finance/corporate-valuation-specialist', color: '#FF8F00', level: 'specialist', efficiency: '63%' },
+  { id: 'ai-ma-financial-advisor', uid: 'ktx-05-ma-financial-advisor', title: 'AI M&A Financial Advisor', route: '/ai-agent/finance/ma-financial-advisor', color: '#1A237E', level: 'advisor', efficiency: '70%' },
+  { id: 'ai-investment-banking-specialist', uid: 'ktx-05-investment-banking-specialist', title: 'AI Investment Banking Specialist', route: '/ai-agent/finance/investment-banking-specialist', color: '#1565C0', level: 'specialist', efficiency: '66%' },
+  { id: 'ai-financial-communications-specialist', uid: 'ktx-05-financial-communications-specialist', title: 'AI Financial Communications Specialist', route: '/ai-agent/finance/financial-communications-specialist', color: '#00695C', level: 'specialist', efficiency: '75%' },
+  { id: 'ai-strategic-finance-advisor', uid: 'ktx-05-strategic-finance-advisor', title: 'AI Strategic Finance Advisor', route: '/ai-agent/finance/strategic-finance-advisor', color: '#004D40', level: 'advisor', efficiency: '66%' },
+];
+export default function DepartmentIndex() {
   const router = useRouter();
-
-  const renderGroup = (agents: any[], title: string) => (
-    <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-      <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>{title}</Text>
-      {agents.map((agent: any) => {
-        const AgentIcon = agent.icon;
-        return (
-          <TouchableOpacity key={agent.id} onPress={() => router.push('/ai-agent/finance/' + agent.id)} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
-            <View style={[styles.agentIcon, { backgroundColor: agent.color + '20' }]}><AgentIcon size={28} color={agent.color} /></View>
-            <View style={styles.agentInfo}>
-              <Text style={[styles.agentName, { color: theme.colors.text }]}>{agent.name}</Text>
-              <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>{agent.subCount} Sub-Agents: {agent.subs.join(', ')}</Text>
-            </View>
-            <ArrowRight size={20} color={theme.colors.textSecondary} />
-          </TouchableOpacity>
-        );
-      })}
-    </View>
-  );
-
   return (
-    <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#2E7D3220' }]}><DollarSign size={48} color="#2E7D32" /></View>
-        <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Finance & Accounting</Text>
-        <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>AI Agents & Employees — Enterprise Workforce</Text>
-        <View style={styles.badgesRow}>
-          <View style={[styles.badge, { backgroundColor: '#34C75922' }]}><Activity size={12} color="#34C759" /><Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#2E7D3222' }]}><Star size={12} color="#2E7D32" /><Text style={[styles.badgeText, { color: '#2E7D32' }]}>Department</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#FF950022' }]}><Users size={12} color="#FF9500" /><Text style={[styles.badgeText, { color: '#FF9500' }]}>3 Agents</Text></View>
-        </View>
+    <ScrollView style={s.container}>
+      <Text style={s.title}>Finance & Accounting - AI Agents</Text>
+      <Text style={s.sub}>69 AI Agents & Employees</Text>
+      <View style={s.grid}>
+        {agents.map((a) => (
+          <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>
+            <Text style={s.at}>{a.title}</Text>
+            <Text style={s.al}>{a.level.replace('_',' ').toUpperCase()}</Text>
+            <Text style={s.ae}>{a.efficiency}</Text>
+          </Pressable>
+        ))}
       </View>
-      <View style={styles.statsContainer}>
-        {[{label:'Main Agents',value:'3',icon:CircleCheckBig,color:'#34C759'},{label:'Sub-Agents',value:'9',icon:Users,color:'#007AFF'},{label:'Uptime',value:'99.9%',icon:Clock,color:'#FF9500'},{label:'Efficiency',value:'20x',icon:Target,color:'#2E7D32'}].map((stat,i)=>(<View key={i} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><stat.icon size={22} color={stat.color} /><Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text><Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text></View>))}
-      </View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Overview</Text>
-        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>The Finance & Accounting department operates through a structured hierarchy of AI agents — from C-Suite leadership down to specialist workers. Each agent manages dedicated sub-agents for granular task execution, ensuring enterprise-grade performance at every level.</Text>
-      </View>
-      {renderGroup(HIERARCHY.cSuite, 'C-Suite Leadership')}
-      {renderGroup(HIERARCHY.vp, 'VP Level')}
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents Hub</Text>
-        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>9 helper and sub-agent AI workers supporting the main agents.</Text>
-        <TouchableOpacity onPress={() => router.push('/ai-agent/finance/sub-agents')} style={[styles.subAgentButton, { backgroundColor: '#2E7D3215' }]}>
-          <DollarSign size={20} color="#2E7D32" />
-          <Text style={[styles.subAgentButtonText, { color: '#2E7D32' }]}>View All 9 Sub-Agents</Text>
-          <ArrowRight size={18} color="#2E7D32" />
-        </TouchableOpacity>
-      </View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
-        <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#2E7D3212' }]}><act.icon size={24} color="#2E7D32" /><Text style={[styles.actionText, { color: '#2E7D32' }]}>{act.label}</Text></TouchableOpacity>))}
-        </View>
-      </View>
-      <AgentFeatures agentId="finance-index" agentName="Finance & Accounting Department" />
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container:{flex:1},
-  hero:{alignItems:'center',paddingVertical:32,paddingHorizontal:20,borderBottomWidth:1},
-  heroIconWrap:{width:88,height:88,borderRadius:44,justifyContent:'center',alignItems:'center',marginBottom:16},
-  heroTitle:{fontSize:26,fontWeight:'bold'},
-  heroSubtitle:{fontSize:15,marginTop:4,fontWeight:'500'},
-  badgesRow:{flexDirection:'row',gap:10,marginTop:16},
-  badge:{flexDirection:'row',alignItems:'center',paddingHorizontal:10,paddingVertical:5,borderRadius:20,gap:4},
-  badgeText:{fontSize:12,fontWeight:'600'},
-  statsContainer:{flexDirection:'row',flexWrap:'wrap',padding:16,gap:12},
-  statCard:{flex:1,minWidth:'22%',alignItems:'center',padding:14,borderRadius:12},
-  statValue:{fontSize:18,fontWeight:'bold',marginTop:8},
-  statLabel:{fontSize:11,marginTop:4},
-  section:{marginHorizontal:16,marginBottom:16,padding:20,borderRadius:16},
-  sectionTitle:{fontSize:18,fontWeight:'700',marginBottom:14},
-  description:{fontSize:14,lineHeight:22},
-  agentCard:{flexDirection:'row',alignItems:'center',padding:16,borderRadius:12,marginBottom:12},
-  agentIcon:{width:48,height:48,borderRadius:12,alignItems:'center',justifyContent:'center'},
-  agentInfo:{flex:1,marginLeft:12},
-  agentName:{fontSize:16,fontWeight:'600'},
-  agentDesc:{fontSize:12,marginTop:2},
-  subAgentButton:{flexDirection:'row',alignItems:'center',padding:16,borderRadius:12,marginTop:12,gap:10},
-  subAgentButtonText:{fontSize:15,fontWeight:'600',flex:1},
-  actionsGrid:{flexDirection:'row',flexWrap:'wrap',gap:12},
-  actionButton:{flex:1,minWidth:'45%',alignItems:'center',padding:16,borderRadius:12},
-  actionText:{fontSize:13,fontWeight:'600',marginTop:8}
+const s = StyleSheet.create({
+  container:{flex:1,backgroundColor:'#0a0a0a',padding:16},title:{color:'#fff',fontSize:24,fontWeight:'bold',marginBottom:4},
+  sub:{color:'#888',fontSize:14,marginBottom:16},grid:{flexDirection:'row',flexWrap:'wrap',gap:12},
+  card:{backgroundColor:'#1a1a2e',borderRadius:12,padding:16,width:'48%',borderLeftWidth:3},
+  at:{color:'#fff',fontSize:14,fontWeight:'600',marginBottom:4},al:{color:'#888',fontSize:11,marginBottom:2},
+  ae:{color:'#10B981',fontSize:12},
 });

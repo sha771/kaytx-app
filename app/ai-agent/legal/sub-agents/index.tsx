@@ -16,7 +16,7 @@ export default function SubAgentsIndex() {
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Helper & Sub-Agent Workforce</Text>
         <View style={styles.badgesRow}>
           <View style={[styles.badge, { backgroundColor: '#34C75922' }]}><Activity size={12} color="#34C759" /><Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#3F51B522' }]}><Users size={12} color="#3F51B5" /><Text style={[styles.badgeText, { color: '#3F51B5' }]}>30 Agents</Text></View>
+          <View style={[styles.badge, { backgroundColor: '#3F51B522' }]}><Users size={12} color="#3F51B5" /><Text style={[styles.badgeText, { color: '#3F51B5' }]}>50 Agents</Text></View>
         </View>
       </View>
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
@@ -257,6 +257,174 @@ export default function SubAgentsIndex() {
           <View style={[styles.agentIcon, { backgroundColor: '#3F51B520' }]}><Scale size={28} color="#3F51B5" /></View>
           <View style={styles.agentInfo}>
             <Text style={[styles.agentName, { color: theme.colors.text }]}>Template Librarian</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="antitrust-specialist" onPress={() => router.push('/ai-agent/legal/sub-agents/antitrust-specialist')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#3F51B520' }]}><Scale size={28} color="#3F51B5" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Antitrust Specialist</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="bankruptcy-specialist" onPress={() => router.push('/ai-agent/legal/sub-agents/bankruptcy-specialist')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#3F51B520' }]}><Scale size={28} color="#3F51B5" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Bankruptcy Specialist</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="corporate-secretary" onPress={() => router.push('/ai-agent/legal/sub-agents/corporate-secretary')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#3F51B520' }]}><Scale size={28} color="#3F51B5" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Corporate Secretary</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="data-privacy-officer" onPress={() => router.push('/ai-agent/legal/sub-agents/data-privacy-officer')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#3F51B520' }]}><Scale size={28} color="#3F51B5" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Data Privacy Officer</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="employment-law-specialist" onPress={() => router.push('/ai-agent/legal/sub-agents/employment-law-specialist')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#3F51B520' }]}><Scale size={28} color="#3F51B5" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Employment Law Specialist</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="environmental-law-specialist" onPress={() => router.push('/ai-agent/legal/sub-agents/environmental-law-specialist')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#3F51B520' }]}><Scale size={28} color="#3F51B5" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Environmental Law Specialist</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="ethics-officer" onPress={() => router.push('/ai-agent/legal/sub-agents/ethics-officer')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#3F51B520' }]}><Scale size={28} color="#3F51B5" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Ethics Officer</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="insurance-law-specialist" onPress={() => router.push('/ai-agent/legal/sub-agents/insurance-law-specialist')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#3F51B520' }]}><Scale size={28} color="#3F51B5" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Insurance Law Specialist</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="intellectual-property-specialist" onPress={() => router.push('/ai-agent/legal/sub-agents/intellectual-property-specialist')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#3F51B520' }]}><Scale size={28} color="#3F51B5" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Intellectual Property Specialist</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="international-law-specialist" onPress={() => router.push('/ai-agent/legal/sub-agents/international-law-specialist')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#3F51B520' }]}><Scale size={28} color="#3F51B5" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>International Law Specialist</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="litigation-support" onPress={() => router.push('/ai-agent/legal/sub-agents/litigation-support')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#3F51B520' }]}><Scale size={28} color="#3F51B5" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Litigation Support</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="merger-acquisition-specialist" onPress={() => router.push('/ai-agent/legal/sub-agents/merger-acquisition-specialist')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#3F51B520' }]}><Scale size={28} color="#3F51B5" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Merger & Acquisition Specialist</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="real-estate-law-specialist" onPress={() => router.push('/ai-agent/legal/sub-agents/real-estate-law-specialist')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#3F51B520' }]}><Scale size={28} color="#3F51B5" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Real Estate Law Specialist</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="securities-law-specialist" onPress={() => router.push('/ai-agent/legal/sub-agents/securities-law-specialist')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#3F51B520' }]}><Scale size={28} color="#3F51B5" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Securities Law Specialist</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="tax-law-specialist" onPress={() => router.push('/ai-agent/legal/sub-agents/tax-law-specialist')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#3F51B520' }]}><Scale size={28} color="#3F51B5" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Tax Law Specialist</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="trade-law-specialist" onPress={() => router.push('/ai-agent/legal/sub-agents/trade-law-specialist')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#3F51B520' }]}><Scale size={28} color="#3F51B5" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Trade Law Specialist</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="whistleblower-coordinator" onPress={() => router.push('/ai-agent/legal/sub-agents/whistleblower-coordinator')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#3F51B520' }]}><Scale size={28} color="#3F51B5" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Whistleblower Coordinator</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="contract-negotiator" onPress={() => router.push('/ai-agent/legal/sub-agents/contract-negotiator')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#3F51B520' }]}><Scale size={28} color="#3F51B5" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Contract Negotiator</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="dispute-resolution" onPress={() => router.push('/ai-agent/legal/sub-agents/dispute-resolution')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#3F51B520' }]}><Scale size={28} color="#3F51B5" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Dispute Resolution</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="licensing-specialist" onPress={() => router.push('/ai-agent/legal/sub-agents/licensing-specialist')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#3F51B520' }]}><Scale size={28} color="#3F51B5" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Licensing Specialist</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="regulatory-affairs" onPress={() => router.push('/ai-agent/legal/sub-agents/regulatory-affairs')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#3F51B520' }]}><Scale size={28} color="#3F51B5" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Regulatory Affairs</Text>
             <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
           </View>
           <ArrowRight size={20} color={theme.colors.textSecondary} />

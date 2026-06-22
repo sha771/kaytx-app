@@ -1,6 +1,6 @@
 /**
  * KAYTX AI WORKFORCE - DEPARTMENT 3: MARKETING & GROWTH
- * 15 Main Agents + 45 Sub-Agents = 60 Total Agents
+ * 30 Main Agents + 30 Sub-Agents = 60 Total Agents
  */
 
 import React, { useState, useMemo } from 'react';
@@ -22,21 +22,47 @@ const DEPT_NAME = 'Marketing & Growth';
 
 // Marketing & Growth Department Agents
 const marketingGrowthAgents = [
-  { id: 'cmo', name: 'AI Chief Marketing Officer', title: 'Chief Marketing Officer', level: 'c_level', efficiency: '96%', cost: '$299/mo', subAgents: 3, capabilities: ['Marketing Strategy', 'Brand Management', 'Budget Allocation'] },
-  { id: 'vp-marketing', name: 'AI VP Marketing', title: 'VP Marketing', level: 'vp_director', efficiency: '93%', cost: '$229/mo', subAgents: 3, capabilities: ['Campaign Management', 'Channel Strategy', 'Team Leadership'] },
-  { id: 'vp-brand', name: 'AI VP Brand', title: 'VP Brand', level: 'vp_director', efficiency: '92%', cost: '$219/mo', subAgents: 3, capabilities: ['Brand Strategy', 'Visual Identity', 'Brand Guidelines'] },
-  { id: 'vp-growth', name: 'AI VP Growth', title: 'VP Growth', level: 'vp_director', efficiency: '94%', cost: '$239/mo', subAgents: 3, capabilities: ['Growth Hacking', 'A/B Testing', 'Funnel Optimization'] },
-  { id: 'vp-content', name: 'AI VP Content', title: 'VP Content', level: 'vp_director', efficiency: '91%', cost: '$209/mo', subAgents: 3, capabilities: ['Content Strategy', 'Editorial Planning', 'Content Quality'] },
-  { id: 'vp-digital', name: 'AI VP Digital', title: 'VP Digital', level: 'vp_director', efficiency: '92%', cost: '$219/mo', subAgents: 3, capabilities: ['Digital Strategy', 'Web Analytics', 'Conversion Optimization'] },
-  { id: 'marketing-manager', name: 'AI Marketing Manager', title: 'Marketing Manager', level: 'manager', efficiency: '89%', cost: '$149/mo', subAgents: 3, capabilities: ['Campaign Execution', 'Team Coordination', 'Budget Tracking'] },
-  { id: 'content-marketing', name: 'AI Content Marketing', title: 'Content Marketing', level: 'specialist', efficiency: '90%', cost: '$89/mo', subAgents: 3, capabilities: ['Blog Writing', 'Copy Editing', 'Content Distribution'] },
-  { id: 'seo-specialist', name: 'AI SEO Specialist', title: 'SEO Specialist', level: 'specialist', efficiency: '91%', cost: '$99/mo', subAgents: 3, capabilities: ['Keyword Research', 'On-page SEO', 'Backlink Analysis'] },
-  { id: 'social-media-manager', name: 'AI Social Media Manager', title: 'Social Media Manager', level: 'specialist', efficiency: '88%', cost: '$79/mo', subAgents: 3, capabilities: ['Social Posting', 'Community Management', 'Trend Monitoring'] },
-  { id: 'email-marketing', name: 'AI Email Marketing', title: 'Email Marketing', level: 'specialist', efficiency: '92%', cost: '$89/mo', subAgents: 3, capabilities: ['Email Campaigns', 'List Segmentation', 'Automation'] },
-  { id: 'ad-campaign-manager', name: 'AI Ad Campaign Manager', title: 'Ad Campaign Manager', level: 'specialist', efficiency: '90%', cost: '$109/mo', subAgents: 3, capabilities: ['PPC Management', 'Ad Creative', 'Audience Targeting'] },
-  { id: 'marketing-analytics', name: 'AI Marketing Analytics', title: 'Marketing Analytics', level: 'specialist', efficiency: '93%', cost: '$99/mo', subAgents: 3, capabilities: ['Attribution Modeling', 'Dashboard Building', 'Insight Reporting'] },
-  { id: 'brand-manager', name: 'AI Brand Manager', title: 'Brand Manager', level: 'specialist', efficiency: '89%', cost: '$99/mo', subAgents: 3, capabilities: ['Brand Monitoring', 'Competitor Analysis', 'Messaging Alignment'] },
-  { id: 'growth-hacker', name: 'AI Growth Hacker', title: 'Growth Hacker', level: 'specialist', efficiency: '91%', cost: '$119/mo', subAgents: 3, capabilities: ['Viral Loops', 'Referral Programs', 'Acquisition Channels'] },
+  { id: 'cmo', name: 'AI Chief Marketing Officer', title: 'Chief Marketing Officer', level: 'c_level', efficiency: '96%', cost: '$299/mo', subAgents: 2, capabilities: ['Marketing Strategy', 'Brand Management', 'Budget Allocation'] },
+  { id: 'vp-marketing', name: 'AI VP Marketing', title: 'VP Marketing', level: 'vp_director', efficiency: '93%', cost: '$229/mo', subAgents: 2, capabilities: ['Campaign Management', 'Channel Strategy', 'Team Leadership'] },
+  { id: 'vp-brand', name: 'AI VP Brand', title: 'VP Brand', level: 'vp_director', efficiency: '92%', cost: '$219/mo', subAgents: 2, capabilities: ['Brand Strategy', 'Visual Identity', 'Brand Guidelines'] },
+  { id: 'vp-growth', name: 'AI VP Growth', title: 'VP Growth', level: 'vp_director', efficiency: '94%', cost: '$239/mo', subAgents: 2, capabilities: ['Growth Hacking', 'A/B Testing', 'Funnel Optimization'] },
+  { id: 'vp-content', name: 'AI VP Content', title: 'VP Content', level: 'vp_director', efficiency: '91%', cost: '$209/mo', subAgents: 2, capabilities: ['Content Strategy', 'Editorial Planning', 'Content Quality'] },
+  { id: 'vp-digital', name: 'AI VP Digital', title: 'VP Digital', level: 'vp_director', efficiency: '92%', cost: '$219/mo', subAgents: 2, capabilities: ['Digital Strategy', 'Web Analytics', 'Conversion Optimization'] },
+  { id: 'vp-product-marketing', name: 'AI VP Product Marketing', title: 'VP Product Marketing', level: 'vp_director', efficiency: '90%', cost: '$229/mo', subAgents: 2, capabilities: ['Product Positioning', 'Go-to-Market', 'Launch Strategy'] },
+  { id: 'vp-performance-marketing', name: 'AI VP Performance Marketing', title: 'VP Performance Marketing', level: 'vp_director', efficiency: '91%', cost: '$219/mo', subAgents: 2, capabilities: ['Performance Strategy', 'ROI Optimization', 'Channel Performance'] },
+  { id: 'marketing-manager', name: 'AI Marketing Manager', title: 'Marketing Manager', level: 'manager', efficiency: '89%', cost: '$149/mo', subAgents: 2, capabilities: ['Campaign Execution', 'Team Coordination', 'Budget Tracking'] },
+  { id: 'digital-marketing-manager', name: 'AI Digital Marketing Manager', title: 'Digital Marketing Manager', level: 'manager', efficiency: '88%', cost: '$139/mo', subAgents: 2, capabilities: ['Digital Campaigns', 'Channel Management', 'Performance Tracking'] },
+  { id: 'brand-manager', name: 'AI Brand Manager', title: 'Brand Manager', level: 'manager', efficiency: '89%', cost: '$149/mo', subAgents: 2, capabilities: ['Brand Strategy', 'Identity Management', 'Brand Guidelines'] },
+  { id: 'growth-marketing-manager', name: 'AI Growth Marketing Manager', title: 'Growth Marketing Manager', level: 'manager', efficiency: '90%', cost: '$159/mo', subAgents: 2, capabilities: ['Growth Strategy', 'Experimentation', 'Acquisition'] },
+  { id: 'content-marketing', name: 'AI Content Marketing', title: 'Content Marketing', level: 'specialist', efficiency: '90%', cost: '$89/mo', subAgents: 2, capabilities: ['Blog Writing', 'Copy Editing', 'Content Distribution'] },
+  { id: 'content-strategist', name: 'AI Content Strategist', title: 'Content Strategist', level: 'specialist', efficiency: '91%', cost: '$99/mo', subAgents: 2, capabilities: ['Content Planning', 'Editorial Calendar', 'Content Frameworks'] },
+  { id: 'copywriter', name: 'AI Copywriter', title: 'Copywriter', level: 'specialist', efficiency: '89%', cost: '$79/mo', subAgents: 2, capabilities: ['Copy Writing', 'Persuasive Writing', 'Brand Voice'] },
+  { id: 'creative-director', name: 'AI Creative Director', title: 'Creative Director', level: 'specialist', efficiency: '92%', cost: '$129/mo', subAgents: 2, capabilities: ['Creative Strategy', 'Visual Direction', 'Campaign Creative'] },
+  { id: 'seo-specialist', name: 'AI SEO Specialist', title: 'SEO Specialist', level: 'specialist', efficiency: '91%', cost: '$99/mo', subAgents: 2, capabilities: ['Keyword Research', 'On-page SEO', 'Backlink Analysis'] },
+  { id: 'technical-seo-specialist', name: 'AI Technical SEO Specialist', title: 'Technical SEO Specialist', level: 'specialist', efficiency: '90%', cost: '$109/mo', subAgents: 2, capabilities: ['Technical Audits', 'Site Speed', 'Schema Implementation'] },
+  { id: 'local-seo-specialist', name: 'AI Local SEO Specialist', title: 'Local SEO Specialist', level: 'specialist', efficiency: '88%', cost: '$94/mo', subAgents: 2, capabilities: ['Local Search', 'Google My Business', 'Local Citations'] },
+  { id: 'social-media-manager', name: 'AI Social Media Manager', title: 'Social Media Manager', level: 'specialist', efficiency: '88%', cost: '$79/mo', subAgents: 2, capabilities: ['Social Posting', 'Community Management', 'Trend Monitoring'] },
+  { id: 'social-media-strategist', name: 'AI Social Media Strategist', title: 'Social Media Strategist', level: 'specialist', efficiency: '89%', cost: '$89/mo', subAgents: 2, capabilities: ['Social Strategy', 'Platform Strategy', 'Content Planning'] },
+  { id: 'community-manager', name: 'AI Community Manager', title: 'Community Manager', level: 'specialist', efficiency: '87%', cost: '$84/mo', subAgents: 2, capabilities: ['Community Building', 'Engagement', 'User Advocacy'] },
+  { id: 'influencer-manager', name: 'AI Influencer Manager', title: 'Influencer Manager', level: 'specialist', efficiency: '86%', cost: '$99/mo', subAgents: 2, capabilities: ['Influencer Relations', 'Campaign Management', 'ROI Tracking'] },
+  { id: 'email-marketing', name: 'AI Email Marketing', title: 'Email Marketing', level: 'specialist', efficiency: '92%', cost: '$89/mo', subAgents: 2, capabilities: ['Email Campaigns', 'List Segmentation', 'Automation'] },
+  { id: 'email-copywriter', name: 'AI Email Copywriter', title: 'Email Copywriter', level: 'specialist', efficiency: '90%', cost: '$84/mo', subAgents: 2, capabilities: ['Email Copy', 'Subject Lines', 'A/B Testing'] },
+  { id: 'marketing-automation-specialist', name: 'AI Marketing Automation Specialist', title: 'Marketing Automation Specialist', level: 'specialist', efficiency: '91%', cost: '$109/mo', subAgents: 2, capabilities: ['Automation Setup', 'Workflow Design', 'Lead Scoring'] },
+  { id: 'ad-campaign-manager', name: 'AI Ad Campaign Manager', title: 'Ad Campaign Manager', level: 'specialist', efficiency: '90%', cost: '$109/mo', subAgents: 2, capabilities: ['PPC Management', 'Ad Creative', 'Audience Targeting'] },
+  { id: 'ppc-specialist', name: 'AI PPC Specialist', title: 'PPC Specialist', level: 'specialist', efficiency: '89%', cost: '$99/mo', subAgents: 2, capabilities: ['PPC Campaigns', 'Bid Management', 'Quality Score'] },
+  { id: 'display-ad-specialist', name: 'AI Display Ad Specialist', title: 'Display Ad Specialist', level: 'specialist', efficiency: '88%', cost: '$94/mo', subAgents: 2, capabilities: ['Display Campaigns', 'Creative Optimization', 'Retargeting'] },
+  { id: 'social-ad-specialist', name: 'AI Social Ad Specialist', title: 'Social Ad Specialist', level: 'specialist', efficiency: '87%', cost: '$89/mo', subAgents: 2, capabilities: ['Social Ads', 'Audience Building', 'Creative Testing'] },
+  { id: 'marketing-analytics', name: 'AI Marketing Analytics', title: 'Marketing Analytics', level: 'specialist', efficiency: '93%', cost: '$99/mo', subAgents: 2, capabilities: ['Attribution Modeling', 'Dashboard Building', 'Insight Reporting'] },
+  { id: 'data-analyst', name: 'AI Marketing Data Analyst', title: 'Marketing Data Analyst', level: 'specialist', efficiency: '91%', cost: '$94/mo', subAgents: 2, capabilities: ['Data Analysis', 'Reporting', 'Trend Identification'] },
+  { id: 'attribution-specialist', name: 'AI Attribution Specialist', title: 'Attribution Specialist', level: 'specialist', efficiency: '90%', cost: '$109/mo', subAgents: 2, capabilities: ['Attribution Modeling', 'Multi-touch Analysis', 'ROI Measurement'] },
+  { id: 'brand-manager', name: 'AI Brand Manager', title: 'Brand Manager', level: 'specialist', efficiency: '89%', cost: '$99/mo', subAgents: 2, capabilities: ['Brand Monitoring', 'Competitor Analysis', 'Messaging Alignment'] },
+  { id: 'brand-strategist', name: 'AI Brand Strategist', title: 'Brand Strategist', level: 'specialist', efficiency: '90%', cost: '$109/mo', subAgents: 2, capabilities: ['Brand Positioning', 'Brand Architecture', 'Brand Experience'] },
+  { id: 'graphic-designer', name: 'AI Graphic Designer', title: 'Graphic Designer', level: 'specialist', efficiency: '88%', cost: '$84/mo', subAgents: 2, capabilities: ['Visual Design', 'Creative Assets', 'Brand Guidelines'] },
+  { id: 'video-producer', name: 'AI Video Producer', title: 'Video Producer', level: 'specialist', efficiency: '87%', cost: '$119/mo', subAgents: 2, capabilities: ['Video Production', 'Content Creation', 'Post-Production'] },
+  { id: 'growth-hacker', name: 'AI Growth Hacker', title: 'Growth Hacker', level: 'specialist', efficiency: '91%', cost: '$119/mo', subAgents: 2, capabilities: ['Viral Loops', 'Referral Programs', 'Acquisition Channels'] },
+  { id: 'conversion-optimizer', name: 'AI Conversion Optimizer', title: 'Conversion Optimizer', level: 'specialist', efficiency: '92%', cost: '$109/mo', subAgents: 2, capabilities: ['CRO Strategy', 'A/B Testing', 'Funnel Optimization'] },
+  { id: 'product-marketing-specialist', name: 'AI Product Marketing Specialist', title: 'Product Marketing Specialist', level: 'specialist', efficiency: '89%', cost: '$99/mo', subAgents: 2, capabilities: ['Product Positioning', 'Market Research', 'Competitive Analysis'] },
+  { id: 'launch-manager', name: 'AI Launch Manager', title: 'Launch Manager', level: 'specialist', efficiency: '88%', cost: '$109/mo', subAgents: 2, capabilities: ['Product Launches', 'Go-to-Market', 'Launch Coordination'] },
 ];
 
 export default function MarketingGrowthDepartment() {

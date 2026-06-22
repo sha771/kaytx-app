@@ -1,0 +1,38 @@
+import React from 'react';
+import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
+
+export default function AgentPage() {
+  const agent = {
+    id: 'ai-policy-researcher',
+    uid: 'ktx-20-policy-researcher',
+    name: 'AI Policy Researcher',
+    title: 'AI Policy Researcher',
+    description: 'AI Policy Researcher provides specialized expertise and executes critical tasks for the Government & Public Sector department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
+    capabilities: ['Program Evaluation', 'Stakeholder Relations', 'Public Communications', 'Government Compliance', 'Policy Analysis'],
+    color: '#78909C',
+    type: 'agent' as const,
+    humanCost: '$65k/year',
+    aiCost: '$800/mo',
+    efficiency: '75% efficiency',
+    replacesRole: 'AI Policy Researcher',
+    infrastructure: {
+      status: 'online',
+      health: 85,
+      uptime: '99.8%',
+      lastActive: 'Now',
+      processingPower: 'standard',
+    },
+    roiMetrics: {
+      savingsPerMonth: '$3780',
+      tasksAutomatedDaily: 440,
+      responseTime: '1.9s',
+      accuracyRate: '98.6%',
+    },
+    hierarchy: {
+      department: 'Government & Public Sector',
+      level: 'specialist',
+      departmentId: 20,
+    },
+  };
+  return <AgentPageWrapper agent={agent} />;
+}

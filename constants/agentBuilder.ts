@@ -101,6 +101,96 @@ export const AGENT_TYPES: AgentTypeConfig[] = [
 ];
 
 // ============================================
+// HUMAN ON THE LOOP - DEFAULT AUTONOMY CONFIGURATIONS
+// ============================================
+
+export const DEFAULT_AUTONOMY_CONFIGS: Record<string, import('../types/builder').AutonomyConfig> = {
+  manual: {
+    level: 'manual',
+    requiresApprovalFor: ['*'], // All actions require approval
+    autoApproveThreshold: 1.0, // Never auto-approve
+    oversightMode: 'intervention',
+    interventionTriggers: {
+      confidenceBelow: 1.0,
+      riskLevel: 'low',
+      anomalyDetected: true,
+    },
+    monitoringInterval: 0,
+    auditLogRetention: 365,
+  },
+  supervised: {
+    level: 'supervised',
+    requiresApprovalFor: ['high_risk', 'critical_actions', 'data_modification'],
+    autoApproveThreshold: 0.85,
+    oversightMode: 'monitoring',
+    interventionTriggers: {
+      confidenceBelow: 0.7,
+      riskLevel: 'medium',
+      anomalyDetected: true,
+    },
+    monitoringInterval: 60,
+    auditLogRetention: 180,
+  },
+  autonomous: {
+    level: 'autonomous',
+    requiresApprovalFor: ['critical_actions'],
+    autoApproveThreshold: 0.7,
+    oversightMode: 'audit',
+    interventionTriggers: {
+      confidenceBelow: 0.5,
+      riskLevel: 'high',
+      anomalyDetected: true,
+    },
+    monitoringInterval: 300,
+    auditLogRetention: 90,
+  },
+  fully_autonomous: {
+    level: 'fully_autonomous',
+    requiresApprovalFor: [],
+    autoApproveThreshold: 0.5,
+    oversightMode: 'audit',
+    interventionTriggers: {
+      confidenceBelow: 0.3,
+      riskLevel: 'critical',
+      anomalyDetected: true,
+    },
+    monitoringInterval: 600,
+    auditLogRetention: 30,
+  },
+};
+
+export const DEFAULT_INTERVENTION_CAPABILITIES: Record<string, import('../types/builder').InterventionCapability> = {
+  manual: {
+    canPause: true,
+    canOverride: true,
+    canModify: true,
+    canRollback: true,
+    emergencyStop: true,
+  },
+  supervised: {
+    canPause: true,
+    canOverride: true,
+    canModify: true,
+    canRollback: true,
+    emergencyStop: true,
+  },
+  autonomous: {
+    canPause: true,
+    canOverride: true,
+    canModify: false,
+    canRollback: true,
+    emergencyStop: true,
+  },
+  fully_autonomous: {
+    canPause: true,
+    canOverride: false,
+    canModify: false,
+    canRollback: false,
+    emergencyStop: true,
+  },
+};
+
+// ============================================
 // INTELLIGENCE LAYER FEATURES
 // ============================================
 

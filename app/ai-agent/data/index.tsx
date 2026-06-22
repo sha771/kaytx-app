@@ -1,115 +1,97 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { useTheme } from '@/providers/ThemeProvider';
-import { Database, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, ChartPie, TrendingUp, Search } from 'lucide-react-native';
-import AgentFeatures from '@/components/ai-agent/AgentFeatures';
+import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
-
-const DEPARTMENT_AGENTS = [
-  { id: 'analytics-manager', name: 'Analytics Manager', description: 'Analytics Manager AI Agent', icon: Database, color: '#1A237E' },
-  { id: 'analytics-specialist', name: 'Analytics Specialist', description: 'Analytics Specialist AI Agent', icon: Database, color: '#1A237E' },
-  { id: 'bi-developer-1', name: 'BI Developer', description: 'BI Developer AI Agent', icon: Database, color: '#1A237E' },
-  { id: 'cdao', name: 'CDAO', description: 'CDAO AI Agent', icon: Database, color: '#1A237E' },
-  { id: 'competitive-analyst', name: 'AI Competitive Analyst', description: 'AI Competitive Analyst AI Agent', icon: Database, color: '#1A237E' },
-  { id: 'customer-insights', name: 'AI Customer Insights Agent', description: 'AI Customer Insights Agent AI Agent', icon: Database, color: '#1A237E' },
-  { id: 'data-analyst-1', name: 'Data Analyst', description: 'Data Analyst AI Agent', icon: Database, color: '#1A237E' },
-  { id: 'data-analyst', name: 'AI Data Analyst', description: 'AI Data Analyst AI Agent', icon: Database, color: '#1A237E' },
-  { id: 'data-manager', name: 'Data Manager', description: 'Data Manager AI Agent', icon: Database, color: '#1A237E' },
-  { id: 'data-scientist-1', name: 'Data Scientist', description: 'Data Scientist AI Agent', icon: Database, color: '#1A237E' },
-  { id: 'data-steward-1', name: 'Data Steward', description: 'Data Steward AI Agent', icon: Database, color: '#1A237E' },
-  { id: 'financial-analyst', name: 'AI Financial Analyst', description: 'AI Financial Analyst AI Agent', icon: Database, color: '#1A237E' },
-  { id: 'forecasting-agent', name: 'AI Forecasting Agent', description: 'AI Forecasting Agent AI Agent', icon: Database, color: '#1A237E' },
-  { id: 'fraud-detection', name: 'AI Fraud Detection Agent', description: 'AI Fraud Detection Agent AI Agent', icon: Database, color: '#1A237E' },
-  { id: 'ml-engineer-1', name: 'ML Engineer', description: 'ML Engineer AI Agent', icon: Database, color: '#1A237E' },
-  { id: 'risk-analyst', name: 'AI Risk Analyst', description: 'AI Risk Analyst AI Agent', icon: Database, color: '#1A237E' },
-  { id: 'sales-data-analyst', name: 'AI Sales Data Analyst', description: 'AI Sales Data Analyst AI Agent', icon: Database, color: '#1A237E' },
-  { id: 'vp-analytics', name: 'VP Analytics', description: 'VP Analytics AI Agent', icon: Database, color: '#1A237E' },
-  { id: 'vp-business-intelligence', name: 'VP Business Intelligence', description: 'VP Business Intelligence AI Agent', icon: Database, color: '#1A237E' },
-  { id: 'vp-data-engineering', name: 'VP Data Engineering', description: 'VP Data Engineering AI Agent', icon: Database, color: '#1A237E' },
-  { id: 'vp-data-science', name: 'VP Data Science', description: 'VP Data Science AI Agent', icon: Database, color: '#1A237E' }
-];;
-
-export default function DataIntelligenceIndex() {
-  const { theme } = useTheme();
+const agents = [
+  { id: 'ai-chief-data-ai-officer', uid: 'ktx-09-chief-data-ai-officer', title: 'AI Chief Data & AI Officer', route: '/ai-agent/data/chief-data-ai-officer', color: '#00ACC1', level: 'c_level', efficiency: '77%' },
+  { id: 'ai-vp-data-science', uid: 'ktx-09-vp-data-science', title: 'AI VP Data Science', route: '/ai-agent/data/vp-data-science', color: '#00ACC1', level: 'vp_director', efficiency: '81%' },
+  { id: 'ai-vp-data-engineering', uid: 'ktx-09-vp-data-engineering', title: 'AI VP Data Engineering', route: '/ai-agent/data/vp-data-engineering', color: '#00ACC1', level: 'vp_director', efficiency: '89%' },
+  { id: 'ai-vp-analytics', uid: 'ktx-09-vp-analytics', title: 'AI VP Analytics', route: '/ai-agent/data/vp-analytics', color: '#00ACC1', level: 'vp_director', efficiency: '80%' },
+  { id: 'ai-vp-business-intelligence', uid: 'ktx-09-vp-business-intelligence', title: 'AI VP Business Intelligence', route: '/ai-agent/data/vp-business-intelligence', color: '#00ACC1', level: 'vp_director', efficiency: '84%' },
+  { id: 'ai-vp-machine-learning', uid: 'ktx-09-vp-machine-learning', title: 'AI VP Machine Learning', route: '/ai-agent/data/vp-machine-learning', color: '#00ACC1', level: 'vp_director', efficiency: '87%' },
+  { id: 'ai-vp-data-governance', uid: 'ktx-09-vp-data-governance', title: 'AI VP Data Governance', route: '/ai-agent/data/vp-data-governance', color: '#00ACC1', level: 'vp_director', efficiency: '83%' },
+  { id: 'ai-vp-data-architecture', uid: 'ktx-09-vp-data-architecture', title: 'AI VP Data Architecture', route: '/ai-agent/data/vp-data-architecture', color: '#00ACC1', level: 'vp_director', efficiency: '85%' },
+  { id: 'ai-data-manager', uid: 'ktx-09-data-manager', title: 'AI Data Manager', route: '/ai-agent/data/data-manager', color: '#00ACC1', level: 'manager', efficiency: '80%' },
+  { id: 'ai-analytics-manager', uid: 'ktx-09-analytics-manager', title: 'AI Analytics Manager', route: '/ai-agent/data/analytics-manager', color: '#00ACC1', level: 'manager', efficiency: '75%' },
+  { id: 'ai-data-science-manager', uid: 'ktx-09-data-science-manager', title: 'AI Data Science Manager', route: '/ai-agent/data/data-science-manager', color: '#00ACC1', level: 'manager', efficiency: '82%' },
+  { id: 'ai-ml-operations-manager', uid: 'ktx-09-ml-operations-manager', title: 'AI ML Operations Manager', route: '/ai-agent/data/ml-operations-manager', color: '#00ACC1', level: 'manager', efficiency: '84%' },
+  { id: 'ai-data-governance-manager', uid: 'ktx-09-data-governance-manager', title: 'AI Data Governance Manager', route: '/ai-agent/data/data-governance-manager', color: '#00ACC1', level: 'manager', efficiency: '81%' },
+  { id: 'ai-data-scientist', uid: 'ktx-09-data-scientist', title: 'AI Data Scientist', route: '/ai-agent/data/data-scientist', color: '#00ACC1', level: 'team_lead', efficiency: '94%' },
+  { id: 'ai-senior-data-scientist', uid: 'ktx-09-senior-data-scientist', title: 'AI Senior Data Scientist', route: '/ai-agent/data/senior-data-scientist', color: '#00ACC1', level: 'team_lead', efficiency: '92%' },
+  { id: 'ai-ml-engineer', uid: 'ktx-09-ml-engineer', title: 'AI ML Engineer', route: '/ai-agent/data/ml-engineer', color: '#00ACC1', level: 'team_lead', efficiency: '93%' },
+  { id: 'ai-deep-learning-engineer', uid: 'ktx-09-deep-learning-engineer', title: 'AI Deep Learning Engineer', route: '/ai-agent/data/deep-learning-engineer', color: '#00ACC1', level: 'team_lead', efficiency: '91%' },
+  { id: 'ai-nlp-engineer', uid: 'ktx-09-nlp-engineer', title: 'AI NLP Engineer', route: '/ai-agent/data/nlp-engineer', color: '#00ACC1', level: 'team_lead', efficiency: '90%' },
+  { id: 'ai-computer-vision-engineer', uid: 'ktx-09-computer-vision-engineer', title: 'AI Computer Vision Engineer', route: '/ai-agent/data/computer-vision-engineer', color: '#00ACC1', level: 'team_lead', efficiency: '89%' },
+  { id: 'ai-data-analyst', uid: 'ktx-09-data-analyst', title: 'AI Data Analyst', route: '/ai-agent/data/data-analyst', color: '#00ACC1', level: 'team_lead', efficiency: '80%' },
+  { id: 'ai-business-analyst', uid: 'ktx-09-business-analyst', title: 'AI Business Analyst', route: '/ai-agent/data/business-analyst', color: '#00ACC1', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-bi-developer', uid: 'ktx-09-bi-developer', title: 'AI BI Developer', route: '/ai-agent/data/bi-developer', color: '#00ACC1', level: 'team_lead', efficiency: '80%' },
+  { id: 'ai-data-warehouse-specialist', uid: 'ktx-09-data-warehouse-specialist', title: 'AI Data Warehouse Specialist', route: '/ai-agent/data/data-warehouse-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-etl-developer', uid: 'ktx-09-etl-developer', title: 'AI ETL Developer', route: '/ai-agent/data/etl-developer', color: '#00ACC1', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-data-steward', uid: 'ktx-09-data-steward', title: 'AI Data Steward', route: '/ai-agent/data/data-steward', color: '#00ACC1', level: 'team_lead', efficiency: '80%' },
+  { id: 'ai-data-quality-specialist', uid: 'ktx-09-data-quality-specialist', title: 'AI Data Quality Specialist', route: '/ai-agent/data/data-quality-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-master-data-manager', uid: 'ktx-09-master-data-manager', title: 'AI Master Data Manager', route: '/ai-agent/data/master-data-manager', color: '#00ACC1', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-analytics-specialist', uid: 'ktx-09-analytics-specialist', title: 'AI Analytics Specialist', route: '/ai-agent/data/analytics-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '76%' },
+  { id: 'ai-reporting-specialist', uid: 'ktx-09-reporting-specialist', title: 'AI Reporting Specialist', route: '/ai-agent/data/reporting-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '81%' },
+  { id: 'ai-dashboard-developer', uid: 'ktx-09-dashboard-developer', title: 'AI Dashboard Developer', route: '/ai-agent/data/dashboard-developer', color: '#00ACC1', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-visualization-specialist', uid: 'ktx-09-visualization-specialist', title: 'AI Visualization Specialist', route: '/ai-agent/data/visualization-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-predictive-modeler', uid: 'ktx-09-predictive-modeler', title: 'AI Predictive Modeler', route: '/ai-agent/data/predictive-modeler', color: '#00ACC1', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-statistician', uid: 'ktx-09-statistician', title: 'AI Statistician', route: '/ai-agent/data/statistician', color: '#00ACC1', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-research-scientist', uid: 'ktx-09-research-scientist', title: 'AI Research Scientist', route: '/ai-agent/data/research-scientist', color: '#00ACC1', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-ai-ethicist', uid: 'ktx-09-ai-ethicist', title: 'AI AI Ethicist', route: '/ai-agent/data/ai-ethicist', color: '#00ACC1', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-data-privacy-officer', uid: 'ktx-09-data-privacy-officer', title: 'AI Data Privacy Officer', route: '/ai-agent/data/data-privacy-officer', color: '#00ACC1', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-data-security-specialist', uid: 'ktx-09-data-security-specialist', title: 'AI Data Security Specialist', route: '/ai-agent/data/data-security-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-data-architect', uid: 'ktx-09-data-architect', title: 'AI Data Architect', route: '/ai-agent/data/data-architect', color: '#00ACC1', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-cloud-data-architect', uid: 'ktx-09-cloud-data-architect', title: 'AI Cloud Data Architect', route: '/ai-agent/data/cloud-data-architect', color: '#00ACC1', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-streaming-specialist', uid: 'ktx-09-streaming-specialist', title: 'AI Streaming Specialist', route: '/ai-agent/data/streaming-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '81%' },
+  { id: 'ai-real-time-analytics-specialist', uid: 'ktx-09-real-time-analytics-specialist', title: 'AI Real-Time Analytics Specialist', route: '/ai-agent/data/real-time-analytics-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-big-data-engineer', uid: 'ktx-09-big-data-engineer', title: 'AI Big Data Engineer', route: '/ai-agent/data/big-data-engineer', color: '#00ACC1', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-data-integration-specialist', uid: 'ktx-09-data-integration-specialist', title: 'AI Data Integration Specialist', route: '/ai-agent/data/data-integration-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-api-integration-specialist', uid: 'ktx-09-api-integration-specialist', title: 'AI API Integration Specialist', route: '/ai-agent/data/api-integration-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-database-administrator-data', uid: 'ktx-09-database-administrator-data', title: 'AI Database Administrator (Data)', route: '/ai-agent/data/database-administrator-data', color: '#00ACC1', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-nosql-specialist', uid: 'ktx-09-nosql-specialist', title: 'AI NoSQL Specialist', route: '/ai-agent/data/nosql-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-graph-database-specialist', uid: 'ktx-09-graph-database-specialist', title: 'AI Graph Database Specialist', route: '/ai-agent/data/graph-database-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-time-series-specialist', uid: 'ktx-09-time-series-specialist', title: 'AI Time Series Specialist', route: '/ai-agent/data/time-series-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '81%' },
+  { id: 'ai-search-engineer', uid: 'ktx-09-search-engineer', title: 'AI Search Engineer', route: '/ai-agent/data/search-engineer', color: '#00ACC1', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-recommendation-engineer', uid: 'ktx-09-recommendation-engineer', title: 'AI Recommendation Engineer', route: '/ai-agent/data/recommendation-engineer', color: '#00ACC1', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-personalization-engineer', uid: 'ktx-09-personalization-engineer', title: 'AI Personalization Engineer', route: '/ai-agent/data/personalization-engineer', color: '#00ACC1', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-fraud-detection-analyst', uid: 'ktx-09-fraud-detection-analyst', title: 'AI Fraud Detection Analyst', route: '/ai-agent/data/fraud-detection-analyst', color: '#00ACC1', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-anomaly-detection-specialist', uid: 'ktx-09-anomaly-detection-specialist', title: 'AI Anomaly Detection Specialist', route: '/ai-agent/data/anomaly-detection-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-a-b-testing-specialist', uid: 'ktx-09-a-b-testing-specialist', title: 'AI A/B Testing Specialist', route: '/ai-agent/data/a-b-testing-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-experimentation-platform-specialist', uid: 'ktx-09-experimentation-platform-specialist', title: 'AI Experimentation Platform Specialist', route: '/ai-agent/data/experimentation-platform-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-customer-analytics-specialist', uid: 'ktx-09-customer-analytics-specialist', title: 'AI Customer Analytics Specialist', route: '/ai-agent/data/customer-analytics-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-product-analytics-specialist', uid: 'ktx-09-product-analytics-specialist', title: 'AI Product Analytics Specialist', route: '/ai-agent/data/product-analytics-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-marketing-analytics-specialist', uid: 'ktx-09-marketing-analytics-specialist', title: 'AI Marketing Analytics Specialist', route: '/ai-agent/data/marketing-analytics-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-financial-analytics-specialist', uid: 'ktx-09-financial-analytics-specialist', title: 'AI Financial Analytics Specialist', route: '/ai-agent/data/financial-analytics-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-operations-analytics-specialist', uid: 'ktx-09-operations-analytics-specialist', title: 'AI Operations Analytics Specialist', route: '/ai-agent/data/operations-analytics-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-hr-analytics-specialist', uid: 'ktx-09-hr-analytics-specialist', title: 'AI HR Analytics Specialist', route: '/ai-agent/data/hr-analytics-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-supply-chain-analytics-specialist', uid: 'ktx-09-supply-chain-analytics-specialist', title: 'AI Supply Chain Analytics Specialist', route: '/ai-agent/data/supply-chain-analytics-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '81%' },
+  { id: 'ai-data-platform-engineer', uid: 'ktx-09-data-platform-engineer', title: 'AI Data Platform Engineer', route: '/ai-agent/data/data-platform-engineer', color: '#00ACC1', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-feature-store-engineer', uid: 'ktx-09-feature-store-engineer', title: 'AI Feature Store Engineer', route: '/ai-agent/data/feature-store-engineer', color: '#00ACC1', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-model-monitoring-specialist', uid: 'ktx-09-model-monitoring-specialist', title: 'AI Model Monitoring Specialist', route: '/ai-agent/data/model-monitoring-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-model-deployment-specialist', uid: 'ktx-09-model-deployment-specialist', title: 'AI Model Deployment Specialist', route: '/ai-agent/data/model-deployment-specialist', color: '#00ACC1', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-mlops-engineer', uid: 'ktx-09-mlops-engineer', title: 'AI MLOps Engineer', route: '/ai-agent/data/mlops-engineer', color: '#00ACC1', level: 'team_lead', efficiency: '83%' },
+];
+export default function DepartmentIndex() {
   const router = useRouter();
   return (
-    <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: theme.colors.primary + '15' }]}><Database size={48} color={theme.colors.primary} /></View>
-        <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Data & Intelligence</Text>
-        <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>AI Agents for Data Analytics</Text>
-        <View style={styles.badgesRow}>
-          <View style={[styles.badge, { backgroundColor: '#34C75922' }]}><Activity size={12} color="#34C759" /><Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text></View>
-          <View style={[styles.badge, { backgroundColor: theme.colors.primary + '22' }]}><Star size={12} color={theme.colors.primary} /><Text style={[styles.badgeText, { color: theme.colors.primary }]}>Department</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#FF950022' }]}><Users size={12} color="#FF9500" /><Text style={[styles.badgeText, { color: '#FF9500' }]}>10 Agents</Text></View>
-        </View>
-      </View>
-      <View style={styles.statsContainer}>
-        {[{label:'Agents',value:'10',icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Activity,color:'#007AFF'},{label:'Queries',value:'50K/hr',icon:Clock,color:'#FF9500'},{label:'Accuracy',value:'99.7%',icon:Target,color:'#AF52DE'}].map((stat,i)=>(<View key={i} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><stat.icon size={22} color={stat.color} /><Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text><Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text></View>))}
-      </View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Overview</Text>
-        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>The Data & Intelligence department powers data-driven decision making through AI analytics. Our agents deliver insights, forecasts, and competitive intelligence across all business functions.</Text>
-      </View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>AI Agents</Text>
-        {DEPARTMENT_AGENTS.map((agent) => (
-          <TouchableOpacity key={agent.id} onPress={()=>router.push('/ai-agent/data/'+agent.id)} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
-            <View style={[styles.agentIcon, { backgroundColor: agent.color + '20' }]}><agent.icon size={28} color={agent.color} /></View>
-            <View style={styles.agentInfo}>
-              <Text style={[styles.agentName, { color: theme.colors.text }]}>{agent.name}</Text>
-              <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>{agent.description}</Text>
-            </View>
-            <ArrowRight size={20} color={theme.colors.textSecondary} />
-          </TouchableOpacity>
+    <ScrollView style={s.container}>
+      <Text style={s.title}>Data & Intelligence - AI Agents</Text>
+      <Text style={s.sub}>60 AI Agents & Employees</Text>
+      <View style={s.grid}>
+        {agents.map((a) => (
+          <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>
+            <Text style={s.at}>{a.title}</Text>
+            <Text style={s.al}>{a.level.replace('_',' ').toUpperCase()}</Text>
+            <Text style={s.ae}>{a.efficiency}</Text>
+          </Pressable>
         ))}
       </View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
-        <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: theme.colors.primary + '12' }]}><act.icon size={24} color={theme.colors.primary} /><Text style={[styles.actionText, { color: theme.colors.primary }]}>{act.label}</Text></TouchableOpacity>))}
-        </View>
-      </View>
-    
-      
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
-        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>39 helper and sub-agent AI workers supporting the main agents.</Text>
-        <TouchableOpacity onPress={() => router.push('/ai-agent/data/sub-agents')} style={[styles.subAgentButton, { backgroundColor: '#6366F115' }]}>
-          <Database size={20} color="#6366F1" />
-          <Text style={[styles.subAgentButtonText, { color: '#6366F1' }]}>View All 39 Sub-Agents</Text>
-          <ArrowRight size={18} color="#6366F1" />
-        </TouchableOpacity>
-      </View>
-
-      <AgentFeatures agentId="data-index" agentName="Index" />
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container:{flex:1},
-  hero:{alignItems:'center',paddingVertical:32,paddingHorizontal:20,borderBottomWidth:1},
-  heroIconWrap:{width:88,height:88,borderRadius:44,justifyContent:'center',alignItems:'center',marginBottom:16},
-  heroTitle:{fontSize:26,fontWeight:'bold'},
-  heroSubtitle:{fontSize:15,marginTop:4,fontWeight:'500'},
-  badgesRow:{flexDirection:'row',gap:10,marginTop:16},
-  badge:{flexDirection:'row',alignItems:'center',paddingHorizontal:10,paddingVertical:5,borderRadius:20,gap:4},
-  badgeText:{fontSize:12,fontWeight:'600'},
-  statsContainer:{flexDirection:'row',flexWrap:'wrap',padding:16,gap:12},
-  statCard:{flex:1,minWidth:'22%',alignItems:'center',padding:14,borderRadius:12},
-  statValue:{fontSize:18,fontWeight:'bold',marginTop:8},
-  statLabel:{fontSize:11,marginTop:4},
-  section:{marginHorizontal:16,marginBottom:16,padding:20,borderRadius:16},
-  sectionTitle:{fontSize:18,fontWeight:'700',marginBottom:14},
-  description:{fontSize:14,lineHeight:22},
-  agentCard:{flexDirection:'row',alignItems:'center',padding:16,borderRadius:12,marginBottom:12},
-  agentIcon:{width:48,height:48,borderRadius:12,alignItems:'center',justifyContent:'center'},
-  agentInfo:{flex:1,marginLeft:12},
-  agentName:{fontSize:16,fontWeight:'600'},
-  agentDesc:{fontSize:12,marginTop:2},
-  actionsGrid:{flexDirection:'row',flexWrap:'wrap',gap:12},
-  actionButton:{flex:1,minWidth:'45%',alignItems:'center',padding:16,borderRadius:12},
-  actionText:{fontSize:13,fontWeight:'600',marginTop:8}
+const s = StyleSheet.create({
+  container:{flex:1,backgroundColor:'#0a0a0a',padding:16},title:{color:'#fff',fontSize:24,fontWeight:'bold',marginBottom:4},
+  sub:{color:'#888',fontSize:14,marginBottom:16},grid:{flexDirection:'row',flexWrap:'wrap',gap:12},
+  card:{backgroundColor:'#1a1a2e',borderRadius:12,padding:16,width:'48%',borderLeftWidth:3},
+  at:{color:'#fff',fontSize:14,fontWeight:'600',marginBottom:4},al:{color:'#888',fontSize:11,marginBottom:2},
+  ae:{color:'#10B981',fontSize:12},
 });
-

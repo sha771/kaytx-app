@@ -1,105 +1,111 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { useTheme } from '@/providers/ThemeProvider';
-import { Shield, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, TrendingUp, ShieldCheck, Key, TriangleAlert, Crosshair, Eye, LayoutDashboard, Monitor, Scale } from 'lucide-react-native';
-import AgentFeatures from '@/components/ai-agent/AgentFeatures';
+import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
-
-const DEPARTMENT_AGENTS = [
-  { id: 'ciso', name: 'CISO', description: 'CISO AI Agent', icon: Shield, color: '#581C84' },
-  { id: 'compliance-security-1', name: 'Compliance & Security', description: 'Compliance & Security AI Agent', icon: Shield, color: '#581C84' },
-  { id: 'identity-manager-1', name: 'Identity Manager', description: 'Identity Manager AI Agent', icon: Shield, color: '#581C84' },
-  { id: 'incident-responder-1', name: 'Incident Responder', description: 'Incident Responder AI Agent', icon: Shield, color: '#581C84' },
-  { id: 'penetration-tester-1', name: 'Penetration Tester', description: 'Penetration Tester AI Agent', icon: Shield, color: '#581C84' },
-  { id: 'security-analyst-1', name: 'Security Analyst', description: 'Security Analyst AI Agent', icon: Shield, color: '#581C84' },
-  { id: 'security-architect', name: 'Security Architect', description: 'Security Architect AI Agent', icon: Shield, color: '#581C84' },
-  { id: 'soc-manager', name: 'SOC Manager', description: 'SOC Manager AI Agent', icon: Shield, color: '#581C84' },
-  { id: 'vp-cyber', name: 'VP Cybersecurity', description: 'VP Cybersecurity AI Agent', icon: Shield, color: '#581C84' },
-  { id: 'vp-governance-risk', name: 'VP Governance & Risk', description: 'VP Governance & Risk AI Agent', icon: Shield, color: '#581C84' },
-  { id: 'vp-privacy', name: 'VP Privacy', description: 'VP Privacy AI Agent', icon: Shield, color: '#581C84' },
-  { id: 'vp-security-ops', name: 'VP Security Operations', description: 'VP Security Operations AI Agent', icon: Shield, color: '#581C84' }
-];;
-
-export default function SecurityDepartment() {
-  const { theme } = useTheme();
+const agents = [
+  { id: 'ai-chief-information-security-officer', uid: 'ktx-11-chief-information-security-officer', title: 'AI Chief Information Security Officer', route: '/ai-agent/security/chief-information-security-officer', color: '#F44336', level: 'c_level', efficiency: '94%' },
+  { id: 'ai-chief-security-officer', uid: 'ktx-11-chief-security-officer', title: 'AI Chief Security Officer', route: '/ai-agent/security/chief-security-officer', color: '#F44336', level: 'c_level', efficiency: '93%' },
+  { id: 'ai-vp-security-operations', uid: 'ktx-11-vp-security-operations', title: 'AI VP Security Operations', route: '/ai-agent/security/vp-security-operations', color: '#F44336', level: 'vp_director', efficiency: '90%' },
+  { id: 'ai-vp-cybersecurity', uid: 'ktx-11-vp-cybersecurity', title: 'AI VP Cybersecurity', route: '/ai-agent/security/vp-cybersecurity', color: '#F44336', level: 'vp_director', efficiency: '88%' },
+  { id: 'ai-vp-governance-risk', uid: 'ktx-11-vp-governance-risk', title: 'AI VP Governance & Risk', route: '/ai-agent/security/vp-governance-risk', color: '#F44336', level: 'vp_director', efficiency: '76%' },
+  { id: 'ai-vp-privacy', uid: 'ktx-11-vp-privacy', title: 'AI VP Privacy', route: '/ai-agent/security/vp-privacy', color: '#F44336', level: 'vp_director', efficiency: '86%' },
+  { id: 'ai-vp-physical-security', uid: 'ktx-11-vp-physical-security', title: 'AI VP Physical Security', route: '/ai-agent/security/vp-physical-security', color: '#F44336', level: 'vp_director', efficiency: '84%' },
+  { id: 'ai-vp-security-engineering', uid: 'ktx-11-vp-security-engineering', title: 'AI VP Security Engineering', route: '/ai-agent/security/vp-security-engineering', color: '#F44336', level: 'vp_director', efficiency: '87%' },
+  { id: 'ai-vp-security-training', uid: 'ktx-11-vp-security-training', title: 'AI VP Security Training', route: '/ai-agent/security/vp-security-training', color: '#F44336', level: 'vp_director', efficiency: '85%' },
+  { id: 'ai-security-architect', uid: 'ktx-11-security-architect', title: 'AI Security Architect', route: '/ai-agent/security/security-architect', color: '#F44336', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-soc-manager', uid: 'ktx-11-soc-manager', title: 'AI SOC Manager', route: '/ai-agent/security/soc-manager', color: '#F44336', level: 'manager', efficiency: '93%' },
+  { id: 'ai-csoc-manager', uid: 'ktx-11-csoc-manager', title: 'AI CSOC Manager', route: '/ai-agent/security/csoc-manager', color: '#F44336', level: 'manager', efficiency: '91%' },
+  { id: 'ai-incident-response-manager', uid: 'ktx-11-incident-response-manager', title: 'AI Incident Response Manager', route: '/ai-agent/security/incident-response-manager', color: '#F44336', level: 'manager', efficiency: '89%' },
+  { id: 'ai-security-engineering-manager', uid: 'ktx-11-security-engineering-manager', title: 'AI Security Engineering Manager', route: '/ai-agent/security/security-engineering-manager', color: '#F44336', level: 'manager', efficiency: '87%' },
+  { id: 'ai-physical-security-manager', uid: 'ktx-11-physical-security-manager', title: 'AI Physical Security Manager', route: '/ai-agent/security/physical-security-manager', color: '#F44336', level: 'manager', efficiency: '85%' },
+  { id: 'ai-security-analyst', uid: 'ktx-11-security-analyst', title: 'AI Security Analyst', route: '/ai-agent/security/security-analyst', color: '#F44336', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-incident-responder', uid: 'ktx-11-incident-responder', title: 'AI Incident Responder', route: '/ai-agent/security/incident-responder', color: '#F44336', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-security-compliance-specialist', uid: 'ktx-11-security-compliance-specialist', title: 'AI Security Compliance Specialist', route: '/ai-agent/security/security-compliance-specialist', color: '#F44336', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-penetration-tester', uid: 'ktx-11-penetration-tester', title: 'AI Penetration Tester', route: '/ai-agent/security/penetration-tester', color: '#F44336', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-identity-manager', uid: 'ktx-11-identity-manager', title: 'AI Identity Manager', route: '/ai-agent/security/identity-manager', color: '#F44336', level: 'manager', efficiency: '88%' },
+  { id: 'ai-threat-hunter', uid: 'ktx-11-threat-hunter', title: 'AI Threat Hunter', route: '/ai-agent/security/threat-hunter', color: '#F44336', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-malware-analyst', uid: 'ktx-11-malware-analyst', title: 'AI Malware Analyst', route: '/ai-agent/security/malware-analyst', color: '#F44336', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-vulnerability-assessor', uid: 'ktx-11-vulnerability-assessor', title: 'AI Vulnerability Assessor', route: '/ai-agent/security/vulnerability-assessor', color: '#F44336', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-security-operations-center-analyst', uid: 'ktx-11-security-operations-center-analyst', title: 'AI Security Operations Center Analyst', route: '/ai-agent/security/security-operations-center-analyst', color: '#F44336', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-security-orchestrator', uid: 'ktx-11-security-orchestrator', title: 'AI Security Orchestrator', route: '/ai-agent/security/security-orchestrator', color: '#F44336', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-siem-analyst', uid: 'ktx-11-siem-analyst', title: 'AI SIEM Analyst', route: '/ai-agent/security/siem-analyst', color: '#F44336', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-edr-analyst', uid: 'ktx-11-edr-analyst', title: 'AI EDR Analyst', route: '/ai-agent/security/edr-analyst', color: '#F44336', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-forensic-analyst', uid: 'ktx-11-forensic-analyst', title: 'AI Forensic Analyst', route: '/ai-agent/security/forensic-analyst', color: '#F44336', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-dfir-specialist', uid: 'ktx-11-dfir-specialist', title: 'AI DFIR Specialist', route: '/ai-agent/security/dfir-specialist', color: '#F44336', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-threat-intelligence-analyst', uid: 'ktx-11-threat-intelligence-analyst', title: 'AI Threat Intelligence Analyst', route: '/ai-agent/security/threat-intelligence-analyst', color: '#F44336', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-cyber-threat-intelligence-specialist', uid: 'ktx-11-cyber-threat-intelligence-specialist', title: 'AI Cyber Threat Intelligence Specialist', route: '/ai-agent/security/cyber-threat-intelligence-specialist', color: '#F44336', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-osint-analyst', uid: 'ktx-11-osint-analyst', title: 'AI OSINT Analyst', route: '/ai-agent/security/osint-analyst', color: '#F44336', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-social-engineering-specialist', uid: 'ktx-11-social-engineering-specialist', title: 'AI Social Engineering Specialist', route: '/ai-agent/security/social-engineering-specialist', color: '#F44336', level: 'team_lead', efficiency: '81%' },
+  { id: 'ai-phishing-analyst', uid: 'ktx-11-phishing-analyst', title: 'AI Phishing Analyst', route: '/ai-agent/security/phishing-analyst', color: '#F44336', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-security-awareness-trainer', uid: 'ktx-11-security-awareness-trainer', title: 'AI Security Awareness Trainer', route: '/ai-agent/security/security-awareness-trainer', color: '#F44336', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-privacy-specialist', uid: 'ktx-11-privacy-specialist', title: 'AI Privacy Specialist', route: '/ai-agent/security/privacy-specialist', color: '#F44336', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-data-protection-officer', uid: 'ktx-11-data-protection-officer', title: 'AI Data Protection Officer', route: '/ai-agent/security/data-protection-officer', color: '#F44336', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-gdpr-compliance-specialist', uid: 'ktx-11-gdpr-compliance-specialist', title: 'AI GDPR Compliance Specialist', route: '/ai-agent/security/gdpr-compliance-specialist', color: '#F44336', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-hipaa-compliance-specialist', uid: 'ktx-11-hipaa-compliance-specialist', title: 'AI HIPAA Compliance Specialist', route: '/ai-agent/security/hipaa-compliance-specialist', color: '#F44336', level: 'team_lead', efficiency: '81%' },
+  { id: 'ai-pci-dss-specialist', uid: 'ktx-11-pci-dss-specialist', title: 'AI PCI DSS Specialist', route: '/ai-agent/security/pci-dss-specialist', color: '#F44336', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-sox-compliance-specialist', uid: 'ktx-11-sox-compliance-specialist', title: 'AI SOX Compliance Specialist', route: '/ai-agent/security/sox-compliance-specialist', color: '#F44336', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-access-control-administrator', uid: 'ktx-11-access-control-administrator', title: 'AI Access Control Administrator', route: '/ai-agent/security/access-control-administrator', color: '#F44336', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-identity-management-specialist', uid: 'ktx-11-identity-management-specialist', title: 'AI Identity Management Specialist', route: '/ai-agent/security/identity-management-specialist', color: '#F44336', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-pam-administrator', uid: 'ktx-11-pam-administrator', title: 'AI PAM Administrator', route: '/ai-agent/security/pam-administrator', color: '#F44336', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-single-sign-on-specialist', uid: 'ktx-11-single-sign-on-specialist', title: 'AI Single Sign-On Specialist', route: '/ai-agent/security/single-sign-on-specialist', color: '#F44336', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-multi-factor-authentication-specialist', uid: 'ktx-11-multi-factor-authentication-specialist', title: 'AI Multi-Factor Authentication Specialist', route: '/ai-agent/security/multi-factor-authentication-specialist', color: '#F44336', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-privileged-access-manager', uid: 'ktx-11-privileged-access-manager', title: 'AI Privileged Access Manager', route: '/ai-agent/security/privileged-access-manager', color: '#F44336', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-physical-security-specialist', uid: 'ktx-11-physical-security-specialist', title: 'AI Physical Security Specialist', route: '/ai-agent/security/physical-security-specialist', color: '#F44336', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-surveillance-specialist', uid: 'ktx-11-surveillance-specialist', title: 'AI Surveillance Specialist', route: '/ai-agent/security/surveillance-specialist', color: '#F44336', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-access-control-specialist', uid: 'ktx-11-access-control-specialist', title: 'AI Access Control Specialist', route: '/ai-agent/security/access-control-specialist', color: '#F44336', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-perimeter-security-specialist', uid: 'ktx-11-perimeter-security-specialist', title: 'AI Perimeter Security Specialist', route: '/ai-agent/security/perimeter-security-specialist', color: '#F44336', level: 'team_lead', efficiency: '81%' },
+  { id: 'ai-security-consultant', uid: 'ktx-11-security-consultant', title: 'AI Security Consultant', route: '/ai-agent/security/security-consultant', color: '#F44336', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-security-auditor', uid: 'ktx-11-security-auditor', title: 'AI Security Auditor', route: '/ai-agent/security/security-auditor', color: '#F44336', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-risk-assessor-security', uid: 'ktx-11-risk-assessor-security', title: 'AI Risk Assessor (Security)', route: '/ai-agent/security/risk-assessor-security', color: '#F44336', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-business-continuity-planner-security', uid: 'ktx-11-business-continuity-planner-security', title: 'AI Business Continuity Planner (Security)', route: '/ai-agent/security/business-continuity-planner-security', color: '#F44336', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-disaster-recovery-specialist', uid: 'ktx-11-disaster-recovery-specialist', title: 'AI Disaster Recovery Specialist', route: '/ai-agent/security/disaster-recovery-specialist', color: '#F44336', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-cryptography-specialist', uid: 'ktx-11-cryptography-specialist', title: 'AI Cryptography Specialist', route: '/ai-agent/security/cryptography-specialist', color: '#F44336', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-key-management-specialist', uid: 'ktx-11-key-management-specialist', title: 'AI Key Management Specialist', route: '/ai-agent/security/key-management-specialist', color: '#F44336', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-certificate-authority-administrator', uid: 'ktx-11-certificate-authority-administrator', title: 'AI Certificate Authority Administrator', route: '/ai-agent/security/certificate-authority-administrator', color: '#F44336', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-pki-specialist', uid: 'ktx-11-pki-specialist', title: 'AI PKI Specialist', route: '/ai-agent/security/pki-specialist', color: '#F44336', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-blockchain-security-specialist', uid: 'ktx-11-blockchain-security-specialist', title: 'AI Blockchain Security Specialist', route: '/ai-agent/security/blockchain-security-specialist', color: '#F44336', level: 'team_lead', efficiency: '81%' },
+  { id: 'ai-iot-security-specialist', uid: 'ktx-11-iot-security-specialist', title: 'AI IoT Security Specialist', route: '/ai-agent/security/iot-security-specialist', color: '#F44336', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-cloud-security-specialist', uid: 'ktx-11-cloud-security-specialist', title: 'AI Cloud Security Specialist', route: '/ai-agent/security/cloud-security-specialist', color: '#F44336', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-container-security-specialist', uid: 'ktx-11-container-security-specialist', title: 'AI Container Security Specialist', route: '/ai-agent/security/container-security-specialist', color: '#F44336', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-devsecops-engineer', uid: 'ktx-11-devsecops-engineer', title: 'AI DevSecOps Engineer', route: '/ai-agent/security/devsecops-engineer', color: '#F44336', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-application-security-engineer', uid: 'ktx-11-application-security-engineer', title: 'AI Application Security Engineer', route: '/ai-agent/security/application-security-engineer', color: '#F44336', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-network-security-engineer', uid: 'ktx-11-network-security-engineer', title: 'AI Network Security Engineer', route: '/ai-agent/security/network-security-engineer', color: '#F44336', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-web-security-specialist', uid: 'ktx-11-web-security-specialist', title: 'AI Web Security Specialist', route: '/ai-agent/security/web-security-specialist', color: '#F44336', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-mobile-security-specialist', uid: 'ktx-11-mobile-security-specialist', title: 'AI Mobile Security Specialist', route: '/ai-agent/security/mobile-security-specialist', color: '#F44336', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-api-security-specialist', uid: 'ktx-11-api-security-specialist', title: 'AI API Security Specialist', route: '/ai-agent/security/api-security-specialist', color: '#F44336', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-database-security-specialist', uid: 'ktx-11-database-security-specialist', title: 'AI Database Security Specialist', route: '/ai-agent/security/database-security-specialist', color: '#F44336', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-incident-response-specialist', uid: 'ktx-11-incident-response-specialist', title: 'AI Incident Response Specialist', route: '/ai-agent/security/incident-response-specialist', color: '#F44336', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-digital-forensics-specialist', uid: 'ktx-11-digital-forensics-specialist', title: 'AI Digital Forensics Specialist', route: '/ai-agent/security/digital-forensics-specialist', color: '#F44336', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-cyber-crisis-manager', uid: 'ktx-11-cyber-crisis-manager', title: 'AI Cyber Crisis Manager', route: '/ai-agent/security/cyber-crisis-manager', color: '#F44336', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-breach-coordinator', uid: 'ktx-11-breach-coordinator', title: 'AI Breach Coordinator', route: '/ai-agent/security/breach-coordinator', color: '#F44336', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-threat-actor-tracking-specialist', uid: 'ktx-11-threat-actor-tracking-specialist', title: 'AI Threat Actor Tracking Specialist', route: '/ai-agent/security/threat-actor-tracking-specialist', color: '#F44336', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-security-automation-engineer', uid: 'ktx-11-security-automation-engineer', title: 'AI Security Automation Engineer', route: '/ai-agent/security/security-automation-engineer', color: '#F44336', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-playbook-developer', uid: 'ktx-11-playbook-developer', title: 'AI Playbook Developer', route: '/ai-agent/security/playbook-developer', color: '#F44336', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-security-analytics-specialist', uid: 'ktx-11-security-analytics-specialist', title: 'AI Security Analytics Specialist', route: '/ai-agent/security/security-analytics-specialist', color: '#F44336', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-security-metrics-specialist', uid: 'ktx-11-security-metrics-specialist', title: 'AI Security Metrics Specialist', route: '/ai-agent/security/security-metrics-specialist', color: '#F44336', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-kpi-manager-security', uid: 'ktx-11-kpi-manager-security', title: 'AI KPI Manager (Security)', route: '/ai-agent/security/kpi-manager-security', color: '#F44336', level: 'team_lead', efficiency: '83%' },
+];
+export default function DepartmentIndex() {
   const router = useRouter();
   return (
-    <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <View style={[styles.hero, { borderBottomColor: theme.colors.border || '#E5E5EA' }]}>
-        <View style={[styles.heroIconWrap, { backgroundColor: '#581C8420' }]}><Shield size={48} color="#581C84" /></View>
-        <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Security & Risk</Text>
-        <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>AI Agents for Security & Risk Operations</Text>
-        <View style={styles.badgesRow}>
-          <View style={[styles.badge, { backgroundColor: '#34C75922' }]}><Activity size={12} color="#34C759" /><Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#581C8422' }]}><Star size={12} color="#581C84" /><Text style={[styles.badgeText, { color: '#581C84' }]}>Department</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#FF950022' }]}><Users size={12} color="#FF9500" /><Text style={[styles.badgeText, { color: '#FF9500' }]}>{DEPARTMENT_AGENTS.length} Agents</Text></View>
-        </View>
-      </View>
-      <View style={styles.statsContainer}>
-        {[{label:'Agents',value:DEPARTMENT_AGENTS.length.toString(),icon: CircleCheckBig,color:'#34C759'},{label:'Uptime',value:'99.9%',icon:Clock,color:'#007AFF'},{label:'Accuracy',value:'99.8%',icon:Target,color:'#FF9500'},{label:'Processed',value:'10K+',icon:TrendingUp,color:'#581C84'}].map((stat,i)=>(<View key={i} style={[styles.statCard, { backgroundColor: theme.colors.card || '#F2F2F7' }]}><stat.icon size={22} color={stat.color} /><Text style={[styles.statValue, { color: theme.colors.text }]}>{stat.value}</Text><Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>{stat.label}</Text></View>))}
-      </View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Overview</Text>
-        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>{'"AI-powered department agents optimizing operations through intelligent automation."'}</Text>
-      </View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Department Agents</Text>
-        {DEPARTMENT_AGENTS.map((agent) => (
-          <TouchableOpacity key={agent.id} onPress={()=>router.push('/ai-agent/security/'+agent.id)} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
-            <View style={[styles.agentIcon, { backgroundColor: agent.color + '20' }]}><agent.icon size={28} color={agent.color} /></View>
-            <View style={styles.agentInfo}>
-              <Text style={[styles.agentName, { color: theme.colors.text }]}>{agent.name}</Text>
-              <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>{agent.description}</Text>
-            </View>
-            <ArrowRight size={20} color={theme.colors.textSecondary} />
-          </TouchableOpacity>
+    <ScrollView style={s.container}>
+      <Text style={s.title}>Security & Risk - AI Agents</Text>
+      <Text style={s.sub}>60 AI Agents & Employees</Text>
+      <View style={s.grid}>
+        {agents.map((a) => (
+          <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>
+            <Text style={s.at}>{a.title}</Text>
+            <Text style={s.al}>{a.level.replace('_',' ').toUpperCase()}</Text>
+            <Text style={s.ae}>{a.efficiency}</Text>
+          </Pressable>
         ))}
       </View>
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
-        <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#581C8412' }]}><act.icon size={24} color="#581C84" /><Text style={[styles.actionText, { color: '#581C84' }]}>{act.label}</Text></TouchableOpacity>))}
-        </View>
-      </View>
-      
-      <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Sub-Agents</Text>
-        <Text style={[styles.description, { color: theme.colors.textSecondary }]}>36 helper and sub-agent AI workers supporting the main agents.</Text>
-        <TouchableOpacity onPress={() => router.push('/ai-agent/security/sub-agents')} style={[styles.subAgentButton, { backgroundColor: '#F4433615' }]}>
-          <Shield size={20} color="#F44336" />
-          <Text style={[styles.subAgentButtonText, { color: '#F44336' }]}>View All 36 Sub-Agents</Text>
-          <ArrowRight size={18} color="#F44336" />
-        </TouchableOpacity>
-      </View>
-
-      <AgentFeatures agentId="security-index" agentName="Security & Risk Department" />
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container:{flex:1},
-  hero:{alignItems:'center',paddingVertical:32,paddingHorizontal:20,borderBottomWidth:1},
-  heroIconWrap:{width:88,height:88,borderRadius:44,justifyContent:'center',alignItems:'center',marginBottom:16},
-  heroTitle:{fontSize:26,fontWeight:'bold'},
-  heroSubtitle:{fontSize:15,marginTop:4,fontWeight:'500'},
-  badgesRow:{flexDirection:'row',gap:10,marginTop:16},
-  badge:{flexDirection:'row',alignItems:'center',paddingHorizontal:10,paddingVertical:5,borderRadius:20,gap:4},
-  badgeText:{fontSize:12,fontWeight:'600'},
-  statsContainer:{flexDirection:'row',flexWrap:'wrap',padding:16,gap:12},
-  statCard:{flex:1,minWidth:'22%',alignItems:'center',padding:14,borderRadius:12},
-  statValue:{fontSize:18,fontWeight:'bold',marginTop:8},
-  statLabel:{fontSize:11,marginTop:4},
-  section:{marginHorizontal:16,marginBottom:16,padding:20,borderRadius:16},
-  sectionTitle:{fontSize:18,fontWeight:'700',marginBottom:14},
-  description:{fontSize:14,lineHeight:22},
-  agentCard:{flexDirection:'row',alignItems:'center',padding:16,borderRadius:12,marginBottom:12},
-  agentIcon:{width:48,height:48,borderRadius:12,alignItems:'center',justifyContent:'center'},
-  agentInfo:{flex:1,marginLeft:12},
-  agentName:{fontSize:16,fontWeight:'600'},
-  agentDesc:{fontSize:12,marginTop:2},
-  actionsGrid:{flexDirection:'row',flexWrap:'wrap',gap:12},
-  actionButton:{flex:1,minWidth:'45%',alignItems:'center',padding:16,borderRadius:12},
-  actionText:{fontSize:13,fontWeight:'600',marginTop:8}
+const s = StyleSheet.create({
+  container:{flex:1,backgroundColor:'#0a0a0a',padding:16},title:{color:'#fff',fontSize:24,fontWeight:'bold',marginBottom:4},
+  sub:{color:'#888',fontSize:14,marginBottom:16},grid:{flexDirection:'row',flexWrap:'wrap',gap:12},
+  card:{backgroundColor:'#1a1a2e',borderRadius:12,padding:16,width:'48%',borderLeftWidth:3},
+  at:{color:'#fff',fontSize:14,fontWeight:'600',marginBottom:4},al:{color:'#888',fontSize:11,marginBottom:2},
+  ae:{color:'#10B981',fontSize:12},
 });
-
