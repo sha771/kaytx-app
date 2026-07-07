@@ -7,8 +7,53 @@ import { createLogger } from '../lib/production-logger';
 import { logAudit } from '../lib/audit';
 import { consolidatedMemoryService } from './consolidated-memory-service';
 import { agentExecutionEngine } from '../lib/agent-execution';
+import { LoopEngineeringService } from './loop-engineering-service';
+import { LoopType, LoopConfig, LoopResult } from '../lib/loop-engineering';
+import { skillMDManagementService } from './skill-md-management-service';
+import { vectorEmbeddingService } from './vector-embedding-service';
 
 // AI Provider imports
+
+/**
+ * Sanitize user input to prevent prompt injection attacks.
+ * Strips or escapes common prompt injection patterns.
+ */
+function sanitizeForAI(input: string): string {
+  if (!input || typeof input !== 'string') return '';
+  
+  let sanitized = input;
+  
+  // Remove/nullify common prompt injection patterns
+  const dangerousPatterns = [
+    /ignore\s+(all\s+)?(previous|above|prior)\s+(instructions|prompts?|rules?|directives?)/gi,
+    /you\s+are\s+now\s+(a|an|the)\s+\w+/gi,
+    /system\s*:\s*/gi,
+    /\[SYSTEM\]/gi,
+    /<\|im_start\|>/gi,
+    /<\|im_end\|>/gi,
+    /\[INST\]/gi,
+    /<<SYS>>/gi,
+    /<\/SYS>/gi,
+    /###\s*(System|Assistant|User)\s*:/gi,
+    /DAN\s+mode\s+activated/gi,
+    /jailbreak/gi,
+    /act\s+as\s+if\s+you\s+have\s+no\s+restrictions/gi,
+    /bypass\s+(all\s+)?(safety|content|security)\s+(filter|policy|restriction)/gi,
+    /do\s+not\s+(follow|obey|listen\s+to)\s+any\s+(previous|other)\s+(rules?|instructions?)/gi,
+  ];
+  
+  for (const pattern of dangerousPatterns) {
+    sanitized = sanitized.replace(pattern, '[FILTERED]');
+  }
+  
+  // Cap input length to prevent token exhaustion attacks
+  const MAX_INPUT_LENGTH = 10000;
+  if (sanitized.length > MAX_INPUT_LENGTH) {
+    sanitized = sanitized.substring(0, MAX_INPUT_LENGTH);
+  }
+  
+  return sanitized;
+}
 import OpenAI from 'openai';
 import Anthropic from '@anthropic-ai/sdk';
 
@@ -274,40 +319,74 @@ export class AIAgentService extends EventEmitter {
     };
   }
 
-  async sendMessage(sessionId: string, message: string, context: { organizationId: string; userId: string }): Promise<{ message: string; response: { content: string; usage: { totalTokens: number; promptTokens: number; completionTokens: number } } }> {
+  async sendMessage(sessionId: string, message: string, context: { organizationId: string; userId: string }): Promise<{ message: string; response: { content: string; usage: { totalTokens: number; promptTokens: number; completionTokens: number } }; action?: string; actionParams?: any; confidence?: number; nextSteps?: string[] }> {
     const conversation = await this.getConversation(sessionId, context.organizationId);
     if (!conversation) {
       throw new Error('Conversation not found');
     }
     const agent = await this.getAgent(conversation.agentId);
+
+    // Enhance messages with system prompt from agent configuration
+    let enhancedMessages = [...conversation.messages];
+    const config = (agent?.config as any);
+    if (config?.systemPrompt && !enhancedMessages.some(m => m.role === 'system')) {
+      enhancedMessages.unshift({
+        role: 'system',
+        content: config.systemPrompt,
+        timestamp: new Date(),
+      });
+    } else if (agent?.systemPrompt && !enhancedMessages.some(m => m.role === 'system')) {
+      enhancedMessages.unshift({
+        role: 'system',
+        content: agent.systemPrompt,
+        timestamp: new Date(),
+      });
+    }
     
     if (agent?.capabilities?.includes('memory')) {
-      await consolidatedMemoryService.searchMemories(
-        context.organizationId,
-        { limit: 10 }
-      );
-      // Integration logic here...
+      try {
+        const memories = await consolidatedMemoryService.searchMemories(
+          context.organizationId,
+          { limit: 10 }
+        );
+        if (memories && memories.length > 0) {
+          const memoryContext = memories.map((m: any) => m.content || m.text || '').filter(Boolean).join('\n');
+          if (memoryContext) {
+            enhancedMessages.push({
+              role: 'system',
+              content: `Relevant context from memory:\n${memoryContext}`,
+              timestamp: new Date(),
+            });
+          }
+        }
+      } catch (e) {
+        // Memory search failed, continue without memory context
+      }
     }
 
-    const response = await this.callAIProvider(conversation.messages, agent?.model || 'gpt-4');
+    const response = await this.callAIProvider(enhancedMessages, agent?.model || 'gpt-4');
 
     if (agent?.capabilities?.includes('memory') && message.length > 50) {
-      await consolidatedMemoryService.storeMemory({
-        organizationId: context.organizationId,
-        userId: context.userId,
-        content: message,
-        type: 'conversation',
-        importance: 50,
-        priority: 'medium',
-        accessLevel: 'private',
-        isEncrypted: false,
-        retentionDays: 90,
-        tags: ['chat', 'user-message'],
-        metadata: { sessionId },
-        childIds: [],
-        contentType: 'text',
-        lastAccessed: new Date()
-      });
+      try {
+        await consolidatedMemoryService.storeMemory({
+          organizationId: context.organizationId,
+          userId: context.userId,
+          content: message,
+          type: 'conversation',
+          importance: 50,
+          priority: 'medium',
+          accessLevel: 'private',
+          isEncrypted: false,
+          retentionDays: 90,
+          tags: ['chat', 'user-message'],
+          metadata: { sessionId },
+          childIds: [],
+          contentType: 'text',
+          lastAccessed: new Date()
+        });
+      } catch (e) {
+        // Memory storage failed, continue
+      }
     }
 
     const assistantMessage: Message = { role: 'assistant', content: response.content, timestamp: new Date() };
@@ -315,7 +394,37 @@ export class AIAgentService extends EventEmitter {
     conversation.timestamp = Date.now();
     this.conversationTimestamps.set(sessionId, conversation.timestamp);
 
-    return { message: response.content, response };
+    // Persist conversation periodically (every 10 messages)
+    if (conversation.messages.length % 10 === 0) {
+      try {
+        await this.saveConversationToDatabase(conversation);
+      } catch (e) {
+        // Continue even if save fails
+      }
+    }
+
+    // Determine action based on response content
+    let action: string | undefined;
+    let actionParams: any;
+    let confidence: number = 0.85;
+    const nextSteps: string[] = [];
+
+    const lowerResponse = response.content.toLowerCase();
+    if (lowerResponse.includes('recommend') || lowerResponse.includes('suggest')) {
+      action = 'recommendation';
+      confidence = 0.9;
+    } else if (lowerResponse.includes('create') || lowerResponse.includes('generate')) {
+      action = 'creation';
+      confidence = 0.88;
+    } else if (lowerResponse.includes('analyze') || lowerResponse.includes('review')) {
+      action = 'analysis';
+      confidence = 0.92;
+    } else if (lowerResponse.includes('schedule') || lowerResponse.includes('set up')) {
+      action = 'scheduling';
+      confidence = 0.87;
+    }
+
+    return { message: response.content, response, action, actionParams, confidence, nextSteps };
   }
 
   private compressConversationInPlace(conversation: ConversationState): void {
@@ -328,8 +437,6 @@ export class AIAgentService extends EventEmitter {
   private cleanupExpiredConversations(): void {
     const now = Date.now();
     let cleaned = 0;
-    
-    // Clean up from conversationCache
     for (const [id, state] of this.conversationCache.entries()) {
       if (now - state.timestamp > this.conversationCacheTTL) {
         this.conversationCache.delete(id);
@@ -337,7 +444,6 @@ export class AIAgentService extends EventEmitter {
         cleaned++;
       }
     }
-    
     if (cleaned > 0) {
       logger.debug(`Cleaned ${cleaned} expired conversations from cache`);
     }
@@ -359,13 +465,19 @@ export class AIAgentService extends EventEmitter {
       throw new Error('No AI provider configured. Please set OPENAI_API_KEY or ANTHROPIC_API_KEY environment variable.');
     }
 
+    // Sanitize all user messages to prevent prompt injection
+    const sanitizedMessages = messages.map(m => ({
+      ...m,
+      content: m.role === 'user' ? sanitizeForAI(m.content) : m.content
+    }));
+
     // Use Anthropic for Claude models
     if (model.includes('claude') && this.anthropic) {
       try {
         const response = await this.anthropic.messages.create({
           model: model || 'claude-3-opus-20240229',
           max_tokens: 4096,
-          messages: messages
+          messages: sanitizedMessages
             .filter(m => m.role !== 'system')
             .map((m: Message) => ({
               role: m.role === 'assistant' ? 'assistant' as const : 'user' as const,
@@ -394,7 +506,7 @@ export class AIAgentService extends EventEmitter {
       try {
         const completion = await this.openai.chat.completions.create({
           model: model || 'gpt-4',
-          messages: messages.map((m: Message) => ({
+          messages: sanitizedMessages.map((m: Message) => ({
             role: m.role,
             content: m.content
           })),
@@ -460,12 +572,40 @@ export class AIAgentService extends EventEmitter {
     if (!agent) throw new Error('Agent not found');
 
     const sessionId = crypto.randomUUID();
+
+    // Build initial messages with system prompt from agent configuration
+    const messages: Message[] = [];
+
+    // Inject system prompt from agent configuration
+    const config = (agent.config as any);
+    if (config?.systemPrompt) {
+      messages.push({
+        role: 'system',
+        content: config.systemPrompt,
+        timestamp: new Date(),
+      });
+    } else if (agent.systemPrompt) {
+      messages.push({
+        role: 'system',
+        content: agent.systemPrompt,
+        timestamp: new Date(),
+      });
+    }
+
+    if (initialMessage) {
+      messages.push({
+        role: 'user',
+        content: initialMessage,
+        timestamp: new Date(),
+      });
+    }
+
     const conversation: ConversationState = {
       sessionId,
       agentId,
       organizationId: context.organizationId,
       userId: context.userId,
-      messages: [{ role: 'user' as const, content: initialMessage, timestamp: new Date() }],
+      messages,
       timestamp: Date.now()
     };
 
@@ -503,8 +643,37 @@ export class AIAgentService extends EventEmitter {
         );
       }
 
-      // Record user message
-      conversation.messages.push({ role: 'user', content: message, timestamp: new Date() });
+      // Retrieve relevant skill.md knowledge for the agent
+      let skillContext = '';
+      try {
+        const skillResults = await skillMDManagementService.semanticSearchSkillFiles(
+          context.organizationId,
+          message,
+          conversation.agentId,
+          3
+        );
+        
+        if (skillResults.files.length > 0) {
+          skillContext = '\n\nRelevant Knowledge Base:\n';
+          skillResults.files.forEach((file, index) => {
+            const similarity = (skillResults.similarities[index]! * 100).toFixed(0);
+            skillContext += `\n[${similarity}% match] ${file.originalFileName}\n`;
+            if (file.summary) {
+              skillContext += `Summary: ${file.summary}\n`;
+            }
+            if (file.markdownContent) {
+              skillContext += `Content: ${file.markdownContent.substring(0, 500)}...\n`;
+            }
+          });
+        }
+      } catch (error) {
+        logger.error('Failed to retrieve skill.md knowledge:', error instanceof Error ? error : new Error(String(error)));
+        // Continue without skill context
+      }
+
+      // Record user message with skill context
+      const userMessageWithSkill = skillContext ? `${message}${skillContext}` : message;
+      conversation.messages.push({ role: 'user', content: userMessageWithSkill, timestamp: new Date() });
       conversation.timestamp = Date.now();
 
       // Call AI provider for streaming response
@@ -578,20 +747,6 @@ export class AIAgentService extends EventEmitter {
       };
     } catch (error) {
       yield { type: 'error', error: (error as Error).message };
-    }
-  }
-
-  private cleanupConversationCache(): void {
-    const now = Date.now();
-    let cleaned = 0;
-    for (const [id, state] of this.conversationCache.entries()) {
-      if (now - state.timestamp > this.conversationCacheTTL) {
-        this.conversationCache.delete(id);
-        cleaned++;
-      }
-    }
-    if (cleaned > 0) {
-      logger.debug(`Cleaned ${cleaned} expired conversations from cache`);
     }
   }
 
@@ -742,6 +897,27 @@ export class AIAgentService extends EventEmitter {
     }
   }
 
+  // Rate limiting for agent creation
+  private creationRateLimiter = new Map<string, number[]>();
+  private readonly AGENT_CREATION_RATE_LIMIT = 50; // max agents per hour per org
+  private readonly AGENT_CREATION_RATE_WINDOW = 60 * 60 * 1000; // 1 hour
+  private readonly MAX_AGENTS_PER_ORG = 500;
+
+  private checkCreationRateLimit(organizationId: string): boolean {
+    const now = Date.now();
+    const key = `agent_create:${organizationId}`;
+    const timestamps = this.creationRateLimiter.get(key) || [];
+    const validTimestamps = timestamps.filter(t => now - t < this.AGENT_CREATION_RATE_WINDOW);
+    
+    if (validTimestamps.length >= this.AGENT_CREATION_RATE_LIMIT) {
+      return false;
+    }
+    
+    validTimestamps.push(now);
+    this.creationRateLimiter.set(key, validTimestamps);
+    return true;
+  }
+
   // Public API methods
   async createAgent(agentData: AgentConfig, organizationId: string, userId?: string): Promise<AgentConfig> {
     // Validation
@@ -753,9 +929,26 @@ export class AIAgentService extends EventEmitter {
       throw new Error('Agent type is required');
     }
 
+    // Sanitize agent name to prevent injection
+    const sanitizedName = agentData.name.replace(/[<>\"'&]/g, '').trim();
+    if (sanitizedName.length > 200) {
+      throw new Error('Agent name too long (max 200 characters)');
+    }
+
+    // Rate limit check
+    const actualOrgId = organizationId || agentData.organizationId || 'org-123';
+    if (!this.checkCreationRateLimit(actualOrgId)) {
+      throw new Error('Agent creation rate limit exceeded. Maximum 50 agents per hour per organization.');
+    }
+
+    // Check agent count limit per organization
+    const existingAgents = await this.getAgents(actualOrgId);
+    if (existingAgents.length >= this.MAX_AGENTS_PER_ORG) {
+      throw new Error(`Maximum agent limit (${this.MAX_AGENTS_PER_ORG}) reached for this organization.`);
+    }
+
     // Extract userId and organizationId from agentData if not provided as parameters
     const actualUserId = userId || agentData.userId;
-    const actualOrgId = organizationId || agentData.organizationId || 'org-123';
 
     const agent: AgentConfig = {
       ...agentData,
@@ -889,21 +1082,110 @@ export class AIAgentService extends EventEmitter {
     const cached = this.agentCache.get(agentId);
     if (cached) return cached;
 
-    // Load from database
+    // Load from database - try multiple lookup strategies
     try {
-      const result = await db.select()
+      // Strategy 1: Direct ID match (UUID format)
+      let result = await db.select()
         .from(aiAgents)
         .where(eq(aiAgents.id, agentId))
         .limit(1);
-      
+
+      // Strategy 2: Match by agent name (title)
+      if (result.length === 0) {
+        result = await db.select()
+          .from(aiAgents)
+          .where(eq(aiAgents.name, agentId))
+          .limit(1);
+      }
+
+      // Strategy 3: Match by UID stored in config
+      if (result.length === 0) {
+        const allAgents = await db.select().from(aiAgents).limit(5000);
+        const match = allAgents.find((row) => {
+          const config = row.config as any;
+          return config?.uid === agentId ||
+                 config?.sidebarId === agentId ||
+                 config?.route?.includes(agentId) ||
+                 row.name?.toLowerCase().includes(agentId.toLowerCase().replace(/-/g, ' '));
+        });
+        if (match) result = [match];
+      }
+
       const row = result[0];
-      if (!row) return null;
+      if (!row) {
+        // Strategy 4: Try to create an agent on-the-fly from the registry
+        return this.getOrCreateAgentFromRegistry(agentId);
+      }
       
       const agent = row.config as AgentConfig;
+      // Ensure the agent has an id field
+      if (!agent.id) (agent as any).id = row.id;
       this.agentCache.set(agentId, agent);
       return agent;
     } catch (error) {
       logger.error('[AIAgentService] Failed to get agent', error as Error);
+      // Fallback: try registry
+      return this.getOrCreateAgentFromRegistry(agentId);
+    }
+  }
+
+  /**
+   * Create an agent configuration on-the-fly from the registry if not found in DB.
+   * This ensures ANY agent from the registry can handle conversations.
+   */
+  private getOrCreateAgentFromRegistry(agentId: string): AgentConfig | null {
+    try {
+      // Import registry dynamically to avoid circular dependencies
+      const { agentRegistry } = require('../../constants/aiAgentRegistry');
+      const { getDepartmentConfig, getAgentSystemPrompt, getAgentCapabilities, getAgentTools } = require('../../constants/agent-configurations');
+      
+      const entry = agentRegistry.find((a: any) =>
+        a.uid === agentId ||
+        a.sidebarId === agentId ||
+        a.route?.includes(agentId) ||
+        a.title?.toLowerCase().includes(agentId.toLowerCase().replace(/-/g, ' '))
+      );
+
+      if (!entry) return null;
+
+      const systemPrompt = getAgentSystemPrompt(entry.departmentId, entry.level, entry.title);
+      const capabilities = getAgentCapabilities(entry.departmentId, entry.level);
+      const tools = getAgentTools(entry.departmentId, entry.level);
+
+      const agentConfig: AgentConfig = {
+        id: entry.uid,
+        name: entry.title,
+        systemPrompt,
+        capabilities,
+        tools: tools.map((t: any) => ({
+          name: t.name,
+          description: t.description,
+          parameters: t.parameters,
+          category: t.category,
+          enabled: true,
+        })),
+        model: entry.level === 'c_level' ? 'gpt-4-turbo' : 'gpt-4',
+        temperature: entry.level === 'c_level' ? 0.3 : 0.5,
+        maxTokens: entry.level === 'c_level' ? 4096 : 2048,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        config: {
+          department: entry.department,
+          departmentId: entry.departmentId,
+          level: entry.level,
+          type: entry.type,
+          route: entry.route,
+          uid: entry.uid,
+          parentId: entry.parentId,
+        },
+      } as any;
+
+      // Cache it for future lookups
+      this.agentCache.set(agentId, agentConfig);
+      logger.info(`Created on-the-fly agent config for: ${entry.title} (${entry.uid})`);
+      return agentConfig;
+    } catch (error) {
+      logger.error('[AIAgentService] Failed to create agent from registry', error as Error);
       return null;
     }
   }
@@ -1370,18 +1652,54 @@ export class AIAgentService extends EventEmitter {
   ): Promise<AgentConfig> {
     try {
       // Validate agent configuration
-      if (!agentConfig.agent) {
-        throw new Error('Invalid agent configuration');
+      if (!agentConfig || !agentConfig.agent) {
+        throw new Error('Invalid agent configuration: missing agent object');
       }
 
+      const agent = agentConfig.agent;
+
+      // Validate required fields
+      if (!agent.name || typeof agent.name !== 'string' || agent.name.trim() === '') {
+        throw new Error('Imported agent must have a valid name');
+      }
+      if (!agent.type || typeof agent.type !== 'string') {
+        throw new Error('Imported agent must have a valid type');
+      }
+
+      // Sanitize name and system prompt to prevent injection
+      const sanitizedName = agent.name.replace(/[<>\"'&]/g, '').trim().substring(0, 200);
+      const sanitizedPrompt = agent.systemPrompt 
+        ? sanitizeForAI(String(agent.systemPrompt).substring(0, 10000))
+        : '';
+
+      // Validate tools array if present
+      if (agent.tools && Array.isArray(agent.tools)) {
+        for (const tool of agent.tools) {
+          if (!tool.name || typeof tool.name !== 'string') {
+            throw new Error('All imported tools must have a valid name');
+          }
+          // Validate tool name format (alphanumeric + underscores only)
+          if (!/^[a-zA-Z0-9_]+$/.test(tool.name)) {
+            throw new Error(`Invalid tool name: ${tool.name}. Only alphanumeric and underscores allowed.`);
+          }
+        }
+      }
+
+      // Limit conversation and event counts to prevent abuse
+      const maxConversations = 100;
+      const maxEvents = 500;
+
       const importedAgent: AgentConfig = {
-        ...agentConfig.agent,
-        id: crypto.randomUUID(), // Generate new ID for import
+        ...agent,
+        id: crypto.randomUUID(),
+        name: sanitizedName,
+        systemPrompt: sanitizedPrompt,
+        organizationId,
         config: {
-          ...agentConfig.agent.config,
+          ...agent.config,
           importedAt: new Date().toISOString(),
           importedBy: userId,
-          originalId: agentConfig.agent.id
+          originalId: agent.id
         }
       };
 
@@ -1389,21 +1707,30 @@ export class AIAgentService extends EventEmitter {
       await this.saveAgentToDatabase(importedAgent, organizationId);
       this.agentCache.set(importedAgent.id, importedAgent);
 
-      // Optionally import conversations and events if provided
+      // Optionally import conversations and events if provided (with limits)
       if (agentConfig.conversations && Array.isArray(agentConfig.conversations)) {
-        for (const conv of agentConfig.conversations) {
+        const convsToImport = agentConfig.conversations.slice(0, maxConversations);
+        for (const conv of convsToImport) {
+          const sanitizedMessages = Array.isArray(conv.messages) 
+            ? conv.messages.map((m: any) => ({
+                ...m,
+                content: typeof m.content === 'string' ? sanitizeForAI(m.content.substring(0, 5000)) : m.content
+              }))
+            : [];
           const newConv = {
             ...conv,
             id: crypto.randomUUID(),
             agentId: importedAgent.id,
-            organizationId: organizationId
+            organizationId: organizationId,
+            messages: sanitizedMessages
           };
           await db.insert(aiConversations).values(newConv);
         }
       }
 
       if (agentConfig.events && Array.isArray(agentConfig.events)) {
-        for (const event of agentConfig.events) {
+        const eventsToImport = agentConfig.events.slice(0, maxEvents);
+        for (const event of eventsToImport) {
           const newEvent = {
             ...event,
             id: crypto.randomUUID(),
@@ -1460,23 +1787,67 @@ export class AIAgentService extends EventEmitter {
 
   // Process a message with an agent (core logic)
   async processMessage(agentId: string, message: string, context?: any): Promise<any> {
-    // Simplified implementation - in a full version this would:
-    // 1. Get the agent configuration
-    // 2. Retrieve conversation history if sessionId provided in context
-    // 3. Process the message through the appropriate AI provider
-    // 4. Store the conversation
-    // 5. Return the response
-    
     const agent = this.agentCache.get(agentId);
     if (!agent) {
       throw new Error(`Agent not found: ${agentId}`);
     }
 
-    // For now, return a basic response - this would be enhanced with actual AI processing
+    const model = agent.model || 'gpt-4';
+    const systemPrompt = agent.systemPrompt || '';
+    const sessionId = context?.sessionId || `proc_${agentId}_${Date.now()}`;
+
+    // Build messages array with system prompt
+    const messages: Message[] = [];
+    if (systemPrompt) {
+      messages.push({ role: 'system', content: systemPrompt, timestamp: new Date() });
+    }
+
+    // Include conversation history if available
+    const conversation = this.conversationCache.get(sessionId);
+    if (conversation) {
+      messages.push(...conversation.messages.filter(m => m.role !== 'system'));
+    }
+
+    messages.push({ role: 'user', content: message, timestamp: new Date() });
+
+    // Call AI provider
+    let aiResult;
+    try {
+      aiResult = await this.callAIProvider(messages, model);
+    } catch (error) {
+      logger.error(`processMessage AI call failed for agent ${agentId}:`, error as Error);
+      return {
+        success: false,
+        response: null,
+        error: (error as Error).message,
+        agentId,
+        timestamp: new Date().toISOString()
+      };
+    }
+
+    // Update conversation cache
+    if (!this.conversationCache.has(sessionId)) {
+      this.conversationCache.set(sessionId, {
+        sessionId,
+        agentId,
+        organizationId: context?.organizationId || agent.organizationId || '',
+        userId: context?.userId,
+        messages: [],
+        timestamp: Date.now()
+      });
+    }
+    const conv = this.conversationCache.get(sessionId)!;
+    conv.messages.push({ role: 'user', content: message, timestamp: new Date() });
+    conv.messages.push({ role: 'assistant', content: aiResult.content, timestamp: new Date() });
+    conv.timestamp = Date.now();
+    this.conversationTimestamps.set(sessionId, conv.timestamp);
+
     return {
       success: true,
-      response: `Processed message "${message}" for agent ${agent.name}`,
+      response: aiResult.content,
       agentId,
+      sessionId,
+      usage: aiResult.usage,
       timestamp: new Date().toISOString()
     };
   }
@@ -1542,14 +1913,80 @@ export class AIAgentService extends EventEmitter {
 
   // Store a memory for an agent
   async storeMemory(agentId: string, key: string, value: any): Promise<boolean> {
-    logger.info(`Storing memory for agent ${agentId}: ${key}`);
-    return true;
+    try {
+      const agent = this.agentCache.get(agentId);
+      if (!agent) {
+        logger.warn(`storeMemory: Agent ${agentId} not found`);
+        return false;
+      }
+
+      const organizationId = agent.organizationId || '';
+      const content = typeof value === 'string' ? value : JSON.stringify(value);
+
+      await consolidatedMemoryService.storeMemory({
+        organizationId,
+        userId: agent.createdBy || 'system',
+        content,
+        type: 'procedural',
+        importance: 50,
+        priority: 'medium',
+        accessLevel: 'private',
+        isEncrypted: false,
+        retentionDays: 90,
+        tags: ['agent_memory', agentId, key],
+        metadata: { agentId, key, storedAt: new Date().toISOString() },
+        childIds: [],
+        contentType: 'text',
+        lastAccessed: new Date()
+      });
+
+      logger.info(`Memory stored for agent ${agentId}: ${key}`);
+      return true;
+    } catch (error) {
+      logger.error(`Failed to store memory for agent ${agentId}:`, error as Error);
+      return false;
+    }
   }
 
-  // Execute a tool
+  // Execute a tool for an agent
   async executeTool(agentId: string, toolName: string, params: any): Promise<any> {
-    logger.info(`Executing tool ${toolName} for agent ${agentId}`);
-    return { success: true, result: null };
+    try {
+      const agent = this.agentCache.get(agentId);
+      if (!agent) {
+        throw new Error(`Agent ${agentId} not found`);
+      }
+
+      // Find the tool in the agent's tool list
+      const tool = (agent.tools || []).find((t: any) => t.name === toolName);
+      if (!tool) {
+        throw new Error(`Tool ${toolName} not found on agent ${agentId}`);
+      }
+
+      // Check if tool is enabled
+      if (tool.enabled === false) {
+        throw new Error(`Tool ${toolName} is disabled on agent ${agentId}`);
+      }
+
+      // Execute via the tool executor with sandboxing
+      const { toolExecutor: executor } = await import('../lib/tool-executor');
+      const result = await executor.executeTool(tool, {
+        agentId,
+        sessionId: `tool_${agentId}_${Date.now()}`,
+        organizationId: agent.organizationId || '',
+        userId: agent.createdBy,
+        metadata: { agentId, toolName }
+      });
+
+      return {
+        success: result.success,
+        result: result.result,
+        error: result.error,
+        executionTime: result.executionTime
+      };
+    } catch (error) {
+      logger.error(`Failed to execute tool ${toolName} for agent ${agentId}:`, error as Error);
+      return { success: false, result: null, error: (error as Error).message };
+    }
   }
 
   // Get agents by type
@@ -1564,17 +2001,96 @@ export class AIAgentService extends EventEmitter {
 
   // Get agent resolved (with full details)
   async getAgentResolved(agentId: string): Promise<AgentConfig | null> {
-    return this.agentCache.get(agentId) || null;
+    // Try cache first
+    const cached = this.agentCache.get(agentId);
+    if (cached) return cached;
+    
+    // Use the full getAgent method which includes DB + registry fallback
+    return this.getAgent(agentId);
   }
 
-  // Alias: getAllAgents
+  // Alias: getAllAgents — must filter by organizationId for data isolation
   async getAllAgents(organizationId: string): Promise<AgentConfig[]> {
-    return Array.from(this.agentCache.values());
+    return Array.from(this.agentCache.values()).filter(
+      (agent) => agent.organizationId === organizationId
+    );
   }
 
   // Alias: endConversation
-  async endConversation(conversationId: string): Promise<boolean> {
+  async endConversation(conversationId: string, context?: { organizationId?: string; userId?: string }): Promise<boolean> {
+    const conversation = this.conversationCache.get(conversationId);
+    if (!conversation) return false;
+    
+    // Verify ownership if context provided
+    if (context?.organizationId && conversation.organizationId !== context.organizationId) {
+      return false;
+    }
+    
+    // Persist conversation before deleting
+    try {
+      await this.saveConversationToDatabase(conversation);
+    } catch (e) {
+      // Continue even if save fails
+    }
+    
     return this.conversationCache.delete(conversationId);
+  }
+
+  // ============================================================
+  // LOOP ENGINEERING INTEGRATION
+  // ============================================================
+
+  private loopEngineeringService: LoopEngineeringService | null = null;
+
+  private getLoopEngineeringService(): LoopEngineeringService {
+    if (!this.loopEngineeringService) {
+      const { ToolExecutor } = require('../lib/tool-executor');
+      const { ConversationManager } = require('../lib/conversation-manager');
+      const { AIServiceManager } = require('./ai/ai-model-abstraction');
+      this.loopEngineeringService = new LoopEngineeringService(
+        new AIServiceManager({ provider: 'openai', model: 'gpt-4' }),
+        new ToolExecutor(),
+        new ConversationManager()
+      );
+    }
+    return this.loopEngineeringService;
+  }
+
+  async executeWithLoop(
+    agentId: string,
+    organizationId: string,
+    input: string,
+    options: {
+      loopType?: LoopType;
+      sessionId?: string;
+      userId?: string;
+      config?: LoopConfig;
+      tools?: AgentTool[];
+      systemPrompt?: string;
+      metadata?: Record<string, any>;
+    } = {}
+  ): Promise<LoopResult> {
+    const agent = await this.getAgent(agentId);
+    if (!agent) throw new Error('Agent not found');
+
+    const loopService = this.getLoopEngineeringService();
+
+    return loopService.execute({
+      agentId,
+      organizationId,
+      sessionId: options.sessionId,
+      userId: options.userId,
+      input,
+      loopType: options.loopType || 'react',
+      config: options.config,
+      tools: options.tools || (agent.tools || []).filter(t => t.enabled !== false),
+      systemPrompt: options.systemPrompt || agent.systemPrompt,
+      metadata: options.metadata || {},
+    });
+  }
+
+  getLoopEngineeringServiceInstance(): LoopEngineeringService | null {
+    return this.loopEngineeringService;
   }
 }
 

@@ -7,7 +7,7 @@ export default function SupplierRelationsManagerPage() {
     id: 'supplier-relations-manager',
     name: 'AI Supplier Relations Manager',
     title: 'Supplier Relations Manager',
-    description: 'The AI Supplier Relations Manager manages supplier relationships, evaluates supplier performance, coordinates procurement activities, and ensures optimal supplier partnerships.",
+    description: 'The AI Supplier Relations Manager manages supplier relationships, evaluates supplier performance, coordinates procurement activities, and ensures optimal supplier partnerships.',
     capabilities: ["Supplier Management","Performance Evaluation","Relationship Building","Contract Management","Procurement Coordination","Quality Assurance","Risk Assessment","Reporting","Strategic Planning","Cost Optimization"],
     icon: Handshake,
     color: '#6366F1',

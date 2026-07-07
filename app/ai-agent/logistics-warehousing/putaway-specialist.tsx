@@ -7,7 +7,7 @@ export default function PutawaySpecialistPage() {
     id: 'putaway-specialist',
     name: 'AI Putaway Specialist',
     title: 'Putaway Specialist',
-    description: 'The AI Putaway Specialist manages putaway operations, coordinates product placement, optimizes putaway sequences, and ensures efficient and accurate putaway of received goods.",
+    description: 'The AI Putaway Specialist manages putaway operations, coordinates product placement, optimizes putaway sequences, and ensures efficient and accurate putaway of received goods.',
     capabilities: ["Putaway Coordination","Placement Optimization","Sequence Planning","Quality Check","Documentation","Performance Tracking","Exception Handling","Reporting","Continuous Improvement","Cost Analysis"],
     icon: ArrowDown,
     color: '#3B82F6',

@@ -7,7 +7,7 @@ export default function TariffClassifierPage() {
     id: 'tariff-classifier',
     name: 'AI Tariff Classifier',
     title: 'Tariff Classifier',
-    description: 'The AI Tariff Classifier classifies products for customs tariffs, determines HS codes, ensures correct tariff application, and maintains compliance with trade regulations.",
+    description: 'The AI Tariff Classifier classifies products for customs tariffs, determines HS codes, ensures correct tariff application, and maintains compliance with trade regulations.',
     capabilities: ["Tariff Classification","HS Code Determination","Compliance Verification","Product Analysis","Regulatory Updates","Documentation","Audit Support","Reporting","Integration","Continuous Improvement"],
     icon: Tags,
     color: '#EC4899',

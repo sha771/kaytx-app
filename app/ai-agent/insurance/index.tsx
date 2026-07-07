@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
-import { useRouter } from 'expo-router';
+import DepartmentDashboardView from '@/components/ai-agent/dashboard/DepartmentDashboardView';
+
 const agents = [
   { id: 'ai-chief-risk-officer', uid: 'ktx-16-chief-risk-officer', title: 'AI Chief Risk Officer', route: '/ai-agent/insurance/chief-risk-officer', color: '#FF7043', level: 'c_level', efficiency: '82%' },
   { id: 'ai-vp-underwriting', uid: 'ktx-16-vp-underwriting', title: 'AI VP Underwriting', route: '/ai-agent/insurance/vp-underwriting', color: '#FF7043', level: 'vp_director', efficiency: '81%' },
@@ -71,28 +71,12 @@ const agents = [
   { id: 'ai-agent-support', uid: 'ktx-16-agent-support', title: 'AI Agent Support', route: '/ai-agent/insurance/agent-support', color: '#FF7043', level: 'team_lead', efficiency: '84%' },
   { id: 'ai-broker-support', uid: 'ktx-16-broker-support', title: 'AI Broker Support', route: '/ai-agent/insurance/broker-support', color: '#FF7043', level: 'team_lead', efficiency: '83%' },
 ];
+
 export default function DepartmentIndex() {
-  const router = useRouter();
   return (
-    <ScrollView style={s.container}>
-      <Text style={s.title}>Insurance & Risk - AI Agents</Text>
-      <Text style={s.sub}>60 AI Agents & Employees</Text>
-      <View style={s.grid}>
-        {agents.map((a) => (
-          <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>
-            <Text style={s.at}>{a.title}</Text>
-            <Text style={s.al}>{a.level.replace('_',' ').toUpperCase()}</Text>
-            <Text style={s.ae}>{a.efficiency}</Text>
-          </Pressable>
-        ))}
-      </View>
-    </ScrollView>
+    <DepartmentDashboardView
+      departmentId="insurance-risk"
+      agents={agents}
+    />
   );
 }
-const s = StyleSheet.create({
-  container:{flex:1,backgroundColor:'#0a0a0a',padding:16},title:{color:'#fff',fontSize:24,fontWeight:'bold',marginBottom:4},
-  sub:{color:'#888',fontSize:14,marginBottom:16},grid:{flexDirection:'row',flexWrap:'wrap',gap:12},
-  card:{backgroundColor:'#1a1a2e',borderRadius:12,padding:16,width:'48%',borderLeftWidth:3},
-  at:{color:'#fff',fontSize:14,fontWeight:'600',marginBottom:4},al:{color:'#888',fontSize:11,marginBottom:2},
-  ae:{color:'#10B981',fontSize:12},
-});

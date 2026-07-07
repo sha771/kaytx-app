@@ -2,7 +2,7 @@ import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
 import { Bot } from 'lucide-react-native';
 
-export default function Multi-unitDirectorPage() {
+export default function MultiUnitDirectorPage() {
   const agent = {
     id: 'multi-unit-director',
     name: 'AI Multi-unit Director',

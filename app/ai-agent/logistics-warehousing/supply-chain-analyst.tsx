@@ -7,7 +7,7 @@ export default function SupplyChainAnalystPage() {
     id: 'supply-chain-analyst',
     name: 'AI Supply Chain Analyst',
     title: 'Supply Chain Analyst',
-    description: 'The AI Supply Chain Analyst analyzes supply chain performance, identifies optimization opportunities, generates insights, and supports data-driven supply chain decisions.",
+    description: 'The AI Supply Chain Analyst analyzes supply chain performance, identifies optimization opportunities, generates insights, and supports data-driven supply chain decisions.',
     capabilities: ["Supply Chain Analysis","Performance Monitoring","Optimization Identification","Trend Analysis","Insight Generation","Reporting","Forecasting","Benchmarking","Strategic Support","Continuous Improvement"],
     icon: BarChart,
     color: '#6366F1',

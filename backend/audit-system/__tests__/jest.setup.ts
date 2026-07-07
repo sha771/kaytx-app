@@ -2,11 +2,9 @@
  * Jest setup for audit system tests
  */
 
-import { closeDatabase } from '../db/connection';
-
 // Clean up database connections after all tests
 afterAll(() => {
-  closeDatabase();
+  // Database cleanup handled by global test teardown
 });
 
 // Set test timeout

@@ -7,7 +7,7 @@ export default function CollaborationFacilitatorPage() {
     id: 'collaboration-facilitator',
     name: 'AI Collaboration Facilitator',
     title: 'Collaboration Facilitator',
-    description: 'The AI Collaboration Facilitator facilitates supply chain collaboration, coordinates partner activities, manages information sharing, and ensures effective stakeholder communication.",
+    description: 'The AI Collaboration Facilitator facilitates supply chain collaboration, coordinates partner activities, manages information sharing, and ensures effective stakeholder communication.',
     capabilities: ["Collaboration Facilitation","Partner Coordination","Information Sharing","Stakeholder Communication","Process Coordination","Conflict Resolution","Performance Monitoring","Reporting","Integration","Continuous Improvement"],
     icon: Users,
     color: '#6366F1',

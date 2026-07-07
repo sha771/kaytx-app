@@ -114,7 +114,7 @@ export default function VoiceCallScreen() {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-
+  };
 
   const toggleMute = () => {
     setCallState(prev => ({ ...prev, isMuted: !prev.isMuted }));

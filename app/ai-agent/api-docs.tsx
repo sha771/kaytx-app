@@ -76,8 +76,8 @@ const API_ENDPOINTS: ApiEndpoint[] = [
       { name: 'session_id', type: 'string', required: false, description: 'Session identifier for context' },
     ],
     responses: [
-      { code: 200, description: 'Success', example: '{"response": "Hello! How can I help?", "session_id": "abc123"}' },
-      { code: 404, description: 'Agent not found', example: '{"error": "Agent not found"}' },
+      { code: 200, description: 'Success', example: `{"response": "Hello! How can I help?", "session_id": "abc123"}` },
+      { code: 404, description: 'Agent not found', example: `{"error": "Agent not found"}` },
     ],
   },
   {
@@ -92,7 +92,7 @@ const API_ENDPOINTS: ApiEndpoint[] = [
       { name: 'offset', type: 'integer', required: false, description: 'Pagination offset' },
     ],
     responses: [
-      { code: 200, description: 'Success', example: '{"agents": [{"id": "1", "name": "Support AI"}], "total": 5}' },
+      { code: 200, description: 'Success', example: `{"agents": [{"id": "1", "name": "Support AI"}], "total": 5}` },
     ],
   },
   {
@@ -107,7 +107,7 @@ const API_ENDPOINTS: ApiEndpoint[] = [
       { name: 'input', type: 'object', required: false, description: 'Input data for the workflow' },
     ],
     responses: [
-      { code: 202, description: 'Accepted', example: '{"execution_id": "exec_123", "status": "running"}' },
+      { code: 202, description: 'Accepted', example: `{"execution_id": "exec_123", "status": "running"}` },
     ],
   },
   {
@@ -123,7 +123,7 @@ const API_ENDPOINTS: ApiEndpoint[] = [
       { name: 'agent_id', type: 'string', required: false, description: 'Filter by specific agent' },
     ],
     responses: [
-      { code: 200, description: 'Success', example: '{"total_conversations": 1234, "avg_duration": 120}' },
+      { code: 200, description: 'Success', example: `{"total_conversations": 1234, "avg_duration": 120}` },
     ],
   },
   {
@@ -138,7 +138,7 @@ const API_ENDPOINTS: ApiEndpoint[] = [
       { name: 'category', type: 'string', required: false, description: 'Knowledge category' },
     ],
     responses: [
-      { code: 201, description: 'Created', example: '{"document_id": "doc_123", "status": "processing"}' },
+      { code: 201, description: 'Created', example: `{"document_id": "doc_123", "status": "processing"}` },
     ],
   },
 ];

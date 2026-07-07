@@ -7,7 +7,7 @@ export default function CustomerNotificationAgentPage() {
     id: 'customer-notification-agent',
     name: 'AI Customer Notification Agent',
     title: 'Customer Notification Agent',
-    description: 'The AI Customer Notification Agent manages customer notifications, sends delivery updates, communicates status changes, and ensures timely and accurate customer communication.",
+    description: 'The AI Customer Notification Agent manages customer notifications, sends delivery updates, communicates status changes, and ensures timely and accurate customer communication.',
     capabilities: ["Notification Management","Update Delivery","Status Communication","Multi-Channel Support","Personalization","Timing Optimization","Response Handling","Analytics","Integration","Customer Experience"],
     icon: MessageSquare,
     color: '#10B981',

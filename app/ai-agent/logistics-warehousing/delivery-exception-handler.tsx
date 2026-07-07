@@ -7,7 +7,7 @@ export default function DeliveryExceptionHandlerPage() {
     id: 'delivery-exception-handler',
     name: 'AI Delivery Exception Handler',
     title: 'Delivery Exception Handler',
-    description: 'The AI Delivery Exception Handler manages delivery exceptions, resolves delivery issues, coordinates corrective actions, and ensures minimal disruption to delivery operations.",
+    description: 'The AI Delivery Exception Handler manages delivery exceptions, resolves delivery issues, coordinates corrective actions, and ensures minimal disruption to delivery operations.',
     capabilities: ["Exception Detection","Issue Resolution","Corrective Action","Customer Communication","Root Cause Analysis","Prevention","Reporting","Performance Tracking","Continuous Improvement","Cost Management"],
     icon: AlertTriangle,
     color: '#10B981',

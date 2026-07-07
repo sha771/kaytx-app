@@ -462,3 +462,5 @@ const styles = StyleSheet.create({
   installBtnText: { color: '#fff', fontSize: 14, fontWeight: '600' },
   bottomSpacing: { height: 40 },
 });
+
+}

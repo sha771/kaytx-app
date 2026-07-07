@@ -79,7 +79,7 @@ export default function BrandSpecialistPage() {
       brandFocus: 'luxury',
       consistencyLevel: 'strict',
       assetQuality: 'premium',
-      monitoringApproach 'proactive',
+      monitoringApproach: 'proactive',
       coordinationLevel: 'high'
     },
     advancedFeatures: {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -32,6 +32,7 @@ import {
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { Stack } from 'expo-router';
+import { trpc } from '@/lib/trpc';
 
 interface GreetingScript {
   id: string;
@@ -67,6 +68,13 @@ export default function ReceptionistConfigScreen() {
   const [showSlotModal, setShowSlotModal] = useState(false);
   const [editingItem, setEditingItem] = useState<any>(null);
 
+  // Load config from backend
+  const configQuery = trpc.aiAssistant.receptionist.getConfig.useQuery();
+  const saveConfigMutation = trpc.aiAssistant.receptionist.saveConfig.useMutation({
+    onSuccess: () => Alert.alert('Saved', 'Configuration saved to backend'),
+    onError: (err) => Alert.alert('Error', err.message),
+  });
+
   const [aiConfig, setAiConfig] = useState({
     enabled: true,
     autoAnswer: true,
@@ -82,6 +90,13 @@ export default function ReceptionistConfigScreen() {
     businessHoursOnly: true,
     sendSummaryEmail: true,
   });
+
+  // Sync backend config to local state
+  useEffect(() => {
+    if (configQuery.data?.config) {
+      setAiConfig(configQuery.data.config);
+    }
+  }, [configQuery.data]);
 
   const [newScript, setNewScript] = useState<{
     name: string;
@@ -216,13 +231,17 @@ export default function ReceptionistConfigScreen() {
         script: newScript.script,
         timeOfDay: newScript.timeOfDay,
         language: newScript.language,
-
+      };
       setGreetingScripts(prev => [...prev, script]);
     }
 
     setShowScriptModal(false);
     setEditingItem(null);
     setNewScript({ name: '', script: '', timeOfDay: 'anytime' as const, language: 'English' });
+  };
+
+  const handleSaveAllConfig = () => {
+    saveConfigMutation.mutate(aiConfig);
   };
 
   const handleSaveRule = () => {
@@ -742,6 +761,17 @@ export default function ReceptionistConfigScreen() {
               </TouchableOpacity>
             ))}
           </View>
+
+          <TouchableOpacity
+            style={[styles.saveButton, { backgroundColor: theme.colors.primary, marginTop: 16 }]}
+            onPress={handleSaveAllConfig}
+            disabled={saveConfigMutation.isPending}
+          >
+            <Save size={20} color="white" />
+            <Text style={styles.saveButtonText}>
+              {saveConfigMutation.isPending ? 'Saving...' : 'Save All Configuration'}
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>

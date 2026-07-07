@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 import { AIAgentService, AgentType } from '../../backend/services/ai-agent-service';
-import { agentMemoryService } from '../../backend/services/agent-memory-service';
+import { agentMemoryService } from '../../backend/services/consolidated-memory-service';
 
 describe('AI Agent Service Advanced Features', () => {
   let aiAgentService: AIAgentService;

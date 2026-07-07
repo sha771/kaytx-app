@@ -2,7 +2,7 @@ import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
 import { Bot } from 'lucide-react-native';
 
-export default function Risk&SafetyChecklistAgentPage() {
+export default function RiskAndSafetyChecklistAgentPage() {
   const agent = {
     id: 'risk--safety-checklist-agent',
     name: 'AI Risk & Safety Checklist Agent',

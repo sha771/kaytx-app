@@ -7,7 +7,7 @@ export default function FeedbackManagerPage() {
     id: 'feedback-manager',
     name: 'AI Feedback Manager',
     title: 'AI Feedback Manager',
-    description: 'The AI Feedback Manager collects and analyzes customer feedback, identifies improvement areas, drives customer satisfaction, and ensures voice of customer is heard and acted upon.",
+    description: 'The AI Feedback Manager collects and analyzes customer feedback, identifies improvement areas, drives customer satisfaction, and ensures voice of customer is heard and acted upon.',
     capabilities: ["Task Automation","Data Processing","Workflow Management","Feedback Collection","Sentiment Analysis","Insight Generation","Improvement Identification","Customer Satisfaction","Voice of Customer","Action Planning"],
     icon: MessageCircle,
     color: '#C2185B',

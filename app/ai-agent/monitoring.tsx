@@ -104,7 +104,7 @@ export default function PerformanceMonitoringScreen() {
     uptime: '99.97%',
     lastIncident: '3 days ago',
     activeAlerts: 2,
-
+  };
 
   const recentAlerts = [
     { id: 1, message: 'AI Sales Agent response time spiked to 850ms', time: '5 min ago', severity: 'medium', resolved: false },
@@ -344,3 +344,4 @@ const styles = StyleSheet.create({
   saveButton: { padding: 14, borderRadius: 12, alignItems: 'center', marginTop: 10 },
   saveButtonText: { color: '#fff', fontSize: 16, fontWeight: '600' },
 });
+

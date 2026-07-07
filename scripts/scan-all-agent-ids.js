@@ -51,7 +51,7 @@ function scanAgentPages(dir, prefix) {
       const baseName = entry.name.replace('.tsx', '');
       const routePath = '/ai-agent' + prefix + '/' + baseName;
       
-      // Read file to extract agent ID if defined
+      // Read file to extract agent details if defined
       try {
         const content = fs.readFileSync(fullPath, 'utf-8');
         const idMatch = content.match(/id:\s*'([a-z][a-z0-9\-]+)'/);
@@ -61,8 +61,15 @@ function scanAgentPages(dir, prefix) {
         if (!allIds.has(agentId)) {
           allIds.set(agentId, { sources: [], name: '', title: '', route: routePath, department: '', level: '' });
         }
-        allIds.get(agentId).sources.push('page:' + prefix + '/' + entry.name);
-        if (!allIds.get(agentId).route) allIds.get(agentId).route = routePath;
+        const agent = allIds.get(agentId);
+        agent.sources.push('page:' + prefix + '/' + entry.name);
+        if (!agent.route) agent.route = routePath;
+        
+        // Extract properties from page file content if not already set
+        if (!agent.name) { const m = content.match(/name:\s*['"]([^'"]+)['"]/); if (m) agent.name = m[1]; }
+        if (!agent.title) { const m = content.match(/title:\s*['"]([^'"]+)['"]/); if (m) agent.title = m[1]; }
+        if (!agent.department) { const m = content.match(/department:\s*['"]([^'"]+)['"]/); if (m) agent.department = m[1]; }
+        if (!agent.level) { const m = content.match(/level:\s*['"]([^'"]+)['"]/); if (m) agent.level = m[1]; }
       } catch(e) {}
     }
   }
@@ -108,19 +115,9 @@ for (const src of otherSources) {
 
 // 4. Extract more details from key definition files
 console.log('\n=== EXTRACTING AGENT DETAILS ===\n');
-const detailFiles = [
-  'constants/aiAgentHierarchyComplete.ts',
-  'constants/aiAgentHierarchy_UPGRADED.ts',
-  'constants/aiAgentHierarchy_ext.ts',
-  'constants/aiAgentHierarchy_Managers.ts',
-  'constants/aiAgentHierarchy_TeamLeadsSpecialists.ts',
-  'constants/aiAgentHierarchy_NewDepartments.ts',
-  'constants/aiEmployees.ts',
-  'constants/aiEmployeesEnhanced.ts',
-  'constants/completeAIWorkforce_1108.ts',
-  'constants/customerExperienceAgents.ts',
-  'constants/aiAgentLayers.ts',
-];
+const detailFiles = fs.readdirSync(constantsDir)
+  .filter(f => f.endsWith('.ts'))
+  .map(f => 'constants/' + f);
 
 for (const file of detailFiles) {
   const fp = path.join(ROOT, file);
@@ -135,8 +132,19 @@ for (const file of detailFiles) {
     if (!allIds.has(id)) continue;
     const agent = allIds.get(id);
     
-    // Look ahead for details
+    // Check current line first
+    if (!agent.name) { const m = lines[i].match(/name:\s*'([^']+)'/); if (m) agent.name = m[1]; }
+    if (!agent.title) { const m = lines[i].match(/title:\s*'([^']+)'/); if (m) agent.title = m[1]; }
+    if (!agent.route) { const m = lines[i].match(/route:\s*'([^']+)'/); if (m) agent.route = m[1]; }
+    if (!agent.department) { const m = lines[i].match(/department:\s*'([^']+)'/); if (m) agent.department = m[1]; }
+    if (!agent.level) { const m = lines[i].match(/level:\s*'([^']+)'/); if (m) agent.level = m[1]; }
+    
+    // Look ahead for details, but stop if we hit another agent id
     for (let j = i + 1; j < Math.min(i + 30, lines.length); j++) {
+      // If we see another id declaration on a new line, stop lookahead
+      if (lines[j].includes('id:') && !lines[j].includes(`id: '${id}'`)) {
+        break;
+      }
       if (!agent.name) { const m = lines[j].match(/name:\s*'([^']+)'/); if (m) agent.name = m[1]; }
       if (!agent.title) { const m = lines[j].match(/title:\s*'([^']+)'/); if (m) agent.title = m[1]; }
       if (!agent.route) { const m = lines[j].match(/route:\s*'([^']+)'/); if (m) agent.route = m[1]; }

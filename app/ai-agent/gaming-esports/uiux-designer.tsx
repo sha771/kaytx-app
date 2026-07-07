@@ -2,7 +2,7 @@ import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
 import { Bot } from 'lucide-react-native';
 
-export default function UI/UXDesignerPage() {
+export default function UiUxDesignerPage() {
   const agent = {
     id: 'uiux-designer',
     name: 'AI UI/UX Designer',

@@ -81,7 +81,7 @@ function RootLayoutNav() {
       <Stack.Screen name="ai-agent/data/index" />
       <Stack.Screen name="ai-agent/product/index" />
       <Stack.Screen name="ai-agent/social-media/index" />
-      <Stack.Screen name="ai-agent/customer/index" />
+      <Stack.Screen name="ai-agent/customer-support/index" />
       <Stack.Screen name="ai-agent/analysis/index" />
       <Stack.Screen name="ai-agent/performance/index" />
       {/* Accounting Department AI Agents */}
@@ -198,6 +198,9 @@ function RootLayoutNav() {
       <Stack.Screen name="ai-agent/receptionist-config" />
       <Stack.Screen name="ai-agent/call-summary-note" />
       <Stack.Screen name="ai-agent/smart-task-automation" />
+      {/* Dynamic agent routes - serves ALL 4,469 agents */}
+      <Stack.Screen name="ai-agent/[department]/[agentSlug]" />
+      <Stack.Screen name="ai-agent/[id]" />
       <Stack.Screen name="automation/automation-hub" />
       <Stack.Screen name="automation/marketing-automation" />
       <Stack.Screen name="automation/lead-generation" />
@@ -356,6 +359,56 @@ function RootLayoutNav() {
       <Stack.Screen name="company-brain/analytics" />
       <Stack.Screen name="company-brain/settings" />
       <Stack.Screen name="company-brain/succession" />
+      {/* AI Governance Routes */}
+      <Stack.Screen name="ai-governance/index" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="ai-governance/model-governance" />
+      <Stack.Screen name="ai-governance/policy-center" />
+      <Stack.Screen name="ai-governance/data-governance" />
+      <Stack.Screen name="ai-governance/risk-safety" />
+      <Stack.Screen name="ai-governance/audit-logs" />
+      <Stack.Screen name="ai-governance/evaluations" />
+      <Stack.Screen name="ai-governance/permissions" />
+      <Stack.Screen name="ai-governance/observability" />
+      <Stack.Screen name="ai-governance/compliance" />
+      <Stack.Screen name="ai-governance/settings" />
+      {/* Media & Entertainment Command Center */}
+      <Stack.Screen name="media-command-center/index" options={{ presentation: "fullScreenModal" }} />
+      {/* Executive & Strategy AI Operating System */}
+      <Stack.Screen name="executive-strategy/index" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="executive-strategy/ai-strategy-agents" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="executive-strategy/ceo-command-center" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="executive-strategy/corporate-performance" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="executive-strategy/financial-intelligence" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="executive-strategy/market-intelligence" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="executive-strategy/ma-command-center" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="executive-strategy/innovation-lab" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="executive-strategy/enterprise-risk" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="executive-strategy/workforce-strategy" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="executive-strategy/investor-relations" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="executive-strategy/global-operations" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="executive-strategy/ai-insights" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="executive-strategy/activity-feed" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="executive-strategy/global-command-center" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="executive-strategy/system-health" options={{ presentation: "fullScreenModal" }} />
+      {/* Event Management AI Operating System */}
+      <Stack.Screen name="event-management/index" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="event-management/dashboard" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="event-management/agents" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="event-management/planning" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="event-management/ticketing" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="event-management/venues" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="event-management/attendees" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="event-management/vendors" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="event-management/sponsors" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="event-management/marketing" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="event-management/live-operations" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="event-management/analytics" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="event-management/settings" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="event-management/financial" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="event-management/global-operations" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="event-management/system-health" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="event-management/ai-insights" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="event-management/activity-feed" options={{ presentation: "fullScreenModal" }} />
     </Stack>
   );
 }

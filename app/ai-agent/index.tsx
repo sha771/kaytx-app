@@ -34,6 +34,7 @@ import { useRouter } from 'expo-router';
 import { Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInUp, FadeIn } from 'react-native-reanimated';
+import { agentRegistry } from '@/constants/aiAgentRegistry';
 import {
   Crown,
   Zap,
@@ -482,28 +483,28 @@ const COMMAND_CENTER_ROLES = [
 
 // Tier 3: Departments (21 teams)
 const DEPARTMENTS = [
-  { id: 'executive', name: 'Executive Office', icon: Crown, color: '#FFD700', agentCount: 1, description: 'Strategic leadership and organizational oversight' },
-  { id: 'accounting', name: 'Finance & Accounting', icon: DollarSign, color: '#2E7D32', agentCount: 12, description: 'Financial operations, budgeting, and reporting' },
-  { id: 'engineering', name: 'Technology & Engineering', icon: Cpu, color: '#1565C0', agentCount: 15, description: 'Software development, infrastructure, and innovation' },
+  { id: 'executive', name: 'Executive Office', icon: Crown, color: '#FFD700', agentCount: 242, description: 'Strategic leadership and organizational oversight' },
+  { id: 'accounting', name: 'Accounting', icon: DollarSign, color: '#2E7D32', agentCount: 209, description: 'Financial operations, budgeting, and reporting' },
+  { id: 'ai_and_technology', name: 'AI and Technology', icon: Cpu, color: '#1565C0', agentCount: 362, description: 'Software development, infrastructure, and innovation' },
   { id: 'marketing', name: 'Marketing & Growth', icon: Megaphone, color: '#E91E63', agentCount: 10, description: 'Brand management, campaigns, and customer acquisition' },
   { id: 'sales', name: 'Sales & Revenue', icon: Target, color: '#F59E0B', agentCount: 11, description: 'Sales operations, pipeline management, and revenue growth' },
-  { id: 'customer_experience', name: 'Customer Experience', icon: Headphones, color: '#00BCD4', agentCount: 14, description: 'Support, success, and customer satisfaction' },
+  { id: 'customer_support', name: 'Customer Support', icon: Headphones, color: '#00BCD4', agentCount: 188, description: 'Support, success, and customer satisfaction' },
   { id: 'operations', name: 'Operations & Management', icon: Settings, color: '#607D8B', agentCount: 13, description: 'Business processes and operational efficiency' },
-  { id: 'hr', name: 'Human Resources', icon: Users, color: '#9C27B0', agentCount: 9, description: 'Talent acquisition, development, and culture' },
+  { id: 'human_resources', name: 'Human Resources', icon: Users, color: '#9C27B0', agentCount: 143, description: 'Talent acquisition, development, and culture' },
   { id: 'legal', name: 'Legal & Compliance', icon: Scale, color: '#3F51B5', agentCount: 8, description: 'Legal counsel, contracts, and regulatory compliance' },
   { id: 'data_intelligence', name: 'Data & Intelligence', icon: Database, color: '#6366F1', agentCount: 10, description: 'Analytics, insights, and data-driven decisions' },
-  { id: 'product', name: 'Product Development', icon: Lightbulb, color: '#F97316', agentCount: 9, description: 'Product strategy, design, and lifecycle management' },
-  { id: 'security', name: 'Security & Risk', icon: Shield, color: '#F44336', agentCount: 11, description: 'Cybersecurity, threat detection, and risk management' },
-  { id: 'research', name: 'Research & Innovation', icon: Microscope, color: '#8B5CF6', agentCount: 7, description: 'R&D, innovation, and emerging technologies' },
+  { id: 'product_management', name: 'Product Management', icon: Lightbulb, color: '#F97316', agentCount: 240, description: 'Product strategy, design, and lifecycle management' },
+  { id: 'security', name: 'Security', icon: Shield, color: '#F44336', agentCount: 190, description: 'Cybersecurity, threat detection, and risk management' },
+  { id: 'research_development', name: 'Research Development', icon: Microscope, color: '#8B5CF6', agentCount: 288, description: 'R&D, innovation, and emerging technologies' },
   { id: 'administrative', name: 'Administrative & Support', icon: Briefcase, color: '#94A3B8', agentCount: 6, description: 'Administrative operations and support services' },
-  { id: 'trading_investments', name: 'Trading & Investments', icon: TrendingUp, color: '#10B981', agentCount: 12, description: 'Portfolio management, TrendingUp, and investments', isNew: true },
+  { id: 'trading_investment', name: 'Trading Investment', icon: TrendingUp, color: '#10B981', agentCount: 296, description: 'Portfolio management, trading, and investments', isNew: true },
   { id: 'real_estate', name: 'Real Estate & Property', icon: House, color: '#8B5CF6', agentCount: 8, description: 'Property management and real estate operations', isNew: true },
   { id: 'insurance_risk', name: 'Insurance & Risk', icon: ShieldCheck, color: '#EC4899', agentCount: 9, description: 'Insurance operations and risk assessment', isNew: true },
-  { id: 'healthcare', name: 'Healthcare & Medical', icon: HeartPulse, color: '#EF4444', agentCount: 14, description: 'Medical operations and patient care management', isNew: true },
+  { id: 'healthcare_medical', name: 'Healthcare Medical', icon: HeartPulse, color: '#EF4444', agentCount: 240, description: 'Medical operations and patient care management', isNew: true },
   { id: 'manufacturing', name: 'Manufacturing & Production', icon: Factory, color: '#F97316', agentCount: 10, description: 'Production planning and quality control', isNew: true },
   { id: 'logistics', name: 'Transportation & Logistics', icon: Truck, color: '#06B6D4', agentCount: 11, description: 'Logistics and supply chain management', isNew: true },
-  { id: 'government', name: 'Government & Public Sector', icon: Landmark, color: '#1E40AF', agentCount: 7, description: 'Public sector and government operations', isNew: true },
-  { id: 'consulting_advisory', name: 'Consulting & Advisory', icon: Briefcase, color: '#1E40AF', agentCount: 101, description: 'Management consulting, strategy consulting, IT consulting, HR consulting, financial advisory, transformation consulting', isNew: true },
+  { id: 'public_sector', name: 'Public Sector', icon: Landmark, color: '#1E40AF', agentCount: 260, description: 'Public sector and government operations', isNew: true },
+  { id: 'consulting_advisory', name: 'Advisory and Consultancy', icon: Briefcase, color: '#1E40AF', agentCount: 360, description: 'Management consulting, strategy consulting, IT consulting, HR consulting, financial advisory, transformation consulting', isNew: true },
   { id: 'logistics_warehousing', name: 'Logistics & Warehousing', icon: Truck, color: '#F97316', agentCount: 249, description: 'Dedicated logistics operations, warehouse management, freight forwarding, customs brokerage, last-mile delivery, inventory optimization', isNew: true },
   { id: 'architecture_design', name: 'Architecture & Design', icon: PenTool, color: '#8B5CF6', agentCount: 103, description: 'Web Design, Architectural design, interior design, urban design, landscape architecture, project management, BIM', isNew: true },
   { id: 'analytics_insights', name: 'Analytics & Insights', icon: ChartBarBig, color: '#0EA5E9', agentCount: 121, description: 'Data analytics, business intelligence, predictive analytics, performance metrics, reporting automation, insights generation', isNew: true },
@@ -596,6 +597,17 @@ export default function AIAgentsIndex() {
 
   // Navigation helper to route executives to their dedicated pages
   const navigateToExecutive = (execId: string) => {
+    // First try to find in registry
+    const entry = agentRegistry.find(a =>
+      a.uid.toLowerCase().includes(execId.toLowerCase()) ||
+      a.sidebarId?.toLowerCase().includes(execId.toLowerCase()) ||
+      a.title?.toLowerCase().includes(execId.toLowerCase().replace(/-/g, ' '))
+    );
+    if (entry) {
+      router.push(entry.route);
+      return;
+    }
+    // Fallback to hardcoded map
     const execRouteMap: { [key: string]: string } = {
       'ceo': '/ai-agent/executive/ceo-advisor',
       'cfo': '/ai-agent/executive/cfo-analyst',
@@ -625,28 +637,35 @@ export default function AIAgentsIndex() {
 
   // Navigation helper to route departments to their folders
   const navigateToDepartment = (deptId: string) => {
+    // Try to find first agent in this department from registry
+    const deptEntry = agentRegistry.find(a => a.departmentId?.toString() === deptId || a.department?.toLowerCase().includes(deptId.toLowerCase().replace(/_/g, ' ')));
+    if (deptEntry) {
+      // Navigate to first agent in the department
+      router.push(deptEntry.route);
+      return;
+    }
     const deptRouteMap: { [key: string]: string } = {
       'executive': '/ai-agent/executive',
       'accounting': '/ai-agent/accounting',
-      'engineering': '/ai-agent/engineering',
+      'ai_and_technology': '/ai-agent/ai-and-technology',
       'marketing': '/ai-agent/marketing',
       'sales': '/ai-agent/sales',
       'operations': '/ai-agent/operations',
-      'hr': '/ai-agent/hr',
+      'human_resources': '/ai-agent/human-resources',
       'legal': '/ai-agent/legal',
       'data_intelligence': '/ai-agent/data',
-      'product': '/ai-agent/product',
-      'security': '/ai-agent/it',
-      'customer_experience': '/ai-agent/customer',
-      'research': '/ai-agent/analysis',
+      'product_management': '/ai-agent/product-management',
+      'security': '/ai-agent/security',
+      'customer_support': '/ai-agent/customer-support',
+      'research_development': '/ai-agent/research-development',
       'administrative': '/ai-agent/operations',
-      'trading_investments': '/ai-agent',
-      'real_estate': '/ai-agent',
-      'insurance_risk': '/ai-agent',
-      'healthcare': '/ai-agent',
-      'manufacturing': '/ai-agent/product',
-      'logistics': '/ai-agent',
-      'government': '/ai-agent',
+      'trading_investment': '/ai-agent/trading-investment',
+      'real_estate': '/ai-agent/real-estate',
+      'insurance_risk': '/ai-agent/insurance',
+      'healthcare_medical': '/ai-agent/healthcare-medical',
+      'manufacturing': '/ai-agent/manufacturing',
+      'logistics': '/ai-agent/transportation',
+      'public_sector': '/ai-agent/public-sector',
       'consulting_advisory': '/ai-agent/consulting-advisory',
       'logistics_warehousing': '/ai-agent/logistics-warehousing',
       'architecture_design': '/ai-agent/architecture-design',
@@ -690,6 +709,13 @@ export default function AIAgentsIndex() {
           {HIERARCHY_STATS.totalAgents} Agents • {HIERARCHY_STATS.totalDepartments} Departments • {HIERARCHY_STATS.efficiency} Efficiency
         </Text>
       </View>
+      <TouchableOpacity
+        style={[styles.builderButton, styles.dashboardButton]}
+        onPress={() => router.push('/ai-agent/department-dashboards')}
+      >
+        <ChartPie size={20} color="#fff" />
+        <Text style={styles.builderButtonText}>Dashboards</Text>
+      </TouchableOpacity>
       <TouchableOpacity 
         style={styles.builderButton}
         onPress={() => router.push('/ai-agents-employees-builder')}
@@ -1214,6 +1240,9 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 20,
     gap: 6,
+  },
+  dashboardButton: {
+    backgroundColor: '#10B981',
   },
   builderButtonText: {
     color: '#fff',

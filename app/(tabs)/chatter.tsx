@@ -59,7 +59,6 @@ import {
   FileText,
   Image as ImageIcon,
   Film,
-  Headphones as HeadphonesIcon,
   Radio,
   Inbox,
   Command,
@@ -73,7 +72,7 @@ import {
   EyeOff,
   Lock,
   LockOpen,
-  GripHorizontal,
+  GripHorizontal
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { trpc } from '@/lib/trpc';

@@ -2,7 +2,7 @@ import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
 import { Bot } from 'lucide-react-native';
 
-export default function Run-of-showBuilderPage() {
+export default function RunOfShowBuilderPage() {
   const agent = {
     id: 'run-of-show-builder',
     name: 'AI Run-of-show Builder',

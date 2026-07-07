@@ -2,7 +2,7 @@ import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
 import { Bot } from 'lucide-react-native';
 
-export default function Anti-cheatSpecialistPage() {
+export default function AntiCheatSpecialistPage() {
   const agent = {
     id: 'anti-cheat-specialist',
     name: 'AI Anti-cheat Specialist',

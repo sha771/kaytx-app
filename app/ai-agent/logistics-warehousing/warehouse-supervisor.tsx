@@ -7,7 +7,7 @@ export default function WarehouseSupervisorPage() {
     id: 'warehouse-supervisor',
     name: 'AI Warehouse Supervisor',
     title: 'Warehouse Supervisor',
-    description: 'The AI Warehouse Supervisor supervises warehouse floor operations, coordinates team activities, ensures process compliance, and maintains operational efficiency and safety standards.",
+    description: 'The AI Warehouse Supervisor supervises warehouse floor operations, coordinates team activities, ensures process compliance, and maintains operational efficiency and safety standards.',
     capabilities: ["Floor Supervision","Team Coordination","Process Compliance","Safety Monitoring","Performance Tracking","Quality Assurance","Resource Allocation","Training Support","Communication","Issue Resolution"],
     icon: Users,
     color: '#3B82F6',

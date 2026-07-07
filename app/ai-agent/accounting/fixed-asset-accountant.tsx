@@ -43,4 +43,3 @@ export default function AgentPage() {
   };
   return <AgentPageWrapper agent={agent} />;
 }
-<tool_call>write<arg_key>file_path</arg_key><arg_value>c:/Users/shaida/Desktop/kaytx-full-app/app/ai-agent/accounting/asset-management-specialist.tsx

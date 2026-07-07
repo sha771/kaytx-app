@@ -1,6 +1,6 @@
 import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
-import ChefHat from 'lucide-react-native/dist/esm/icons/ChefHat';
+import { ChefHat } from 'lucide-react-native';
 
 export default function ArchitectureKitchenDesigner11Page() {
   const agent = {

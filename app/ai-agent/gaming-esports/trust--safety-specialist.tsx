@@ -2,7 +2,7 @@ import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
 import { Bot } from 'lucide-react-native';
 
-export default function Trust&SafetySpecialistPage() {
+export default function TrustAndSafetySpecialistPage() {
   const agent = {
     id: 'trust--safety-specialist',
     name: 'AI Trust & Safety Specialist',

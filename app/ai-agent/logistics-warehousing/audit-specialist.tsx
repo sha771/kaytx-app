@@ -7,7 +7,7 @@ export default function AuditSpecialistPage() {
     id: 'audit-specialist',
     name: 'AI Audit Specialist',
     title: 'Audit Specialist',
-    description: 'The AI Audit Specialist conducts warehouse audits, verifies inventory accuracy, identifies discrepancies, and ensures compliance with audit requirements and standards.",
+    description: 'The AI Audit Specialist conducts warehouse audits, verifies inventory accuracy, identifies discrepancies, and ensures compliance with audit requirements and standards.',
     capabilities: ["Audit Execution","Inventory Verification","Discrepancy Identification","Compliance Checking","Reporting","Documentation","Analysis","Recommendations","Performance Tracking","Continuous Improvement"],
     icon: ClipboardCheck,
     color: '#3B82F6',

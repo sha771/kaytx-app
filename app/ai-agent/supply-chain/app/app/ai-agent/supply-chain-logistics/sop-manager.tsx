@@ -2,7 +2,7 @@ import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
 import { Bot } from 'lucide-react-native';
 
-export default function S&OPManagerPage() {
+export default function SAndOPManagerPage() {
   const agent = {
     id: 'sop-manager',
     name: 'AI S&OP Manager',

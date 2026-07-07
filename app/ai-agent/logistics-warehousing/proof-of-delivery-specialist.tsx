@@ -7,7 +7,7 @@ export default function ProofOfDeliverySpecialistPage() {
     id: 'proof-of-delivery-specialist',
     name: 'AI Proof of Delivery Specialist',
     title: 'Proof of Delivery Specialist',
-    description: 'The AI Proof of Delivery Specialist manages proof of delivery documentation, captures delivery confirmations, verifies receipt, and maintains complete delivery records.",
+    description: 'The AI Proof of Delivery Specialist manages proof of delivery documentation, captures delivery confirmations, verifies receipt, and maintains complete delivery records.',
     capabilities: ["POD Management","Documentation Capture","Verification","Digital Signatures","Record Keeping","Customer Communication","Dispute Resolution","Reporting","Integration","Audit Support"],
     icon: CheckCircle,
     color: '#10B981',

@@ -7,7 +7,7 @@ export default function DemandForecasterPage() {
     id: 'demand-forecaster',
     name: 'AI Demand Forecaster',
     title: 'Demand Forecaster',
-    description: 'The AI Demand Forecaster forecasts demand patterns, analyzes historical data, predicts future requirements, and supports inventory planning with accurate demand insights.",
+    description: 'The AI Demand Forecaster forecasts demand patterns, analyzes historical data, predicts future requirements, and supports inventory planning with accurate demand insights.',
     capabilities: ["Demand Forecasting","Trend Analysis","Pattern Recognition","Predictive Modeling","Seasonality Analysis","Accuracy Tracking","Scenario Planning","Reporting","Integration","Continuous Improvement"],
     icon: TrendingUp,
     color: '#F59E0B',

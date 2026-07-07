@@ -7,7 +7,7 @@ export default function TourGuidePage() {
     id: 'tour-guide',
     name: 'AI Tour Guide',
     title: 'AI Tour Guide',
-    description: 'The AI Tour Guide leads tours, provides destination information, ensures guest safety, and delivers engaging and informative tour experiences.",
+    description: 'The AI Tour Guide leads tours, provides destination information, ensures guest safety, and delivers engaging and informative tour experiences.',
     capabilities: ["Task Automation","Data Processing","Workflow Management","Tour Leading","Destination Information","Guest Safety","Engagement Delivery","Storytelling","Group Management","Cultural Education"],
     icon: Signpost,
     color: '#AD1457',

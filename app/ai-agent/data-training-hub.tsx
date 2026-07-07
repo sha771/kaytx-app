@@ -71,7 +71,7 @@ export default function DataTrainingHubScreen() {
     pending: allDocuments.filter(d => d.processingStatus === 'pending').length,
     failed: allDocuments.filter(d => d.processingStatus === 'failed').length,
     totalSize: allDocuments.reduce((sum, d) => sum + (d.size || 0), 0),
-
+  };
 
   const agentsWithData = allAgents.filter(a => 
     (a.configuration?.dataUpload?.uploadedDocuments?.length || 0) > 0

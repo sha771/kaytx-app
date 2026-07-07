@@ -19,13 +19,12 @@ import {
   User,
   Zap,
   ChartPie,
-  Database as DatabaseIcon,
   ChartLine,
   Activity,
   Network,
   Binary,
   Server,
-  BrainCircuit,
+  BrainCircuit
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInUp, FadeInRight } from 'react-native-reanimated';

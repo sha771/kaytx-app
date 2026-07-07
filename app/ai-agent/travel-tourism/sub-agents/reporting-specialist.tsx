@@ -7,7 +7,7 @@ export default function ReportingSpecialistPage() {
     id: 'reporting-specialist',
     name: 'AI Reporting Specialist',
     title: 'AI Reporting Specialist',
-    description: 'The AI Reporting Specialist creates reports, manages reporting schedules, ensures data accuracy, and delivers timely and accurate business intelligence.",
+    description: 'The AI Reporting Specialist creates reports, manages reporting schedules, ensures data accuracy, and delivers timely and accurate business intelligence.',
     capabilities: ["Task Automation","Data Processing","Workflow Management","Report Creation","Schedule Management","Data Accuracy","BI Delivery","Visualization","Dashboard Management","Stakeholder Communication"],
     icon: FileText,
     color: '#388E3C',

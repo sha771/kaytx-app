@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
-import { useRouter } from 'expo-router';
+import DepartmentDashboardView from '@/components/ai-agent/dashboard/DepartmentDashboardView';
+
 const agents = [
   { id: 'ai-chief-real-estate-officer', uid: 'ktx-15-chief-real-estate-officer', title: 'AI Chief Real Estate Officer', route: '/ai-agent/real-estate/chief-real-estate-officer', color: '#8D6E63', level: 'c_level', efficiency: '91%' },
   { id: 'ai-vp-property-management', uid: 'ktx-15-vp-property-management', title: 'AI VP Property Management', route: '/ai-agent/real-estate/vp-property-management', color: '#8D6E63', level: 'vp_director', efficiency: '90%' },
@@ -75,28 +75,12 @@ const agents = [
   { id: 'ai-green-building-specialist', uid: 'ktx-15-green-building-specialist', title: 'AI Green Building Specialist', route: '/ai-agent/real-estate/green-building-specialist', color: '#8D6E63', level: 'team_lead', efficiency: '84%' },
   { id: 'ai-energy-manager-property', uid: 'ktx-15-energy-manager-property', title: 'AI Energy Manager (Property)', route: '/ai-agent/real-estate/energy-manager-property', color: '#8D6E63', level: 'team_lead', efficiency: '83%' },
 ];
+
 export default function DepartmentIndex() {
-  const router = useRouter();
   return (
-    <ScrollView style={s.container}>
-      <Text style={s.title}>Real Estate & Property - AI Agents</Text>
-      <Text style={s.sub}>60 AI Agents & Employees</Text>
-      <View style={s.grid}>
-        {agents.map((a) => (
-          <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>
-            <Text style={s.at}>{a.title}</Text>
-            <Text style={s.al}>{a.level.replace('_',' ').toUpperCase()}</Text>
-            <Text style={s.ae}>{a.efficiency}</Text>
-          </Pressable>
-        ))}
-      </View>
-    </ScrollView>
+    <DepartmentDashboardView
+      departmentId="real-estate-property"
+      agents={agents}
+    />
   );
 }
-const s = StyleSheet.create({
-  container:{flex:1,backgroundColor:'#0a0a0a',padding:16},title:{color:'#fff',fontSize:24,fontWeight:'bold',marginBottom:4},
-  sub:{color:'#888',fontSize:14,marginBottom:16},grid:{flexDirection:'row',flexWrap:'wrap',gap:12},
-  card:{backgroundColor:'#1a1a2e',borderRadius:12,padding:16,width:'48%',borderLeftWidth:3},
-  at:{color:'#fff',fontSize:14,fontWeight:'600',marginBottom:4},al:{color:'#888',fontSize:11,marginBottom:2},
-  ae:{color:'#10B981',fontSize:12},
-});

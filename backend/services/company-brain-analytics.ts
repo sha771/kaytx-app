@@ -631,7 +631,7 @@ export class AnalyticsDashboardService {
     overallHealth: 'excellent' | 'good' | 'fair' | 'poor';
     keyMetrics: Record<string, number>;
     topInsights: Insight[];
-    recentTrends: Record<string, 'up' | 'down' | 'stable'>>;
+    recentTrends: Record<string, 'up' | 'down' | 'stable'>;
   } {
     const health = this.metrics.knowledgeHealth;
     const risk = this.metrics.riskAssessment;

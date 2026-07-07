@@ -7,7 +7,7 @@ export default function LockerCoordinatorPage() {
     id: 'locker-coordinator',
     name: 'AI Locker Coordinator',
     title: 'Locker Coordinator',
-    description: 'The AI Locker Coordinator manages parcel locker operations, coordinates locker access, monitors locker utilization, and ensures efficient self-service delivery options.",
+    description: 'The AI Locker Coordinator manages parcel locker operations, coordinates locker access, monitors locker utilization, and ensures efficient self-service delivery options.',
     capabilities: ["Locker Management","Access Coordination","Utilization Monitoring","Customer Notification","Maintenance Support","Security Monitoring","Performance Tracking","Reporting","Integration","Continuous Improvement"],
     icon: Package,
     color: '#10B981',

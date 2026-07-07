@@ -1,10 +1,26 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { 
-  TrendingUp, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, 
-  ChartBarBig, MessageSquare, Calendar, Shield, ChartPie, Lightbulb, Globe, Sparkles, 
-  DollarSign, Target as TargetIcon, Trophy, Zap
+import {
+  TrendingUp,
+  Activity,
+  Star,
+  Users,
+  CircleCheckBig,
+  Clock,
+  Target,
+  ArrowRight,
+  ChartBarBig,
+  MessageSquare,
+  Calendar,
+  Shield,
+  ChartPie,
+  Lightbulb,
+  Globe,
+  Sparkles,
+  DollarSign,
+  Trophy,
+  Zap
 } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { useRouter } from 'expo-router';

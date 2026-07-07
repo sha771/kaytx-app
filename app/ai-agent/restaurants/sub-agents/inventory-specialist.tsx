@@ -7,7 +7,7 @@ export default function InventorySpecialistPage() {
     id: 'inventory-specialist',
     name: 'AI Inventory Specialist',
     title: 'AI Inventory Specialist',
-    description: 'The AI Inventory Specialist manages kitchen inventory, tracks stock levels, and ensures optimal inventory for restaurant operations.",
+    description: 'The AI Inventory Specialist manages kitchen inventory, tracks stock levels, and ensures optimal inventory for restaurant operations.',
     capabilities: ["Inventory Management","Stock Tracking","Order Management","Inventory Optimization","Stock Control","Supply Coordination","Inventory Analytics","Cost Management","Inventory Excellence","Supply Efficiency"],
     icon: Package,
     color: '#FF9800',

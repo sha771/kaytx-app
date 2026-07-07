@@ -7,7 +7,7 @@ export default function WarehouseSecurityManagerPage() {
     id: 'warehouse-security-manager',
     name: 'AI Warehouse Security Manager',
     title: 'Warehouse Security Manager',
-    description: 'The AI Warehouse Security Manager manages warehouse security, monitors access control, coordinates security systems, and ensures protection of assets and personnel in warehouse facilities.",
+    description: 'The AI Warehouse Security Manager manages warehouse security, monitors access control, coordinates security systems, and ensures protection of assets and personnel in warehouse facilities.',
     capabilities: ["Security Management","Access Control","Monitoring","Incident Response","System Coordination","Compliance","Reporting","Risk Assessment","Training","Continuous Improvement"],
     icon: Shield,
     color: '#3B82F6',

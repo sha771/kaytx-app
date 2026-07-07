@@ -95,8 +95,7 @@ import {
   Clipboard,
   FileCheck,
   SquareCheck,
-  Factory,
-  Share2 as NetworkIcon,
+  Factory
 } from 'lucide-react-native';
 import { useTheme } from '../../providers/ThemeProvider';
 import { useMessaging } from '../../providers/MessagingProvider';

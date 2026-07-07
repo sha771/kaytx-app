@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
-import { useRouter } from 'expo-router';
+import DepartmentDashboardView from '@/components/ai-agent/dashboard/DepartmentDashboardView';
+
 const agents = [
   { id: 'ai-chief-logistics-officer', uid: 'ktx-19-chief-logistics-officer', title: 'AI Chief Logistics Officer', route: '/ai-agent/transportation/chief-logistics-officer', color: '#26A69A', level: 'c_level', efficiency: '77%' },
   { id: 'ai-vp-transportation', uid: 'ktx-19-vp-transportation', title: 'AI VP Transportation', route: '/ai-agent/transportation/vp-transportation', color: '#26A69A', level: 'vp_director', efficiency: '75%' },
@@ -78,28 +78,12 @@ const agents = [
   { id: 'ai-compliance-manager-1', uid: 'ktx-19-compliance-manager-1', title: 'AI Compliance Manager I', route: '/ai-agent/transportation/compliance-manager-1', color: '#26A69A', level: 'manager', efficiency: '90%' },
   { id: 'ai-compliance-manager-2', uid: 'ktx-19-compliance-manager-2', title: 'AI Compliance Manager II', route: '/ai-agent/transportation/compliance-manager-2', color: '#26A69A', level: 'manager', efficiency: '91%' },
 ];
+
 export default function DepartmentIndex() {
-  const router = useRouter();
   return (
-    <ScrollView style={s.container}>
-      <Text style={s.title}>Transportation & Logistics - AI Agents</Text>
-      <Text style={s.sub}>120 AI Agents & Employees</Text>
-      <View style={s.grid}>
-        {agents.map((a) => (
-          <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>
-            <Text style={s.at}>{a.title}</Text>
-            <Text style={s.al}>{a.level.replace('_',' ').toUpperCase()}</Text>
-            <Text style={s.ae}>{a.efficiency}</Text>
-          </Pressable>
-        ))}
-      </View>
-    </ScrollView>
+    <DepartmentDashboardView
+      departmentId="transportation-logistics"
+      agents={agents}
+    />
   );
 }
-const s = StyleSheet.create({
-  container:{flex:1,backgroundColor:'#0a0a0a',padding:16},title:{color:'#fff',fontSize:24,fontWeight:'bold',marginBottom:4},
-  sub:{color:'#888',fontSize:14,marginBottom:16},grid:{flexDirection:'row',flexWrap:'wrap',gap:12},
-  card:{backgroundColor:'#1a1a2e',borderRadius:12,padding:16,width:'48%',borderLeftWidth:3},
-  at:{color:'#fff',fontSize:14,fontWeight:'600',marginBottom:4},al:{color:'#888',fontSize:11,marginBottom:2},
-  ae:{color:'#10B981',fontSize:12},
-});

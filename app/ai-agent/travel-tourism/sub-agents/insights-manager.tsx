@@ -7,7 +7,7 @@ export default function InsightsManagerPage() {
     id: 'insights-manager',
     name: 'AI Insights Manager',
     title: 'AI Insights Manager',
-    description: 'The AI Insights Manager generates actionable insights, analyzes business performance, identifies opportunities, and drives data-informed decision making.",
+    description: 'The AI Insights Manager generates actionable insights, analyzes business performance, identifies opportunities, and drives data-informed decision making.',
     capabilities: ["Task Automation","Data Processing","Workflow Management","Insight Generation","Performance Analysis","Opportunity Identification","Decision Support","Strategic Recommendations","Business Intelligence","Impact Measurement"],
     icon: Lightbulb,
     color: '#43A047',

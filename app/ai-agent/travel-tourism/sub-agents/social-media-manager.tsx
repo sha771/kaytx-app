@@ -7,7 +7,7 @@ export default function SocialMediaManagerPage() {
     id: 'social-media-manager',
     name: 'AI Social Media Manager',
     title: 'AI Social Media Manager',
-    description: 'The AI Social Media Manager manages social media presence, creates social content, engages with followers, and drives social media growth and engagement.",
+    description: 'The AI Social Media Manager manages social media presence, creates social content, engages with followers, and drives social media growth and engagement.',
     capabilities: ["Task Automation","Data Processing","Workflow Management","Social Media Management","Content Creation","Community Engagement","Follower Growth","Social Analytics","Brand Advocacy","Crisis Management"],
     icon: Share2,
     color: '#E64A19',

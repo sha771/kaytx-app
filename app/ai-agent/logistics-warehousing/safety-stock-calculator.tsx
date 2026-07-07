@@ -7,7 +7,7 @@ export default function SafetyStockCalculatorPage() {
     id: 'safety-stock-calculator',
     name: 'AI Safety Stock Calculator',
     title: 'Safety Stock Calculator',
-    description: 'The AI Safety Stock Calculator calculates optimal safety stock levels, analyzes demand variability, considers lead time fluctuations, and ensures buffer stock to prevent stockouts.",
+    description: 'The AI Safety Stock Calculator calculates optimal safety stock levels, analyzes demand variability, considers lead time fluctuations, and ensures buffer stock to prevent stockouts.',
     capabilities: ["Safety Stock Calculation","Demand Variability Analysis","Lead Time Analysis","Buffer Optimization","Service Level Management","Cost Analysis","Monitoring","Reporting","Integration","Continuous Improvement"],
     icon: Shield,
     color: '#F59E0B',

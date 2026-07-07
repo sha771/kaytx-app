@@ -7,7 +7,7 @@ export default function ReorderPointOptimizerPage() {
     id: 'reorder-point-optimizer',
     name: 'AI Reorder Point Optimizer',
     title: 'Reorder Point Optimizer',
-    description: 'The AI Reorder Point Optimizer calculates optimal reorder points, analyzes lead times, considers demand patterns, and ensures timely replenishment to prevent stockouts.",
+    description: 'The AI Reorder Point Optimizer calculates optimal reorder points, analyzes lead times, considers demand patterns, and ensures timely replenishment to prevent stockouts.',
     capabilities: ["Reorder Point Calculation","Lead Time Analysis","Demand Analysis","Timing Optimization","Cost Consideration","Service Level Management","Monitoring","Reporting","Integration","Continuous Improvement"],
     icon: RefreshCw,
     color: '#F59E0B',

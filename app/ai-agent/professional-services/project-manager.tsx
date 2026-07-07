@@ -1,68 +1,42 @@
 import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
-import { Bot } from 'lucide-react-native';
 
-export default function ProjectManagerPage() {
+export default function AgentPage() {
   const agent = {
-    id: 'project-manager',
+    id: 'ai-project-manager',
+    uid: 'ktx-17-project-manager',
     name: 'AI Project Manager',
     title: 'AI Project Manager',
-    description: 'AI Project Manager provides specialized expertise and executes critical tasks for the Professional Services department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
-    capabilities: ["Consulting","Advisory Services","Implementation Services","Customer Success","Practice Development","Sales"],
-    icon: Bot,
-    color: '#0891B2',
-    type: 'employee' as const,
-    humanCost: '$80k/year',
-    aiCost: '$2k/year',
-    efficiency: '40x efficiency improvement',
-    replacesRole: 'project-manager',
+    description: 'AI Project Manager leads project execution, timeline management, and team coordination for the Professional Services department. This AI agent automates complex project workflows, provides intelligent project insights, and collaborates with other agents to achieve optimal project outcomes with maximum efficiency.',
+    capabilities: ['Project Execution', 'Timeline Management', 'Team Coordination', 'Budget Tracking', 'Risk Mitigation'],
+    color: '#10B981',
+    type: 'agent' as const,
+    humanCost: '$110k/year',
+    aiCost: '$2,200/mo',
+    efficiency: '87% efficiency',
+    replacesRole: 'AI Project Manager',
+    subAgents: [
+      { id: 'ai-consultant', uid: 'ktx-17-consultant', name: 'AI Consultant', title: 'AI Consultant', route: '/ai-agent/professional-services/consultant' },
+      { id: 'ai-analyst', uid: 'ktx-17-analyst', name: 'AI Analyst', title: 'AI Analyst', route: '/ai-agent/professional-services/analyst' }
+    ],
     infrastructure: {
       status: 'online',
-      health: 95 + Math.floor(Math.random() * 5),
-      uptime: '99.5%',
+      health: 87,
+      uptime: '99.6%',
       lastActive: 'Now',
-      processingPower: 'enterprise',
+      processingPower: 'high',
     },
     roiMetrics: {
-      savingsPerMonth: '$6,500',
-      tasksAutomatedDaily: 450,
-      responseTime: '2.5s',
-      accuracyRate: '95.5%',
-      errorReduction: '85%',
-      timeSaved: '75%',
+      savingsPerMonth: '$10542',
+      tasksAutomatedDaily: 567,
+      responseTime: '2.3s',
+      accuracyRate: '94.5%',
     },
-    performance: {
-      tasksCompleted: 15000 + Math.floor(Math.random() * 5000),
-      avgResponseTime: '2.3s',
-      accuracy: '94.8%',
-      uptime: '99.7%',
-      userSatisfaction: '4.6/5',
+    hierarchy: {
+      department: 'Professional Services',
+      level: 'manager',
+      departmentId: 17,
     },
-    features: {
-      taskAutomation: true,
-      dataProcessing: true,
-      workflowManagement: true,
-      reporting: true,
-      integration: true,
-      collaboration: true,
-      learning: true,
-      security: true,
-    },
-    integrations: [
-      'Department Systems',
-      'Enterprise CRM',
-      'Analytics Platform',
-      'Communication Tools',
-    ],
-    kpis: [
-      'Tasks Completed',
-      'Response Time',
-      'Accuracy Rate',
-      'User Satisfaction',
-      'Cost Savings',
-      'Efficiency Gain',
-    ],
   };
-
   return <AgentPageWrapper agent={agent} />;
 }

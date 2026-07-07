@@ -7,7 +7,7 @@ export default function DeliveryTrackingSpecialistPage() {
     id: 'delivery-tracking-specialist',
     name: 'AI Delivery Tracking Specialist',
     title: 'Delivery Tracking Specialist',
-    description: 'The AI Delivery Tracking Specialist tracks delivery progress, monitors shipment status, provides real-time updates, and ensures complete visibility of delivery operations.",
+    description: 'The AI Delivery Tracking Specialist tracks delivery progress, monitors shipment status, provides real-time updates, and ensures complete visibility of delivery operations.',
     capabilities: ["Delivery Tracking","Real-Time Monitoring","Status Updates","Exception Detection","Customer Communication","Performance Analytics","Reporting","Alert Management","Integration","Customer Service"],
     icon: MapPin,
     color: '#10B981',

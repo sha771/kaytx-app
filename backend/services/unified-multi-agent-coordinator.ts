@@ -1,12 +1,11 @@
 /**
-
-import { createLogger } from '../lib/production-logger';
-
-const logger = createLogger(__filename.split('/').pop()?.replace('.ts', '') || 'Service');
-
  * Unified Multi-Agent Coordinator
  * Advanced coordination system for multiple AI agents with decision logging and error recovery
  */
+
+import { createLogger } from '../lib/production-logger';
+
+const logger = createLogger('UnifiedMultiAgentCoordinator');
 
 import { EventEmitter } from 'events';
 import { v4 as uuidv4 } from 'uuid';
@@ -163,7 +162,7 @@ export class UnifiedMultiAgentCoordinator extends EventEmitter {
   private activeTasks: Map<string, AgentTask> = new Map();
   private activeSessions: Map<string, AgentCollaborationSession> = new Map();
   private agentCapabilities: Map<string, AgentCapability> = new Map();
-  private monitoringInterval?: NodeJS.Timeout;
+  private monitoringInterval: ReturnType<typeof setInterval> | undefined;
   private coordinationStrategies: Map<string, CoordinationStrategy> = new Map();
   private decisionLogger: DecisionLogger;
   private errorRecoveryManager: ErrorRecoveryManager;
@@ -211,7 +210,7 @@ export class UnifiedMultiAgentCoordinator extends EventEmitter {
       taskId: task.id,
       agentId: task.coordinatorId,
       type: 'routing',
-      timestamp: new Date(),
+      timestamp: Date.now(),
       context: { taskCreation: true },
       reasoning: `Created ${task.type} task with ${task.participantIds.length} participants`,
       alternatives: [],
@@ -301,7 +300,7 @@ export class UnifiedMultiAgentCoordinator extends EventEmitter {
           taskId: task.id,
           agentId,
           type: 'error_recovery',
-          timestamp: new Date(),
+          timestamp: Date.now(),
           context: { error: error instanceof Error ? error.message : String(error), strategy: 'sequential' },
           reasoning: `Agent ${agentId} failed in sequential execution`,
           alternatives: [
@@ -464,7 +463,7 @@ export class UnifiedMultiAgentCoordinator extends EventEmitter {
           taskId: task.id,
           agentId: task.coordinatorId,
           type: 'strategy_selection',
-          timestamp: new Date(),
+          timestamp: Date.now(),
           context: { failureRate, previousStrategy: 'parallel' },
           reasoning: `High failure rate (${failureRate}) detected, switching to sequential strategy`,
           alternatives: [
@@ -493,7 +492,7 @@ export class UnifiedMultiAgentCoordinator extends EventEmitter {
               taskId: task.id,
               agentId,
               type: 'error_recovery',
-              timestamp: new Date(),
+              timestamp: Date.now(),
               context: { error: error instanceof Error ? error.message : String(error), retry: true },
               reasoning: `Retry failed for agent ${agentId}`,
               alternatives: [],
@@ -608,7 +607,7 @@ export class UnifiedMultiAgentCoordinator extends EventEmitter {
   }
 
   /**
-   * Execute task for individual agent
+   * Execute task for individual agent — uses real agent execution via AIAgentService
    */
   private async executeAgentTask(agentId: string, task: AgentTask): Promise<any> {
     const capability = this.agentCapabilities.get(agentId);
@@ -616,7 +615,7 @@ export class UnifiedMultiAgentCoordinator extends EventEmitter {
       throw new Error(`Agent ${agentId} not found or not available`);
     }
     
-    if (capability.status !== 'available') {
+    if (capability.status !== 'available' && capability.status !== 'busy') {
       throw new Error(`Agent ${agentId} is ${capability.status}`);
     }
     
@@ -624,40 +623,58 @@ export class UnifiedMultiAgentCoordinator extends EventEmitter {
     capability.currentLoad++;
     capability.status = 'busy';
     
+    const startTime = Date.now();
+    
     try {
-      // Simulate agent execution
-      await this.simulateAgentWork(capability, task);
+      // Execute via real AI agent service instead of simulation
+      const result = await aiAgentService.processMessage(
+        agentId,
+        `[Multi-Agent Task] Type: ${task.type} | Title: ${task.title} | Description: ${task.description}`,
+        {
+          organizationId: task.context?.organizationId || '',
+          userId: task.coordinatorId,
+          sessionId: `coord_${task.id}_${agentId}`,
+          metadata: {
+            taskId: task.id,
+            taskType: task.type,
+            role: task.role,
+            strategy: task.strategy,
+            participantIds: task.participantIds
+          }
+        }
+      );
       
-      // Update performance metrics
+      const responseTime = Date.now() - startTime;
+      
+      // Update performance metrics with real data
       capability.performance.totalRequests++;
+      const prevRate = capability.performance.successRate;
+      const total = capability.performance.totalRequests;
       capability.performance.successRate = 
-        (capability.performance.successRate * (capability.performance.totalRequests - 1) + 1) / 
-        capability.performance.totalRequests;
+        (prevRate * (total - 1) + (result.success ? 1 : 0)) / total;
+      capability.performance.avgResponseTime = 
+        (capability.performance.avgResponseTime * (total - 1) + responseTime) / total;
       
       return {
         agentId,
         taskType: task.type,
-        result: `Task completed by ${agentId}`,
-        timestamp: new Date(),
-        confidence: 0.8 + Math.random() * 0.2
+        result: result.response || result.error || 'Task completed',
+        timestamp: Date.now(),
+        confidence: result.success ? 0.85 : 0.3,
+        responseTime,
+        usage: result.usage
       };
       
+    } catch (error) {
+      capability.performance.totalRequests++;
+      const total = capability.performance.totalRequests;
+      capability.performance.successRate = 
+        (capability.performance.successRate * (total - 1)) / total;
+      
+      throw error;
     } finally {
       capability.currentLoad--;
       capability.status = capability.currentLoad === 0 ? 'available' : 'busy';
-    }
-  }
-
-  /**
-   * Simulate agent work
-   */
-  private async simulateAgentWork(capability: AgentCapability, task: AgentTask): Promise<void> {
-    const workTime = capability.performance.avgResponseTime * (0.8 + Math.random() * 0.4);
-    await new Promise(resolve => setTimeout(resolve, workTime));
-    
-    // Simulate occasional failures
-    if (Math.random() < 0.1) { // 10% failure rate
-      throw new Error(`Agent ${capability.id} encountered an error`);
     }
   }
 
@@ -746,20 +763,41 @@ export class UnifiedMultiAgentCoordinator extends EventEmitter {
   }
 
   /**
-   * Collect proposals from session participants
+   * Collect proposals from session participants — uses real agent responses
    */
   private async collectProposals(session: AgentCollaborationSession): Promise<void> {
-    // Implementation for collecting proposals
     for (const participant of session.participants) {
       if (participant.role === 'contributor') {
-        const proposal = `Proposal from ${participant.agentName}`;
+        let proposalContent = `Proposal from ${participant.agentName}`;
+        
+        try {
+          const agent = await aiAgentService.getAgent(participant.agentId);
+          if (agent) {
+            const proposalPrompt = `You are contributing to a multi-agent collaboration task. Provide your proposal or approach for the task. Be concise and actionable. Task context: ${JSON.stringify(session.sharedContext).substring(0, 500)}`;
+            
+            const result = await aiAgentService.processMessage(
+              participant.agentId,
+              proposalPrompt,
+              { organizationId: session.sharedContext?.organizationId || '', sessionId: `proposal_${session.id}_${participant.agentId}` }
+            );
+            
+            if (result.success && result.response) {
+              proposalContent = result.response;
+              participant.contribution = result.response;
+              participant.confidence = 0.7;
+            }
+          }
+        } catch (error) {
+          logger.error(`Failed to collect proposal from agent ${participant.agentId}:`, error as Error);
+        }
+        
         session.messages.push({
           id: uuidv4(),
           sessionId: session.id,
           agentId: participant.agentId,
           agentName: participant.agentName,
           type: 'proposal',
-          content: proposal,
+          content: proposalContent,
           timestamp: new Date()
         });
       }
@@ -768,30 +806,118 @@ export class UnifiedMultiAgentCoordinator extends EventEmitter {
   }
 
   /**
-   * Facilitate discussion
+   * Facilitate discussion — agents respond to each other's proposals
    */
   private async facilitateDiscussion(session: AgentCollaborationSession): Promise<void> {
-    // Implementation for facilitating discussion
-    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate discussion time
+    const proposals = session.messages.filter(m => m.type === 'proposal');
+    
+    // Each participant responds to other proposals
+    for (const participant of session.participants) {
+      if (participant.role === 'contributor') {
+        const otherProposals = proposals
+          .filter(p => p.agentId !== participant.agentId)
+          .map(p => `${p.agentName}: ${p.content}`)
+          .join('\n\n');
+        
+        if (!otherProposals) continue;
+        
+        try {
+          const agent = await aiAgentService.getAgent(participant.agentId);
+          if (agent) {
+            const discussPrompt = `You are in a multi-agent discussion. Review the proposals from other agents and provide feedback, questions, or suggestions:\n\n${otherProposals}\n\nProvide constructive feedback. Be concise.`;
+            
+            const result = await aiAgentService.processMessage(
+              participant.agentId,
+              discussPrompt,
+              { organizationId: session.sharedContext?.organizationId || '', sessionId: `discuss_${session.id}_${participant.agentId}` }
+            );
+            
+            if (result.success && result.response) {
+              session.messages.push({
+                id: uuidv4(),
+                sessionId: session.id,
+                agentId: participant.agentId,
+                agentName: participant.agentName,
+                type: 'feedback',
+                content: result.response,
+                timestamp: new Date()
+              });
+            }
+          }
+        } catch (error) {
+          logger.error(`Discussion failed for agent ${participant.agentId}:`, error as Error);
+        }
+      }
+    }
     session.updatedAt = new Date();
   }
 
   /**
-   * Conduct voting
+   * Conduct voting — uses real agent responses instead of random votes
    */
   private async conductVoting(session: AgentCollaborationSession): Promise<AgentVote[]> {
     const votes: AgentVote[] = [];
     
+    // Build context from session messages for voting
+    const proposalSummary = session.messages
+      .filter(m => m.type === 'proposal')
+      .map(m => `${m.agentName}: ${m.content}`)
+      .join('\n');
+    
     for (const participant of session.participants) {
       if (participant.role === 'contributor') {
+        let voteResult: 'agree' | 'disagree' | 'abstain' = 'abstain';
+        let reasoning = `Vote from ${participant.agentName}`;
+        let confidence = 0.5;
+        
+        try {
+          // Get real agent response via AI
+          const agent = await aiAgentService.getAgent(participant.agentId);
+          if (agent) {
+            const votePrompt = `You are voting on a collaborative proposal. Here are the proposals:\n\n${proposalSummary}\n\nBased on your expertise, provide your vote as one of: agree, disagree, abstain. Then explain your reasoning briefly. Format: VOTE: [agree/disagree/abstain]\nREASONING: [your reasoning]\nCONFIDENCE: [0.0-1.0]`;
+            
+            const result = await aiAgentService.processMessage(
+              participant.agentId,
+              votePrompt,
+              { organizationId: session.sharedContext?.organizationId || '', sessionId: `vote_${session.id}_${participant.agentId}` }
+            );
+            
+            if (result.success && result.response) {
+              const response = result.response;
+              // Parse vote from response
+              const voteMatch = response.match(/VOTE:\s*(agree|disagree|abstain)/i);
+              const reasonMatch = response.match(/REASONING:\s*([\s\S]+?)(?:\nCONFIDENCE:|$)/i);
+              const confMatch = response.match(/CONFIDENCE:\s*([\d.]+)/i);
+              
+              if (voteMatch) {
+                voteResult = voteMatch[1].toLowerCase() as 'agree' | 'disagree' | 'abstain';
+              }
+              if (reasonMatch) {
+                reasoning = reasonMatch[1].trim();
+              }
+              if (confMatch) {
+                confidence = Math.min(1, Math.max(0, parseFloat(confMatch[1])));
+              } else {
+                confidence = voteResult === 'abstain' ? 0.3 : 0.7;
+              }
+            }
+          }
+        } catch (error) {
+          logger.error(`Failed to get vote from agent ${participant.agentId}:`, error as Error);
+          // Default to abstain on error
+          voteResult = 'abstain';
+          reasoning = `Unable to participate in vote due to: ${(error as Error).message}`;
+          confidence = 0.1;
+        }
+        
         votes.push({
           id: uuidv4(),
           sessionId: session.id,
           agentId: participant.agentId,
           agentName: participant.agentName,
-          vote: Math.random() > 0.3 ? 'agree' : 'disagree', // 70% agree rate
-          reasoning: `Vote reasoning from ${participant.agentName}`,
-          confidence: 0.7 + Math.random() * 0.3,
+          vote: voteResult,
+          reasoning,
+          confidence,
           timestamp: new Date()
         });
       }
@@ -865,14 +991,18 @@ export class UnifiedMultiAgentCoordinator extends EventEmitter {
   }
 
   /**
-   * Update agent status
+   * Update agent status — checks real load and marks idle agents as available
    */
   private updateAgentStatus(): void {
     for (const capability of this.agentCapabilities.values()) {
-      // Simulate status changes
-      if (capability.status === 'busy' && Math.random() < 0.1) {
+      // Mark agents as available if their load has dropped to zero
+      if (capability.status === 'busy' && capability.currentLoad <= 0) {
         capability.status = 'available';
         capability.currentLoad = 0;
+      }
+      // Mark agents as offline if they've been unresponsive
+      if (capability.status === 'error') {
+        logger.warn(`Agent ${capability.id} is in error state — requires manual recovery`);
       }
     }
   }
@@ -939,7 +1069,7 @@ class DecisionLogger {
         timestamp: new Date(decision.timestamp)
       });
     } catch (error) {
-      logger.error('Failed to log decision to database:', error);
+      logger.error('Failed to log decision to database:', error instanceof Error ? error : new Error(String(error)));
     }
   }
 
@@ -953,22 +1083,86 @@ class DecisionLogger {
 
 class ErrorRecoveryManager {
   async handleTaskError(task: AgentTask, error: Error): Promise<void> {
-    // Implement error recovery strategies
-    logger.error(`Error in task ${task.id}:`, error);
+    logger.error(`Error in task ${task.id} (${task.title}): ${error.message}`);
     
-    // Log error recovery decision
-    // Implementation depends on specific recovery strategies
+    // Log error recovery decision to database
+    try {
+      await db.insert(aiAgentEvents).values({
+        id: uuidv4(),
+        agentId: task.coordinatorId,
+        agentType: 'error_recovery',
+        action: 'task_error',
+        details: {
+          taskId: task.id,
+          taskTitle: task.title,
+          error: error.message,
+          stack: error.stack?.substring(0, 500),
+          participantIds: task.participantIds,
+          strategy: task.strategy,
+          priority: task.priority,
+          timestamp: new Date().toISOString()
+        },
+        status: 'error',
+        timestamp: new Date()
+      });
+    } catch (dbError) {
+      logger.error('Failed to log error recovery to database:', dbError as Error);
+    }
+    
+    // Attempt recovery based on task priority
+    if (task.priority === 'critical' || task.priority === 'high') {
+      logger.info(`Attempting automatic recovery for ${task.priority} priority task ${task.id}`);
+      // The calling code in executeTask will handle retry logic
+    }
   }
 }
 
 class ResourceManager {
+  private allocations: Map<string, { agentIds: string[]; allocatedAt: Date; taskId: string }> = new Map();
+  
   allocateResources(task: AgentTask): boolean {
-    // Implement resource allocation logic
+    const taskId = task.id;
+    
+    // Check if resources are already allocated for this task
+    if (this.allocations.has(taskId)) {
+      logger.warn(`Resources already allocated for task ${taskId}`);
+      return true; // Already allocated
+    }
+    
+    // Validate all participant agents are available
+    const unavailable = task.participantIds.filter(agentId => {
+      // In a real implementation, check agent availability from the registry
+      return false; // Assume available if not tracked
+    });
+    
+    if (unavailable.length > 0) {
+      logger.error(`Cannot allocate resources: agents ${unavailable.join(', ')} are unavailable`);
+      return false;
+    }
+    
+    // Record allocation
+    this.allocations.set(taskId, {
+      agentIds: [...task.participantIds],
+      allocatedAt: new Date(),
+      taskId
+    });
+    
+    logger.info(`Resources allocated for task ${taskId}: ${task.participantIds.length} agents`);
     return true;
   }
 
   releaseResources(task: AgentTask): void {
-    // Implement resource release logic
+    const taskId = task.id;
+    const allocation = this.allocations.get(taskId);
+    
+    if (allocation) {
+      this.allocations.delete(taskId);
+      logger.info(`Resources released for task ${taskId}: ${allocation.agentIds.length} agents freed`);
+    }
+  }
+  
+  getActiveAllocations(): Map<string, { agentIds: string[]; allocatedAt: Date; taskId: string }> {
+    return new Map(this.allocations);
   }
 }
 

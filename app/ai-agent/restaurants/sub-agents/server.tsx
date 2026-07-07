@@ -7,7 +7,7 @@ export default function ServerPage() {
     id: 'server',
     name: 'AI Server',
     title: 'AI Server',
-    description: 'The AI Server provides table service, takes orders, and ensures exceptional guest dining experience.",
+    description: 'The AI Server provides table service, takes orders, and ensures exceptional guest dining experience.',
     capabilities: ["Table Service","Order Taking","Guest Experience","Menu Knowledge","Service Excellence","Guest Relations","Order Accuracy","Service Speed","Dining Experience","Service Quality"],
     icon: User,
     color: '#9C27B0',

@@ -7,7 +7,7 @@ export default function SameDayDeliverySpecialistPage() {
     id: 'same-day-delivery-specialist',
     name: 'AI Same Day Delivery Specialist',
     title: 'Same Day Delivery Specialist',
-    description: 'The AI Same Day Delivery Specialist manages same-day delivery operations, coordinates rapid fulfillment, optimizes urgent delivery routing, and ensures fast and reliable same-day service.",
+    description: 'The AI Same Day Delivery Specialist manages same-day delivery operations, coordinates rapid fulfillment, optimizes urgent delivery routing, and ensures fast and reliable same-day service.',
     capabilities: ["Same Day Operations","Rapid Fulfillment","Urgent Routing","Speed Optimization","Customer Communication","Performance Tracking","Exception Handling","Reporting","Integration","Continuous Improvement"],
     icon: Zap,
     color: '#10B981',

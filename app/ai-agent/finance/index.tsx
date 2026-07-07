@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
-import { useRouter } from 'expo-router';
+import DepartmentDashboardView from '@/components/ai-agent/dashboard/DepartmentDashboardView';
+
 const agents = [
   { id: 'ai-chief-financial-officer', uid: 'ktx-05-chief-financial-officer', title: 'AI Chief Financial Officer', route: '/ai-agent/finance/chief-financial-officer', color: '#2E7D32', level: 'c_level', efficiency: '77%' },
   { id: 'ai-vp-finance', uid: 'ktx-05-vp-finance', title: 'AI VP Finance', route: '/ai-agent/finance/vp-finance', color: '#2E7D32', level: 'vp_director', efficiency: '86%' },
@@ -73,27 +73,10 @@ const agents = [
   { id: 'ai-strategic-finance-advisor', uid: 'ktx-05-strategic-finance-advisor', title: 'AI Strategic Finance Advisor', route: '/ai-agent/finance/strategic-finance-advisor', color: '#004D40', level: 'advisor', efficiency: '66%' },
 ];
 export default function DepartmentIndex() {
-  const router = useRouter();
   return (
-    <ScrollView style={s.container}>
-      <Text style={s.title}>Finance & Accounting - AI Agents</Text>
-      <Text style={s.sub}>69 AI Agents & Employees</Text>
-      <View style={s.grid}>
-        {agents.map((a) => (
-          <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>
-            <Text style={s.at}>{a.title}</Text>
-            <Text style={s.al}>{a.level.replace('_',' ').toUpperCase()}</Text>
-            <Text style={s.ae}>{a.efficiency}</Text>
-          </Pressable>
-        ))}
-      </View>
-    </ScrollView>
+    <DepartmentDashboardView
+      departmentId="finance-accounting"
+      agents={agents}
+    />
   );
 }
-const s = StyleSheet.create({
-  container:{flex:1,backgroundColor:'#0a0a0a',padding:16},title:{color:'#fff',fontSize:24,fontWeight:'bold',marginBottom:4},
-  sub:{color:'#888',fontSize:14,marginBottom:16},grid:{flexDirection:'row',flexWrap:'wrap',gap:12},
-  card:{backgroundColor:'#1a1a2e',borderRadius:12,padding:16,width:'48%',borderLeftWidth:3},
-  at:{color:'#fff',fontSize:14,fontWeight:'600',marginBottom:4},al:{color:'#888',fontSize:11,marginBottom:2},
-  ae:{color:'#10B981',fontSize:12},
-});

@@ -7,7 +7,7 @@ export default function InventoryOptimizationManagerPage() {
     id: 'inventory-optimization-manager',
     name: 'AI Inventory Optimization Manager',
     title: 'Inventory Optimization Manager',
-    description: 'The AI Inventory Optimization Manager manages inventory strategy, optimizes stock levels, coordinates demand planning, and ensures optimal inventory balance across all locations.",
+    description: 'The AI Inventory Optimization Manager manages inventory strategy, optimizes stock levels, coordinates demand planning, and ensures optimal inventory balance across all locations.',
     capabilities: ["Inventory Strategy","Stock Optimization","Demand Planning","Multi-Echelon Management","Cost Optimization","Service Level Management","Performance Monitoring","Analytics","Reporting","Strategic Planning"],
     icon: Box,
     color: '#F59E0B',

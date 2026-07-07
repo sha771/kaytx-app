@@ -7,7 +7,7 @@ export default function ReschedulingSpecialistPage() {
     id: 'rescheduling-specialist',
     name: 'AI Rescheduling Specialist',
     title: 'Rescheduling Specialist',
-    description: 'The AI Rescheduling Specialist manages delivery rescheduling, coordinates time changes, communicates updates, and ensures smooth handling of schedule adjustments.",
+    description: 'The AI Rescheduling Specialist manages delivery rescheduling, coordinates time changes, communicates updates, and ensures smooth handling of schedule adjustments.',
     capabilities: ["Rescheduling Management","Change Coordination","Customer Communication","Driver Notification","Route Adjustment","Impact Analysis","Performance Tracking","Reporting","Integration","Continuous Improvement"],
     icon: Calendar,
     color: '#10B981',

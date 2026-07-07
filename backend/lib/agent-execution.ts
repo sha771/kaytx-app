@@ -5,6 +5,7 @@ import { aiAgentEvents } from '../db/drizzle-schema';
 import { AIServiceManager, createAIMessage } from '../services/ai/ai-model-abstraction';
 import { ConversationManager } from './conversation-manager';
 import { ToolExecutor } from './tool-executor';
+import { LoopEngine, LoopType, LoopContext, LoopConfig, LoopResult, ReActConfig } from './loop-engineering';
 import crypto from 'crypto';
 import { logger } from './production-logger';
 
@@ -17,6 +18,11 @@ export interface ExecutionContext {
   timeout?: number;
   maxSteps?: number;
   enableParallelExecution?: boolean;
+  loopConfig?: {
+    enabled: boolean;
+    loopType?: LoopType;
+    config?: LoopConfig;
+  };
 }
 
 export interface ExecutionResult {
@@ -26,11 +32,12 @@ export interface ExecutionResult {
   executionTime: number;
   tokensUsed?: number;
   steps: ExecutionStep[];
+  loopResult?: LoopResult;
 }
 
 export interface ExecutionStep {
   id: string;
-  type: 'api_call' | 'tool_execution' | 'validation' | 'conversation_management' | 'error_recovery';
+  type: 'api_call' | 'tool_execution' | 'validation' | 'conversation_management' | 'error_recovery' | 'loop_engineering';
   name: string;
   status: 'pending' | 'running' | 'completed' | 'failed' | 'cancelled';
   startTime: Date;
@@ -50,6 +57,7 @@ export class AgentExecutionEngine extends EventEmitter {
   private aiService: AIServiceManager;
   private conversationManager: ConversationManager;
   private toolExecutor: ToolExecutor;
+  private loopEngine: LoopEngine;
   private rateLimiter = new Map<string, number[]>();
   private circuitBreaker = new Map<string, { failures: number; lastFailure: number; state: 'closed' | 'open' | 'half-open' }>();
 
@@ -63,9 +71,132 @@ export class AgentExecutionEngine extends EventEmitter {
     });
     this.conversationManager = new ConversationManager();
     this.toolExecutor = new ToolExecutor();
+    this.loopEngine = new LoopEngine(this.aiService, this.toolExecutor);
+  }
+
+  /**
+   * Register external tools (e.g. Skill Brain A2A tools) with this engine's ToolExecutor.
+   * Ensures tools have rate limiting, timeout, and retry configuration.
+   */
+  registerExternalTools(tools: Array<{ name: string; description: string; parameters: any; handler: Function }>): void {
+    let registered = 0;
+    for (const tool of tools) {
+      try {
+        this.toolExecutor.registerTool(tool as any);
+        registered++;
+      } catch {
+        // Already registered
+      }
+    }
+    if (registered > 0) {
+      console.log(`[AgentExecutionEngine] Registered ${registered} external tools`);
+    }
   }
 
   async executeAgent(
+    agent: AgentConfig,
+    context: ExecutionContext,
+    input: string,
+    tools?: AgentTool[]
+  ): Promise<ExecutionResult> {
+    if (context.loopConfig?.enabled) {
+      return this.executeWithLoops(agent, context, input, tools);
+    }
+
+    return this.executeLinear(agent, context, input, tools);
+  }
+
+  private async executeWithLoops(
+    agent: AgentConfig,
+    context: ExecutionContext,
+    input: string,
+    tools?: AgentTool[]
+  ): Promise<ExecutionResult> {
+    const startTime = Date.now();
+    const steps: ExecutionStep[] = [];
+    const loopType = context.loopConfig?.loopType || 'react';
+
+    const loopContext: LoopContext = {
+      agentId: agent.id,
+      sessionId: context.sessionId,
+      organizationId: context.organizationId,
+      userId: context.userId,
+      metadata: context.metadata,
+    };
+
+    try {
+      if (!this.checkRateLimit(context.organizationId)) {
+        throw new Error('Rate limit exceeded');
+      }
+
+      if (!this.checkCircuitBreaker(agent.id)) {
+        throw new Error('Circuit breaker is open for this agent');
+      }
+
+      const loopStep = await this.executeStep({
+        id: 'loop_engineering',
+        type: 'loop_engineering',
+        name: `Loop Engineering: ${loopType}`,
+        status: 'pending',
+        startTime: new Date(),
+      }, async () => {
+        const loopRequest = {
+          type: loopType,
+          systemPrompt: agent.systemPrompt || 'You are a helpful AI assistant.',
+          userInput: input,
+          tools: tools || [],
+          context: loopContext,
+          config: {
+            maxIterations: context.maxSteps || 10,
+            ...context.loopConfig?.config,
+          } as ReActConfig,
+        };
+
+        return await this.loopEngine.execute(loopRequest);
+      });
+
+      steps.push(loopStep);
+      const loopResult = loopStep.output as LoopResult;
+
+      this.recordCircuitBreakerSuccess(agent.id);
+
+      const result: ExecutionResult = {
+        success: loopResult.success,
+        result: {
+          message: loopResult.finalOutput,
+          loopType: loopResult.loopType,
+          iterations: loopResult.iterationsCount,
+          tokensUsed: loopResult.totalTokensUsed,
+          totalLatency: loopResult.totalLatency,
+          loopStatus: loopResult.status,
+        },
+        executionTime: Date.now() - startTime,
+        tokensUsed: loopResult.totalTokensUsed,
+        steps,
+        loopResult,
+      };
+
+      await this.logExecutionEvent(context, result);
+      this.emit('execution:completed', { context, result });
+      return result;
+
+    } catch (err) {
+      const error = err instanceof Error ? err.message : 'Unknown error';
+      this.recordCircuitBreakerFailure(agent.id);
+
+      const result: ExecutionResult = {
+        success: false,
+        error,
+        executionTime: Date.now() - startTime,
+        steps,
+      };
+
+      await this.logExecutionEvent(context, result);
+      return result;
+    }
+  }
+
+  private async executeLinear(
     agent: AgentConfig,
     context: ExecutionContext,
     input: string,
@@ -81,17 +212,14 @@ export class AgentExecutionEngine extends EventEmitter {
     const maxSteps = context.maxSteps || 10;
 
     try {
-      // Rate limiting check
       if (!this.checkRateLimit(context.organizationId)) {
         throw new Error('Rate limit exceeded');
       }
 
-      // Circuit breaker check
       if (!this.checkCircuitBreaker(agent.id)) {
         throw new Error('Circuit breaker is open for this agent');
       }
 
-      // Validation step
       const validationStep = await this.executeStep({
         id: 'validation',
         type: 'validation',
@@ -105,7 +233,6 @@ export class AgentExecutionEngine extends EventEmitter {
       });
       steps.push(validationStep);
 
-      // Conversation management step
       const conversationStep = await this.executeStep({
         id: 'conversation_management',
         type: 'conversation_management',
@@ -122,7 +249,6 @@ export class AgentExecutionEngine extends EventEmitter {
       });
       steps.push(conversationStep);
 
-      // API call step with enhanced error handling
       const apiStep = await this.executeStep({
         id: 'api_call',
         type: 'api_call',
@@ -133,21 +259,20 @@ export class AgentExecutionEngine extends EventEmitter {
         const conversationContext = conversationStep.output;
         const messages = [
           createAIMessage('system', agent.systemPrompt!),
-          ...conversationContext.history.map((msg: any) => 
+          ...conversationContext.history.map((msg: any) =>
             createAIMessage(msg.role as any, msg.content, msg.metadata)
           )
         ];
-        
+
         try {
           const response = await this.aiService.chat(messages, agent.model);
-          return { 
-            message: response.content, 
+          return {
+            message: response.content,
             tokensUsed: response.usage?.totalTokens || Math.floor(Math.random() * 1000) + 100,
             model: response.model,
             latency: response.latency || 1
           };
-        } catch (error) {
-          // Fallback for test environments
+        } catch {
           return {
             message: 'Test response',
             tokensUsed: Math.floor(Math.random() * 1000) + 100,
@@ -159,9 +284,8 @@ export class AgentExecutionEngine extends EventEmitter {
       steps.push(apiStep);
       tokensUsed += apiStep.output?.tokensUsed || 0;
 
-      // Tool execution steps with parallel support
       if (tools?.length && context.enableParallelExecution) {
-        const toolPromises = tools.map(tool => 
+        const toolPromises = tools.map(tool =>
           this.executeStep({
             id: `tool_${tool.name}`,
             type: 'tool_execution',
@@ -175,7 +299,7 @@ export class AgentExecutionEngine extends EventEmitter {
             });
           })
         );
-        
+
         const toolSteps = await Promise.all(toolPromises);
         steps.push(...toolSteps);
       } else if (tools?.length) {
@@ -196,23 +320,19 @@ export class AgentExecutionEngine extends EventEmitter {
         }
       }
 
-      result = { 
-        message: apiStep.output?.message || 'Success', 
-        steps: steps.length, 
+      result = {
+        message: apiStep.output?.message || 'Success',
+        steps: steps.length,
         tokensUsed,
         toolResults: steps.filter(s => s.type === 'tool_execution').map(s => s.output)
       };
 
-      // Record success for circuit breaker
       this.recordCircuitBreakerSuccess(agent.id);
 
     } catch (err) {
       error = err instanceof Error ? err.message : 'Unknown error';
-      
-      // Record failure for circuit breaker
       this.recordCircuitBreakerFailure(agent.id);
-      
-      // Error recovery step
+
       if (steps.length < maxSteps) {
         try {
           const recoveryStep = await this.executeStep({
@@ -242,7 +362,7 @@ export class AgentExecutionEngine extends EventEmitter {
 
     await this.logExecutionEvent(context, executionResult);
     this.emit('execution:completed', { executionId, context, result: executionResult });
-    
+
     return executionResult;
   }
 
@@ -254,7 +374,7 @@ export class AgentExecutionEngine extends EventEmitter {
     try {
       const output = await Promise.race([
         executor(),
-        new Promise((_, reject) => 
+        new Promise((_, reject) =>
           setTimeout(() => reject(new Error('Timeout')), this.maxExecutionTime)
         )
       ]);
@@ -276,16 +396,14 @@ export class AgentExecutionEngine extends EventEmitter {
 
   private checkRateLimit(organizationId: string): boolean {
     const now = Date.now();
-    const windowMs = 60000; // 1 minute window
-    const maxRequests = 100; // Max 100 requests per minute
+    const windowMs = 60000;
+    const maxRequests = 100;
 
     if (!this.rateLimiter.has(organizationId)) {
       this.rateLimiter.set(organizationId, []);
     }
 
     const requests = this.rateLimiter.get(organizationId)!;
-    
-    // Remove old requests outside the window
     const validRequests = requests.filter(timestamp => now - timestamp < windowMs);
     this.rateLimiter.set(organizationId, validRequests);
 
@@ -305,7 +423,7 @@ export class AgentExecutionEngine extends EventEmitter {
     }
 
     const now = Date.now();
-    const timeoutMs = 60000; // 1 minute timeout
+    const timeoutMs = 60000;
 
     switch (breaker.state) {
       case 'closed':
@@ -336,8 +454,7 @@ export class AgentExecutionEngine extends EventEmitter {
     if (breaker) {
       breaker.failures++;
       breaker.lastFailure = Date.now();
-      
-      if (breaker.failures >= 5) { // Open after 5 failures
+      if (breaker.failures >= 5) {
         breaker.state = 'open';
       }
     }
@@ -348,7 +465,6 @@ export class AgentExecutionEngine extends EventEmitter {
     context: ExecutionContext,
     agent: AgentConfig
   ): Promise<any> {
-    // Basic error recovery strategy
     const recoveryStrategies = [
       'Retry with reduced complexity',
       'Fallback to simpler model',
@@ -364,18 +480,16 @@ export class AgentExecutionEngine extends EventEmitter {
     };
   }
 
-  /**
-   * Get AI service provider status
-   */
   getProviderStatus() {
     return this.aiService.getProviderStatus();
   }
 
-  /**
-   * Update AI service configuration
-   */
   updateAIConfig(config: { provider?: 'openai' | 'anthropic' | 'local'; model?: string; temperature?: number; maxTokens?: number }) {
     this.aiService.updateDefaultConfig(config);
+  }
+
+  getLoopEngine(): LoopEngine {
+    return this.loopEngine;
   }
 
   private async logExecutionEvent(
@@ -392,11 +506,14 @@ export class AgentExecutionEngine extends EventEmitter {
         details: {
           executionTime: result.executionTime,
           tokensUsed: result.tokensUsed,
-          stepsCount: result.steps.length
+          stepsCount: result.steps.length,
+          loopEnabled: !!context.loopConfig?.enabled,
+          loopType: context.loopConfig?.loopType,
+          loopIterations: result.loopResult?.iterationsCount,
         },
         metadata: {
           sessionId: context.sessionId,
-          userId: context.userId
+          userId: context.userId,
         }
       } as any);
     } catch (error) {

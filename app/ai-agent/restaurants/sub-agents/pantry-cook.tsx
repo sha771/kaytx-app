@@ -7,7 +7,7 @@ export default function PantryCookPage() {
     id: 'pantry-cook',
     name: 'AI Pantry Cook',
     title: 'AI Pantry Cook',
-    description: 'The AI Pantry Cook handles cold food preparation, salads, appetizers, and ensures fresh cold food quality.",
+    description: 'The AI Pantry Cook handles cold food preparation, salads, appetizers, and ensures fresh cold food quality.',
     capabilities: ["Cold Food Preparation","Salad Preparation","Appetizers","Cold Food Quality","Fresh Ingredients","Pantry Station","Food Presentation","Food Safety","Pantry Standards","Pantry Excellence"],
     icon: Salad,
     color: '#4CAF50',

@@ -2,7 +2,7 @@ import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
 import { Bot } from 'lucide-react-native';
 
-export default function Import/ExportSpecialistPage() {
+export default function ImportExportSpecialistPage() {
   const agent = {
     id: 'importexport-specialist',
     name: 'AI Import/Export Specialist',

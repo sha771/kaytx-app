@@ -7,7 +7,7 @@ export default function PickupPointManagerPage() {
     id: 'pickup-point-manager',
     name: 'AI Pickup Point Manager',
     title: 'Pickup Point Manager',
-    description: 'The AI Pickup Point Manager manages pickup point operations, coordinates location services, monitors point performance, and ensures efficient self-service pickup options.",
+    description: 'The AI Pickup Point Manager manages pickup point operations, coordinates location services, monitors point performance, and ensures efficient self-service pickup options.',
     capabilities: ["Pickup Point Management","Location Coordination","Performance Monitoring","Customer Communication","Inventory Management","Security Monitoring","Reporting","Integration","Quality Assurance","Continuous Improvement"],
     icon: MapPin,
     color: '#10B981',

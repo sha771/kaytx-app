@@ -102,7 +102,6 @@ import {
   LineChart,
   GitBranch,
   Users2,
-  Zap as Lightning,
   ArrowRight,
   ArrowLeft,
   Maximize2,
@@ -121,10 +120,9 @@ import {
   MoreHorizontal,
   Star,
   Award,
-  Target as TargetIcon,
   Gauge,
   Send,
-  MessageSquare,
+  MessageSquare
 } from 'lucide-react-native';
 
 // Types

@@ -7,7 +7,7 @@ export default function BookingCoordinatorPage() {
     id: 'booking-coordinator',
     name: 'AI Booking Coordinator',
     title: 'Booking Coordinator',
-    description: 'The AI Booking Coordinator coordinates freight bookings, manages scheduling, optimizes booking capacity, and ensures efficient booking processes across all carriers and modes.",
+    description: 'The AI Booking Coordinator coordinates freight bookings, manages scheduling, optimizes booking capacity, and ensures efficient booking processes across all carriers and modes.',
     capabilities: ["Booking Coordination","Scheduling","Capacity Management","Carrier Selection","Confirmation Management","Documentation","Tracking","Communication","Performance Monitoring","Cost Optimization"],
     icon: CalendarCheck,
     color: '#8B5CF6',

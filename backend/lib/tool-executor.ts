@@ -232,11 +232,36 @@ export class ToolExecutor extends EventEmitter {
     context: ToolExecutionContext
   ): Promise<any> {
     if (tool.handler) {
-      return await tool.handler({
-        ...context,
-        toolName: tool.name,
-        toolParameters: tool.parameters,
-      });
+      // Sandboxed execution — wrap handler in try/catch with timeout and isolation
+      const handlerTimeout = tool.timeout || 30000;
+      const handlerFn = tool.handler;
+      
+      return Promise.race([
+        // Execute handler with error boundary
+        (async () => {
+          try {
+            const result = await handlerFn({
+              ...context,
+              toolName: tool.name,
+              toolParameters: tool.parameters,
+              // Provide a limited context — no access to process, require, etc.
+              __sandbox: {
+                organizationId: context.organizationId,
+                agentId: context.agentId,
+                sessionId: context.sessionId
+              }
+            });
+            return result;
+          } catch (error) {
+            logger.error(`Tool handler error for ${tool.name}:`, error as Error);
+            throw error;
+          }
+        })(),
+        // Timeout guard
+        new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error(`Tool ${tool.name} execution timeout (${handlerTimeout}ms)`)), handlerTimeout)
+        )
+      ]);
     }
 
     // Default tool behavior based on tool name

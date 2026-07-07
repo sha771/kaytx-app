@@ -2,7 +2,7 @@ import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
 import { Bot } from 'lucide-react-native';
 
-export default function Co-pilotPage() {
+export default function CoPilotPage() {
   const agent = {
     id: 'co-pilot',
     name: 'AI Co-pilot',

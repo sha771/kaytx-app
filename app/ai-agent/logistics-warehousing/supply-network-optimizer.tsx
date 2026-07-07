@@ -7,7 +7,7 @@ export default function SupplyNetworkOptimizerPage() {
     id: 'supply-network-optimizer',
     name: 'AI Supply Network Optimizer',
     title: 'Supply Network Optimizer',
-    description: 'The AI Supply Network Optimizer optimizes supply network design, balances network capacity, improves network efficiency, and ensures optimal supply network configuration.",
+    description: 'The AI Supply Network Optimizer optimizes supply network design, balances network capacity, improves network efficiency, and ensures optimal supply network configuration.',
     capabilities: ["Network Optimization","Capacity Balancing","Efficiency Improvement","Cost Analysis","Service Level Management","Simulation","Performance Monitoring","Reporting","Strategic Planning","Continuous Improvement"],
     icon: Network,
     color: '#6366F1',

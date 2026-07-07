@@ -2,7 +2,7 @@ import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
 import { Bot } from 'lucide-react-native';
 
-export default function ChiefBrand&LuxuryOfficerPage() {
+export default function ChiefBrandAndLuxuryOfficerPage() {
   const agent = {
     id: 'chief-brand--luxury-officer',
     name: 'AI Chief Brand & Luxury Officer',

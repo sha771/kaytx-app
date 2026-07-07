@@ -181,13 +181,13 @@ services:
       ENCRYPTION_KEY: ${ENCRYPTION_KEY}
     ports:
       - "${APP_PORT:-3001}:3001"
-    # depends_on:
-    #   postgres:
-    #     condition: service_healthy
-    #   redis:
-    #     condition: service_healthy
-    #   rabbitmq:
-    #     condition: service_healthy
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
     volumes:
       - ./app:/app/app
       - ./backend:/app/backend

@@ -1,4 +1,4 @@
-import { AgentMemoryService, MemoryEntry } from '../../backend/services/agent-memory-service';
+import { AgentMemoryService, MemoryEntry } from '../../backend/services/consolidated-memory-service';
 import { vectorEmbeddingService } from '../../backend/services/vector-embedding-service';
 import { db as pgDb } from '../../backend/db/connection';
 import { aiMemories } from '../../backend/db/drizzle-schema';

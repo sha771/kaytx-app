@@ -131,6 +131,8 @@ export default function EmployeesPage() {
       case 'terminated': return '#EF4444';
       default: return '#6B7280';
     }
+  };
+
 
 
   const getLevelColor = (level: string) => {

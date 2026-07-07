@@ -7,7 +7,7 @@ export default function ReturnsManagementSpecialistPage() {
     id: 'returns-management-specialist',
     name: 'AI Returns Management Specialist',
     title: 'Returns Management Specialist',
-    description: 'The AI Returns Management Specialist manages returns operations, coordinates processing activities, analyzes return patterns, and optimizes reverse logistics processes.",
+    description: 'The AI Returns Management Specialist manages returns operations, coordinates processing activities, analyzes return patterns, and optimizes reverse logistics processes.',
     capabilities: ["Returns Management","Processing Coordination","Pattern Analysis","Process Optimization","Quality Control","Customer Communication","Cost Analysis","Reporting","Integration","Continuous Improvement"],
     icon: RotateCcw,
     color: '#10B981',

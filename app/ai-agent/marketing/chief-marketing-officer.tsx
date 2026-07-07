@@ -18,10 +18,12 @@ export default function AgentPage() {
     subAgents: [
       { id: 'ai-marketing-strategy-analyst', uid: 'ktx-03-marketing-strategy-analyst', name: 'AI Marketing Strategy Analyst', title: 'AI Marketing Strategy Analyst', route: '/ai-agent/marketing/marketing-strategy-analyst' },
       { id: 'ai-digital-channel-optimizer', uid: 'ktx-03-digital-channel-optimizer', name: 'AI Digital Channel Optimizer', title: 'AI Digital Channel Optimizer', route: '/ai-agent/marketing/digital-channel-optimizer' },
-      { id: 'ai-list-segmenter', uid: 'ktx-03-list-segmenter', name: 'AI List Segmenter', title: 'AI List Segmenter', route: '/ai-agent/marketing/list-segmenter' }
+      { id: 'ai-list-segmenter', uid: 'ktx-03-list-segmenter', name: 'AI List Segmenter', title: 'AI List Segmenter', route: '/ai-agent/marketing/list-segmenter' },
+      { id: 'ai-geo-marketing', uid: 'ktx-03-geo-marketing', name: 'AI Geographic Marketing', title: 'AI Geographic Marketing', route: '/ai-agent/marketing/geo-marketing' },
+      { id: 'ai-aeo-marketing', uid: 'ktx-03-aeo-marketing', name: 'AI Answer Engine Optimization', title: 'AI Answer Engine Optimization', route: '/ai-agent/marketing/aeo-marketing' }
     ],
     infrastructure: {
-      status: 'online',
+      status: 'online' as const,
       health: 88,
       uptime: '99.7%',
       lastActive: 'Now',

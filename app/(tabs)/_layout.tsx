@@ -1,7 +1,7 @@
 import { Tabs } from 'expo-router';
  
 import React from 'react';
-import { House, MessageSquare, Layers, Zap, Calendar, MessageCircle, Brain, Network } from 'lucide-react-native';
+import { House, MessageSquare, Layers, Zap, Calendar, MessageCircle, Brain, Network, GraduationCap, Shirt } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 
 export default function TabLayout() {
@@ -78,6 +78,20 @@ export default function TabLayout() {
         options={{
           title: 'Hierarchy',
           tabBarIcon: ({ color, size }) => <Network size={size} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="education"
+        options={{
+          title: 'Education',
+          tabBarIcon: ({ color, size }) => <GraduationCap size={size} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="fashion-luxury-command-center"
+        options={{
+          title: 'Fashion Luxury',
+          tabBarIcon: ({ color, size }) => <Shirt size={size} color={color} />,
         }}
       />
     </Tabs>

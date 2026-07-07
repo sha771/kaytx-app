@@ -7,7 +7,7 @@ export default function DeliveryPerformanceAnalystPage() {
     id: 'delivery-performance-analyst',
     name: 'AI Delivery Performance Analyst',
     title: 'Delivery Performance Analyst',
-    description: 'The AI Delivery Performance Analyst analyzes delivery performance, identifies optimization opportunities, tracks key metrics, and provides insights for delivery operations improvement.",
+    description: 'The AI Delivery Performance Analyst analyzes delivery performance, identifies optimization opportunities, tracks key metrics, and provides insights for delivery operations improvement.',
     capabilities: ["Performance Analysis","Metric Tracking","Trend Analysis","Optimization Identification","Insight Generation","Reporting","Benchmarking","Analytics","Strategic Support","Continuous Improvement"],
     icon: BarChart,
     color: '#10B981',

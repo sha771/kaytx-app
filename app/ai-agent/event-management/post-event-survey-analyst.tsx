@@ -2,7 +2,7 @@ import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
 import { Bot } from 'lucide-react-native';
 
-export default function Post-eventSurveyAnalystPage() {
+export default function PostEventSurveyAnalystPage() {
   const agent = {
     id: 'post-event-survey-analyst',
     name: 'AI Post-event Survey Analyst',

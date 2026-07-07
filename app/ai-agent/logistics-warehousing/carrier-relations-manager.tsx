@@ -7,7 +7,7 @@ export default function CarrierRelationsManagerPage() {
     id: 'carrier-relations-manager',
     name: 'AI Carrier Relations Manager',
     title: 'Carrier Relations Manager',
-    description: 'The AI Carrier Relations Manager manages carrier relationships, negotiates rates, coordinates carrier performance, and ensures optimal carrier partnerships for freight operations.",
+    description: 'The AI Carrier Relations Manager manages carrier relationships, negotiates rates, coordinates carrier performance, and ensures optimal carrier partnerships for freight operations.',
     capabilities: ["Carrier Management","Rate Negotiation","Performance Monitoring","Relationship Building","Contract Management","Service Level Management","Issue Resolution","Reporting","Strategic Planning","Cost Optimization"],
     icon: Handshake,
     color: '#8B5CF6',

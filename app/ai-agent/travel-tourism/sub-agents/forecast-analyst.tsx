@@ -7,7 +7,7 @@ export default function ForecastAnalystPage() {
     id: 'forecast-analyst',
     name: 'AI Forecast Analyst',
     title: 'AI Forecast Analyst',
-    description: 'The AI Forecast Analyst forecasts tourism trends, predicts demand, analyzes seasonal patterns, and provides accurate forecasts for planning and decision making.",
+    description: 'The AI Forecast Analyst forecasts tourism trends, predicts demand, analyzes seasonal patterns, and provides accurate forecasts for planning and decision making.',
     capabilities: ["Task Automation","Data Processing","Workflow Management","Forecasting","Demand Prediction","Seasonal Analysis","Trend Projection","Model Building","Accuracy Tracking","Scenario Planning"],
     icon: TrendingUp,
     color: '#1B5E20',

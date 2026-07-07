@@ -50,7 +50,6 @@ interface LayerStatus {
 }
 
 const MainSimulation = () => {
-};
   const insets = useSafeAreaInsets();
   const { colors } = useTheme();
   
@@ -71,7 +70,7 @@ const MainSimulation = () => {
   ];
   
   const [layerConfigs, setLayerConfigs] = useState<Record<LayerId, SimulationConfig>>(() => {
-    const configs: Record<string, SimulationConfig> = {,
+    const configs: Record<string, SimulationConfig> = {};
     layerFlowOrder.forEach(layerId => {
       configs[layerId] = {
         layerId,

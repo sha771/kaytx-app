@@ -7,7 +7,7 @@ export default function InventoryAllocationSpecialistPage() {
     id: 'inventory-allocation-specialist',
     name: 'AI Inventory Allocation Specialist',
     title: 'Inventory Allocation Specialist',
-    description: 'The AI Inventory Allocation Specialist allocates inventory across locations, balances stock distribution, fulfills demand efficiently, and ensures optimal inventory placement.",
+    description: 'The AI Inventory Allocation Specialist allocates inventory across locations, balances stock distribution, fulfills demand efficiently, and ensures optimal inventory placement.',
     capabilities: ["Inventory Allocation","Stock Distribution","Demand Fulfillment","Balance Optimization","Cost Analysis","Service Level Management","Reporting","Integration","Analytics","Continuous Improvement"],
     icon: Box,
     color: '#F59E0B',

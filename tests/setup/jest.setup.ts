@@ -1,4 +1,5 @@
-import { jest, beforeAll, afterAll, afterEach } from '@jest/globals';
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { jest, beforeAll, afterAll, afterEach } = require('@jest/globals');
 
 /**
  * Jest setup file for general test configuration

@@ -2,12 +2,12 @@ import { describe, it, expect, beforeEach, afterEach, jest } from '@jest/globals
 import { AIAgentService, AgentType } from '../../../services/ai-agent-service';
 import { db as pgDb } from '../../../db/connection';
 import { logAudit } from '../../../lib/audit';
-import { agentMemoryService } from '../../../services/agent-memory-service';
+import { agentMemoryService } from '../../../services/consolidated-memory-service';
 
 // Mock dependencies
 jest.mock('../../../db/connection');
 jest.mock('../../../lib/audit');
-jest.mock('../../../services/agent-memory-service');
+jest.mock('../../../services/consolidated-memory-service');
 
 const mockDb = pgDb as jest.Mocked<typeof pgDb>;
 const mockLogAudit = logAudit as jest.MockedFunction<typeof logAudit>;

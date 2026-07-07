@@ -364,3 +364,5 @@ const styles = StyleSheet.create({
   dangerLabel: { fontSize: 15, fontWeight: '600' },
   dangerDescription: { fontSize: 12, marginTop: 2 },
 });
+
+}

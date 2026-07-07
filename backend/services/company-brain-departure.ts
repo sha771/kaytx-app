@@ -6,6 +6,8 @@
 import { knowledgeExtractionService } from './company-brain-extraction';
 import { companyBrainWebSocketService } from './company-brain-websocket';
 import { companyBrainIngestionService } from './company-brain-ingestion';
+import { skillBrainService } from './skill-brain-service';
+import { ContentType } from '../../lib/skill-brain/types';
 
 /**
  * Company Brain Employee Departure Service
@@ -229,6 +231,14 @@ export class CompanyBrainDepartureService {
           }
         );
 
+        // Also extract skills for the skill brain
+        await skillBrainService.extractFromDocument(
+          doc.content,
+          doc.title,
+          employee.name,
+          employee.email
+        );
+
         console.log(`Extracted knowledge from document: ${doc.title}`);
       } catch (error) {
         console.error(`Failed to extract from document ${doc.title}:`, error);
@@ -281,6 +291,17 @@ export class CompanyBrainDepartureService {
           }
         );
 
+        // Also extract skills for the skill brain
+        await skillBrainService.extractFromText(
+          conv.text,
+          ContentType.CONVERSATION,
+          {
+            sourceTitle: conv.source === 'slack' ? `Slack: ${conv.channel}` : `Email: ${conv.subject}`,
+            personName: employee.name,
+            personEmail: employee.email,
+          }
+        );
+
         console.log(`Extracted knowledge from conversation`);
       } catch (error) {
         console.error(`Failed to extract from conversation:`, error);
@@ -327,11 +348,30 @@ export class CompanyBrainDepartureService {
   private async createTransferPlan(plan: KnowledgePreservationPlan): Promise<void> {
     console.log(`Creating transfer plan for ${plan.employeeName}`);
 
+    // Generate skill transfer plan using Skill Brain
+    const transferPlan = skillBrainService.createTransferPlan(
+      plan.employeeId,
+      plan.employeeName,
+      plan.transferTarget
+    );
+
+    console.log(`Skill transfer plan created: ${transferPlan.id} with ${transferPlan.skills.length} skills`);
+
     // In production, this would:
     // 1. Identify suitable transfer target
     // 2. Create structured transfer plan
     // 3. Schedule transfer sessions
     // 4. Notify stakeholders
+
+    companyBrainWebSocketService.broadcastRiskAlert({
+      type: 'knowledge_transfer_plan_created',
+      employeeId: plan.employeeId,
+      employeeName: plan.employeeName,
+      planId: plan.id,
+      skillTransferPlanId: transferPlan.id,
+      skillCount: transferPlan.skills.length,
+      message: `Transfer plan created for ${plan.employeeName} with ${transferPlan.skills.length} skills identified`,
+    });
 
     console.log(`Transfer plan created for target: ${plan.transferTarget}`);
   }
@@ -341,6 +381,14 @@ export class CompanyBrainDepartureService {
    */
   private async finalizeKnowledgePreservation(employee: EmployeeProfile): Promise<void> {
     console.log(`Finalizing knowledge preservation for ${employee.name}`);
+
+    // Generate skill brain index with latest state
+    try {
+      await skillBrainService.generateIndex();
+      console.log(`Skill brain index generated for ${employee.name}'s knowledge`);
+    } catch (error) {
+      console.error(`Failed to generate skill brain index:`, error);
+    }
 
     // In production, this would:
     // 1. Mark all employee knowledge as preserved

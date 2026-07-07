@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
-import { useRouter } from 'expo-router';
+import DepartmentDashboardView from '@/components/ai-agent/dashboard/DepartmentDashboardView';
 
 const agents = [
   { id: 'ai-ai-governance-specialist', uid: 'ktx-aimg-ai-governance-specialist', title: 'AI Governance Specialist', route: '/ai-agent/ai-management-governance/ai-governance-specialist', color: '#1E88E5', level: 'team_lead', efficiency: '92%' },
@@ -64,32 +63,11 @@ const agents = [
   { id: 'ai-ai-governance-trainer', uid: 'ktx-aimg-ai-governance-trainer', title: 'AI Governance Trainer', route: '/ai-agent/ai-management-governance/ai-governance-trainer', color: '#1E88E5', level: 'team_lead', efficiency: '87%' },
 ];
 
-export default function AIDepartment() {
-  const router = useRouter();
+export default function DepartmentIndex() {
   return (
-    <ScrollView style={s.container}>
-      <Text style={s.title}>AI Management & Governance - AI Agents</Text>
-      <Text style={s.sub}>{agents.length} AI Agents & Employees</Text>
-      <View style={s.grid}>
-        {agents.map((a) => (
-          <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>
-            <Text style={s.at}>{a.title}</Text>
-            <Text style={s.al}>{a.level.replace('_',' ').toUpperCase()}</Text>
-            <Text style={s.ae}>{a.efficiency}</Text>
-          </Pressable>
-        ))}
-      </View>
-    </ScrollView>
+    <DepartmentDashboardView
+      departmentId="ai-management-governance"
+      agents={agents}
+    />
   );
 }
-
-const s = StyleSheet.create({
-  container:{flex:1,backgroundColor:'#0a0a0a',padding:16},
-  title:{color:'#fff',fontSize:24,fontWeight:'bold',marginBottom:4},
-  sub:{color:'#888',fontSize:14,marginBottom:16},
-  grid:{flexDirection:'row',flexWrap:'wrap',gap:12},
-  card:{backgroundColor:'#1a1a2e',borderRadius:12,padding:16,width:'48%',borderLeftWidth:3},
-  at:{color:'#fff',fontSize:14,fontWeight:'600',marginBottom:4},
-  al:{color:'#888',fontSize:11,marginBottom:2},
-  ae:{color:'#10B981',fontSize:12},
-});

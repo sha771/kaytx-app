@@ -7,7 +7,7 @@ export default function ContentCreatorPage() {
     id: 'content-creator',
     name: 'AI Content Creator',
     title: 'AI Content Creator',
-    description: 'The AI Content Creator creates engaging content, manages content calendars, produces multimedia assets, and tells compelling destination stories.",
+    description: 'The AI Content Creator creates engaging content, manages content calendars, produces multimedia assets, and tells compelling destination stories.',
     capabilities: ["Task Automation","Data Processing","Workflow Management","Content Creation","Calendar Management","Multimedia Production","Storytelling","Content Strategy","Brand Voice","Quality Assurance"],
     icon: Pen,
     color: '#D32F2F',

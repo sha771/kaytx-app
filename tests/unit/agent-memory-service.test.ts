@@ -1,4 +1,4 @@
-import { AgentMemoryService } from '../../backend/services/agent-memory-service';
+import { AgentMemoryService } from '../../backend/services/consolidated-memory-service';
 import { db as pgDb } from '../../backend/db/connection';
 import { vectorEmbeddingService } from '../../backend/services/vector-embedding-service';
 

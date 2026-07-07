@@ -7,7 +7,7 @@ export default function WarehouseAnalystPage() {
     id: 'warehouse-analyst',
     name: 'AI Warehouse Analyst',
     title: 'Warehouse Analyst',
-    description: 'The AI Warehouse Analyst analyzes warehouse performance data, identifies trends and patterns, generates insights, and provides recommendations for warehouse optimization and improvement.",
+    description: 'The AI Warehouse Analyst analyzes warehouse performance data, identifies trends and patterns, generates insights, and provides recommendations for warehouse optimization and improvement.',
     capabilities: ["Data Analysis","Trend Identification","Performance Analytics","Insight Generation","Reporting","Benchmarking","Recommendations","Visualization","Forecasting","Continuous Improvement"],
     icon: BarChart,
     color: '#3B82F6',

@@ -5,6 +5,7 @@
 
 import { knowledgeExtractionService } from './company-brain-extraction';
 import { companyBrainWebSocketService } from './company-brain-websocket';
+import { extractSkillsFromDocumentChunk } from './skill-brain-ingestion-hook';
 import fs from 'fs/promises';
 import path from 'path';
 
@@ -403,6 +404,18 @@ export class DocumentProcessorService {
           );
 
           nodesCreated++;
+
+          // 🔥 GENERATE skill.md FILE — every document chunk becomes a skill.md
+          // This ensures no knowledge is lost when employees leave.
+          // Each skill.md captures: competencies, skills, procedures, decisions, relationships
+          await extractSkillsFromDocumentChunk(
+            chunk,
+            metadata.filename,
+            metadata.authorId,
+            undefined,
+            i,
+            chunks.length
+          );
 
           // Notify about new knowledge
           companyBrainWebSocketService.notifyKnowledgeCreated({

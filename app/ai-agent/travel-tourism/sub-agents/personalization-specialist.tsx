@@ -7,7 +7,7 @@ export default function PersonalizationSpecialistPage() {
     id: 'personalization-specialist',
     name: 'AI Personalization Specialist',
     title: 'AI Personalization Specialist',
-    description: 'The AI Personalization Specialist creates personalized experiences, analyzes customer preferences, delivers tailored recommendations, and enhances customer engagement through personalization.",
+    description: 'The AI Personalization Specialist creates personalized experiences, analyzes customer preferences, delivers tailored recommendations, and enhances customer engagement through personalization.',
     capabilities: ["Task Automation","Data Processing","Workflow Management","Personalization Design","Preference Analysis","Recommendation Engine","Customer Segmentation","Experience Tailoring","Engagement Optimization","Data Analysis"],
     icon: UserCircle,
     color: '#7B1FA2',

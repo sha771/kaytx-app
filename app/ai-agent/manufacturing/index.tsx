@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
-import { useRouter } from 'expo-router';
+import DepartmentDashboardView from '@/components/ai-agent/dashboard/DepartmentDashboardView';
+
 const agents = [
   { id: 'ai-chief-production-officer', uid: 'ktx-18-chief-production-officer', title: 'AI Chief Production Officer', route: '/ai-agent/manufacturing/chief-production-officer', color: '#5C6BC0', level: 'c_level', efficiency: '84%' },
   { id: 'ai-vp-manufacturing', uid: 'ktx-18-vp-manufacturing', title: 'AI VP Manufacturing', route: '/ai-agent/manufacturing/vp-manufacturing', color: '#5C6BC0', level: 'vp_director', efficiency: '88%' },
@@ -76,28 +76,12 @@ const agents = [
   { id: 'ai-continuous-improvement-manager-1', uid: 'ktx-18-continuous-improvement-manager-1', title: 'AI Continuous Improvement Manager I', route: '/ai-agent/manufacturing/continuous-improvement-manager-1', color: '#5C6BC0', level: 'manager', efficiency: '94%' },
   { id: 'ai-continuous-improvement-manager-2', uid: 'ktx-18-continuous-improvement-manager-2', title: 'AI Continuous Improvement Manager II', route: '/ai-agent/manufacturing/continuous-improvement-manager-2', color: '#5C6BC0', level: 'manager', efficiency: '95%' },
 ];
+
 export default function DepartmentIndex() {
-  const router = useRouter();
   return (
-    <ScrollView style={s.container}>
-      <Text style={s.title}>Manufacturing & Production - AI Agents</Text>
-      <Text style={s.sub}>120 AI Agents & Employees</Text>
-      <View style={s.grid}>
-        {agents.map((a) => (
-          <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>
-            <Text style={s.at}>{a.title}</Text>
-            <Text style={s.al}>{a.level.replace('_',' ').toUpperCase()}</Text>
-            <Text style={s.ae}>{a.efficiency}</Text>
-          </Pressable>
-        ))}
-      </View>
-    </ScrollView>
+    <DepartmentDashboardView
+      departmentId="manufacturing-production"
+      agents={agents}
+    />
   );
 }
-const s = StyleSheet.create({
-  container:{flex:1,backgroundColor:'#0a0a0a',padding:16},title:{color:'#fff',fontSize:24,fontWeight:'bold',marginBottom:4},
-  sub:{color:'#888',fontSize:14,marginBottom:16},grid:{flexDirection:'row',flexWrap:'wrap',gap:12},
-  card:{backgroundColor:'#1a1a2e',borderRadius:12,padding:16,width:'48%',borderLeftWidth:3},
-  at:{color:'#fff',fontSize:14,fontWeight:'600',marginBottom:4},al:{color:'#888',fontSize:11,marginBottom:2},
-  ae:{color:'#10B981',fontSize:12},
-});

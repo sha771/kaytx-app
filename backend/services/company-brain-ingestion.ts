@@ -5,6 +5,11 @@
 
 import { knowledgeExtractionService } from './company-brain-extraction';
 import { companyBrainWebSocketService } from './company-brain-websocket';
+import {
+  extractSkillsFromConversation,
+  extractSkillsFromEmail,
+  extractSkillsForDepartingEmployee,
+} from './skill-brain-ingestion-hook';
 
 /**
  * Company Brain Knowledge Ingestion Service
@@ -263,6 +268,26 @@ export class CompanyBrainIngestionService {
             }
           );
 
+          // 🔥 GENERATE skill.md FILE — every conversation message gets a skill.md
+          // Slack, Teams, Zoom, etc. — ALL become skill.md files.
+          // This is the core fix for the 70% knowledge loss problem.
+          if (source.type === 'email') {
+            await extractSkillsFromEmail(
+              message.text,
+              message.metadata?.subject || `${source.type} message`,
+              message.author,
+              message.authorEmail
+            );
+          } else {
+            await extractSkillsFromConversation(
+              message.text,
+              source.type,
+              message.channel || source.type,
+              message.author,
+              message.authorEmail
+            );
+          }
+
           // Create knowledge node (would be saved to database in production)
           knowledgeNodesCreated++;
 
@@ -426,6 +451,14 @@ export class CompanyBrainIngestionService {
           }
         );
 
+        // 🔥 GENERATE skill.md FILE for every polled email
+        await extractSkillsFromEmail(
+          message.text,
+          message.metadata?.subject || 'Polled email',
+          message.author,
+          message.authorEmail
+        );
+
         companyBrainWebSocketService.notifyKnowledgeCreated({
           id: message.id,
           title: knowledge.title,
@@ -470,15 +503,23 @@ export class CompanyBrainIngestionService {
 
   /**
    * Preserve knowledge from departing employee
+   * 🔥 Generates skill.md files for ALL employee knowledge and creates transfer plan
    */
   private async preserveEmployeeKnowledge(employeeId: string, employeeName: string): Promise<void> {
     console.log(`Preserving knowledge for ${employeeName}`);
+    
+    // 🔥 Generate skill.md files for departed employee
+    // This captures ALL their skills before they leave — solving the 70% loss problem.
+    const { skillMdsCreated, skillsExtracted } = await extractSkillsForDepartingEmployee(
+      employeeId,
+      employeeName
+    );
     
     // In production, this would:
     // 1. Extract all knowledge nodes created by this employee
     // 2. Identify critical knowledge areas
     // 3. Generate documentation
-    // 4. Create knowledge transfer plans
+    // 4. Create knowledge transfer plans (already done via extractSkillsForDepartingEmployee)
     // 5. Notify relevant stakeholders
     
     // Notify progress
@@ -487,7 +528,9 @@ export class CompanyBrainIngestionService {
       employeeId,
       employeeName,
       status: 'in_progress',
-      message: 'Extracting and preserving employee knowledge...',
+      skillMdsCreated,
+      skillsExtracted,
+      message: `Extracting and preserving employee knowledge... ${skillMdsCreated} skill.md files created with ${skillsExtracted} skills`,
     });
   }
 

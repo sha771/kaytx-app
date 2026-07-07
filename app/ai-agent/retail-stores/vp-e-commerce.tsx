@@ -2,7 +2,7 @@ import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
 import { Bot } from 'lucide-react-native';
 
-export default function VPE-commercePage() {
+export default function VPECommercePage() {
   const agent = {
     id: 'vp-e-commerce',
     name: 'AI VP E-commerce',

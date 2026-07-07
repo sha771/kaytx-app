@@ -1,0 +1,77 @@
+import React from 'react';
+import DepartmentDashboardView from '@/components/ai-agent/dashboard/DepartmentDashboardView';
+
+const agents = [
+  { id: 'ai-chief-technology-officer', uid: 'ktx-06-chief-technology-officer', title: 'AI Chief Technology Officer', route: '/ai-agent/technologynology/chief-technology-officer', color: '#1565C0', level: 'c_level', efficiency: '84%' },
+  { id: 'ai-vp-engineering', uid: 'ktx-06-vp-engineering', title: 'AI VP Engineering', route: '/ai-agent/technologynology/vp-engineering', color: '#1565C0', level: 'vp_director', efficiency: '94%' },
+  { id: 'ai-vp-infrastructure', uid: 'ktx-06-vp-infrastructure', title: 'AI VP Infrastructure', route: '/ai-agent/technologynology/vp-infrastructure', color: '#1565C0', level: 'vp_director', efficiency: '75%' },
+  { id: 'ai-vp-aiml', uid: 'ktx-06-vp-aiml', title: 'AI VP AI/ML', route: '/ai-agent/technologynology/vp-aiml', color: '#1565C0', level: 'vp_director', efficiency: '92%' },
+  { id: 'ai-vp-security-technology', uid: 'ktx-06-vp-security-technology', title: 'AI VP Security Technology', route: '/ai-agent/technologynology/vp-security-technology', color: '#1565C0', level: 'vp_director', efficiency: '90%' },
+  { id: 'ai-vp-product-engineering', uid: 'ktx-06-vp-product-engineering', title: 'AI VP Product Engineering', route: '/ai-agent/technologynology/vp-product-engineering', color: '#1565C0', level: 'vp_director', efficiency: '88%' },
+  { id: 'ai-vp-platform-engineering', uid: 'ktx-06-vp-platform-engineering', title: 'AI VP Platform Engineering', route: '/ai-agent/technologynology/vp-platform-engineering', color: '#1565C0', level: 'vp_director', efficiency: '87%' },
+  { id: 'ai-vp-data-engineering', uid: 'ktx-06-vp-data-engineering', title: 'AI VP Data Engineering', route: '/ai-agent/technologynology/vp-data-engineering', color: '#1565C0', level: 'vp_director', efficiency: '89%' },
+  { id: 'ai-lead-architect', uid: 'ktx-06-lead-architect', title: 'AI Lead Architect', route: '/ai-agent/technologynology/lead-architect', color: '#1565C0', level: 'manager', efficiency: '94%' },
+  { id: 'ai-solutions-architect', uid: 'ktx-06-solutions-architect', title: 'AI Solutions Architect', route: '/ai-agent/technologynology/solutions-architect', color: '#1565C0', level: 'manager', efficiency: '92%' },
+  { id: 'ai-cloud-architect', uid: 'ktx-06-cloud-architect', title: 'AI Cloud Architect', route: '/ai-agent/technologynology/cloud-architect', color: '#1565C0', level: 'manager', efficiency: '90%' },
+  { id: 'ai-devops-manager', uid: 'ktx-06-devops-manager', title: 'AI DevOps Manager', route: '/ai-agent/technologynology/devops-manager', color: '#1565C0', level: 'manager', efficiency: '94%' },
+  { id: 'ai-engineering-manager', uid: 'ktx-06-engineering-manager', title: 'AI Engineering Manager', route: '/ai-agent/technologynology/engineering-manager', color: '#1565C0', level: 'manager', efficiency: '88%' },
+  { id: 'ai-frontend-lead', uid: 'ktx-06-frontend-lead', title: 'AI Frontend Lead', route: '/ai-agent/technologynology/frontend-lead', color: '#1565C0', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-backend-lead', uid: 'ktx-06-backend-lead', title: 'AI Backend Lead', route: '/ai-agent/technologynology/backend-lead', color: '#1565C0', level: 'team_lead', efficiency: '80%' },
+  { id: 'ai-sre-lead', uid: 'ktx-06-sre-lead', title: 'AI SRE Lead', route: '/ai-agent/technologynology/sre-lead', color: '#1565C0', level: 'team_lead', efficiency: '92%' },
+  { id: 'ai-qa-lead', uid: 'ktx-06-qa-lead', title: 'AI QA Lead', route: '/ai-agent/technologynology/qa-lead', color: '#1565C0', level: 'team_lead', efficiency: '89%' },
+  { id: 'ai-data-lead', uid: 'ktx-06-data-lead', title: 'AI Data Lead', route: '/ai-agent/technologynology/data-lead', color: '#1565C0', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-security-lead', uid: 'ktx-06-security-lead', title: 'AI Security Lead', route: '/ai-agent/technologynology/security-lead', color: '#1565C0', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-frontend-developer', uid: 'ktx-06-frontend-developer', title: 'AI Frontend Developer', route: '/ai-agent/technologynology/frontend-developer', color: '#1565C0', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-backend-developer', uid: 'ktx-06-backend-developer', title: 'AI Backend Developer', route: '/ai-agent/technologynology/backend-developer', color: '#1565C0', level: 'team_lead', efficiency: '75%' },
+  { id: 'ai-full-stack-developer', uid: 'ktx-06-full-stack-developer', title: 'AI Full Stack Developer', route: '/ai-agent/technologynology/full-stack-developer', color: '#1565C0', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-mobile-developer', uid: 'ktx-06-mobile-developer', title: 'AI Mobile Developer', route: '/ai-agent/technologynology/mobile-developer', color: '#1565C0', level: 'team_lead', efficiency: '81%' },
+  { id: 'ai-ui-developer', uid: 'ktx-06-ui-developer', title: 'AI UI Developer', route: '/ai-agent/technologynology/ui-developer', color: '#1565C0', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-ux-engineer', uid: 'ktx-06-ux-engineer', title: 'AI UX Engineer', route: '/ai-agent/technologynology/ux-engineer', color: '#1565C0', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-sre-engineer', uid: 'ktx-06-sre-engineer', title: 'AI SRE Engineer', route: '/ai-agent/technologynology/sre-engineer', color: '#1565C0', level: 'team_lead', efficiency: '80%' },
+  { id: 'ai-devops-engineer', uid: 'ktx-06-devops-engineer', title: 'AI DevOps Engineer', route: '/ai-agent/technologynology/devops-engineer', color: '#1565C0', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-cloud-engineer', uid: 'ktx-06-cloud-engineer', title: 'AI Cloud Engineer', route: '/ai-agent/technologynology/cloud-engineer', color: '#1565C0', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-qa-automation-engineer', uid: 'ktx-06-qa-automation-engineer', title: 'AI QA Automation Engineer', route: '/ai-agent/technologynology/qa-automation-engineer', color: '#1565C0', level: 'team_lead', efficiency: '90%' },
+  { id: 'ai-manual-qa-engineer', uid: 'ktx-06-manual-qa-engineer', title: 'AI Manual QA Engineer', route: '/ai-agent/technologynology/manual-qa-engineer', color: '#1565C0', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-performance-engineer', uid: 'ktx-06-performance-engineer', title: 'AI Performance Engineer', route: '/ai-agent/technologynology/performance-engineer', color: '#1565C0', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-data-engineer', uid: 'ktx-06-data-engineer', title: 'AI Data Engineer', route: '/ai-agent/technologynology/data-engineer', color: '#1565C0', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-ml-engineer', uid: 'ktx-06-ml-engineer', title: 'AI ML Engineer', route: '/ai-agent/technologynology/ml-engineer', color: '#1565C0', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-ai-researcher', uid: 'ktx-06-ai-researcher', title: 'AI AI Researcher', route: '/ai-agent/technologynology/ai-researcher', color: '#1565C0', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-security-engineer', uid: 'ktx-06-security-engineer', title: 'AI Security Engineer', route: '/ai-agent/technologynology/security-engineer', color: '#1565C0', level: 'team_lead', efficiency: '75%' },
+  { id: 'ai-application-security-engineer', uid: 'ktx-06-application-security-engineer', title: 'AI Application Security Engineer', route: '/ai-agent/technologynology/application-security-engineer', color: '#1565C0', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-network-security-engineer', uid: 'ktx-06-network-security-engineer', title: 'AI Network Security Engineer', route: '/ai-agent/technologynology/network-security-engineer', color: '#1565C0', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-database-administrator', uid: 'ktx-06-database-administrator', title: 'AI Database Administrator', route: '/ai-agent/technologynology/database-administrator', color: '#1565C0', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-data-scientist', uid: 'ktx-06-data-scientist', title: 'AI Data Scientist', route: '/ai-agent/technologynology/data-scientist', color: '#1565C0', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-infrastructure-engineer', uid: 'ktx-06-infrastructure-engineer', title: 'AI Infrastructure Engineer', route: '/ai-agent/technologynology/infrastructure-engineer', color: '#1565C0', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-platform-engineer', uid: 'ktx-06-platform-engineer', title: 'AI Platform Engineer', route: '/ai-agent/technologynology/platform-engineer', color: '#1565C0', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-api-developer', uid: 'ktx-06-api-developer', title: 'AI API Developer', route: '/ai-agent/technologynology/api-developer', color: '#1565C0', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-embedded-systems-engineer', uid: 'ktx-06-embedded-systems-engineer', title: 'AI Embedded Systems Engineer', route: '/ai-agent/technologynology/embedded-systems-engineer', color: '#1565C0', level: 'team_lead', efficiency: '81%' },
+  { id: 'ai-blockchain-developer', uid: 'ktx-06-blockchain-developer', title: 'AI Blockchain Developer', route: '/ai-agent/technologynology/blockchain-developer', color: '#1565C0', level: 'team_lead', efficiency: '80%' },
+  { id: 'ai-iot-developer', uid: 'ktx-06-iot-developer', title: 'AI IoT Developer', route: '/ai-agent/technologynology/iot-developer', color: '#1565C0', level: 'team_lead', efficiency: '79%' },
+  { id: 'ai-arvr-developer', uid: 'ktx-06-arvr-developer', title: 'AI AR/VR Developer', route: '/ai-agent/technologynology/arvr-developer', color: '#1565C0', level: 'team_lead', efficiency: '78%' },
+  { id: 'ai-game-developer', uid: 'ktx-06-game-developer', title: 'AI Game Developer', route: '/ai-agent/technologynology/game-developer', color: '#1565C0', level: 'team_lead', efficiency: '77%' },
+  { id: 'ai-test-engineer', uid: 'ktx-06-test-engineer', title: 'AI Test Engineer', route: '/ai-agent/technologynology/test-engineer', color: '#1565C0', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-release-engineer', uid: 'ktx-06-release-engineer', title: 'AI Release Engineer', route: '/ai-agent/technologynology/release-engineer', color: '#1565C0', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-build-engineer', uid: 'ktx-06-build-engineer', title: 'AI Build Engineer', route: '/ai-agent/technologynology/build-engineer', color: '#1565C0', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-configuration-management-engineer', uid: 'ktx-06-configuration-management-engineer', title: 'AI Configuration Management Engineer', route: '/ai-agent/technologynology/configuration-management-engineer', color: '#1565C0', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-monitoring-engineer', uid: 'ktx-06-monitoring-engineer', title: 'AI Monitoring Engineer', route: '/ai-agent/technologynology/monitoring-engineer', color: '#1565C0', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-logging-specialist', uid: 'ktx-06-logging-specialist', title: 'AI Logging Specialist', route: '/ai-agent/technologynology/logging-specialist', color: '#1565C0', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-incident-responder', uid: 'ktx-06-incident-responder', title: 'AI Incident Responder', route: '/ai-agent/technologynology/incident-responder', color: '#1565C0', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-site-reliability-engineer', uid: 'ktx-06-site-reliability-engineer', title: 'AI Site Reliability Engineer', route: '/ai-agent/technologynology/site-reliability-engineer', color: '#1565C0', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-chaos-engineer', uid: 'ktx-06-chaos-engineer', title: 'AI Chaos Engineer', route: '/ai-agent/technologynology/chaos-engineer', color: '#1565C0', level: 'team_lead', efficiency: '81%' },
+  { id: 'ai-technical-writer', uid: 'ktx-06-technical-writer', title: 'AI Technical Writer', route: '/ai-agent/technologynology/technical-writer', color: '#1565C0', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-developer-relations-engineer', uid: 'ktx-06-developer-relations-engineer', title: 'AI Developer Relations Engineer', route: '/ai-agent/technologynology/developer-relations-engineer', color: '#1565C0', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-opensource-maintainer', uid: 'ktx-06-opensource-maintainer', title: 'AI Open Source Maintainer', route: '/ai-agent/technologynology/opensource-maintainer', color: '#1565C0', level: 'team_lead', efficiency: '80%' },
+  { id: 'ai-technology-strategist', uid: 'ktx-06-technology-strategist', title: 'AI Technology Strategist', route: '/ai-agent/technologynology/technology-strategist', color: '#1565C0', level: 'team_lead', efficiency: '83%' },
+  { id: 'ai-innovation-manager-tech', uid: 'ktx-06-innovation-manager-tech', title: 'AI Innovation Manager (Tech)', route: '/ai-agent/technologynology/innovation-manager-tech', color: '#1565C0', level: 'team_lead', efficiency: '85%' },
+  { id: 'ai-rd-engineer', uid: 'ktx-06-rd-engineer', title: 'AI R&D Engineer', route: '/ai-agent/technologynology/rd-engineer', color: '#1565C0', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-prototyping-engineer', uid: 'ktx-06-prototyping-engineer', title: 'AI Prototyping Engineer', route: '/ai-agent/technologynology/prototyping-engineer', color: '#1565C0', level: 'team_lead', efficiency: '83%' },
+];
+
+export default function DepartmentIndex() {
+  return (
+    <DepartmentDashboardView
+      departmentId="technology-engineering"
+      agents={agents}
+    />
+  );
+}

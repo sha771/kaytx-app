@@ -7,7 +7,7 @@ export default function RoutePlannerPage() {
     id: 'route-planner',
     name: 'AI Route Planner',
     title: 'Route Planner',
-    description: 'The AI Route Planner plans delivery routes, optimizes sequencing, considers constraints, and ensures efficient routing for last-mile delivery operations.",
+    description: 'The AI Route Planner plans delivery routes, optimizes sequencing, considers constraints, and ensures efficient routing for last-mile delivery operations.',
     capabilities: ["Route Planning","Sequencing Optimization","Constraint Management","Traffic Analysis","Cost Optimization","Real-Time Adjustments","Performance Monitoring","Customer Considerations","Reporting","Continuous Improvement"],
     icon: Map,
     color: '#10B981',

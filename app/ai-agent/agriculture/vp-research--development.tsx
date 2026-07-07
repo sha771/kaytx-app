@@ -2,7 +2,7 @@ import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
 import { Bot } from 'lucide-react-native';
 
-export default function VPResearch&DevelopmentPage() {
+export default function VPResearchAndDevelopmentPage() {
   const agent = {
     id: 'vp-research--development',
     name: 'AI VP Research & Development',

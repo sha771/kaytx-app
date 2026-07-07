@@ -7,7 +7,7 @@ export default function LayoutOptimizerPage() {
     id: 'layout-optimizer',
     name: 'AI Layout Optimizer',
     title: 'Layout Optimizer',
-    description: 'The AI Layout Optimizer designs and optimizes warehouse layouts, analyzes workflow efficiency, recommends layout improvements, and ensures optimal configuration of warehouse space and equipment.",
+    description: 'The AI Layout Optimizer designs and optimizes warehouse layouts, analyzes workflow efficiency, recommends layout improvements, and ensures optimal configuration of warehouse space and equipment.',
     capabilities: ["Layout Design","Workflow Analysis","Efficiency Optimization","Space Planning","Equipment Placement","Performance Simulation","Cost Analysis","Reporting","Implementation Support","Continuous Improvement"],
     icon: Layout,
     color: '#3B82F6',

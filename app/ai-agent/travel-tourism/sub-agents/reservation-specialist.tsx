@@ -7,7 +7,7 @@ export default function ReservationSpecialistPage() {
     id: 'reservation-specialist',
     name: 'AI Reservation Specialist',
     title: 'AI Reservation Specialist',
-    description: 'The AI Reservation Specialist manages complex reservations, handles special requests, coordinates with partners, and ensures seamless reservation experiences.",
+    description: 'The AI Reservation Specialist manages complex reservations, handles special requests, coordinates with partners, and ensures seamless reservation experiences.',
     capabilities: ["Task Automation","Data Processing","Workflow Management","Reservation Management","Special Requests","Partner Coordination","Complex Itineraries","Reservation Support","Customer Service","Issue Resolution"],
     icon: CalendarClock,
     color: '#0277BD',

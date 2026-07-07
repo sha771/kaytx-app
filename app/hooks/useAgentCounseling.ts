@@ -240,32 +240,26 @@ export function useAgentCounseling() {
     return await respondMutation.mutateAsync(params);
   }, [respondMutation]);
 
-  // Helper to get related agents for counseling
-  const getRelatedAgents = useCallback((agentId: string) => {
-    const agent = getAgentById(agentId);
-    if (!agent) return { mainAgent: null, subAgents: [], peers: [] };
+  // Helper to get related agents for counseling via tRPC
+  const hierarchyQuery = trpc.aiAgents.getAgentHierarchy.useQuery(
+    { agentId: '' },
+    { enabled: false }
+  );
 
-    const hierarchy = getAgentHierarchy(agentId);
-    return {
-      mainAgent: hierarchy.mainAgent,
-      subAgents: hierarchy.subAgents,
-      peers: hierarchy.peers || [],
-    };
+  const getRelatedAgents = useCallback(async (agentId: string) => {
+    try {
+      const result = await trpc.client.aiAgents.getAgentHierarchy.query({ agentId });
+      return {
+        mainAgent: result.hierarchy?.mainAgent || null,
+        subAgents: result.hierarchy?.subAgents || [],
+        peers: result.hierarchy?.peers || [],
+      };
+    } catch {
+      return { mainAgent: null, subAgents: [], peers: [] };
+    }
   }, []);
 
-  // Helper to determine counseling mode
-  const getCounselingMode = useCallback((sourceId: string, targetId: string): 'main_to_sub' | 'sub_to_main' | 'peer_to_peer' => {
-    const source = getAgentById(sourceId);
-    const target = getAgentById(targetId);
-
-    if (!source || !target) return 'peer_to_peer';
-
-    if (source.type === 'main_agent' && target.type === 'subagent') {
-      return 'main_to_sub';
-    }
-    if (source.type === 'subagent' && target.type === 'main_agent') {
-      return 'sub_to_main';
-    }
+  const getCounselingMode = useCallback((_sourceId: string, _targetId: string): 'main_to_sub' | 'sub_to_main' | 'peer_to_peer' => {
     return 'peer_to_peer';
   }, []);
 

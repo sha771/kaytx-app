@@ -7,7 +7,7 @@ export default function LastMileAnalystPage() {
     id: 'last-mile-analyst',
     name: 'AI Last Mile Analyst',
     title: 'Last Mile Analyst',
-    description: 'The AI Last Mile Analyst analyzes last-mile performance, identifies improvement opportunities, tracks delivery metrics, and provides insights for last-mile optimization.",
+    description: 'The AI Last Mile Analyst analyzes last-mile performance, identifies improvement opportunities, tracks delivery metrics, and provides insights for last-mile optimization.',
     capabilities: ["Last Mile Analysis","Performance Tracking","Opportunity Identification","Metric Analysis","Trend Recognition","Insight Generation","Reporting","Benchmarking","Strategic Support","Continuous Improvement"],
     icon: TrendingUp,
     color: '#10B981',

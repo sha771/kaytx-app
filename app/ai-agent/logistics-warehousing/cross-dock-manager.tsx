@@ -7,7 +7,7 @@ export default function CrossDockManagerPage() {
     id: 'cross-dock-manager',
     name: 'AI Cross Dock Manager',
     title: 'Cross Dock Manager',
-    description: 'The AI Cross Dock Manager manages cross-docking operations, coordinates direct transfers, optimizes dock scheduling, and ensures efficient cross-dock operations for rapid throughput.",
+    description: 'The AI Cross Dock Manager manages cross-docking operations, coordinates direct transfers, optimizes dock scheduling, and ensures efficient cross-dock operations for rapid throughput.',
     capabilities: ["Cross-Dock Operations","Transfer Coordination","Dock Scheduling","Throughput Optimization","Quality Check","Performance Monitoring","Resource Allocation","Reporting","Cost Analysis","Continuous Improvement"],
     icon: ArrowRightLeft,
     color: '#3B82F6',

@@ -68,9 +68,9 @@ export const departments: Department[] = [
     "shortName": "Marketing & Gro",
     "color": "#E91E63",
     "icon": "Brain",
-    "mainAgents": 20,
-    "subAgents": 40,
-    "total": 60
+    "mainAgents": 22,
+    "subAgents": 48,
+    "total": 70
   },
   {
     "id": 4,
@@ -6048,6 +6048,194 @@ export const allAgents: MainAgent[] = [
     "aiCost": "$1462/mo",
     "efficiency": "94%",
     "isPremium": true
+  },
+  {
+    "id": "ai-geo-marketing",
+    "uid": "ktx-03-geo-marketing",
+    "name": "AI Geographic Marketing",
+    "title": "AI Geographic Marketing",
+    "department": "Marketing & Growth",
+    "departmentId": 3,
+    "level": "manager",
+    "description": "AI Geographic Marketing specializes in location-based marketing strategies, local SEO optimization, and regional market analysis. This AI agent automates geo-targeting campaigns, location-based audience segmentation, and geographic performance tracking to maximize regional marketing effectiveness.",
+    "capabilities": [
+      "Geo-Targeting",
+      "Local SEO",
+      "Regional Analytics",
+      "Location-Based Campaigns",
+      "Market Area Analysis",
+      "Geographic Segmentation",
+      "Local Search Optimization",
+      "Regional Performance Tracking"
+    ],
+    "responsibilities": [
+      "Lead geographic marketing initiatives",
+      "Implement location-based targeting strategies",
+      "Optimize local SEO performance",
+      "Analyze regional market trends"
+    ],
+    "icon": "MapPin",
+    "color": "#E91E63",
+    "route": "/ai-agent/marketing/geo-marketing",
+    "subAgents": [
+      {
+        "id": "ai-local-seo-specialist",
+        "uid": "ktx-03-local-seo-specialist",
+        "name": "AI Local SEO Specialist",
+        "title": "AI Local SEO Specialist",
+        "parentId": "ai-geo-marketing",
+        "description": "AI Local SEO Specialist optimizes business visibility in local search results, manages Google Business Profile listings, and ensures consistent local citations across directories.",
+        "capabilities": [
+          "Local Keyword Research",
+          "Google Business Profile",
+          "Citation Management",
+          "Review Management",
+          "Local Content Optimization"
+        ]
+      },
+      {
+        "id": "ai-geo-targeting-coordinator",
+        "uid": "ktx-03-geo-targeting-coordinator",
+        "name": "AI Geo-Targeting Coordinator",
+        "title": "AI Geo-Targeting Coordinator",
+        "parentId": "ai-geo-marketing",
+        "description": "AI Geo-Targeting Coordinator manages location-based ad targeting, geo-fencing campaigns, and regional audience segmentation.",
+        "capabilities": [
+          "Geo-Fencing",
+          "Location-Based Bidding",
+          "Regional Segmentation",
+          "Geo-Performance Analytics",
+          "Location-Based Ad Delivery"
+        ]
+      },
+      {
+        "id": "ai-regional-market-analyst",
+        "uid": "ktx-03-regional-market-analyst",
+        "name": "AI Regional Market Analyst",
+        "title": "AI Regional Market Analyst",
+        "parentId": "ai-geo-marketing",
+        "description": "AI Regional Market Analyst analyzes market trends across different geographic regions, identifies regional opportunities, and provides location-specific market intelligence.",
+        "capabilities": [
+          "Regional Market Research",
+          "Geographic Demographics",
+          "Regional Competitor Analysis",
+          "Market Opportunity Identification",
+          "Geo-Performance Reporting"
+        ]
+      },
+      {
+        "id": "ai-location-intelligence-manager",
+        "uid": "ktx-03-location-intelligence-manager",
+        "name": "AI Location Intelligence Manager",
+        "title": "AI Location Intelligence Manager",
+        "parentId": "ai-geo-marketing",
+        "description": "AI Location Intelligence Manager leverages geographic data and location analytics to optimize marketing strategies, identify high-value locations, and drive foot traffic.",
+        "capabilities": [
+          "Location Analytics",
+          "Heat Map Generation",
+          "Foot Traffic Analysis",
+          "Store Performance Optimization",
+          "Geographic Data Integration"
+        ]
+      }
+    ],
+    "aiCost": "$1500/mo",
+    "efficiency": "82%",
+    "isPremium": false
+  },
+  {
+    "id": "ai-aeo-marketing",
+    "uid": "ktx-03-aeo-marketing",
+    "name": "AI Answer Engine Optimization",
+    "title": "AI Answer Engine Optimization",
+    "department": "Marketing & Growth",
+    "departmentId": 3,
+    "level": "manager",
+    "description": "AI Answer Engine Optimization specializes in optimizing content for answer engines, AI-powered search, and voice assistants. This AI agent automates featured snippet optimization, schema markup implementation, and conversational content strategy to maximize visibility in answer-based search results.",
+    "capabilities": [
+      "Featured Snippet Optimization",
+      "Schema Markup",
+      "Voice Search Optimization",
+      "Q&A Content Strategy",
+      "Answer Engine Visibility",
+      "Conversational Content",
+      "Structured Data",
+      "Position Zero Targeting"
+    ],
+    "responsibilities": [
+      "Lead answer engine optimization initiatives",
+      "Implement featured snippet strategies",
+      "Optimize for voice search",
+      "Develop Q&A content frameworks"
+    ],
+    "icon": "Brain",
+    "color": "#E91E63",
+    "route": "/ai-agent/marketing/aeo-marketing",
+    "subAgents": [
+      {
+        "id": "ai-featured-snippet-optimizer",
+        "uid": "ktx-03-featured-snippet-optimizer",
+        "name": "AI Featured Snippet Optimizer",
+        "title": "AI Featured Snippet Optimizer",
+        "parentId": "ai-aeo-marketing",
+        "description": "AI Featured Snippet Optimizer specializes in optimizing content to appear in Google featured snippets and other answer boxes.",
+        "capabilities": [
+          "Snippet Opportunity Research",
+          "Content Structuring",
+          "Position Zero Optimization",
+          "Snippet Performance Tracking",
+          "Answer Format Optimization"
+        ]
+      },
+      {
+        "id": "ai-schema-markup-specialist",
+        "uid": "ktx-03-schema-markup-specialist",
+        "name": "AI Schema Markup Specialist",
+        "title": "AI Schema Markup Specialist",
+        "parentId": "ai-aeo-marketing",
+        "description": "AI Schema Markup Specialist implements and manages structured data markup to help search engines understand content better.",
+        "capabilities": [
+          "Schema.org Markup",
+          "JSON-LD Implementation",
+          "Structured Data Validation",
+          "Rich Results Optimization",
+          "Schema Testing"
+        ]
+      },
+      {
+        "id": "ai-voice-search-optimizer",
+        "uid": "ktx-03-voice-search-optimizer",
+        "name": "AI Voice Search Optimizer",
+        "title": "AI Voice Search Optimizer",
+        "parentId": "ai-aeo-marketing",
+        "description": "AI Voice Search Optimizer focuses on optimizing content for voice assistants and voice search queries.",
+        "capabilities": [
+          "Voice Keyword Research",
+          "Conversational Content",
+          "Question-Based Optimization",
+          "Voice Search Analytics",
+          "Assistant Integration"
+        ]
+      },
+      {
+        "id": "ai-qa-content-strategist",
+        "uid": "ktx-03-qa-content-strategist",
+        "name": "AI Q&A Content Strategist",
+        "title": "AI Q&A Content Strategist",
+        "parentId": "ai-aeo-marketing",
+        "description": "AI Q&A Content Strategist develops question-and-answer content optimized for answer engines and AI-powered search.",
+        "capabilities": [
+          "FAQ Generation",
+          "Answer Optimization",
+          "Q&A Content Strategy",
+          "Question Intent Analysis",
+          "Answer Performance Tracking"
+        ]
+      }
+    ],
+    "aiCost": "$1500/mo",
+    "efficiency": "84%",
+    "isPremium": false
   },
   {
     "id": "ai-neural-operations-intelligence-hub",

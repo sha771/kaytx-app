@@ -544,3 +544,5 @@ const styles = StyleSheet.create({
   addStepButton: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, padding: 14, borderRadius: 12 },
   addStepText: { color: '#fff', fontSize: 15, fontWeight: '600' },
 });
+
+}

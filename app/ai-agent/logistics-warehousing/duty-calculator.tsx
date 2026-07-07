@@ -7,7 +7,7 @@ export default function DutyCalculatorPage() {
     id: 'duty-calculator',
     name: 'AI Duty Calculator',
     title: 'Duty Calculator',
-    description: 'The AI Duty Calculator calculates import duties, determines tax obligations, analyzes cost implications, and ensures accurate duty assessment for international shipments.",
+    description: 'The AI Duty Calculator calculates import duties, determines tax obligations, analyzes cost implications, and ensures accurate duty assessment for international shipments.',
     capabilities: ["Duty Calculation","Tax Determination","Cost Analysis","Regulatory Compliance","Rate Management","Reporting","Integration","Audit Support","Optimization","Continuous Improvement"],
     icon: Calculator,
     color: '#EC4899',

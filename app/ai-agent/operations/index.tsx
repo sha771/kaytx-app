@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
-import { useRouter } from 'expo-router';
+import DepartmentDashboardView from '@/components/ai-agent/dashboard/DepartmentDashboardView';
+
 const agents = [
   { id: 'ai-chief-operating-officer', uid: 'ktx-04-chief-operating-officer', title: 'AI Chief Operating Officer', route: '/ai-agent/operations/chief-operating-officer', color: '#607D8B', level: 'c_level', efficiency: '77%' },
   { id: 'ai-vp-operations', uid: 'ktx-04-vp-operations', title: 'AI VP Operations', route: '/ai-agent/operations/vp-operations', color: '#607D8B', level: 'vp_director', efficiency: '87%' },
@@ -63,27 +63,10 @@ const agents = [
   { id: 'ai-benchmarking-specialist', uid: 'ktx-04-benchmarking-specialist', title: 'AI Benchmarking Specialist', route: '/ai-agent/operations/benchmarking-specialist', color: '#607D8B', level: 'team_lead', efficiency: '83%' },
 ];
 export default function DepartmentIndex() {
-  const router = useRouter();
   return (
-    <ScrollView style={s.container}>
-      <Text style={s.title}>Operations & Management - AI Agents</Text>
-      <Text style={s.sub}>60 AI Agents & Employees</Text>
-      <View style={s.grid}>
-        {agents.map((a) => (
-          <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>
-            <Text style={s.at}>{a.title}</Text>
-            <Text style={s.al}>{a.level.replace('_',' ').toUpperCase()}</Text>
-            <Text style={s.ae}>{a.efficiency}</Text>
-          </Pressable>
-        ))}
-      </View>
-    </ScrollView>
+    <DepartmentDashboardView
+      departmentId="operations-management"
+      agents={agents}
+    />
   );
 }
-const s = StyleSheet.create({
-  container:{flex:1,backgroundColor:'#0a0a0a',padding:16},title:{color:'#fff',fontSize:24,fontWeight:'bold',marginBottom:4},
-  sub:{color:'#888',fontSize:14,marginBottom:16},grid:{flexDirection:'row',flexWrap:'wrap',gap:12},
-  card:{backgroundColor:'#1a1a2e',borderRadius:12,padding:16,width:'48%',borderLeftWidth:3},
-  at:{color:'#fff',fontSize:14,fontWeight:'600',marginBottom:4},al:{color:'#888',fontSize:11,marginBottom:2},
-  ae:{color:'#10B981',fontSize:12},
-});

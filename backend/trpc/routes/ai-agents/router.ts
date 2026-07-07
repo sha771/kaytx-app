@@ -189,9 +189,37 @@ const listAgentsProcedure = permissionProcedure(Permission.AI_AGENT_READ)
         .where(and(...whereParts))
         .orderBy(desc(aiAgents.createdAt));
 
+      // Also include agents from the registry that aren't in the DB yet
+      const dbAgentNames = new Set(agents.map(a => a.name));
+      const registryAgents = agentRegistry
+        .filter(a => !dbAgentNames.has(a.title))
+        .slice(0, 500) // Limit to prevent too many results
+        .map(a => ({
+          id: a.uid,
+          organizationId: ctx.user!.organizationId!,
+          name: a.title,
+          type: `department-${a.departmentId}`,
+          description: `${a.title} - ${a.department}`,
+          model: a.level === 'c_level' ? 'gpt-4-turbo' : 'gpt-4',
+          status: 'active' as const,
+          config: {
+            department: a.department,
+            departmentId: a.departmentId,
+            level: a.level,
+            uid: a.uid,
+            route: a.route,
+          },
+          systemPrompt: '',
+          capabilities: [],
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        }));
+
       return {
-        agents,
-        count: agents.length,
+        agents: [...agents, ...registryAgents],
+        count: agents.length + registryAgents.length,
+        dbCount: agents.length,
+        registryCount: registryAgents.length,
       };
     } catch (error: any) {
       console.error('Failed to list agents:', error);
@@ -894,6 +922,104 @@ const getRecruitingDataProcedure = permissionProcedure(Permission.AI_AGENT_READ)
     }
   });
 
+// Dynamic agent configuration endpoints
+import { getDepartmentConfig, getAgentSystemPrompt, getAgentCapabilities, getAgentTools } from '../../../../constants/agent-configurations';
+import { agentRegistry } from '../../../../constants/aiAgentRegistry';
+import { registerAllAgents, getAgentConfig as getAgentConfigFromService } from '../../../services/agent-registration-service';
+
+const getAgentConfigSchema = z.object({
+  uid: z.string(),
+  organizationId: z.string().optional(),
+});
+
+const getAgentConfigProcedure = permissionProcedure(Permission.AI_AGENT_READ)
+  .input(getAgentConfigSchema)
+  .query(async ({ input }) => {
+    try {
+      const config = await getAgentConfigFromService(input.uid, input.organizationId);
+      if (!config) {
+        throw new Error('Agent not found');
+      }
+      return { success: true, data: config };
+    } catch (error: any) {
+      throw new Error(error.message || 'Failed to get agent config');
+    }
+  });
+
+const registerAgentsSchema = z.object({
+  organizationId: z.string(),
+});
+
+const registerAgentsProcedure = permissionProcedure(Permission.AI_AGENT_CREATE)
+  .input(registerAgentsSchema)
+  .mutation(async ({ input }) => {
+    try {
+      const result = await registerAllAgents(input.organizationId);
+      return { success: true, data: result };
+    } catch (error: any) {
+      throw new Error(error.message || 'Failed to register agents');
+    }
+  });
+
+const listRegistryAgentsProcedure = permissionProcedure(Permission.AI_AGENT_READ)
+  .input(z.object({
+    departmentId: z.number().optional(),
+    level: z.string().optional(),
+    search: z.string().optional(),
+    limit: z.number().optional().default(100),
+    offset: z.number().optional().default(0),
+  }))
+  .query(async ({ input }) => {
+    try {
+      let filtered = [...agentRegistry];
+
+      if (input.departmentId !== undefined) {
+        filtered = filtered.filter(a => a.departmentId === input.departmentId);
+      }
+      if (input.level) {
+        filtered = filtered.filter(a => a.level === input.level);
+      }
+      if (input.search) {
+        const search = input.search.toLowerCase();
+        filtered = filtered.filter(a =>
+          a.title.toLowerCase().includes(search) ||
+          a.department.toLowerCase().includes(search) ||
+          a.uid.toLowerCase().includes(search)
+        );
+      }
+
+      const total = filtered.length;
+      const agents = filtered.slice(input.offset, input.offset + input.limit);
+
+      return {
+        success: true,
+        data: {
+          agents,
+          total,
+          limit: input.limit,
+          offset: input.offset,
+        },
+      };
+    } catch (error: any) {
+      throw new Error(error.message || 'Failed to list registry agents');
+    }
+  });
+
+const getDepartmentConfigsProcedure = permissionProcedure(Permission.AI_AGENT_READ)
+  .query(async () => {
+    try {
+      const configs = getAllDepartmentConfigs ? getAllDepartmentConfigs() : [];
+      return { success: true, data: configs };
+    } catch (error: any) {
+      throw new Error(error.message || 'Failed to get department configs');
+    }
+  });
+
+function getAllDepartmentConfigs() {
+  const { getAllDepartmentConfigs: getAll } = require('../../../../constants/agent-configurations');
+  return getAll();
+}
+
 export const aiAgentsRouter = createTRPCRouter({
   startConversation: startConversationProcedure,
   sendMessage: sendMessageProcedure,
@@ -918,4 +1044,9 @@ export const aiAgentsRouter = createTRPCRouter({
   employeeToAgentCounseling: employeeToAgentCounselingProcedure,
   respondToCounseling: respondToCounselingProcedure,
   getAgentHierarchy: getAgentHierarchyProcedure,
+  // Dynamic agent configuration endpoints
+  getAgentConfig: getAgentConfigProcedure,
+  registerAgents: registerAgentsProcedure,
+  listRegistryAgents: listRegistryAgentsProcedure,
+  getDepartmentConfigs: getDepartmentConfigsProcedure,
 });

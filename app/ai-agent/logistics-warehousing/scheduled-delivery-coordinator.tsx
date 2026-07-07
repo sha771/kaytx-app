@@ -7,7 +7,7 @@ export default function ScheduledDeliveryCoordinatorPage() {
     id: 'scheduled-delivery-coordinator',
     name: 'AI Scheduled Delivery Coordinator',
     title: 'Scheduled Delivery Coordinator',
-    description: 'The AI Scheduled Delivery Coordinator manages scheduled delivery operations, coordinates time-window deliveries, optimizes appointment scheduling, and ensures reliable scheduled service.",
+    description: 'The AI Scheduled Delivery Coordinator manages scheduled delivery operations, coordinates time-window deliveries, optimizes appointment scheduling, and ensures reliable scheduled service.',
     capabilities: ["Scheduled Delivery Management","Time Window Coordination","Appointment Scheduling","Reliability Management","Customer Communication","Performance Tracking","Resource Optimization","Reporting","Integration","Continuous Improvement"],
     icon: Clock,
     color: '#10B981',

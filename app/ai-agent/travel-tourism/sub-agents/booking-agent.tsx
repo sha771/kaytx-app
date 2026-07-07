@@ -7,7 +7,7 @@ export default function BookingAgentPage() {
     id: 'booking-agent',
     name: 'AI Booking Agent',
     title: 'AI Booking Agent',
-    description: 'The AI Booking Agent handles booking requests, processes reservations, manages availability, and ensures accurate and efficient booking operations.",
+    description: 'The AI Booking Agent handles booking requests, processes reservations, manages availability, and ensures accurate and efficient booking operations.',
     capabilities: ["Task Automation","Data Processing","Workflow Management","Booking Processing","Reservation Management","Availability Management","Customer Service","Payment Processing","Confirmation Management","Booking Support"],
     icon: CalendarDays,
     color: '#1565C0',

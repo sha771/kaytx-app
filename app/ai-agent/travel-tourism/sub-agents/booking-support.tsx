@@ -7,7 +7,7 @@ export default function BookingSupportPage() {
     id: 'booking-support',
     name: 'AI Booking Support',
     title: 'AI Booking Support',
-    description: 'The AI Booking Support provides booking assistance, resolves booking issues, answers customer inquiries, and ensures smooth booking experiences for all customers.",
+    description: 'The AI Booking Support provides booking assistance, resolves booking issues, answers customer inquiries, and ensures smooth booking experiences for all customers.',
     capabilities: ["Task Automation","Data Processing","Workflow Management","Booking Assistance","Issue Resolution","Customer Inquiry","Support Services","Problem Solving","Communication","Customer Satisfaction"],
     icon: HelpCircle,
     color: '#006064',

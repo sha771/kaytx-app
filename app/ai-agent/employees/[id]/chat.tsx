@@ -50,7 +50,7 @@ interface Message {
     sentiment?: 'positive' | 'neutral' | 'negative';
     intent?: string;
     confidence?: number;
-
+  };
   suggestions?: string[];
   actions?: {
     label: string;
@@ -69,7 +69,6 @@ interface Agent {
   capabilities: string[];
 }
 
-};
 // Mock Data
 const MOCK_AGENT: Agent = {
   id: 'accounting-ai',

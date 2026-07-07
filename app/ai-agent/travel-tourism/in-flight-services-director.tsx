@@ -2,7 +2,7 @@ import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
 import { Bot } from 'lucide-react-native';
 
-export default function In-flightServicesDirectorPage() {
+export default function InFlightServicesDirectorPage() {
   const agent = {
     id: 'in-flight-services-director',
     name: 'AI In-flight Services Director',

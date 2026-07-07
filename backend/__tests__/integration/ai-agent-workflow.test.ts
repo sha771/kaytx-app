@@ -1,11 +1,11 @@
 import { describe, it, expect, beforeEach, afterEach, jest } from '@jest/globals';
 import { AIAgentService } from '../../services/ai-agent-service';
-import { agentMemoryService } from '../../services/agent-memory-service';
+import { agentMemoryService } from '../../services/consolidated-memory-service';
 import { db as pgDb } from '../../db/connection';
 import { logAudit } from '../../lib/audit';
 
 // Mock dependencies
-jest.mock('../../services/agent-memory-service');
+jest.mock('../../services/consolidated-memory-service');
 jest.mock('../../db/connection');
 jest.mock('../../lib/audit');
 

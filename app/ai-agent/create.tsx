@@ -10,360 +10,164 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 export default function CreateAgentScreen() {
     const { theme } = useTheme();
-    const { toggleAgent, activeAgents } = useAIAssistant();
+    const { showAIAssistant } = useAIAssistant();
     const [activeTab, setActiveTab] = useState<'marketplace' | 'custom'>('marketplace');
-    const [searchQuery, setSearchQuery] = useState('');
+    const [search, setSearch] = useState('');
+    const [selectedId, setSelectedId] = useState<string | null>(null);
 
-    // Fetch existing agents from database
-    const { data: agentsData, refetch: refetchAgents } = trpc.aiAgents.getAllAgents.useQuery();
-    const { data: subscription } = trpc.enterprise.getSubscription.useQuery();
-
-    const isEnterprise = useMemo(() => {
-        return subscription?.plan === 'enterprise' || subscription?.plan === 'professional';
-    }, [subscription]);
-
-    const createAgent = trpc.aiAgents.createAgent.useMutation({
-        onSuccess: () => {
-            refetchAgents();
-            Alert.alert('Success', 'Agent created successfully!');
-        },
-        onError: (error: any) => {
-            Alert.alert('Error', error.message || 'Failed to create agent');
-        },
-    });
-    const updateStatus = trpc.aiAgents.updateAgentStatus.useMutation({
-        onSuccess: () => {
-            refetchAgents();
-        },
-    });
-
-    const existingAgents = agentsData?.agents || [];
-    const existingAgentTypes = new Set(existingAgents.map((a: any) => (a.type ?? '').toLowerCase()));
-
-    // Custom Agent Form State
-    const [name, setName] = useState('');
-    const [role, setRole] = useState('');
-    const [description, setDescription] = useState('');
-    const [category, setCategory] = useState<'sales' | 'marketing' | 'operations' | 'support' | 'analytics' | 'executive'>('operations');
-
-    // Filter agents based on search
     const filteredAgents = useMemo(() => {
-        if (!searchQuery) return aiEmployees;
-        const query = searchQuery.toLowerCase();
-        return aiEmployees.filter(agent => 
-            agent.name.toLowerCase().includes(query) ||
-            agent.title.toLowerCase().includes(query) ||
-            agent.description.toLowerCase().includes(query)
+        if (!search) return aiEmployees;
+        const q = search.toLowerCase();
+        return aiEmployees.filter((a: AIEmployee) =>
+            a.name.toLowerCase().includes(q) ||
+            a.role.toLowerCase().includes(q) ||
+            a.description?.toLowerCase().includes(q)
         );
-    }, [searchQuery]);
+    }, [search]);
 
-    const handleCreateAgent = async (agent: AIEmployee) => {
-        try {
-            const created = await createAgent.mutateAsync({
-                name: agent.name,
-                description: agent.description,
-                type: agent.id.replace(/^ai-/, ''),
-                model: 'gpt-4',
-                systemPrompt: `You are an AI ${agent.name}. ${agent.description}`,
-                capabilities: agent.capabilities,
-                config: {
-                    category: agent.category,
-                    color: agent.color,
-                    icon: agent.name,
-                },
-            });
-
-            return created?.agent?.id as string | undefined;
-        } catch {
-            console.error('Failed to create agent:');
-            return undefined;
-        }
-
-
-    const handleToggleAgent = async (agent: AIEmployee) => {
-        const normalizedType = agent.id.replace(/^ai-/, '').toLowerCase();
-        const existingAgent = existingAgents.find((a: any) =>
-            (a.type || '').toLowerCase() === normalizedType ||
-            (a.name || '').toLowerCase() === agent.name.toLowerCase()
-        );
-
-        if (existingAgent) {
-            // Toggle status between active and paused
-            const newStatus = existingAgent.status === 'active' ? 'paused' : 'active';
-            try {
-                await updateStatus.mutateAsync({
-                    agentId: existingAgent.id,
-                    status: newStatus as 'draft' | 'active' | 'paused' | 'archived',
-                });
-            } catch {
-                console.error('Failed to update agent status:');
-            }
-        } else {
-            // Create new agent and activate it
-            const createdId = await handleCreateAgent(agent);
-            if (createdId) {
-                await updateStatus.mutateAsync({
-                    agentId: createdId,
-                    status: 'active',
-                });
-            } else {
-                await refetchAgents();
-            }
-        }
-    };
-
-    const handleSaveCustomAgent = async () => {
-        if (!name || !role) {
-            Alert.alert('Missing Fields', 'Please provide a name and role for your agent.');
-            return;
-        }
-
-        try {
-            await createAgent.mutateAsync({
-                name,
-                description: description || 'Custom AI Agent trained for specific business logic.',
-                type: role.toLowerCase().replace(/\s+/g, '-'),
-                model: 'gpt-4',
-                systemPrompt: `You are an AI ${name}. ${description || 'Custom AI Agent trained for specific business logic.'}`,
-                capabilities: ['Custom Logic', 'Task Automation'],
-                config: {
-                    category,
-                    custom: true,
-                },
-            });
-            
-            // Also add to local state for immediate UI update
-            const newAgent: AIEmployee = {
-                id: `custom-${Date.now()}`,
-                name,
-                title: role,
-                description: description || 'Custom AI Agent trained for specific business logic.',
-                icon: User,
-                color: '#AF52DE',
-                humanCost: '—',
-                aiCost: '—',
-                efficiency: '—',
-                capabilities: ['Custom Logic', 'Task Automation'],
-                route: '/ai-agent/create',
-                category,
-                type: 'agent',
-                replacesRole: role,
-                infrastructure: {
-                    status: 'standby',
-                    health: 100,
-                    uptime: '—',
-                    lastActive: 'Now',
-                    processingPower: 'standard',
-                },
-                roiMetrics: {
-                    tasksAutomatedDaily: 0,
-                    responseTime: '—',
-                    accuracyRate: '—',
-                    savingsPerMonth: '0',
-                },
-                isNew: true
-            };
-
-            setName('');
-            setRole('');
-            setDescription('');
-            Alert.alert('Success', 'Custom agent template created. To persist it, use the Create button in Marketplace.');
-        } catch {
-            console.error('Failed to create custom agent:');
-        }
-    };
-
-    const getAgentStatus = (agent: AIEmployee) => {
-        const existingAgent = existingAgents.find((a: any) => 
-            (a.type || '').toLowerCase() === agent.id.replace('ai-', '').toLowerCase() ||
-            (a.name || '').toLowerCase() === agent.name.toLowerCase()
-        );
-        return existingAgent?.status || 'draft';
-    };
-
-    const isAgentActive = (agent: AIEmployee) => {
-        const status = getAgentStatus(agent);
-        return status === 'active';
-    };
+    const availableAgents = filteredAgents.filter((a: AIEmployee) => !a.isActive && !a.isComingSoon);
+    const comingSoon = filteredAgents.filter((a: AIEmployee) => a.isComingSoon);
 
     const renderMarketplace = () => (
-        <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-            <View style={styles.banner}>
-                <LinearGradient colors={['#007AFF', '#00C7BE']} style={styles.bannerGradient} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}>
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+            <LinearGradient colors={['#007AFF', '#5856D6']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.banner}>
+                <View style={styles.bannerGradient}>
                     <View style={styles.bannerContent}>
-                        <Sparkles size={32} color="#fff" />
+                        <Sparkles size={28} color="#fff" />
                         <View>
-                            <Text style={styles.bannerTitle}>AI Talent Marketplace</Text>
-                            <Text style={styles.bannerSubtitle}>Browse and activate specialized pre-trained agents.</Text>
+                            <Text style={styles.bannerTitle}>AI Agent Marketplace</Text>
+                            <Text style={styles.bannerSubtitle}>Browse and deploy AI agents to supercharge your workforce</Text>
                         </View>
                     </View>
-                </LinearGradient>
-            </View>
+                </View>
+            </LinearGradient>
 
-            <View style={[styles.searchContainer, { backgroundColor: theme.colors.cardBackground }]}>
-                <Search size={20} color={theme.colors.secondaryText} />
+            <View style={[styles.searchContainer, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
+                <Search size={18} color={theme.colors.secondaryText} />
                 <TextInput
                     style={[styles.searchInput, { color: theme.colors.text }]}
                     placeholder="Search agents..."
                     placeholderTextColor={theme.colors.secondaryText}
-                    value={searchQuery}
-                    onChangeText={setSearchQuery}
+                    value={search}
+                    onChangeText={setSearch}
                 />
             </View>
 
-            <Text style={[styles.sectionHeader, { color: theme.colors.text }]}>Available Roles ({filteredAgents.length})</Text>
-
+            <Text style={[styles.sectionHeader, { color: theme.colors.text }]}>Available Agents ({availableAgents.length})</Text>
             <View style={styles.grid}>
-                {filteredAgents.map(agent => {
-                    const isActive = isAgentActive(agent);
-                    const status = getAgentStatus(agent);
-                    const isLoading = createAgent.isPending || updateStatus.isPending;
-
-                    return (
-                        <View key={agent.id} style={[styles.marketCard, { backgroundColor: theme.colors.cardBackground }]}>
-                            <View style={styles.cardHeader}>
-                                <View style={[styles.iconBox, { backgroundColor: agent.color + '15' }]}>
-                                    <agent.icon size={24} color={agent.color} />
-                                </View>
-                                <View style={styles.statusContainer}>
-                                    {status !== 'draft' && (
-                                        <View style={[styles.statusBadge, { backgroundColor: status === 'active' ? '#34C75915' : '#FF950015' }]}>
-                                            <Text style={[styles.statusText, { color: status === 'active' ? '#34C759' : '#FF9500' }]}>
-                                                {status.toUpperCase()}
-                                            </Text>
-                                        </View>
-                                    )}
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            if (!isEnterprise && agent.isPremium) {
-                                                router.push('/enterprise/billing');
-                                                return;
-                                            }
-                                            handleToggleAgent(agent);
-                                        }}
-                                        disabled={isLoading}
-                                        style={[styles.activateButton, { backgroundColor: isActive ? agent.color + '15' : theme.colors.background }]}
-                                    >
-                                        {isLoading ? (
-                                            <ActivityIndicator size="small" color={agent.color} />
-                                        ) : isActive ? (
-                                            <Power size={18} color={agent.color} />
-                                        ) : agent.isPremium && !isEnterprise ? (
-                                            <Lock size={18} color={theme.colors.secondaryText} />
-                                        ) : (
-                                            <Power size={18} color={theme.colors.secondaryText} />
-                                        )}
-                                    </TouchableOpacity>
-                                </View>
+                {availableAgents.map((agent: AIEmployee) => (
+                    <TouchableOpacity
+                        key={agent.id}
+                        style={[styles.marketCard, { backgroundColor: theme.colors.card, borderColor: selectedId === agent.id ? theme.colors.primary : theme.colors.border }]}
+                        onPress={() => setSelectedId(selectedId === agent.id ? null : agent.id)}
+                    >
+                        <View style={styles.cardHeader}>
+                            <View style={[styles.iconBox, { backgroundColor: agent.color + '20' }]}>
+                                <Text style={{ fontSize: 20 }}>{agent.icon}</Text>
                             </View>
-                            <Text style={[styles.cardName, { color: theme.colors.text }]}>{agent.name}</Text>
-                            <Text style={[styles.cardRole, { color: theme.colors.secondaryText }]} numberOfLines={1}>{agent.title}</Text>
-                            <Text style={[styles.cardDesc, { color: theme.colors.secondaryText }]} numberOfLines={2}>{agent.description}</Text>
-
-                            <View style={styles.cardFooter}>
-                                <Text style={[styles.cost, { color: agent.color }]}>{agent.aiCost}</Text>
-                                {agent.isNew && (
-                                    <View style={[styles.badge, { backgroundColor: theme.colors.primary }]}>
-                                        <Text style={styles.badgeText}>NEW</Text>
-                                    </View>
-                                )}
+                            <View style={styles.statusContainer}>
+                                <View style={[styles.statusBadge, { backgroundColor: agent.isActive ? '#34C759' : '#8E8E93' }]}>
+                                    <Text style={styles.statusText}>{agent.isActive ? 'Active' : agent.isComingSoon ? 'Soon' : 'Ready'}</Text>
+                                </View>
+                                <TouchableOpacity style={[styles.activateButton, { backgroundColor: theme.colors.primary + '20' }]}>
+                                    <Plus size={14} color={theme.colors.primary} />
+                                </TouchableOpacity>
                             </View>
                         </View>
-                    );
-                })}
+                        <Text style={[styles.cardName, { color: theme.colors.text }]}>{agent.name}</Text>
+                        <Text style={[styles.cardRole, { color: theme.colors.secondaryText }]}>{agent.role}</Text>
+                        {agent.description && (
+                            <Text style={[styles.cardDesc, { color: theme.colors.secondaryText }]} numberOfLines={2}>
+                                {agent.description}
+                            </Text>
+                        )}
+                        <View style={styles.cardFooter}>
+                            <Text style={[styles.cost, { color: theme.colors.primary }]}>${agent.cost?.toLocaleString() ?? 'Contact'}/yr</Text>
+                            {agent.isActive && (
+                                <View style={[styles.badge, { backgroundColor: '#34C759' }]}>
+                                    <Text style={styles.badgeText}>ACTIVE</Text>
+                                </View>
+                            )}
+                        </View>
+                    </TouchableOpacity>
+                ))}
             </View>
+
+            {comingSoon.length > 0 && (
+                <>
+                    <Text style={[styles.sectionHeader, { color: theme.colors.text }]}>Coming Soon ({comingSoon.length})</Text>
+                    <View style={styles.grid}>
+                        {comingSoon.map((agent: AIEmployee) => (
+                            <View key={agent.id} style={[styles.marketCard, { backgroundColor: theme.colors.card, borderColor: theme.colors.border, opacity: 0.5 }]}>
+                                <View style={styles.cardHeader}>
+                                    <View style={[styles.iconBox, { backgroundColor: agent.color + '10' }]}>
+                                        <Text style={{ fontSize: 20 }}>{agent.icon}</Text>
+                                    </View>
+                                    <View style={[styles.badge, { backgroundColor: '#FF9500' }]}>
+                                        <Text style={styles.badgeText}>SOON</Text>
+                                    </View>
+                                </View>
+                                <Text style={[styles.cardName, { color: theme.colors.text }]}>{agent.name}</Text>
+                                <Text style={[styles.cardRole, { color: theme.colors.secondaryText }]}>{agent.role}</Text>
+                            </View>
+                        ))}
+                    </View>
+                </>
+            )}
         </ScrollView>
     );
 
     const renderCustomForm = () => (
-        <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-            <View style={[styles.formCard, { backgroundColor: theme.colors.cardBackground }]}>
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+            <View style={[styles.formCard, { backgroundColor: theme.colors.card }]}>
                 <View style={styles.formHeader}>
-                    <User size={32} color={theme.colors.primary} />
-                    <Text style={[styles.formTitle, { color: theme.colors.text }]}>Design Your Agent</Text>
+                    <Settings size={32} color={theme.colors.primary} />
+                    <Text style={[styles.formTitle, { color: theme.colors.text }]}>Custom Agent Builder</Text>
                 </View>
 
                 <View style={styles.inputGroup}>
                     <Text style={[styles.label, { color: theme.colors.text }]}>Agent Name</Text>
                     <TextInput
-                        style={[styles.input, { backgroundColor: theme.colors.background, color: theme.colors.text }]}
-                        placeholder="e.g. Compliance User 3000"
+                        style={[styles.input, { backgroundColor: theme.colors.background, color: theme.colors.text, borderColor: theme.colors.border }]}
+                        placeholder="e.g., Customer Support AI"
                         placeholderTextColor={theme.colors.secondaryText}
-                        value={name}
-                        onChangeText={setName}
                     />
                 </View>
 
                 <View style={styles.inputGroup}>
-                    <Text style={[styles.label, { color: theme.colors.text }]}>Role / Title</Text>
+                    <Text style={[styles.label, { color: theme.colors.text }]}>Role / Specialty</Text>
                     <TextInput
-                        style={[styles.input, { backgroundColor: theme.colors.background, color: theme.colors.text }]}
-                        placeholder="e.g. Internal Auditor"
+                        style={[styles.input, { backgroundColor: theme.colors.background, color: theme.colors.text, borderColor: theme.colors.border }]}
+                        placeholder="e.g., Support Agent"
                         placeholderTextColor={theme.colors.secondaryText}
-                        value={role}
-                        onChangeText={setRole}
                     />
                 </View>
 
                 <View style={styles.inputGroup}>
-                    <Text style={[styles.label, { color: theme.colors.text }]}>Department</Text>
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.categoryScroll}>
-                        {(['sales', 'marketing', 'operations', 'support', 'analytics', 'executive'] as const).map(cat => (
-                            <TouchableOpacity
-                                key={cat}
-                                style={[
-                                    styles.catChip,
-                                    category === cat ? { backgroundColor: theme.colors.primary } : { backgroundColor: theme.colors.background }
-                                ]}
-                                onPress={() => setCategory(cat)}
-                            >
-                                <Text style={[
-                                    styles.catText,
-                                    { color: category === cat ? '#fff' : theme.colors.secondaryText, textTransform: 'capitalize' }
-                                ]}>{cat}</Text>
-                            </TouchableOpacity>
-                        ))}
-                    </ScrollView>
-                </View>
-
-                <View style={styles.inputGroup}>
-                    <Text style={[styles.label, { color: theme.colors.text }]}>Description & Capabilities</Text>
+                    <Text style={[styles.label, { color: theme.colors.text }]}>Description</Text>
                     <TextInput
-                        style={[styles.textArea, { backgroundColor: theme.colors.background, color: theme.colors.text }]}
-                        placeholder="Describe what this agent will do..."
+                        style={[styles.textArea, { backgroundColor: theme.colors.background, color: theme.colors.text, borderColor: theme.colors.border }]}
+                        placeholder="Describe what this agent does..."
                         placeholderTextColor={theme.colors.secondaryText}
-                        value={description}
-                        onChangeText={setDescription}
                         multiline
                         textAlignVertical="top"
                     />
                 </View>
 
-                <TouchableOpacity 
-                    style={[
-                        styles.saveBtn, 
-                        { 
-                            backgroundColor: isEnterprise ? theme.colors.primary : theme.colors.secondaryText, 
-                            opacity: (createAgent.isPending || (!isEnterprise)) ? 0.6 : 1 
-                        }
-                    ]} 
-                    onPress={() => {
-                        if (!isEnterprise) {
-                            router.push('/enterprise/billing');
-                            return;
-                        }
-                        handleSaveCustomAgent();
-                    }}
-                    disabled={createAgent.isPending}
-                >
-                    {createAgent.isPending ? (
-                        <ActivityIndicator size="small" color="#fff" />
-                    ) : (
-                        <>
-                            {isEnterprise ? <Save size={20} color="#fff" /> : <Lock size={20} color="#fff" />}
-                            <Text style={styles.saveText}>{isEnterprise ? 'Create Agent' : 'Upgrade to Create'}</Text>
-                        </>
-                    )}
+                <View style={styles.inputGroup}>
+                    <Text style={[styles.label, { color: theme.colors.text }]}>Category</Text>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.categoryScroll}>
+                        {['Customer Support', 'Sales', 'Marketing', 'Engineering', 'HR', 'Finance', 'Operations'].map(cat => (
+                            <TouchableOpacity key={cat} style={[styles.catChip, { backgroundColor: theme.colors.primary + '15', borderColor: theme.colors.primary + '30' }]}>
+                                <Text style={[styles.catText, { color: theme.colors.primary }]}>{cat}</Text>
+                            </TouchableOpacity>
+                        ))}
+                    </ScrollView>
+                </View>
+
+                <TouchableOpacity style={[styles.saveBtn, { backgroundColor: theme.colors.primary }]}>
+                    <Save size={18} color="#fff" />
+                    <Text style={styles.saveText}>Create Agent</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>
@@ -372,18 +176,17 @@ export default function CreateAgentScreen() {
     return (
         <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
             <Stack.Screen options={{ headerShown: false }} />
-
-            <View style={styles.header}>
-                <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-                    <ArrowLeft size={24} color={theme.colors.text} />
+            <View style={[styles.header, { backgroundColor: theme.colors.card }]}>
+                <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+                    <ArrowLeft size={22} color={theme.colors.text} />
                 </TouchableOpacity>
                 <View style={styles.headerText}>
-                    <Text style={[styles.title, { color: theme.colors.text }]}>Deploy Workforce</Text>
-                    <Text style={[styles.subtitle, { color: theme.colors.secondaryText }]}>Add new capabilities to your team</Text>
+                    <Text style={[styles.title, { color: theme.colors.text }]}>Create Agent</Text>
+                    <Text style={[styles.subtitle, { color: theme.colors.secondaryText }]}>Deploy a new AI agent</Text>
                 </View>
             </View>
 
-            <View style={styles.tabBar}>
+            <View style={[styles.tabBar, { borderBottomColor: theme.colors.border }]}>
                 <TouchableOpacity
                     style={[styles.tab, activeTab === 'marketplace' && styles.activeTab]}
                     onPress={() => setActiveTab('marketplace')}

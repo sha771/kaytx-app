@@ -7,7 +7,7 @@ export default function EquipmentTrackerPage() {
     id: 'equipment-tracker',
     name: 'AI Equipment Tracker',
     title: 'Equipment Tracker',
-    description: 'The AI Equipment Tracker tracks equipment location and status, monitors equipment utilization, coordinates equipment movements, and maintains visibility of all warehouse equipment assets.",
+    description: 'The AI Equipment Tracker tracks equipment location and status, monitors equipment utilization, coordinates equipment movements, and maintains visibility of all warehouse equipment assets.',
     capabilities: ["Equipment Tracking","Location Monitoring","Utilization Analysis","Movement Coordination","Status Monitoring","Performance Tracking","Maintenance Support","Reporting","Analytics","Cost Management"],
     icon: Settings,
     color: '#3B82F6',

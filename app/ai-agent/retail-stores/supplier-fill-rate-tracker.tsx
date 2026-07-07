@@ -2,7 +2,7 @@ import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
 import { Bot } from 'lucide-react-native';
 
-export default function SupplierFill-rateTrackerPage() {
+export default function SupplierFillRateTrackerPage() {
   const agent = {
     id: 'supplier-fill-rate-tracker',
     name: 'AI Supplier Fill-rate Tracker',

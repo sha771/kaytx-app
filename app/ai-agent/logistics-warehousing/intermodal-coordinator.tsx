@@ -7,7 +7,7 @@ export default function IntermodalCoordinatorPage() {
     id: 'intermodal-coordinator',
     name: 'AI Intermodal Coordinator',
     title: 'Intermodal Coordinator',
-    description: 'The AI Intermodal Coordinator coordinates intermodal shipments, manages mode transfers, optimizes multi-modal routes, and ensures seamless transitions between transportation modes.",
+    description: 'The AI Intermodal Coordinator coordinates intermodal shipments, manages mode transfers, optimizes multi-modal routes, and ensures seamless transitions between transportation modes.',
     capabilities: ["Intermodal Coordination","Mode Transfer Management","Route Optimization","Synchronization","Documentation","Tracking","Performance Monitoring","Cost Analysis","Exception Handling","Customer Service"],
     icon: ArrowRightLeft,
     color: '#8B5CF6',

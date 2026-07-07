@@ -31,7 +31,7 @@ export default function HistoryScreen() {
         setRefreshing(true);
         await refetch();
         setRefreshing(false);
-
+    };
 
     const handleToggleStatus = async (agentId: string, currentStatus: string) => {
         const newStatus = currentStatus === 'active' ? 'paused' : 'active';

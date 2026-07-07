@@ -11,12 +11,36 @@ import { initializeOpenTelemetry } from './lib/opentelemetry'
 import { alertingService } from './lib/alerting-service'
 import { setupComprehensiveMonitoring } from './lib/monitoring-setup'
 import { logger } from './lib/production-logger'
+import { skillBrainService } from './services/skill-brain-service'
+import { toolExecutor } from './lib/tool-executor'
+import { agentExecutionEngine } from './lib/agent-execution'
+import { initializeSkillBrainA2A } from './services/skill-brain-a2a-integration'
 
 // Initialize comprehensive monitoring
 setupComprehensiveMonitoring(app)
 
 // Initialize OpenTelemetry for distributed tracing
 const otelSDK = initializeOpenTelemetry()
+
+// 🔥 Initialize Skill Brain — generates skill.md for EVERY document, file, and conversation
+// This solves the 70% knowledge loss problem: when employees leave, their skills stay.
+;(async () => {
+  try {
+    await skillBrainService.initialize()
+    logger.info('[SkillBrain] ✅ Skill Brain initialized — skill.md generation active for all content')
+  } catch (error) {
+    logger.error('[SkillBrain] ❌ Failed to initialize Skill Brain', error as Error)
+  }
+  // 🔥 Register Skill Brain A2A tools — agents can now consult, query, and transfer skills
+  try {
+    const skillBrainTools = initializeSkillBrainA2A(toolExecutor)
+    // Also register with the agent execution engine so A2A agent consultations can use them
+    agentExecutionEngine.registerExternalTools(skillBrainTools)
+    logger.info(`[SkillBrainA2A] ✅ ${skillBrainTools.length} skill transfer tools registered for agent-to-agent communication`)
+  } catch (error) {
+    logger.error('[SkillBrainA2A] ❌ Failed to register A2A tools', error as Error)
+  }
+})()
 
 // Initialize alerting service
 logger.info('[Server] Alerting service initialized')

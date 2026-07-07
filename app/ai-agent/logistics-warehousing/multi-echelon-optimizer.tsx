@@ -7,7 +7,7 @@ export default function MultiEchelonOptimizerPage() {
     id: 'multi-echelon-optimizer',
     name: 'AI Multi-Echelon Optimizer',
     title: 'Multi-Echelon Optimizer',
-    description: 'The AI Multi-Echelon Optimizer optimizes inventory across multiple echelons, balances stock levels network-wide, and ensures optimal inventory placement throughout the supply chain.",
+    description: 'The AI Multi-Echelon Optimizer optimizes inventory across multiple echelons, balances stock levels network-wide, and ensures optimal inventory placement throughout the supply chain.',
     capabilities: ["Multi-Echelon Optimization","Network Balance","Stock Placement","Cost Optimization","Service Level Management","Visibility","Analytics","Reporting","Integration","Strategic Planning"],
     icon: Layers,
     color: '#F59E0B',

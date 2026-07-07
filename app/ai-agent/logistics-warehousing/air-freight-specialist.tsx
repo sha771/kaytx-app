@@ -7,7 +7,7 @@ export default function AirFreightSpecialistPage() {
     id: 'air-freight-specialist',
     name: 'AI Air Freight Specialist',
     title: 'Air Freight Specialist',
-    description: 'The AI Air Freight Specialist manages air freight shipments, coordinates airline bookings, optimizes urgent shipments, and ensures rapid and reliable air freight services.",
+    description: 'The AI Air Freight Specialist manages air freight shipments, coordinates airline bookings, optimizes urgent shipments, and ensures rapid and reliable air freight services.',
     capabilities: ["Air Freight Management","Airline Booking","Urgent Shipments","Route Optimization","Documentation","Tracking","Cost Analysis","Compliance","Performance Monitoring","Customer Service"],
     icon: Plane,
     color: '#8B5CF6',

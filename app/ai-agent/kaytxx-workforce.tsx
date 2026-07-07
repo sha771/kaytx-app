@@ -84,7 +84,6 @@ interface MainAgentCategory {
 }
 
 const KAYT_AI_WORKFORCE_SYSTEM = () => {
-};
   const insets = useSafeAreaInsets();
   const { colors } = useTheme();
 
@@ -791,7 +790,7 @@ const KAYT_AI_WORKFORCE_SYSTEM = () => {
       </ScrollView>
     </View>
   );
-
+};
 
 // ============================================
 // STYLES

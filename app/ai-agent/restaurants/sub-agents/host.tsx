@@ -7,7 +7,7 @@ export default function HostPage() {
     id: 'host',
     name: 'AI Host',
     title: 'AI Host',
-    description: 'The AI Host greets guests, manages seating, and ensures welcoming first impression for restaurant guests.",
+    description: 'The AI Host greets guests, manages seating, and ensures welcoming first impression for restaurant guests.',
     capabilities: ["Guest Greeting","Seating Management","Welcome Experience","Guest Relations","Reservation Management","First Impression","Host Excellence","Guest Welcome","Seating Coordination","Hospitality"],
     icon: DoorOpen,
     color: '#E91E63',

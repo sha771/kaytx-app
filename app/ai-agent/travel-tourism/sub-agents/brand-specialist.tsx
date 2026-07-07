@@ -7,7 +7,7 @@ export default function BrandSpecialistPage() {
     id: 'brand-specialist',
     name: 'AI Brand Specialist',
     title: 'AI Brand Specialist',
-    description: 'The AI Brand Specialist manages brand identity, ensures brand consistency, develops brand guidelines, and protects and enhances brand reputation.",
+    description: 'The AI Brand Specialist manages brand identity, ensures brand consistency, develops brand guidelines, and protects and enhances brand reputation.',
     capabilities: ["Task Automation","Data Processing","Workflow Management","Brand Management","Identity Development","Consistency Assurance","Guideline Creation","Reputation Management","Brand Analytics","Strategic Positioning"],
     icon: Badge,
     color: '#B71C1C',

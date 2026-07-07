@@ -2997,6 +2997,139 @@ export const companyBrainAIMessages = pgTable('company_brain_ai_messages', {
   createdAtIdx: index('company_brain_ai_messages_created_idx').on(table.createdAt),
 }));
 
+// Skill.md - AI Agent Knowledge Base Files
+export const agentSkillFiles = pgTable('agent_skill_files', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  agentId: uuid('agent_id').references(() => aiAgents.id, { onDelete: 'cascade' }),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'set null' }),
+  
+  // Original file information
+  originalFileName: varchar('original_file_name', { length: 500 }).notNull(),
+  originalFilePath: text('original_file_path'),
+  originalMimeType: varchar('original_mime_type', { length: 100 }).notNull(),
+  originalFileSize: integer('original_file_size').notNull(),
+  originalFileHash: varchar('original_file_hash', { length: 64 }),
+  
+  // Generated markdown content
+  markdownContent: text('markdown_content').notNull(),
+  markdownFilePath: text('markdown_file_path'),
+  
+  // Knowledge extraction
+  extractedTopics: jsonb('extracted_topics').default([]).notNull(),
+  extractedEntities: jsonb('extracted_entities').default([]).notNull(),
+  extractedKeywords: jsonb('extracted_keywords').default([]).notNull(),
+  summary: text('summary'),
+  
+  // Vector embedding for semantic search
+  embeddingVector: vector('embedding_vector', { dimensions: 1536 }),
+  
+  // Classification and metadata
+  category: varchar('category', { length: 100 }),
+  tags: jsonb('tags').default([]).notNull(),
+  language: varchar('language', { length: 10 }).default('en'),
+  difficulty: varchar('difficulty', { length: 20 }), // 'beginner', 'intermediate', 'advanced'
+  
+  // Processing status
+  processingStatus: varchar('processing_status', { length: 50 }).default('pending'), // 'pending', 'processing', 'completed', 'failed'
+  processingError: text('processing_error'),
+  processingStartedAt: timestamp('processing_started_at'),
+  processingCompletedAt: timestamp('processing_completed_at'),
+  
+  // Usage tracking
+  accessCount: integer('access_count').default(0).notNull(),
+  lastAccessedAt: timestamp('last_accessed_at'),
+  relevanceScore: decimal('relevance_score', { precision: 3, scale: 2 }).default('0.50'),
+  
+  // Relationships
+  relatedFileIds: jsonb('related_file_ids').default([]).notNull(),
+  parentFileId: uuid('parent_file_id').references(() => agentSkillFiles.id, { onDelete: 'set null' }),
+  
+  // Open Knowledge Graph format
+  knowledgeGraph: jsonb('knowledge_graph').default({}).notNull(),
+  triples: jsonb('triples').default([]).notNull(), // Subject-Predicate-Object triples
+  
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('agent_skill_files_org_idx').on(table.organizationId),
+  agentIdIdx: index('agent_skill_files_agent_idx').on(table.agentId),
+  userIdIdx: index('agent_skill_files_user_idx').on(table.userId),
+  categoryIdx: index('agent_skill_files_category_idx').on(table.category),
+  processingStatusIdx: index('agent_skill_files_status_idx').on(table.processingStatus),
+  createdAtIdx: index('agent_skill_files_created_idx').on(table.createdAt),
+  relevanceScoreIdx: index('agent_skill_files_relevance_idx').on(table.relevanceScore),
+  embeddingVectorIdx: index('agent_skill_files_embedding_idx').using('ivfflat', table.embeddingVector),
+}));
+
+// Skill.md File Chunks - For chunked document processing
+export const agentSkillFileChunks = pgTable('agent_skill_file_chunks', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  skillFileId: uuid('skill_file_id').references(() => agentSkillFiles.id, { onDelete: 'cascade' }).notNull(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  agentId: uuid('agent_id').references(() => aiAgents.id, { onDelete: 'cascade' }),
+  
+  chunkIndex: integer('chunk_index').notNull(),
+  chunkContent: text('chunk_content').notNull(),
+  chunkSummary: text('chunk_summary'),
+  
+  // Vector embedding for chunk-level search
+  embeddingVector: vector('embedding_vector', { dimensions: 1536 }),
+  
+  // Chunk metadata
+  startPosition: integer('start_position'),
+  endPosition: integer('end_position'),
+  tokenCount: integer('token_count'),
+  
+  // Chunk classification
+  chunkType: varchar('chunk_type', { length: 50 }), // 'introduction', 'body', 'conclusion', 'code', 'table'
+  importanceScore: decimal('importance_score', { precision: 3, scale: 2 }).default('0.50'),
+  
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  skillFileIdIdx: index('agent_skill_chunks_file_idx').on(table.skillFileId),
+  orgIdx: index('agent_skill_chunks_org_idx').on(table.organizationId),
+  agentIdIdx: index('agent_skill_chunks_agent_idx').on(table.agentId),
+  chunkIndexIdx: index('agent_skill_chunks_index_idx').on(table.chunkIndex),
+  embeddingVectorIdx: index('agent_skill_chunks_embedding_idx').using('ivfflat', table.embeddingVector),
+}));
+
+// Skill.md Knowledge Graph - Open Knowledge Graph format
+export const agentSkillKnowledgeGraph = pgTable('agent_skill_knowledge_graph', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  agentId: uuid('agent_id').references(() => aiAgents.id, { onDelete: 'cascade' }),
+  
+  // Knowledge graph nodes (entities)
+  nodeId: varchar('node_id', { length: 255 }).notNull(),
+  nodeType: varchar('node_type', { length: 100 }).notNull(), // 'concept', 'entity', 'relation', 'attribute'
+  nodeLabel: varchar('node_label', { length: 500 }).notNull(),
+  nodeProperties: jsonb('node_properties').default({}).notNull(),
+  
+  // Vector embedding for node similarity
+  embeddingVector: vector('embedding_vector', { dimensions: 1536 }),
+  
+  // Graph structure
+  connections: jsonb('connections').default([]).notNull(), // Connected node IDs
+  connectionTypes: jsonb('connection_types').default({}).notNull(), // Map of connectionId -> relationType
+  
+  // Source tracking
+  sourceFileIds: jsonb('source_file_ids').default([]).notNull(),
+  confidence: decimal('confidence', { precision: 3, scale: 2 }).default('0.50'),
+  
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('agent_skill_graph_org_idx').on(table.organizationId),
+  agentIdIdx: index('agent_skill_graph_agent_idx').on(table.agentId),
+  nodeIdIdx: uniqueIndex('agent_skill_graph_node_idx').on(table.nodeId),
+  nodeTypeIdx: index('agent_skill_graph_type_idx').on(table.nodeType),
+  embeddingVectorIdx: index('agent_skill_graph_embedding_idx').using('ivfflat', table.embeddingVector),
+}));
+
 // Real-time Collaboration Features
 export const companyBrainChatTypingIndicators = pgTable('company_brain_chat_typing', {
   id: uuid('id').primaryKey().defaultRandom(),

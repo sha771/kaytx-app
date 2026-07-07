@@ -7,7 +7,7 @@ export default function SupplyChainRiskManagerPage() {
     id: 'supply-chain-risk-manager',
     name: 'AI Supply Chain Risk Manager',
     title: 'Supply Chain Risk Manager',
-    description: 'The AI Supply Chain Risk Manager identifies supply chain risks, assesses potential disruptions, develops mitigation strategies, and ensures resilient supply chain operations.",
+    description: 'The AI Supply Chain Risk Manager identifies supply chain risks, assesses potential disruptions, develops mitigation strategies, and ensures resilient supply chain operations.',
     capabilities: ["Risk Identification","Disruption Assessment","Mitigation Strategy","Risk Monitoring","Contingency Planning","Compliance","Reporting","Analytics","Communication","Strategic Planning"],
     icon: AlertTriangle,
     color: '#6366F1',

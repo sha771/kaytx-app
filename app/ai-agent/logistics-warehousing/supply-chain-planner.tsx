@@ -7,7 +7,7 @@ export default function SupplyChainPlannerPage() {
     id: 'supply-chain-planner',
     name: 'AI Supply Chain Planner',
     title: 'Supply Chain Planner',
-    description: 'The AI Supply Chain Planner develops supply chain plans, coordinates supply activities, manages capacity, and ensures efficient supply chain operations.",
+    description: 'The AI Supply Chain Planner develops supply chain plans, coordinates supply activities, manages capacity, and ensures efficient supply chain operations.',
     capabilities: ["Supply Planning","Activity Coordination","Capacity Management","Demand Alignment","Optimization","Performance Monitoring","Risk Assessment","Reporting","Integration","Strategic Planning"],
     icon: Calendar,
     color: '#6366F1',

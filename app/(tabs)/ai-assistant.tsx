@@ -36,6 +36,7 @@ import {
   Sparkle,
   Mail,
   Activity,
+  Film,
 } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { aiEmployees, aiEmployeeCategories, AIEmployee } from '@/constants/aiEmployees';
@@ -207,6 +208,7 @@ export default function AIAssistantScreen() {
           {[
             { id: 'emails', title: 'Emails', icon: Mail, color: '#FF9500', route: '/ai-assistant/emails' },
             { id: 'calendar', title: 'Calendar', icon: Calendar, color: '#007AFF', route: '/ai-assistant/calendar' },
+            { id: 'media', title: 'Media Center', icon: Film, color: '#EC4899', route: '/media-command-center' },
             { id: 'research', title: 'Research', icon: Search, color: '#AF52DE', action: () => { setShowChat(true); sendMessage('I need to research something'); } },
             { id: 'workflow', title: 'Workflow', icon: Workflow, color: '#00C7BE', action: () => { setShowChat(true); sendMessage('Create an automation'); } },
           ].map(action => (

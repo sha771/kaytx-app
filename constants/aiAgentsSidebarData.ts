@@ -1847,6 +1847,53 @@ export const aiAgentsSidebarSections = [
       },
     ]
   },
+
+  // DEPT 25: EVENT MANAGEMENT (6 Main + 18 Sub = 24 Total)
+  {
+    id: 'dept25-event-management',
+    title: '25: Event Management (24)',
+    icon: Calendar,
+    subSections: [
+      {
+        id: 'dept25-main',
+        title: 'Main Agents (6)',
+        icon: Crown,
+        items: [
+          { id: '25-ai-chief-event-officer', title: 'AI Chief Event Officer', icon: Crown },
+          { id: '25-ai-vp-event-operations', title: 'AI VP Event Operations', icon: Calendar },
+          { id: '25-ai-vp-venue-operations', title: 'AI VP Venue Operations', icon: MapPin },
+          { id: '25-ai-vp-ticketing', title: 'AI VP Ticketing', icon: Ticket },
+          { id: '25-ai-vp-attendee-experience', title: 'AI VP Attendee Experience', icon: Users },
+          { id: '25-ai-vp-sponsorship', title: 'AI VP Sponsorship', icon: DollarSign },
+        ]
+      },
+      {
+        id: 'dept25-sub',
+        title: 'Sub-Agents (18)',
+        icon: Bot,
+        items: [
+          { id: '25-ai-event-planner', title: 'AI Event Planner', icon: Calendar },
+          { id: '25-ai-venue-coordinator', title: 'AI Venue Coordinator', icon: MapPin },
+          { id: '25-ai-ticketing-manager', title: 'AI Ticketing Manager', icon: Ticket },
+          { id: '25-ai-attendee-engagement-agent', title: 'AI Attendee Engagement Agent', icon: Users },
+          { id: '25-ai-sponsorship-coordinator', title: 'AI Sponsorship Coordinator', icon: DollarSign },
+          { id: '25-ai-security-agent', title: 'AI Security Agent', icon: Shield },
+          { id: '25-ai-event-scheduler', title: 'AI Event Scheduler', icon: CalendarClock },
+          { id: '25-ai-timeline-manager', title: 'AI Timeline Manager', icon: Clock },
+          { id: '25-ai-resource-allocator', title: 'AI Resource Allocator', icon: Package },
+          { id: '25-ai-capacity-planner', title: 'AI Capacity Planner', icon: Users },
+          { id: '25-ai-check-in-manager', title: 'AI Check-in Manager', icon: CheckCircle },
+          { id: '25-ai-vendor-coordinator', title: 'AI Vendor Coordinator', icon: Truck },
+          { id: '25-ai-marketing-coordinator', title: 'AI Marketing Coordinator', icon: Megaphone },
+          { id: '25-ai-live-operations-manager', title: 'AI Live Operations Manager', icon: Radio },
+          { id: '25-ai-financial-tracker', title: 'AI Financial Tracker', icon: DollarSign },
+          { id: '25-ai-analytics-agent', title: 'AI Analytics Agent', icon: BarChart3 },
+          { id: '25-ai-feedback-collector', title: 'AI Feedback Collector', icon: MessageSquare },
+          { id: '25-ai-risk-assessor', title: 'AI Risk Assessor', icon: AlertTriangle },
+        ]
+      },
+    ]
+  },
 ];
 
 export default aiAgentsSidebarSections;

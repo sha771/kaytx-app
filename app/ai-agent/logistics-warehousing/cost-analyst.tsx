@@ -7,7 +7,7 @@ export default function CostAnalystPage() {
     id: 'cost-analyst',
     name: 'AI Cost Analyst',
     title: 'Cost Analyst',
-    description: 'The AI Cost Analyst analyzes logistics costs, identifies cost savings opportunities, tracks cost metrics, and provides recommendations to optimize logistics expenditures.",
+    description: 'The AI Cost Analyst analyzes logistics costs, identifies cost savings opportunities, tracks cost metrics, and provides recommendations to optimize logistics expenditures.',
     capabilities: ["Cost Analysis","Savings Identification","Cost Tracking","Budget Monitoring","ROI Analysis","Expense Optimization","Reporting","Trend Analysis","Forecasting","Recommendations"],
     icon: DollarSign,
     color: '#EF4444',

@@ -7,7 +7,7 @@ export default function DeliveryOptimizerPage() {
     id: 'delivery-optimizer',
     name: 'AI Delivery Optimizer',
     title: 'Delivery Optimizer',
-    description: 'The AI Delivery Optimizer optimizes delivery operations, analyzes delivery patterns, identifies efficiency opportunities, and ensures optimal delivery performance.",
+    description: 'The AI Delivery Optimizer optimizes delivery operations, analyzes delivery patterns, identifies efficiency opportunities, and ensures optimal delivery performance.',
     capabilities: ["Delivery Optimization","Pattern Analysis","Efficiency Identification","Route Optimization","Cost Analysis","Performance Monitoring","Strategic Planning","Reporting","Integration","Continuous Improvement"],
     icon: Zap,
     color: '#10B981',

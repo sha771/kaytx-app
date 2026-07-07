@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
-import { useRouter } from 'expo-router';
+import DepartmentDashboardView from '@/components/ai-agent/dashboard/DepartmentDashboardView';
+
 const agents = [
   { id: 'ai-cmeo', uid: 'ktx-26-cmeo', title: 'AI Chief Media & Entertainment Officer', route: '/ai-agent/media-entertainment/cmeo', color: '#E11D48', level: 'c_level', efficiency: '85%' },
   { id: 'ai-vp-content-production', uid: 'ktx-26-vp-content-production', title: 'AI VP Content Production', route: '/ai-agent/media-entertainment/vp-content-production', color: '#E11D48', level: 'vp_director', efficiency: '88%' },
@@ -16,31 +16,12 @@ const agents = [
   { id: 'ai-digital-media-specialist', uid: 'ktx-26-digital-media-specialist', title: 'AI Digital Media Specialist', route: '/ai-agent/media-entertainment/digital-media-specialist', color: '#E11D48', level: 'manager', efficiency: '85%' },
   { id: 'ai-vp-distribution', uid: 'ktx-26-vp-distribution', title: 'AI VP Distribution', route: '/ai-agent/media-entertainment/vp-distribution', color: '#E11D48', level: 'vp_director', efficiency: '86%' },
 ];
+
 export default function DepartmentIndex() {
-  const router = useRouter();
   return (
-    <ScrollView style={s.container}>
-      <Text style={s.title}>Media & Entertainment - AI Agents</Text>
-      <Text style={s.sub}>48 AI Agents & Employees</Text>
-      <View style={s.grid}>
-        {agents.map((a) => (
-          <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>
-            <Text style={s.at}>{a.title}</Text>
-            <Text style={s.al}>{a.level.replace('_',' ').toUpperCase()}</Text>
-            <Text style={s.ae}>{a.efficiency}</Text>
-          </Pressable>
-        ))}
-      </View>
-    </ScrollView>
+    <DepartmentDashboardView
+      departmentId="media-entertainment"
+      agents={agents}
+    />
   );
 }
-const s = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
-  title: { fontSize: 28, fontWeight: 'bold', marginBottom: 8 },
-  sub: { fontSize: 16, color: '#666', marginBottom: 24 },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 16 },
-  card: { width: '48%', padding: 16, borderRadius: 12, backgroundColor: '#F5F5F5', borderLeftWidth: 4 },
-  at: { fontSize: 16, fontWeight: '600', marginBottom: 4 },
-  al: { fontSize: 12, color: '#666', marginBottom: 2 },
-  ae: { fontSize: 14, fontWeight: '500', color: '#333' }
-});

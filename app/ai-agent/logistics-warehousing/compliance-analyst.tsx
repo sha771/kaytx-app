@@ -7,7 +7,7 @@ export default function ComplianceAnalystPage() {
     id: 'compliance-analyst',
     name: 'AI Compliance Analyst',
     title: 'Compliance Analyst',
-    description: 'The AI Compliance Analyst monitors regulatory compliance, analyzes trade regulations, ensures adherence to standards, and provides compliance insights for customs and trade operations.",
+    description: 'The AI Compliance Analyst monitors regulatory compliance, analyzes trade regulations, ensures adherence to standards, and provides compliance insights for customs and trade operations.',
     capabilities: ["Compliance Monitoring","Regulatory Analysis","Standards Enforcement","Risk Assessment","Audit Support","Reporting","Documentation","Training Support","Policy Management","Continuous Improvement"],
     icon: ShieldCheck,
     color: '#EC4899',

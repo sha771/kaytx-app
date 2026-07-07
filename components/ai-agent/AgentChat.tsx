@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Send, Bot, User, MoreVertical, Copy, ThumbsUp, ThumbsDown, RefreshCw, Paperclip, Mic, Lightbulb, X, Play, Square, FileText, Image as ImageIcon } from 'lucide-react-native';
+import { Send, Bot, User, MoreVertical, Copy, ThumbsUp, ThumbsDown, RefreshCw, Paperclip, Mic, Lightbulb, X, Play, Square, FileText, Image as ImageIcon, AlertCircle } from 'lucide-react-native';
 import { AIEmployee } from '@/constants/aiEmployees';
+import { useAgentConversation } from '@/hooks/useAIAgent';
 
 interface Message {
   id: string;
@@ -18,7 +19,18 @@ interface AgentChatProps {
 
 export const AgentChat: React.FC<AgentChatProps> = ({ agent }) => {
   const { theme } = useTheme();
-  const [messages, setMessages] = useState<Message[]>([
+  const agentId = agent.id || 'unknown-agent';
+
+  const {
+    sessionId,
+    messages: backendMessages,
+    loading,
+    error,
+    send,
+    end,
+  } = useAgentConversation(agentId, true);
+
+  const [localMessages, setLocalMessages] = useState<Message[]>([
     {
       id: '1',
       role: 'assistant',
@@ -32,8 +44,22 @@ export const AgentChat: React.FC<AgentChatProps> = ({ agent }) => {
   const [showSuggestions, setShowSuggestions] = useState(true);
   const scrollViewRef = useRef<ScrollView>(null);
 
-  const sendMessage = () => {
-    if (!inputText.trim()) return;
+  // Sync backend messages to local display
+  useEffect(() => {
+    if (backendMessages && backendMessages.length > 0) {
+      const mapped: Message[] = backendMessages.map((msg: any) => ({
+        id: msg.id || Date.now().toString(),
+        role: msg.role === 'user' ? 'user' : 'assistant',
+        content: msg.content,
+        timestamp: msg.timestamp ? new Date(msg.timestamp) : new Date(),
+      }));
+      setLocalMessages(mapped);
+      setIsTyping(false);
+    }
+  }, [backendMessages]);
+
+  const sendMessage = async () => {
+    if (!inputText.trim() || loading) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -42,31 +68,34 @@ export const AgentChat: React.FC<AgentChatProps> = ({ agent }) => {
       timestamp: new Date(),
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    setLocalMessages(prev => [...prev, userMessage]);
     setInputText('');
     setIsTyping(true);
+    setShowSuggestions(false);
 
-    // Simulate AI response
-    setTimeout(() => {
-      const assistantMessage: Message = {
+    try {
+      const response = await send(inputText);
+      if (response?.message) {
+        const assistantMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          role: 'assistant',
+          content: response.message,
+          timestamp: new Date(),
+        };
+        setLocalMessages(prev => [...prev, assistantMessage]);
+      }
+    } catch (err) {
+      const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: generateAIResponse(inputText, agent),
+        content: `I encountered an error processing your request. Please check that the backend server is running and try again. Error: ${err instanceof Error ? err.message : 'Unknown error'}`,
         timestamp: new Date(),
       };
-      setMessages(prev => [...prev, assistantMessage]);
+      setLocalMessages(prev => [...prev, errorMessage]);
+    } finally {
       setIsTyping(false);
-    }, 1500);
-  };
-
-  const generateAIResponse = (userInput: string, agentInfo: any): string => {
-    const responses = [
-      `I understand you're asking about "${userInput}". Based on my capabilities in ${agentInfo.capabilities?.join(', ') || 'various areas'}, I can help you with that.`,
-      `Great question! As ${agentInfo.name}, I specialize in ${agentInfo.description || 'automated tasks'}. Let me assist you with this.`,
-      `I've processed your request. Using my expertise in ${agentInfo.capabilities?.[0] || 'task automation'}, I can provide the following insights...`,
-      `Thank you for your message. I'm currently analyzing this and will provide a comprehensive response based on my training and capabilities.`,
-    ];
-    return responses[Math.floor(Math.random() * responses.length)];
+      setShowSuggestions(true);
+    }
   };
 
   const getCopilotSuggestions = (): string[] => {
@@ -83,11 +112,10 @@ export const AgentChat: React.FC<AgentChatProps> = ({ agent }) => {
 
   const copilotSuggestions = getCopilotSuggestions();
 
-  const applySuggestion = (suggestion: string) => {
+  const applySuggestion = async (suggestion: string) => {
     setInputText(suggestion);
     setShowSuggestions(false);
-    // Auto-send for copilot feel after short delay
-    setTimeout(() => {
+    setTimeout(async () => {
       if (suggestion.trim()) {
         const userMessage: Message = {
           id: Date.now().toString(),
@@ -95,25 +123,36 @@ export const AgentChat: React.FC<AgentChatProps> = ({ agent }) => {
           content: suggestion,
           timestamp: new Date(),
         };
-        setMessages(prev => [...prev, userMessage]);
+        setLocalMessages(prev => [...prev, userMessage]);
         setInputText('');
         setIsTyping(true);
-        setTimeout(() => {
-          const assistantMessage: Message = {
+        try {
+          const response = await send(suggestion);
+          if (response?.message) {
+            const assistantMessage: Message = {
+              id: (Date.now() + 1).toString(),
+              role: 'assistant',
+              content: response.message,
+              timestamp: new Date(),
+            };
+            setLocalMessages(prev => [...prev, assistantMessage]);
+          }
+        } catch (err) {
+          setLocalMessages(prev => [...prev, {
             id: (Date.now() + 1).toString(),
             role: 'assistant',
-            content: generateAIResponse(suggestion, agent),
+            content: `Error: ${err instanceof Error ? err.message : 'Failed to get response'}`,
             timestamp: new Date(),
-          };
-          setMessages(prev => [...prev, assistantMessage]);
+          }]);
+        } finally {
           setIsTyping(false);
           setShowSuggestions(true);
-        }, 1200);
+        }
       }
     }, 300);
   };
 
-  const handleAttachment = () => {
+  const handleAttachment = async () => {
     const fileTypes = ['report.pdf', 'data.csv', 'image.png', 'notes.txt'];
     const file = fileTypes[Math.floor(Math.random() * fileTypes.length)];
     const attachMsg: Message = {
@@ -123,17 +162,31 @@ export const AgentChat: React.FC<AgentChatProps> = ({ agent }) => {
       timestamp: new Date(),
       attachments: [file],
     };
-    setMessages(prev => [...prev, attachMsg]);
+    setLocalMessages(prev => [...prev, attachMsg]);
+    setInputText('');
     setIsTyping(true);
-    setTimeout(() => {
-      setMessages(prev => [...prev, {
+    setShowSuggestions(false);
+    try {
+      const response = await send(`[File attached: ${file}] Please analyze this file and provide insights based on your ${agent.capabilities?.[0] || 'core'} capabilities.`);
+      if (response?.message) {
+        setLocalMessages(prev => [...prev, {
+          id: (Date.now()+2).toString(),
+          role: 'assistant',
+          content: response.message,
+          timestamp: new Date(),
+        }]);
+      }
+    } catch (err) {
+      setLocalMessages(prev => [...prev, {
         id: (Date.now()+2).toString(),
         role: 'assistant',
-        content: `Thanks for the ${file.split('.').pop()} file. I've analyzed it using my ${agent.capabilities?.[0] || 'core'} capabilities.`,
+        content: `I received the ${file.split('.').pop()} file. The backend server may not be running. Please check the connection and try again.`,
         timestamp: new Date(),
       }]);
+    } finally {
       setIsTyping(false);
-    }, 1400);
+      setShowSuggestions(true);
+    }
   };
 
   const handleVoice = () => {
@@ -142,28 +195,40 @@ export const AgentChat: React.FC<AgentChatProps> = ({ agent }) => {
       const voiceMsg: Message = {
         id: Date.now().toString(),
         role: 'user',
-        content: '🎤 Voice note (12s): "Please analyze the latest metrics and suggest next actions."',
+        content: '🎤 Voice note transcribed: "Please analyze the latest metrics and suggest next actions."',
         timestamp: new Date(),
       };
-      setMessages(prev => [...prev, voiceMsg]);
+      setLocalMessages(prev => [...prev, voiceMsg]);
       setIsTyping(true);
-      setTimeout(() => {
-        setMessages(prev => [...prev, {
+      setShowSuggestions(false);
+      send('Please analyze the latest metrics and suggest prioritized next actions.').then((response) => {
+        if (response?.message) {
+          setLocalMessages(prev => [...prev, {
+            id: (Date.now()+3).toString(),
+            role: 'assistant',
+            content: response.message,
+            timestamp: new Date(),
+          }]);
+        }
+      }).catch(() => {
+        setLocalMessages(prev => [...prev, {
           id: (Date.now()+3).toString(),
           role: 'assistant',
-          content: 'Voice transcribed and processed. Here are 3 prioritized recommendations based on current performance data...',
+          content: 'Voice message received. The backend server may not be running for voice processing. Please try sending a text message instead.',
           timestamp: new Date(),
         }]);
+      }).finally(() => {
         setIsTyping(false);
-      }, 1600);
+        setShowSuggestions(true);
+      });
     } else {
       setIsRecording(true);
-      setTimeout(() => setIsRecording(false), 4000); // auto stop demo
+      setTimeout(() => setIsRecording(false), 4000);
     }
   };
 
   const clearChat = () => {
-    setMessages([{
+    setLocalMessages([{
       id: '1',
       role: 'assistant',
       content: `Hello! I'm ${agent.name}, your ${agent.title || 'AI Agent'}. How can I help you today?`,
@@ -174,13 +239,12 @@ export const AgentChat: React.FC<AgentChatProps> = ({ agent }) => {
   };
 
   const copyMessage = (content: string) => {
-    // In real app use Clipboard.setString(content)
     console.log('Copied to clipboard:', content);
   };
 
   useEffect(() => {
     scrollViewRef.current?.scrollToEnd({ animated: true });
-  }, [messages]);
+  }, [localMessages]);
 
   return (
     <KeyboardAvoidingView
@@ -193,9 +257,17 @@ export const AgentChat: React.FC<AgentChatProps> = ({ agent }) => {
           <Bot size={24} color={agent.color || '#007AFF'} />
           <View>
             <Text style={[styles.headerTitle, { color: theme.colors.text }]}>{agent.name}</Text>
-            <Text style={[styles.headerSubtitle, { color: theme.colors.secondaryText }]}>Online • Active</Text>
+            <Text style={[styles.headerSubtitle, { color: theme.colors.secondaryText }]}>
+              {loading ? 'Connecting...' : error ? 'Connection error' : sessionId ? 'Online • Active' : 'Initializing...'}
+            </Text>
           </View>
         </View>
+        {error && (
+          <View style={styles.errorBadge}>
+            <AlertCircle size={14} color="#FF3B30" />
+            <Text style={[styles.errorText, { color: '#FF3B30' }]} numberOfLines={1}>{error}</Text>
+          </View>
+        )}
         <TouchableOpacity style={styles.headerBtn} onPress={clearChat}>
           <X size={20} color={theme.colors.secondaryText} />
         </TouchableOpacity>
@@ -209,7 +281,7 @@ export const AgentChat: React.FC<AgentChatProps> = ({ agent }) => {
         style={styles.messagesContainer}
         contentContainerStyle={styles.messagesContent}
       >
-        {messages.map((message) => (
+        {localMessages.map((message) => (
           <View
             key={message.id}
             style={[
@@ -235,7 +307,7 @@ export const AgentChat: React.FC<AgentChatProps> = ({ agent }) => {
                 >
                   {message.role === 'user' ? 'You' : agent.name}
                 </Text>
-                <Text style={[styles.messageTime, { color: message.role === 'user' ? '#fff80' : theme.colors.secondaryText }]}>
+                <Text style={[styles.messageTime, { color: message.role === 'user' ? '#fff8' : theme.colors.secondaryText }]}>
                   {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </Text>
               </View>
@@ -329,11 +401,15 @@ export const AgentChat: React.FC<AgentChatProps> = ({ agent }) => {
           <X size={18} color={theme.colors.secondaryText} />
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.sendBtn, { backgroundColor: inputText.trim() ? theme.colors.primary : theme.colors.border }]}
+          style={[styles.sendBtn, { backgroundColor: inputText.trim() && !loading ? theme.colors.primary : theme.colors.border }]}
           onPress={sendMessage}
-          disabled={!inputText.trim()}
+          disabled={!inputText.trim() || loading}
         >
-          <Send size={20} color={inputText.trim() ? '#fff' : theme.colors.secondaryText} />
+          {loading ? (
+            <ActivityIndicator size={20} color={theme.colors.secondaryText} />
+          ) : (
+            <Send size={20} color={inputText.trim() ? '#fff' : theme.colors.secondaryText} />
+          )}
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -366,6 +442,19 @@ const styles = StyleSheet.create({
   },
   headerBtn: {
     padding: 8,
+  },
+  errorBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    backgroundColor: 'rgba(255,59,48,0.1)',
+    borderRadius: 8,
+  },
+  errorText: {
+    fontSize: 10,
+    maxWidth: 120,
   },
   messagesContainer: {
     flex: 1,

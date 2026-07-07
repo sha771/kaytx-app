@@ -7,7 +7,7 @@ export default function CustomerServiceAgentPage() {
     id: 'customer-service-agent',
     name: 'AI Customer Service Agent',
     title: 'Customer Service Agent',
-    description: 'The AI Customer Service Agent handles customer inquiries, provides delivery updates, resolves issues, and ensures excellent customer service for delivery operations.",
+    description: 'The AI Customer Service Agent handles customer inquiries, provides delivery updates, resolves issues, and ensures excellent customer service for delivery operations.',
     capabilities: ["Customer Service","Inquiry Handling","Issue Resolution","Update Provision","Communication","Documentation","Feedback Collection","Performance Tracking","Reporting", "Continuous Improvement"],
     icon: Headphones,
     color: '#10B981',

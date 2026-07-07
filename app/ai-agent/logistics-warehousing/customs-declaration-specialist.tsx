@@ -7,7 +7,7 @@ export default function CustomsDeclarationSpecialistPage() {
     id: 'customs-declaration-specialist',
     name: 'AI Customs Declaration Specialist',
     title: 'Customs Declaration Specialist',
-    description: 'The AI Customs Declaration Specialist prepares customs declarations, ensures regulatory compliance, manages tariff classifications, and facilitates smooth customs clearance processes.",
+    description: 'The AI Customs Declaration Specialist prepares customs declarations, ensures regulatory compliance, manages tariff classifications, and facilitates smooth customs clearance processes.',
     capabilities: ["Declaration Preparation","Compliance Management","Tariff Classification","Documentation","Communication","Clearance Coordination","Audit Support","Reporting","Regulatory Updates","Continuous Improvement"],
     icon: FileText,
     color: '#EC4899',

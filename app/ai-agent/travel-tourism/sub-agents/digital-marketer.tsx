@@ -7,7 +7,7 @@ export default function DigitalMarketerPage() {
     id: 'digital-marketer',
     name: 'AI Digital Marketer',
     title: 'AI Digital Marketer',
-    description: 'The AI Digital Marketer executes digital marketing campaigns, manages online channels, optimizes digital presence, and drives customer acquisition through digital channels.",
+    description: 'The AI Digital Marketer executes digital marketing campaigns, manages online channels, optimizes digital presence, and drives customer acquisition through digital channels.',
     capabilities: ["Task Automation","Data Processing","Workflow Management","Digital Marketing","Campaign Management","Channel Management","SEO Optimization","Content Marketing","Social Media","Analytics"],
     icon: MonitorPlay,
     color: '#C62828',

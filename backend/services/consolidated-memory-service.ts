@@ -985,3 +985,4 @@ export class ConsolidatedMemoryService {
 
 export const consolidatedMemoryService = new ConsolidatedMemoryService();
 export const agentMemoryService = consolidatedMemoryService; // Alias for backward compatibility
+export const AgentMemoryService = ConsolidatedMemoryService; // Class alias for backward compatibility

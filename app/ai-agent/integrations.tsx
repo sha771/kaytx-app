@@ -163,7 +163,7 @@ export default function IntegrationsScreen() {
     setVisibleKeys(prev =>
       prev.includes(keyId) ? prev.filter(k => k !== keyId) : [...prev, keyId]
     );
-
+  };
 
   const copyToClipboard = (text: string) => {
     Alert.alert('Copied', 'API key copied to clipboard');

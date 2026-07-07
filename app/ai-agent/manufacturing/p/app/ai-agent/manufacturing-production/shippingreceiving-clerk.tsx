@@ -2,7 +2,7 @@ import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
 import { Bot } from 'lucide-react-native';
 
-export default function Shipping/ReceivingClerkPage() {
+export default function ShippingReceivingClerkPage() {
   const agent = {
     id: 'shippingreceiving-clerk',
     name: 'AI Shipping/Receiving Clerk',

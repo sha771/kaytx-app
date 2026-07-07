@@ -289,3 +289,5 @@ const styles = StyleSheet.create({
   statLabel: { fontSize: 12, marginTop: 2 },
   statDivider: { width: 1, backgroundColor: '#00000010', marginHorizontal: 10 },
 });
+
+}

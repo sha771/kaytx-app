@@ -7,7 +7,7 @@ export default function GroundFreightSpecialistPage() {
     id: 'ground-freight-specialist',
     name: 'AI Ground Freight Specialist',
     title: 'Ground Freight Specialist',
-    description: 'The AI Ground Freight Specialist manages ground freight shipments, coordinates trucking operations, optimizes overland routes, and ensures efficient ground transportation services.",
+    description: 'The AI Ground Freight Specialist manages ground freight shipments, coordinates trucking operations, optimizes overland routes, and ensures efficient ground transportation services.',
     capabilities: ["Ground Freight Management","Trucking Coordination","Route Optimization","Load Planning","Documentation","Tracking","Cost Analysis","Compliance","Performance Monitoring","Customer Service"],
     icon: Truck,
     color: '#8B5CF6',

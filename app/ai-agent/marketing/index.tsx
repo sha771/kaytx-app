@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
-import { useRouter } from 'expo-router';
+import DepartmentDashboardView from '@/components/ai-agent/dashboard/DepartmentDashboardView';
+
 const agents = [
   { id: 'ai-chief-marketing-officer', uid: 'ktx-03-chief-marketing-officer', title: 'AI Chief Marketing Officer', route: '/ai-agent/marketing/chief-marketing-officer', color: '#E91E63', level: 'c_level', efficiency: '77%' },
   { id: 'ai-vp-marketing', uid: 'ktx-03-vp-marketing', title: 'AI VP Marketing', route: '/ai-agent/marketing/vp-marketing', color: '#E91E63', level: 'vp_director', efficiency: '80%' },
@@ -17,29 +17,15 @@ const agents = [
   { id: 'ai-marketing-analytics-agent', uid: 'ktx-03-marketing-analytics-agent', title: 'AI Marketing Analytics Agent', route: '/ai-agent/marketing/marketing-analytics-agent', color: '#E91E63', level: 'team_lead', efficiency: '91%' },
   { id: 'ai-brand-manager', uid: 'ktx-03-brand-manager', title: 'AI Brand Manager', route: '/ai-agent/marketing/brand-manager', color: '#E91E63', level: 'manager', efficiency: '87%' },
   { id: 'ai-growth-hacker', uid: 'ktx-03-growth-hacker', title: 'AI Growth Hacker', route: '/ai-agent/marketing/growth-hacker', color: '#E91E63', level: 'team_lead', efficiency: '87%' },
+  { id: 'ai-geo-marketing', uid: 'ktx-03-geo-marketing', title: 'AI Geographic Marketing', route: '/ai-agent/marketing/geo-marketing', color: '#E91E63', level: 'manager', efficiency: '82%' },
+  { id: 'ai-aeo-marketing', uid: 'ktx-03-aeo-marketing', title: 'AI Answer Engine Optimization', route: '/ai-agent/marketing/aeo-marketing', color: '#E91E63', level: 'manager', efficiency: '84%' },
 ];
+
 export default function DepartmentIndex() {
-  const router = useRouter();
   return (
-    <ScrollView style={s.container}>
-      <Text style={s.title}>Marketing & Growth - AI Agents</Text>
-      <Text style={s.sub}>{agents.length} AI Agents & Employees</Text>
-      <View style={s.grid}>
-        {agents.map((a) => (
-          <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>
-            <Text style={s.at}>{a.title}</Text>
-            <Text style={s.al}>{a.level.replace('_',' ').toUpperCase()}</Text>
-            <Text style={s.ae}>{a.efficiency}</Text>
-          </Pressable>
-        ))}
-      </View>
-    </ScrollView>
+    <DepartmentDashboardView
+      departmentId="marketing-growth"
+      agents={agents}
+    />
   );
 }
-const s = StyleSheet.create({
-  container:{flex:1,backgroundColor:'#0a0a0a',padding:16},title:{color:'#fff',fontSize:24,fontWeight:'bold',marginBottom:4},
-  sub:{color:'#888',fontSize:14,marginBottom:16},grid:{flexDirection:'row',flexWrap:'wrap',gap:12},
-  card:{backgroundColor:'#1a1a2e',borderRadius:12,padding:16,width:'48%',borderLeftWidth:3},
-  at:{color:'#fff',fontSize:14,fontWeight:'600',marginBottom:4},al:{color:'#888',fontSize:11,marginBottom:2},
-  ae:{color:'#10B981',fontSize:12},
-});

@@ -7,7 +7,7 @@ export default function LastMileDeliveryManagerPage() {
     id: 'last-mile-delivery-manager',
     name: 'AI Last Mile Delivery Manager',
     title: 'Last Mile Delivery Manager',
-    description: 'The AI Last Mile Delivery Manager manages final delivery operations, coordinates driver networks, optimizes delivery routes, and ensures exceptional last-mile service and customer experience.",
+    description: 'The AI Last Mile Delivery Manager manages final delivery operations, coordinates driver networks, optimizes delivery routes, and ensures exceptional last-mile service and customer experience.',
     capabilities: ["Last Mile Operations","Driver Management","Route Optimization","Customer Experience","Performance Monitoring","Cost Control","Service Quality","Exception Handling","Reporting","Strategic Planning"],
     icon: Package,
     color: '#10B981',

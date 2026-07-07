@@ -7,7 +7,7 @@ export default function DriverCoordinatorPage() {
     id: 'driver-coordinator',
     name: 'AI Driver Coordinator',
     title: 'Driver Coordinator',
-    description: 'The AI Driver Coordinator manages driver activities, coordinates driver schedules, monitors driver performance, and ensures efficient driver utilization and compliance.",
+    description: 'The AI Driver Coordinator manages driver activities, coordinates driver schedules, monitors driver performance, and ensures efficient driver utilization and compliance.',
     capabilities: ["Driver Management","Schedule Coordination","Performance Monitoring","Compliance Tracking","Communication","Training Support","Resource Allocation","Reporting","Safety Monitoring","Efficiency Optimization"],
     icon: Users,
     color: '#10B981',

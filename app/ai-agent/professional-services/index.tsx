@@ -1,44 +1,30 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
-import { useRouter } from 'expo-router';
+import DepartmentDashboardView from '@/components/ai-agent/dashboard/DepartmentDashboardView';
+
 const agents = [
-  { id: 'ai-chief-professional-services-officer', uid: 'ktx-25-chief-professional-services-officer', title: 'AI Chief Professional Services Officer', route: '/ai-agent/professional-services/chief-professional-services-officer', color: '#9333EA', level: 'c_level', efficiency: '82%' },
-  { id: 'ai-vp-client-services', uid: 'ktx-25-vp-client-services', title: 'AI VP Client Services', route: '/ai-agent/professional-services/vp-client-services', color: '#9333EA', level: 'vp_director', efficiency: '85%' },
-  { id: 'ai-vp-consulting', uid: 'ktx-25-vp-consulting', title: 'AI VP Consulting', route: '/ai-agent/professional-services/vp-consulting', color: '#9333EA', level: 'vp_director', efficiency: '88%' },
-  { id: 'ai-vp-project-delivery', uid: 'ktx-25-vp-project-delivery', title: 'AI VP Project Delivery', route: '/ai-agent/professional-services/vp-project-delivery', color: '#9333EA', level: 'vp_director', efficiency: '80%' },
-  { id: 'ai-vp-service-operations', uid: 'ktx-25-vp-service-operations', title: 'AI VP Service Operations', route: '/ai-agent/professional-services/vp-service-operations', color: '#9333EA', level: 'vp_director', efficiency: '83%' },
-  { id: 'ai-consulting-manager', uid: 'ktx-25-consulting-manager', title: 'AI Consulting Manager', route: '/ai-agent/professional-services/consulting-manager', color: '#9333EA', level: 'manager', efficiency: '86%' },
-  { id: 'ai-service-delivery-manager', uid: 'ktx-25-service-delivery-manager', title: 'AI Service Delivery Manager', route: '/ai-agent/professional-services/service-delivery-manager', color: '#9333EA', level: 'manager', efficiency: '84%' },
-  { id: 'ai-project-manager-prof', uid: 'ktx-25-project-manager-prof', title: 'AI Project Manager (Prof)', route: '/ai-agent/professional-services/project-manager-prof', color: '#9333EA', level: 'manager', efficiency: '87%' },
-  { id: 'ai-client-success-manager', uid: 'ktx-25-client-success-manager', title: 'AI Client Success Manager', route: '/ai-agent/professional-services/client-success-manager', color: '#9333EA', level: 'team_lead', efficiency: '89%' },
-  { id: 'ai-business-consultant', uid: 'ktx-25-business-consultant', title: 'AI Business Consultant', route: '/ai-agent/professional-services/business-consultant', color: '#9333EA', level: 'team_lead', efficiency: '85%' },
-  { id: 'ai-consulting-integration-specialist', uid: 'ktx-25-consulting-integration-specialist', title: 'AI Consulting Integration Specialist', route: '/ai-agent/professional-services/consulting-integration-specialist', color: '#9333EA', level: 'team_lead', efficiency: '90%' },
+  { id: 'ai-chief-professional-services-officer', uid: 'ktx-17-chief-professional-services-officer', title: 'AI Chief Professional Services Officer', route: '/ai-agent/professional-services/chief-professional-services-officer', color: '#10B981', level: 'c_level', efficiency: '94%' },
+  { id: 'ai-project-delivery-agent', uid: 'ktx-17-project-delivery-agent', title: 'AI Project Delivery Agent', route: '/ai-agent/professional-services/project-delivery-agent', color: '#10B981', level: 'vp_director', efficiency: '91%' },
+  { id: 'ai-proposal-sow-agent', uid: 'ktx-17-proposal-sow-agent', title: 'AI Proposal & SOW Agent', route: '/ai-agent/professional-services/proposal-sow-agent', color: '#10B981', level: 'vp_director', efficiency: '88%' },
+  { id: 'ai-client-success-agent', uid: 'ktx-17-client-success-agent', title: 'AI Client Success Agent', route: '/ai-agent/professional-services/client-success-agent', color: '#10B981', level: 'vp_director', efficiency: '93%' },
+  { id: 'ai-resource-allocation-agent', uid: 'ktx-17-resource-allocation-agent', title: 'AI Resource Allocation Agent', route: '/ai-agent/professional-services/resource-allocation-agent', color: '#10B981', level: 'vp_director', efficiency: '86%' },
+  { id: 'ai-risk-management-agent', uid: 'ktx-17-risk-management-agent', title: 'AI Risk Management Agent', route: '/ai-agent/professional-services/risk-management-agent', color: '#10B981', level: 'vp_director', efficiency: '89%' },
+  { id: 'ai-consulting-manager', uid: 'ktx-17-consulting-manager', title: 'AI Consulting Manager', route: '/ai-agent/professional-services/consulting-manager', color: '#10B981', level: 'manager', efficiency: '85%' },
+  { id: 'ai-project-manager', uid: 'ktx-17-project-manager', title: 'AI Project Manager', route: '/ai-agent/professional-services/project-manager', color: '#10B981', level: 'manager', efficiency: '87%' },
+  { id: 'ai-consultant', uid: 'ktx-17-consultant', title: 'AI Consultant', route: '/ai-agent/professional-services/consultant', color: '#10B981', level: 'team_lead', efficiency: '82%' },
+  { id: 'ai-analyst', uid: 'ktx-17-analyst', title: 'AI Analyst', route: '/ai-agent/professional-services/analyst', color: '#10B981', level: 'team_lead', efficiency: '84%' },
+  { id: 'ai-attorney', uid: 'ktx-17-attorney', title: 'AI Attorney', route: '/ai-agent/professional-services/attorney', color: '#10B981', level: 'manager', efficiency: '90%' },
+  { id: 'ai-paralegal', uid: 'ktx-17-paralegal', title: 'AI Paralegal', route: '/ai-agent/professional-services/paralegal', color: '#10B981', level: 'team_lead', efficiency: '88%' },
+  { id: 'ai-legal-researcher', uid: 'ktx-17-legal-researcher', title: 'AI Legal Researcher', route: '/ai-agent/professional-services/legal-researcher', color: '#10B981', level: 'team_lead', efficiency: '91%' },
+  { id: 'ai-accountant', uid: 'ktx-17-accountant', title: 'AI Accountant', route: '/ai-agent/professional-services/accountant', color: '#10B981', level: 'team_lead', efficiency: '86%' },
+  { id: 'ai-auditor', uid: 'ktx-17-auditor', title: 'AI Auditor', route: '/ai-agent/professional-services/auditor', color: '#10B981', level: 'team_lead', efficiency: '89%' },
+  { id: 'ai-tax-specialist', uid: 'ktx-17-tax-specialist', title: 'AI Tax Specialist', route: '/ai-agent/professional-services/tax-specialist', color: '#10B981', level: 'team_lead', efficiency: '92%' },
 ];
+
 export default function DepartmentIndex() {
-  const router = useRouter();
   return (
-    <ScrollView style={s.container}>
-      <Text style={s.title}>Professional Services - AI Agents</Text>
-      <Text style={s.sub}>120 AI Agents & Employees</Text>
-      <View style={s.grid}>
-        {agents.map((a) => (
-          <Pressable key={a.id} style={[s.card, { borderLeftColor: a.color }]} onPress={() => router.push(a.route as any)}>
-            <Text style={s.at}>{a.title}</Text>
-            <Text style={s.al}>{a.level.replace('_',' ').toUpperCase()}</Text>
-            <Text style={s.ae}>{a.efficiency}</Text>
-          </Pressable>
-        ))}
-      </View>
-    </ScrollView>
+    <DepartmentDashboardView
+      departmentId="professional-services"
+      agents={agents}
+    />
   );
 }
-const s = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
-  title: { fontSize: 28, fontWeight: 'bold', marginBottom: 8 },
-  sub: { fontSize: 16, color: '#666', marginBottom: 24 },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 16 },
-  card: { width: '48%', padding: 16, borderRadius: 12, backgroundColor: '#F5F5F5', borderLeftWidth: 4 },
-  at: { fontSize: 16, fontWeight: '600', marginBottom: 4 },
-  al: { fontSize: 12, color: '#666', marginBottom: 2 },
-  ae: { fontSize: 14, fontWeight: '500', color: '#333' }
-});

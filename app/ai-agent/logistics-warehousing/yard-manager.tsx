@@ -7,7 +7,7 @@ export default function YardManagerPage() {
     id: 'yard-manager',
     name: 'AI Yard Manager',
     title: 'Yard Manager',
-    description: 'The AI Yard Manager manages yard operations, coordinates trailer movements, optimizes yard space utilization, and ensures efficient yard logistics for inbound and outbound trailers.",
+    description: 'The AI Yard Manager manages yard operations, coordinates trailer movements, optimizes yard space utilization, and ensures efficient yard logistics for inbound and outbound trailers.',
     capabilities: ["Yard Management","Trailer Coordination","Space Optimization","Gate Operations","Dock Door Management","Performance Monitoring","Safety Compliance","Resource Allocation","Reporting","Continuous Improvement"],
     icon: MapPin,
     color: '#3B82F6',

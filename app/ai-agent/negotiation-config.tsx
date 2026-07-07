@@ -154,7 +154,7 @@ export default function NegotiationConfigScreen() {
         scenario: newTraining.scenario,
         expectedResponse: newTraining.expectedResponse,
         category: newTraining.category,
-
+      };
       setTrainingData(prev => [...prev, training]);
     }
 

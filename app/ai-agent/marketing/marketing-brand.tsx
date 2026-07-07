@@ -73,6 +73,7 @@ export default function AgentPage() {
     hierarchy: {
       department: 'Marketing',
     },
+  };
 
   return (
     <div>
@@ -157,4 +158,5 @@ export default function AgentPage() {
       </div>
     </div>
   );
+
 }

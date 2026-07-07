@@ -7,7 +7,7 @@ export default function DataAnalystPage() {
     id: 'data-analyst',
     name: 'AI Data Analyst',
     title: 'AI Data Analyst',
-    description: 'The AI Data Analyst analyzes tourism data, identifies trends, generates insights, and provides data-driven recommendations for tourism operations.",
+    description: 'The AI Data Analyst analyzes tourism data, identifies trends, generates insights, and provides data-driven recommendations for tourism operations.',
     capabilities: ["Task Automation","Data Processing","Workflow Management","Data Analysis","Trend Identification","Insight Generation","Data Visualization","Statistical Analysis","Reporting","Predictive Modeling"],
     icon: Database,
     color: '#2E7D32',

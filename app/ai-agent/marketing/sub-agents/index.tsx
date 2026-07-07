@@ -16,7 +16,7 @@ export default function SubAgentsIndex() {
         <Text style={[styles.heroSubtitle, { color: theme.colors.textSecondary }]}>Helper & Sub-Agent Workforce</Text>
         <View style={styles.badgesRow}>
           <View style={[styles.badge, { backgroundColor: '#34C75922' }]}><Activity size={12} color="#34C759" /><Text style={[styles.badgeText, { color: '#34C759' }]}>Active</Text></View>
-          <View style={[styles.badge, { backgroundColor: '#E91E6322' }]}><Users size={12} color="#E91E63" /><Text style={[styles.badgeText, { color: '#E91E63' }]}>45 Agents</Text></View>
+          <View style={[styles.badge, { backgroundColor: '#E91E6322' }]}><Users size={12} color="#E91E63" /><Text style={[styles.badgeText, { color: '#E91E63' }]}>53 Agents</Text></View>
         </View>
       </View>
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
@@ -237,6 +237,14 @@ export default function SubAgentsIndex() {
           </View>
           <ArrowRight size={20} color={theme.colors.textSecondary} />
         </TouchableOpacity>
+        <TouchableOpacity key="featured-snippet-optimizer" onPress={() => router.push('/ai-agent/marketing/sub-agents/featured-snippet-optimizer')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#E91E6320' }]}><Megaphone size={28} color="#E91E63" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Featured Snippet Optimizer</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
         <TouchableOpacity key="insight-summarizer" onPress={() => router.push('/ai-agent/marketing/sub-agents/insight-summarizer')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
           <View style={[styles.agentIcon, { backgroundColor: '#E91E6320' }]}><Megaphone size={28} color="#E91E63" /></View>
           <View style={styles.agentInfo}>
@@ -253,6 +261,22 @@ export default function SubAgentsIndex() {
           </View>
           <ArrowRight size={20} color={theme.colors.textSecondary} />
         </TouchableOpacity>
+        <TouchableOpacity key="local-seo-specialist" onPress={() => router.push('/ai-agent/marketing/sub-agents/local-seo-specialist')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#E91E6320' }]}><Megaphone size={28} color="#E91E63" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Local Seo Specialist</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="location-intelligence-manager" onPress={() => router.push('/ai-agent/marketing/sub-agents/location-intelligence-manager')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#E91E6320' }]}><Megaphone size={28} color="#E91E63" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Location Intelligence Manager</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
         <TouchableOpacity key="kpi-dashboard-builder" onPress={() => router.push('/ai-agent/marketing/sub-agents/kpi-dashboard-builder')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
           <View style={[styles.agentIcon, { backgroundColor: '#E91E6320' }]}><Megaphone size={28} color="#E91E63" /></View>
           <View style={styles.agentInfo}>
@@ -265,6 +289,14 @@ export default function SubAgentsIndex() {
           <View style={[styles.agentIcon, { backgroundColor: '#E91E6320' }]}><Megaphone size={28} color="#E91E63" /></View>
           <View style={styles.agentInfo}>
             <Text style={[styles.agentName, { color: theme.colors.text }]}>List Segmenter</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="geo-targeting-coordinator" onPress={() => router.push('/ai-agent/marketing/sub-agents/geo-targeting-coordinator')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#E91E6320' }]}><Megaphone size={28} color="#E91E63" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Geo Targeting Coordinator</Text>
             <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
           </View>
           <ArrowRight size={20} color={theme.colors.textSecondary} />
@@ -377,6 +409,38 @@ export default function SubAgentsIndex() {
           <View style={[styles.agentIcon, { backgroundColor: '#E91E6320' }]}><Megaphone size={28} color="#E91E63" /></View>
           <View style={styles.agentInfo}>
             <Text style={[styles.agentName, { color: theme.colors.text }]}>Web Performance Tracker</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="schema-markup-specialist" onPress={() => router.push('/ai-agent/marketing/sub-agents/schema-markup-specialist')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#E91E6320' }]}><Megaphone size={28} color="#E91E63" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Schema Markup Specialist</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="voice-search-optimizer" onPress={() => router.push('/ai-agent/marketing/sub-agents/voice-search-optimizer')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#E91E6320' }]}><Megaphone size={28} color="#E91E63" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Voice Search Optimizer</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="qa-content-strategist" onPress={() => router.push('/ai-agent/marketing/sub-agents/qa-content-strategist')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#E91E6320' }]}><Megaphone size={28} color="#E91E63" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Qa Content Strategist</Text>
+            <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
+          </View>
+          <ArrowRight size={20} color={theme.colors.textSecondary} />
+        </TouchableOpacity>
+        <TouchableOpacity key="regional-market-analyst" onPress={() => router.push('/ai-agent/marketing/sub-agents/regional-market-analyst')} style={[styles.agentCard, { backgroundColor: theme.colors.background || '#F2F2F7' }]}>
+          <View style={[styles.agentIcon, { backgroundColor: '#E91E6320' }]}><Megaphone size={28} color="#E91E63" /></View>
+          <View style={styles.agentInfo}>
+            <Text style={[styles.agentName, { color: theme.colors.text }]}>Regional Market Analyst</Text>
             <Text style={[styles.agentDesc, { color: theme.colors.textSecondary }]}>Sub-Agent</Text>
           </View>
           <ArrowRight size={20} color={theme.colors.textSecondary} />

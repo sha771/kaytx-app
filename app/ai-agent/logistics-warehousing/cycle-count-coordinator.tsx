@@ -7,7 +7,7 @@ export default function CycleCountCoordinatorPage() {
     id: 'cycle-count-coordinator',
     name: 'AI Cycle Count Coordinator',
     title: 'Cycle Count Coordinator',
-    description: 'The AI Cycle Count Coordinator manages cycle count programs, schedules counting activities, coordinates count verification, and ensures accurate inventory records through regular cycle counting.",
+    description: 'The AI Cycle Count Coordinator manages cycle count programs, schedules counting activities, coordinates count verification, and ensures accurate inventory records through regular cycle counting.',
     capabilities: ["Cycle Count Management","Scheduling","Coordination","Verification","Accuracy Tracking","Exception Resolution","Reporting","Performance Monitoring","Continuous Improvement","Cost Analysis"],
     icon: RefreshCw,
     color: '#3B82F6',

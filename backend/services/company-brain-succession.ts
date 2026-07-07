@@ -5,6 +5,7 @@
 
 import { companyBrainWebSocketService } from './company-brain-websocket';
 import { companyBrainDepartureService } from './company-brain-departure';
+import { skillBrainService } from './skill-brain-service';
 
 /**
  * Company Brain Succession Planning Service
@@ -93,6 +94,15 @@ export class CompanyBrainSuccessionService {
 
     this.workflows.set(workflow.id, workflow);
 
+    // Create skill transfer plan from Skill Brain
+    const skillTransferPlan = skillBrainService.createTransferPlan(
+      fromEmployeeId,
+      fromEmployeeName,
+      toEmployeeId,
+      toEmployeeName
+    );
+    console.log(`Skill transfer plan created: ${skillTransferPlan.id} with ${skillTransferPlan.skills.length} skills`);
+
     // Auto-generate transfer checklist
     await this.generateTransferChecklist(workflow);
 
@@ -107,6 +117,8 @@ export class CompanyBrainSuccessionService {
       toEmployee: toEmployeeName,
       knowledgeAreas,
       targetDate,
+      skillCount: skillTransferPlan.skills.length,
+      skillTransferPlanId: skillTransferPlan.id,
     });
 
     console.log(`Transfer workflow created: ${fromEmployeeName} → ${toEmployeeName}`);
@@ -391,10 +403,12 @@ export class CompanyBrainSuccessionService {
     sessionsCompleted: number;
     sessionsTotal: number;
     daysRemaining: number;
+    skillTransferReadiness: number;
+    atRiskSkills: number;
   } {
     const workflow = this.workflows.get(workflowId);
     if (!workflow) {
-      return { score: 0, checklistProgress: 0, sessionsCompleted: 0, sessionsTotal: 0, daysRemaining: 0 };
+      return { score: 0, checklistProgress: 0, sessionsCompleted: 0, sessionsTotal: 0, daysRemaining: 0, skillTransferReadiness: 0, atRiskSkills: 0 };
     }
 
     const checklist = this.getWorkflowChecklist(workflowId);
@@ -406,9 +420,20 @@ export class CompanyBrainSuccessionService {
       Math.floor((workflow.targetDate.getTime() - Date.now()) / (24 * 60 * 60 * 1000))
     );
 
-    // Calculate overall readiness score
+    // Get skill brain transfer readiness
+    const stats = skillBrainService.getStatistics();
+    const atRiskSkills = stats.atRiskSkills;
+    const transferReady = stats.transferReadyCount;
+    const totalSkills = stats.totalSkills;
+    const skillTransferReadiness = totalSkills > 0
+      ? Math.round((transferReady / totalSkills) * 100)
+      : 0;
+
+    // Calculate overall readiness score (incorporating skill transfer readiness)
     const score = Math.round(
-      (checklistProgress * 0.6) + ((sessionsCompleted / sessionsTotal) * 100 * 0.4)
+      (checklistProgress * 0.4) +
+      ((sessionsCompleted / sessionsTotal) * 100 * 0.3) +
+      (skillTransferReadiness * 0.3)
     );
 
     return {
@@ -417,6 +442,8 @@ export class CompanyBrainSuccessionService {
       sessionsCompleted,
       sessionsTotal,
       daysRemaining,
+      skillTransferReadiness,
+      atRiskSkills,
     };
   }
 
@@ -428,16 +455,35 @@ export class CompanyBrainSuccessionService {
     departingEmployeeName: string,
     knowledgeAreas: string[]
   ): Promise<void> {
+    console.log(`Auto-creating transfer workflow for departing employee: ${departingEmployeeName}`);
+
+    // Create skill transfer plan using Skill Brain
+    const skillTransferPlan = skillBrainService.createTransferPlan(
+      departingEmployeeId,
+      departingEmployeeName
+    );
+
+    console.log(`Skill transfer plan auto-created: ${skillTransferPlan.id}`);
+    console.log(`Skills to transfer: ${skillTransferPlan.skills.length}`);
+    console.log(`Priority: ${skillTransferPlan.priority}`);
+
+    // Broadcast alert for high-priority departures
+    if (skillTransferPlan.priority === 'critical' || skillTransferPlan.priority === 'high') {
+      companyBrainWebSocketService.broadcastRiskAlert({
+        type: 'critical_departure_skill_risk',
+        employeeId: departingEmployeeId,
+        employeeName: departingEmployeeName,
+        skillCount: skillTransferPlan.skills.length,
+        priority: skillTransferPlan.priority,
+        message: `CRITICAL: ${departingEmployeeName} has ${skillTransferPlan.skills.length} skills requiring transfer. Priority: ${skillTransferPlan.priority}`,
+      });
+    }
+
     // In production, this would:
     // 1. Identify best transfer target based on skills, department, availability
     // 2. Get manager approval
     // 3. Create transfer workflow
     // 4. Notify all stakeholders
-
-    console.log(`Auto-creating transfer workflow for departing employee: ${departingEmployeeName}`);
-
-    // For now, we'll just log the action
-    // In a real implementation, you would identify the target employee automatically
   }
 }
 

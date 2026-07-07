@@ -7,7 +7,7 @@ export default function SupplierOnboardingSpecialistPage() {
     id: 'supplier-onboarding-specialist',
     name: 'AI Supplier Onboarding Specialist',
     title: 'Supplier Onboarding Specialist',
-    description: 'The AI Supplier Onboarding Specialist manages supplier onboarding, coordinates qualification processes, ensures compliance, and facilitates smooth supplier integration.",
+    description: 'The AI Supplier Onboarding Specialist manages supplier onboarding, coordinates qualification processes, ensures compliance, and facilitates smooth supplier integration.',
     capabilities: ["Onboarding Management","Qualification Coordination","Compliance Verification","Documentation","System Integration","Training Coordination","Performance Monitoring","Communication","Reporting","Continuous Improvement"],
     icon: UserPlus,
     color: '#6366F1',

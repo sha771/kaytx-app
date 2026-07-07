@@ -7,7 +7,7 @@ export default function SeasonalityAnalystPage() {
     id: 'seasonality-analyst',
     name: 'AI Seasonality Analyst',
     title: 'Seasonality Analyst',
-    description: 'The AI Seasonality Analyst analyzes seasonal demand patterns, identifies peak periods, develops seasonal strategies, and supports inventory planning with seasonal insights.",
+    description: 'The AI Seasonality Analyst analyzes seasonal demand patterns, identifies peak periods, develops seasonal strategies, and supports inventory planning with seasonal insights.',
     capabilities: ["Seasonal Analysis","Pattern Recognition","Peak Identification","Strategy Development","Forecasting Support","Reporting","Planning Support","Integration","Analytics","Continuous Improvement"],
     icon: TrendingUp,
     color: '#F59E0B',

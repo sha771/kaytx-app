@@ -7,7 +7,7 @@ export default function TouchpointManagerPage() {
     id: 'touchpoint-manager',
     name: 'AI Touchpoint Manager',
     title: 'AI Touchpoint Manager',
-    description: 'The AI Touchpoint Manager manages customer touchpoints, ensures consistency across channels, optimizes touchpoint performance, and delivers seamless customer interactions.",
+    description: 'The AI Touchpoint Manager manages customer touchpoints, ensures consistency across channels, optimizes touchpoint performance, and delivers seamless customer interactions.',
     capabilities: ["Task Automation","Data Processing","Workflow Management","Touchpoint Management","Channel Consistency","Performance Optimization","Customer Interaction","Cross-channel Coordination","Touchpoint Analytics","Quality Assurance"],
     icon: Network,
     color: '#4527A0',

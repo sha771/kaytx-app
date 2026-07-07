@@ -2,7 +2,7 @@ import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
 import { Bot } from 'lucide-react-native';
 
-export default function Check-inStaffPage() {
+export default function CheckInStaffPage() {
   const agent = {
     id: 'check-in-staff',
     name: 'AI Check-in Staff',

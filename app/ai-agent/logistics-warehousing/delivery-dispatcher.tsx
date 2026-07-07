@@ -7,7 +7,7 @@ export default function DeliveryDispatcherPage() {
     id: 'delivery-dispatcher',
     name: 'AI Delivery Dispatcher',
     title: 'Delivery Dispatcher',
-    description: 'The AI Delivery Dispatcher dispatches delivery vehicles, coordinates driver assignments, manages delivery schedules, and ensures efficient dispatch operations for last-mile delivery.",
+    description: 'The AI Delivery Dispatcher dispatches delivery vehicles, coordinates driver assignments, manages delivery schedules, and ensures efficient dispatch operations for last-mile delivery.',
     capabilities: ["Dispatch Operations","Driver Assignment","Schedule Management","Real-Time Coordination","Performance Tracking","Exception Handling","Communication","Route Monitoring","Reporting","Efficiency Optimization"],
     icon: Radio,
     color: '#10B981',

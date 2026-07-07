@@ -7,7 +7,7 @@ export default function ZoneManagerPage() {
     id: 'zone-manager',
     name: 'AI Zone Manager',
     title: 'Zone Manager',
-    description: 'The AI Zone Manager manages specific warehouse zones, coordinates zone-specific activities, optimizes zone operations, and ensures efficient performance within designated areas.",
+    description: 'The AI Zone Manager manages specific warehouse zones, coordinates zone-specific activities, optimizes zone operations, and ensures efficient performance within designated areas.',
     capabilities: ["Zone Management","Activity Coordination","Performance Monitoring","Resource Allocation","Safety Compliance","Quality Assurance","Reporting","Optimization","Team Supervision","Continuous Improvement"],
     icon: Map,
     color: '#3B82F6',

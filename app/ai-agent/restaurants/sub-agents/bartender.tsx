@@ -7,7 +7,7 @@ export default function BartenderPage() {
     id: 'bartender',
     name: 'AI Bartender',
     title: 'AI Bartender',
-    description: 'The AI Bartender prepares drinks, manages bar service, and ensures exceptional beverage experience for guests.",
+    description: 'The AI Bartender prepares drinks, manages bar service, and ensures exceptional beverage experience for guests.',
     capabilities: ["Drink Preparation","Bar Service","Beverage Knowledge","Guest Experience","Drink Quality","Bar Operations","Recipe Execution","Beverage Excellence","Guest Relations","Bar Service Quality"],
     icon: Wine,
     color: '#795548',

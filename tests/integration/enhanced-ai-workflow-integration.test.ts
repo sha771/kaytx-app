@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, jest, beforeAll, afterAll } from '@jest/globals';
 import { AIAgentService, AgentType } from '../../backend/services/ai-agent-service';
-import { agentMemoryService } from '../../backend/services/agent-memory-service';
+import { agentMemoryService } from '../../backend/services/consolidated-memory-service';
 import { db as pgDb } from '../../backend/db/connection';
 
 describe('Enhanced AI Workflow Integration Tests', () => {

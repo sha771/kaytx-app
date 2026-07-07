@@ -7,7 +7,7 @@ export default function ObsoleteInventorySpecialistPage() {
     id: 'obsolete-inventory-specialist',
     name: 'AI Obsolete Inventory Specialist',
     title: 'Obsolete Inventory Specialist',
-    description: 'The AI Obsolete Inventory Specialist identifies obsolete inventory, manages write-offs, coordinates disposal processes, and minimizes obsolete stock losses.",
+    description: 'The AI Obsolete Inventory Specialist identifies obsolete inventory, manages write-offs, coordinates disposal processes, and minimizes obsolete stock losses.',
     capabilities: ["Obsolete Identification","Write-Off Management","Disposal Coordination","Cost Recovery","Analysis","Reporting","Documentation","Vendor Communication","Prevention","Continuous Improvement"],
     icon: Trash2,
     color: '#F59E0B',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
-import SearchCheck from 'lucide-react-native/dist/esm/icons/search-check';
+import { SearchCheck } from 'lucide-react-native';
 
 export default function AgentPage() {
   const agent = {

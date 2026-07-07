@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, jest, afterAll } from '@jest/globals';
 import { AIAgentService , AgentType } from '../../../backend/services/ai-agent-service';
-import { agentMemoryService } from '../../../backend/services/agent-memory-service';
+import { agentMemoryService } from '../../../backend/services/consolidated-memory-service';
 import { platformDataSyncService } from '../../../backend/services/platform-data-sync-service';
 
 describe('AI Services Integration Tests', () => {

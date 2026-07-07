@@ -2,7 +2,7 @@ import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
 import { Bot } from 'lucide-react-native';
 
-export default function Cross-deptCoordinatorPage() {
+export default function CrossDeptCoordinatorPage() {
   const agent = {
     id: 'cross-dept-coordinator',
     name: 'AI Cross-dept Coordinator',

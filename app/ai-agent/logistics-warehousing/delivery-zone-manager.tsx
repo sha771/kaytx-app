@@ -7,7 +7,7 @@ export default function DeliveryZoneManagerPage() {
     id: 'delivery-zone-manager',
     name: 'AI Delivery Zone Manager',
     title: 'Delivery Zone Manager',
-    description: 'The AI Delivery Zone Manager manages delivery zones, coordinates zone-specific operations, optimizes zone performance, and ensures efficient delivery within designated areas.",
+    description: 'The AI Delivery Zone Manager manages delivery zones, coordinates zone-specific operations, optimizes zone performance, and ensures efficient delivery within designated areas.',
     capabilities: ["Zone Management","Zone Operations","Performance Optimization","Resource Allocation","Customer Service","Cost Control","Reporting","Strategic Planning","Team Supervision","Continuous Improvement"],
     icon: Map,
     color: '#10B981',

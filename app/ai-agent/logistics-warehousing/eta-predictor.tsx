@@ -7,7 +7,7 @@ export default function ETAPredictorPage() {
     id: 'eta-predictor',
     name: 'AI ETA Predictor',
     title: 'ETA Predictor',
-    description: 'The AI ETA Predictor predicts delivery times, analyzes transit patterns, considers external factors, and provides accurate ETA estimates for customer communications.",
+    description: 'The AI ETA Predictor predicts delivery times, analyzes transit patterns, considers external factors, and provides accurate ETA estimates for customer communications.',
     capabilities: ["ETA Prediction","Transit Analysis","Pattern Recognition","Factor Analysis","Real-Time Updates","Accuracy Tracking","Communication","Reporting","Integration","Continuous Improvement"],
     icon: Clock,
     color: '#10B981',

@@ -2,7 +2,7 @@ import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
 import { Bot } from 'lucide-react-native';
 
-export default function Post-productionSupervisorPage() {
+export default function PostProductionSupervisorPage() {
   const agent = {
     id: 'post-production-supervisor',
     name: 'AI Post-production Supervisor',

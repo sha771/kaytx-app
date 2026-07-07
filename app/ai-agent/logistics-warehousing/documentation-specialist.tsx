@@ -7,7 +7,7 @@ export default function DocumentationSpecialistPage() {
     id: 'documentation-specialist',
     name: 'AI Documentation Specialist',
     title: 'Documentation Specialist',
-    description: 'The AI Documentation Specialist manages freight documentation, generates shipping documents, ensures regulatory compliance, and maintains accurate documentation records.",
+    description: 'The AI Documentation Specialist manages freight documentation, generates shipping documents, ensures regulatory compliance, and maintains accurate documentation records.',
     capabilities: ["Documentation Management","Document Generation","Compliance Checking","Record Keeping","Verification","Reporting","Integration","Quality Control","Archive Management","Communication"],
     icon: FileText,
     color: '#8B5CF6',
