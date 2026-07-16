@@ -7,10 +7,12 @@ build/
 .next/
 out/
 
-# Environment files
+# Environment files — NEVER commit secrets
 .env
 .env.local
 .env.*.local
+.env.production
+!.env.example
 
 # IDE
 .vscode/
@@ -47,3 +49,34 @@ expo-output/
 
 expo-env.d.ts
 # @end expo-cli
+
+# Test & Coverage
+coverage/
+
+# CI/CD
+secrets/
+
+# Legacy / Backup artifacts
+*.backup
+*-fixed.*
+package-fixed.json
+
+# Database backups
+*.sql.backup
+*.dump
+
+# Scripts archive
+scripts/_archive/
+
+# OpenTelemetry
+otel-traces/
+
+# Parsed data
+*.csv
+insert_features.log
+insert_features.py
+*.py
+
+# Generated agent data
+1108-agents-raw.json
+gen9-data.json

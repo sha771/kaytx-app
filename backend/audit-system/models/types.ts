@@ -437,7 +437,7 @@ export interface SecurityRule {
   id: string;
   name: string;
   severity: IssueSeverity;
-  pattern: string;
+  pattern: string | RegExp;
   description: string;
   owaspCategory: string;
 }

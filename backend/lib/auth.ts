@@ -6,8 +6,8 @@ import { getDb } from '../db/connection';
 import { users, sessions } from '../db/drizzle-schema';
 import { config } from './config';
 import { logAudit, AuditActions } from './audit';
-import * as samlify from 'samlify';
-import { SamlIdp, SamlSp } from 'samlify';
+// import * as samlify from 'samlify';
+// import { SamlIdp, SamlSp } from 'samlify';
 import { logger } from './production-logger';
 
 type DbUser = any;
@@ -846,6 +846,9 @@ async function initiateSAMLFlow(
     loginHint?: string;
   }
 ) {
+  throw new Error('SAML functionality is temporarily disabled. Install @authenio/xml-encryption to enable.');
+  
+  /*
   const provider = samlProviders.get(samlConfig.provider || 'okta-saml');
   if (!provider) {
     throw new Error('SAML provider not configured');
@@ -891,6 +894,7 @@ async function initiateSAMLFlow(
     relayState,
     provider: samlConfig.provider || 'okta-saml'
   };
+  */
 }
 
 async function initiateOIDCFlow(organizationSlug: string, oidcConfig: any) {

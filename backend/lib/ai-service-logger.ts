@@ -579,6 +579,14 @@ export class AIServiceLogger {
     );
   }
 
+  static getInstance(): typeof AIServiceLogger {
+    return AIServiceLogger;
+  }
+
+  static logAlert(action: string, id: string, severity: string, message: string) {
+    this.log(LogLevel.INFO, 'alerting', `Alert ${action}: ${message}`, { alertId: id, severity, action });
+  }
+
   static logError(params: { id: any; error: Error; context?: any; correlationId?: string }) {
     const entry: StructuredLogEntry = {
       timestamp: new Date().toISOString(),

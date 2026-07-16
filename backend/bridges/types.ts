@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { BridgeConnectionState, BridgeEvent } from '../../core/base-bridge';
 
 export const TLSConfigSchema = z.object({
   enabled: z.boolean().default(true),
@@ -31,12 +32,6 @@ export const ProtocolSchema = z.enum([
 ]);
 
 export type Protocol = z.infer<typeof ProtocolSchema>;
-
-export type BridgeConnectionState =
-  | { status: 'disconnected' }
-  | { status: 'connecting'; startedAt: number }
-  | { status: 'connected'; connectedAt: number; details?: Record<string, unknown> }
-  | { status: 'error'; error: string };
 
 export interface BridgeCapability {
   id: string;

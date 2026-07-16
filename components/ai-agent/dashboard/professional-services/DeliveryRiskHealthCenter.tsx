@@ -119,22 +119,22 @@ export default function DeliveryRiskHealthCenter({ data }: DeliveryRiskHealthCen
         <View style={styles.riskGrid}>
           <View style={styles.riskMetric}>
             <Text style={[styles.riskMetricLabel, { color: 'rgba(255, 255, 255, 0.6)' }]}>Project Delays</Text>
-            <Text style={[styles.riskMetricValue, { color: projectDelays.count || '12' }]}>{projectDelays.count || 12}</Text>
+            <Text style={[styles.riskMetricValue, { color: '#EF4444' }]}>{projectDelays.count || 12}</Text>
             <Text style={[styles.riskMetricSub, { color: '#EF4444' }]}>{projectDelays.impact || '$2.4M impact'}</Text>
           </View>
           <View style={styles.riskMetric}>
             <Text style={[styles.riskMetricLabel, { color: 'rgba(255, 255, 255, 0.6)' }]}>Scope Creep</Text>
-            <Text style={[styles.riskMetricValue, { color: scopeCreep.count || '8' }]}>{scopeCreep.count || 8}</Text>
+            <Text style={[styles.riskMetricValue, { color: '#F59E0B' }]}>{scopeCreep.count || 8}</Text>
             <Text style={[styles.riskMetricSub, { color: '#F59E0B' }]}>{scopeCreep.impact || '$1.8M impact'}</Text>
           </View>
           <View style={styles.riskMetric}>
             <Text style={[styles.riskMetricLabel, { color: 'rgba(255, 255, 255, 0.6)' }]}>Budget Overruns</Text>
-            <Text style={[styles.riskMetricValue, { color: budgetOverruns.count || '5' }]}>{budgetOverruns.count || 5}</Text>
+            <Text style={[styles.riskMetricValue, { color: '#EF4444' }]}>{budgetOverruns.count || 5}</Text>
             <Text style={[styles.riskMetricSub, { color: '#EF4444' }]}>{budgetOverruns.impact || '$3.2M impact'}</Text>
           </View>
           <View style={styles.riskMetric}>
             <Text style={[styles.riskMetricLabel, { color: 'rgba(255, 255, 255, 0.6)' }]}>Resource Shortages</Text>
-            <Text style={[styles.riskMetricValue, { color: resourceShortages.count || '15' }]}>{resourceShortages.count || 15}</Text>
+            <Text style={[styles.riskMetricValue, { color: '#F59E0B' }]}>{resourceShortages.count || 15}</Text>
             <Text style={[styles.riskMetricSub, { color: '#F59E0B' }]}>{resourceShortages.impact || '42 positions'}</Text>
           </View>
         </View>
@@ -159,12 +159,8 @@ export default function DeliveryRiskHealthCenter({ data }: DeliveryRiskHealthCen
             <Text style={[styles.escalationValue, { color: '#06B6D4' }]}>{clientEscalations.avgTime || '2.3d'}</Text>
           </View>
         </View>
-      </View>
-    </View>
-  );
-}
-
-      {/* Escalation Tracking */}
+        
+        {/* Escalation Tracking */}
       <View style={[styles.escalationSection, { backgroundColor: 'rgba(11, 15, 20, 0.6)', borderColor: 'rgba(239, 68, 68, 0.2)', borderWidth: 1 }]}>
         <Text style={[styles.sectionTitle, { color: '#FFFFFF' }]}>
           Escalation Tracking
@@ -234,6 +230,7 @@ export default function DeliveryRiskHealthCenter({ data }: DeliveryRiskHealthCen
             <Text style={[styles.predictiveConfidence, { color: '#F59E0B' }]}>65% confidence</Text>
           </View>
         </View>
+      </View>
       </View>
     </View>
   );

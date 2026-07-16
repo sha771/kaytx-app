@@ -457,7 +457,7 @@ class UnifiedAlertingSystem {
         });
       }
     } catch (error) {
-      this.logger.logError('rule_evaluation_failed', error instanceof Error ? error.message : 'Unknown error', { ruleId: rule.id });
+      this.logger.logError({ id: 'rule_evaluation_failed', error: error instanceof Error ? error : new Error('Unknown error'), context: { ruleId: rule.id } });
     }
   }
 }

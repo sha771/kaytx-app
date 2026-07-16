@@ -11,14 +11,17 @@
 import { Hono } from 'hono';
 import { z } from 'zod';
 import { skillBrainService } from '../../services/skill-brain-service';
+import type { RouteContext } from './route-types';
 
-const skillBrainRouter = new Hono();
+const skillBrainRouter = new Hono<{ Variables: RouteContext['env']['Variables'] }>();
+
+type AppContext = RouteContext;
 
 /**
  * GET /api/skill-brain/stats
  * Returns overall Skill Brain statistics
  */
-skillBrainRouter.get('/stats', async (c) => {
+skillBrainRouter.get('/stats', async (c: AppContext) => {
   try {
     const stats = skillBrainService.getStatistics();
     return c.json({ success: true, stats });
@@ -31,7 +34,7 @@ skillBrainRouter.get('/stats', async (c) => {
  * GET /api/skill-brain/skills
  * Returns all skills across the system
  */
-skillBrainRouter.get('/skills', async (c) => {
+skillBrainRouter.get('/skills', async (c: AppContext) => {
   try {
     const category = c.req.query('category');
     const competency = c.req.query('competency');
@@ -62,7 +65,7 @@ skillBrainRouter.get('/skills', async (c) => {
  * GET /api/skill-brain/skills/at-risk
  * Returns all at-risk skills (expert-level, undocumented/unverified)
  */
-skillBrainRouter.get('/skills/at-risk', async (c) => {
+skillBrainRouter.get('/skills/at-risk', async (c: AppContext) => {
   try {
     const skills = skillBrainService.getAtRiskSkills();
     return c.json({ success: true, skills, total: skills.length });
@@ -75,7 +78,7 @@ skillBrainRouter.get('/skills/at-risk', async (c) => {
  * GET /api/skill-brain/skills/transfer-ready
  * Returns all transfer-ready skills
  */
-skillBrainRouter.get('/skills/transfer-ready', async (c) => {
+skillBrainRouter.get('/skills/transfer-ready', async (c: AppContext) => {
   try {
     const skills = skillBrainService.getTransferReadySkills();
     return c.json({ success: true, skills, total: skills.length });
@@ -88,7 +91,7 @@ skillBrainRouter.get('/skills/transfer-ready', async (c) => {
  * GET /api/skill-brain/skills/:id
  * Returns a specific skill by ID
  */
-skillBrainRouter.get('/skills/:id', async (c) => {
+skillBrainRouter.get('/skills/:id', async (c: AppContext) => {
   try {
     const id = c.req.param('id');
     const allSkills = skillBrainService.getAllSkills();
@@ -106,7 +109,7 @@ skillBrainRouter.get('/skills/:id', async (c) => {
  * GET /api/skill-brain/people/:email
  * Returns skill profile for a person
  */
-skillBrainRouter.get('/people/:email', async (c) => {
+skillBrainRouter.get('/people/:email', async (c: AppContext) => {
   try {
     const email = c.req.param('email');
     const skills = skillBrainService.getPersonSkills(email);
@@ -127,7 +130,7 @@ skillBrainRouter.get('/people/:email', async (c) => {
  * GET /api/skill-brain/departments/:name/coverage
  * Returns department skill coverage
  */
-skillBrainRouter.get('/departments/:name/coverage', async (c) => {
+skillBrainRouter.get('/departments/:name/coverage', async (c: AppContext) => {
   try {
     const name = c.req.param('name');
     const coverage = skillBrainService.getDepartmentCoverage(name);
@@ -141,7 +144,7 @@ skillBrainRouter.get('/departments/:name/coverage', async (c) => {
  * POST /api/skill-brain/transfer-plan
  * Creates a skill transfer plan for a departing employee
  */
-skillBrainRouter.post('/transfer-plan', async (c) => {
+skillBrainRouter.post('/transfer-plan', async (c: AppContext) => {
   try {
     const body = await c.req.json();
     const schema = z.object({
@@ -157,7 +160,7 @@ skillBrainRouter.post('/transfer-plan', async (c) => {
     return c.json({ success: true, plan });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return c.json({ success: false, error: error.errors }, 400);
+      return c.json({ success: false, error: error.issues }, 400);
     }
     return c.json({ success: false, error: 'Failed to create transfer plan' }, 500);
   }
@@ -167,7 +170,7 @@ skillBrainRouter.post('/transfer-plan', async (c) => {
  * GET /api/skill-brain/health
  * Returns Skill Brain system health
  */
-skillBrainRouter.get('/health', async (c) => {
+skillBrainRouter.get('/health', async (c: AppContext) => {
   try {
     const health = skillBrainService.getHealth();
     return c.json({ success: true, ...health });
@@ -180,7 +183,7 @@ skillBrainRouter.get('/health', async (c) => {
  * GET /api/skill-brain/export
  * Exports all Skill Brain data
  */
-skillBrainRouter.get('/export', async (c) => {
+skillBrainRouter.get('/export', async (c: AppContext) => {
   try {
     const data = await skillBrainService.export();
     return c.json({ success: true, data });

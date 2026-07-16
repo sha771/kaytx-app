@@ -276,7 +276,7 @@ export default function PlatformHealthDeliverySystems({ systems }: PlatformHealt
           </View>
           <View style={styles.aiHealthItem}>
             <View style={[styles.aiHealthDot, { backgroundColor: '#F59E0B' }]} />
-            <Text style={[styles.aiHealthLabel, { color: '#FFFFFF' }]}]}>Tasks Processed</Text>
+            <Text style={[styles.aiHealthLabel, { color: '#FFFFFF' }]}>Tasks Processed</Text>
             <Text style={[styles.aiHealthValue, { color: '#F59E0B' }]}>8.4K/hr</Text>
           </View>
         </View>

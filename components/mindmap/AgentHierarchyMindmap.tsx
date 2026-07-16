@@ -121,7 +121,6 @@ import {
   Gauge,
   Sparkles,
   DollarSign,
-  Crown,
   ArrowRight,
 } from 'lucide-react-native';
 

@@ -48,7 +48,7 @@ export default function TimeBillingIntelligence({ data }: TimeBillingIntelligenc
         <View style={[styles.metricCard, { backgroundColor: 'rgba(11, 15, 20, 0.6)', borderColor: 'rgba(245, 158, 11, 0.2)', borderWidth: 1 }]}>
           <Text style={[styles.metricLabel, { color: 'rgba(255, 255, 255, 0.6)' }]}>Non-Billable Time</Text>
           <Text style={[styles.metricValue, { color: '#F59E0B' }]}>{data.nonBillableTime}</Text>
-          <Text style={[styles.metricSubtitle, { color: 'rgba(255, 255, 255, 0.4)' }]}>Target: <15%</Text>
+          <Text style={[styles.metricSubtitle, { color: 'rgba(255, 255, 255, 0.4)' }]}>{'Target: <15%'}</Text>
         </View>
 
         <View style={[styles.metricCard, { backgroundColor: 'rgba(11, 15, 20, 0.6)', borderColor: 'rgba(239, 68, 68, 0.2)', borderWidth: 1 }]}>

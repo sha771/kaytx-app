@@ -1365,8 +1365,8 @@ const ACTIVITY_FEED = [
 
 // System Health Data
 const SYSTEM_HEALTH = [
-  { name: 'POS Systems', status: 'healthy', active: 1,247, offline: 0, health: 99.9, icon: Receipt },
-  { name: 'Kitchen Display Systems', status: 'healthy', active: 1,247, offline: 0, health: 99.5, icon: Monitor },
+  { name: 'POS Systems', status: 'healthy', active: 1247, offline: 0, health: 99.9, icon: Receipt },
+  { name: 'Kitchen Display Systems', status: 'healthy', active: 1247, offline: 0, health: 99.5, icon: Monitor },
   { name: 'Payment Gateways', status: 'healthy', active: 23, offline: 0, health: 99.8, icon: CreditCard },
   { name: 'Reservation Platform', status: 'healthy', active: 45, offline: 0, health: 98.9, icon: Calendar },
   { name: 'Delivery APIs', status: 'healthy', active: 12, offline: 0, health: 97.8, icon: Truck },
@@ -1412,7 +1412,7 @@ const INVENTORY_DATA = {
 
 // Delivery Command Center Data
 const DELIVERY_DATA = {
-  deliveryOrders: { total: 12,456, active: 234, completed: 12,222 },
+  deliveryOrders: { total: 12456, active: 234, completed: 12222 },
   driverLocations: { available: 89, onDelivery: 145, offline: 12 },
   avgDeliveryTime: { current: '18min', target: '15min', trend: 'down' },
   etaAccuracy: { current: '94%', benchmark: '90%', trend: 'up' },
@@ -1440,7 +1440,7 @@ const STAFF_DATA = {
 // Global Restaurant Operations Data
 const GLOBAL_OPERATIONS = {
   revenueByRegion: { northAmerica: '$34.5M', europe: '$23.4M', asia: '$18.9M', other: '$6.7M' },
-  restaurantLocations: { total: 1,247, new: 23, planned: 45 },
+  restaurantLocations: { total: 1247, new: 23, planned: 45 },
   deliveryZones: { total: 89, covered: 78, expanding: 11 },
   supplierNetwork: { total: 234, active: 189, new: 45 },
   customerDistribution: { urban: 67, suburban: 23, rural: 10 },

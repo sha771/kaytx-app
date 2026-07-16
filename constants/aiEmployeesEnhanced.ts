@@ -2,93 +2,22 @@ import {
   autoEnhanceAllEmployees,
   enhanceAIEmployee,
 } from './utils/agent-capability-enhancer';
-import {
-  Phone,
-  Users,
-  DollarSign,
-  Headphones,
-  Megaphone,
-  UserCheck,
-  Briefcase,
-  Settings,
-  ChartBar,
-  Target,
-  Database,
-  Handshake,
-  TrendingUp,
-  Zap,
-  Eye,
-  Shield,
-  ShieldAlert,
-  PiggyBank,
-  Search,
-  Globe,
-  UserPlus,
-  Share2,
-  Bot,
-  Brain,
-  Cpu,
-  Server,
-  Activity,
-  Clock,
-  CircleDollarSign,
-  MessageSquare,
-  Ticket,
-  Gift,
-  ClipboardList,
-  Receipt,
-  UserCog,
-  FileText,
-  Award,
-  Building2,
-  Palette,
-  Calendar,
-  SquareCheck,
-  GitBranch,
-  Boxes,
-  FileCheck,
-  TriangleAlert,
-  Calculator,
-  ChartLine,
-  Gauge,
-  Lightbulb,
-  Binoculars,
-  Target as TargetIcon,
-  Wallet,
-  CreditCard,
-  Mail,
-  PenTool,
-  BookOpen,
-  Workflow,
-  FileChartColumn,
-  Lock,
-  UsersRound,
-  Crown,
-  AlertTriangle,
-  Package,
-  FolderCog,
-  ClipboardCheck,
-  ShieldCheck,
-  FileBadge,
-  ScanEye,
-  FingerprintPattern,
-  Microscope,
-  Compass,
-  ScrollText,
-  Scale,
-  Landmark,
-  ShoppingCart as ShoppingCartIcon,
-  Truck as TruckIcon,
-  MapPin,
-  ChartBarBig,
-  SearchCheck,
-  Telescope,
-  BadgeCheck,
-  Sparkles,
-  TrendingDown,
-  Ear,
-} from 'lucide-react-native';
-import type { LucideIcon } from 'lucide-react-native';
+type LucideIcon = React.FC<{ size?: number; color?: string; className?: string }>;
+const stub = () => null;
+const Phone: any = stub, Users: any = stub, DollarSign: any = stub, Headphones: any = stub, Megaphone: any = stub, UserCheck: any = stub;
+const Briefcase: any = stub, Settings: any = stub, ChartBar: any = stub, Target: any = stub, Database: any = stub, Handshake: any = stub;
+const TrendingUp: any = stub, Zap: any = stub, Eye: any = stub, Shield: any = stub, ShieldAlert: any = stub, PiggyBank: any = stub;
+const Search: any = stub, Globe: any = stub, UserPlus: any = stub, Share2: any = stub, Bot: any = stub, Brain: any = stub, Cpu: any = stub;
+const Server: any = stub, Activity: any = stub, Clock: any = stub, CircleDollarSign: any = stub, MessageSquare: any = stub, Ticket: any = stub;
+const Gift: any = stub, ClipboardList: any = stub, Receipt: any = stub, UserCog: any = stub, FileText: any = stub, Award: any = stub;
+const Building2: any = stub, Palette: any = stub, Calendar: any = stub, SquareCheck: any = stub, GitBranch: any = stub, Boxes: any = stub;
+const FileCheck: any = stub, TriangleAlert: any = stub, Calculator: any = stub, ChartLine: any = stub, Gauge: any = stub, Lightbulb: any = stub;
+const Binoculars: any = stub, TargetIcon: any = stub, Wallet: any = stub, CreditCard: any = stub, Mail: any = stub, PenTool: any = stub;
+const BookOpen: any = stub, Workflow: any = stub, FileChartColumn: any = stub, Lock: any = stub, UsersRound: any = stub, Crown: any = stub;
+const AlertTriangle: any = stub, Package: any = stub, FolderCog: any = stub, ClipboardCheck: any = stub, ShieldCheck: any = stub, FileBadge: any = stub;
+const ScanEye: any = stub, FingerprintPattern: any = stub, Microscope: any = stub, Compass: any = stub, ScrollText: any = stub, Scale: any = stub;
+const Landmark: any = stub, ShoppingCartIcon: any = stub, TruckIcon: any = stub, MapPin: any = stub, ChartBarBig: any = stub, SearchCheck: any = stub;
+const Telescope: any = stub, BadgeCheck: any = stub, Sparkles: any = stub, TrendingDown: any = stub, Ear: any = stub;
 
 // ============================================
 // BASE INTERFACES

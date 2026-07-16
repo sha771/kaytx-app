@@ -3,6 +3,8 @@
  * Provides common bridge functionality
  */
 
+import { EventEmitter } from 'events';
+
 export interface BridgeConfig {
   id: string;
   name: string;
@@ -27,25 +29,25 @@ export interface BridgeEvent {
   timestamp: number;
 }
 
-export interface BridgeConnectionState {
-  status: 'disconnected' | 'connecting' | 'connected' | 'error';
-  connectedAt?: number;
-  startedAt?: number;
-  details?: Record<string, any>;
-  error?: string;
-}
+export type BridgeConnectionState =
+  | { status: 'disconnected' }
+  | { status: 'connecting'; startedAt: number }
+  | { status: 'connected'; connectedAt: number; details?: Record<string, unknown> }
+  | { status: 'error'; error: string };
 
-export abstract class BaseBridge {
+export abstract class BaseBridge extends EventEmitter {
   protected config: BridgeConfig;
   protected state: BridgeConnectionState = { status: 'disconnected' };
   private eventListeners: Map<string, Array<(event: BridgeEvent) => void>> = new Map();
 
   constructor(config: BridgeConfig) {
+    super();
     this.config = config;
   }
 
   protected setState(state: Partial<BridgeConnectionState>): void {
     this.state = { ...this.state, ...state };
+    this.emit('stateChange', this.state);
   }
 
   protected emitEvent(event: BridgeEvent): void {
@@ -57,6 +59,7 @@ export abstract class BaseBridge {
     for (const listener of allListeners) {
       try { listener(event); } catch (e) { /* ignore listener errors */ }
     }
+    this.emit(event.type, event);
   }
 
   on(event: string, listener: (event: BridgeEvent) => void): void {
@@ -77,7 +80,7 @@ export abstract class BaseBridge {
     return this.config.protocol || 'unknown';
   }
 
-  abstract connect(): Promise<any>;
+  abstract connect(): Promise<BridgeConnectionState>;
   abstract disconnect(): Promise<void>;
   abstract sendMessage(message: BridgeMessage): Promise<void>;
 
@@ -91,5 +94,6 @@ export abstract class BaseBridge {
 
   removeAllListeners(): void {
     this.eventListeners.clear();
+    super.removeAllListeners();
   }
 }

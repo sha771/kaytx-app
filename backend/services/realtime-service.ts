@@ -1,4 +1,4 @@
-import { WebSocketServer } from 'ws';
+import { Server as WebSocketServer } from 'ws';
 import { verifyToken } from '../lib/auth';
 import { db as pgDb } from '../db/connection';
 import { realtimeClientState, realtimeEvents, realtimePresence } from '../db/drizzle-schema';

@@ -12,23 +12,22 @@
 
 import type { AIAgent } from './aiAgentHierarchy';
 import { enhanceAIAgent } from './utils/agent-capability-enhancer';
-import {
-  Users, Target, Megaphone, Settings, Zap, Shield, ChartBarBig,
-  Briefcase, TrendingUp, Globe, Building2, Truck, ShoppingCart, Scale,
-  Heart, Activity, Microscope, Factory, Landmark, FileText, Database,
-  Search, Workflow, Cpu, Lock, BadgeCheck, Sparkles, Award,
-  Phone, Mail, Calendar, CheckCircle, AlertTriangle, Bell, MessageSquare,
-  ClipboardList, Receipt, Calculator, Wallet, CreditCard, PiggyBank,
-  RefreshCw, Play, Pause, Square, Layers, Network, Share2, Link,
-  Cloud, Server, FileCode, FileImage, Folder, Archive, Package, Box,
-  MapPin, Compass, Car, Wrench, Paintbrush, Palette, Camera, Mic,
-  Eye, Scan, ShieldCheck, ShieldAlert, Unlock, Key, Badge,
-  User, UserCheck, UserPlus, UsersRound, Home, Store, Shop, Bag,
-  DollarSign, ArrowUpRight, ArrowDownRight, BarChart, LineChart, PieChart,
-  Gamepad2, GraduationCap, Plane, Lightbulb, Tv, Coffee, Sprout,
-  Gem, Utensils, Banknote, Video, Music, Radio, Newspaper,
-  CreditCard, Globe2, Hammer, Train, Ship, WrenchIcon, Crown, Calendar as CalendarIcon,
-} from 'lucide-react-native';
+const stub = () => null;
+const Users: any = stub, Target: any = stub, Megaphone: any = stub, Settings: any = stub, Zap: any = stub, Shield: any = stub, ChartBarBig: any = stub;
+const Briefcase: any = stub, TrendingUp: any = stub, Globe: any = stub, Building2: any = stub, Truck: any = stub, ShoppingCart: any = stub, Scale: any = stub;
+const Heart: any = stub, Activity: any = stub, Microscope: any = stub, Factory: any = stub, Landmark: any = stub, FileText: any = stub, Database: any = stub;
+const Search: any = stub, Workflow: any = stub, Cpu: any = stub, Lock: any = stub, BadgeCheck: any = stub, Sparkles: any = stub, Award: any = stub;
+const Phone: any = stub, Mail: any = stub, Calendar: any = stub, CheckCircle: any = stub, AlertTriangle: any = stub, Bell: any = stub, MessageSquare: any = stub;
+const ClipboardList: any = stub, Receipt: any = stub, Calculator: any = stub, Wallet: any = stub, PiggyBank: any = stub;
+const RefreshCw: any = stub, Play: any = stub, Pause: any = stub, Square: any = stub, Layers: any = stub, Network: any = stub, Share2: any = stub, Link: any = stub;
+const Cloud: any = stub, Server: any = stub, FileCode: any = stub, FileImage: any = stub, Folder: any = stub, Archive: any = stub, Package: any = stub, Box: any = stub;
+const MapPin: any = stub, Compass: any = stub, Car: any = stub, Wrench: any = stub, Paintbrush: any = stub, Palette: any = stub, Camera: any = stub, Mic: any = stub;
+const Eye: any = stub, Scan: any = stub, ShieldCheck: any = stub, ShieldAlert: any = stub, Unlock: any = stub, Key: any = stub, Badge: any = stub;
+const User: any = stub, UserCheck: any = stub, UserPlus: any = stub, UsersRound: any = stub, Home: any = stub, Store: any = stub, ShoppingBag: any = stub;
+const DollarSign: any = stub, ArrowUpRight: any = stub, ArrowDownRight: any = stub, BarChart: any = stub, LineChart: any = stub, PieChart: any = stub;
+const Gamepad2: any = stub, GraduationCap: any = stub, Plane: any = stub, Lightbulb: any = stub, Tv: any = stub, Coffee: any = stub, Sprout: any = stub;
+const Gem: any = stub, Utensils: any = stub, Banknote: any = stub, Video: any = stub, Music: any = stub, Radio: any = stub, Newspaper: any = stub;
+const Globe2: any = stub, Hammer: any = stub, Train: any = stub, Ship: any = stub, WrenchIcon: any = stub, Crown: any = stub, CalendarIcon: any = stub;
 
 // ============================================
 // DEPARTMENT CONFIGURATIONS
@@ -1217,7 +1216,7 @@ const DEPARTMENT_CONFIGS: Record<string, DepartmentConfig> = {
     id: 'retail-stores',
     name: 'Retail & Stores',
     color: '#06B6D4',
-    icon: Shop,
+    icon: Store,
     mainAgentCount: 20,
     subAgentCount: 40,
     mainAgentRoles: [
@@ -1355,7 +1354,7 @@ const DEPARTMENT_CONFIGS: Record<string, DepartmentConfig> = {
     id: 'fashion-luxury',
     name: 'Fashion & Luxury',
     color: '#C026D3',
-    icon: Bag,
+    icon: ShoppingBag,
     mainAgentCount: 20,
     subAgentCount: 40,
     mainAgentRoles: [
@@ -1494,7 +1493,7 @@ Object.assign(DEPARTMENT_CONFIGS, {
     'retail-stores',
     'Retail & Stores',
     '#06B6D4',
-    Shop,
+    Store,
     ['Chief Retail Officer', 'VP Store Operations', 'VP Merchandising', 'VP E-commerce', 'VP Supply Chain', 'Store Performance Director', 'Inventory Planning Director', 'Customer Loyalty Director'],
     ['Store Traffic Analyst', 'Planogram Auditor', 'Inventory Replenishment Agent', 'POS Exception Monitor', 'Shrinkage Risk Detector', 'Promotion Performance Analyst', 'Local Assortment Planner', 'Store Labor Scheduler', 'Omnichannel Pickup Coordinator', 'Returns Desk Assistant', 'Loyalty Segment Planner', 'Mystery Shop Summarizer', 'Price Compliance Auditor', 'Shelf Availability Monitor', 'Seasonal Allocation Agent', 'Supplier Fill-rate Tracker', 'Cash Office Reconciler', 'Store Opening Checklist Agent', 'Store Manager', 'Assistant Store Manager', 'Department Supervisor', 'Sales Associate', 'Cashier', 'Stock Associate', 'Customer Service Representative', 'Visual Merchandiser', 'Inventory Coordinator', 'Receiving Clerk', 'Security Officer', 'Loss Prevention Specialist', 'Operations Manager', 'District Manager', 'Regional Manager', 'Buyer', 'Planner', 'Allocator', 'Merchant', 'Marketing Coordinator', 'Social Media Specialist', 'Email Marketing Specialist', 'Event Coordinator', 'Personal Stylist', 'Fit Specialist', 'Beauty Advisor', 'Technical Specialist', 'Loss Prevention Director', 'Human Resources Director', 'Marketing Director', 'Finance Director', 'Technology Director', 'Real Estate Director', 'Operations Director', 'Supply Chain Director', 'E-commerce Director', 'Digital Marketing Manager', 'Customer Experience Manager', 'Brand Manager', 'Category Manager', 'Product Developer', 'Sourcing Specialist', 'Quality Control Inspector', 'Distribution Center Manager', 'Fulfillment Specialist', 'Last Mile Delivery Coordinator', 'Store Design Manager', 'Facilities Manager', 'Maintenance Technician', 'Environmental Services Manager'],
     ['Store Operations', 'Merchandising', 'Inventory Replenishment', 'Loss Prevention', 'Omnichannel Retail', 'Promotion Analytics'],
@@ -1560,7 +1559,7 @@ Object.assign(DEPARTMENT_CONFIGS, {
     'fashion-luxury',
     'Fashion & Luxury',
     '#C026D3',
-    Bag,
+    ShoppingBag,
     ['Chief Brand & Luxury Officer', 'VP Fashion Merchandising', 'VP Luxury Clienteling', 'VP Design', 'VP Retail', 'VP E-commerce', 'Design Operations Director', 'Collection Planning Director', 'Luxury Experience Director', 'Merchandising Director', 'Retail Director', 'E-commerce Director'],
     ['Trend Forecaster', 'Collection Assortment Planner', 'Runway Calendar Coordinator', 'VIP Clienteling Specialist', 'Personal Styling Advisor', 'Boutique Inventory Analyst', 'Luxury Pricing Analyst', 'Brand Partnership Coordinator', 'Visual Merchandising Auditor', 'Sustainable Materials Researcher', 'Product Drop Planner', 'Returns Quality Reviewer', 'Influencer Seeding Coordinator', 'Lookbook Content Planner', 'Wholesale Account Analyst', 'Counterfeit Risk Monitor', 'Size Curve Analyst', 'Seasonal Demand Forecaster', 'Fashion Designer', 'Textile Designer', 'Accessory Designer', 'Pattern Maker', 'Sample Maker', 'Fit Technician', 'Quality Control Inspector', 'Production Coordinator', 'Sourcing Specialist', 'Material Buyer', 'Trim Buyer', 'Production Manager', 'Factory Liaison', 'Boutique Manager', 'Assistant Store Manager', 'Sales Associate', 'Visual Merchandiser', 'Stock Room Supervisor', 'Client Advisor', 'Personal Shopper', 'Stylist', 'Makeup Artist', 'Photographer', 'Model Booker', 'Showroom Manager', 'PR Specialist', 'Social Media Manager', 'Content Creator', 'Copywriter', 'Graphic Designer', 'Email Marketing Specialist', 'CRM Manager', 'Customer Service Representative', 'Inventory Planner', 'Allocator', 'Distribution Coordinator', 'Marketing Director', 'Supply Chain Director', 'Finance Director', 'Human Resources Director', 'Creative Director', 'Art Director', 'Design Director', 'Merchandising Analyst', 'Retail Analyst', 'E-commerce Analyst', 'Digital Marketing Manager', 'Brand Manager', 'Social Media Director', 'Influencer Marketing Manager', 'Public Relations Director', 'Events Director', 'Fashion Show Producer', 'Digital Content Creator', 'Video Producer', 'Art Director', 'Copy Chief', 'Brand Strategist'],
     ['Collection Planning', 'Luxury Clienteling', 'Merchandising Analytics', 'Trend Forecasting', 'Brand Management', 'Inventory Optimization'],

@@ -154,7 +154,7 @@ export default function PostScheduler() {
           <View style={[styles.editorCard, { backgroundColor: theme.colors.cardBackground }]}>
             <TextInput
               style={[styles.textInput, { color: theme.colors.text }]}
-              placeholder="What's on your mind?"
+              placeholder="What\'s on your mind?"
               placeholderTextColor={theme.colors.secondaryText}
               multiline
               value={postContent}

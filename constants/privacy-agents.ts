@@ -1,5 +1,5 @@
-import { Shield, Eye, Lock, FingerprintPattern, ListFilter, Ban, Trash2, ClipboardCheck, FileText } from 'lucide-react-native';
 import type { AIEmployee } from './aiEmployeesEnhanced';
+const Shield = () => null, Eye = () => null, Lock = () => null, FingerprintPattern = () => null, ListFilter = () => null, Ban = () => null, Trash2 = () => null, ClipboardCheck = () => null, FileText = () => null;
 
 function createPrivacyAgent(
   id: string, name: string, title: string, desc: string,

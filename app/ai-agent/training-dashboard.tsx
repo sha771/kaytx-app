@@ -55,7 +55,7 @@ interface TrainingJob {
     precision: number;
     recall: number;
     f1Score: number;
-
+  };
 }
 
 interface TrainingDataset {
@@ -70,7 +70,6 @@ interface TrainingDataset {
   quality: 'excellent' | 'good' | 'fair' | 'poor';
 }
 
-};
 // Mock Data
 const MOCK_TRAINING_JOBS: TrainingJob[] = [
   {

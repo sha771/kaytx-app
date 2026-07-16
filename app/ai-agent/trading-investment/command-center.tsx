@@ -1803,7 +1803,7 @@ const styles = StyleSheet.create({
   tradeInfo: {
     flex: 1,
   },
-  trade Symbol: {
+  tradeSymbol: {
     fontSize: 14,
     fontWeight: '700',
     marginBottom: 2,

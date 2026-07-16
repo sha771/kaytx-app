@@ -1,0 +1,31 @@
+# ============================================================================
+# Kaytx Monorepo Workspace Configuration
+# ============================================================================
+# This file declares the workspace packages for potential future migration
+# to a formal monorepo structure (pnpm workspaces + Turborepo).
+#
+# Current state: Frontend and backend live in a single package.json.
+# This config is provided as a transition target.
+#
+# To activate:
+#   1. Install pnpm: npm install -g pnpm
+#   2. Move backend deps to backend/package.json
+#   3. Move frontend deps to root package.json
+#   4. Run: pnpm install
+# ============================================================================
+
+packages:
+  # Frontend application (Expo React Native)
+  - '.'
+
+  # Backend server (Hono + Express + tRPC)
+  - 'backend'
+
+  # Shared types and utilities
+  - 'packages/shared'
+
+  # Audit system (standalone)
+  - 'backend/audit-system'
+
+  # MCP client (standalone)
+  - 'backend/mcp'

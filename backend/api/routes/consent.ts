@@ -4,14 +4,17 @@ import { requireAuth } from '../../middleware/rbac-middleware';
 import { validateInput, validateBody, validateParams, validateQuery , validationSchemas } from '../../middleware/comprehensive-validation';
 import { logAudit } from '../../lib/audit';
 import { DatabaseUtils } from '../../utils/database-utils';
+import type { RouteContext } from './route-types';
 
-const consent = new Hono();
+const consent = new Hono<{ Variables: RouteContext['env']['Variables'] }>();
+
+type AppContext = RouteContext;
 
 // Apply authentication to all consent routes
 consent.use('*', requireAuth());
 
 // Consent management endpoints
-consent.get('/preferences', async (c) => {
+consent.get('/preferences', async (c: AppContext) => {
   try {
     const auth = c.get('auth') as any;
     const db = DatabaseUtils.getDatabase() as any;
@@ -49,7 +52,7 @@ consent.get('/preferences', async (c) => {
   }
 });
 
-consent.put('/preferences', validateBody(validationSchemas.consentPreferences), async (c) => {
+consent.put('/preferences', validateBody(validationSchemas.consentPreferences), async (c: AppContext) => {
   try {
     const body = c.get('validatedBody') as any;
     const auth = c.get('auth') as any;
@@ -98,7 +101,7 @@ consent.put('/preferences', validateBody(validationSchemas.consentPreferences), 
 });
 
 // Consent history
-consent.get('/history', validateQuery(validationSchemas.consentHistoryQuery), async (c) => {
+consent.get('/history', validateQuery(validationSchemas.consentHistoryQuery), async (c: AppContext) => {
   try {
     const query = c.get('validatedQuery') as any;
     const auth = c.get('auth') as any;
@@ -126,7 +129,7 @@ consent.get('/history', validateQuery(validationSchemas.consentHistoryQuery), as
 });
 
 // Data subject rights
-consent.post('/data-request', validateBody(validationSchemas.dataSubjectRequest), async (c) => {
+consent.post('/data-request', validateBody(validationSchemas.dataSubjectRequest), async (c: AppContext) => {
   try {
     const body = c.get('validatedBody') as any;
     const auth = c.get('auth') as any;
@@ -177,7 +180,7 @@ consent.post('/data-request', validateBody(validationSchemas.dataSubjectRequest)
   }
 });
 
-consent.get('/data-requests', validateQuery(validationSchemas.dataSubjectRequestQuery), async (c) => {
+consent.get('/data-requests', validateQuery(validationSchemas.dataSubjectRequestQuery), async (c: AppContext) => {
   try {
     const query = c.get('validatedQuery') as any;
     const auth = c.get('auth') as any;
@@ -205,7 +208,7 @@ consent.get('/data-requests', validateQuery(validationSchemas.dataSubjectRequest
 });
 
 // Cookie consent
-consent.get('/cookies', async (c) => {
+consent.get('/cookies', async (c: AppContext) => {
   try {
     const auth = (c as any).get('auth') as any;
     const db = DatabaseUtils.getDatabase() as any;
@@ -231,7 +234,7 @@ consent.get('/cookies', async (c) => {
   }
 });
 
-consent.put('/cookies', validateBody(validationSchemas.cookieConsent), async (c) => {
+consent.put('/cookies', validateBody(validationSchemas.cookieConsent), async (c: AppContext) => {
   try {
     const body = (c as any).get('validatedBody') as any;
     const auth = (c as any).get('auth') as any;
@@ -276,7 +279,7 @@ consent.put('/cookies', validateBody(validationSchemas.cookieConsent), async (c)
 });
 
 // Withdraw consent
-consent.post('/withdraw', validateBody(validationSchemas.consentWithdrawal), async (c) => {
+consent.post('/withdraw', validateBody(validationSchemas.consentWithdrawal), async (c: AppContext) => {
   try {
     const body = (c as any).get('validatedBody') as any;
     const auth = (c as any).get('auth') as any;
@@ -330,7 +333,7 @@ consent.post('/withdraw', validateBody(validationSchemas.consentWithdrawal), asy
 });
 
 // Export user data (GDPR right to data portability)
-consent.get('/export', async (c) => {
+consent.get('/export', async (c: AppContext) => {
   try {
     const auth = (c as any).get('auth') as any;
     const db = DatabaseUtils.getDatabase() as any;
@@ -395,7 +398,7 @@ consent.get('/export', async (c) => {
 });
 
 // Delete user data (GDPR right to be forgotten)
-consent.delete('/delete', validateBody(validationSchemas.dataDeletion), async (c) => {
+consent.delete('/delete', validateBody(validationSchemas.dataDeletion), async (c: AppContext) => {
   try {
     const body = (c as any).get('validatedBody') as any;
     const auth = (c as any).get('auth') as any;

@@ -8,7 +8,7 @@ export default function DevelopmentAnalystPage() {
     name: 'AI Development Analyst',
     title: 'AI Development Analyst',
     description: 'AI Development Analyst provides specialized expertise and executes critical tasks for the Real Estate Development department. This AI agent automates complex workflows, provides intelligent insights, and collaborates with other agents to achieve organizational goals with maximum efficiency.',
-    capabilities: ["Development Analysis","Feasibility Studies","Market Analysis","Financial Analysis","Risk Assessment,"Development Planning"],
+    capabilities: ["Development Analysis","Feasibility Studies","Market Analysis","Financial Analysis","Risk Assessment","Development Planning"],
     icon: Bot,
     color: '#1E40AF',
     type: 'employee' as const,

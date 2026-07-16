@@ -26,12 +26,38 @@ export {
 // Export database
 export { AuditDatabase, getDatabase, closeDatabase } from './db/connection';
 
-// Future exports (to be implemented in subsequent tasks)
-// export { CodeScanner } from './scanner';
-// export { StaticAnalyzer } from './analyzer';
-// export { IssueDetector } from './detector';
-// export { SafeExecutor, BackupManager, RollbackManager } from './executor';
-// export { ReportGenerator } from './reporter';
+// Scanner
+export { CodeScanner, DEFAULT_SCAN_OPTIONS } from './scanner';
+
+// Analyzer
+export { StaticAnalyzer } from './analyzer';
+
+// Detector
+export { IssueDetector } from './detector';
+
+// Executor
+export { SafeExecutor, BackupManager } from './executor';
+
+// Reporter
+export { ReportGenerator } from './reporter';
+
+// Utils
+export {
+  readFileSafe,
+  writeFileSafe,
+  hashContent,
+  hashFile,
+  formatBytes,
+  formatDuration,
+  formatDate,
+  simpleDiff,
+  jaccardSimilarity,
+  truncate,
+  groupBy,
+  uniqueBy,
+  RateLimiter,
+  ProgressTracker,
+} from './utils';
 
 interface AuditConfig {
   projectRoot: string;

@@ -325,7 +325,7 @@ const NodeDetailModal: React.FC<NodeDetailModalProps> = ({ node, loop, onClose, 
       <View style={[styles.modalHeader, { borderBottomColor: theme.colors.border }]}>
         <Pressable onPress={onClose}>
           <ArrowRight size={24} color={theme.colors.text} />
-        </Press>
+        </Pressable>
         <Text style={[styles.modalTitle, { color: theme.colors.text }]}>
           {node.name}
         </Text>

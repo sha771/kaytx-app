@@ -135,21 +135,21 @@ export const EnvironmentVariablesSchema = z.object({
   AUDIT_REPORT_PATH: z.string().default('./reports'),
   
   // Performance
-  AUDIT_MAX_WORKERS: z.string().regex(/^\d+$/).transform(Number).pipe(z.number().int().positive().max(16)).default('4'),
-  AUDIT_MAX_FILE_SIZE: z.string().regex(/^\d+$/).transform(Number).pipe(z.number().positive()).default('1048576'), // 1MB
+  AUDIT_MAX_WORKERS: z.coerce.number().int().positive().max(16).default(4),
+  AUDIT_MAX_FILE_SIZE: z.coerce.number().positive().default(1048576),
   
   // Thresholds
-  AUDIT_DUPLICATE_THRESHOLD: z.string().regex(/^0?\.\d+$|^1\.0$/).transform(Number).pipe(z.number().min(0).max(1)).default('0.7'),
-  AUDIT_COVERAGE_THRESHOLD: z.string().regex(/^0?\.\d+$|^1\.0$/).transform(Number).pipe(z.number().min(0).max(1)).default('0.8'),
-  AUDIT_COMPLEXITY_THRESHOLD: z.string().regex(/^\d+$/).transform(Number).pipe(z.number().positive()).default('20'),
+  AUDIT_DUPLICATE_THRESHOLD: z.coerce.number().min(0).max(1).default(0.7),
+  AUDIT_COVERAGE_THRESHOLD: z.coerce.number().min(0).max(1).default(0.8),
+  AUDIT_COMPLEXITY_THRESHOLD: z.coerce.number().positive().default(20),
   
   // Execution
-  AUDIT_AUTO_EXECUTE: z.string().regex(/^(true|false)$/).transform(val => val === 'true').default('false'),
-  AUDIT_DRY_RUN: z.string().regex(/^(true|false)$/).transform(val => val === 'true').default('false'),
-  AUDIT_ROLLBACK_ON_FAILURE: z.string().regex(/^(true|false)$/).transform(val => val === 'true').default('true'),
+  AUDIT_AUTO_EXECUTE: z.coerce.boolean().default(false),
+  AUDIT_DRY_RUN: z.coerce.boolean().default(false),
+  AUDIT_ROLLBACK_ON_FAILURE: z.coerce.boolean().default(true),
   
   // Retention
-  AUDIT_BACKUP_RETENTION_DAYS: z.string().regex(/^\d+$/).transform(Number).pipe(z.number().int().positive()).default('30'),
+  AUDIT_BACKUP_RETENTION_DAYS: z.coerce.number().int().positive().default(30),
 });
 
 export type EnvironmentVariables = z.infer<typeof EnvironmentVariablesSchema>;
@@ -170,7 +170,7 @@ export function validateConfig(config: unknown): AuditConfig {
  * Validates audit configuration with safe parsing
  * Returns success/error result
  */
-export function validateConfigSafe(config: unknown): z.SafeParseReturnType<unknown, AuditConfig> {
+export function validateConfigSafe(config: unknown): import('zod').ZodSafeParseResult<AuditConfig> {
   return AuditConfigSchema.safeParse(config);
 }
 
@@ -188,7 +188,7 @@ export function validateEnvironmentVariables(env: Record<string, string | undefi
  */
 export function validateEnvironmentVariablesSafe(
   env: Record<string, string | undefined>
-): z.SafeParseReturnType<unknown, EnvironmentVariables> {
+): import('zod').ZodSafeParseResult<EnvironmentVariables> {
   return EnvironmentVariablesSchema.safeParse(env);
 }
 
@@ -201,7 +201,7 @@ export function getValidatedEnvironmentVariables(): EnvironmentVariables {
   
   if (!result.success) {
     console.error('Environment variable validation failed:');
-    result.error.errors.forEach(err => {
+    result.error.issues.forEach(err => {
       console.error(`  - ${err.path.join('.')}: ${err.message}`);
     });
     throw new Error('Invalid environment variables. See errors above.');

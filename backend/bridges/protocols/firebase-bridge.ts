@@ -1,5 +1,5 @@
-import { BaseBridge, BridgeConfig, BridgeMessage } from '../core/base-bridge';
-import { BridgeConnectionState } from '../types';
+import { BaseBridge, BridgeConfig, BridgeMessage } from '../../../core/base-bridge';
+import { BridgeConnectionState } from '../../../core/base-bridge';
 
 interface FirebaseBridgeConfig extends BridgeConfig {
   projectId: string;
@@ -55,7 +55,7 @@ export class FirebaseBridge extends BaseBridge {
     }
   }
 
-  async disconnect(): Promise<BridgeConnectionState> {
+  async disconnect(): Promise<void> {
     console.log(`[FirebaseBridge:${this.getId()}] Disconnecting`);
 
     this.clearDataListeners();
@@ -64,14 +64,12 @@ export class FirebaseBridge extends BaseBridge {
     const state: BridgeConnectionState = { status: 'disconnected' };
     this.setState(state);
     this.emitEvent({ type: 'disconnected', data: state, timestamp: Date.now() });
-
-    return state;
   }
 
-  async sendMessage(message: BridgeMessage): Promise<boolean> {
+  async sendMessage(message: BridgeMessage): Promise<void> {
     if (this.getState().status !== 'connected') {
       console.warn(`[FirebaseBridge:${this.getId()}] Not connected`);
-      return false;
+      return;
     }
 
     try {
@@ -84,12 +82,9 @@ export class FirebaseBridge extends BaseBridge {
       });
 
       this.notifyListeners(path, message);
-
-      return true;
     } catch (error) {
       console.error(`[FirebaseBridge:${this.getId()}] Send error:`, error);
       this.emitEvent({ type: 'error', data: error, timestamp: Date.now() });
-      return false;
     }
   }
 

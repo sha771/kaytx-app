@@ -4,6 +4,14 @@
  * Supports multiple log levels and destinations
  */
 
+const originalConsole = {
+  log: console.log.bind(console),
+  debug: console.debug.bind(console),
+  info: console.info.bind(console),
+  warn: console.warn.bind(console),
+  error: console.error.bind(console),
+};
+
 export enum LogLevel {
   DEBUG = 'debug',
   INFO = 'info',
@@ -37,16 +45,16 @@ export class ProductionLogger {
       
       switch (entry.level) {
         case LogLevel.DEBUG:
-          console.debug(`${prefix}${service} ${entry.message}${context}`);
+          originalConsole.debug(`${prefix}${service} ${entry.message}${context}`);
           break;
         case LogLevel.INFO:
-          console.info(`${prefix}${service} ${entry.message}${context}`);
+          originalConsole.info(`${prefix}${service} ${entry.message}${context}`);
           break;
         case LogLevel.WARN:
-          console.warn(`${prefix}${service} ${entry.message}${context}`);
+          originalConsole.warn(`${prefix}${service} ${entry.message}${context}`);
           break;
         case LogLevel.ERROR:
-          console.error(`${prefix}${service} ${entry.message}${context}`, entry.error || '');
+          originalConsole.error(`${prefix}${service} ${entry.message}${context}`, entry.error || '');
           break;
       }
     });

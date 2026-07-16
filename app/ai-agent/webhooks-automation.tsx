@@ -47,7 +47,7 @@ interface Webhook {
     maxRetries: number;
     backoffMultiplier: number;
     initialDelay: number;
-
+  };
   lastTriggered?: string;
   totalTriggers: number;
   failedTriggers: number;
@@ -72,7 +72,6 @@ interface AutomationRule {
   createdAt: string;
 }
 
-};
 // Mock Data
 const MOCK_WEBHOOKS: Webhook[] = [
   {

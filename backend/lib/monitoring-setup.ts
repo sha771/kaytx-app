@@ -3,8 +3,9 @@ import { alertManager } from './alerting';
 import { setupMonitoring } from './monitoring';
 import { AIServiceLogger } from './ai-service-logger';
 import { logger } from './production-logger';
+import type { RouteContext } from '../api/routes/route-types';
 
-export function setupComprehensiveMonitoring(app: Hono) {
+export function setupComprehensiveMonitoring(app: Hono<{ Variables: RouteContext['env']['Variables'] }>) {
   // Setup existing monitoring endpoints
   setupMonitoring(app);
 

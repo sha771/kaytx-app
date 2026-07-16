@@ -1,5 +1,5 @@
-import { BaseBridge, BridgeConfig, BridgeMessage } from '../core/base-bridge';
-import { BridgeConnectionState } from '../types';
+import { BaseBridge, BridgeConfig, BridgeMessage } from '../../../core/base-bridge';
+import { BridgeConnectionState } from '../../../core/base-bridge';
 
 const isNode = typeof process !== 'undefined' && process.versions?.node;
 const getPlatform = () => isNode ? 'node' : 'web';
@@ -147,7 +147,7 @@ export class WebSocketBridge extends BaseBridge {
     };
   }
 
-  async disconnect(): Promise<BridgeConnectionState> {
+  async disconnect(): Promise<void> {
     console.log(`[WebSocketBridge:${this.config.id}] Disconnecting`);
 
     this.stopPingPong();
@@ -160,26 +160,22 @@ export class WebSocketBridge extends BaseBridge {
     const state: BridgeConnectionState = { status: 'disconnected' };
     this.setState(state);
     this.emitEvent({ type: 'disconnected', data: state, timestamp: Date.now() });
-
-    return state;
   }
 
-  async sendMessage(message: BridgeMessage): Promise<boolean> {
+  async sendMessage(message: BridgeMessage): Promise<void> {
     if (!this.ws || this.state.status !== 'connected') {
       console.warn(`[WebSocketBridge:${this.config.id}] Not connected, queueing message`);
       this.messageQueue.push(message);
-      return false;
+      return;
     }
 
     try {
       const payload = JSON.stringify(message);
       await this.ws.send(payload);
       console.log(`[WebSocketBridge:${this.config.id}] Message sent:`, message.id);
-      return true;
     } catch (error) {
       console.error(`[WebSocketBridge:${this.config.id}] Send error:`, error);
       this.emitEvent({ type: 'error', data: error, timestamp: Date.now() });
-      return false;
     }
   }
 

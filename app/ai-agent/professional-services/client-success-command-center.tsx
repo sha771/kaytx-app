@@ -61,7 +61,7 @@ export default function ClientSuccessCommandCenter() {
     amber: '#F59E0B',
     red: '#EF4444',
     glass: 'rgba(255, 255, 255, 0.05)',
-    glassBorder: 'rgba(255, 255, 255, 0.1)'
+    glassBorder: 'rgba(255, 255, 255, 0.1)',
   };
 
   const clientMetrics = {
@@ -490,7 +490,7 @@ export default function ClientSuccessCommandCenter() {
                 <AlertTriangle size={20} color={colors.red} />
               </View>
               <View style={styles.insightContent}>
-                <Text style={[styles.insightTitle, { color: colors.text }]}]}>Churn Risk Alert</Text>
+                <Text style={[styles.insightTitle, { color: colors.text }]}>Churn Risk Alert</Text>
                 <Text style={[styles.insightDescription, { color: colors.textSecondary }]}>
                   Healthcare System shows 15% churn risk with 6 open issues. AI recommends immediate intervention.
                 </Text>
@@ -913,4 +913,4 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
   },
-);
+});

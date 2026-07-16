@@ -8,10 +8,8 @@
 
 import type { AIEmployee } from './aiEmployeesEnhanced';
 import { enhanceAllAIAgents } from './utils/agent-capability-enhancer';
-import {
-  Settings, Zap, MessagesSquare, Target, Megaphone, Crown, Shield, ChartBarBig,
-  Briefcase, Video,
-} from 'lucide-react-native';
+const stub = () => null;
+let Settings: any = stub, Zap: any = stub, MessagesSquare: any = stub, Target: any = stub, Megaphone: any = stub, Crown: any = stub, Shield: any = stub, ChartBarBig: any = stub, Briefcase: any = stub, Video: any = stub;
 import {
   allPrivacyAgents,
   privacyDataClassifier,
@@ -148,10 +146,10 @@ export const mainAgents: AIAgent[] = [];
 // ALL AGENTS CONSOLIDATED
 // ============================================
 export const allSubAgents: AIAgent[] = [
-  ...cxAgents,
-  ...salesAgents,
-  ...marketingAgents,
-  ...ciaAgents,
+  ...customerExperienceSubAgents,
+  ...salesRevenueSubAgents,
+  ...marketingGrowthSubAgents,
+  ...customerInsightsAnalyticsPlaceholder,
   ...operationsManagementSubAgents,
   ...financeAccountingSubAgents,
   ...technologyEngineeringSubAgents,
@@ -250,7 +248,7 @@ export const navigationHierarchy = {
     color: '#007AFF',
     path: '/ai-agent/customer-agents',
     mainAgents: customerExperienceMainAgents,
-    subAgents: cxAgents,
+    subAgents: customerExperienceSubAgents,
     description: 'AI agents for customer support, experience, retention, and loyalty',
     stats: { main: 14, sub: 42, total: 56 }
   },
@@ -261,7 +259,7 @@ export const navigationHierarchy = {
     color: '#34C759',
     path: '/ai-agent/sales-agents',
     mainAgents: salesRevenueMainAgents,
-    subAgents: salesAgents,
+    subAgents: salesRevenueSubAgents,
     description: 'AI agents for sales operations, revenue generation, and business development',
     stats: { main: 14, sub: 42, total: 56 }
   },

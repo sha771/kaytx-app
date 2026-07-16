@@ -508,6 +508,20 @@ export const validationSchemas = {
     agentId: z.string().optional(),
     scope: z.enum(['active', 'history']).optional(),
   }),
+
+  multiAgentTaskCreate: z.object({
+    type: z.enum(['collaboration', 'delegation', 'coordination', 'consensus']),
+    priority: z.enum(['low', 'medium', 'high', 'critical']).optional().default('medium'),
+    title: z.string().min(1).max(200),
+    description: z.string().min(1).max(5000),
+    participantIds: z.array(z.string()).min(1).max(20),
+    requiredCapabilities: z.array(z.string()).optional().default([]),
+    context: z.record(z.any()).optional().default({}),
+    deadline: z.string().datetime().optional(),
+    strategy: z.enum(['sequential', 'parallel', 'hierarchical', 'adaptive']).optional(),
+    dependencies: z.array(z.string()).optional().default([]),
+    timeout: z.number().positive().optional(),
+  }),
 };
 
 /**

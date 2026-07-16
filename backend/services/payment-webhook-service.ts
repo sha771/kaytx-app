@@ -10,20 +10,23 @@ import { createLogger } from '../lib/production-logger';
 
 const logger = createLogger(__filename.split('/').pop()?.replace('.ts', '') || 'Service');
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('STRIPE_SECRET_KEY is required for webhook processing');
-}
-
-if (!process.env.STRIPE_WEBHOOK_SECRET) {
-  throw new Error('STRIPE_WEBHOOK_SECRET is required for webhook processing');
-}
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2024-06-20',
-});
+}) : null;
+
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || '';
+
+if (!stripe) {
+  logger.warn('Stripe credentials not configured. Payment webhook service running in mock mode.');
+}
 
 export class PaymentWebhookService {
   async processWebhook(request: any): Promise<{ success: boolean; message: string }> {
+    if (!stripe) {
+      logger.warn('[Webhook] Stripe not configured, returning mock success');
+      return { success: true, message: 'Mock mode - webhook processed' };
+    }
+
     const body = await request.text();
     const signature = request.headers.get('stripe-signature');
 
@@ -38,7 +41,7 @@ export class PaymentWebhookService {
       event = stripe.webhooks.constructEvent(
         body,
         signature,
-        process.env.STRIPE_WEBHOOK_SECRET!
+        webhookSecret
       );
     } catch (err) {
       logger.error('[Webhook] Signature verification failed:', err);

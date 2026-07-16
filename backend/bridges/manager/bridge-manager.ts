@@ -1,11 +1,11 @@
 import { EventEmitter } from 'events';
-import { BaseBridge } from '../core/base-bridge';
+import { BaseBridge, type BridgeConnectionState } from '../../../core/base-bridge';
 import { WebSocketBridge } from '../protocols/websocket-bridge';
 import { MatrixBridge } from '../protocols/matrix-bridge';
 import { FirebaseBridge } from '../protocols/firebase-bridge';
 import { LocalBridge } from '../protocols/local-bridge';
 import { GRPCBridge } from '../protocols/grpc-bridge';
-import { BridgeConnectionState, BridgeMetrics, BridgeHealth, Protocol } from '../types';
+import { BridgeMetrics, BridgeHealth, Protocol } from '../types';
 
 export class BridgeManager extends EventEmitter {
   private bridges: Map<string, BaseBridge> = new Map();

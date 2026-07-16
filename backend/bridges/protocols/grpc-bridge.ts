@@ -1,5 +1,5 @@
-import { BaseBridge, BridgeConfig, BridgeMessage } from '../core/base-bridge';
-import { BridgeConnectionState } from '../types';
+import { BaseBridge, BridgeConfig, BridgeMessage } from '../../../core/base-bridge';
+import { BridgeConnectionState } from '../../../core/base-bridge';
 
 interface GRPCBridgeConfig extends BridgeConfig {
   host: string;
@@ -58,7 +58,7 @@ export class GRPCBridge extends BaseBridge {
     }
   }
 
-  async disconnect(): Promise<BridgeConnectionState> {
+  async disconnect(): Promise<void> {
     console.log(`[GRPCBridge:${this.config.id}] Disconnecting`);
 
     this.closeAllStreams();
@@ -70,14 +70,12 @@ export class GRPCBridge extends BaseBridge {
     const state: BridgeConnectionState = { status: 'disconnected' };
     this.setState(state);
     this.emitEvent({ type: 'disconnected', data: state, timestamp: Date.now() });
-
-    return state;
   }
 
-  async sendMessage(message: BridgeMessage): Promise<boolean> {
+  async sendMessage(message: BridgeMessage): Promise<void> {
     if (this.state.status !== 'connected' || !this.client) {
       console.warn(`[GRPCBridge:${this.config.id}] Not connected`);
-      return false;
+      return;
     }
 
     try {
@@ -86,11 +84,9 @@ export class GRPCBridge extends BaseBridge {
       const response = await this.makeUnaryCall('SendMessage', message);
       
       console.log(`[GRPCBridge:${this.config.id}] Message sent successfully:`, response);
-      return true;
     } catch (error) {
       console.error(`[GRPCBridge:${this.config.id}] Send error:`, error);
       this.emitEvent({ type: 'error', data: error, timestamp: Date.now() });
-      return false;
     }
   }
 

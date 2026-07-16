@@ -1,8 +1,8 @@
-import { router } from '../trpc';
+import { router, publicProcedure } from '../trpc';
 import { z } from 'zod';
-import { BrainSystem } from '@/lib/agents-brain';
-import { BrainLLMClient } from '@/lib/agents-brain/llm-client';
-import { AgentBrainManager, AgentBrainConfig } from '@/lib/agents-brain/agent-brain-manager';
+import { BrainSystem } from '../../../../lib/agents-brain';
+import { BrainLLMClient } from '../../../../lib/agents-brain/llm-client';
+import { AgentBrainManager, AgentBrainConfig } from '../../../../lib/agents-brain/agent-brain-manager';
 
 // Brain system instances cache (per-agent)
 const brainSystemsCache = new Map<string, BrainSystem>();
@@ -54,7 +54,7 @@ function getBrainSystem(agentId?: string): BrainSystem {
 
 export const agentsBrainRouter = router({
   // Initialize brain system
-  initialize: router.procedure
+  initialize: publicProcedure
     .input(z.object({
       agentId: z.string().optional(),
     }))
@@ -70,7 +70,7 @@ export const agentsBrainRouter = router({
     }),
 
   // Ingest sources into brain
-  ingest: router.procedure
+  ingest: publicProcedure
     .input(z.object({
       sourcePaths: z.array(z.string()).optional(),
       agentId: z.string().optional(),
@@ -82,7 +82,7 @@ export const agentsBrainRouter = router({
     }),
 
   // Query brain
-  query: router.procedure
+  query: publicProcedure
     .input(z.object({
       query: z.string(),
       limit: z.number().optional(),
@@ -99,7 +99,7 @@ export const agentsBrainRouter = router({
     }),
 
   // Search by tag
-  searchByTag: router.procedure
+  searchByTag: publicProcedure
     .input(z.object({
       tag: z.string(),
       agentId: z.string().optional(),
@@ -111,7 +111,7 @@ export const agentsBrainRouter = router({
     }),
 
   // Search by category
-  searchByCategory: router.procedure
+  searchByCategory: publicProcedure
     .input(z.object({
       category: z.string(),
       agentId: z.string().optional(),
@@ -123,7 +123,7 @@ export const agentsBrainRouter = router({
     }),
 
   // Get page by ID
-  getPage: router.procedure
+  getPage: publicProcedure
     .input(z.object({
       pageId: z.string(),
       agentId: z.string().optional(),
@@ -135,7 +135,7 @@ export const agentsBrainRouter = router({
     }),
 
   // Get all pages
-  getAllPages: router.procedure
+  getAllPages: publicProcedure
     .input(z.object({
       agentId: z.string().optional(),
     }))
@@ -146,7 +146,7 @@ export const agentsBrainRouter = router({
     }),
 
   // Get related pages
-  getRelatedPages: router.procedure
+  getRelatedPages: publicProcedure
     .input(z.object({
       pageId: z.string(),
       agentId: z.string().optional(),
@@ -158,7 +158,7 @@ export const agentsBrainRouter = router({
     }),
 
   // Get statistics
-  getStatistics: router.procedure
+  getStatistics: publicProcedure
     .input(z.object({
       agentId: z.string().optional(),
     }))
@@ -169,7 +169,7 @@ export const agentsBrainRouter = router({
     }),
 
   // Get manifest
-  getManifest: router.procedure
+  getManifest: publicProcedure
     .input(z.object({
       agentId: z.string().optional(),
     }))
@@ -180,7 +180,7 @@ export const agentsBrainRouter = router({
     }),
 
   // Get index
-  getIndex: router.procedure
+  getIndex: publicProcedure
     .input(z.object({
       agentId: z.string().optional(),
     }))
@@ -191,7 +191,7 @@ export const agentsBrainRouter = router({
     }),
 
   // Get log
-  getLog: router.procedure
+  getLog: publicProcedure
     .input(z.object({
       agentId: z.string().optional(),
     }))
@@ -202,7 +202,7 @@ export const agentsBrainRouter = router({
     }),
 
   // Add raw source
-  addRawSource: router.procedure
+  addRawSource: publicProcedure
     .input(z.object({
       filePath: z.string(),
       content: z.string(),
@@ -215,7 +215,7 @@ export const agentsBrainRouter = router({
     }),
 
   // Get raw sources
-  getRawSources: router.procedure
+  getRawSources: publicProcedure
     .input(z.object({
       agentId: z.string().optional(),
     }))
@@ -226,7 +226,7 @@ export const agentsBrainRouter = router({
     }),
 
   // Re-ingest source
-  reingestSource: router.procedure
+  reingestSource: publicProcedure
     .input(z.object({
       sourcePath: z.string(),
       agentId: z.string().optional(),
@@ -238,7 +238,7 @@ export const agentsBrainRouter = router({
     }),
 
   // Get token savings
-  getTokenSavings: router.procedure
+  getTokenSavings: publicProcedure
     .input(z.object({
       agentId: z.string().optional(),
     }))
@@ -249,7 +249,7 @@ export const agentsBrainRouter = router({
     }),
 
   // Get health status
-  getHealthStatus: router.procedure
+  getHealthStatus: publicProcedure
     .input(z.object({
       agentId: z.string().optional(),
     }))
@@ -260,7 +260,7 @@ export const agentsBrainRouter = router({
     }),
 
   // Export brain
-  export: router.procedure
+  export: publicProcedure
     .input(z.object({
       agentId: z.string().optional(),
     }))
@@ -271,7 +271,7 @@ export const agentsBrainRouter = router({
     }),
 
   // Import brain
-  import: router.procedure
+  import: publicProcedure
     .input(z.object({
       data: z.any(),
       agentId: z.string().optional(),
@@ -283,7 +283,7 @@ export const agentsBrainRouter = router({
     }),
 
   // Reset brain
-  reset: router.procedure
+  reset: publicProcedure
     .input(z.object({
       agentId: z.string().optional(),
     }))
@@ -299,7 +299,7 @@ export const agentsBrainRouter = router({
     }),
 
   // List all agent brains
-  listAgentBrains: router.procedure.query(async () => {
+  listAgentBrains: publicProcedure.query(async () => {
     const fs = require('fs');
     const path = require('path');
     const agentsBase = '/agents-brain/agents';
@@ -322,7 +322,7 @@ export const agentsBrainRouter = router({
   }),
 
   // Initialize agent brain with configuration
-  initializeAgentBrain: router.procedure
+  initializeAgentBrain: publicProcedure
     .input(z.object({
       agentId: z.string(),
       agentType: z.string().optional(),
@@ -355,7 +355,7 @@ export const agentsBrainRouter = router({
     }),
 
   // Get all agent brain statistics
-  getAllAgentStatistics: router.procedure.query(async () => {
+  getAllAgentStatistics: publicProcedure.query(async () => {
     const manager = getBrainManager();
     const statistics = await manager.getAllAgentStatistics();
     
@@ -366,7 +366,7 @@ export const agentsBrainRouter = router({
     }),
 
   // Stop auto-ingest for an agent
-  stopAutoIngest: router.procedure
+  stopAutoIngest: publicProcedure
     .input(z.object({
       agentId: z.string(),
     }))

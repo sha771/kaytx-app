@@ -115,7 +115,7 @@ export default function ProductCatalogIntelligence({
                 </Text>
                 <View style={[styles.trendIndicator, { backgroundColor: `${getTrendColor(product.trend)}20` }]}>
                   <Text style={[styles.trendText, { color: getTrendColor(product.trend) }]}>
-                    {product.trend === 'up' ? '↑' : product.trend === 'stable' : '→'}
+                    {product.trend === 'up' ? '↑' : product.trend === 'stable' ? '→' : '→'}
                   </Text>
                 </View>
               </View>

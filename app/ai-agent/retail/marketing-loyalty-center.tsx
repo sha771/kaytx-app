@@ -40,6 +40,7 @@ import {
   Star,
   Mail,
   MessageSquare,
+  Smartphone,
 } from 'lucide-react-native';
 import { BlurView } from 'expo-blur';
 
@@ -185,7 +186,7 @@ export default function MarketingLoyaltyCenter() {
       SMS: MessageSquare,
       'Push Notifications': Megaphone,
       'In-App': Activity,
-    };
+    } as const;
     const Icon = channelIcons[channel.channel as keyof typeof channelIcons];
 
     return (
@@ -556,7 +557,7 @@ const styles = StyleSheet.create({
   },
   channelMetricValue: {
     fontSize: 14,
-    fontWeight: '600,
+    fontWeight: '600',
   },
   trendUp: {
     flexDirection: 'row',

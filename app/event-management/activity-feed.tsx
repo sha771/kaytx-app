@@ -91,7 +91,7 @@ export default function RealTimeEventActivityFeed() {
     { period: 'Last Hour', critical: 2, warning: 8, info: 24, total: 34, color: '#EF4444' },
     { period: 'Last 6 Hours', critical: 12, warning: 45, info: 124, total: 181, color: '#F59E0B' },
     { period: 'Last 24 Hours', critical: 28, warning: 89, info: 347, total: 464, color: '#10B981' },
-    { period: 'Last 7 Days', critical: 67, warning: 234, info: 890, total: 1,191, color: '#06B6D4' },
+    { period: 'Last 7 Days', critical: 67, warning: 234, info: 890, total: 1191, color: '#06B6D4' },
   ];
 
   const GEOGRAPHIC_DISTRIBUTION = [

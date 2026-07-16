@@ -65,11 +65,11 @@ export default function MarketingPromotionHub() {
   ];
 
   const CHANNEL_PERFORMANCE = [
-    { channel: 'Email', reach: '4.2M', engagement: 42%, conversion: 24%, roi: 340, color: '#06B6D4' },
-    { channel: 'Social Media', reach: '8.9M', engagement: 68%, conversion: 18%, roi: 520, color: '#8B5CF6' },
-    { channel: 'Paid Ads', reach: '12.4M', engagement: 28%, conversion: 12%, roi: 280, color: '#10B981' },
-    { channel: 'Influencer', reach: '2.8M', engagement: 54%, conversion: 22%, roi: 410, color: '#F59E0B' },
-    { channel: 'Content Marketing', reach: '6.7M', engagement: 38%, conversion: 16%, roi: 320, color: '#EC4899' },
+    { channel: 'Email', reach: '4.2M', engagement: '42%', conversion: '24%', roi: 340, color: '#06B6D4' },
+    { channel: 'Social Media', reach: '8.9M', engagement: '68%', conversion: '18%', roi: 520, color: '#8B5CF6' },
+    { channel: 'Paid Ads', reach: '12.4M', engagement: '28%', conversion: '12%', roi: 280, color: '#10B981' },
+    { channel: 'Influencer', reach: '2.8M', engagement: '54%', conversion: '22%', roi: 410, color: '#F59E0B' },
+    { channel: 'Content Marketing', reach: '6.7M', engagement: '38%', conversion: '16%', roi: 320, color: '#EC4899' },
   ];
 
   const EMAIL_PERFORMANCE = [

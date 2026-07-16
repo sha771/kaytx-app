@@ -52,7 +52,7 @@ export default function VoiceCenterScreen() {
     voiceActivity: true,
     speechRate: 1.0,
     language: 'english',
-
+  };
 
   const simulateVoiceResponse = () => {
     if (!selectedAgentData) return;
@@ -289,5 +289,3 @@ const styles = StyleSheet.create({
   statLabel: { fontSize: 12, marginTop: 2 },
   statDivider: { width: 1, backgroundColor: '#00000010', marginHorizontal: 10 },
 });
-
-}

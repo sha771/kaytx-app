@@ -106,7 +106,7 @@ Best regards,
       subject: 'Re: Quick question about [Company]',
       body: `Hi [Name],
 
-I wanted to follow up on my previous email. I understand you're busy, but I believe our solution could save your team 20+ hours per week.
+I wanted to follow up on my previous email. I understand you\'re busy, but I believe our solution could save your team 20+ hours per week.
 
 Would a quick 10-minute call work for you this week?
 

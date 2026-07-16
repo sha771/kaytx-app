@@ -288,6 +288,13 @@ export class PlatformAuthService {
   }
 
   /**
+   * Check if a platform is supported
+   */
+  isPlatformSupported(platform: string): boolean {
+    return platform in this.oauthConfigs;
+  }
+
+  /**
    * Exchange OAuth code for tokens
    */
   async exchangeOAuthCode(platform: PlatformType, code: string, state: string): Promise<{

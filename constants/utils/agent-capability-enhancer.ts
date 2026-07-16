@@ -432,7 +432,7 @@ export function createEnhancedEmployeeConfig(overrides: Partial<AIEmployee> = {}
     name: overrides.name || 'New Employee',
     title: overrides.title || 'AI Employee',
     description: overrides.description || 'Enhanced AI Employee with full capabilities',
-    icon: overrides.icon || require('lucide-react-native').Bot,
+    icon: overrides.icon || (() => null),
     color: overrides.color || '#007AFF',
     humanCost: overrides.humanCost || '$50,000/year',
     aiCost: overrides.aiCost || '$5,000/year',

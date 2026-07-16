@@ -67,18 +67,18 @@ export default function SponsorshipCommandCenter() {
   ];
 
   const SPONSORSHIP_BENEFITS = [
-    { benefit: 'Booth Space', utilization: 87%, satisfaction: 4.8, color: '#06B6D4' },
-    { benefit: 'Speaking Slots', utilization: 94%, satisfaction: 4.9, color: '#8B5CF6' },
-    { benefit: 'Logo Placement', utilization: 98%, satisfaction: 4.7, color: '#10B981' },
-    { benefit: 'VIP Access', utilization: 91%, satisfaction: 4.8, color: '#F59E0B' },
-    { benefit: 'Digital Ads', utilization: 89%, satisfaction: 4.6, color: '#EC4899' },
+    { benefit: 'Booth Space', utilization: '87%', satisfaction: 4.8, color: '#06B6D4' },
+    { benefit: 'Speaking Slots', utilization: '94%', satisfaction: 4.9, color: '#8B5CF6' },
+    { benefit: 'Logo Placement', utilization: '98%', satisfaction: 4.7, color: '#10B981' },
+    { benefit: 'VIP Access', utilization: '91%', satisfaction: 4.8, color: '#F59E0B' },
+    { benefit: 'Digital Ads', utilization: '89%', satisfaction: 4.6, color: '#EC4899' },
   ];
 
   const ROI_TRACKING = [
-    { metric: 'Lead Generation', value: '124K', conversion: 24%, color: '#06B6D4' },
-    { metric: 'Brand Awareness', value: '156M', conversion: 18%, color: '#8B5CF6' },
-    { metric: 'Deal Pipeline', value: '$2.4B', conversion: 12%, color: '#10B981' },
-    { metric: 'Customer Acquisition', value: '8.4K', conversion: 8%, color: '#F59E0B' },
+    { metric: 'Lead Generation', value: '124K', conversion: '24%', color: '#06B6D4' },
+    { metric: 'Brand Awareness', value: '156M', conversion: '18%', color: '#8B5CF6' },
+    { metric: 'Deal Pipeline', value: '$2.4B', conversion: '12%', color: '#10B981' },
+    { metric: 'Customer Acquisition', value: '8.4K', conversion: '8%', color: '#F59E0B' },
   ];
 
   const RECENT_ACTIVATIONS = [

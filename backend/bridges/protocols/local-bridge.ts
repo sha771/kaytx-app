@@ -1,5 +1,5 @@
-import { BaseBridge, BridgeConfig, BridgeMessage } from '../core/base-bridge';
-import { BridgeConnectionState } from '../types';
+import { BaseBridge, BridgeConfig, BridgeMessage } from '../../../core/base-bridge';
+import { BridgeConnectionState } from '../../../core/base-bridge';
 
 interface LocalBridgeConfig extends BridgeConfig {
   dataPath?: string;
@@ -50,7 +50,7 @@ export class LocalBridge extends BaseBridge {
     }
   }
 
-  async disconnect(): Promise<BridgeConnectionState> {
+  async disconnect(): Promise<void> {
     console.log(`[LocalBridge:${this.config.id}] Disconnecting`);
 
     this.stopSync();
@@ -59,14 +59,12 @@ export class LocalBridge extends BaseBridge {
     const state: BridgeConnectionState = { status: 'disconnected' };
     this.setState(state);
     this.emitEvent({ type: 'disconnected', data: state, timestamp: Date.now() });
-
-    return state;
   }
 
-  async sendMessage(message: BridgeMessage): Promise<boolean> {
+  async sendMessage(message: BridgeMessage): Promise<void> {
     if (this.state.status !== 'connected') {
       console.warn(`[LocalBridge:${this.config.id}] Not connected`);
-      return false;
+      return;
     }
 
     try {
@@ -76,12 +74,9 @@ export class LocalBridge extends BaseBridge {
       
       this.emitEvent({ type: 'message', data: message, timestamp: Date.now() });
       this.emit('message', message);
-
-      return true;
     } catch (error) {
       console.error(`[LocalBridge:${this.config.id}] Send error:`, error);
       this.emitEvent({ type: 'error', data: error, timestamp: Date.now() });
-      return false;
     }
   }
 
@@ -124,22 +119,22 @@ export class LocalBridge extends BaseBridge {
     }
   }
 
-  getMessages(Filter?: { from?: string; to?: string; after?: number }): BridgeMessage[] {
+  getMessages(Filter?: { sender?: string; to?: string; after?: number }): BridgeMessage[] {
     let messages = Array.from(this.messageStore.values());
 
     if (Filter) {
-      if (Filter.from) {
-        messages = messages.filter(m => m.from === Filter.from);
+      if (Filter.sender) {
+        messages = messages.filter(m => m.sender === Filter.sender);
       }
       if (Filter.to) {
         messages = messages.filter(m => m.to === Filter.to);
       }
       if (Filter.after !== undefined) {
-        messages = messages.filter(m => (m.timestamp ?? 0) > Filter.after!);
+        messages = messages.filter(m => new Date(m.timestamp).getTime() > Filter.after!);
       }
     }
 
-    return messages.sort((a, b) => (a.timestamp ?? 0) - (b.timestamp ?? 0));
+    return messages.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
   }
 
   clearMessages(): void {

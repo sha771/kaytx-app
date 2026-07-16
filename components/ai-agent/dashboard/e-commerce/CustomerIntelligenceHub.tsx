@@ -140,7 +140,7 @@ export default function CustomerIntelligenceHub() {
                     <Text style={[styles.metricValue, { color: theme.colors.text }]}>{profile.count}</Text>
                   </View>
                   <View style={styles.profileMetric}>
-                    <Text style={[styles.metricLabel, { color: theme.colors.textSecondary }]}]}>Conversion</Text>
+                    <Text style={[styles.metricLabel, { color: theme.colors.textSecondary }]}>Conversion</Text>
                     <Text style={[styles.metricValue, { color: '#22C55E' }]}>{profile.conversion}</Text>
                   </View>
                 </View>

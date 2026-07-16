@@ -186,32 +186,7 @@ export default function ChiefDeliveryOfficerDashboard({ data }: ChiefDeliveryOff
             </View>
           </View>
         </View>
-                <Text style={[styles.trendText, { color: '#10B981' }]}>+3% YoY</Text>
-              </View>
-            </View>
-
-            <View style={[styles.executiveCard, { backgroundColor: 'rgba(6, 182, 212, 0.1)', borderColor: 'rgba(6, 182, 212, 0.3)', borderWidth: 1 }]}>
-              <Activity size={24} color="#06B6D4" />
-              <Text style={[styles.executiveValue, { color: '#06B6D4' }]}>{data.utilization}</Text>
-              <Text style={[styles.executiveLabel, { color: 'rgba(255, 255, 255, 0.6)' }]}>Utilization</Text>
-              <View style={styles.trendBadge}>
-                <TrendingUp size={12} color="#10B981" />
-                <Text style={[styles.trendText, { color: '#10B981' }]}>+4% YoY</Text>
-              </View>
-            </View>
-
-            <View style={[styles.executiveCard, { backgroundColor: 'rgba(236, 72, 153, 0.1)', borderColor: 'rgba(236, 72, 153, 0.3)', borderWidth: 1 }]}>
-              <Zap size={24} color="#EC4899" />
-              <Text style={[styles.executiveValue, { color: '#EC4899' }]}>{data.aiProductivityImpact}</Text>
-              <Text style={[styles.executiveLabel, { color: 'rgba(255, 255, 255, 0.6)' }]}>AI Productivity Impact</Text>
-              <View style={styles.trendBadge}>
-                <TrendingUp size={12} color="#10B981" />
-                <Text style={[styles.trendText, { color: '#10B981' }]}>+28% YoY</Text>
-              </View>
-            </View>
-          </View>
-        </View>
-
+        
         {/* Portfolio Performance Dashboard */}
         <View style={[styles.portfolioSection, { backgroundColor: 'rgba(11, 15, 20, 0.6)', borderColor: 'rgba(16, 185, 129, 0.2)', borderWidth: 1 }]}>
           <Text style={[styles.sectionTitle, { color: '#FFFFFF' }]}>

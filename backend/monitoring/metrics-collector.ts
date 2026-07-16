@@ -112,7 +112,7 @@ export class MetricsCollector {
   private startCollection() {
     // Collect system metrics every 30 seconds
     setInterval(() => {
-      this.collectSystemMetrics();
+      this.collectSystemMetrics().catch(() => {});
     }, 30000);
 
     // Clean old metrics every 5 minutes
@@ -215,10 +215,10 @@ export class MetricsCollector {
       // Store locally
       this.systemMetrics.push(systemMetrics);
       
-      // Update OpenTelemetry metrics
-      this.cpuGauge.set(cpuUsage * 100);
-      this.memoryGauge.set(memoryUsage * 100);
-      this.activeConnectionsGauge.set(activeConnections);
+      // Update OpenTelemetry metrics (non-critical, catch errors)
+      try { this.cpuGauge.set(cpuUsage * 100); } catch {}
+      try { this.memoryGauge.set(memoryUsage * 100); } catch {}
+      try { this.activeConnectionsGauge.set(activeConnections); } catch {}
 
       return systemMetrics;
     } catch (error) {

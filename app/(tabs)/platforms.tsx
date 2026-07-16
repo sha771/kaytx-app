@@ -75,7 +75,7 @@ export default function PlatformsScreen() {
   }, [loadPlatforms]);
 
   const { data: searchResultsData } = trpc.platforms.search.useQuery(searchQuery, {
-    enabled: searchQuery.trim().length > 0
+    enabled: searchQuery.trim().length > 0,
   });
 
   useEffect(() => {

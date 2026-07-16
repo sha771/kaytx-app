@@ -107,6 +107,41 @@ export class KnowledgeGraphService {
   }
 
   /**
+   * Update a node
+   */
+  updateNode(id: string, updates: Partial<GraphNode>): GraphNode | undefined {
+    const existing = this.nodes.get(id);
+    if (!existing) return undefined;
+
+    const updated: GraphNode = {
+      ...existing,
+      ...updates,
+      id: existing.id, // Ensure ID doesn't change
+      updatedAt: new Date(),
+    };
+
+    this.nodes.set(id, updated);
+    return updated;
+  }
+
+  /**
+   * Delete a node and its edges
+   */
+  deleteNode(id: string): boolean {
+    const deleted = this.nodes.delete(id);
+    if (deleted) {
+      // Remove connected edges
+      for (const [edgeId, edge] of this.edges.entries()) {
+        if (edge.source === id || edge.target === id) {
+          this.edges.delete(edgeId);
+        }
+      }
+      this.adjacencyList.delete(id);
+    }
+    return deleted;
+  }
+
+  /**
    * Get an edge by ID
    */
   getEdge(id: string): GraphEdge | undefined {

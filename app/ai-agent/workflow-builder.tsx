@@ -62,8 +62,7 @@ interface WorkflowNode {
   id: string;
   type: NodeType;
   label: string;
-  position: { x: number; y: number ,
-
+  position: { x: number; y: number };
   config: any;
   connections: string[];
 }
@@ -86,7 +85,6 @@ interface WorkflowTemplate {
   connections: WorkflowConnection[];
 }
 
-};
 const NODE_TYPES: { type: NodeType; label: string; icon: any; color: string; description: string }[] = [
   { type: 'trigger', label: 'Trigger', icon: Zap, color: '#F59E0B', description: 'Start the workflow' },
   { type: 'agent-task', label: 'Agent Task', icon: MessageSquare, color: '#3B82F6', description: 'Assign task to AI agent' },

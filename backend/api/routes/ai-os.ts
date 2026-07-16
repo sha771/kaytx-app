@@ -11,10 +11,15 @@ import { Permission, Role } from '../../lib/rbac';
 import { createLogger } from '../../lib/production-logger';
 import { aiAgentServiceEnterprise } from '../../services/ai-agent-service-enterprise';
 import { aiosInfrastructureService } from '../../services/ai-os-infrastructure';
+import { distributedExecutionLayer } from '../../services/ai-os-distributed-layer';
+import { pluginSystem } from '../../services/ai-os-plugin-system';
 import { ServiceContext } from '../../services/base-service';
+import type { RouteContext } from './route-types';
 
 const logger = createLogger('AIOSRoutes');
-const app = new Hono();
+const app = new Hono<{ Variables: RouteContext['env']['Variables'] }>();
+
+type AppContext = RouteContext;
 
 // ============================================
 // Validation Schemas
@@ -70,7 +75,7 @@ app.post(
   requirePermission(Permission.AI_AGENT_CREATE),
   validateParams(z.object({ agentId: z.string().min(1) })),
   validateBody(deployAgentSchema),
-  async (c) => {
+  async (c: AppContext) => {
     const { agentId } = c.req.param();
     const body = c.get('validatedBody') as z.infer<typeof deployAgentSchema>;
     const authContext = c.get('authContext');
@@ -108,7 +113,7 @@ app.post(
   requireAuth,
   requirePermission(Permission.AI_AGENT_DELETE),
   validateParams(z.object({ agentId: z.string().min(1) })),
-  async (c) => {
+  async (c: AppContext) => {
     const { agentId } = c.req.param();
     const authContext = c.get('authContext');
     const { force } = await c.req.json<{ force?: boolean }>().catch(() => ({ force: false }));
@@ -139,7 +144,7 @@ app.get(
   requireAuth,
   requirePermission(Permission.AI_AGENT_READ),
   validateParams(z.object({ agentId: z.string().min(1) })),
-  async (c) => {
+  async (c: AppContext) => {
     const { agentId } = c.req.param();
     const authContext = c.get('authContext');
 
@@ -170,7 +175,7 @@ app.post(
   requirePermission(Permission.AI_AGENT_UPDATE),
   validateParams(z.object({ agentId: z.string().min(1) })),
   validateBody(scaleAgentSchema),
-  async (c) => {
+  async (c: AppContext) => {
     const { agentId } = c.req.param();
     const body = c.get('validatedBody') as z.infer<typeof scaleAgentSchema>;
     const authContext = c.get('authContext');
@@ -202,7 +207,7 @@ app.post(
   requirePermission(Permission.AI_AGENT_UPDATE),
   validateParams(z.object({ agentId: z.string().min(1) })),
   validateBody(migrateAgentSchema),
-  async (c) => {
+  async (c: AppContext) => {
     const { agentId } = c.req.param();
     const body = c.get('validatedBody') as z.infer<typeof migrateAgentSchema>;
     const authContext = c.get('authContext');
@@ -241,7 +246,7 @@ app.post(
   requirePermission(Permission.AI_AGENT_UPDATE),
   validateParams(z.object({ agentId: z.string().min(1) })),
   validateBody(upgradeAgentSchema),
-  async (c) => {
+  async (c: AppContext) => {
     const { agentId } = c.req.param();
     const body = c.get('validatedBody') as z.infer<typeof upgradeAgentSchema>;
     const authContext = c.get('authContext');
@@ -274,7 +279,7 @@ app.post(
   requirePermission(Permission.AI_AGENT_UPDATE),
   validateParams(z.object({ agentId: z.string().min(1) })),
   validateBody(rollbackAgentSchema),
-  async (c) => {
+  async (c: AppContext) => {
     const { agentId } = c.req.param();
     const body = c.get('validatedBody') as z.infer<typeof rollbackAgentSchema>;
     const authContext = c.get('authContext');
@@ -308,7 +313,7 @@ app.get(
   '/health',
   requireAuth,
   requirePermission(Permission.SYSTEM_READ),
-  async (c) => {
+  async (c: AppContext) => {
     const result = aiAgentServiceEnterprise.getInfrastructureHealth();
     return c.json(result);
   }
@@ -322,8 +327,8 @@ app.get(
   '/nodes',
   requireAuth,
   requirePermission(Permission.SYSTEM_READ),
-  async (c) => {
-    const nodes = aiosInfrastructureService['mesh'].getAllNodes();
+  async (c: AppContext) => {
+    const nodes = distributedExecutionLayer.getAllNodes();
     return c.json({ success: true, data: nodes });
   }
 );
@@ -337,7 +342,7 @@ app.get(
   requireAuth,
   requirePermission(Permission.ORGANIZATION_READ),
   validateQuery(resourceReportQuerySchema),
-  async (c) => {
+  async (c: AppContext) => {
     const query = c.get('validatedQuery') as z.infer<typeof resourceReportQuerySchema>;
     const authContext = c.get('authContext');
 
@@ -365,7 +370,7 @@ app.get(
   '/quota-plans',
   requireAuth,
   requirePermission(Permission.ORGANIZATION_READ),
-  async (c) => {
+  async (c: AppContext) => {
     const plans = aiosInfrastructureService.getQuotaPlans();
     return c.json({ success: true, data: plans });
   }
@@ -380,7 +385,7 @@ app.post(
   requireAuth,
   requireMinRole(Role.ADMIN),
   validateParams(z.object({ planId: z.string().min(1) })),
-  async (c) => {
+  async (c: AppContext) => {
     const { planId } = c.req.param();
     const authContext = c.get('authContext');
 
@@ -410,9 +415,9 @@ app.get(
   '/plugins',
   requireAuth,
   requirePermission(Permission.AI_AGENT_READ),
-  async (c) => {
+  async (c: AppContext) => {
     const authContext = c.get('authContext');
-    const plugins = aiosInfrastructureService['pluginSystem'].getOrganizationPlugins(authContext.organizationId);
+    const plugins = pluginSystem.getInstalledPlugins(authContext.organizationId);
     return c.json({ success: true, data: plugins });
   }
 );
@@ -426,7 +431,7 @@ app.post(
   requireAuth,
   requirePermission(Permission.AI_AGENT_CREATE),
   validateParams(z.object({ pluginId: z.string().min(1) })),
-  async (c) => {
+  async (c: AppContext) => {
     const { pluginId } = c.req.param();
     const authContext = c.get('authContext');
 
@@ -461,7 +466,7 @@ app.get(
     page: z.coerce.number().min(1).optional(),
     limit: z.coerce.number().min(1).max(100).optional()
   })),
-  async (c) => {
+  async (c: AppContext) => {
     const query = c.get('validatedQuery') as { status?: string; page?: number; limit?: number };
     const authContext = c.get('authContext');
 

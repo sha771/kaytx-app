@@ -46,8 +46,10 @@ class MonitoringService {
   }
 
   private setupGlobalErrorHandler(): void {
-    const errorUtils = (globalThis as any).ErrorUtils;
-    if (typeof errorUtils !== 'undefined') {
+    // Only setup React Native ErrorUtils in React Native environment
+    // Skip in Node.js backend environment to avoid esbuild errors
+    if (typeof (globalThis as any).ErrorUtils !== 'undefined' && typeof (globalThis as any).__dirname === 'undefined') {
+      const errorUtils = (globalThis as any).ErrorUtils;
       const originalHandler = errorUtils.getGlobalHandler();
       
       errorUtils.setGlobalHandler((error: any, isFatal: any) => {

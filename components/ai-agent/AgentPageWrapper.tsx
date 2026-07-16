@@ -600,6 +600,10 @@ export const AgentPageWrapper: React.FC<AgentPageWrapperProps> = ({
               </View>
             </View>
           </>
+        ) : (
+          <View style={{ padding: 20, alignItems: 'center' }}>
+            <Text style={[styles.cardText, { color: theme.colors.secondaryText }]}>No analytics data available</Text>
+          </View>
         )}
       </View>
     </ScrollView>

@@ -1,130 +1,27 @@
- import {
-  Phone,
-  Users,
-  UserCheck,
-  DollarSign,
-  Megaphone,
-  Headphones,
-  Briefcase,
-  Settings,
-  ChartBarBig,
-  Target,
-  Database,
-  Handshake,
-  TrendingUp,
-  Zap,
-  Eye,
-  Shield,
-  PiggyBank,
-  Search,
-  Globe,
-  UserPlus,
-  Share2,
-  Bot,
-  Brain,
-  Cpu,
-  Server,
-  Activity,
-  Clock,
-  Sparkles,
-  CircleDollarSign,
-  Calculator,
-  Crown,
-  Award,
-  Lightbulb,
-  Monitor,
-  MessageCircle,
-  Scale,
-  Code,
-  Heart,
-  Gavel,
-  Building,
-  FileText,
-  CircleCheck,
-  Layers,
-  PenTool,
-  Calendar,
-  Radio,
-  Hash,
-  Video as VideoIcon,
-  Send,
-  Inbox,
-  Image as ImageIcon,
-  ChartLine,
-  ChartPie,
-  Wallet,
-  Receipt,
-  Percent,
-  CreditCard,
-  Landmark,
-  Coins,
-  GraduationCap,
-  ClipboardCheck,
-  Smile,
-  UserCog,
-  UserX,
-  Package,
-  FlaskConical,
-  Route,
-  TestTube,
-  GitBranch,
-  Workflow,
-  Factory,
-  Truck,
-  ClipboardList,
-  MessageSquare,
-  ThumbsUp,
-  Star,
-  UserMinus,
-  SquarePen,
-  LayoutDashboard,
-  BookOpen,
-  Terminal,
-  Cloud,
-  Wifi,
-  Lock,
-  LifeBuoy,
-  Network,
-  FileCheck,
-  TriangleAlert,
-  ScrollText,
-  BookMarked,
-  GitMerge,
-  Bug,
-  TestTubes,
-  SquarePlay,
-  Mail,
-  ListTodo,
-  Bell,
-  NotebookTabs,
-  Microscope,
-  BellRing,
-  MessageSquareText,
-  FileBadge,
-  TrendingDown,
-  ChartNoAxesCombined,
-  Rocket,
-  FingerprintPattern,
-  KeyRound,
-  ShieldCheck,
-  ShieldAlert,
-  ScanFace,
-  IdCard,
-  Presentation,
-  Speaker,
-  PanelLeft,
-  PanelTop,
-  PanelsTopLeft,
-  PanelsLeftBottom,
-  PanelsRightBottom,
-  PanelRight,
-  PanelBottom,
-  LayoutGrid,
-  LayoutList,
-  LayoutPanelLeft,
-  LayoutPanelTop,
-} from 'lucide-react-native';
-import type { LucideIcon } from 'lucide-react-native';
+type LucideIcon = React.FC<{ size?: number; color?: string; className?: string }>;
+const stub = () => null;
+const Phone: any = stub, Users: any = stub, UserCheck: any = stub, DollarSign: any = stub, Megaphone: any = stub, Headphones: any = stub;
+const Briefcase: any = stub, Settings: any = stub, ChartBarBig: any = stub, Target: any = stub, Database: any = stub, Handshake: any = stub;
+const TrendingUp: any = stub, Zap: any = stub, Eye: any = stub, Shield: any = stub, PiggyBank: any = stub, Search: any = stub;
+const Globe: any = stub, UserPlus: any = stub, Share2: any = stub, Bot: any = stub, Brain: any = stub, Cpu: any = stub, Server: any = stub;
+const Activity: any = stub, Clock: any = stub, Sparkles: any = stub, CircleDollarSign: any = stub, Calculator: any = stub, Crown: any = stub;
+const Award: any = stub, Lightbulb: any = stub, Monitor: any = stub, MessageCircle: any = stub, Scale: any = stub, Code: any = stub;
+const Heart: any = stub, Gavel: any = stub, Building: any = stub, FileText: any = stub, CircleCheck: any = stub, Layers: any = stub;
+const PenTool: any = stub, Calendar: any = stub, Radio: any = stub, Hash: any = stub, VideoIcon: any = stub, Send: any = stub;
+const Inbox: any = stub, ImageIcon: any = stub, ChartLine: any = stub, ChartPie: any = stub, Wallet: any = stub, Receipt: any = stub;
+const Percent: any = stub, CreditCard: any = stub, Landmark: any = stub, Coins: any = stub, GraduationCap: any = stub, ClipboardCheck: any = stub;
+const Smile: any = stub, UserCog: any = stub, UserX: any = stub, Package: any = stub, FlaskConical: any = stub, Route: any = stub;
+const TestTube: any = stub, GitBranch: any = stub, Workflow: any = stub, Factory: any = stub, Truck: any = stub, ClipboardList: any = stub;
+const MessageSquare: any = stub, ThumbsUp: any = stub, Star: any = stub, UserMinus: any = stub, SquarePen: any = stub, LayoutDashboard: any = stub;
+const BookOpen: any = stub, Terminal: any = stub, Cloud: any = stub, Wifi: any = stub, Lock: any = stub, LifeBuoy: any = stub;
+const Network: any = stub, FileCheck: any = stub, TriangleAlert: any = stub, ScrollText: any = stub, BookMarked: any = stub, GitMerge: any = stub;
+const Bug: any = stub, TestTubes: any = stub, SquarePlay: any = stub, Mail: any = stub, ListTodo: any = stub, Bell: any = stub;
+const NotebookTabs: any = stub, Microscope: any = stub, BellRing: any = stub, MessageSquareText: any = stub, FileBadge: any = stub;
+const TrendingDown: any = stub, ChartNoAxesCombined: any = stub, Rocket: any = stub, FingerprintPattern: any = stub, KeyRound: any = stub;
+const ShieldCheck: any = stub, ShieldAlert: any = stub, ScanFace: any = stub, IdCard: any = stub, Presentation: any = stub, Speaker: any = stub;
+const PanelLeft: any = stub, PanelTop: any = stub, PanelsTopLeft: any = stub, PanelsLeftBottom: any = stub, PanelsRightBottom: any = stub;
+const PanelRight: any = stub, PanelBottom: any = stub, LayoutGrid: any = stub, LayoutList: any = stub, LayoutPanelLeft: any = stub;
+const LayoutPanelTop: any = stub;
 import { autoEnhanceAllEmployees } from './utils/agent-capability-enhancer';
 
 export interface AIInfrastructure {

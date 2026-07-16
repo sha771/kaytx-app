@@ -154,7 +154,7 @@ export const LoopWorkflowDesigner: React.FC<LoopWorkflowDesignerProps> = ({
           </Pressable>
           <Pressable onPress={handleSave}>
             <Save size={24} color={theme.colors.success} />
-          </Press>
+          </Pressable>
         </View>
       </View>
 
@@ -426,7 +426,7 @@ const AgentPalette: React.FC<AgentPaletteProps> = ({ agents, onSelectAgent, onCl
       <View style={[styles.paletteHeader, { borderBottomColor: theme.colors.border }]}>
         <Pressable onPress={onClose}>
           <ArrowRight size={24} color={theme.colors.text} />
-        </PressView>
+        </Pressable>
         <Text style={[styles.paletteTitle, { color: theme.colors.text }]}>
           Select Agent
         </Text>

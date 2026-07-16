@@ -5,14 +5,17 @@ import { alertManager } from '../../monitoring/alerts';
 import { protectWithRBAC } from '../../middleware/route-protection';
 import { requireAuth } from '../../middleware/rbac-middleware';
 import { validateInput , validationSchemas } from '../../middleware/comprehensive-validation';
+import type { RouteContext } from './route-types';
 
-const monitoring = new Hono();
+const monitoring = new Hono<{ Variables: RouteContext['env']['Variables'] }>();
+
+type AppContext = RouteContext;
 
 // Apply authentication to all monitoring routes
 monitoring.use('*', requireAuth());
 
 // Dashboard endpoint
-monitoring.get('/dashboard', async (c) => {
+monitoring.get('/dashboard', async (c: AppContext) => {
   try {
     const dashboardData = await MonitoringDashboard.getDashboardData();
     return c.json(dashboardData);
@@ -22,7 +25,7 @@ monitoring.get('/dashboard', async (c) => {
 });
 
 // Metrics data endpoint
-monitoring.get('/metrics', validateInput(validationSchemas.metricsQuery), async (c) => {
+monitoring.get('/metrics', validateInput(validationSchemas.metricsQuery), async (c: AppContext) => {
   try {
     const query = c.get('validatedQuery') as { timeRange?: string };
     const timeRange = query.timeRange || '1h';
@@ -35,7 +38,7 @@ monitoring.get('/metrics', validateInput(validationSchemas.metricsQuery), async 
 });
 
 // Alert history endpoint
-monitoring.get('/alerts', validateInput(validationSchemas.alertQuery), async (c) => {
+monitoring.get('/alerts', validateInput(validationSchemas.alertQuery), async (c: AppContext) => {
   try {
     const query = c.get('validatedQuery') as {
       severity?: string;
@@ -52,7 +55,7 @@ monitoring.get('/alerts', validateInput(validationSchemas.alertQuery), async (c)
 });
 
 // Performance data endpoint
-monitoring.get('/performance', async (c) => {
+monitoring.get('/performance', async (c: AppContext) => {
   try {
     const performanceData = await MonitoringDashboard.getPerformanceData();
     return c.json(performanceData);
@@ -62,7 +65,7 @@ monitoring.get('/performance', async (c) => {
 });
 
 // Top endpoints endpoint
-monitoring.get('/endpoints', validateInput(validationSchemas.endpointQuery), async (c) => {
+monitoring.get('/endpoints', validateInput(validationSchemas.endpointQuery), async (c: AppContext) => {
   try {
     const query = c.get('validatedQuery') as { limit?: number };
     const limit = query.limit || 10;
@@ -75,7 +78,7 @@ monitoring.get('/endpoints', validateInput(validationSchemas.endpointQuery), asy
 });
 
 // Security metrics endpoint
-monitoring.get('/security', async (c) => {
+monitoring.get('/security', async (c: AppContext) => {
   try {
     const securityMetrics = await MonitoringDashboard.getSecurityMetrics();
     return c.json(securityMetrics);
@@ -85,7 +88,7 @@ monitoring.get('/security', async (c) => {
 });
 
 // Health check endpoint (enhanced)
-monitoring.get('/health', async (c) => {
+monitoring.get('/health', async (c: AppContext) => {
   try {
     const healthStatus = metricsCollector.getHealthStatus();
     return c.json(healthStatus);
@@ -99,7 +102,7 @@ monitoring.get('/health', async (c) => {
 });
 
 // Prometheus metrics endpoint
-monitoring.get('/prometheus', async (c) => {
+monitoring.get('/prometheus', async (c: AppContext) => {
   try {
     const prometheusMetrics = metricsCollector.exportPrometheusMetrics();
     c.header('Content-Type', 'text/plain; version=0.0.4');
@@ -110,7 +113,7 @@ monitoring.get('/prometheus', async (c) => {
 });
 
 // HTML dashboard endpoint
-monitoring.get('/dashboard/html', async (c) => {
+monitoring.get('/dashboard/html', async (c: AppContext) => {
   try {
     const html = MonitoringDashboard.generateDashboardHTML();
     c.header('Content-Type', 'text/html');
@@ -121,7 +124,7 @@ monitoring.get('/dashboard/html', async (c) => {
 });
 
 // Alert management endpoints (admin only)
-monitoring.post('/alerts/test', protectWithRBAC, async (c) => {
+monitoring.post('/alerts/test', protectWithRBAC, async (c: AppContext) => {
   try {
     const body = await c.req.json();
     const { ruleId, testMetrics } = body;
@@ -137,7 +140,7 @@ monitoring.post('/alerts/test', protectWithRBAC, async (c) => {
   }
 });
 
-monitoring.put('/alerts/:ruleId/toggle', protectWithRBAC, async (c) => {
+monitoring.put('/alerts/:ruleId/toggle', protectWithRBAC, async (c: AppContext) => {
   try {
     const ruleId = c.req.param('ruleId');
     const body = await c.req.json();
@@ -154,7 +157,7 @@ monitoring.put('/alerts/:ruleId/toggle', protectWithRBAC, async (c) => {
   }
 });
 
-monitoring.delete('/alerts/:ruleId', protectWithRBAC, async (c) => {
+monitoring.delete('/alerts/:ruleId', protectWithRBAC, async (c: AppContext) => {
   try {
     const ruleId = c.req.param('ruleId');
     alertManager.removeRule(ruleId);
@@ -165,7 +168,7 @@ monitoring.delete('/alerts/:ruleId', protectWithRBAC, async (c) => {
 });
 
 // Custom alert rule creation (admin only)
-monitoring.post('/alerts/rules', protectWithRBAC, async (c) => {
+monitoring.post('/alerts/rules', protectWithRBAC, async (c: AppContext) => {
   try {
     const body = await c.req.json();
     const rule = body;

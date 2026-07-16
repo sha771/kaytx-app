@@ -3156,7 +3156,7 @@ export const executiveDashboardConfig: DepartmentDashboardConfig = {
 };
 
 // Customer Experience Department Configuration
-export const customerSupportDashboardConfig: DepartmentDashboardConfig = {
+export const customerExperienceDashboardConfig: DepartmentDashboardConfig = {
   departmentId: 'customer-support',
   departmentName: 'Customer Experience',
   primaryColor: '#22D3EE',
@@ -7267,213 +7267,6 @@ export const accountingDashboardConfig: DepartmentDashboardConfig = {
   }
 };
 
-// Customer Support Department Configuration
-export const customerSupportDashboardConfig: DepartmentDashboardConfig = {
-  departmentId: 'customer-support',
-  departmentName: 'Customer Support',
-  primaryColor: '#10B981',
-  metrics: [
-    {
-      id: 'total-conversations',
-      title: 'Total Conversations',
-      value: '2,847',
-      change: '+324',
-      trend: 'up',
-      icon: MessageCircle,
-      color: '#10B981',
-      subtitle: 'Today'
-    },
-    {
-      id: 'active-agents',
-      title: 'Active AI Agents',
-      value: '12',
-      change: '+2',
-      trend: 'up',
-      icon: Users,
-      color: '#3B82F6',
-      subtitle: 'Online now'
-    },
-    {
-      id: 'csat-score',
-      title: 'CSAT Score',
-      value: '4.7/5.0',
-      change: '+0.2',
-      trend: 'up',
-      icon: Heart,
-      color: '#22C55E',
-      subtitle: 'Customer satisfaction'
-    },
-    {
-      id: 'avg-resolution-time',
-      title: 'Avg Resolution Time',
-      value: '8m 32s',
-      change: '-45s',
-      trend: 'up',
-      icon: Clock,
-      color: '#F59E0B',
-      subtitle: 'Target: 10m'
-    },
-    {
-      id: 'first-response-time',
-      title: 'First Response Time',
-      value: '1m 15s',
-      change: '-12s',
-      trend: 'up',
-      icon: Zap,
-      color: '#8B5CF6',
-      subtitle: 'Target: 2m'
-    },
-    {
-      id: 'escalation-rate',
-      title: 'Escalation Rate',
-      value: '4.2%',
-      change: '-0.8%',
-      trend: 'up',
-      icon: AlertCircle,
-      color: '#EF4444',
-      subtitle: 'Target: <5%'
-    },
-    {
-      id: 'open-tickets',
-      title: 'Open Tickets',
-      value: '156',
-      change: '-23',
-      trend: 'up',
-      icon: FileText,
-      color: '#3B82F6',
-      subtitle: 'Pending resolution'
-    },
-    {
-      id: 'resolved-tickets',
-      title: 'Resolved Tickets',
-      value: '2,691',
-      change: '+456',
-      trend: 'up',
-      icon: CheckCircle,
-      color: '#22C55E',
-      subtitle: 'Today'
-    },
-  ],
-  pipeline: [
-    {
-      id: 'inquiry',
-      name: 'Customer Inquiry',
-      status: 'completed',
-      duration: '0.5s',
-      description: 'Message received',
-      lastUpdate: '14:32:15'
-    },
-    {
-      id: 'ai-analysis',
-      name: 'AI Analysis',
-      status: 'completed',
-      duration: '1.2s',
-      description: 'Intent classified',
-      lastUpdate: '14:32:16'
-    },
-    {
-      id: 'knowledge-retrieval',
-      name: 'Knowledge Retrieval',
-      status: 'completed',
-      duration: '0.8s',
-      description: 'Context found',
-      lastUpdate: '14:32:17'
-    },
-    {
-      id: 'response-generation',
-      name: 'Response Generation',
-      status: 'active',
-      duration: 'pending',
-      description: 'AI drafting response',
-      lastUpdate: '14:32:18'
-    },
-    {
-      id: 'customer-feedback',
-      name: 'Customer Feedback',
-      status: 'pending',
-      duration: 'pending',
-      description: 'Awaiting response'
-    },
-    {
-      id: 'resolution',
-      name: 'Resolution',
-      status: 'pending',
-      duration: 'pending',
-      description: 'Ticket closure'
-    },
-  ],
-  activity: [
-    {
-      id: 'cs-act-1',
-      task: 'Billing inquiry resolved by Support Agent Alpha',
-      status: 'completed',
-      time: '2m ago',
-      impact: 'medium',
-      agent: 'Support Agent Alpha'
-    },
-    {
-      id: 'cs-act-2',
-      task: 'Technical issue escalated to human agent',
-      status: 'processing',
-      time: '5m ago',
-      impact: 'high',
-      agent: 'Support Agent Beta'
-    },
-    {
-      id: 'cs-act-3',
-      task: 'Product question answered by Support Agent Gamma',
-      status: 'completed',
-      time: '8m ago',
-      impact: 'low',
-      agent: 'Support Agent Gamma'
-    },
-    {
-      id: 'cs-act-4',
-      task: 'Password reset completed automatically',
-      status: 'completed',
-      time: '12m ago',
-      impact: 'low',
-      agent: 'System Automation'
-    },
-    {
-      id: 'cs-act-5',
-      task: 'Refund request processed successfully',
-      status: 'completed',
-      time: '15m ago',
-      impact: 'high',
-      agent: 'Support Agent Alpha'
-    },
-  ],
-  charts: {
-    performance: {
-      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-      datasets: [
-        {
-          label: 'Conversations',
-          data: [2456, 2890, 3102, 2756, 3200, 1890, 2847],
-          color: '#10B981',
-          fill: true
-        }
-      ]
-    },
-    trend: {
-      labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-      datasets: [
-        {
-          label: 'CSAT Score',
-          data: [4.5, 4.6, 4.6, 4.7],
-          color: '#22C55E'
-        },
-        {
-          label: 'Resolution Rate',
-          data: [88, 90, 91, 92],
-          color: '#3B82F6'
-        }
-      ]
-    }
-  }
-};
-
 // Sales & Revenue Dashboard Configuration
 export const salesRevenueDashboardConfig: DepartmentDashboardConfig = {
   departmentId: 'sales-revenue',
@@ -8671,7 +8464,7 @@ export const dashboardConfigs: Record<string, DepartmentDashboardConfig> = {
   'supply-chain': supplychainDashboardConfig,
   'public-sector': governmentDashboardConfig,
   'executive': executiveDashboardConfig,
-  'customer-support': customerSupportDashboardConfig,
+  'customer-support': customerExperienceDashboardConfig,
   'ai-management-governance': aiGovernanceDashboardConfig,
   'banking-finance': bankingFinanceDashboardConfig,
   'e-commerce': ecommerceDashboardConfig,
@@ -8687,7 +8480,6 @@ export const dashboardConfigs: Record<string, DepartmentDashboardConfig> = {
   'fashion-luxury': fashionDashboardConfig,
   'restaurants': restaurantsDashboardConfig,
   'accounting': accountingDashboardConfig,
-  'customer-support': customerSupportDashboardConfig,
   'sales-revenue': salesRevenueDashboardConfig,
   'professional-services': professionalServicesDashboardConfig,
 };

@@ -278,7 +278,7 @@ export default function AIEngineeringInsights({ insights }: AIEngineeringInsight
           </View>
         </View>
       </View>
-    </View>
+    </BlurView>
   );
 }
 

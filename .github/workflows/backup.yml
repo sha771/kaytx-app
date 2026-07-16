@@ -1,0 +1,121 @@
+name: Scheduled Backups
+
+on:
+  schedule:
+    # Daily at 02:00 UTC
+    - cron: '0 2 * * *'
+    # Weekly on Sunday at 03:00 UTC
+    - cron: '0 3 * * 0'
+    # Monthly on the 1st at 04:00 UTC
+    - cron: '0 4 1 * *'
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  backup:
+    name: Database Backup
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      BACKUP_DIR: ./backups
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      S3_BACKUP_BUCKET: ${{ secrets.S3_BACKUP_BUCKET }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install PostgreSQL client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+
+      - name: Install AWS CLI
+        run: pip install awscli
+
+      - name: Determine backup type
+        id: type
+        run: |
+          if [[ "${{ github.event.schedule }}" == "0 4 1 * *" ]]; then
+            echo "frequency=monthly" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.event.schedule }}" == "0 3 * * 0" ]]; then
+            echo "frequency=weekly" >> $GITHUB_OUTPUT
+          else
+            echo "frequency=daily" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create backup
+        id: backup
+        run: |
+          mkdir -p $BACKUP_DIR
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H-%M-%SZ")
+          FILENAME="${{ steps.type.outputs.frequency }}-${TIMESTAMP}.sql.gz"
+          FILEPATH="${BACKUP_DIR}/${FILENAME}"
+
+          echo "Creating backup: $FILENAME"
+          PGPASSWORD="${{ secrets.PGPASSWORD }}" pg_dump "$DATABASE_URL" \
+            --no-owner --no-acl --format=custom | gzip > "$FILEPATH"
+
+          SIZE=$(stat -c%s "$FILEPATH" 2>/dev/null || stat -f%z "$FILEPATH")
+          echo "size=$SIZE" >> $GITHUB_OUTPUT
+          echo "filepath=$FILEPATH" >> $GITHUB_OUTPUT
+          echo "filename=$FILENAME" >> $GITHUB_OUTPUT
+
+      - name: Verify backup integrity
+        run: |
+          FILEPATH="${{ steps.backup.outputs.filepath }}"
+          if [ ! -f "$FILEPATH" ]; then
+            echo "ERROR: Backup file not found"
+            exit 1
+          fi
+          SIZE="${{ steps.backup.outputs.size }}"
+          if [ "$SIZE" -lt 100 ]; then
+            echo "ERROR: Backup file too small ($SIZE bytes)"
+            exit 1
+          fi
+          echo "Backup verified: $SIZE bytes"
+
+      - name: Upload to S3
+        if: env.S3_BACKUP_BUCKET != ''
+        run: |
+          aws s3 cp "${{ steps.backup.outputs.filepath }}" \
+            "s3://${S3_BACKUP_BUCKET}/backups/${{ steps.backup.outputs.filename }}" \
+            --server-side-encryption AES256
+
+      - name: Prune old backups from S3
+        if: env.S3_BACKUP_BUCKET != ''
+        run: |
+          # Keep last 30 daily, 12 weekly, 12 monthly
+          aws s3api list-objects-v2 \
+            --bucket "$S3_BACKUP_BUCKET" \
+            --prefix "backups/daily-" \
+            --query "Contents[?LastModified<='$(date -u -d '30 days ago' +%Y-%m-%dT%H:%M:%SZ)'].Key" \
+            --output text | tr '\t' '\n' | while read key; do
+              [ -n "$key" ] && aws s3api delete-object --bucket "$S3_BACKUP_BUCKET" --key "$key"
+            done
+
+      - name: Upload backup artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.backup.outputs.filename }}
+          path: ${{ steps.backup.outputs.filepath }}
+          retention-days: 30
+
+      - name: Notify on failure
+        if: failure()
+        uses: slackapi/slack-github-action@v1
+        with:
+          slack-message: "❌ Backup failed for ${{ steps.type.outputs.frequency }}: ${{ github.run_id }}"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_BACKUP_WEBHOOK }}
+
+      - name: Notify on success
+        if: success()
+        uses: slackapi/slack-github-action@v1
+        with:
+          slack-message: "✅ Backup completed: ${{ steps.backup.outputs.filename }} (${{ steps.backup.outputs.size }} bytes)"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_BACKUP_WEBHOOK }}

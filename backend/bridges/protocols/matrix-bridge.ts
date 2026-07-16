@@ -1,5 +1,5 @@
-import { BaseBridge, BridgeConfig, BridgeMessage } from '../core/base-bridge';
-import { BridgeConnectionState } from '../types';
+import { BaseBridge, BridgeConfig, BridgeMessage } from '../../../core/base-bridge';
+import { BridgeConnectionState } from '../../../core/base-bridge';
 
 interface MatrixBridgeConfig extends BridgeConfig {
   homeserver: string;
@@ -55,7 +55,7 @@ export class MatrixBridge extends BaseBridge {
     }
   }
 
-  async disconnect(): Promise<BridgeConnectionState> {
+  async disconnect(): Promise<void> {
     console.log(`[MatrixBridge:${this.config.id}] Disconnecting`);
 
     this.syncRunning = false;
@@ -67,14 +67,12 @@ export class MatrixBridge extends BaseBridge {
     const state: BridgeConnectionState = { status: 'disconnected' };
     this.setState(state);
     this.emitEvent({ type: 'disconnected', data: state, timestamp: Date.now() });
-
-    return state;
   }
 
-  async sendMessage(message: BridgeMessage): Promise<boolean> {
+  async sendMessage(message: BridgeMessage): Promise<void> {
     if (this.state.status !== 'connected') {
       console.warn(`[MatrixBridge:${this.config.id}] Not connected`);
-      return false;
+      return;
     }
 
     try {
@@ -83,11 +81,9 @@ export class MatrixBridge extends BaseBridge {
       const eventId = `$${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
       
       console.log(`[MatrixBridge:${this.config.id}] Message sent with event ID: ${eventId}`);
-      return true;
     } catch (error) {
       console.error(`[MatrixBridge:${this.config.id}] Send error:`, error);
       this.emitEvent({ type: 'error', data: error, timestamp: Date.now() });
-      return false;
     }
   }
 
@@ -161,11 +157,11 @@ export class MatrixBridge extends BaseBridge {
       if (event.type === 'm.room.message') {
         const message: BridgeMessage = {
           id: event.event_id,
-          from: event.sender,
+          sender: event.sender,
           to: event.room_id,
           type: event.content.msgtype || 'm.text',
           content: event.content.body,
-          timestamp: event.origin_server_ts,
+          timestamp: new Date(event.origin_server_ts),
           metadata: {
             msgtype: event.content.msgtype,
             format: event.content.format,

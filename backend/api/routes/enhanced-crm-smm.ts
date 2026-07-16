@@ -6,8 +6,11 @@ import { z } from 'zod';
 // Import enhanced services
 import { socialCRMService } from '../../services/social-crm-service';
 import { enhancedSocialMediaService } from '../../services/enhanced-social-media-service';
+import type { RouteContext } from './route-types';
 
-const router = new Hono();
+const router = new Hono<{ Variables: RouteContext['env']['Variables'] }>();
+
+type AppContext = RouteContext;
 
 // Apply authentication to all routes
 router.use('*', requireAuth());
@@ -20,7 +23,7 @@ router.use('*', requireAuth());
  * GET /api/crm/revenue-intelligence
  * Get comprehensive revenue analytics including forecast, cohorts, attribution
  */
-router.get('/crm/revenue-intelligence', async (c) => {
+router.get('/crm/revenue-intelligence', async (c: AppContext) => {
   try {
     const auth = (c as any).get('auth') as any;
     
@@ -40,7 +43,7 @@ router.get('/crm/revenue-intelligence', async (c) => {
  * GET /api/crm/contacts/:id/advanced-score
  * Get AI-powered lead score with intent signals
  */
-router.get('/crm/contacts/:id/advanced-score', async (c) => {
+router.get('/crm/contacts/:id/advanced-score', async (c: AppContext) => {
   try {
     const { id } = c.req.param();
     
@@ -60,7 +63,7 @@ router.get('/crm/contacts/:id/advanced-score', async (c) => {
  * GET /api/crm/accounts/:id/org-chart
  * Get organizational chart and account intelligence
  */
-router.get('/crm/accounts/:id/org-chart', async (c) => {
+router.get('/crm/accounts/:id/org-chart', async (c: AppContext) => {
   try {
     const { id } = c.req.param();
     
@@ -95,12 +98,12 @@ const createSequenceSchema = z.object({
     content: z.string().optional(),
     templateId: z.string().optional(),
     delay: z.number(),
-    channel: z.enum(['email', 'phone', 'sms', 'whatsapp', 'linkedin', 'twitter', 'facebook', 'instagram', 'tiktok', 'meeting', 'webchat', 'slack', 'teams', 'discord']).optional(),
+    channel: z.enum(['email', 'phone', 'sms', 'whatsapp', 'linkedin', 'twitter', 'facebook', 'instagram', 'website', 'app', 'in_person']).optional(),
     aiAgentId: z.string().optional()
   }))
 });
 
-router.post('/crm/smart-sequences', validateInput(createSequenceSchema, 'body'), async (c) => {
+router.post('/crm/smart-sequences', validateInput(createSequenceSchema, 'body'), async (c: AppContext) => {
   try {
     const body = (c as any).get('validatedBody') as z.infer<typeof createSequenceSchema>;
     
@@ -125,7 +128,7 @@ router.post('/crm/smart-sequences', validateInput(createSequenceSchema, 'body'),
  * POST /api/crm/contacts/:id/enrich
  * Enrich contact data from external sources
  */
-router.post('/crm/contacts/:id/enrich', async (c) => {
+router.post('/crm/contacts/:id/enrich', async (c: AppContext) => {
   try {
     const { id } = c.req.param();
     const body = await c.req.json();
@@ -169,7 +172,7 @@ const shoppableContentSchema = z.object({
       title: z.string(),
       price: z.number(),
       inventory: z.number(),
-      options: z.record(z.string())
+      options: z.record(z.string(), z.string())
     })).optional()
   })),
   checkoutFlow: z.enum(['native', 'redirect', 'messenger', 'instagram_shop', 'tiktok_shop']).optional(),
@@ -177,7 +180,7 @@ const shoppableContentSchema = z.object({
   promotionBudget: z.number().optional()
 });
 
-router.post('/smm/shoppable-content', validateInput(shoppableContentSchema, 'body'), async (c) => {
+router.post('/smm/shoppable-content', validateInput(shoppableContentSchema, 'body'), async (c: AppContext) => {
   try {
     const body = (c as any).get('validatedBody') as z.infer<typeof shoppableContentSchema>;
     
@@ -212,7 +215,7 @@ const commerceEventSchema = z.object({
   value: z.number().optional()
 });
 
-router.post('/smm/commerce-events', validateInput(commerceEventSchema, 'body'), async (c) => {
+router.post('/smm/commerce-events', validateInput(commerceEventSchema, 'body'), async (c: AppContext) => {
   try {
     const body = (c as any).get('validatedBody') as z.infer<typeof commerceEventSchema>;
     
@@ -250,7 +253,7 @@ const discoverInfluencersSchema = z.object({
   location: z.string().optional()
 });
 
-router.post('/smm/influencers/discover', validateInput(discoverInfluencersSchema, 'body'), async (c) => {
+router.post('/smm/influencers/discover', validateInput(discoverInfluencersSchema, 'body'), async (c: AppContext) => {
   try {
     const body = (c as any).get('validatedBody') as z.infer<typeof discoverInfluencersSchema>;
     
@@ -293,7 +296,7 @@ const createCollaborationSchema = z.object({
   contentRights: z.enum(['usage', 'ownership', 'limited']).optional()
 });
 
-router.post('/smm/influencers/:id/collaborations', validateInput(createCollaborationSchema, 'body'), async (c) => {
+router.post('/smm/influencers/:id/collaborations', validateInput(createCollaborationSchema, 'body'), async (c: AppContext) => {
   try {
     const { id } = c.req.param();
     const body = (c as any).get('validatedBody') as z.infer<typeof createCollaborationSchema>;
@@ -327,7 +330,7 @@ router.post('/smm/influencers/:id/collaborations', validateInput(createCollabora
  * GET /api/smm/influencers/:id/performance
  * Get influencer performance analytics
  */
-router.get('/smm/influencers/:id/performance', async (c) => {
+router.get('/smm/influencers/:id/performance', async (c: AppContext) => {
   try {
     const { id } = c.req.param();
     
@@ -351,7 +354,7 @@ router.get('/smm/influencers/:id/performance', async (c) => {
  * GET /api/smm/accounts/:id/community-health
  * Get comprehensive community health metrics
  */
-router.get('/smm/accounts/:id/community-health', async (c) => {
+router.get('/smm/accounts/:id/community-health', async (c: AppContext) => {
   try {
     const { id } = c.req.param();
     
@@ -391,7 +394,7 @@ const aiContentSchema = z.object({
   trendHijacking: z.string().optional()
 });
 
-router.post('/smm/ai-content', validateInput(aiContentSchema, 'body'), async (c) => {
+router.post('/smm/ai-content', validateInput(aiContentSchema, 'body'), async (c: AppContext) => {
   try {
     const body = (c as any).get('validatedBody') as z.infer<typeof aiContentSchema>;
     
@@ -419,7 +422,7 @@ const socialListeningSchema = z.object({
   query: z.string()
 });
 
-router.post('/smm/social-listening', validateInput(socialListeningSchema, 'body'), async (c) => {
+router.post('/smm/social-listening', validateInput(socialListeningSchema, 'body'), async (c: AppContext) => {
   try {
     const body = (c as any).get('validatedBody') as z.infer<typeof socialListeningSchema>;
     
@@ -439,7 +442,7 @@ router.post('/smm/social-listening', validateInput(socialListeningSchema, 'body'
 // HEALTH CHECK
 // ============================================
 
-router.get('/health', (c) => {
+router.get('/health', async (c: AppContext) => {
   return c.json({
     success: true,
     message: 'Enhanced CRM & SMM API is running',

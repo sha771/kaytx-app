@@ -21,7 +21,7 @@ import { twilioCallingService } from './services/twilio-calling-service';
 import { consolidatedPlatformSyncService } from './services/consolidated-platform-sync-service';
 import { EmailCampaignService } from './services/email-campaign-service';
 import { ssoService } from './services/sso-service';
-import { validateCSRFToken, csrfTokenMiddleware, generateCSRFToken } from './lib/unified-csrf';
+import { csrfTokenMiddleware, generateCSRFToken } from './lib/unified-csrf';
 import { rateLimitMiddleware, RateLimitPresets } from './services/consolidated-rate-limit-service';
 import { secureAuthErrorHandler } from './middleware/secure-auth-error-handler';
 import { secureAuthMiddleware } from './middleware/secure-auth-middleware';
@@ -33,7 +33,7 @@ import { validateBody, validateParams, validateQuery } from './middleware/valida
 import { requireAuth, requirePermission, requireMinRole, getAuthContext } from './middleware/rbac-middleware';
 import { Permission, Role } from './lib/rbac';
 import { db as pgDb } from './db/connection';
-import { users, callLogs } from './db/drizzle-schema';
+import { users } from './db/drizzle-schema';
 import { eq, sql, desc } from 'drizzle-orm';
 import { generateBase32Secret, buildOtpauthUrl } from './lib/mfa-totp';
 import {
@@ -118,9 +118,9 @@ app.use("/api/v1/*", rateLimitMiddleware(RateLimitPresets.API));
 app.use("/webhooks/*", rateLimitMiddleware(RateLimitPresets.WEBHOOK));
 
 // CSRF Protection
-app.use("/api/*", validateCSRFToken());
-app.use("/api/v1/*", validateCSRFToken());
-app.use("/auth/*", validateCSRFToken());
+app.use("/api/*", csrfTokenMiddleware());
+app.use("/api/v1/*", csrfTokenMiddleware());
+app.use("/auth/*", csrfTokenMiddleware());
 
 app.use('/api/v1/*', async (c, next) => {
   const path = c.req.path;
@@ -225,9 +225,9 @@ app.use("/webhooks/*", rateLimitMiddleware(RateLimitPresets.WEBHOOK));
 app.use("/api/integrations/*", rateLimitMiddleware(RateLimitPresets.INTEGRATION));
 
 // 2. CSRF protection for state-changing endpoints only
-app.use("/api/*", validateCSRFToken()); // Skips GET, HEAD, OPTIONS automatically
-app.use("/api/v1/*", validateCSRFToken()); // Skips GET, HEAD, OPTIONS automatically
-app.use("/auth/*", validateCSRFToken()); // Apply to auth endpoints too
+app.use("/api/*", csrfTokenMiddleware()); // Skips GET, HEAD, OPTIONS automatically
+app.use("/api/v1/*", csrfTokenMiddleware()); // Skips GET, HEAD, OPTIONS automatically
+app.use("/auth/*", csrfTokenMiddleware()); // Apply to auth endpoints too
 
 // 3. Security headers
 app.use('*', secureHeaders({

@@ -122,7 +122,7 @@ export default function AgentTestingScreen() {
       role: 'user',
       content: inputText,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-
+    };
 
     setMessages(prev => [...prev, userMessage]);
     setInputText('');
@@ -871,5 +871,3 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 });
-
-}
