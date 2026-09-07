@@ -26,7 +26,7 @@ import {
   Sparkles,
   Zap,
   FileText,
-  ChartBarBig,
+  BarChart3,
   Calendar,
   Briefcase,
 } from 'lucide-react-native';
@@ -92,7 +92,7 @@ const INITIAL_MESSAGES: Message[] = [
 
 const QUICK_ACTIONS = [
   { icon: FileText, label: 'Reports', color: '#3B82F6' },
-  { icon: ChartBarBig, label: 'Analytics', color: '#8B5CF6' },
+  { icon: BarChart3, label: 'Analytics', color: '#8B5CF6' },
   { icon: Calendar, label: 'Schedule', color: '#F59E0B' },
   { icon: Briefcase, label: 'Tasks', color: '#10B981' },
 ];

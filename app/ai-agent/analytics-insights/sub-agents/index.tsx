@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Activity, BarChart3, LineChart, PieChart, Database, TrendingUp, ArrowRight, Users, Sparkles, Shield, Zap, Target, FileText, Calculator, Search, Filter, Settings, Globe, Workflow, Network, Server } from 'lucide-react-native';
+import { Activity, BarChart3, LineChart, PieChart, Database, TrendingUp, ArrowRight, Users, Sparkles, Shield, Zap, Target, FileText, Calculator, Search, Filter, Settings, Globe, Workflow, Network, Server, Archive, Bell, Clock, Cpu, DollarSign, GitBranch, Layers, Lock, Send, TrendingDown, Trophy } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 
 export default function AnalyticsInsightsSubAgentsIndex() {

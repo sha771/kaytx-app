@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { HelpCircle, Search, BookOpen, MessageCircle, Video, FileText, ChevronRight, Mail, Phone, ExternalLink, Zap, Shield, Users, Settings } from 'lucide-react-native';
+import { HelpCircle, Search, BookOpen, MessageCircle, Video, FileText, ChevronRight, Mail, PhoneCall, ExternalLink, Zap, Shield, Users, Settings } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
@@ -53,7 +53,7 @@ const FAQS = [
 const SUPPORT_CHANNELS = [
   { id: 'chat', name: 'Live Chat', icon: MessageCircle, color: '#3B82F6', availability: 'Available 24/7' },
   { id: 'email', name: 'Email Support', icon: Mail, color: '#8B5CF6', availability: 'Response within 4 hours' },
-  { id: 'phone', name: 'Phone Support', icon: Phone, color: '#10B981', availability: 'Mon-Fri 9AM-6PM EST' },
+  { id: 'phone', name: 'Phone Support', icon: PhoneCall, color: '#10B981', availability: 'Mon-Fri 9AM-6PM EST' },
 ];
 
 export default function HelpPage() {

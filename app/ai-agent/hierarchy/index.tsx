@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Crown, Users, UserCircle, User, Activity, ArrowRight, ChartBarBig, Network, Target, Zap, Briefcase, Award, GitBranch, Layers, Brain, Shield, Search, Filter } from 'lucide-react-native';
+import { Crown, Users, UserCircle, User, Activity, ArrowRight, BarChart3, Network, Target, Zap, Briefcase, Award, GitBranch, Layers, Brain, Shield, Search, Filter } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
@@ -95,7 +95,7 @@ const ORG_STATS = [
 const QUICK_ACTIONS = [
   { label: 'Full Org Chart', icon: Network, route: '/ai-agent/ai-workforce-architecture' },
   { label: 'Team View', icon: Users, route: '/ai-agent/team-management' },
-  { label: 'Performance', icon: ChartBarBig, route: '/ai-agent/performance' },
+  { label: 'Performance', icon: BarChart3, route: '/ai-agent/performance' },
   { label: 'Goals', icon: Target, route: '/ai-agent/team-management/goals' },
 ];
 

@@ -29,7 +29,7 @@ import {
   Settings,
   Plus,
   Search,
-  ChartBarBig,
+  BarChart3,
   Globe,
   Layers,
   Shield,
@@ -753,7 +753,7 @@ export default function ContainersScreen() {
               <View style={[styles.statCard, { backgroundColor: theme.colors.cardBackground }]}
                 testID="stat-card-total">
                 <View style={[styles.statIcon, { backgroundColor: 'rgba(0,0,0,0.05)' }]}>
-                  <ChartBarBig size={18} color={theme.colors.text} />
+                  <BarChart3 size={18} color={theme.colors.text} />
                 </View>
                 <Text style={[styles.statValue, { color: theme.colors.text }]}>{filteredContainers.length}</Text>
                 <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Total Services</Text>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
-import { ChartBarBig } from 'lucide-react-native';
+import { BarChart3 } from 'lucide-react-native';
 
 export default function AgentPage() {
   const agent = {
@@ -9,7 +9,7 @@ export default function AgentPage() {
     title: 'controller',
     description: 'The controller AI provides specialized services and automation within its department.',
     capabilities: ["Task Automation","Data Processing","Workflow Management"],
-    icon: ChartBarBig,
+    icon: BarChart3,
     color: '#0D47A1',
     type: 'agent' as const,
     humanCost: '$79k/year',

@@ -1,6 +1,13 @@
 import { serve } from '@hono/node-server'
 import { logger } from './lib/production-logger'
 
+if (!process.env.OPENAI_API_KEY) {
+  process.env.OPENAI_API_KEY = 'sk-mock'
+}
+if (!process.env.OTEL_ENABLE_TRACING) {
+  process.env.OTEL_ENABLE_TRACING = 'false'
+}
+
 async function startServer() {
   try {
     // Lazy-load heavy modules to avoid startup hangs

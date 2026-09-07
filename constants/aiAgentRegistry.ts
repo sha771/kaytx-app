@@ -18,6 +18,12 @@ export interface AgentRegistryEntry {
   level: string;
   type: 'main' | 'sub';
   parentId: string | null;
+  /**
+   * Phone number assigned to voice/phone/call-oriented agents.
+   * Undefined for agents whose role does not require a phone line.
+   * Values are deterministic mock/placeholder numbers (no real PII).
+   */
+  phoneNumber?: string;
 }
 
 export const agentRegistry: AgentRegistryEntry[] = [
@@ -1157,6 +1163,64 @@ export const agentRegistry: AgentRegistryEntry[] = [
   { uid: 'ktx-00-data-lineage-tracker', seq: 1134, sidebarId: '0-ai-data-lineage-tracker', hierarchyId: null, route: '/ai-agent/cross-department/data-lineage-tracker', title: 'AI Data Lineage Tracker', department: 'Cross-Department', departmentId: 0, level: 'specialist', type: 'sub', parentId: 'ai-anomaly-detector' },
   { uid: 'ktx-00-feedback-loop-agent', seq: 1135, sidebarId: '0-ai-feedback-loop-agent', hierarchyId: null, route: '/ai-agent/cross-department/feedback-loop-agent', title: 'AI Feedback Loop Agent', department: 'Cross-Department', departmentId: 0, level: 'specialist', type: 'sub', parentId: 'ai-swarm-controller' },
 ];
+
+// ============================================================================
+// Phone number assignment for voice/phone/call-oriented agents
+// ============================================================================
+
+/**
+ * Keyword patterns that identify an agent whose role requires a phone line
+ * (receptionist, customer support, negotiator, call router, call center,
+ * hotline, switchboard, telemarketer, dispatcher, appointment/outreach/follow-up
+ * callers, voice agents, etc.). Centralized here for easy tuning.
+ */
+export const PHONE_ROLE_PATTERNS: RegExp[] = [
+  /\breceptionist\b/i,
+  /\bsupport\b/i,
+  /\bnegotiat(or|ion)\b/i,
+  /\bcall(er| router| center)?\b/i,
+  /\bhotline\b/i,
+  /\bswitchboard\b/i,
+  /\btelephone\b/i,
+  /\btelemarketer\b/i,
+  /\bappointment\b/i,
+  /\boutreach\b/i,
+  /\bfollow[- ]?up\b/i,
+  /\bdispatch(er)?\b/i,
+  /\bvoice\b/i,
+  /\bhelpline\b/i,
+  /\binbound\b/i,
+  /\bcallback\b/i,
+];
+
+/** Returns true when the given agent title indicates a phone/voice/call role. */
+export function requiresPhone(title: string): boolean {
+  return PHONE_ROLE_PATTERNS.some((re) => re.test(title));
+}
+
+/**
+ * Deterministic mock/placeholder phone number derived from an agent's sequence.
+ * Format: +1 (AREA) PREFIX-LINE  (no real PII).
+ */
+export function generateAgentPhoneNumber(seq: number): string {
+  const area = 200 + (seq % 700);
+  const prefix = String(100 + (seq % 900)).padStart(3, '0');
+  const line = String((seq * 37) % 10000).padStart(4, '0');
+  return `+1 (${area}) ${prefix}-${line}`;
+}
+
+// Augment the registry in place so every consumer (pages, hooks, backend, seed
+// scripts) sees the generated phone number on qualifying agents.
+agentRegistry.forEach((entry) => {
+  if (requiresPhone(entry.title)) {
+    entry.phoneNumber = generateAgentPhoneNumber(entry.seq);
+  }
+});
+
+/** Returns the assigned phone number for an agent uid, or null if none. */
+export function getAgentPhoneNumber(uid: string): string | null {
+  return getByUid(uid)?.phoneNumber ?? null;
+}
 
 // Lookup functions
 export function getByUid(uid: string): AgentRegistryEntry | undefined { return agentRegistry.find(e => e.uid === uid); }

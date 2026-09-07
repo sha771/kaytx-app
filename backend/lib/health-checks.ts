@@ -145,8 +145,7 @@ async function checkMessageQueue(): Promise<{ status: string; latency: number; e
       };
     }
 
-    // Check connection status
-    const connectionStatus = await messageQueue.getConnectionStatus();
+    const connectionStatus = !!(messageQueue.connection && messageQueue.channel);
     const latency = Date.now() - startTime;
     
     monitoring.trackPerformance('health_check_message_queue', latency, 'ms');

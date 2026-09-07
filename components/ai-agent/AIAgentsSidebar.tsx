@@ -12,7 +12,7 @@ import {
   FlaskConical,
   Settings,
   Share2,
-  ChartBarBig,
+  BarChart3,
   Gauge,
   Users,
   Monitor,
@@ -96,11 +96,11 @@ import {
   ArrowRightLeft,
   LayoutGrid as LayoutGridIcon,
   BookOpen as BookOpenIcon,
-  PhoneForward,
+  PhoneForwarded,
   Brain,
   CircleCheckBig,
   GraduationCap,
-  Box,
+  Package,
   Clipboard,
   Building,
   Truck,
@@ -109,7 +109,6 @@ import {
   HardHat,
   Ruler,
   Trash2,
-  Package,
   Link,
   ShieldAlert,
   Terminal,
@@ -143,6 +142,18 @@ import {
   ShoppingCart,
   Upload,
   FileCheck,
+  Tv,
+  Gamepad2,
+  Store,
+  Plane,
+  Sprout,
+  Gem,
+  Utensils,
+  Clock,
+  User,
+  LayoutDashboard,
+  FolderOpen,
+  ArrowRight,
 } from 'lucide-react-native';
 
 interface SidebarCategory {
@@ -154,54 +165,51 @@ interface SidebarCategory {
   count: number;
 }
 
-// All 22 Departments - 1,108 Total Agents
+// All 36 Departments - 2,160 Total Agents
 const departmentCategories: SidebarCategory[] = [
   // Mind Map Visualization
-  { id: 'mind-map', label: 'AI Workforce Map', icon: GitBranch, color: '#7C4DFF', route: '/ai-agent/mind-map', count: 1108 },
-  // DEPT 1: Customer Experience (56 agents)
-  { id: 'customer-experience', label: 'Customer Experience', icon: Headphones, color: '#00BCD4', route: '/ai-agent/customer', count: 56 },
-  // DEPT 2: Sales & Revenue (56 agents)
-  { id: 'sales-revenue', label: 'Sales & Revenue', icon: Target, color: '#FFA000', route: '/ai-agent/sales', count: 56 },
-  // DEPT 3: Marketing & Growth (60 agents)
-  { id: 'marketing-growth', label: 'Marketing & Growth', icon: Megaphone, color: '#E91E63', route: '/ai-agent/marketing', count: 60 },
-  // DEPT 4: Operations & Management (52 agents)
+  { id: 'mind-map', label: 'AI Workforce Map', icon: GitBranch, color: '#7C4DFF', route: '/agent-hierarchy-mindmap', count: 2160 },
+  // Hierarchy & Education Sections
+  { id: 'hierarchy-mindmap', label: '📊 Hierarchy & Mind Map', icon: GitBranch, color: '#7C4DFF', route: '/agent-hierarchy-mindmap', count: 5 },
+  { id: 'education-training', label: '🎓 Education & Training', icon: GraduationCap, color: '#F59E0B', route: '/ai-agent/education', count: 11 },
+  // Original 22 Core Departments
+  { id: 'customer-experience', label: 'Customer Experience', icon: Headphones, color: '#00BCD4', route: '/ai-agent/customer-support', count: 56 },
+  { id: 'sales-revenue', label: 'Sales & Revenue', icon: Target, color: '#FFA000', route: '/ai-agent/sales-revenue', count: 56 },
+  { id: 'marketing-growth', label: 'Marketing & Growth', icon: Megaphone, color: '#E91E63', route: '/ai-agent/marketing', count: 70 },
   { id: 'operations-management', label: 'Operations & Management', icon: Settings, color: '#607D8B', route: '/ai-agent/operations', count: 52 },
-  // DEPT 5: Finance & Accounting (52 agents)
   { id: 'finance-accounting', label: 'Finance & Accounting', icon: DollarSign, color: '#2E7D32', route: '/ai-agent/finance', count: 52 },
-  // DEPT 6: Technology & Engineering (64 agents)
-  { id: 'technology-engineering', label: 'Technology & Engineering', icon: Code, color: '#1565C0', route: '/ai-agent/engineering', count: 64 },
-  // DEPT 7: Human Resources (44 agents)
-  { id: 'human-resources', label: 'Human Resources', icon: Users, color: '#9C27B0', route: '/ai-agent/hr', count: 44 },
-  // DEPT 8: Legal & Compliance (40 agents)
+  { id: 'technology-engineering', label: 'Technology & Engineering', icon: Code, color: '#1565C0', route: '/ai-agent/technology-engineering', count: 64 },
+  { id: 'human-resources', label: 'Human Resources', icon: Users, color: '#9C27B0', route: '/ai-agent/human-resources', count: 44 },
   { id: 'legal-compliance', label: 'Legal & Compliance', icon: Scale, color: '#3F51B5', route: '/ai-agent/legal', count: 40 },
-  // DEPT 9: Data & Intelligence (52 agents)
-  { id: 'data-intelligence', label: 'Data & Intelligence', icon: Database, color: '#AF52DE', route: '/ai-agent/data', count: 52 },
-  // DEPT 10: Product Management (40 agents)
-  { id: 'product-management', label: 'Product Management', icon: Box, color: '#FF5722', route: '/ai-agent/product', count: 40 },
-  // DEPT 11: Security & Risk (48 agents)
+  { id: 'data-intelligence', label: 'Data & Intelligence', icon: Database, color: '#00ACC1', route: '/ai-agent/data', count: 52 },
+  { id: 'product-management', label: 'Product Management', icon: Package, color: '#FF5722', route: '/ai-agent/product-management', count: 40 },
   { id: 'security-risk', label: 'Security & Risk', icon: Shield, color: '#F44336', route: '/ai-agent/security', count: 48 },
-  // DEPT 12: Research & Development (36 agents)
-  { id: 'research-development', label: 'Research & Development', icon: FlaskConical, color: '#009688', route: '/ai-agent/research', count: 36 },
-  // DEPT 13: Administrative (36 agents)
-  { id: 'administrative', label: 'Administrative', icon: Clipboard, color: '#795548', route: '/ai-agent/admin', count: 36 },
-  // DEPT 14: Trading & Investments (72 agents)
-  { id: 'trading-investments', label: 'Trading & Investments', icon: TrendingUp, color: '#10B981', route: '/ai-agent/trading', count: 72 },
-  // DEPT 15: Real Estate & Property (56 agents)
-  { id: 'real-estate', label: 'Real Estate & Property', icon: Building, color: '#8D6E63', route: '/ai-agent/real-estate', count: 56 },
-  // DEPT 16: Insurance & Risk (64 agents)
+  { id: 'research-development', label: 'Research & Development', icon: FlaskConical, color: '#009688', route: '/ai-agent/research-development', count: 36 },
+  { id: 'administrative', label: 'Administrative', icon: Clipboard, color: '#795548', route: '/ai-agent/administrative', count: 36 },
+  { id: 'trading-investments', label: 'Trading & Investments', icon: TrendingUp, color: '#10B981', route: '/ai-agent/trading-investment', count: 72 },
+  { id: 'real-estate-property', label: 'Real Estate & Property', icon: Building, color: '#8D6E63', route: '/ai-agent/real-estate', count: 56 },
   { id: 'insurance-risk', label: 'Insurance & Risk', icon: ShieldCheck, color: '#FF7043', route: '/ai-agent/insurance', count: 64 },
-  // DEPT 17: Healthcare & Medical (56 agents)
-  { id: 'healthcare-medical', label: 'Healthcare & Medical', icon: HeartPulse, color: '#EC407A', route: '/ai-agent/healthcare', count: 56 },
-  // DEPT 18: Manufacturing & Production (56 agents)
-  { id: 'manufacturing', label: 'Manufacturing & Production', icon: Factory, color: '#5C6BC0', route: '/ai-agent/manufacturing', count: 56 },
-  // DEPT 19: Transportation & Logistics (56 agents)
-  { id: 'transportation', label: 'Transportation & Logistics', icon: Truck, color: '#26A69A', route: '/ai-agent/transportation', count: 56 },
-  // DEPT 20: Government & Public Sector (48 agents)
-  { id: 'government', label: 'Government & Public Sector', icon: Landmark, color: '#78909C', route: '/ai-agent/government', count: 48 },
-  // DEPT 21: Supply Chain & Logistics (40 agents)
-  { id: 'supply-chain', label: 'Supply Chain & Logistics', icon: Link, color: '#42A5F5', route: '/ai-agent/supply-chain', count: 40 },
-  // DEPT 22: AI Management & Governance (24 agents)
-  { id: 'ai-governance', label: 'AI Management & Governance', icon: Brain, color: '#7C4DFF', route: '/ai-agent/ai-mgmt', count: 24 },
+  { id: 'healthcare-medical', label: 'Healthcare & Medical', icon: HeartPulse, color: '#EC407A', route: '/ai-agent/healthcare-medical', count: 56 },
+  { id: 'manufacturing-production', label: 'Manufacturing & Production', icon: Factory, color: '#5C6BC0', route: '/ai-agent/manufacturing', count: 56 },
+  { id: 'transportation-logistics', label: 'Transportation & Logistics', icon: Truck, color: '#26A69A', route: '/ai-agent/transportation', count: 56 },
+  { id: 'government-public-sector', label: 'Government & Public Sector', icon: Landmark, color: '#78909C', route: '/ai-agent/public-sector', count: 48 },
+  { id: 'supply-chain-logistics', label: 'Supply Chain & Logistics', icon: Link, color: '#42A5F5', route: '/ai-agent/supply-chain', count: 40 },
+  { id: 'ai-management-governance', label: 'AI Management & Governance', icon: Brain, color: '#6366F1', route: '/ai-agent/ai-management-governance', count: 24 },
+  // New 14 Industry-Specific Departments
+  { id: 'banking-finance', label: 'Banking & Finance', icon: Landmark, color: '#059669', route: '/ai-agent/banking-finance', count: 48 },
+  { id: 'ecommerce', label: 'E-Commerce', icon: ShoppingCart, color: '#7C3AED', route: '/ai-agent/e-commerce', count: 56 },
+  { id: 'professional-services', label: 'Professional Services', icon: Briefcase, color: '#0891B2', route: '/ai-agent/consulting-advisory', count: 40 },
+  { id: 'media-entertainment', label: 'Media & Entertainment', icon: Tv, color: '#EC4899', route: '/ai-agent/media-entertainment', count: 48 },
+  { id: 'gaming-esports', label: 'Gaming & Esports', icon: Gamepad2, color: '#8B5CF6', route: '/ai-agent/gaming-esports', count: 40 },
+  { id: 'education-dept', label: 'Education', icon: GraduationCap, color: '#F59E0B', route: '/ai-agent/education', count: 48 },
+  { id: 'retail-stores', label: 'Retail & Stores', icon: Store, color: '#EF4444', route: '/ai-agent/retail-stores', count: 48 },
+  { id: 'travel-tourism', label: 'Travel & Tourism', icon: Plane, color: '#0EA5E9', route: '/ai-agent/travel-tourism', count: 48 },
+  { id: 'energy-utilities', label: 'Energy & Utilities', icon: Zap, color: '#84CC16', route: '/ai-agent/energy-utilities', count: 40 },
+  { id: 'executive-strategy', label: 'Executive & Strategy', icon: Crown, color: '#64748B', route: '/ai-agent/executive', count: 40 },
+  { id: 'event-management', label: 'Event Management', icon: Calendar, color: '#F97316', route: '/ai-agent/event-management', count: 40 },
+  { id: 'agriculture', label: 'Agriculture', icon: Sprout, color: '#22C55E', route: '/ai-agent/agriculture', count: 40 },
+  { id: 'fashion-luxury', label: 'Fashion & Luxury', icon: Gem, color: '#DB2777', route: '/ai-agent/fashion-luxury', count: 48 },
+  { id: 'restaurants', label: 'Restaurants', icon: Utensils, color: '#DC2626', route: '/ai-agent/restaurant-hospitality', count: 40 },
 ];
 
 // Legacy categories for backwards compatibility
@@ -214,7 +222,7 @@ const categories: SidebarCategory[] = [
   { id: 'product-rnd-ai', label: 'Product & R&D AI', icon: FlaskConical, color: '#7B1FA2', route: '/ai-agent/product-rnd-ai', count: 6 },
   { id: 'operations-management-ai', label: 'Operations & Management AI', icon: Settings, color: '#FF6B35', route: '/ai-agent/operations-ai', count: 10 },
   { id: 'social-media-management-ai', label: 'Social Media Management AI', icon: Share2, color: '#E1306C', route: '/ai-agent/social-media-management-ai', count: 8 },
-  { id: 'data-intelligence-ai', label: 'Data & Intelligence AI', icon: ChartBarBig, color: '#9B59B6', route: '/ai-agent/data-ai', count: 8 },
+  { id: 'data-intelligence-ai', label: 'Data & Intelligence AI', icon: BarChart3, color: '#9B59B6', route: '/ai-agent/data-ai', count: 8 },
   { id: 'analysis-performance-ai', label: 'Analysis, Insights & Performance AI', icon: Gauge, color: '#E74C3C', route: '/ai-agent/analysis-performance-ai', count: 9 },
   { id: 'human-resources-ai', label: 'Human Resources AI', icon: Users, color: '#00897B', route: '/ai-agent/hr-ai', count: 7 },
   { id: 'it-technology-ai', label: 'IT & Technology AI', icon: Monitor, color: '#0288D1', route: '/ai-agent/it-technology-ai', count: 6 },
@@ -276,7 +284,7 @@ const operationsFinanceCategories: SidebarCategory[] = [
   { id: 'ai-resource-planner', label: 'AI Resource Planner', icon: Calendar, color: '#FF6B35', route: '/ai-agent/operations/ai-resource-planner', count: 3 },
   { id: 'ai-quality-assurance', label: 'AI Quality Assurance', icon: CheckCircle, color: '#8B5CF6', route: '/ai-agent/operations/ai-quality-assurance', count: 3 },
   { id: 'ai-cfo', label: 'AI Chief Financial Officer', icon: Briefcase, color: '#10B981', route: '/ai-agent/finance/cfo', count: 3 },
-  { id: 'ai-vp-finance', label: 'AI VP Finance', icon: ChartBarBig, color: '#4CAF50', route: '/ai-agent/finance/vp-finance', count: 3 },
+  { id: 'ai-vp-finance', label: 'AI VP Finance', icon: BarChart3, color: '#4CAF50', route: '/ai-agent/finance/vp-finance', count: 3 },
   { id: 'ai-vp-accounting', label: 'AI VP Accounting', icon: Landmark, color: '#388E3C', route: '/ai-agent/finance/vp-accounting', count: 3 },
 ];
 
@@ -298,7 +306,7 @@ const financeVPHierarchy: SidebarCategory[] = [
   { id: 'vp-treasury', label: 'AI VP Treasury', icon: DollarSign, color: '#2E7D32', route: '/ai-agent/finance/vp-treasury', count: 3 },
   { id: 'vp-investor-relations', label: 'AI VP Investor Relations', icon: TrendingUp, color: '#007AFF', route: '/ai-agent/finance/vp-investor-relations', count: 3 },
   { id: 'controller', label: 'AI Controller', icon: Shield, color: '#4E342E', route: '/ai-agent/finance/controller', count: 3 },
-  { id: 'finance-manager', label: 'AI Finance Manager', icon: ChartBarBig, color: '#388E3C', route: '/ai-agent/finance/finance-manager', count: 3 },
+  { id: 'finance-manager', label: 'AI Finance Manager', icon: BarChart3, color: '#388E3C', route: '/ai-agent/finance/finance-manager', count: 3 },
   { id: 'accounting-manager', label: 'AI Accounting Manager', icon: Landmark, color: '#1565C0', route: '/ai-agent/finance/accounting-manager', count: 3 },
   { id: 'financial-analyst', label: 'AI Financial Analyst', icon: BarChart3, color: '#FF9500', route: '/ai-agent/finance/ai-financial-analyst', count: 3 },
   { id: 'budget-manager', label: 'AI Budget Manager', icon: Calculator, color: '#7B1FA2', route: '/ai-agent/finance/ai-budget-manager', count: 3 },
@@ -569,7 +577,7 @@ const dataIntelligenceAgents: SidebarCategory[] = [
   { id: 'ai-ml-engineer', label: 'AI ML Engineer', icon: Brain, color: '#8BC34A', route: '/ai-agent/data/ai-ml-engineer', count: 3 },
   { id: 'ai-data-steward', label: 'AI Data Steward', icon: Shield, color: '#009688', route: '/ai-agent/data/ai-data-steward', count: 3 },
   { id: 'ai-analytics-specialist', label: 'AI Analytics Specialist', icon: TrendingUp, color: '#F44336', route: '/ai-agent/data/ai-analytics-specialist', count: 3 },
-  { id: 'vp-product', label: 'AI VP Product', icon: Box, color: '#FF5722', route: '/ai-agent/product/vp-product', count: 3 },
+  { id: 'vp-product', label: 'AI VP Product', icon: Package, color: '#FF5722', route: '/ai-agent/product/vp-product', count: 3 },
 ];
 
 // VP Analytics Sub-Agents - Agent 110
@@ -1117,7 +1125,7 @@ const insuranceAgentHierarchy: SidebarCategory[] = [
   { id: 'claims-adjuster', label: 'AI Claims Adjuster', icon: ClipboardList, color: '#FF5722', route: '/ai-agent/insurance/claims-adjuster', count: 3 },
   { id: 'fraud-detector', label: 'AI Fraud Detection Agent', icon: Search, color: '#E64A19', route: '/ai-agent/insurance/fraud-detector', count: 3 },
   { id: 'actuary-analyst', label: 'AI Actuary Analyst', icon: Calculator, color: '#FF7043', route: '/ai-agent/insurance/actuary-analyst', count: 3 },
-  { id: 'risk-modeler', label: 'AI Risk Modeler', icon: ChartBarBig, color: '#FF5722', route: '/ai-agent/insurance/risk-modeler', count: 3 },
+  { id: 'risk-modeler', label: 'AI Risk Modeler', icon: BarChart3, color: '#FF5722', route: '/ai-agent/insurance/risk-modeler', count: 3 },
   { id: 'policy-admin', label: 'AI Policy Administrator', icon: FileText, color: '#E64A19', route: '/ai-agent/insurance/policy-admin', count: 3 },
   { id: 'customer-risk-analyst', label: 'AI Customer Risk Analyst', icon: UserCheck, color: '#FF7043', route: '/ai-agent/insurance/customer-risk-analyst', count: 3 },
   { id: 'catastrophe-modeler', label: 'AI Catastrophe Modeler', icon: AlertTriangle, color: '#FF5722', route: '/ai-agent/insurance/catastrophe-modeler', count: 3 },
@@ -1389,7 +1397,7 @@ const manufacturingSpecialists: SidebarCategory[] = [
 // CPO Sub-Agents - Agent 222
 const cpoSubAgents: SidebarCategory[] = [
   { id: 'production-strategy-advisor', label: 'AI Production Strategy Advisor', icon: Globe, color: '#BF360C', route: '/ai-agent/manufacturing/sub-agents/production-strategy-advisor', count: 1 },
-  { id: 'capacity-planner', label: 'AI Capacity Planner', icon: ChartBarBig, color: '#BF360C', route: '/ai-agent/manufacturing/sub-agents/capacity-planner', count: 1 },
+  { id: 'capacity-planner', label: 'AI Capacity Planner', icon: BarChart3, color: '#BF360C', route: '/ai-agent/manufacturing/sub-agents/capacity-planner', count: 1 },
   { id: 'cost-reduction-analyst', label: 'AI Cost Reduction Analyst', icon: DollarSign, color: '#BF360C', route: '/ai-agent/manufacturing/sub-agents/cost-reduction-analyst', count: 1 },
 ];
 
@@ -1411,7 +1419,7 @@ const vpQASubAgents: SidebarCategory[] = [
 const prodMgrSubAgents: SidebarCategory[] = [
   { id: 'shift-coordinator', label: 'AI Shift Coordinator', icon: Clock, color: '#BF360C', route: '/ai-agent/manufacturing/sub-agents/shift-coordinator', count: 1 },
   { id: 'production-scheduler', label: 'AI Production Scheduler', icon: Calendar, color: '#BF360C', route: '/ai-agent/manufacturing/sub-agents/production-scheduler', count: 1 },
-  { id: 'output-tracker', label: 'AI Output Tracker', icon: ChartBarBig, color: '#BF360C', route: '/ai-agent/manufacturing/sub-agents/output-tracker', count: 1 },
+  { id: 'output-tracker', label: 'AI Output Tracker', icon: BarChart3, color: '#BF360C', route: '/ai-agent/manufacturing/sub-agents/output-tracker', count: 1 },
 ];
 
 // Quality Manager Sub-Agents - Agent 226

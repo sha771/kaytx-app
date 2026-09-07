@@ -3,16 +3,37 @@
  * @license MIT - See LICENSE file for full terms
  */
 
-import React, { useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, TextInput, ActivityIndicator, RefreshControl } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Search, Brain, TrendingUp, FileText, Users, AlertCircle, ArrowRight, Clock, CheckCircle } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import apiClient from '@/lib/api-client';
 
 export default function CompanyBrainDashboard() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const [searchQuery, setSearchQuery] = useState('');
+  const [dashboardData, setDashboardData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadDashboard();
+  }, []);
+
+  const loadDashboard = async () => {
+    try {
+      setLoading(true);
+      const response = await apiClient.getCompanyBrainDashboard();
+      if (response?.success && response?.data) {
+        setDashboardData(response.data);
+      }
+    } catch (err) {
+      console.error('Failed to load dashboard:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
@@ -23,26 +44,9 @@ export default function CompanyBrainDashboard() {
     }
   };
 
-  const knowledgeHealth = {
-    coverage: 78,
-    outdated: 12,
-    duplicates: 5,
-    score: 85,
-  };
-
-  const trendingTopics = [
-    { id: 1, topic: 'Client onboarding process', searches: 234, trend: 'up' },
-    { id: 2, topic: 'API authentication', searches: 189, trend: 'up' },
-    { id: 3, topic: 'Expense reimbursement', searches: 156, trend: 'stable' },
-    { id: 4, topic: 'Remote work policy', searches: 143, trend: 'down' },
-  ];
-
-  const recentKnowledge = [
-    { id: 1, title: 'Updated Q4 sales strategy', type: 'document', time: '2 hours ago', author: 'Sarah M.' },
-    { id: 2, title: 'New product launch timeline', type: 'project', time: '5 hours ago', author: 'John D.' },
-    { id: 3, title: 'Customer feedback analysis', type: 'decision', time: '1 day ago', author: 'AI Agent' },
-    { id: 4, title: 'Team meeting notes - Marketing', type: 'meeting', time: '2 days ago', author: 'Emily R.' },
-  ];
+  const knowledgeHealth = dashboardData?.health || { coverage: 0, outdated: 0, duplicates: 0, score: 0 };
+  const trendingTopics = dashboardData?.trendingTopics || [];
+  const recentKnowledge = dashboardData?.recentActivity || [];
 
   const quickActions = [
     { id: 1, title: 'Upload Document', icon: FileText, route: '/company-brain/documents', color: '#6366f1' },
@@ -51,10 +55,20 @@ export default function CompanyBrainDashboard() {
     { id: 4, title: 'Team Dashboard', icon: Users, route: '/company-brain/team', color: '#f59e0b' },
   ];
 
+  if (loading && !dashboardData) {
+    return (
+      <View style={[styles.container, styles.loadingContainer, { paddingTop: insets.top }]}>
+        <ActivityIndicator size="large" color="#6366f1" />
+        <Text style={styles.loadingText}>Loading Company Brain...</Text>
+      </View>
+    );
+  }
+
   return (
     <ScrollView 
       style={[styles.container, { paddingTop: insets.top }]}
       contentContainerStyle={[styles.contentContainer, { paddingBottom: insets.bottom + 20 }]}
+      refreshControl={<RefreshControl refreshing={loading} onRefresh={loadDashboard} tintColor="#6366f1" />}
     >
       {/* Header */}
       <View style={styles.header}>
@@ -182,6 +196,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#0f172a',
+  },
+  loadingContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    color: '#94a3b8',
+    fontSize: 16,
+    marginTop: 16,
   },
   contentContainer: {
     padding: 20,

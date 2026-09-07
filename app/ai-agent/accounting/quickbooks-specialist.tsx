@@ -1,6 +1,6 @@
 import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
-import { FileBox } from 'lucide-react-native';
+import { FileText } from 'lucide-react-native';
 
 export default function AgentPage() {
   const agent = {
@@ -16,7 +16,7 @@ export default function AgentPage() {
       "Third-Party Integration",
       "User Training"
     ],
-    icon: FileBox,
+    icon: FileText,
     color: '#2E7D32',
     type: 'agent' as const,
     humanCost: '$60k/year',

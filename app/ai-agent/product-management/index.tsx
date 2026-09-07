@@ -1,6 +1,6 @@
 import React from 'react';
 import DepartmentDashboardView from '@/components/ai-agent/dashboard/DepartmentDashboardView';
-import { Briefcase, TrendingUp, Layout, Target, Users, BarChart3, Box, Rocket, Activity, Shield, RefreshCw, FileText, Calendar, Compass, MessageSquare } from 'lucide-react-native';
+import { Briefcase, TrendingUp, Layout, Target, Users, BarChart3, Package, Rocket, Activity, Shield, RefreshCw, FileText, Calendar, Compass, MessageSquare } from 'lucide-react-native';
 
 const DEPARTMENT_AGENTS = [
   { id: 'neural-product-hub', name: 'AI Neural Product Hub', description: 'Central product management coordination system', icon: Briefcase, color: '#E65100' },
@@ -9,7 +9,7 @@ const DEPARTMENT_AGENTS = [
   { id: 'cognitive-feature-prioritizer', name: 'AI Cognitive Feature Prioritizer', description: 'Intelligent feature prioritization and backlog management', icon: Target, color: '#E65100' },
   { id: 'adaptive-user-researcher', name: 'AI Adaptive User Researcher', description: 'Adaptive user research and customer insights', icon: Users, color: '#E65100' },
   { id: 'intelligent-product-analytics', name: 'AI Intelligent Product Analytics', description: 'Product analytics and performance metrics', icon: BarChart3, color: '#E65100' },
-  { id: 'neural-prototype-validator', name: 'AI Neural Prototype Validator', description: 'Prototype validation and testing with neural AI', icon: Box, color: '#E65100' },
+  { id: 'neural-prototype-validator', name: 'AI Neural Prototype Validator', description: 'Prototype validation and testing with neural AI', icon: Package, color: '#E65100' },
   { id: 'predictive-launch-coordinator', name: 'AI Predictive Launch Coordinator', description: 'Predictive product launch coordination and management', icon: Rocket, color: '#E65100' },
   { id: 'real-time-ab-testing', name: 'AI Real-Time A/B Testing', description: 'Real-time A/B testing and optimization platform', icon: Activity, color: '#E65100' },
   { id: 'cognitive-product-owner', name: 'AI Cognitive Product Owner', description: 'Intelligent product owner assistance and decision support', icon: Shield, color: '#E65100' },

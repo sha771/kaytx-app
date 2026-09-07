@@ -58,7 +58,7 @@ import {
   AlertCircle,
   ArrowUpRight,
   ArrowDownRight,
-  ChartBarBig,
+  BarChart3,
   User,
   Building2,
   Handshake,

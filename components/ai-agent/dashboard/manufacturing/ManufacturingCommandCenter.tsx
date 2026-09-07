@@ -75,7 +75,6 @@ import {
   Wifi,
   AlertTriangle,
   CheckSquare,
-  Box,
   Warehouse,
   Armchair,
   Cog,
@@ -91,6 +90,7 @@ import {
   Layers as LayersIcon,
   Bot,
   Workflow,
+  Box
 } from 'lucide-react-native';
 
 // Types

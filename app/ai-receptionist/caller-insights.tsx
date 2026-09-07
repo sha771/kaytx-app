@@ -23,7 +23,7 @@ import {
   MapPin,
   Building,
   Award,
-  ChartBarBig,
+  BarChart3,
   ChartPie,
   Activity,
   Lock,

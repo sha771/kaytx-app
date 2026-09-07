@@ -1,64 +1,88 @@
-/**
- * @copyright Copyright (c) 2026 Kaytx & Antigravity Ecosystem ("kaytx")
- * @license MIT - See LICENSE file for full terms
- */
-
-import React, { useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Modal, ActivityIndicator, RefreshControl } from 'react-native';
 import { useRouter } from 'expo-router';
 import { ChevronRight, Users, AlertTriangle, TrendingUp, Search, Filter, User, Award, Target, BookOpen, Activity, Shield, CheckCircle, X } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import apiClient from '@/lib/api-client';
 
 export default function CompanyBrainTeam() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const [selectedDepartment, setSelectedDepartment] = useState('all');
   const [showFilterModal, setShowFilterModal] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
-  const departments = [
+  const [departments, setDepartments] = useState<any[]>([
     { id: 'all', name: 'All Departments' },
-    { id: 'product', name: 'Product' },
-    { id: 'engineering', name: 'Engineering' },
-    { id: 'sales', name: 'Sales' },
-    { id: 'marketing', name: 'Marketing' },
-    { id: 'hr', name: 'HR' },
-  ];
+  ]);
+  const [departmentStats, setDepartmentStats] = useState<any[]>([]);
+  const [experts, setExperts] = useState<any[]>([]);
+  const [atRiskKnowledge, setAtRiskKnowledge] = useState<any[]>([]);
+  const [recentContributions, setRecentContributions] = useState<any[]>([]);
+  const [searchActivity, setSearchActivity] = useState<any[]>([]);
 
-  const departmentStats = [
-    { id: 'product', name: 'Product', coverage: 85, experts: 12, atRisk: 2, contributions: 156 },
-    { id: 'engineering', name: 'Engineering', coverage: 92, experts: 18, atRisk: 1, contributions: 234 },
-    { id: 'sales', name: 'Sales', coverage: 78, experts: 8, atRisk: 4, contributions: 98 },
-    { id: 'marketing', name: 'Marketing', coverage: 71, experts: 6, atRisk: 5, contributions: 87 },
-    { id: 'hr', name: 'HR', coverage: 88, experts: 4, atRisk: 1, contributions: 65 },
-  ];
+  const loadData = useCallback(async () => {
+    try {
+      const params = { organizationId: 'default' };
 
-  const experts = [
-    { id: 1, name: 'Sarah M.', role: 'Senior Product Manager', department: 'Product', expertise: ['Product Strategy', 'Roadmap Planning', 'Stakeholder Management'], contributionScore: 95 },
-    { id: 2, name: 'John D.', role: 'Tech Lead', department: 'Engineering', expertise: ['Architecture', 'API Design', 'Team Leadership'], contributionScore: 92 },
-    { id: 3, name: 'Emily R.', role: 'Marketing Director', department: 'Marketing', expertise: ['Brand Strategy', 'Campaign Management', 'Analytics'], contributionScore: 88 },
-    { id: 4, name: 'Mike T.', role: 'Sales Manager', department: 'Sales', expertise: ['Enterprise Sales', 'Negotiation', 'Client Relations'], contributionScore: 85 },
-  ];
+      const [expertsRes, statsRes] = await Promise.all([
+        apiClient.getTeamExperts(params),
+        apiClient.getGraphStatistics(params),
+      ]);
 
-  const atRiskKnowledge = [
-    { id: 1, area: 'Legacy System Architecture', holder: 'John D.', riskLevel: 'high', reason: 'Single point of failure', impact: 'Critical' },
-    { id: 2, area: 'Key Client Relationships', holder: 'Mike T.', riskLevel: 'high', reason: 'No documented backup', impact: 'High' },
-    { id: 3, area: 'Product Launch Process', holder: 'Sarah M.', riskLevel: 'medium', reason: 'Partial documentation', impact: 'Medium' },
-    { id: 4, area: 'Marketing Analytics Setup', holder: 'Emily R.', riskLevel: 'medium', reason: 'Complex configuration', impact: 'Medium' },
-  ];
+      if (expertsRes?.success && expertsRes?.data) {
+        setExperts(expertsRes.data);
 
-  const recentContributions = [
-    { id: 1, contributor: 'Sarah M.', type: 'process', title: 'Updated Q4 Launch Process', time: '2 hours ago', department: 'Product' },
-    { id: 2, contributor: 'John D.', type: 'technical', title: 'API Authentication Guide', time: '5 hours ago', department: 'Engineering' },
-    { id: 3, contributor: 'Emily R.', type: 'decision', title: 'Brand Strategy Decision', time: '1 day ago', department: 'Marketing' },
-    { id: 4, contributor: 'Mike T.', type: 'client', title: 'Enterprise Client Notes', time: '2 days ago', department: 'Sales' },
-  ];
+        const deptMap = new Map<string, any>();
+        const deptList = [{ id: 'all', name: 'All Departments' }];
+        const statsList: any[] = [];
 
-  const searchActivity = [
-    { id: 1, query: 'API authentication', count: 45, trend: 'up' },
-    { id: 2, query: 'Client onboarding', count: 38, trend: 'up' },
-    { id: 3, query: 'Expense policy', count: 32, trend: 'stable' },
-    { id: 4, query: 'Product roadmap', count: 28, trend: 'down' },
-  ];
+        for (const expert of expertsRes.data) {
+          const deptId = (expert.department || '').toLowerCase().replace(/\s+/g, '-');
+          if (!deptMap.has(deptId)) {
+            deptMap.set(deptId, {
+              id: deptId,
+              name: expert.department,
+              coverage: expert.coverage || 0,
+              experts: 0,
+              atRisk: 0,
+              contributions: 0,
+            });
+            deptList.push({ id: deptId, name: expert.department });
+          }
+          const dept = deptMap.get(deptId);
+          dept.experts++;
+          dept.contributions += expert.contributionScore || expert.contributions || 0;
+        }
+
+        deptList.slice(1).forEach((d) => {
+          if (deptMap.has(d.id)) statsList.push(deptMap.get(d.id));
+        });
+        setDepartments(deptList);
+        setDepartmentStats(statsList);
+      }
+
+      if (statsRes?.success && statsRes?.data) {
+        const sd = statsRes.data;
+        if (sd.atRiskKnowledge) setAtRiskKnowledge(sd.atRiskKnowledge);
+        if (sd.recentContributions) setRecentContributions(sd.recentContributions);
+        if (sd.searchActivity) setSearchActivity(sd.searchActivity);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  }, []);
+
+  useEffect(() => { loadData(); }, [loadData]);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    loadData();
+  }, [loadData]);
 
   const getRiskColor = (level: string) => {
     switch (level) {
@@ -86,13 +110,21 @@ export default function CompanyBrainTeam() {
     }
   };
 
-  const filteredStats = selectedDepartment === 'all' 
-    ? departmentStats 
+  const filteredStats = selectedDepartment === 'all'
+    ? departmentStats
     : departmentStats.filter(d => d.id === selectedDepartment);
 
   const filteredExperts = selectedDepartment === 'all'
     ? experts
-    : experts.filter(e => e.department.toLowerCase() === selectedDepartment);
+    : experts.filter(e => (e.department || '').toLowerCase().replace(/\s+/g, '-') === selectedDepartment);
+
+  if (loading && !refreshing) {
+    return (
+      <View style={[styles.container, { paddingTop: insets.top }, styles.centered]}>
+        <ActivityIndicator size="large" color="#6366f1" />
+      </View>
+    );
+  }
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
@@ -108,13 +140,13 @@ export default function CompanyBrainTeam() {
       </View>
 
       {/* Department Selector */}
-      <ScrollView 
-        horizontal 
+      <ScrollView
+        horizontal
         showsHorizontalScrollIndicator={false}
         style={styles.departmentScroll}
         contentContainerStyle={styles.departmentScrollContent}
       >
-        {departments.map((dept) => (
+        {departments.map((dept: any) => (
           <TouchableOpacity
             key={dept.id}
             style={[styles.departmentChip, selectedDepartment === dept.id && styles.departmentChipActive]}
@@ -127,12 +159,16 @@ export default function CompanyBrainTeam() {
         ))}
       </ScrollView>
 
-      <ScrollView style={styles.scrollView} contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 20 }]}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 20 }]}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#6366f1" />}
+      >
         {/* Department Stats */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Knowledge Coverage by Department</Text>
           <View style={styles.statsGrid}>
-            {filteredStats.map((stat) => (
+            {filteredStats.map((stat: any) => (
               <View key={stat.id} style={styles.statCard}>
                 <View style={styles.statHeader}>
                   <Text style={styles.statName}>{stat.name}</Text>
@@ -165,16 +201,16 @@ export default function CompanyBrainTeam() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Knowledge Experts</Text>
           <View style={styles.expertsList}>
-            {filteredExperts.map((expert) => (
+            {filteredExperts.map((expert: any) => (
               <TouchableOpacity key={expert.id} style={styles.expertCard}>
                 <View style={styles.expertAvatar}>
                   <User size={32} color="#6366f1" />
                 </View>
                 <View style={styles.expertInfo}>
                   <Text style={styles.expertName}>{expert.name}</Text>
-                  <Text style={styles.expertRole}>{expert.role}</Text>
+                  <Text style={styles.expertRole}>{expert.role || expert.title}</Text>
                   <View style={styles.expertExpertise}>
-                    {expert.expertise.slice(0, 2).map((skill, index) => (
+                    {(expert.expertise || []).slice(0, 2).map((skill: string, index: number) => (
                       <View key={index} style={styles.skillBadge}>
                         <Text style={styles.skillText}>{skill}</Text>
                       </View>
@@ -183,7 +219,7 @@ export default function CompanyBrainTeam() {
                 </View>
                 <View style={styles.expertScore}>
                   <Award size={16} color="#f59e0b" />
-                  <Text style={styles.expertScoreText}>{expert.contributionScore}</Text>
+                  <Text style={styles.expertScoreText}>{expert.contributionScore || expert.score || 0}</Text>
                 </View>
               </TouchableOpacity>
             ))}
@@ -199,19 +235,19 @@ export default function CompanyBrainTeam() {
             </TouchableOpacity>
           </View>
           <View style={styles.atRiskList}>
-            {atRiskKnowledge.map((risk) => (
+            {atRiskKnowledge.map((risk: any) => (
               <TouchableOpacity key={risk.id} style={styles.atRiskCard}>
                 <View style={[styles.atRiskIcon, { backgroundColor: `${getRiskColor(risk.riskLevel)}20` }]}>
                   <AlertTriangle size={20} color={getRiskColor(risk.riskLevel)} />
                 </View>
                 <View style={styles.atRiskInfo}>
-                  <Text style={styles.atRiskArea}>{risk.area}</Text>
-                  <Text style={styles.atRiskHolder}>Holder: {risk.holder}</Text>
-                  <Text style={styles.atRiskReason}>{risk.reason}</Text>
+                  <Text style={styles.atRiskArea}>{risk.area || risk.name}</Text>
+                  <Text style={styles.atRiskHolder}>Holder: {risk.holder || risk.employee || '-'}</Text>
+                  <Text style={styles.atRiskReason}>{risk.reason || '-'}</Text>
                 </View>
                 <View style={[styles.atRiskImpact, { backgroundColor: `${getRiskColor(risk.riskLevel)}20` }]}>
                   <Text style={[styles.atRiskImpactText, { color: getRiskColor(risk.riskLevel) }]}>
-                    {risk.impact}
+                    {risk.impact || risk.severity}
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -228,23 +264,23 @@ export default function CompanyBrainTeam() {
             </TouchableOpacity>
           </View>
           <View style={styles.contributionsList}>
-            {recentContributions.map((contribution) => (
+            {recentContributions.map((contribution: any) => (
               <TouchableOpacity key={contribution.id} style={styles.contributionItem}>
                 <View style={styles.contributionIcon}>
                   <BookOpen size={20} color="#6366f1" />
                 </View>
                 <View style={styles.contributionInfo}>
-                  <Text style={styles.contributionTitle}>{contribution.title}</Text>
+                  <Text style={styles.contributionTitle}>{contribution.title || contribution.name}</Text>
                   <View style={styles.contributionMeta}>
-                    <Text style={styles.contributionAuthor}>{contribution.contributor}</Text>
+                    <Text style={styles.contributionAuthor}>{contribution.contributor || contribution.author || '-'}</Text>
                     <Text style={styles.contributionSeparator}>•</Text>
-                    <Text style={styles.contributionType}>{contribution.type}</Text>
+                    <Text style={styles.contributionType}>{contribution.type || '-'}</Text>
                     <Text style={styles.contributionSeparator}>•</Text>
-                    <Text style={styles.contributionTime}>{contribution.time}</Text>
+                    <Text style={styles.contributionTime}>{contribution.time || contribution.createdAt || '-'}</Text>
                   </View>
                 </View>
                 <View style={styles.contributionDepartment}>
-                  <Text style={styles.contributionDepartmentText}>{contribution.department}</Text>
+                  <Text style={styles.contributionDepartmentText}>{contribution.department || '-'}</Text>
                 </View>
               </TouchableOpacity>
             ))}
@@ -255,14 +291,14 @@ export default function CompanyBrainTeam() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Search Activity</Text>
           <View style={styles.searchActivityList}>
-            {searchActivity.map((activity) => {
+            {searchActivity.map((activity: any) => {
               const TrendIcon = getTrendIcon(activity.trend);
               return (
                 <View key={activity.id} style={styles.searchActivityItem}>
                   <Search size={20} color="#6366f1" />
                   <View style={styles.searchActivityInfo}>
-                    <Text style={styles.searchActivityQuery}>{activity.query}</Text>
-                    <Text style={styles.searchActivityCount}>{activity.count} searches</Text>
+                    <Text style={styles.searchActivityQuery}>{activity.query || activity.name}</Text>
+                    <Text style={styles.searchActivityCount}>{activity.count || activity.searches || 0} searches</Text>
                   </View>
                   <TrendIcon size={20} color={getTrendColor(activity.trend)} />
                 </View>
@@ -305,7 +341,7 @@ export default function CompanyBrainTeam() {
           <ScrollView style={styles.modalContent}>
             <View style={styles.filterSection}>
               <Text style={styles.filterSectionTitle}>Department</Text>
-              {departments.slice(1).map((dept) => (
+              {departments.slice(1).map((dept: any) => (
                 <TouchableOpacity
                   key={dept.id}
                   style={styles.filterOption}
@@ -356,6 +392,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#0f172a',
+  },
+  centered: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   header: {
     flexDirection: 'row',

@@ -540,7 +540,7 @@ export default function DailyBriefingModal({ visible, onClose }: Props) {
 
               <View style={styles.section}>
                 <View style={styles.sectionHeader}>
-                  <ChartBarBig size={18} color="#10B981" />
+                  <BarChart3 size={18} color="#10B981" />
                   <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
                     Today Activity
                   </Text>
@@ -647,7 +647,7 @@ export default function DailyBriefingModal({ visible, onClose }: Props) {
 
               <View style={styles.section}>
                 <View style={styles.sectionHeader}>
-                  <ChartBarBig size={18} color={theme.colors.primary} />
+                  <BarChart3 size={18} color={theme.colors.primary} />
                   <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
                     Platform Breakdown
                   </Text>

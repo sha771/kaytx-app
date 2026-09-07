@@ -1,6 +1,6 @@
 import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
-import { Box } from 'lucide-react-native';
+import { Boxes } from 'lucide-react-native';
 
 export default function AgentPage() {
   const agent = {
@@ -9,7 +9,7 @@ export default function AgentPage() {
     title: 'Manage orders, returns, and product questions quickly',
     description: 'The Retail & eCommerce AI provides specialized services and automation within its department.',
     capabilities: ["Task Automation","Data Processing","Workflow Management"],
-    icon: Box,
+    icon: Boxes,
     color: '#607D8B',
     type: 'agent' as const,
     humanCost: '$64k/year',

@@ -828,7 +828,7 @@ export const companyBrainChatThreads = pgTable('company_brain_chat_threads', {
   id: uuid('id').primaryKey().defaultRandom(),
   organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
   channelId: uuid('channel_id').references(() => companyBrainChatChannels.id, { onDelete: 'cascade' }).notNull(),
-  parentMessageId: uuid('parent_message_id').references(() => companyBrainChatMessages.id, { onDelete: 'cascade' }).notNull(),
+  parentMessageId: uuid('parent_message_id').references(() => companyBrainChatMessagesExtended.id, { onDelete: 'cascade' }).notNull(),
   title: varchar('title', { length: 255 }),
   participants: jsonb('participants').default([]).notNull(),
   messageCount: integer('message_count').default(0).notNull(),
@@ -1023,7 +1023,7 @@ export const agentSkillKnowledgeGraph = pgTable('agent_skill_knowledge_graph', {
 export const companyBrainChatTypingIndicators = pgTable('company_brain_chat_typing', {
   id: uuid('id').primaryKey().defaultRandom(),
   organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
-  conversationId: uuid('conversation_id').references(() => companyBrainChatConversations.id, { onDelete: 'cascade' }).notNull(),
+  conversationId: uuid('conversation_id').references(() => companyBrainChatConversationsExtended.id, { onDelete: 'cascade' }).notNull(),
   userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
   isTyping: boolean('is_typing').default(false).notNull(),
   lastSeenAt: timestamp('last_seen_at').defaultNow().notNull(),
@@ -1037,7 +1037,7 @@ export const companyBrainChatTypingIndicators = pgTable('company_brain_chat_typi
 export const companyBrainChatReadReceipts = pgTable('company_brain_chat_read_receipts', {
   id: uuid('id').primaryKey().defaultRandom(),
   organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
-  messageId: uuid('message_id').references(() => companyBrainChatMessages.id, { onDelete: 'cascade' }).notNull(),
+  messageId: uuid('message_id').references(() => companyBrainChatMessagesExtended.id, { onDelete: 'cascade' }).notNull(),
   userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
   readAt: timestamp('read_at').defaultNow().notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
@@ -1057,21 +1057,474 @@ export type CompanyBrainAIMessage = typeof companyBrainAIMessages.$inferSelect;
 export type CompanyBrainChatTypingIndicator = typeof companyBrainChatTypingIndicators.$inferSelect;
 export type CompanyBrainChatReadReceipt = typeof companyBrainChatReadReceipts.$inferSelect;
 
-// Type aliases for Company Brain
+// ==================== KNOWLEDGE GRAPH TABLES ====================
+
+// Knowledge Nodes - Main knowledge entity in the graph
+export const knowledgeNodes = pgTable('knowledge_nodes', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  type: varchar('type', { length: 100 }).notNull(), // 'process', 'decision', 'client', 'project', 'technical', 'tribal', 'sop', 'workflow', 'playbook', 'person', 'document', 'meeting', 'email', 'product', 'policy'
+  label: varchar('label', { length: 500 }).notNull(),
+  content: text('content'),
+  summary: text('summary'),
+  sourceType: varchar('source_type', { length: 100 }),
+  sourceId: text('source_id'),
+  status: varchar('status', { length: 50 }).default('draft').notNull(), // 'draft', 'verified', 'outdated', 'archived'
+  confidenceScore: decimal('confidence_score', { precision: 3, scale: 2 }).default('0.50'),
+  importanceScore: decimal('importance_score', { precision: 3, scale: 2 }).default('0.50'),
+  embeddingVector: vector('embedding_vector', { dimensions: 1536 }),
+  tags: jsonb('tags').default([]).notNull(),
+  properties: jsonb('properties').default({}).notNull(),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdBy: uuid('created_by').references(() => users.id, { onDelete: 'set null' }),
+  departmentId: varchar('department_id', { length: 100 }),
+  projectIds: jsonb('project_ids').default([]).notNull(),
+  accessCount: integer('access_count').default(0).notNull(),
+  lastAccessedAt: timestamp('last_accessed_at'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_nodes_org_idx').on(table.organizationId),
+  typeIdx: index('knowledge_nodes_type_idx').on(table.type),
+  statusIdx: index('knowledge_nodes_status_idx').on(table.status),
+  createdByIdx: index('knowledge_nodes_created_by_idx').on(table.createdBy),
+  embeddingIdx: index('knowledge_nodes_embedding_idx').using('ivfflat', table.embeddingVector),
+  createdAtIdx: index('knowledge_nodes_created_at_idx').on(table.createdAt),
+}));
+
+// Knowledge Relationships - Graph edges
+export const knowledgeRelationships = pgTable('knowledge_relationships', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  sourceNodeId: uuid('source_node_id').references(() => knowledgeNodes.id, { onDelete: 'cascade' }).notNull(),
+  targetNodeId: uuid('target_node_id').references(() => knowledgeNodes.id, { onDelete: 'cascade' }).notNull(),
+  type: varchar('type', { length: 100 }).notNull(), // 'works_on', 'reports_to', 'collaborates_with', 'depends_on', 'related_to', 'part_of', 'owns', 'manages', 'knows', etc.
+  weight: decimal('weight', { precision: 3, scale: 2 }).default('1.0').notNull(),
+  properties: jsonb('properties').default({}).notNull(),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_relationships_org_idx').on(table.organizationId),
+  sourceIdx: index('knowledge_relationships_source_idx').on(table.sourceNodeId),
+  targetIdx: index('knowledge_relationships_target_idx').on(table.targetNodeId),
+  typeIdx: index('knowledge_relationships_type_idx').on(table.type),
+  sourceTargetIdx: uniqueIndex('knowledge_relationships_st_idx').on(table.sourceNodeId, table.targetNodeId, table.type),
+}));
+
+// Knowledge Persons - Person entities in the knowledge graph
+export const knowledgePersons = pgTable('knowledge_persons', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'set null' }),
+  nodeId: uuid('node_id').references(() => knowledgeNodes.id, { onDelete: 'set null' }),
+  name: varchar('name', { length: 255 }).notNull(),
+  email: varchar('email', { length: 255 }),
+  department: varchar('department', { length: 255 }),
+  role: varchar('role', { length: 255 }),
+  skills: jsonb('skills').default([]).notNull(),
+  expertise: jsonb('expertise').default([]).notNull(),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_persons_org_idx').on(table.organizationId),
+  userIdx: index('knowledge_persons_user_idx').on(table.userId),
+  nodeIdx: index('knowledge_persons_node_idx').on(table.nodeId),
+}));
+
+// Knowledge Projects - Project entities in the knowledge graph
+export const knowledgeProjects = pgTable('knowledge_projects', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  nodeId: uuid('node_id').references(() => knowledgeNodes.id, { onDelete: 'set null' }),
+  name: varchar('name', { length: 255 }).notNull(),
+  description: text('description'),
+  status: varchar('status', { length: 50 }).default('active').notNull(),
+  startDate: timestamp('start_date'),
+  endDate: timestamp('end_date'),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_projects_org_idx').on(table.organizationId),
+  nodeIdx: index('knowledge_projects_node_idx').on(table.nodeId),
+}));
+
+// Knowledge Clients - Client entities in the knowledge graph
+export const knowledgeClients = pgTable('knowledge_clients', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  nodeId: uuid('node_id').references(() => knowledgeNodes.id, { onDelete: 'set null' }),
+  name: varchar('name', { length: 255 }).notNull(),
+  industry: varchar('industry', { length: 255 }),
+  contactEmail: varchar('contact_email', { length: 255 }),
+  contactPhone: varchar('contact_phone', { length: 50 }),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_clients_org_idx').on(table.organizationId),
+  nodeIdx: index('knowledge_clients_node_idx').on(table.nodeId),
+}));
+
+// Knowledge Documents - Document metadata
+export const knowledgeDocuments = pgTable('knowledge_documents', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  nodeId: uuid('node_id').references(() => knowledgeNodes.id, { onDelete: 'set null' }),
+  fileName: varchar('file_name', { length: 500 }).notNull(),
+  fileType: varchar('file_type', { length: 100 }).notNull(),
+  fileSize: integer('file_size'),
+  filePath: text('file_path'),
+  content: text('content'),
+  mimeType: varchar('mime_type', { length: 100 }),
+  processingStatus: varchar('processing_status', { length: 50 }).default('pending').notNull(),
+  chunkCount: integer('chunk_count').default(0).notNull(),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdBy: uuid('created_by').references(() => users.id, { onDelete: 'set null' }),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_documents_org_idx').on(table.organizationId),
+  nodeIdx: index('knowledge_documents_node_idx').on(table.nodeId),
+  statusIdx: index('knowledge_documents_status_idx').on(table.processingStatus),
+}));
+
+// Knowledge Document Chunks
+export const knowledgeDocumentChunks = pgTable('knowledge_document_chunks', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  documentId: uuid('document_id').references(() => knowledgeDocuments.id, { onDelete: 'cascade' }).notNull(),
+  chunkIndex: integer('chunk_index').notNull(),
+  chunkContent: text('chunk_content').notNull(),
+  chunkSummary: text('chunk_summary'),
+  embeddingVector: vector('embedding_vector', { dimensions: 1536 }),
+  tokenCount: integer('token_count'),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_doc_chunks_org_idx').on(table.organizationId),
+  docIdx: index('knowledge_doc_chunks_doc_idx').on(table.documentId),
+  embeddingIdx: index('knowledge_doc_chunks_embedding_idx').using('ivfflat', table.embeddingVector),
+}));
+
+// ==================== MEMORY SYSTEM TABLES ====================
+
+// Memory Records - All memory types unified
+export const memoryRecords = pgTable('memory_records', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  type: varchar('type', { length: 50 }).notNull(), // 'working', 'short_term', 'long_term', 'semantic', 'episodic', 'procedural', 'organizational'
+  subtype: varchar('subtype', { length: 100 }),
+  content: text('content').notNull(),
+  summary: text('summary'),
+  importance: decimal('importance', { precision: 3, scale: 2 }).default('0').notNull(),
+  relevanceScore: decimal('relevance_score', { precision: 3, scale: 2 }).default('0.50'),
+  embeddingVector: vector('embedding_vector', { dimensions: 1536 }),
+  context: jsonb('context').default({}).notNull(),
+  tags: jsonb('tags').default([]).notNull(),
+  metadata: jsonb('metadata').default({}).notNull(),
+  expiresAt: timestamp('expires_at'),
+  accessedAt: timestamp('accessed_at'),
+  accessCount: integer('access_count').default(0).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('memory_records_org_idx').on(table.organizationId),
+  userIdx: index('memory_records_user_idx').on(table.userId),
+  typeIdx: index('memory_records_type_idx').on(table.type),
+  orgUserTypeIdx: index('memory_records_org_user_type_idx').on(table.organizationId, table.userId, table.type),
+  embeddingIdx: index('memory_records_embedding_idx').using('ivfflat', table.embeddingVector),
+  createdAtIdx: index('memory_records_created_at_idx').on(table.createdAt),
+}));
+
+// ==================== SEARCH & ANALYTICS TABLES ====================
+
+// Knowledge Search Queries - Search analytics
+export const knowledgeSearchQueries = pgTable('knowledge_search_queries', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'set null' }),
+  query: text('query').notNull(),
+  queryType: varchar('query_type', { length: 50 }), // 'semantic', 'keyword', 'hybrid', 'graph'
+  resultCount: integer('result_count').default(0).notNull(),
+  clickCount: integer('click_count').default(0).notNull(),
+  successful: boolean('successful').default(true).notNull(),
+  searchTime: integer('search_time'), // ms
+  filters: jsonb('filters').default({}).notNull(),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_search_queries_org_idx').on(table.organizationId),
+  userIdx: index('knowledge_search_queries_user_idx').on(table.userId),
+  queryIdx: index('knowledge_search_queries_query_idx').on(table.query),
+  createdAtIdx: index('knowledge_search_queries_created_idx').on(table.createdAt),
+}));
+
+// Knowledge Contributions - Track who contributes what
+export const knowledgeContributions = pgTable('knowledge_contributions', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'set null' }).notNull(),
+  nodeId: uuid('node_id').references(() => knowledgeNodes.id, { onDelete: 'cascade' }).notNull(),
+  contributionType: varchar('contribution_type', { length: 50 }).notNull(), // 'created', 'edited', 'verified', 'commented', 'shared'
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_contributions_org_idx').on(table.organizationId),
+  userIdx: index('knowledge_contributions_user_idx').on(table.userId),
+  nodeIdx: index('knowledge_contributions_node_idx').on(table.nodeId),
+}));
+
+// Knowledge Verifications
+export const knowledgeVerifications = pgTable('knowledge_verifications', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  nodeId: uuid('node_id').references(() => knowledgeNodes.id, { onDelete: 'cascade' }).notNull(),
+  verifiedBy: uuid('verified_by').references(() => users.id, { onDelete: 'set null' }).notNull(),
+  status: varchar('status', { length: 50 }).notNull(), // 'verified', 'rejected', 'needs_review'
+  notes: text('notes'),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_verifications_org_idx').on(table.organizationId),
+  nodeIdx: index('knowledge_verifications_node_idx').on(table.nodeId),
+  verifierIdx: index('knowledge_verifications_verifier_idx').on(table.verifiedBy),
+}));
+
+// Knowledge Analytics - Aggregated metrics
+export const knowledgeAnalytics = pgTable('knowledge_analytics', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  metricType: varchar('metric_type', { length: 100 }).notNull(),
+  metricValue: decimal('metric_value', { precision: 15, scale: 4 }).notNull(),
+  period: varchar('period', { length: 50 }).notNull(), // 'daily', 'weekly', 'monthly'
+  periodStart: timestamp('period_start').notNull(),
+  periodEnd: timestamp('period_end').notNull(),
+  dimensions: jsonb('dimensions').default({}).notNull(),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_analytics_org_idx').on(table.organizationId),
+  metricTypeIdx: index('knowledge_analytics_metric_idx').on(table.metricType),
+  periodIdx: index('knowledge_analytics_period_idx').on(table.period, table.periodStart),
+}));
+
+// ==================== INGESTION & INTEGRATION TABLES ====================
+
+// Knowledge Integration Syncs
+export const knowledgeIntegrationSyncs = pgTable('knowledge_integration_syncs', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  integrationType: varchar('integration_type', { length: 100 }).notNull(), // 'slack', 'gmail', 'outlook', 'teams', 'notion', 'confluence', 'github', 'drive', 'dropbox', 'sharepoint'
+  status: varchar('status', { length: 50 }).notNull(), // 'running', 'completed', 'failed', 'pending'
+  itemsProcessed: integer('items_processed').default(0).notNull(),
+  itemsCreated: integer('items_created').default(0).notNull(),
+  itemsUpdated: integer('items_updated').default(0).notNull(),
+  errors: integer('errors').default(0).notNull(),
+  errorLog: jsonb('error_log').default([]).notNull(),
+  startedAt: timestamp('started_at').notNull(),
+  completedAt: timestamp('completed_at'),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_integration_syncs_org_idx').on(table.organizationId),
+  integrationTypeIdx: index('knowledge_integration_syncs_type_idx').on(table.integrationType),
+}));
+
+// Knowledge Onboarding Progress
+export const knowledgeOnboardingProgress = pgTable('knowledge_onboarding_progress', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  role: varchar('role', { length: 255 }).notNull(),
+  department: varchar('department', { length: 255 }),
+  progress: decimal('progress', { precision: 5, scale: 2 }).default('0').notNull(),
+  modulesCompleted: integer('modules_completed').default(0).notNull(),
+  totalModules: integer('total_modules').default(0).notNull(),
+  currentModule: varchar('current_module', { length: 255 }),
+  completedModules: jsonb('completed_modules').default([]).notNull(),
+  learningPath: jsonb('learning_path').default([]).notNull(),
+  daysOnboarded: integer('days_onboarded').default(0).notNull(),
+  estimatedCompletion: integer('estimated_completion').default(21).notNull(),
+  startedAt: timestamp('started_at').defaultNow().notNull(),
+  completedAt: timestamp('completed_at'),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_onboarding_org_idx').on(table.organizationId),
+  userIdx: uniqueIndex('knowledge_onboarding_user_idx').on(table.organizationId, table.userId),
+}));
+
+// ==================== INTELLIGENCE & INSIGHTS TABLES ====================
+
+// Knowledge Intelligence Insights - Auto-discovered insights
+export const knowledgeInsights = pgTable('knowledge_insights', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  type: varchar('type', { length: 50 }).notNull(), // 'faq', 'expert', 'risk', 'gap', 'trend', 'duplicate', 'opportunity', 'missing'
+  subtype: varchar('subtype', { length: 100 }),
+  title: varchar('title', { length: 500 }).notNull(),
+  description: text('description'),
+  confidence: decimal('confidence', { precision: 3, scale: 2 }).default('0.50'),
+  severity: varchar('severity', { length: 20 }).default('info').notNull(), // 'info', 'low', 'medium', 'high', 'critical'
+  actionable: boolean('actionable').default(false).notNull(),
+  suggestedActions: jsonb('suggested_actions').default([]).notNull(),
+  relatedNodeIds: jsonb('related_node_ids').default([]).notNull(),
+  metadata: jsonb('metadata').default({}).notNull(),
+  resolvedAt: timestamp('resolved_at'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('knowledge_insights_org_idx').on(table.organizationId),
+  typeIdx: index('knowledge_insights_type_idx').on(table.type),
+  severityIdx: index('knowledge_insights_severity_idx').on(table.severity),
+  createdAtIdx: index('knowledge_insights_created_idx').on(table.createdAt),
+}));
+
+// ==================== COMPANY UNDERSTANDING TABLES ====================
+
+// Company Structure - Departments, teams, roles
+export const companyStructure = pgTable('company_structure', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  type: varchar('type', { length: 50 }).notNull(), // 'department', 'team', 'role', 'division'
+  name: varchar('name', { length: 255 }).notNull(),
+  description: text('description'),
+  parentId: uuid('parent_id'),
+  headUserId: uuid('head_user_id').references(() => users.id, { onDelete: 'set null' }),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('company_structure_org_idx').on(table.organizationId),
+  typeIdx: index('company_structure_type_idx').on(table.type),
+  parentIdx: index('company_structure_parent_idx').on(table.parentId),
+}));
+
+// Company Products/Services
+export const companyProducts = pgTable('company_products', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  type: varchar('type', { length: 50 }).notNull(), // 'product', 'service'
+  name: varchar('name', { length: 255 }).notNull(),
+  description: text('description'),
+  category: varchar('category', { length: 255 }),
+  pricing: jsonb('pricing').default({}).notNull(),
+  status: varchar('status', { length: 50 }).default('active').notNull(),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('company_products_org_idx').on(table.organizationId),
+  typeIdx: index('company_products_type_idx').on(table.type),
+}));
+
+// Company Goals & KPIs
+export const companyGoals = pgTable('company_goals', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  type: varchar('type', { length: 50 }).notNull(), // 'goal', 'kpi', 'okr', 'milestone'
+  name: varchar('name', { length: 255 }).notNull(),
+  description: text('description'),
+  targetValue: varchar('target_value', { length: 255 }),
+  currentValue: varchar('current_value', { length: 255 }),
+  unit: varchar('unit', { length: 50 }),
+  deadline: timestamp('deadline'),
+  status: varchar('status', { length: 50 }).default('active').notNull(),
+  progress: decimal('progress', { precision: 5, scale: 2 }).default('0').notNull(),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('company_goals_org_idx').on(table.organizationId),
+  typeIdx: index('company_goals_type_idx').on(table.type),
+}));
+
+// ==================== AI REASONING LOGS ====================
+
+export const aiReasoningLogs = pgTable('ai_reasoning_logs', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'set null' }),
+  reasoningType: varchar('reasoning_type', { length: 50 }).notNull(), // 'compare', 'summarize', 'contradiction', 'recommend', 'report', 'question'
+  inputData: jsonb('input_data').notNull(),
+  outputData: jsonb('output_data').notNull(),
+  modelUsed: varchar('model_used', { length: 100 }),
+  tokensUsed: integer('tokens_used'),
+  processingTime: integer('processing_time'),
+  confidence: decimal('confidence', { precision: 3, scale: 2 }),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('ai_reasoning_logs_org_idx').on(table.organizationId),
+  userIdx: index('ai_reasoning_logs_user_idx').on(table.userId),
+  typeIdx: index('ai_reasoning_logs_type_idx').on(table.reasoningType),
+  createdAtIdx: index('ai_reasoning_logs_created_idx').on(table.createdAt),
+}));
+
+// ==================== DESIGN CUSTOMIZATIONS TABLE ====================
+
+export const designCustomizations = pgTable('design_customizations', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  pagePath: varchar('page_path', { length: 500 }).notNull(),
+  pageName: varchar('page_name', { length: 255 }).notNull(),
+  prompt: text('prompt').notNull(),
+  changes: jsonb('changes').default({}).notNull(),
+  appliedAt: timestamp('applied_at'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  userIdx: index('design_customizations_user_idx').on(table.userId),
+  pagePathIdx: index('design_customizations_page_path_idx').on(table.pagePath),
+  userPageIdx: index('design_customizations_user_page_idx').on(table.userId, table.pagePath),
+  createdAtIdx: index('design_customizations_created_at_idx').on(table.createdAt),
+}));
+
+export type DesignCustomization = typeof designCustomizations.$inferSelect;
+
+// ==================== CONTEXT ENGINE TABLES ====================
+
+export const contextSessions = pgTable('context_sessions', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizationId: uuid('organization_id').references(() => organizations.id, { onDelete: 'cascade' }).notNull(),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  sessionType: varchar('session_type', { length: 50 }).notNull(), // 'chat', 'search', 'onboarding', 'assistant'
+  context: jsonb('context').default({}).notNull(),
+  isActive: boolean('is_active').default(true).notNull(),
+  expiresAt: timestamp('expires_at'),
+  metadata: jsonb('metadata').default({}).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table: TableRef) => ({
+  orgIdx: index('context_sessions_org_idx').on(table.organizationId),
+  userIdx: index('context_sessions_user_idx').on(table.userId),
+  typeIdx: index('context_sessions_type_idx').on(table.sessionType),
+  activeIdx: index('context_sessions_active_idx').on(table.isActive),
+}));
+
+// Type aliases
 export type KnowledgeNode = typeof knowledgeNodes.$inferSelect;
 export type KnowledgeRelationship = typeof knowledgeRelationships.$inferSelect;
 export type KnowledgePerson = typeof knowledgePersons.$inferSelect;
 export type KnowledgeProject = typeof knowledgeProjects.$inferSelect;
 export type KnowledgeClient = typeof knowledgeClients.$inferSelect;
+export type KnowledgeDocument = typeof knowledgeDocuments.$inferSelect;
+export type KnowledgeDocumentChunk = typeof knowledgeDocumentChunks.$inferSelect;
 export type KnowledgeSearchQuery = typeof knowledgeSearchQueries.$inferSelect;
 export type KnowledgeContribution = typeof knowledgeContributions.$inferSelect;
 export type KnowledgeVerification = typeof knowledgeVerifications.$inferSelect;
 export type KnowledgeAnalytics = typeof knowledgeAnalytics.$inferSelect;
-export type KnowledgeDocument = typeof knowledgeDocuments.$inferSelect;
 export type KnowledgeIntegrationSync = typeof knowledgeIntegrationSyncs.$inferSelect;
 export type KnowledgeOnboardingProgress = typeof knowledgeOnboardingProgress.$inferSelect;
-
-// Remaining type aliases
-export type AgentSchedule = typeof agentSchedules.$inferSelect;
-export type AgentAvailability = typeof agentAvailability.$inferSelect;
-export type CostTracking = typeof costTracking.$inferSelect;
+export type KnowledgeInsight = typeof knowledgeInsights.$inferSelect;
+export type MemoryRecord = typeof memoryRecords.$inferSelect;
+export type CompanyStructure = typeof companyStructure.$inferSelect;
+export type CompanyProduct = typeof companyProducts.$inferSelect;
+export type CompanyGoal = typeof companyGoals.$inferSelect;
+export type AiReasoningLog = typeof aiReasoningLogs.$inferSelect;
+export type ContextSession = typeof contextSessions.$inferSelect;

@@ -23,7 +23,7 @@ import {
   // TrendingUp & Investment Icons
   TrendingUp,
   DollarSign,
-  ChartBarBig,
+  BarChart3,
   ChartLine,
   ChartPie,
   Activity,
@@ -54,13 +54,13 @@ import {
   Phone,
   Video as VideoIcon,
 
-  // Manufacturing Icons
-  Factory,
-  Settings,
-  Package,
-  Box,
-  Gauge,
-  Zap,
+// Manufacturing Icons
+   Factory,
+   Settings,
+   Package,
+   Boxes,
+   Gauge,
+   Zap,
 
   // Transportation Icons
   Truck as TruckIcon,
@@ -169,7 +169,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
     level: 'vp_director',
     department: 'trading_investments',
     description: 'Manages trading desk operations, execution strategies, and order flow optimization. Oversees all trading activities across asset classes.',
-    icon: ChartBarBig,
+    icon: BarChart3,
     color: '#10B981',
     orgChart: {
       id: 'vp-trading',
@@ -765,7 +765,7 @@ export const tradingInvestmentsAgents: AIEmployeeProfile[] = [
     level: 'specialist',
     department: 'trading_investments',
     description: 'Trades options flow, implied volatility, and spread strategies. Specializes in earnings volatility plays and hedging.',
-    icon: ChartBarBig,
+    icon: BarChart3,
     color: '#10B981',
     orgChart: {
       id: 'options-trader',
@@ -3479,9 +3479,9 @@ export const manufacturingProductionAgents: AIEmployeeProfile[] = [
     title: 'Inventory Management Specialist',
     level: 'specialist',
     department: 'manufacturing_production',
-    description: 'Manages raw material and finished goods inventory. Performs cycle counts and inventory analysis.',
-    icon: Box,
-    color: '#6366F1',
+description: 'Manages raw material and finished goods inventory. Performs cycle counts and inventory analysis.',
+     icon: Boxes,
+     color: '#6366F1',
     orgChart: {
       id: 'inventory-controller',
       uid: 'ktx-18-inventory-controller',

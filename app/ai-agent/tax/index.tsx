@@ -1,5 +1,6 @@
 import React from 'react';
 import DepartmentDashboardView from '@/components/ai-agent/dashboard/DepartmentDashboardView';
+import { Briefcase, Calculator, Shield, Search, FileCheck, TrendingUp, FileText, Scale, BarChart3, Users, AlertTriangle, MessageSquare, Layout, Globe, Target, Star, PieChart } from 'lucide-react-native';
 
 const DEPARTMENT_AGENTS = [
   { id: 'neural-tax-hub', name: 'AI Neural Tax Hub', description: 'Central tax coordination and management system', icon: Briefcase, color: '#2E7D32' },

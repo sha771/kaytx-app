@@ -2,7 +2,7 @@ import React, { useState, useCallback, useMemo, useEffect, useRef } from 'react'
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, Animated } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import { ArrowLeft, ChevronRight, Play, Pause, RefreshCw, Power, Sparkles, Crown, Star, CircleCheck, Settings, ChartBarBig as ChartBar, Zap, Radio, Eye, Brain, ArrowUpRight, ArrowDownRight, Activity, Shield, Gauge, Timer, ThumbsUp } from 'lucide-react-native';
+import { ArrowLeft, ChevronRight, Play, Pause, RefreshCw, Power, Sparkles, Crown, Star, CircleCheck, Settings, BarChart3 as ChartBar, Zap, Radio, Eye, Brain, ArrowUpRight, ArrowDownRight, Activity, Shield, Gauge, Timer, ThumbsUp } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { router } from 'expo-router';
 import { trpc } from '@/lib/trpc';

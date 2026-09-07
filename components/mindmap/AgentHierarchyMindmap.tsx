@@ -124,6 +124,8 @@ import {
   ArrowRight,
 } from 'lucide-react-native';
 
+import { buildCircularKnowledgeGraphLayout } from './knowledgeGraphLayout';
+
 const { width, height } = Dimensions.get('window');
 
 // ============================================
@@ -287,6 +289,7 @@ export default function AgentHierarchyMindmap({
     nodeSpacing: 100,
     levelSpacing: 150,
   });
+  const [graphMode, setGraphMode] = useState<'tree' | 'graph'>('graph');
   const [scale, setScale] = useState(1);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [selectedNode, setSelectedNode] = useState<MindmapNode | null>(null);
@@ -407,38 +410,61 @@ export default function AgentHierarchyMindmap({
 
   const applyLayout = useCallback(() => {
     setIsAnimating(true);
-    
+
     let layoutNodes: MindmapNode[];
-    
-    switch (layout.type) {
-      case 'tree':
-        layoutNodes = calculateTreeLayout(nodes);
-        break;
-      case 'radial':
-        layoutNodes = calculateRadialLayout(nodes);
-        break;
-      case 'force':
-        // Simplified force-directed layout
-        layoutNodes = calculateTreeLayout(nodes); // Fallback to tree for now
-        break;
-      default:
-        layoutNodes = calculateTreeLayout(nodes);
+
+    if (graphMode === 'graph') {
+      const graphLayout = buildCircularKnowledgeGraphLayout(
+        nodes.map((node) => ({ ...node, children: node.children ? node.children.map((child) => ({ ...child })) : undefined })),
+        { width, height }
+      );
+      layoutNodes = nodes.map((node) => ({ ...node }));
+      const positionMap = new Map<string, { x: number; y: number }>();
+      [graphLayout.root, ...graphLayout.departmentNodes, ...graphLayout.agentNodes, ...graphLayout.subAgentNodes].forEach((entry) => {
+        positionMap.set(entry.id, entry.position);
+      });
+      const applyPositions = (nodeList: MindmapNode[]) => {
+        nodeList.forEach((node) => {
+          const position = positionMap.get(node.id);
+          if (position) {
+            node.position = position;
+          }
+          if (node.children) {
+            applyPositions(node.children);
+          }
+        });
+      };
+      applyPositions(layoutNodes);
+    } else {
+      switch (layout.type) {
+        case 'tree':
+          layoutNodes = calculateTreeLayout(nodes);
+          break;
+        case 'radial':
+          layoutNodes = calculateRadialLayout(nodes);
+          break;
+        case 'force':
+          layoutNodes = calculateTreeLayout(nodes);
+          break;
+        default:
+          layoutNodes = calculateTreeLayout(nodes);
+      }
     }
-    
+
     setNodes(layoutNodes);
-    
+
     Animated.timing(scaleRef, {
       toValue: 1,
       duration: 300,
       useNativeDriver: true,
     }).start(() => setIsAnimating(false));
-  }, [layout, nodes, calculateTreeLayout, calculateRadialLayout]);
+  }, [layout, nodes, calculateTreeLayout, calculateRadialLayout, graphMode]);
 
   useEffect(() => {
     if (nodes.length > 0) {
       applyLayout();
     }
-  }, [layout.type]);
+  }, [layout.type, graphMode]);
 
   // ============================================
   // PAN AND ZOOM
@@ -628,6 +654,7 @@ export default function AgentHierarchyMindmap({
 
   const toggle3DMode = useCallback(() => {
     setIs3DMode(!is3DMode);
+    setGraphMode('graph');
     if (!is3DMode) {
       Animated.timing(scaleRef, {
         toValue: 1,
@@ -933,6 +960,52 @@ export default function AgentHierarchyMindmap({
     }
   };
 
+  const getNodeVisualStyle = (node: MindmapNode) => {
+    const baseColor = node.color || getColorForType(node.type);
+    if (node.type === 'root') {
+      return {
+        backgroundColor: 'rgba(245, 158, 11, 0.16)',
+        borderColor: '#f59e0b',
+        borderWidth: 3,
+        shadowColor: '#f59e0b',
+        shadowOpacity: 0.45,
+        shadowRadius: 10,
+      };
+    }
+    if (node.type === 'department') {
+      return {
+        backgroundColor: 'rgba(16, 185, 129, 0.18)',
+        borderColor: '#10b981',
+        borderWidth: 2,
+        shadowColor: '#10b981',
+        shadowOpacity: 0.25,
+        shadowRadius: 8,
+      };
+    }
+    if (node.type === 'agent') {
+      return {
+        backgroundColor: 'rgba(99, 102, 241, 0.18)',
+        borderColor: '#6366f1',
+        borderWidth: 2,
+        shadowColor: '#6366f1',
+        shadowOpacity: 0.25,
+        shadowRadius: 8,
+      };
+    }
+    if (node.type === 'sub_agent') {
+      return {
+        backgroundColor: 'rgba(139, 92, 246, 0.16)',
+        borderColor: '#8b5cf6',
+        borderWidth: 1.5,
+      };
+    }
+    return {
+      backgroundColor: 'rgba(255,255,255,0.9)',
+      borderColor: baseColor,
+      borderWidth: 2,
+    };
+  };
+
   const getColorForType = (type: string) => {
     switch (type) {
       case 'root': return '#f59e0b';
@@ -948,7 +1021,8 @@ export default function AgentHierarchyMindmap({
     const Icon = getIconForType(node.type);
     const color = node.color || getColorForType(node.type);
     const isSelected = selectedNode?.id === node.id;
-    
+    const visualStyle = getNodeVisualStyle(node);
+
     return (
       <Animated.View
         key={node.id}
@@ -957,11 +1031,14 @@ export default function AgentHierarchyMindmap({
           {
             left: node.position.x * scale + offset.x,
             top: node.position.y * scale + offset.y,
-            backgroundColor: node.style?.backgroundColor || (theme === 'dark' ? '#1e293b' : '#fff'),
-            borderColor: isSelected ? '#6366f1' : node.style?.borderColor || color,
-            borderWidth: node.style?.borderWidth || (isSelected ? 3 : 2),
-            borderRadius: node.style?.borderRadius || 12,
+            backgroundColor: node.style?.backgroundColor || visualStyle.backgroundColor,
+            borderColor: isSelected ? '#6366f1' : node.style?.borderColor || visualStyle.borderColor,
+            borderWidth: node.style?.borderWidth || visualStyle.borderWidth,
+            borderRadius: node.style?.borderRadius || 14,
             transform: [{ scale: scaleRef }],
+            shadowColor: visualStyle.shadowColor || '#000',
+            shadowOpacity: visualStyle.shadowOpacity || 0.1,
+            shadowRadius: visualStyle.shadowRadius || 6,
           },
           node.isLocked && styles.nodeLocked,
         ]}
@@ -1083,6 +1160,18 @@ export default function AgentHierarchyMindmap({
       </View>
       
       <View style={styles.toolbarCenter}>
+        <TouchableOpacity
+          style={[styles.toolbarButton, graphMode === 'graph' && styles.toolbarButtonActive]}
+          onPress={() => setGraphMode('graph')}
+        >
+          <Network size={20} color={graphMode === 'graph' ? '#6366f1' : theme === 'dark' ? '#fff' : '#1e293b'} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.toolbarButton, graphMode === 'tree' && styles.toolbarButtonActive]}
+          onPress={() => setGraphMode('tree')}
+        >
+          <GitBranch size={20} color={graphMode === 'tree' ? '#6366f1' : theme === 'dark' ? '#fff' : '#1e293b'} />
+        </TouchableOpacity>
         <TouchableOpacity
           style={styles.toolbarButton}
           onPress={() => setShowLayoutSelector(true)}

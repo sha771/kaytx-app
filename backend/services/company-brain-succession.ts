@@ -3,18 +3,14 @@
  * @license MIT - See LICENSE file for full terms
  */
 
+import { db } from '../db/connection';
+import { knowledgeNodes, knowledgeContributions, knowledgePersons, knowledgeDocuments, knowledgeVerifications } from '../db/drizzle-schema';
+import { eq, and, desc, sql, count } from 'drizzle-orm';
 import { companyBrainWebSocketService } from './company-brain-websocket';
-import { companyBrainDepartureService } from './company-brain-departure';
-import { skillBrainService } from './skill-brain-service';
-
-/**
- * Company Brain Succession Planning Service
- * Automated knowledge transfer workflows for employee transitions
- * Ensures seamless knowledge handover when employees leave
- */
 
 export interface KnowledgeTransferWorkflow {
   id: string;
+  organizationId: string;
   fromEmployeeId: string;
   fromEmployeeName: string;
   toEmployeeId: string;
@@ -35,7 +31,7 @@ export interface TransferSession {
   title: string;
   description: string;
   scheduledDate: Date;
-  duration: number; // minutes
+  duration: number;
   attendees: string[];
   status: 'scheduled' | 'completed' | 'cancelled';
   notes?: string;
@@ -60,78 +56,73 @@ export interface ChecklistItem {
   priority: 'high' | 'medium' | 'low';
 }
 
+export interface CreateTransferWorkflowData {
+  organizationId: string;
+  fromEmployeeId: string;
+  fromEmployeeName: string;
+  toEmployeeId: string;
+  toEmployeeName: string;
+  knowledgeAreas: string[];
+  targetDate: Date;
+}
+
+export interface UpdateTransferSessionData {
+  sessionId: string;
+  status: 'completed' | 'cancelled';
+  notes?: string;
+  recordingUrl?: string;
+}
+
+export interface TransferReadinessScore {
+  score: number;
+  knowledgeNodesCount: number;
+  documentsCount: number;
+  contributionsCount: number;
+  verificationsCount: number;
+}
+
 export class CompanyBrainSuccessionService {
   private workflows: Map<string, KnowledgeTransferWorkflow> = new Map();
   private checklists: Map<string, TransferChecklist> = new Map();
 
-  /**
-   * Create automated knowledge transfer workflow
-   */
-  async createTransferWorkflow(
-    fromEmployeeId: string,
-    fromEmployeeName: string,
-    toEmployeeId: string,
-    toEmployeeName: string,
-    knowledgeAreas: string[],
-    targetDate: Date
-  ): Promise<KnowledgeTransferWorkflow> {
+  async createTransferWorkflow(data: CreateTransferWorkflowData): Promise<KnowledgeTransferWorkflow> {
     const workflow: KnowledgeTransferWorkflow = {
-      id: `transfer-${fromEmployeeId}-${toEmployeeId}-${Date.now()}`,
-      fromEmployeeId,
-      fromEmployeeName,
-      toEmployeeId,
-      toEmployeeName,
+      id: `transfer-${data.fromEmployeeId}-${data.toEmployeeId}-${Date.now()}`,
+      organizationId: data.organizationId,
+      fromEmployeeId: data.fromEmployeeId,
+      fromEmployeeName: data.fromEmployeeName,
+      toEmployeeId: data.toEmployeeId,
+      toEmployeeName: data.toEmployeeName,
       status: 'pending',
-      knowledgeAreas,
+      knowledgeAreas: data.knowledgeAreas,
       scheduledSessions: [],
-      documentsToReview: 0, // Would calculate from database
-      conversationsToReview: 0, // Would calculate from database
+      documentsToReview: 0,
+      conversationsToReview: 0,
       progress: 0,
       startDate: new Date(),
-      targetDate,
+      targetDate: data.targetDate,
       created: new Date(),
     };
 
     this.workflows.set(workflow.id, workflow);
-
-    // Create skill transfer plan from Skill Brain
-    const skillTransferPlan = skillBrainService.createTransferPlan(
-      fromEmployeeId,
-      fromEmployeeName,
-      toEmployeeId,
-      toEmployeeName
-    );
-    console.log(`Skill transfer plan created: ${skillTransferPlan.id} with ${skillTransferPlan.skills.length} skills`);
-
-    // Auto-generate transfer checklist
     await this.generateTransferChecklist(workflow);
-
-    // Auto-schedule transfer sessions
     await this.scheduleTransferSessions(workflow);
 
-    // Notify via WebSocket
     companyBrainWebSocketService.broadcastAnalyticsUpdate({
       type: 'transfer_workflow_created',
       workflowId: workflow.id,
-      fromEmployee: fromEmployeeName,
-      toEmployee: toEmployeeName,
-      knowledgeAreas,
-      targetDate,
-      skillCount: skillTransferPlan.skills.length,
-      skillTransferPlanId: skillTransferPlan.id,
+      fromEmployee: data.fromEmployeeName,
+      toEmployee: data.toEmployeeName,
+      knowledgeAreas: data.knowledgeAreas,
+      targetDate: data.targetDate,
     });
 
-    console.log(`Transfer workflow created: ${fromEmployeeName} → ${toEmployeeName}`);
     return workflow;
   }
 
-  /**
-   * Generate automated transfer checklist
-   */
   private async generateTransferChecklist(workflow: KnowledgeTransferWorkflow): Promise<void> {
     const checklistItems: ChecklistItem[] = [];
 
-    // Generate checklist items based on knowledge areas
     for (const area of workflow.knowledgeAreas) {
       checklistItems.push(
         {
@@ -169,7 +160,6 @@ export class CompanyBrainSuccessionService {
       );
     }
 
-    // Add general items
     checklistItems.push(
       {
         id: 'item-general-1',
@@ -223,12 +213,8 @@ export class CompanyBrainSuccessionService {
     };
 
     this.checklists.set(checklist.id, checklist);
-    console.log(`Transfer checklist generated for workflow ${workflow.id}`);
   }
 
-  /**
-   * Schedule automated transfer sessions
-   */
   private async scheduleTransferSessions(workflow: KnowledgeTransferWorkflow): Promise<void> {
     const sessions: TransferSession[] = [];
     const sessionCount = Math.min(workflow.knowledgeAreas.length, 5);
@@ -252,7 +238,6 @@ export class CompanyBrainSuccessionService {
       });
     }
 
-    // Add final review session
     sessions.push({
       id: `session-${workflow.id}-final`,
       title: 'Final Review and Sign-off',
@@ -265,13 +250,8 @@ export class CompanyBrainSuccessionService {
 
     workflow.scheduledSessions = sessions;
     workflow.status = 'scheduled';
-
-    console.log(`Scheduled ${sessions.length} transfer sessions for workflow ${workflow.id}`);
   }
 
-  /**
-   * Start transfer workflow
-   */
   async startTransferWorkflow(workflowId: string): Promise<void> {
     const workflow = this.workflows.get(workflowId);
     if (!workflow) {
@@ -281,24 +261,18 @@ export class CompanyBrainSuccessionService {
     workflow.status = 'in_progress';
     workflow.startDate = new Date();
 
-    // Notify via WebSocket
     companyBrainWebSocketService.broadcastAnalyticsUpdate({
       type: 'transfer_workflow_started',
       workflowId,
       fromEmployee: workflow.fromEmployeeName,
       toEmployee: workflow.toEmployeeName,
     });
-
-    console.log(`Transfer workflow started: ${workflowId}`);
   }
 
-  /**
-   * Complete checklist item
-   */
-  completeChecklistItem(checklistId: string, itemId: string): void {
-    const checklist = this.checklists.get(checklistId);
+  completeChecklistItem(workflowId: string, itemId: string): void {
+    const checklist = this.getWorkflowChecklist(workflowId);
     if (!checklist) {
-      throw new Error(`Checklist ${checklistId} not found`);
+      throw new Error(`Checklist for workflow ${workflowId} not found`);
     }
 
     const item = checklist.items.find(i => i.id === itemId);
@@ -306,12 +280,10 @@ export class CompanyBrainSuccessionService {
       item.completed = true;
       checklist.completed++;
 
-      // Update workflow progress
       const workflow = this.workflows.get(checklist.workflowId);
       if (workflow) {
         workflow.progress = Math.round((checklist.completed / checklist.total) * 100);
 
-        // Check if all items completed
         if (checklist.completed === checklist.total) {
           workflow.status = 'complete';
           companyBrainWebSocketService.broadcastAnalyticsUpdate({
@@ -322,46 +294,27 @@ export class CompanyBrainSuccessionService {
           });
         }
       }
-
-      console.log(`Checklist item completed: ${itemId}`);
     }
   }
 
-  /**
-   * Update transfer session status
-   */
-  updateTransferSession(
-    workflowId: string,
-    sessionId: string,
-    status: 'completed' | 'cancelled',
-    notes?: string,
-    recordingUrl?: string
-  ): void {
+  updateTransferSession(workflowId: string, sessionData: UpdateTransferSessionData): void {
     const workflow = this.workflows.get(workflowId);
     if (!workflow) {
       throw new Error(`Workflow ${workflowId} not found`);
     }
 
-    const session = workflow.scheduledSessions.find(s => s.id === sessionId);
+    const session = workflow.scheduledSessions.find(s => s.id === sessionData.sessionId);
     if (session) {
-      session.status = status;
-      session.notes = notes;
-      session.recordingUrl = recordingUrl;
-
-      console.log(`Transfer session updated: ${sessionId} - ${status}`);
+      session.status = sessionData.status;
+      if (sessionData.notes !== undefined) session.notes = sessionData.notes;
+      if (sessionData.recordingUrl !== undefined) session.recordingUrl = sessionData.recordingUrl;
     }
   }
 
-  /**
-   * Get workflow by ID
-   */
   getWorkflow(workflowId: string): KnowledgeTransferWorkflow | undefined {
     return this.workflows.get(workflowId);
   }
 
-  /**
-   * Get workflow checklist
-   */
   getWorkflowChecklist(workflowId: string): TransferChecklist | undefined {
     for (const checklist of this.checklists.values()) {
       if (checklist.workflowId === workflowId) {
@@ -371,121 +324,76 @@ export class CompanyBrainSuccessionService {
     return undefined;
   }
 
-  /**
-   * Get all active workflows
-   */
-  getActiveWorkflows(): KnowledgeTransferWorkflow[] {
+  getActiveWorkflows(organizationId: string): KnowledgeTransferWorkflow[] {
     return Array.from(this.workflows.values()).filter(
-      w => w.status === 'in_progress' || w.status === 'scheduled'
+      w => w.organizationId === organizationId && (w.status === 'in_progress' || w.status === 'scheduled')
     );
   }
 
-  /**
-   * Get workflows for employee
-   */
-  getEmployeeWorkflows(employeeId: string): {
+  getEmployeeWorkflows(organizationId: string, employeeId: string): {
     outgoing: KnowledgeTransferWorkflow[];
     incoming: KnowledgeTransferWorkflow[];
   } {
-    const allWorkflows = Array.from(this.workflows.values());
+    const orgWorkflows = Array.from(this.workflows.values()).filter(
+      w => w.organizationId === organizationId
+    );
     return {
-      outgoing: allWorkflows.filter(w => w.fromEmployeeId === employeeId),
-      incoming: allWorkflows.filter(w => w.toEmployeeId === employeeId),
+      outgoing: orgWorkflows.filter(w => w.fromEmployeeId === employeeId),
+      incoming: orgWorkflows.filter(w => w.toEmployeeId === employeeId),
     };
   }
 
-  /**
-   * Get transfer readiness score
-   */
-  getTransferReadinessScore(workflowId: string): {
-    score: number;
-    checklistProgress: number;
-    sessionsCompleted: number;
-    sessionsTotal: number;
-    daysRemaining: number;
-    skillTransferReadiness: number;
-    atRiskSkills: number;
-  } {
-    const workflow = this.workflows.get(workflowId);
-    if (!workflow) {
-      return { score: 0, checklistProgress: 0, sessionsCompleted: 0, sessionsTotal: 0, daysRemaining: 0, skillTransferReadiness: 0, atRiskSkills: 0 };
-    }
+  async getTransferReadinessScore(organizationId: string, employeeId: string): Promise<TransferReadinessScore> {
+    const [nodeResult] = await db.select({ count: count() })
+      .from(knowledgeNodes)
+      .where(and(
+        eq(knowledgeNodes.organizationId, organizationId),
+        eq(knowledgeNodes.createdBy, employeeId)
+      ));
 
-    const checklist = this.getWorkflowChecklist(workflowId);
-    const checklistProgress = checklist ? (checklist.completed / checklist.total) * 100 : 0;
-    const sessionsCompleted = workflow.scheduledSessions.filter(s => s.status === 'completed').length;
-    const sessionsTotal = workflow.scheduledSessions.length;
-    const daysRemaining = Math.max(
-      0,
-      Math.floor((workflow.targetDate.getTime() - Date.now()) / (24 * 60 * 60 * 1000))
-    );
+    const [docResult] = await db.select({ count: count() })
+      .from(knowledgeDocuments)
+      .where(and(
+        eq(knowledgeDocuments.organizationId, organizationId),
+        eq(knowledgeDocuments.createdBy, employeeId)
+      ));
 
-    // Get skill brain transfer readiness
-    const stats = skillBrainService.getStatistics();
-    const atRiskSkills = stats.atRiskSkills;
-    const transferReady = stats.transferReadyCount;
-    const totalSkills = stats.totalSkills;
-    const skillTransferReadiness = totalSkills > 0
-      ? Math.round((transferReady / totalSkills) * 100)
-      : 0;
+    const [contributionResult] = await db.select({ count: count() })
+      .from(knowledgeContributions)
+      .where(and(
+        eq(knowledgeContributions.organizationId, organizationId),
+        eq(knowledgeContributions.userId, employeeId)
+      ));
 
-    // Calculate overall readiness score (incorporating skill transfer readiness)
-    const score = Math.round(
-      (checklistProgress * 0.4) +
-      ((sessionsCompleted / sessionsTotal) * 100 * 0.3) +
-      (skillTransferReadiness * 0.3)
+    const [verificationResult] = await db.select({ count: count() })
+      .from(knowledgeVerifications)
+      .where(and(
+        eq(knowledgeVerifications.organizationId, organizationId),
+        eq(knowledgeVerifications.verifiedBy, employeeId)
+      ));
+
+    const nodeCount = Number(nodeResult?.count ?? 0);
+    const docCount = Number(docResult?.count ?? 0);
+    const contributionCount = Number(contributionResult?.count ?? 0);
+    const verificationCount = Number(verificationResult?.count ?? 0);
+
+    const score = Math.min(100,
+      Math.round(
+        Math.min(25, nodeCount * 2.5) +
+        Math.min(25, docCount * 5) +
+        Math.min(25, contributionCount * 2.5) +
+        Math.min(25, verificationCount * 5)
+      )
     );
 
     return {
       score,
-      checklistProgress,
-      sessionsCompleted,
-      sessionsTotal,
-      daysRemaining,
-      skillTransferReadiness,
-      atRiskSkills,
+      knowledgeNodesCount: nodeCount,
+      documentsCount: docCount,
+      contributionsCount: contributionCount,
+      verificationsCount: verificationCount,
     };
-  }
-
-  /**
-   * Auto-create transfer workflow on employee departure
-   */
-  async autoCreateTransferOnDeparture(
-    departingEmployeeId: string,
-    departingEmployeeName: string,
-    knowledgeAreas: string[]
-  ): Promise<void> {
-    console.log(`Auto-creating transfer workflow for departing employee: ${departingEmployeeName}`);
-
-    // Create skill transfer plan using Skill Brain
-    const skillTransferPlan = skillBrainService.createTransferPlan(
-      departingEmployeeId,
-      departingEmployeeName
-    );
-
-    console.log(`Skill transfer plan auto-created: ${skillTransferPlan.id}`);
-    console.log(`Skills to transfer: ${skillTransferPlan.skills.length}`);
-    console.log(`Priority: ${skillTransferPlan.priority}`);
-
-    // Broadcast alert for high-priority departures
-    if (skillTransferPlan.priority === 'critical' || skillTransferPlan.priority === 'high') {
-      companyBrainWebSocketService.broadcastRiskAlert({
-        type: 'critical_departure_skill_risk',
-        employeeId: departingEmployeeId,
-        employeeName: departingEmployeeName,
-        skillCount: skillTransferPlan.skills.length,
-        priority: skillTransferPlan.priority,
-        message: `CRITICAL: ${departingEmployeeName} has ${skillTransferPlan.skills.length} skills requiring transfer. Priority: ${skillTransferPlan.priority}`,
-      });
-    }
-
-    // In production, this would:
-    // 1. Identify best transfer target based on skills, department, availability
-    // 2. Get manager approval
-    // 3. Create transfer workflow
-    // 4. Notify all stakeholders
   }
 }
 
-// Export singleton instance
 export const companyBrainSuccessionService = new CompanyBrainSuccessionService();

@@ -3,11 +3,12 @@
  * @license MIT - See LICENSE file for full terms
  */
 
-import React, { useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Modal, TextInput } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Modal, TextInput, ActivityIndicator, RefreshControl } from 'react-native';
 import { useRouter } from 'expo-router';
 import { ChevronRight, AlertTriangle, User, Target, TrendingUp, FileText, Users, Calendar, Shield, CheckCircle, X, Download, Mail, Clock } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import apiClient from '@/lib/api-client';
 
 export default function CompanyBrainSuccession() {
   const router = useRouter();
@@ -15,37 +16,50 @@ export default function CompanyBrainSuccession() {
   const [selectedTab, setSelectedTab] = useState('risks');
   const [showTransferModal, setShowTransferModal] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-  const criticalKnowledgeHolders = [
-    { id: 1, name: 'John D.', role: 'Tech Lead', department: 'Engineering', riskLevel: 'high', knowledgeAreas: ['Architecture', 'API Design', 'Team Leadership'], impactScore: 92, tenure: '5 years' },
-    { id: 2, name: 'Sarah M.', role: 'Senior PM', department: 'Product', riskLevel: 'medium', knowledgeAreas: ['Product Strategy', 'Roadmap', 'Stakeholder Management'], impactScore: 78, tenure: '3 years' },
-    { id: 3, name: 'Mike T.', role: 'Sales Manager', department: 'Sales', riskLevel: 'medium', knowledgeAreas: ['Enterprise Sales', 'Client Relations', 'Negotiation'], impactScore: 71, tenure: '4 years' },
-    { id: 4, name: 'Emily R.', role: 'Marketing Director', department: 'Marketing', riskLevel: 'low', knowledgeAreas: ['Brand Strategy', 'Campaign Management', 'Analytics'], impactScore: 65, tenure: '2 years' },
-  ];
+  const [criticalKnowledgeHolders, setCriticalKnowledgeHolders] = useState<any[]>([]);
+  const [departureRisks, setDepartureRisks] = useState<any[]>([]);
+  const [knowledgeTransferPlans, setKnowledgeTransferPlans] = useState<any[]>([]);
+  const [backupDocumentation, setBackupDocumentation] = useState<any[]>([]);
+  const [recommendations, setRecommendations] = useState<any[]>([]);
 
-  const departureRisks = [
-    { id: 1, employee: 'John D.', role: 'Tech Lead', riskScore: 92, riskFactors: ['Single point of failure', 'No documented backup', 'Critical client relationships'], timeline: '3-6 months' },
-    { id: 2, employee: 'Sarah M.', role: 'Senior PM', riskScore: 78, riskFactors: ['Partial documentation', 'Key stakeholder relationships'], timeline: '6-12 months' },
-    { id: 3, employee: 'Mike T.', role: 'Sales Manager', riskScore: 71, riskFactors: ['Client knowledge not shared', 'Sales process undocumented'], timeline: 'Unknown' },
-  ];
+  useEffect(() => {
+    loadData();
+  }, []);
 
-  const knowledgeTransferPlans = [
-    { id: 1, from: 'John D.', to: 'Alex K.', status: 'in_progress', progress: 45, startDate: '2026-03-01', targetDate: '2026-06-01', areas: ['Architecture', 'API Design'] },
-    { id: 2, from: 'Sarah M.', to: 'Lisa P.', status: 'not_started', progress: 0, startDate: '2026-04-01', targetDate: '2026-07-01', areas: ['Product Strategy', 'Roadmap'] },
-  ];
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      const [expertsRes, insightsRes, healthRes] = await Promise.all([
+        apiClient.getTeamExperts({ organizationId: 'default' }),
+        apiClient.getAnalyticsInsights({ organizationId: 'default' }),
+        apiClient.getKnowledgeHealth({ organizationId: 'default' }),
+      ]);
 
-  const backupDocumentation = [
-    { id: 1, employee: 'John D.', title: 'Architecture Documentation', status: 'complete', lastUpdated: '2026-02-15', completeness: 95 },
-    { id: 2, employee: 'John D.', title: 'API Design Guide', status: 'in_progress', lastUpdated: '2026-03-01', completeness: 70 },
-    { id: 3, employee: 'Sarah M.', title: 'Product Strategy Playbook', status: 'complete', lastUpdated: '2026-02-20', completeness: 88 },
-  ];
+      if (expertsRes?.success && expertsRes?.data) {
+        const data = expertsRes.data;
+        setCriticalKnowledgeHolders(data.holders || data.experts || data);
+      }
 
-  const recommendations = [
-    { id: 1, priority: 'high', type: 'documentation', description: 'Create comprehensive API documentation for John D.', impact: 'Critical', effort: 'Medium' },
-    { id: 2, priority: 'high', type: 'training', description: 'Start knowledge transfer for John D. to Alex K.', impact: 'High', effort: 'High' },
-    { id: 3, priority: 'medium', type: 'process', description: 'Document client relationship handoff process', impact: 'High', effort: 'Medium' },
-    { id: 4, priority: 'medium', type: 'hiring', description: 'Identify backup candidates for critical roles', impact: 'Medium', effort: 'Low' },
-  ];
+      if (insightsRes?.success && insightsRes?.data) {
+        const data = insightsRes.data;
+        if (data.departureRisks) setDepartureRisks(data.departureRisks);
+        if (data.knowledgeTransferPlans || data.transferPlans) setKnowledgeTransferPlans(data.knowledgeTransferPlans || data.transferPlans);
+        if (data.recommendations) setRecommendations(data.recommendations);
+      }
+
+      if (healthRes?.success && healthRes?.data) {
+        const data = healthRes.data;
+        if (data.backupDocumentation || data.backupDocs) setBackupDocumentation(data.backupDocumentation || data.backupDocs);
+        if (!healthRes?.data?.recommendations && data.recommendations) setRecommendations(data.recommendations);
+      }
+    } catch (err) {
+      console.error('Failed to load succession data:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const getRiskColor = (level: string) => {
     switch (level) {
@@ -131,28 +145,32 @@ export default function CompanyBrainSuccession() {
         </TouchableOpacity>
       </ScrollView>
 
-      <ScrollView style={styles.scrollView} contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 20 }]}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 20 }]}
+        refreshControl={<RefreshControl refreshing={loading} onRefresh={loadData} tintColor="#6366f1" />}
+      >
         {selectedTab === 'risks' && (
           <View style={styles.tabContent}>
             <View style={styles.riskSummary}>
               <View style={styles.riskSummaryItem}>
                 <AlertTriangle size={24} color="#ef4444" />
                 <View style={styles.riskSummaryInfo}>
-                  <Text style={styles.riskSummaryValue}>3</Text>
+                  <Text style={styles.riskSummaryValue}>{departureRisks.filter(r => r.riskScore > 80).length}</Text>
                   <Text style={styles.riskSummaryLabel}>High Risk</Text>
                 </View>
               </View>
               <View style={styles.riskSummaryItem}>
                 <AlertTriangle size={24} color="#f59e0b" />
                 <View style={styles.riskSummaryInfo}>
-                  <Text style={styles.riskSummaryValue}>2</Text>
+                  <Text style={styles.riskSummaryValue}>{departureRisks.filter(r => r.riskScore > 60 && r.riskScore <= 80).length}</Text>
                   <Text style={styles.riskSummaryLabel}>Medium Risk</Text>
                 </View>
               </View>
               <View style={styles.riskSummaryItem}>
                 <Shield size={24} color="#10b981" />
                 <View style={styles.riskSummaryInfo}>
-                  <Text style={styles.riskSummaryValue}>5</Text>
+                  <Text style={styles.riskSummaryValue}>{departureRisks.filter(r => r.riskScore <= 60).length}</Text>
                   <Text style={styles.riskSummaryLabel}>Protected</Text>
                 </View>
               </View>
@@ -169,7 +187,7 @@ export default function CompanyBrainSuccession() {
                     <Text style={styles.riskEmployee}>{risk.employee}</Text>
                     <Text style={styles.riskRole}>{risk.role}</Text>
                     <View style={styles.riskFactors}>
-                      {risk.riskFactors.map((factor, index) => (
+                      {risk.riskFactors.map((factor: string, index: number) => (
                         <View key={index} style={styles.riskFactorBadge}>
                           <Text style={styles.riskFactorText}>{factor}</Text>
                         </View>
@@ -200,7 +218,7 @@ export default function CompanyBrainSuccession() {
                     <Text style={styles.holderRole}>{holder.role} • {holder.department}</Text>
                     <Text style={styles.holderTenure}>Tenure: {holder.tenure}</Text>
                     <View style={styles.holderAreas}>
-                      {holder.knowledgeAreas.slice(0, 2).map((area, index) => (
+                      {holder.knowledgeAreas.slice(0, 2).map((area: string, index: number) => (
                         <View key={index} style={styles.areaBadge}>
                           <Text style={styles.areaText}>{area}</Text>
                         </View>
@@ -266,7 +284,7 @@ export default function CompanyBrainSuccession() {
                     </View>
                   </View>
                   <View style={styles.transferPlanAreas}>
-                    {plan.areas.map((area, index) => (
+                    {plan.areas.map((area: string, index: number) => (
                       <View key={index} style={styles.transferAreaBadge}>
                         <Text style={styles.transferAreaText}>{area}</Text>
                       </View>

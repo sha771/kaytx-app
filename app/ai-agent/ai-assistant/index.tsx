@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Activity, Star, Users, User, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, TrendingUp } from 'lucide-react-native';
+import { Activity, Star, Users, User, CircleCheckBig, Clock, Target, ArrowRight, BarChart3, MessageSquare, Calendar, Shield, TrendingUp } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 const DEPARTMENT_AGENTS = [
@@ -45,7 +45,7 @@ export default function AiAssistantDepartment() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#6200EA12' }]}><act.icon size={24} color="#6200EA" /><Text style={[styles.actionText, { color: '#6200EA' }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:BarChart3},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#6200EA12' }]}><act.icon size={24} color="#6200EA" /><Text style={[styles.actionText, { color: '#6200EA' }]}>{act.label}</Text></TouchableOpacity>))}
         </View>
       </View>
       <AgentFeatures agentId="ai-assistant-index" agentName="AI Assistant Department" />

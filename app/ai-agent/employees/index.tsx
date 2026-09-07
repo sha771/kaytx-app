@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, Dimensions } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Users, Search, Filter, Crown, UserCircle, UsersRound, User, ArrowRight, Activity, ChartBarBig, Briefcase, Plus, ChartLine } from 'lucide-react-native';
+import { Users, Search, Filter, Crown, UserCircle, UsersRound, User, ArrowRight, Activity, BarChart3, Briefcase, Plus, ChartLine } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { LineChart, BarChart, PieChart } from 'react-native-chart-kit';
@@ -385,7 +385,7 @@ export default function EmployeesIndexPage() {
       <View style={styles.chartHeader}>
         <Text style={[styles.chartTitle, { color: theme.colors.text }]}>{title}</Text>
         <TouchableOpacity>
-          <ChartBarBig size={18} color={theme.colors.primary} />
+          <BarChart3 size={18} color={theme.colors.primary} />
         </TouchableOpacity>
       </View>
       <BarChart
@@ -413,7 +413,7 @@ export default function EmployeesIndexPage() {
       <View style={styles.chartHeader}>
         <Text style={[styles.chartTitle, { color: theme.colors.text }]}>{title}</Text>
         <TouchableOpacity>
-          <ChartBarBig size={18} color={theme.colors.primary} />
+          <BarChart3 size={18} color={theme.colors.primary} />
         </TouchableOpacity>
       </View>
       <PieChart
@@ -565,7 +565,7 @@ export default function EmployeesIndexPage() {
             onPress={() => router.push('/ai-agent/hierarchy')}
             style={[styles.quickCard, { backgroundColor: theme.colors.background }]}
           >
-            <ChartBarBig size={24} color="#8B5CF6" />
+            <BarChart3 size={24} color="#8B5CF6" />
             <Text style={[styles.quickCardText, { color: theme.colors.text }]}>Hierarchy View</Text>
           </TouchableOpacity>
           <TouchableOpacity

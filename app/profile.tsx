@@ -14,7 +14,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { X, Camera, Mail, Phone, MapPin, Calendar } from 'lucide-react-native';
 import { router } from 'expo-router';
 import { useTheme } from '@/providers/ThemeProvider';
-import { useApi } from './hooks/useApi';
+import { useApi } from '@/hooks/useApi';
 import apiClient from '@/lib/api-client';
 
 export default function ProfileScreen() {

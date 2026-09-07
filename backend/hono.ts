@@ -83,6 +83,7 @@ import monitoringRoutes from './api/routes/monitoring';
 import aiOSRoutes from './api/routes/ai-os';
 import logCleanupRoutes from './routes/log-cleanup';
 import enhancedCRMSMMRoutes from './api/routes/enhanced-crm-smm';
+import companyBrainRoutes from './api/routes/company-brain';
 const emailService = new EmailCampaignService();
 
 const logger = createLogger('HonoServer');
@@ -336,6 +337,10 @@ app.route("/api/log-cleanup", logCleanupRoutes);
 
 // Versioned log cleanup routes
 app.route("/api/v1/log-cleanup", logCleanupRoutes);
+
+// Company Brain routes
+app.route('/api/company-brain', companyBrainRoutes);
+app.route('/api/v1/company-brain', companyBrainRoutes);
 
 app.get("/", (c) => {
   return c.json({ status: "ok", message: "API is running" });

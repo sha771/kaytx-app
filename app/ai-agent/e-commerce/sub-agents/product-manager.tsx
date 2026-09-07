@@ -1,6 +1,6 @@
 import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
-import { Box } from 'lucide-react-native';
+import { Boxes } from 'lucide-react-native';
 
 export default function ProductManagerPage() {
   const agent = {
@@ -9,7 +9,7 @@ export default function ProductManagerPage() {
     title: 'AI Product Manager',
     description: 'The AI Product Manager manages product lifecycle, coordinates product development, defines product requirements, and ensures product success in the market.',
     capabilities: ["Task Automation","Data Processing","Workflow Management","Product Management","Product Development","Requirements Definition","Market Research","Roadmap Planning","Stakeholder Management","Analytics"],
-    icon: Box,
+    icon: Boxes,
     color: '#F57C00',
     type: 'employee' as const,
     humanCost: '$115k/year',

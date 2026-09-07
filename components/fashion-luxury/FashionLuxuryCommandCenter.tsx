@@ -34,7 +34,7 @@ import {
   ChevronRight,
   LayoutDashboard,
   User,
-  ChartBarBig,
+  BarChart3,
   Factory,
   Navigation,
   Scan,
@@ -768,7 +768,7 @@ const AI_FASHION_AGENTS = [
     name: 'AI Neural Analytics Dashboard',
     role: 'Analytics',
     color: THEME.royalPurple,
-    icon: ChartBarBig,
+    icon: BarChart3,
     responsibilities: [
       'Data analytics',
       'Visualization',
@@ -1308,7 +1308,7 @@ const AI_FASHION_AGENTS = [
     name: 'AI Fashion Data Analyst',
     role: 'Data Analytics',
     color: THEME.emeraldGreen,
-    icon: ChartBarBig,
+    icon: BarChart3,
     responsibilities: [
       'Data analysis',
       'Reporting',
@@ -1563,7 +1563,7 @@ const NAVIGATION_ITEMS = [
   { id: 'marketing', label: 'Marketing', icon: TrendingUp },
   { id: 'supply', label: 'Supply Chain', icon: Truck },
   { id: 'sustainability', label: 'Sustainability', icon: Leaf },
-  { id: 'analytics', label: 'Analytics', icon: ChartBarBig },
+  { id: 'analytics', label: 'Analytics', icon: BarChart3 },
   { id: 'settings', label: 'Settings', icon: Settings },
 ];
 

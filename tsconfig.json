@@ -18,34 +18,33 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "incremental": true,
-    "baseUrl": ".",
     "paths": {
       "@/*": [
         "./*"
       ],
       "@app/*": [
-        "app/*"
+        "./app/*"
       ],
       "@backend/*": [
-        "backend/*"
+        "./backend/*"
       ],
       "@components/*": [
-        "components/*"
+        "./components/*"
       ],
       "@hooks/*": [
-        "app/hooks/*"
+        "./hooks/*"
       ],
       "@lib/*": [
-        "app/lib/*"
+        "./lib/*"
       ],
       "@utils/*": [
-        "utils/*"
+        "./utils/*"
       ],
       "@constants/*": [
-        "constants/*"
+        "./constants/*"
       ],
       "@assets/*": [
-        "assets/*"
+        "./assets/*"
       ]
     },
     "typeRoots": [

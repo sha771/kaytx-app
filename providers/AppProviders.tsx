@@ -6,6 +6,7 @@ import { AuthProvider } from './AuthProvider';
 import { AIAssistantProvider } from './AIAssistantProvider';
 import { MessagingProvider } from './MessagingProvider';
 import { CommandCenterProvider } from './CommandCenterProvider';
+import { DesignAgentProvider } from './DesignAgentProvider';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 interface AppProvidersProps {
@@ -23,7 +24,9 @@ export function AppProviders({ children }: AppProvidersProps) {
                 <ErrorBoundary>
                   <CommandCenterProvider>
                     <MessagingProvider>
-                      {children}
+                      <DesignAgentProvider>
+                        {children}
+                      </DesignAgentProvider>
                     </MessagingProvider>
                   </CommandCenterProvider>
                 </ErrorBoundary>

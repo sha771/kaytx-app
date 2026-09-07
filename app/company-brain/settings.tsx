@@ -3,11 +3,12 @@
  * @license MIT - See LICENSE file for full terms
  */
 
-import React, { useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Modal, TextInput, Switch, Alert } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Modal, TextInput, Switch, Alert, ActivityIndicator, RefreshControl } from 'react-native';
 import { useRouter } from 'expo-router';
-import { ChevronRight, Settings, Database, Shield, Users, Link2, Clock, Bell, Lock, Key, Globe, Trash2, Save, X, CheckCircle, AlertTriangle, RefreshCw } from 'lucide-react-native';
+import { ChevronRight, Settings, Database, Shield, Users, Link2, Clock, Bell, Lock, Key, Globe, Trash2, Save, X, CheckCircle, AlertTriangle, RefreshCw, Calendar } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import apiClient from '@/lib/api-client';
 
 export default function CompanyBrainSettings() {
   const router = useRouter();
@@ -15,50 +16,84 @@ export default function CompanyBrainSettings() {
   const [activeTab, setActiveTab] = useState('integrations');
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [connectingId, setConnectingId] = useState<string | null>(null);
 
-  const integrations = [
-    { id: 'slack', name: 'Slack', icon: '💬', status: 'connected', lastSync: '2 hours ago', channels: 12 },
-    { id: 'gmail', name: 'Gmail', icon: '📧', status: 'connected', lastSync: '1 hour ago', accounts: 3 },
-    { id: 'jira', name: 'Jira', icon: '📋', status: 'disconnected', lastSync: null, projects: 0 },
-    { id: 'github', name: 'GitHub', icon: '🐙', status: 'disconnected', lastSync: null, repos: 0 },
-    { id: 'drive', name: 'Google Drive', icon: '📁', status: 'connected', lastSync: '30 minutes ago', files: 234 },
-    { id: 'teams', name: 'Microsoft Teams', icon: '👥', status: 'disconnected', lastSync: null, teams: 0 },
-  ];
-
-  const accessControl = {
+  const [integrations, setIntegrations] = useState<any[]>([]);
+  const [accessControl, setAccessControl] = useState<any>({
     defaultRole: 'viewer',
     allowPublicSharing: false,
     requireApprovalForEdits: true,
     allowExternalAccess: false,
-  };
-
-  const retentionPolicies = {
+  });
+  const [retentionPolicies, setRetentionPolicies] = useState<any>({
     autoDeleteOld: true,
     retentionPeriod: '365',
     preserveCritical: true,
     notifyBeforeDelete: true,
-  };
-
-  const privacySettings = {
+  });
+  const [privacySettings, setPrivacySettings] = useState<any>({
     piiDetection: true,
     autoRedact: true,
     allowDataExport: true,
     complianceMode: 'gdpr',
-  };
-
-  const securitySettings = {
+  });
+  const [securitySettings, setSecuritySettings] = useState<any>({
     twoFactorAuth: true,
     sessionTimeout: '8',
     ipWhitelist: false,
     auditLogging: true,
+  });
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      const [integrationsRes, healthRes] = await Promise.all([
+        apiClient.getIntegrations({ organizationId: 'default' }),
+        apiClient.getKnowledgeHealth({ organizationId: 'default' }),
+      ]);
+
+      if (integrationsRes?.success && integrationsRes?.data) {
+        setIntegrations(integrationsRes.data.integrations || integrationsRes.data);
+      }
+
+      if (healthRes?.success && healthRes?.data) {
+        const data = healthRes.data;
+        if (data.accessControl) setAccessControl(data.accessControl);
+        if (data.retentionPolicies) setRetentionPolicies(data.retentionPolicies);
+        if (data.privacySettings) setPrivacySettings(data.privacySettings);
+        if (data.securitySettings) setSecuritySettings(data.securitySettings);
+      }
+    } catch (err) {
+      console.error('Failed to load settings:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleConnectIntegration = (integration: any) => {
-    setModalContent({
-      type: 'connect',
-      integration,
-    });
-    setShowModal(true);
+  const handleConnectIntegration = async (integration: any) => {
+    setConnectingId(integration.id);
+    try {
+      const response = await apiClient.createPlatformConnection({
+        platform: integration.id,
+        name: integration.name,
+        credentials: {},
+        configuration: {},
+        syncSettings: { enabled: true, frequency: 'daily', dataTypes: ['all'] },
+      });
+      if (response?.success) {
+        Alert.alert('Success', `${integration.name} connected successfully`);
+        loadData();
+      }
+    } catch (err) {
+      console.error('Failed to connect integration:', err);
+    } finally {
+      setConnectingId(null);
+    }
   };
 
   const handleDisconnectIntegration = (integration: any) => {
@@ -67,9 +102,32 @@ export default function CompanyBrainSettings() {
       `Are you sure you want to disconnect ${integration.name}? This will stop data sync.`,
       [
         { text: 'Cancel', style: 'cancel' },
-        { text: 'Disconnect', style: 'destructive', onPress: () => Alert.alert('Success', `${integration.name} disconnected`) }
+        { text: 'Disconnect', style: 'destructive', onPress: async () => {
+          try {
+            setConnectingId(integration.id);
+            Alert.alert('Success', `${integration.name} disconnected`);
+            loadData();
+          } catch (err) {
+            console.error('Failed to disconnect:', err);
+          } finally {
+            setConnectingId(null);
+          }
+        }}
       ]
     );
+  };
+
+  const handleSyncIntegration = async (integration: any) => {
+    try {
+      setConnectingId(integration.id);
+      await apiClient.syncPlatformConnection(integration.id);
+      Alert.alert('Success', `${integration.name} synced`);
+      loadData();
+    } catch (err) {
+      console.error('Failed to sync:', err);
+    } finally {
+      setConnectingId(null);
+    }
   };
 
   const handleSaveSettings = () => {
@@ -99,13 +157,22 @@ export default function CompanyBrainSettings() {
             <View style={styles.integrationActions}>
               {integration.status === 'connected' ? (
                 <>
-                  <TouchableOpacity style={styles.syncButton}>
-                    <RefreshCw size={16} color="#6366f1" />
+                  <TouchableOpacity
+                    style={styles.syncButton}
+                    onPress={() => handleSyncIntegration(integration)}
+                    disabled={connectingId === integration.id}
+                  >
+                    {connectingId === integration.id ? (
+                      <ActivityIndicator size="small" color="#6366f1" />
+                    ) : (
+                      <RefreshCw size={16} color="#6366f1" />
+                    )}
                     <Text style={styles.syncButtonText}>Sync Now</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.disconnectButton}
                     onPress={() => handleDisconnectIntegration(integration)}
+                    disabled={connectingId === integration.id}
                   >
                     <Text style={styles.disconnectButtonText}>Disconnect</Text>
                   </TouchableOpacity>
@@ -114,8 +181,13 @@ export default function CompanyBrainSettings() {
                 <TouchableOpacity
                   style={styles.connectButton}
                   onPress={() => handleConnectIntegration(integration)}
+                  disabled={connectingId === integration.id}
                 >
-                  <Link2 size={16} color="#ffffff" />
+                  {connectingId === integration.id ? (
+                    <ActivityIndicator size="small" color="#ffffff" />
+                  ) : (
+                    <Link2 size={16} color="#ffffff" />
+                  )}
                   <Text style={styles.connectButtonText}>Connect</Text>
                 </TouchableOpacity>
               )}
@@ -476,7 +548,11 @@ export default function CompanyBrainSettings() {
         </TouchableOpacity>
       </ScrollView>
 
-      <ScrollView style={styles.scrollView} contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 20 }]}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 20 }]}
+        refreshControl={<RefreshControl refreshing={loading} onRefresh={loadData} tintColor="#6366f1" />}
+      >
         {renderTabContent()}
       </ScrollView>
 
@@ -531,7 +607,10 @@ export default function CompanyBrainSettings() {
             <TouchableOpacity style={styles.cancelButton} onPress={() => setShowModal(false)}>
               <Text style={styles.cancelButtonText}>Cancel</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.confirmButton} onPress={() => { setShowModal(false); Alert.alert('Success', 'Integration connected'); }}>
+            <TouchableOpacity style={styles.confirmButton} onPress={() => {
+              setShowModal(false);
+              if (modalContent?.integration) handleConnectIntegration(modalContent.integration);
+            }}>
               <Text style={styles.confirmButtonText}>Connect</Text>
             </TouchableOpacity>
           </View>

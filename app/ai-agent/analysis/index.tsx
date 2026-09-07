@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Microscope, Activity, Star, Users, CircleCheckBig, Clock, Target, Zap, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, Brain, Lightbulb, FlaskConical, Search } from 'lucide-react-native';
+import { Microscope, Activity, Star, Users, CircleCheckBig, Clock, Target, Zap, ArrowRight, BarChart3, MessageSquare, Calendar, Shield, Brain, Lightbulb, FlaskConical, Search } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 
 const AGENTS = [
   { id: '1', name: 'Research Analyst', icon: Microscope, color: '#8B5CF6', description: 'Market and industry research' },
   { id: '2', name: 'Innovation Scout', icon: Lightbulb, color: '#8B5CF6', description: 'Emerging technology tracking' },
-  { id: '3', name: 'Trend Forecaster', icon: ChartBarBig, color: '#8B5CF6', description: 'Future trend prediction' },
+  { id: '3', name: 'Trend Forecaster', icon: BarChart3, color: '#8B5CF6', description: 'Future trend prediction' },
   { id: '4', name: 'R&D Coordinator', icon: FlaskConical, color: '#8B5CF6', description: 'Research project management' },
   { id: '5', name: 'Insight Generator', icon: Brain, color: '#8B5CF6', description: 'Deep analysis and insights' },
   { id: '6', name: 'Competitive Intel', icon: Search, color: '#8B5CF6', description: 'Competitive analysis' },
@@ -50,7 +50,7 @@ export default function ResearchAnalysisIndex() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: theme.colors.primary + '12' }]}><act.icon size={24} color={theme.colors.primary} /><Text style={[styles.actionText, { color: theme.colors.primary }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:BarChart3},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: theme.colors.primary + '12' }]}><act.icon size={24} color={theme.colors.primary} /><Text style={[styles.actionText, { color: theme.colors.primary }]}>{act.label}</Text></TouchableOpacity>))}
         </View>
       </View>
     

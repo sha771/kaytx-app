@@ -1,19 +1,33 @@
-/**
- * @copyright Copyright (c) 2026 Kaytx & Antigravity Ecosystem ("kaytx")
- * @license MIT - See LICENSE file for full terms
- */
-
-import React, { useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, ActivityIndicator, RefreshControl } from 'react-native';
 import { useRouter } from 'expo-router';
-import { ChevronRight, BarChart3, TrendingUp, AlertTriangle, Shield, Users, Search, BookOpen, Clock, Target, CheckCircle, X, Calendar, Filter, Download } from 'lucide-react-native';
+import { ChevronRight, BarChart3, TrendingUp, AlertTriangle, Shield, Users, Search, BookOpen, Clock, Target, CheckCircle, Calendar, Filter, Download } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import apiClient from '@/lib/api-client';
 
 export default function CompanyBrainAnalytics() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const [timeRange, setTimeRange] = useState('30d');
-  const [showFilterModal, setShowFilterModal] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const [knowledgeHealth, setKnowledgeHealth] = useState<any>({
+    coverage: 0, outdated: 0, duplicates: 0, lastUpdated: '-',
+  });
+  const [usageMetrics, setUsageMetrics] = useState<any>({
+    totalSearches: 0, uniqueUsers: 0, avgSessionDuration: '-', successRate: 0,
+  });
+  const [topSearches, setTopSearches] = useState<any[]>([]);
+  const [knowledgeGaps, setKnowledgeGaps] = useState<any[]>([]);
+  const [riskAssessment, setRiskAssessment] = useState<any>({
+    singlePointOfFailure: 0, atRiskDepartures: 0, complianceGaps: 0, overallRisk: 'low',
+  });
+  const [departureRisks, setDepartureRisks] = useState<any[]>([]);
+  const [onboardingMetrics, setOnboardingMetrics] = useState<any>({
+    avgOnboardingTime: 0, targetOnboardingTime: 21, completionRate: 0, satisfactionScore: 0,
+  });
+  const [departmentPerformance, setDepartmentPerformance] = useState<any[]>([]);
 
   const timeRanges = [
     { id: '7d', label: '7 Days' },
@@ -22,62 +36,45 @@ export default function CompanyBrainAnalytics() {
     { id: '1y', label: '1 Year' },
   ];
 
-  const knowledgeHealth = {
-    coverage: 78,
-    outdated: 12,
-    duplicates: 8,
-    lastUpdated: '2 hours ago',
-  };
+  const loadData = useCallback(async () => {
+    try {
+      setLoading(true);
+      const params = { organizationId: 'default' };
 
-  const usageMetrics = {
-    totalSearches: 1234,
-    uniqueUsers: 45,
-    avgSessionDuration: '8m 32s',
-    successRate: 87,
-  };
+      const [healthRes, metricsRes, searchesRes, insightsRes, summaryRes] = await Promise.all([
+        apiClient.getKnowledgeHealth(params),
+        apiClient.getAnalyicsMetrics(params),
+        apiClient.getPopularSearches({ ...params, limit: 5 }),
+        apiClient.getAnalyticsInsights(params),
+        apiClient.getAnalyticsSummary(params),
+      ]);
 
-  const topSearches = [
-    { id: 1, query: 'API authentication', count: 156, trend: '+12%' },
-    { id: 2, query: 'Client onboarding', count: 134, trend: '+8%' },
-    { id: 3, query: 'Expense policy', count: 98, trend: '-3%' },
-    { id: 4, query: 'Product roadmap', count: 87, trend: '+5%' },
-    { id: 5, query: 'Team structure', count: 76, trend: '+2%' },
-  ];
+      if (healthRes?.success && healthRes?.data) setKnowledgeHealth(healthRes.data);
+      if (metricsRes?.success && metricsRes?.data) setUsageMetrics(metricsRes.data);
+      if (searchesRes?.success && searchesRes?.data) setTopSearches(searchesRes.data);
+      if (insightsRes?.success && insightsRes?.data) setKnowledgeGaps(insightsRes.data);
 
-  const knowledgeGaps = [
-    { id: 1, area: 'Legacy System Documentation', department: 'Engineering', severity: 'high', impact: 'Critical' },
-    { id: 2, area: 'Client Communication Protocols', department: 'Sales', severity: 'high', impact: 'High' },
-    { id: 3, area: 'Marketing Analytics Setup', department: 'Marketing', severity: 'medium', impact: 'Medium' },
-    { id: 4, area: 'HR Policy Updates', department: 'HR', severity: 'medium', impact: 'Medium' },
-  ];
+      if (summaryRes?.success && summaryRes?.data) {
+        const sd = summaryRes.data;
+        if (sd.riskAssessment) setRiskAssessment(sd.riskAssessment);
+        if (sd.departureRisks) setDepartureRisks(sd.departureRisks);
+        if (sd.onboardingMetrics) setOnboardingMetrics(sd.onboardingMetrics);
+        if (sd.departmentPerformance) setDepartmentPerformance(sd.departmentPerformance);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  }, []);
 
-  const riskAssessment = {
-    singlePointOfFailure: 3,
-    atRiskDepartures: 2,
-    complianceGaps: 1,
-    overallRisk: 'medium',
-  };
+  useEffect(() => { loadData(); }, [loadData]);
 
-  const departureRisks = [
-    { id: 1, employee: 'John D.', role: 'Tech Lead', riskLevel: 'high', knowledgeAreas: ['Architecture', 'API Design'], impactScore: 92 },
-    { id: 2, employee: 'Sarah M.', role: 'Senior PM', riskLevel: 'medium', knowledgeAreas: ['Product Strategy', 'Roadmap'], impactScore: 78 },
-    { id: 3, employee: 'Mike T.', role: 'Sales Manager', riskLevel: 'medium', knowledgeAreas: ['Enterprise Sales', 'Client Relations'], impactScore: 71 },
-  ];
-
-  const onboardingMetrics = {
-    avgOnboardingTime: 14,
-    targetOnboardingTime: 21,
-    completionRate: 85,
-    satisfactionScore: 4.2,
-  };
-
-  const departmentPerformance = [
-    { id: 'engineering', name: 'Engineering', coverage: 92, contributions: 234, searchActivity: 456 },
-    { id: 'product', name: 'Product', coverage: 85, contributions: 156, searchActivity: 312 },
-    { id: 'sales', name: 'Sales', coverage: 78, contributions: 98, searchActivity: 234 },
-    { id: 'marketing', name: 'Marketing', coverage: 71, contributions: 87, searchActivity: 198 },
-    { id: 'hr', name: 'HR', coverage: 88, contributions: 65, searchActivity: 145 },
-  ];
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    loadData();
+  }, [loadData]);
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
@@ -101,6 +98,14 @@ export default function CompanyBrainAnalytics() {
     }
   };
 
+  if (loading && !refreshing) {
+    return (
+      <View style={[styles.container, { paddingTop: insets.top }, styles.centered]}>
+        <ActivityIndicator size="large" color="#6366f1" />
+      </View>
+    );
+  }
+
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       {/* Header */}
@@ -115,8 +120,8 @@ export default function CompanyBrainAnalytics() {
       </View>
 
       {/* Time Range Selector */}
-      <ScrollView 
-        horizontal 
+      <ScrollView
+        horizontal
         showsHorizontalScrollIndicator={false}
         style={styles.timeRangeScroll}
         contentContainerStyle={styles.timeRangeScrollContent}
@@ -134,7 +139,11 @@ export default function CompanyBrainAnalytics() {
         ))}
       </ScrollView>
 
-      <ScrollView style={styles.scrollView} contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 20 }]}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 20 }]}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#6366f1" />}
+      >
         {/* Knowledge Health */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Knowledge Health</Text>
@@ -145,7 +154,7 @@ export default function CompanyBrainAnalytics() {
                 <Text style={styles.healthMetricLabel}>Coverage</Text>
               </View>
               <Text style={styles.healthMetricValue}>{knowledgeHealth.coverage}%</Text>
-              <Text style={styles.healthMetricSub}>Last updated: {knowledgeHealth.lastUpdated}</Text>
+              <Text style={styles.healthMetricSub}>Last updated: {knowledgeHealth.lastUpdated || '-'}</Text>
             </View>
             <View style={styles.healthDivider} />
             <View style={styles.healthMetric}>
@@ -204,18 +213,18 @@ export default function CompanyBrainAnalytics() {
             </TouchableOpacity>
           </View>
           <View style={styles.topSearchesList}>
-            {topSearches.map((search) => (
-              <View key={search.id} style={styles.topSearchItem}>
+            {topSearches.map((search: any, index: number) => (
+              <View key={search.id || index} style={styles.topSearchItem}>
                 <View style={styles.searchRank}>
-                  <Text style={styles.searchRankText}>{search.id}</Text>
+                  <Text style={styles.searchRankText}>{index + 1}</Text>
                 </View>
                 <View style={styles.searchInfo}>
-                  <Text style={styles.searchQuery}>{search.query}</Text>
-                  <Text style={styles.searchCount}>{search.count} searches</Text>
+                  <Text style={styles.searchQuery}>{search.query || search.name}</Text>
+                  <Text style={styles.searchCount}>{search.count || search.searches || 0} searches</Text>
                 </View>
-                <View style={[styles.searchTrend, { backgroundColor: search.trend.startsWith('+') ? '#10b98120' : '#ef444420' }]}>
-                  <Text style={[styles.searchTrendText, { color: search.trend.startsWith('+') ? '#10b981' : '#ef4444' }]}>
-                    {search.trend}
+                <View style={[styles.searchTrend, { backgroundColor: (search.trend || '').startsWith('+') ? '#10b98120' : '#ef444420' }]}>
+                  <Text style={[styles.searchTrendText, { color: (search.trend || '').startsWith('+') ? '#10b981' : '#ef4444' }]}>
+                    {search.trend || '-'}
                   </Text>
                 </View>
               </View>
@@ -232,18 +241,18 @@ export default function CompanyBrainAnalytics() {
             </TouchableOpacity>
           </View>
           <View style={styles.gapsList}>
-            {knowledgeGaps.map((gap) => (
+            {knowledgeGaps.map((gap: any) => (
               <TouchableOpacity key={gap.id} style={styles.gapItem}>
                 <View style={[styles.gapSeverity, { backgroundColor: `${getSeverityColor(gap.severity)}20` }]}>
                   <AlertTriangle size={20} color={getSeverityColor(gap.severity)} />
                 </View>
                 <View style={styles.gapInfo}>
-                  <Text style={styles.gapArea}>{gap.area}</Text>
-                  <Text style={styles.gapDepartment}>{gap.department}</Text>
+                  <Text style={styles.gapArea}>{gap.area || gap.name}</Text>
+                  <Text style={styles.gapDepartment}>{gap.department || '-'}</Text>
                 </View>
                 <View style={[styles.gapImpact, { backgroundColor: `${getSeverityColor(gap.severity)}20` }]}>
                   <Text style={[styles.gapImpactText, { color: getSeverityColor(gap.severity) }]}>
-                    {gap.impact}
+                    {gap.impact || gap.severity}
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -260,7 +269,7 @@ export default function CompanyBrainAnalytics() {
               <View style={styles.riskInfo}>
                 <Text style={styles.riskTitle}>Overall Risk Level</Text>
                 <Text style={[styles.riskLevel, { color: getRiskColor(riskAssessment.overallRisk) }]}>
-                  {riskAssessment.overallRisk.charAt(0).toUpperCase() + riskAssessment.overallRisk.slice(1)}
+                  {riskAssessment.overallRisk ? riskAssessment.overallRisk.charAt(0).toUpperCase() + riskAssessment.overallRisk.slice(1) : 'N/A'}
                 </Text>
               </View>
             </View>
@@ -290,16 +299,16 @@ export default function CompanyBrainAnalytics() {
             </TouchableOpacity>
           </View>
           <View style={styles.departureRisksList}>
-            {departureRisks.map((risk) => (
+            {departureRisks.map((risk: any) => (
               <TouchableOpacity key={risk.id} style={styles.departureRiskItem}>
                 <View style={[styles.departureRiskIcon, { backgroundColor: `${getRiskColor(risk.riskLevel)}20` }]}>
                   <AlertTriangle size={20} color={getRiskColor(risk.riskLevel)} />
                 </View>
                 <View style={styles.departureRiskInfo}>
-                  <Text style={styles.departureRiskName}>{risk.employee}</Text>
-                  <Text style={styles.departureRiskRole}>{risk.role}</Text>
+                  <Text style={styles.departureRiskName}>{risk.employee || risk.name}</Text>
+                  <Text style={styles.departureRiskRole}>{risk.role || '-'}</Text>
                   <View style={styles.departureRiskAreas}>
-                    {risk.knowledgeAreas.map((area, index) => (
+                    {(risk.knowledgeAreas || []).map((area: string, index: number) => (
                       <View key={index} style={styles.knowledgeAreaBadge}>
                         <Text style={styles.knowledgeAreaText}>{area}</Text>
                       </View>
@@ -307,7 +316,7 @@ export default function CompanyBrainAnalytics() {
                   </View>
                 </View>
                 <View style={styles.departureRiskScore}>
-                  <Text style={styles.departureRiskScoreValue}>{risk.impactScore}</Text>
+                  <Text style={styles.departureRiskScoreValue}>{risk.impactScore || 0}</Text>
                   <Text style={styles.departureRiskScoreLabel}>Impact</Text>
                 </View>
               </TouchableOpacity>
@@ -350,7 +359,7 @@ export default function CompanyBrainAnalytics() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Department Performance</Text>
           <View style={styles.departmentPerformanceList}>
-            {departmentPerformance.map((dept) => (
+            {departmentPerformance.map((dept: any) => (
               <TouchableOpacity key={dept.id} style={styles.departmentPerformanceItem}>
                 <View style={styles.departmentPerformanceInfo}>
                   <Text style={styles.departmentPerformanceName}>{dept.name}</Text>
@@ -364,7 +373,7 @@ export default function CompanyBrainAnalytics() {
                       <Text style={styles.departmentPerformanceMetricLabel}>Contributions</Text>
                     </View>
                     <View style={styles.departmentPerformanceMetric}>
-                      <Text style={styles.departmentPerformanceMetricValue}>{dept.searchActivity}</Text>
+                      <Text style={styles.departmentPerformanceMetricValue}>{dept.searchActivity || dept.searches}</Text>
                       <Text style={styles.departmentPerformanceMetricLabel}>Searches</Text>
                     </View>
                   </View>
@@ -401,6 +410,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#0f172a',
+  },
+  centered: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   header: {
     flexDirection: 'row',

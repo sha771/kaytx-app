@@ -24,7 +24,7 @@ import {
   History,
   Bug,
   Lightbulb,
-  ChartBarBig,
+  BarChart3,
   Send,
   Mic,
   Paperclip,
@@ -330,7 +330,7 @@ export default function AgentTestingScreen() {
           style={[styles.tab, activeTab === 'results' && { backgroundColor: colors.tint }]}
           onPress={() => setActiveTab('results')}
         >
-          <ChartBarBig size={16} color={activeTab === 'results' ? 'white' : colors.icon} />
+          <BarChart3 size={16} color={activeTab === 'results' ? 'white' : colors.icon} />
           <Text style={[styles.tabText, { color: activeTab === 'results' ? 'white' : colors.text }]}>
             Results
           </Text>

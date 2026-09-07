@@ -13,7 +13,7 @@
 import type { AIAgent } from './aiAgentHierarchy';
 import { enhanceAIAgent } from './utils/agent-capability-enhancer';
 import {
-  Users, Target, Megaphone, Settings, Zap, Shield, ChartBarBig,
+  Users, Target, Megaphone, Settings, Zap, Shield, BarChart3,
   Briefcase, TrendingUp, Globe, Building2, Truck, ShoppingCart, Scale,
   Heart, Activity, Microscope, Factory, Landmark, FileText, Database,
   Search, Workflow, Cpu, Lock, BadgeCheck, Sparkles, Award,

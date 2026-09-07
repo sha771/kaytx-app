@@ -29,7 +29,7 @@ import {
   X,
   Pencil,
   Trash2,
-  ChartBarBig,
+  BarChart3,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { Stack } from 'expo-router';
@@ -266,7 +266,7 @@ export default function SalesAutomationScreen() {
           Last 30 days
         </Text>
         <View style={styles.chartPlaceholder}>
-          <ChartBarBig size={48} color={theme.colors.secondaryText} />
+          <BarChart3 size={48} color={theme.colors.secondaryText} />
           <Text style={[styles.chartPlaceholderText, { color: theme.colors.secondaryText }]}>
             Performance chart would appear here
           </Text>
@@ -410,7 +410,7 @@ export default function SalesAutomationScreen() {
           ]}
           onPress={() => setActiveTab('stats')}
         >
-          <ChartBarBig
+          <BarChart3
             size={20}
             color={activeTab === 'stats' ? theme.colors.primary : theme.colors.secondaryText}
           />

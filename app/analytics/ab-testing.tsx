@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
-  ChartBarBig,
+  BarChart3,
   TrendingUp,
   TrendingDown,
   Users,

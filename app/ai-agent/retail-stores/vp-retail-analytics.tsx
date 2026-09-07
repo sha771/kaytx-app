@@ -1,6 +1,6 @@
 import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
-import { ChartBarBig } from 'lucide-react-native';
+import { BarChart3 } from 'lucide-react-native';
 
 export default function VPRetailAnalyticsPage() {
   const agent = {
@@ -9,7 +9,7 @@ export default function VPRetailAnalyticsPage() {
     title: 'AI VP Retail Analytics',
     description: 'The AI VP Retail Analytics oversees all retail analytics initiatives, manages data analysis, business intelligence, forecasting, and reporting to provide actionable insights for decision-making.',
     capabilities: ["Task Automation","Data Processing","Workflow Management","Data Analytics","Business Intelligence","Forecasting","Reporting","Insight Generation","Performance Analysis","Strategic Planning"],
-    icon: ChartBarBig,
+    icon: BarChart3,
     color: '#00695C',
     type: 'employee' as const,
     humanCost: '$170k/year',

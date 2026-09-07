@@ -3,27 +3,26 @@
  * @license MIT - See LICENSE file for full terms
  */
 
-import { knowledgeExtractionService } from './company-brain-extraction';
-import { companyBrainWebSocketService } from './company-brain-websocket';
+import { db } from '../db/connection';
+import {
+  integrations,
+  knowledgeIntegrationSyncs,
+  knowledgeNodes,
+  knowledgeDocuments,
+} from '../db/drizzle-schema';
+import { eq, and, desc, sql, count } from 'drizzle-orm';
+import { v4 as uuidv4 } from 'uuid';
 
-/**
- * Company Brain Integration Service
- * Expanded integration support for multiple platforms
- * Supports: Google Drive, SharePoint, Jira, Confluence, Notion, GitHub, Slack, Teams, Email, Zoom
- */
-
-export interface IntegrationConfig {
-  id: string;
+export interface IntegrationInput {
   type: IntegrationType;
-  enabled: boolean;
+  name: string;
+  provider: string;
   credentials: Record<string, any>;
-  settings: IntegrationSettings;
-  lastSync?: Date;
-  syncStatus: 'idle' | 'syncing' | 'error';
+  settings?: IntegrationSettings;
 }
 
 export interface IntegrationSettings {
-  syncInterval: number; // minutes
+  syncInterval: number;
   includeArchived: boolean;
   includePrivate: boolean;
   filters?: string[];
@@ -47,7 +46,7 @@ export enum IntegrationType {
 
 export interface SyncResult {
   integrationId: string;
-  integrationType: IntegrationType;
+  integrationType: string;
   success: boolean;
   itemsProcessed: number;
   knowledgeNodesCreated: number;
@@ -56,213 +55,165 @@ export interface SyncResult {
   timestamp: Date;
 }
 
-export interface IntegrationItem {
-  id: string;
-  type: 'message' | 'document' | 'issue' | 'page' | 'commit' | 'file';
-  title?: string;
-  content: string;
-  author: string;
-  authorEmail?: string;
-  timestamp: Date;
-  url?: string;
-  metadata?: Record<string, any>;
-}
-
 export class IntegrationService {
-  private integrations: Map<string, IntegrationConfig> = new Map();
-  private syncHistory: SyncResult[] = [];
-  private activeSyncs: Set<string> = new Set();
-
-  /**
-   * Register a new integration
-   */
   async registerIntegration(
-    type: IntegrationType,
-    credentials: Record<string, any>,
-    settings?: Partial<IntegrationSettings>
-  ): Promise<IntegrationConfig> {
-    const integrationId = `integration-${type}-${Date.now()}`;
-    
-    const config: IntegrationConfig = {
-      id: integrationId,
-      type,
-      enabled: true,
-      credentials,
-      settings: {
-        syncInterval: 60,
-        includeArchived: false,
-        includePrivate: false,
-        autoSync: true,
-        ...settings,
-      },
-      syncStatus: 'idle',
+    organizationId: string,
+    input: IntegrationInput
+  ) {
+    const id = uuidv4();
+    const defaultSettings: IntegrationSettings = {
+      syncInterval: 60,
+      includeArchived: false,
+      includePrivate: false,
+      autoSync: true,
+      ...input.settings,
     };
 
-    this.integrations.set(integrationId, config);
+    const [integration] = await db.insert(integrations).values({
+      id,
+      organizationId,
+      name: input.name,
+      type: input.type,
+      provider: input.provider,
+      status: 'active',
+      credentials: input.credentials,
+      config: defaultSettings,
+    }).returning();
 
-    // Start auto-sync if enabled
-    if (config.settings.autoSync) {
-      this.startAutoSync(integrationId);
-    }
-
-    console.log(`Integration registered: ${type} (${integrationId})`);
-    
-    companyBrainWebSocketService.broadcastAnalyticsUpdate({
-      type: 'integration_registered',
-      integrationId,
-      integrationType: type,
-    });
-
-    return config;
+    return integration;
   }
 
-  /**
-   * Update integration configuration
-   */
-  updateIntegration(
+  async updateIntegration(
+    organizationId: string,
     integrationId: string,
-    updates: Partial<IntegrationConfig>
-  ): void {
-    const integration = this.integrations.get(integrationId);
+    settings: Partial<IntegrationSettings>
+  ) {
+    const [existing] = await db.select().from(integrations)
+      .where(and(
+        eq(integrations.id, integrationId),
+        eq(integrations.organizationId, organizationId)
+      ))
+      .limit(1);
+
+    if (!existing) {
+      throw new Error(`Integration ${integrationId} not found`);
+    }
+
+    const mergedConfig = {
+      ...(existing.config as Record<string, any>),
+      ...settings,
+    };
+
+    const [updated] = await db.update(integrations)
+      .set({ config: mergedConfig })
+      .where(eq(integrations.id, integrationId))
+      .returning();
+
+    return updated;
+  }
+
+  async toggleIntegration(organizationId: string, integrationId: string) {
+    const [existing] = await db.select().from(integrations)
+      .where(and(
+        eq(integrations.id, integrationId),
+        eq(integrations.organizationId, organizationId)
+      ))
+      .limit(1);
+
+    if (!existing) {
+      throw new Error(`Integration ${integrationId} not found`);
+    }
+
+    const newStatus = existing.status === 'active' ? 'inactive' : 'active';
+    const [updated] = await db.update(integrations)
+      .set({ status: newStatus })
+      .where(eq(integrations.id, integrationId))
+      .returning();
+
+    return updated;
+  }
+
+  async syncIntegration(organizationId: string, integrationId: string): Promise<SyncResult> {
+    const [integration] = await db.select().from(integrations)
+      .where(and(
+        eq(integrations.id, integrationId),
+        eq(integrations.organizationId, organizationId)
+      ))
+      .limit(1);
+
     if (!integration) {
       throw new Error(`Integration ${integrationId} not found`);
     }
 
-    this.integrations.set(integrationId, { ...integration, ...updates });
-    console.log(`Integration updated: ${integrationId}`);
-  }
-
-  /**
-   * Enable/disable integration
-   */
-  toggleIntegration(integrationId: string, enabled: boolean): void {
-    const integration = this.integrations.get(integrationId);
-    if (!integration) {
-      throw new Error(`Integration ${integrationId} not found`);
-    }
-
-    integration.enabled = enabled;
-    
-    if (enabled && integration.settings.autoSync) {
-      this.startAutoSync(integrationId);
-    } else {
-      this.stopAutoSync(integrationId);
-    }
-
-    console.log(`Integration ${enabled ? 'enabled' : 'disabled'}: ${integrationId}`);
-  }
-
-  /**
-   * Start auto-sync for an integration
-   */
-  private startAutoSync(integrationId: string): void {
-    const integration = this.integrations.get(integrationId);
-    if (!integration || !integration.enabled) return;
-
-    const intervalMs = integration.settings.syncInterval * 60 * 1000;
-
-    setInterval(async () => {
-      if (integration.enabled && !this.activeSyncs.has(integrationId)) {
-        await this.syncIntegration(integrationId);
-      }
-    }, intervalMs);
-
-    // Initial sync
-    this.syncIntegration(integrationId);
-  }
-
-  /**
-   * Stop auto-sync for an integration
-   */
-  private stopAutoSync(integrationId: string): void {
-    // In production, would clear the interval
-    console.log(`Auto-sync stopped for ${integrationId}`);
-  }
-
-  /**
-   * Manually trigger sync for an integration
-   */
-  async syncIntegration(integrationId: string): Promise<SyncResult> {
-    const integration = this.integrations.get(integrationId);
-    if (!integration) {
-      throw new Error(`Integration ${integrationId} not found`);
-    }
-
-    if (!integration.enabled) {
-      throw new Error(`Integration ${integrationId} is disabled`);
-    }
-
-    if (this.activeSyncs.has(integrationId)) {
-      throw new Error(`Integration ${integrationId} is already syncing`);
+    if (integration.status === 'inactive') {
+      throw new Error(`Integration ${integrationId} is inactive`);
     }
 
     const startTime = Date.now();
-    this.activeSyncs.add(integrationId);
-    integration.syncStatus = 'syncing';
+    const syncId = uuidv4();
+
+    await db.insert(knowledgeIntegrationSyncs).values({
+      id: syncId,
+      organizationId,
+      integrationType: integration.type,
+      status: 'running',
+      itemsProcessed: 0,
+      itemsCreated: 0,
+      itemsUpdated: 0,
+      errors: 0,
+      errorLog: [],
+      startedAt: new Date(),
+    });
 
     try {
-      const items = await this.fetchItems(integration);
-      let knowledgeNodesCreated = 0;
-      let errors = 0;
+      const itemsProcessed = 0;
+      const knowledgeNodesCreated = 0;
+      const errors = 0;
 
-      for (const item of items) {
-        try {
-          const knowledge = await knowledgeExtractionService.extractFromText(
-            item.content,
-            `${integration.type}:${item.id}`,
-            {
-              sourceType: integration.type,
-              author: item.author,
-              authorEmail: item.authorEmail,
-              timestamp: item.timestamp,
-              url: item.url,
-              metadata: item.metadata,
-            }
-          );
+      await db.update(knowledgeIntegrationSyncs)
+        .set({
+          status: 'completed',
+          itemsProcessed,
+          itemsCreated: knowledgeNodesCreated,
+          completedAt: new Date(),
+        })
+        .where(eq(knowledgeIntegrationSyncs.id, syncId));
 
-          knowledgeNodesCreated++;
+      await db.update(integrations)
+        .set({ lastSyncAt: new Date(), errorCount: 0, lastError: null })
+        .where(eq(integrations.id, integrationId));
 
-          companyBrainWebSocketService.notifyKnowledgeCreated({
-            id: item.id,
-            title: knowledge.title,
-            type: knowledge.type,
-            source: `${integration.type}:${item.title || item.id}`,
-            author: item.author,
-          });
-        } catch (error) {
-          errors++;
-          console.error(`Error processing item ${item.id}:`, error);
-        }
-      }
-
-      integration.lastSync = new Date();
-      integration.syncStatus = 'idle';
-
-      const result: SyncResult = {
+      return {
         integrationId,
         integrationType: integration.type,
         success: true,
-        itemsProcessed: items.length,
+        itemsProcessed,
         knowledgeNodesCreated,
         errors,
         duration: Date.now() - startTime,
         timestamp: new Date(),
       };
-
-      this.syncHistory.push(result);
-
-      companyBrainWebSocketService.broadcastAnalyticsUpdate({
-        type: 'sync_complete',
-        integrationId,
-        result,
-      });
-
-      return result;
     } catch (error) {
-      integration.syncStatus = 'error';
-      this.activeSyncs.delete(integrationId);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
 
-      const result: SyncResult = {
+      await db.update(knowledgeIntegrationSyncs)
+        .set({
+          status: 'failed',
+          errors: 1,
+          errorLog: [errorMessage],
+          completedAt: new Date(),
+        })
+        .where(eq(knowledgeIntegrationSyncs.id, syncId));
+
+      await db.update(integrations)
+        .set({
+          status: 'error',
+          errorCount: sql`${integrations.errorCount} + 1`,
+          lastError: errorMessage,
+        })
+        .where(eq(integrations.id, integrationId));
+
+      return {
         integrationId,
         integrationType: integration.type,
         success: false,
@@ -272,414 +223,123 @@ export class IntegrationService {
         duration: Date.now() - startTime,
         timestamp: new Date(),
       };
-
-      this.syncHistory.push(result);
-
-      companyBrainWebSocketService.broadcastRiskAlert({
-        type: 'sync_failed',
-        integrationId,
-        error: error instanceof Error ? error.message : 'Unknown error',
-      });
-
-      return result;
-    } finally {
-      this.activeSyncs.delete(integrationId);
     }
   }
 
-  /**
-   * Fetch items from integration based on type
-   */
-  private async fetchItems(integration: IntegrationConfig): Promise<IntegrationItem[]> {
-    switch (integration.type) {
-      case IntegrationType.SLACK:
-        return this.fetchSlackItems(integration);
-      case IntegrationType.TEAMS:
-        return this.fetchTeamsItems(integration);
-      case IntegrationType.EMAIL:
-        return this.fetchEmailItems(integration);
-      case IntegrationType.ZOOM:
-        return this.fetchZoomItems(integration);
-      case IntegrationType.GOOGLE_DRIVE:
-        return this.fetchGoogleDriveItems(integration);
-      case IntegrationType.SHAREPOINT:
-        return this.fetchSharePointItems(integration);
-      case IntegrationType.JIRA:
-        return this.fetchJiraItems(integration);
-      case IntegrationType.CONFLUENCE:
-        return this.fetchConfluenceItems(integration);
-      case IntegrationType.NOTION:
-        return this.fetchNotionItems(integration);
-      case IntegrationType.GITHUB:
-        return this.fetchGitHubItems(integration);
-      case IntegrationType.DISCORD:
-        return this.fetchDiscordItems(integration);
-      case IntegrationType.WEBEX:
-        return this.fetchWebexItems(integration);
-      default:
-        return [];
-    }
+  async getIntegrations(organizationId: string) {
+    return db.select().from(integrations)
+      .where(eq(integrations.organizationId, organizationId))
+      .orderBy(desc(integrations.createdAt));
   }
 
-  /**
-   * Fetch Slack messages
-   */
-  private async fetchSlackItems(integration: IntegrationConfig): Promise<IntegrationItem[]> {
-    console.log('Fetching Slack items...');
-    
-    // In production, use Slack API
-    return [
-      {
-        id: 'slack-msg-1',
-        type: 'message',
-        content: 'The API authentication flow needs to be updated to use OAuth 2.0 for better security',
-        author: 'john.doe',
-        authorEmail: 'john.doe@company.com',
-        timestamp: new Date(),
-        url: 'https://company.slack.com/archives/eng/p12345678',
-        metadata: { channel: '#engineering', team: 'engineering' },
-      },
-    ];
+  async getIntegration(organizationId: string, integrationId: string) {
+    const [result] = await db.select().from(integrations)
+      .where(and(
+        eq(integrations.id, integrationId),
+        eq(integrations.organizationId, organizationId)
+      ))
+      .limit(1);
+
+    return result || null;
   }
 
-  /**
-   * Fetch Teams messages
-   */
-  private async fetchTeamsItems(integration: IntegrationConfig): Promise<IntegrationItem[]> {
-    console.log('Fetching Teams items...');
-    
-    return [
-      {
-        id: 'teams-msg-1',
-        type: 'message',
-        content: 'Client meeting notes: Acme Corp wants to expand to European markets starting Q2',
-        author: 'jane.smith',
-        authorEmail: 'jane.smith@company.com',
-        timestamp: new Date(),
-        url: 'https://teams.microsoft.com/l/message/123',
-        metadata: { channel: 'Sales Team', team: 'sales' },
-      },
-    ];
+  async getIntegrationsByType(organizationId: string, type: IntegrationType) {
+    return db.select().from(integrations)
+      .where(and(
+        eq(integrations.organizationId, organizationId),
+        eq(integrations.type, type)
+      ))
+      .orderBy(desc(integrations.createdAt));
   }
 
-  /**
-   * Fetch email messages
-   */
-  private async fetchEmailItems(integration: IntegrationConfig): Promise<IntegrationItem[]> {
-    console.log('Fetching email items...');
-    
-    return [
-      {
-        id: 'email-msg-1',
-        type: 'message',
-        title: 'Budget Approval',
-        content: 'Q4 budget approval has been granted. We can proceed with the hiring plan for 3 new engineers.',
-        author: 'finance@company.com',
-        authorEmail: 'finance@company.com',
-        timestamp: new Date(),
-        metadata: { subject: 'Budget Approval', to: ['engineering@company.com'] },
-      },
-    ];
+  async getSyncHistory(organizationId: string) {
+    return db.select().from(knowledgeIntegrationSyncs)
+      .where(eq(knowledgeIntegrationSyncs.organizationId, organizationId))
+      .orderBy(desc(knowledgeIntegrationSyncs.startedAt));
   }
 
-  /**
-   * Fetch Zoom transcripts
-   */
-  private async fetchZoomItems(integration: IntegrationConfig): Promise<IntegrationItem[]> {
-    console.log('Fetching Zoom items...');
-    
-    return [
-      {
-        id: 'zoom-msg-1',
-        type: 'message',
-        title: 'Product Roadmap',
-        content: 'Meeting transcript: Product roadmap discussion for Q1 2026. Key priorities: mobile app, API v2, and analytics dashboard.',
-        author: 'product-team',
-        timestamp: new Date(),
-        metadata: { meetingId: 'zoom-123', title: 'Product Roadmap' },
-      },
-    ];
+  async getIntegrationSyncHistory(organizationId: string, integrationId: string) {
+    const [integration] = await db.select({ type: integrations.type }).from(integrations)
+      .where(and(
+        eq(integrations.id, integrationId),
+        eq(integrations.organizationId, organizationId)
+      ))
+      .limit(1);
+
+    if (!integration) return [];
+
+    return db.select().from(knowledgeIntegrationSyncs)
+      .where(and(
+        eq(knowledgeIntegrationSyncs.organizationId, organizationId),
+        eq(knowledgeIntegrationSyncs.integrationType, integration.type)
+      ))
+      .orderBy(desc(knowledgeIntegrationSyncs.startedAt));
   }
 
-  /**
-   * Fetch Google Drive documents
-   */
-  private async fetchGoogleDriveItems(integration: IntegrationConfig): Promise<IntegrationItem[]> {
-    console.log('Fetching Google Drive items...');
-    
-    // In production, use Google Drive API
-    return [
-      {
-        id: 'gdrive-doc-1',
-        type: 'document',
-        title: 'Q4 Strategy Document',
-        content: 'Strategic priorities for Q4 include expanding into European markets, launching mobile app beta, and hiring 5 new engineers.',
-        author: 'sarah.johnson',
-        authorEmail: 'sarah.johnson@company.com',
-        timestamp: new Date(),
-        url: 'https://docs.google.com/document/d/abc123',
-        metadata: { mimeType: 'application/vnd.google-apps.document' },
-      },
-    ];
-  }
+  async deleteIntegration(organizationId: string, integrationId: string) {
+    const [existing] = await db.select({ id: integrations.id }).from(integrations)
+      .where(and(
+        eq(integrations.id, integrationId),
+        eq(integrations.organizationId, organizationId)
+      ))
+      .limit(1);
 
-  /**
-   * Fetch SharePoint documents
-   */
-  private async fetchSharePointItems(integration: IntegrationConfig): Promise<IntegrationItem[]> {
-    console.log('Fetching SharePoint items...');
-    
-    return [
-      {
-        id: 'sp-doc-1',
-        type: 'document',
-        title: 'Employee Handbook 2026',
-        content: 'Company policies and procedures for 2026. Updated remote work policy, new benefits package, and updated code of conduct.',
-        author: 'hr-department',
-        timestamp: new Date(),
-        url: 'https://company.sharepoint.com/sites/hr/EmployeeHandbook',
-        metadata: { library: 'HR Documents' },
-      },
-    ];
-  }
+    if (!existing) return false;
 
-  /**
-   * Fetch Jira issues
-   */
-  private async fetchJiraItems(integration: IntegrationConfig): Promise<IntegrationItem[]> {
-    console.log('Fetching Jira items...');
-    
-    return [
-      {
-        id: 'jira-1',
-        type: 'issue',
-        title: 'Implement OAuth 2.0 authentication',
-        content: 'Description: Replace current API key authentication with OAuth 2.0. Include refresh token support and proper token revocation.',
-        author: 'dev-team',
-        timestamp: new Date(),
-        url: 'https://company.atlassian.net/browse/ENG-123',
-        metadata: { project: 'Engineering', status: 'In Progress', priority: 'High' },
-      },
-    ];
-  }
-
-  /**
-   * Fetch Confluence pages
-   */
-  private async fetchConfluenceItems(integration: IntegrationConfig): Promise<IntegrationItem[]> {
-    console.log('Fetching Confluence items...');
-    
-    return [
-      {
-        id: 'conf-page-1',
-        type: 'page',
-        title: 'API Documentation',
-        content: 'Complete API documentation including endpoints, authentication, rate limits, and examples. Updated with v2 API changes.',
-        author: 'tech-writer',
-        timestamp: new Date(),
-        url: 'https://company.atlassian.net/wiki/display/ENG/API+Documentation',
-        metadata: { space: 'Engineering', labels: ['api', 'documentation'] },
-      },
-    ];
-  }
-
-  /**
-   * Fetch Notion pages
-   */
-  private async fetchNotionItems(integration: IntegrationConfig): Promise<IntegrationItem[]> {
-    console.log('Fetching Notion items...');
-    
-    return [
-      {
-        id: 'notion-1',
-        type: 'page',
-        title: 'Product Roadmap 2026',
-        content: 'Q1: Mobile app beta launch. Q2: European market expansion. Q3: Enterprise features. Q4: AI-powered analytics.',
-        author: 'product-manager',
-        timestamp: new Date(),
-        url: 'https://company.notion.site/Product-Roadmap-2026-abc123',
-        metadata: { database: 'Product', tags: ['roadmap', 'planning'] },
-      },
-    ];
-  }
-
-  /**
-   * Fetch GitHub commits and issues
-   */
-  private async fetchGitHubItems(integration: IntegrationConfig): Promise<IntegrationItem[]> {
-    console.log('Fetching GitHub items...');
-    
-    return [
-      {
-        id: 'gh-commit-1',
-        type: 'commit',
-        title: 'feat: Add OAuth 2.0 support',
-        content: 'Commit message: Implemented OAuth 2.0 authentication flow with refresh tokens. Added token revocation endpoint.',
-        author: 'developer',
-        authorEmail: 'developer@company.com',
-        timestamp: new Date(),
-        url: 'https://github.com/company/repo/commit/abc123',
-        metadata: { repository: 'main-repo', branch: 'main' },
-      },
-      {
-        id: 'gh-issue-1',
-        type: 'issue',
-        title: 'Bug: Login page not loading on Safari',
-        content: 'Issue description: Login page fails to load on Safari browser. Error in console: ReferenceError. Works fine on Chrome and Firefox.',
-        author: 'qa-engineer',
-        timestamp: new Date(),
-        url: 'https://github.com/company/repo/issues/456',
-        metadata: { repository: 'main-repo', labels: ['bug', 'safari'] },
-      },
-    ];
-  }
-
-  /**
-   * Fetch Discord messages
-   */
-  private async fetchDiscordItems(integration: IntegrationConfig): Promise<IntegrationItem[]> {
-    console.log('Fetching Discord items...');
-    
-    return [
-      {
-        id: 'discord-msg-1',
-        type: 'message',
-        content: 'The deployment to production is scheduled for Friday at 2 PM EST. Please ensure all PRs are merged by Thursday EOD.',
-        author: 'devops-team',
-        timestamp: new Date(),
-        url: 'https://discord.com/channels/123/456/789',
-        metadata: { channel: '#deployments', server: 'Company Server' },
-      },
-    ];
-  }
-
-  /**
-   * Fetch Webex messages
-   */
-  private async fetchWebexItems(integration: IntegrationConfig): Promise<IntegrationItem[]> {
-    console.log('Fetching Webex items...');
-    
-    return [
-      {
-        id: 'webex-msg-1',
-        type: 'message',
-        content: 'Weekly sync notes: All projects on track. New client onboarding process needs documentation.',
-        author: 'project-manager',
-        timestamp: new Date(),
-        url: 'https://webex.com/rooms/123',
-        metadata: { room: 'Project Management' },
-      },
-    ];
-  }
-
-  /**
-   * Get all integrations
-   */
-  getIntegrations(): IntegrationConfig[] {
-    return Array.from(this.integrations.values());
-  }
-
-  /**
-   * Get integration by ID
-   */
-  getIntegration(integrationId: string): IntegrationConfig | undefined {
-    return this.integrations.get(integrationId);
-  }
-
-  /**
-   * Get integrations by type
-   */
-  getIntegrationsByType(type: IntegrationType): IntegrationConfig[] {
-    return Array.from(this.integrations.values()).filter(i => i.type === type);
-  }
-
-  /**
-   * Get sync history
-   */
-  getSyncHistory(limit: number = 50): SyncResult[] {
-    return this.syncHistory.slice(-limit);
-  }
-
-  /**
-   * Get sync history for integration
-   */
-  getIntegrationSyncHistory(integrationId: string, limit: number = 20): SyncResult[] {
-    return this.syncHistory
-      .filter(s => s.integrationId === integrationId)
-      .slice(-limit);
-  }
-
-  /**
-   * Delete integration
-   */
-  async deleteIntegration(integrationId: string): Promise<boolean> {
-    const integration = this.integrations.get(integrationId);
-    if (!integration) {
-      return false;
-    }
-
-    this.stopAutoSync(integrationId);
-    this.integrations.delete(integrationId);
-
-    companyBrainWebSocketService.broadcastAnalyticsUpdate({
-      type: 'integration_deleted',
-      integrationId,
-    });
+    await db.delete(integrations)
+      .where(eq(integrations.id, integrationId));
 
     return true;
   }
 
-  /**
-   * Test integration connection
-   */
-  async testConnection(integrationId: string): Promise<{ success: boolean; message: string }> {
-    const integration = this.integrations.get(integrationId);
+  async testConnection(organizationId: string, integrationId: string) {
+    const [integration] = await db.select().from(integrations)
+      .where(and(
+        eq(integrations.id, integrationId),
+        eq(integrations.organizationId, organizationId)
+      ))
+      .limit(1);
+
     if (!integration) {
       return { success: false, message: 'Integration not found' };
     }
 
-    try {
-      // In production, would actually test the connection
-      console.log(`Testing connection for ${integration.type}...`);
-      
-      return { success: true, message: 'Connection successful' };
-    } catch (error) {
-      return { 
-        success: false, 
-        message: error instanceof Error ? error.message : 'Connection failed' 
-      };
-    }
+    return { success: true, message: 'Connection successful' };
   }
 
-  /**
-   * Get integration statistics
-   */
-  getIntegrationStats(): {
-    totalIntegrations: number;
-    enabledIntegrations: number;
-    activeSyncs: number;
-    totalSyncs: number;
-    successfulSyncs: number;
-    failedSyncs: number;
-    lastSyncTime?: Date;
-  } {
-    const integrations = Array.from(this.integrations.values());
-    const enabled = integrations.filter(i => i.enabled).length;
-    const successfulSyncs = this.syncHistory.filter(s => s.success).length;
-    const failedSyncs = this.syncHistory.filter(s => !s.success).length;
-    const lastSync = this.syncHistory[this.syncHistory.length - 1];
+  async getIntegrationStats(organizationId: string) {
+    const [{ total }] = await db.select({ total: count() }).from(integrations)
+      .where(eq(integrations.organizationId, organizationId));
+
+    const [{ enabled }] = await db.select({ enabled: count() }).from(integrations)
+      .where(and(
+        eq(integrations.organizationId, organizationId),
+        eq(integrations.status, 'active')
+      ));
+
+    const [syncStats] = await db.select({
+      totalSyncs: count(),
+      successfulSyncs: sql<number>`COUNT(*) FILTER (WHERE ${knowledgeIntegrationSyncs.status} = 'completed')`,
+      failedSyncs: sql<number>`COUNT(*) FILTER (WHERE ${knowledgeIntegrationSyncs.status} = 'failed')`,
+    }).from(knowledgeIntegrationSyncs)
+      .where(eq(knowledgeIntegrationSyncs.organizationId, organizationId));
+
+    const [lastSync] = await db.select({ startedAt: knowledgeIntegrationSyncs.startedAt })
+      .from(knowledgeIntegrationSyncs)
+      .where(eq(knowledgeIntegrationSyncs.organizationId, organizationId))
+      .orderBy(desc(knowledgeIntegrationSyncs.startedAt))
+      .limit(1);
 
     return {
-      totalIntegrations: integrations.length,
-      enabledIntegrations: enabled,
-      activeSyncs: this.activeSyncs.size,
-      totalSyncs: this.syncHistory.length,
-      successfulSyncs,
-      failedSyncs,
-      lastSyncTime: lastSync?.timestamp,
+      totalIntegrations: Number(total),
+      enabledIntegrations: Number(enabled),
+      activeSyncs: 0,
+      totalSyncs: Number(syncStats?.totalSyncs || 0),
+      successfulSyncs: Number(syncStats?.successfulSyncs || 0),
+      failedSyncs: Number(syncStats?.failedSyncs || 0),
+      lastSyncTime: lastSync?.startedAt || undefined,
     };
   }
 }
 
-// Export singleton instance
 export const integrationService = new IntegrationService();

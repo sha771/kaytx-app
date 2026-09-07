@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, ScrollView } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Network, GitBranch, ArrowRight, AlertTriangle, CheckCircle, Activity, Layers, Box, Database } from 'lucide-react-native';
+import { Network, GitBranch, ArrowRight, AlertTriangle, CheckCircle, Activity, Layers, Package, Database } from 'lucide-react-native';
 
 interface ServiceNode {
   id: string;
@@ -26,13 +26,13 @@ export default function ServiceDependencyNetwork({ services }: ServiceDependency
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case 'api': return Box;
+      case 'api': return Package;
       case 'database': return Database;
       case 'queue': return Layers;
       case 'cache': return Activity;
       case 'frontend': return Network;
       case 'microservice': return GitBranch;
-      default: return Box;
+      default: return Package;
     }
   };
 

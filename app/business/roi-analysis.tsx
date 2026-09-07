@@ -14,7 +14,7 @@ import {
   TrendingUp,
   TrendingDown,
   DollarSign,
-  ChartBarBig,
+  BarChart3,
   ChartPie,
   Calendar,
   ListFilter,

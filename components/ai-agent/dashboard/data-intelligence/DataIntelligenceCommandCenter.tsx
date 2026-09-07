@@ -2515,7 +2515,7 @@ export default function DataIntelligenceCommandCenter() {
                     </View>
                   )}
                 </View>
-</View>
+              </View>
         ))}
            </View>
          </View>

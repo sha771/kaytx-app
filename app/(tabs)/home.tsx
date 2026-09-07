@@ -1,4 +1,3 @@
- 
 import React, { useState } from 'react';
 import {
   View,
@@ -15,7 +14,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   Activity,
   ArrowUpRight,
-  ChartBarBig,
+  BarChart3,
+  ChartPie,
   Bell,
   Bot,
   Brain,
@@ -49,10 +49,10 @@ import {
   Menu,
   MessageCircle as MessageCircleIcon,
   MessageSquare,
-  Microscope,
-  Monitor,
-  Phone,
-  ChartPie,
+  MonitorCheck,
+  Network,
+  Network as NetworkIcon,
+  PhoneCall,
   Plus,
   Radio,
   Scale,
@@ -95,12 +95,81 @@ import {
   Clipboard,
   FileCheck,
   SquareCheck,
-  Factory
+  Factory,
+  Calendar as CalendarIcon,
+  Smile,
+  CircleCheck as SquareCheckAlias,
+  Workflow,
+  Terminal,
+  BookOpen,
+  BarChart3,
+  Gauge,
+  PieChart,
+  RefreshCw,
+  CalendarClock,
+  RotateCcw,
+  GitBranch,
+  ArrowUpCircle,
+  TrendingDown,
+  Gift,
+  Tag,
+  ArrowDown,
+  FlaskConical,
+  Funnel,
+  PenTool,
+  Edit3,
+  Link,
+  LayoutDashboard,
+  Repeat,
+  Flag,
+  Trash2,
+  Archive,
+  Bitcoin,
+  Leaf,
+  Plane,
+  ShoppingCart,
+  Wrench,
+  Construction,
+  Key,
+  Cloud,
+  Grid3X3,
+  ListOrdered,
+  Ruler,
+  Hammer,
+  Undo2,
+  UserCheck as UserCheckAlias,
+  User,
+  Play,
+  Map,
+  BadgeCheck,
+  CreditCard,
+  Folder,
+  ArrowRight,
+  CheckCircle,
+  TestTube as TestTubeAlias,
+  Camera,
+  Music,
+  Mic,
+  SearchCheck as SearchCheckAlias,
+  HeartHandshake,
+  Ticket,
+  Award,
+  Monitor,
+  Shirt,
+  Gamepad2,
+  Store,
+  Utensils,
+  Sprout,
+  Gem,
+  Plane as PlaneIcon,
+  Tv,
+  ShoppingBag,
 } from 'lucide-react-native';
 import { useTheme } from '../../providers/ThemeProvider';
 import { useMessaging } from '../../providers/MessagingProvider';
 import { router } from 'expo-router';
-import aiAgentsSidebarSections from '../../constants/aiAgentsSidebarData';
+import { DesignAgentButton } from '../../components/design-agent/DesignAgentButton';
+import { DesignAgentPanel } from '../../components/design-agent/DesignAgentPanel';
 
 interface QuickAction {
   id: string;
@@ -130,6 +199,7 @@ interface SidebarSubItem {
   id: string;
   title: string;
   icon: React.ComponentType<any>;
+  color?: string;
   isHeader?: boolean;
   subSections?: SidebarSubSection[];
   route?: string;
@@ -158,9 +228,402 @@ interface SmartFeature {
   enabled: boolean;
 }
 
-// ... (rest of the code remains the same)
+// All 36+ Departments as main sidebar sections
+const departmentSidebarSections: SidebarOption[] = [
+  {
+    id: 'dept-customer-experience',
+    title: 'Customer Experience (56)',
+    icon: Headphones,
+    color: '#00BCD4',
+    subItems: [
+      { id: 'dept1-main', title: 'Main Agents (14)', icon: Crown, route: '/ai-agent/customer-experience/index' },
+      { id: 'dept1-sub', title: 'Sub-Agents (42)', icon: Bot, route: '/ai-agent/customer-experience/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-sales-revenue',
+    title: 'Sales & Revenue (56)',
+    icon: TrendingUp,
+    color: '#FFA000',
+    subItems: [
+      { id: 'dept2-main', title: 'Main Agents (14)', icon: Crown, route: '/ai-agent/sales-revenue/index' },
+      { id: 'dept2-sub', title: 'Sub-Agents (42)', icon: Bot, route: '/ai-agent/sales-revenue/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-marketing-growth',
+    title: 'Marketing & Growth (60)',
+    icon: Megaphone,
+    color: '#E91E63',
+    subItems: [
+      { id: 'dept3-main', title: 'Main Agents (15)', icon: Crown, route: '/ai-agent/marketing-growth/index' },
+      { id: 'dept3-sub', title: 'Sub-Agents (45)', icon: Bot, route: '/ai-agent/marketing-growth/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-operations-management',
+    title: 'Operations & Management (52)',
+    icon: Settings,
+    color: '#607D8B',
+    subItems: [
+      { id: 'dept4-main', title: 'Main Agents (13)', icon: Crown, route: '/ai-agent/operations-management/index' },
+      { id: 'dept4-sub', title: 'Sub-Agents (39)', icon: Bot, route: '/ai-agent/operations-management/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-finance-accounting',
+    title: 'Finance & Accounting (52)',
+    icon: DollarSign,
+    color: '#2E7D32',
+    subItems: [
+      { id: 'dept5-main', title: 'Main Agents (13)', icon: Crown, route: '/ai-agent/finance-accounting/index' },
+      { id: 'dept5-sub', title: 'Sub-Agents (39)', icon: Bot, route: '/ai-agent/finance-accounting/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-technology-engineering',
+    title: 'Technology & Engineering (64)',
+    icon: Code,
+    color: '#1565C0',
+    subItems: [
+      { id: 'dept6-main', title: 'Main Agents (16)', icon: Crown, route: '/ai-agent/technology-engineering/index' },
+      { id: 'dept6-sub', title: 'Sub-Agents (48)', icon: Bot, route: '/ai-agent/technology-engineering/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-human-resources',
+    title: 'Human Resources (44)',
+    icon: Users,
+    color: '#9C27B0',
+    subItems: [
+      { id: 'dept7-main', title: 'Main Agents (11)', icon: Crown, route: '/ai-agent/human-resources/index' },
+      { id: 'dept7-sub', title: 'Sub-Agents (33)', icon: Bot, route: '/ai-agent/human-resources/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-legal-compliance',
+    title: 'Legal & Compliance (40)',
+    icon: Scale,
+    color: '#3F51B5',
+    subItems: [
+      { id: 'dept8-main', title: 'Main Agents (10)', icon: Crown, route: '/ai-agent/legal-compliance/index' },
+      { id: 'dept8-sub', title: 'Sub-Agents (30)', icon: Bot, route: '/ai-agent/legal-compliance/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-data-intelligence',
+    title: 'Data & Intelligence (52)',
+    icon: Database,
+    color: '#AF52DE',
+    subItems: [
+      { id: 'dept9-main', title: 'Main Agents (13)', icon: Crown, route: '/ai-agent/data-intelligence/index' },
+      { id: 'dept9-sub', title: 'Sub-Agents (39)', icon: Bot, route: '/ai-agent/data-intelligence/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-product-management',
+    title: 'Product Management (40)',
+    icon: Package,
+    color: '#FF5722',
+    subItems: [
+      { id: 'dept10-main', title: 'Main Agents (10)', icon: Crown, route: '/ai-agent/product-management/index' },
+      { id: 'dept10-sub', title: 'Sub-Agents (30)', icon: Bot, route: '/ai-agent/product-management/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-security-risk',
+    title: 'Security & Risk (48)',
+    icon: Shield,
+    color: '#F44336',
+    subItems: [
+      { id: 'dept11-main', title: 'Main Agents (12)', icon: Crown, route: '/ai-agent/security-risk/index' },
+      { id: 'dept11-sub', title: 'Sub-Agents (36)', icon: Bot, route: '/ai-agent/security-risk/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-research-development',
+    title: 'Research & Development (36)',
+    icon: FlaskConical,
+    color: '#009688',
+    subItems: [
+      { id: 'dept12-main', title: 'Main Agents (9)', icon: Crown, route: '/ai-agent/research-development/index' },
+      { id: 'dept12-sub', title: 'Sub-Agents (27)', icon: Bot, route: '/ai-agent/research-development/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-administrative',
+    title: 'Administrative (36)',
+    icon: Building,
+    color: '#795548',
+    subItems: [
+      { id: 'dept13-main', title: 'Main Agents (9)', icon: Crown, route: '/ai-agent/administrative/index' },
+      { id: 'dept13-sub', title: 'Sub-Agents (27)', icon: Bot, route: '/ai-agent/administrative/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-trading-investments',
+    title: 'Trading & Investments (72)',
+    icon: TrendingUp,
+    color: '#10B981',
+    subItems: [
+      { id: 'dept14-main', title: 'Main Agents (18)', icon: Crown, route: '/ai-agent/trading-investments/index' },
+      { id: 'dept14-sub', title: 'Sub-Agents (54)', icon: Bot, route: '/ai-agent/trading-investments/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-real-estate-property',
+    title: 'Real Estate & Property (56)',
+    icon: Building2,
+    color: '#8D6E63',
+    subItems: [
+      { id: 'dept15-main', title: 'Main Agents (14)', icon: Crown, route: '/ai-agent/real-estate-property/index' },
+      { id: 'dept15-sub', title: 'Sub-Agents (42)', icon: Bot, route: '/ai-agent/real-estate-property/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-insurance-risk',
+    title: 'Insurance & Risk (64)',
+    icon: ShieldCheck,
+    color: '#FF7043',
+    subItems: [
+      { id: 'dept16-main', title: 'Main Agents (16)', icon: Crown, route: '/ai-agent/insurance-risk/index' },
+      { id: 'dept16-sub', title: 'Sub-Agents (48)', icon: Bot, route: '/ai-agent/insurance-risk/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-healthcare-medical',
+    title: 'Healthcare & Medical (56)',
+    icon: Heart,
+    color: '#EC407A',
+    subItems: [
+      { id: 'dept17-main', title: 'Main Agents (14)', icon: Crown, route: '/ai-agent/healthcare-medical/index' },
+      { id: 'dept17-sub', title: 'Sub-Agents (42)', icon: Bot, route: '/ai-agent/healthcare-medical/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-manufacturing-production',
+    title: 'Manufacturing & Production (56)',
+    icon: Factory,
+    color: '#5C6BC0',
+    subItems: [
+      { id: 'dept18-main', title: 'Main Agents (14)', icon: Crown, route: '/ai-agent/manufacturing-production/index' },
+      { id: 'dept18-sub', title: 'Sub-Agents (42)', icon: Bot, route: '/ai-agent/manufacturing-production/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-transportation-logistics',
+    title: 'Transportation & Logistics (56)',
+    icon: Truck,
+    color: '#26A69A',
+    subItems: [
+      { id: 'dept19-main', title: 'Main Agents (14)', icon: Crown, route: '/ai-agent/transportation-logistics/index' },
+      { id: 'dept19-sub', title: 'Sub-Agents (42)', icon: Bot, route: '/ai-agent/transportation-logistics/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-government-public-sector',
+    title: 'Government & Public Sector (48)',
+    icon: Landmark,
+    color: '#78909C',
+    subItems: [
+      { id: 'dept20-main', title: 'Main Agents (12)', icon: Crown, route: '/ai-agent/government-public-sector/index' },
+      { id: 'dept20-sub', title: 'Sub-Agents (36)', icon: Bot, route: '/ai-agent/government-public-sector/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-supply-chain-logistics',
+    title: 'Supply Chain & Logistics (40)',
+    icon: Package,
+    color: '#42A5F5',
+    subItems: [
+      { id: 'dept21-main', title: 'Main Agents (10)', icon: Crown, route: '/ai-agent/supply-chain-logistics/index' },
+      { id: 'dept21-sub', title: 'Sub-Agents (30)', icon: Bot, route: '/ai-agent/supply-chain-logistics/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-ai-management-governance',
+    title: 'AI Management & Governance (24)',
+    icon: Brain,
+    color: '#7C4DFF',
+    subItems: [
+      { id: 'dept22-main', title: 'Main Agents (6)', icon: Crown, route: '/ai-agent/ai-management-governance/index' },
+      { id: 'dept22-sub', title: 'Sub-Agents (18)', icon: Bot, route: '/ai-agent/ai-management-governance/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-banking-finance',
+    title: 'Banking & Finance (60)',
+    icon: Landmark,
+    color: '#059669',
+    subItems: [
+      { id: 'dept23-main', title: 'Main Agents', icon: Crown, route: '/ai-agent/banking-finance/index' },
+      { id: 'dept23-sub', title: 'Sub-Agents', icon: Bot, route: '/ai-agent/banking-finance/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-ecommerce',
+    title: 'E-Commerce (60)',
+    icon: ShoppingCart,
+    color: '#7C3AED',
+    subItems: [
+      { id: 'dept24-main', title: 'Main Agents', icon: Crown, route: '/ai-agent/ecommerce/index' },
+      { id: 'dept24-sub', title: 'Sub-Agents', icon: Bot, route: '/ai-agent/ecommerce/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-professional-services',
+    title: 'Professional Services (40)',
+    icon: Briefcase,
+    color: '#0891B2',
+    subItems: [
+      { id: 'dept25-main', title: 'Main Agents (10)', icon: Crown, route: '/ai-agent/professional-services/index' },
+      { id: 'dept25-sub', title: 'Sub-Agents (30)', icon: Bot, route: '/ai-agent/professional-services/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-media-entertainment',
+    title: 'Media & Entertainment (48)',
+    icon: Tv,
+    color: '#EC4899',
+    subItems: [
+      { id: 'dept26-main', title: 'Main Agents (12)', icon: Crown, route: '/ai-agent/media-entertainment/index' },
+      { id: 'dept26-sub', title: 'Sub-Agents (36)', icon: Bot, route: '/ai-agent/media-entertainment/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-gaming-esports',
+    title: 'Gaming & Esports (60)',
+    icon: Gamepad2,
+    color: '#8B5CF6',
+    subItems: [
+      { id: 'dept27-main', title: 'Main Agents', icon: Crown, route: '/ai-agent/gaming-esports/index' },
+      { id: 'dept27-sub', title: 'Sub-Agents', icon: Bot, route: '/ai-agent/gaming-esports/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-education',
+    title: 'Education (60)',
+    icon: GraduationCap,
+    color: '#F59E0B',
+    subItems: [
+      { id: 'dept28-main', title: 'Main Agents', icon: Crown, route: '/ai-agent/education/index' },
+      { id: 'dept28-sub', title: 'Sub-Agents', icon: Bot, route: '/ai-agent/education/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-retail-stores',
+    title: 'Retail & Stores (60)',
+    icon: Store,
+    color: '#EF4444',
+    subItems: [
+      { id: 'dept29-main', title: 'Main Agents', icon: Crown, route: '/ai-agent/retail-stores/index' },
+      { id: 'dept29-sub', title: 'Sub-Agents', icon: Bot, route: '/ai-agent/retail-stores/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-travel-tourism',
+    title: 'Travel & Tourism (60)',
+    icon: PlaneIcon,
+    color: '#0EA5E9',
+    subItems: [
+      { id: 'dept30-main', title: 'Main Agents', icon: Crown, route: '/ai-agent/travel-tourism/index' },
+      { id: 'dept30-sub', title: 'Sub-Agents', icon: Bot, route: '/ai-agent/travel-tourism/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-energy-utilities',
+    title: 'Energy & Utilities (60)',
+    icon: Zap,
+    color: '#84CC16',
+    subItems: [
+      { id: 'dept31-main', title: 'Main Agents', icon: Crown, route: '/ai-agent/energy-utilities/index' },
+      { id: 'dept31-sub', title: 'Sub-Agents', icon: Bot, route: '/ai-agent/energy-utilities/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-executive-strategy',
+    title: 'Executive & Strategy (60)',
+    icon: Crown,
+    color: '#64748B',
+    subItems: [
+      { id: 'dept32-main', title: 'Main Agents', icon: Crown, route: '/ai-agent/executive-strategy/index' },
+      { id: 'dept32-sub', title: 'Sub-Agents', icon: Bot, route: '/ai-agent/executive-strategy/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-event-management',
+    title: 'Event Management (24)',
+    icon: Calendar,
+    color: '#F97316',
+    subItems: [
+      { id: 'dept33-main', title: 'Main Agents (6)', icon: Crown, route: '/ai-agent/event-management/index' },
+      { id: 'dept33-sub', title: 'Sub-Agents (18)', icon: Bot, route: '/ai-agent/event-management/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-agriculture',
+    title: 'Agriculture (60)',
+    icon: Sprout,
+    color: '#22C55E',
+    subItems: [
+      { id: 'dept34-main', title: 'Main Agents', icon: Crown, route: '/ai-agent/agriculture/index' },
+      { id: 'dept34-sub', title: 'Sub-Agents', icon: Bot, route: '/ai-agent/agriculture/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-fashion-luxury',
+    title: 'Fashion & Luxury (60)',
+    icon: Shirt,
+    color: '#DB2777',
+    subItems: [
+      { id: 'dept35-main', title: 'Main Agents', icon: Crown, route: '/ai-agent/fashion-luxury/index' },
+      { id: 'dept35-sub', title: 'Sub-Agents', icon: Bot, route: '/ai-agent/fashion-luxury/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-restaurants',
+    title: 'Restaurants (60)',
+    icon: Utensils,
+    color: '#DC2626',
+    subItems: [
+      { id: 'dept36-main', title: 'Main Agents', icon: Crown, route: '/ai-agent/restaurants/index' },
+      { id: 'dept36-sub', title: 'Sub-Agents', icon: Bot, route: '/ai-agent/restaurants/sub-agents/index' },
+    ],
+  },
+  {
+    id: 'dept-cross-department',
+    title: 'Cross-Department (27)',
+    icon: Network,
+    color: '#8B5CF6',
+    subItems: [
+      { id: 'dept0-intelligence', title: 'Intelligence Layer (3)', icon: Brain, route: '/ai-agent/cross-department/index' },
+      { id: 'dept0-command', title: 'Command & Orchestration (3)', icon: Zap, route: '/ai-agent/cross-department/index' },
+      { id: 'dept0-governance', title: 'Governance & Oversight (4)', icon: Shield, route: '/ai-agent/cross-department/index' },
+      { id: 'dept0-bridge', title: 'Bridge Agents (3)', icon: Link, route: '/ai-agent/cross-department/index' },
+      { id: 'dept0-enterprise', title: 'Enterprise Services (10)', icon: Building, route: '/ai-agent/cross-department/index' },
+    ],
+  },
+];
 
 const sidebarOptions: SidebarOption[] = [
+  {
+    id: 'mindmap',
+    title: 'Mind Map',
+    icon: Brain,
+    color: '#8B5CF6',
+  },
+  {
+    id: 'education',
+    title: 'Education AI OS',
+    icon: GraduationCap,
+    color: '#F59E0B',
+  },
+  {
+    id: 'fashion-luxury',
+    title: 'Fashion & Luxury',
+    icon: Palette,
+    color: '#DB2777',
+  },
   {
     id: 'social-media',
     title: 'Social Media Management (Enterprise)',
@@ -212,7 +675,7 @@ const sidebarOptions: SidebarOption[] = [
             items: [
               { id: '2-ceo', title: 'CEO - Chief Executive Officer', icon: Crown },
               { id: '2-cfo', title: 'CFO - Chief Financial Officer', icon: Calculator },
-              { id: '2-cto', title: 'CTO - Chief Technology Officer', icon: Monitor },
+              { id: '2-cto', title: 'CTO - Chief Technology Officer', icon: MonitorCheck },
               { id: '2-cmo', title: 'CMO - Chief Marketing Officer', icon: Megaphone },
               { id: '2-cco', title: 'CCO - Chief Customer Officer', icon: Headphones },
               { id: '2-coo', title: 'COO - Chief Operating Officer', icon: Settings },
@@ -351,40 +814,9 @@ const sidebarOptions: SidebarOption[] = [
           },
         ]
       },
-      ...(aiAgentsSidebarSections || [])
-        .filter((section: any) => section && section.icon)
-        .map((section: any) => ({
-          ...section,
-          color: '#007AFF',
-          subItems: section.subSections
-            ?.filter((subSection: any) => subSection && subSection.icon)
-            .map((subSection: any) => ({
-              ...subSection,
-              subSections: subSection.items
-                ?.filter((item: any) => item && item.icon)
-                ?.map((item: any) => ({
-                  ...item,
-                  icon: item.icon,
-                  route: item.route ?? (/^\d+-ai-/.test(item.id) ? `/ai-agent/${item.id}` : undefined),
-                }))
-                ?.length
-                  ? [{
-                    id: `${subSection.id}-group`,
-                    title: subSection.title,
-                    icon: subSection.icon,
-                    items: subSection.items
-                      .filter((item: any) => item && item.icon)
-                      .map((item: any) => ({
-                        ...item,
-                        route: item.route ?? (/^\d+-ai-/.test(item.id) ? `/ai-agent/${item.id}` : undefined),
-                      })),
-                  }]
-                  : undefined,
-            })) || [],
-        })),
       {
         id: '2-section-workforce',
-        title: '4: AI Workforce (1108)',
+        title: '4: AI Workforce (2160)',
         icon: Bot,
         subSections: [
           {
@@ -392,29 +824,18 @@ const sidebarOptions: SidebarOption[] = [
             title: 'AI agents and employees',
             icon: Users,
             items: [
-              { id: '2-show-all-agents', title: 'Show all (1108) AI agents and employees', icon: Bot },
+              { id: '2-show-all-agents', title: 'Show all (2160) AI agents and employees', icon: Bot },
             ]
           },
           {
             id: '2-wf-dashboard',
             title: 'Dashboard & Overview',
-            icon: ChartBarBig,
+            icon: BarChart3,
             items: [
               { id: '2-main', title: '📊 View All Agents Dashboard', icon: Bot },
               { id: '2-agent-reactive', title: '⚡ Reactive Agents (199)', icon: Zap },
               { id: '2-agent-learning', title: '📚 Learning Agents (120)', icon: Brain },
               { id: '2-agent-swarm', title: '🐝 Swarm Agents (Unlimited)', icon: Users },
-            ]
-          },
-          {
-            id: '2-wf-hierarchy',
-            title: 'Hierarchy Levels',
-            icon: Layers,
-            items: [
-              { id: '2-vp-directors', title: 'Main Agents (277)', icon: Users },
-              { id: '2-managers', title: 'Sub-Agents (831)', icon: UserCheck },
-              { id: '2-team-leads', title: 'Departments (22)', icon: Users },
-              { id: '2-specialists', title: 'Total (1108)', icon: Bot },
             ]
           },
           {
@@ -425,7 +846,7 @@ const sidebarOptions: SidebarOption[] = [
               { id: '2-team-sales', title: 'Sales Team - SDRs & AEs', icon: TrendingUp },
               { id: '2-team-support', title: 'Support Team - Tiers 1-3', icon: Headphones },
               { id: '2-team-recruiting', title: 'Recruiting Team', icon: UserPlus },
-              { id: '2-team-analytics', title: 'Analytics Team', icon: ChartBarBig },
+              { id: '2-team-analytics', title: 'Analytics Team', icon: BarChart3 },
               { id: '2-team-creative', title: 'Creative Team', icon: Palette },
               { id: '2-team-legal', title: 'Legal Team', icon: Scale },
               { id: '2-team-finance', title: 'Finance Team', icon: Calculator },
@@ -460,7 +881,7 @@ const sidebarOptions: SidebarOption[] = [
             icon: Bot,
             items: [
               { id: '2-pa', title: '🤖 AI Personal Assistant', icon: Bot },
-              { id: '2-ar', title: '📞 AI Receptionist', icon: Phone },
+              { id: '2-ar', title: '📞 AI Receptionist', icon: PhoneCall },
               { id: '2-an', title: '🤝 AI Negotiation', icon: Handshake },
             ]
           },
@@ -468,6 +889,53 @@ const sidebarOptions: SidebarOption[] = [
       },
     ],
   },
+  // Hierarchy & Education - moved from inside AI Agents to main section
+  {
+    id: 'hierarchy-education',
+    title: 'Hierarchy & Education',
+    icon: Layers,
+    color: '#FF3B30',
+    subItems: [
+      {
+        id: 'he-hierarchy',
+        title: 'Hierarchy Levels',
+        icon: Layers,
+        subSections: [
+          {
+            id: 'he-hierarchy-main',
+            title: 'Hierarchy Overview',
+            icon: Layers,
+            items: [
+              { id: 'he-vp-directors', title: 'Main Agents (277)', icon: Users, route: '/ai-agent/hierarchy/index' },
+              { id: 'he-managers', title: 'Sub-Agents (831)', icon: UserCheck, route: '/ai-agent/hierarchy/index' },
+              { id: 'he-team-leads', title: 'Departments (36+)', icon: Users, route: '/ai-agent/hierarchy/index' },
+              { id: 'he-specialists', title: 'Total (2160)', icon: Bot, route: '/ai-agent/hierarchy/index' },
+            ]
+          },
+        ]
+      },
+      {
+        id: 'he-education',
+        title: 'Education & Training',
+        icon: GraduationCap,
+        subSections: [
+          {
+            id: 'he-education-main',
+            title: 'Education OS',
+            icon: GraduationCap,
+            items: [
+              { id: 'he-education-overview', title: 'Education Overview', icon: GraduationCap, route: '/ai-agent/education/index' },
+              { id: 'he-training-programs', title: 'Training Programs', icon: BookOpen, route: '/ai-agent/education/index' },
+              { id: 'he-learning-paths', title: 'Learning Paths', icon: Brain, route: '/ai-agent/education/index' },
+              { id: 'he-certifications', title: 'Certifications', icon: Award, route: '/ai-agent/education/index' },
+            ]
+          },
+        ]
+      },
+    ],
+  },
+  // All 36+ Departments as main sections
+  ...departmentSidebarSections,
   {
     id: '5',
     title: 'CRM (Enterprise)',
@@ -510,7 +978,7 @@ const sidebarOptions: SidebarOption[] = [
   {
     id: '6',
     title: 'Analytics (Enterprise)',
-    icon: ChartBarBig,
+    icon: BarChart3,
     color: '#FF3B30',
     subItems: [
       { id: '6-1', title: 'Analytics Dashboard (Enterprise)', icon: ChartLine },
@@ -691,7 +1159,7 @@ export default function HomeScreen() {
         Alert.alert(
           'AI Agent Types (23+ Categories)',
           'Enterprise AI agents across multiple categories:\n\n• Sales & Marketing\n• Customer Support\n• HR & Recruiting\n• Finance & Legal\n• Operations & More',
-          [{ text: 'View Agents', onPress: () => router.push('/ai-agent') }, { text: 'Cancel' }]
+          [{ text: 'View Agents', onPress: () => router.push('/ai-agent/index') }, { text: 'Cancel' }]
         );
         break;
     }
@@ -715,9 +1183,9 @@ export default function HomeScreen() {
     {
       id: '3',
       title: 'Analytics (Enterprise)',
-      icon: ChartBarBig,
+      icon: BarChart3,
       color: '#FF9500',
-      onPress: () => {},
+      onPress: () => router.push('/analytics/reports-insights'),
     },
     {
       id: '4',
@@ -782,7 +1250,7 @@ export default function HomeScreen() {
       title: 'Revenue',
       value: '$45K',
       change: '+18%',
-      icon: ChartBarBig,
+      icon: BarChart3,
       color: '#32D74B',
     },
   ];
@@ -829,7 +1297,7 @@ export default function HomeScreen() {
       // Navigate to specific pages based on option
       switch (option.id) {
         case '2': // AI Agents & Employees
-          router.push('/ai-agent');
+          router.push('/ai-agent/index');
           break;
         case '7': // Marketing
           router.push('/marketing/marketing-hub');
@@ -844,14 +1312,32 @@ export default function HomeScreen() {
           router.push('/settings');
           break;
         case '11': // Company Brain
-          router.push('/ai-agent/company-brain');
+          router.push('/company-brain/index');
+          break;
+        case 'hierarchy-education': // Hierarchy & Education
+          router.push('/ai-agent/hierarchy/index');
+          break;
+        case 'mindmap': // Mind Map
+          router.push('/agent-hierarchy-mindmap');
+          break;
+        case 'education': // Education AI OS
+          router.push('/ai-agent/education/index');
+          break;
+        case 'fashion-luxury': // Fashion & Luxury
+          router.push('/ai-agent/fashion-luxury/index');
           break;
         default:
-          Alert.alert(
-            option.title,
-            'This feature is coming soon! Stay tuned for updates.',
-            [{ text: 'OK', style: 'default' }]
-          );
+          // Check if it's a department section - navigate to its index
+          if (option.id.startsWith('dept-')) {
+            const deptRoute = `/ai-agent/${option.id.replace('dept-', '')}/index`;
+            router.push(deptRoute as any);
+          } else {
+            Alert.alert(
+              option.title,
+              'This feature is coming soon! Stay tuned for updates.',
+              [{ text: 'OK', style: 'default' }]
+            );
+          }
       }
     }
   };
@@ -862,10 +1348,19 @@ export default function HomeScreen() {
   const handleSubItemPress = (subItem: SidebarSubItem | SidebarSubSectionItem) => {
     setShowSidebar(false);
     const routeMap: { [key: string]: string } = {
+      // Mind Map
+      'mindmap-tab': '/(tabs)/mindmap',
+      'mindmap-page': '/agent-hierarchy-mindmap',
+      // Education
+      'education-tab': '/(tabs)/education',
+      'education-dept': '/ai-agent/education/index',
+      // Fashion & Luxury
+      'fashion-tab': '/(tabs)/fashion-luxury-command-center',
+      'fashion-dept': '/ai-agent/fashion-luxury/index',
       // AI Agents & Employees - Main Dashboard
-      '2-main': '/ai-agent',
-      '2-show-all-agents': '/ai-agent',
-      '2-agents-overview': '/ai-agent',
+      '2-main': '/ai-agent/index',
+      '2-show-all-agents': '/ai-agent/index',
+      '2-agents-overview': '/ai-agent/index',
       // C-Suite Executives
       '2-ceo': '/ai-agent/executive/ceo-advisor',
       '2-cfo': '/ai-agent/executive/cfo-analyst',
@@ -896,32 +1391,115 @@ export default function HomeScreen() {
       '2-learn': '/command-center',
       '2-layer-bridge': '/command-center',
       '2-pred-engine': '/ai-agent/data',
-      '2-sentiment': '/ai-agent/customer',
-      '2-anomaly': '/ai-agent/data/fraud-detection',
+      '2-sentiment': '/ai-agent/customer-support',
+      '2-anomaly': '/ai-agent/data',
       '2-cc': '/command-center',
       '2-mindmap': '/ai-agent/mind-map',
       // Agent Types & Hierarchy
-      '2-agent-reactive': '/ai-agent',
-      '2-agent-learning': '/ai-agent',
-      '2-agent-swarm': '/ai-agent',
-      '2-vp-directors': '/ai-agent',
-      '2-managers': '/ai-agent',
-      '2-team-leads': '/ai-agent',
-      '2-specialists': '/ai-agent',
+      '2-agent-reactive': '/ai-agent/index',
+      '2-agent-learning': '/ai-agent/index',
+      '2-agent-swarm': '/ai-agent/index',
+      // Hierarchy & Education (new routes)
+      'he-vp-directors': '/ai-agent/hierarchy/index',
+      'he-managers': '/ai-agent/hierarchy/index',
+      'he-team-leads': '/ai-agent/hierarchy/index',
+      'he-specialists': '/ai-agent/hierarchy/index',
+      'he-education-overview': '/ai-agent/education/index',
+      'he-training-programs': '/ai-agent/education/index',
+      'he-learning-paths': '/ai-agent/education/index',
+      'he-certifications': '/ai-agent/education/index',
+      // Department routes
+      'dept1-main': '/ai-agent/customer-experience/index',
+      'dept1-sub': '/ai-agent/customer-experience/sub-agents/index',
+      'dept2-main': '/ai-agent/sales-revenue/index',
+      'dept2-sub': '/ai-agent/sales-revenue/sub-agents/index',
+      'dept3-main': '/ai-agent/marketing-growth/index',
+      'dept3-sub': '/ai-agent/marketing-growth/sub-agents/index',
+      'dept4-main': '/ai-agent/operations-management/index',
+      'dept4-sub': '/ai-agent/operations-management/sub-agents/index',
+      'dept5-main': '/ai-agent/finance-accounting/index',
+      'dept5-sub': '/ai-agent/finance-accounting/sub-agents/index',
+      'dept6-main': '/ai-agent/technology-engineering/index',
+      'dept6-sub': '/ai-agent/technology-engineering/sub-agents/index',
+      'dept7-main': '/ai-agent/human-resources/index',
+      'dept7-sub': '/ai-agent/human-resources/sub-agents/index',
+      'dept8-main': '/ai-agent/legal-compliance/index',
+      'dept8-sub': '/ai-agent/legal-compliance/sub-agents/index',
+      'dept9-main': '/ai-agent/data-intelligence/index',
+      'dept9-sub': '/ai-agent/data-intelligence/sub-agents/index',
+      'dept10-main': '/ai-agent/product-management/index',
+      'dept10-sub': '/ai-agent/product-management/sub-agents/index',
+      'dept11-main': '/ai-agent/security-risk/index',
+      'dept11-sub': '/ai-agent/security-risk/sub-agents/index',
+      'dept12-main': '/ai-agent/research-development/index',
+      'dept12-sub': '/ai-agent/research-development/sub-agents/index',
+      'dept13-main': '/ai-agent/administrative/index',
+      'dept13-sub': '/ai-agent/administrative/sub-agents/index',
+      'dept14-main': '/ai-agent/trading-investments/index',
+      'dept14-sub': '/ai-agent/trading-investments/sub-agents/index',
+      'dept15-main': '/ai-agent/real-estate-property/index',
+      'dept15-sub': '/ai-agent/real-estate-property/sub-agents/index',
+      'dept16-main': '/ai-agent/insurance-risk/index',
+      'dept16-sub': '/ai-agent/insurance-risk/sub-agents/index',
+      'dept17-main': '/ai-agent/healthcare-medical/index',
+      'dept17-sub': '/ai-agent/healthcare-medical/sub-agents/index',
+      'dept18-main': '/ai-agent/manufacturing-production/index',
+      'dept18-sub': '/ai-agent/manufacturing-production/sub-agents/index',
+      'dept19-main': '/ai-agent/transportation-logistics/index',
+      'dept19-sub': '/ai-agent/transportation-logistics/sub-agents/index',
+      'dept20-main': '/ai-agent/government-public-sector/index',
+      'dept20-sub': '/ai-agent/government-public-sector/sub-agents/index',
+      'dept21-main': '/ai-agent/supply-chain-logistics/index',
+      'dept21-sub': '/ai-agent/supply-chain-logistics/sub-agents/index',
+      'dept22-main': '/ai-agent/ai-management-governance/index',
+      'dept22-sub': '/ai-agent/ai-management-governance/sub-agents/index',
+      'dept23-main': '/ai-agent/banking-finance/index',
+      'dept23-sub': '/ai-agent/banking-finance/sub-agents/index',
+      'dept24-main': '/ai-agent/ecommerce/index',
+      'dept24-sub': '/ai-agent/ecommerce/sub-agents/index',
+      'dept25-main': '/ai-agent/professional-services/index',
+      'dept25-sub': '/ai-agent/professional-services/sub-agents/index',
+      'dept26-main': '/ai-agent/media-entertainment/index',
+      'dept26-sub': '/ai-agent/media-entertainment/sub-agents/index',
+      'dept27-main': '/ai-agent/gaming-esports/index',
+      'dept27-sub': '/ai-agent/gaming-esports/sub-agents/index',
+      'dept28-main': '/ai-agent/education/index',
+      'dept28-sub': '/ai-agent/education/sub-agents/index',
+      'dept29-main': '/ai-agent/retail-stores/index',
+      'dept29-sub': '/ai-agent/retail-stores/sub-agents/index',
+      'dept30-main': '/ai-agent/travel-tourism/index',
+      'dept30-sub': '/ai-agent/travel-tourism/sub-agents/index',
+      'dept31-main': '/ai-agent/energy-utilities/index',
+      'dept31-sub': '/ai-agent/energy-utilities/sub-agents/index',
+      'dept32-main': '/ai-agent/executive-strategy/index',
+      'dept32-sub': '/ai-agent/executive-strategy/sub-agents/index',
+      'dept33-main': '/ai-agent/event-management/index',
+      'dept33-sub': '/ai-agent/event-management/sub-agents/index',
+      'dept34-main': '/ai-agent/agriculture/index',
+      'dept34-sub': '/ai-agent/agriculture/sub-agents/index',
+      'dept35-main': '/ai-agent/fashion-luxury/index',
+      'dept35-sub': '/ai-agent/fashion-luxury/sub-agents/index',
+      'dept36-main': '/ai-agent/restaurants/index',
+      'dept36-sub': '/ai-agent/restaurants/sub-agents/index',
+      'dept0-intelligence': '/ai-agent/cross-department/index',
+      'dept0-command': '/ai-agent/cross-department/index',
+      'dept0-governance': '/ai-agent/cross-department/index',
+      'dept0-bridge': '/ai-agent/cross-department/index',
+      'dept0-enterprise': '/ai-agent/cross-department/index',
       // Specialized Teams
-      '2-team-sales': '/ai-agent/sales',
-      '2-team-support': '/ai-agent/customer',
-      '2-team-recruiting': '/ai-agent/hr/recruiter',
-      '2-team-analytics': '/ai-agent/data',
-      '2-team-creative': '/ai-agent/marketing',
-      '2-team-legal': '/ai-agent/legal',
-      '2-team-finance': '/ai-agent/accounting',
-      '2-team-engineering': '/ai-agent/engineering',
-      '2-team-hr': '/ai-agent/hr',
-      '2-team-marketing': '/ai-agent/marketing',
-      '2-team-ops': '/ai-agent/operations',
-      '2-team-security': '/ai-agent/it',
-      '2-team-product': '/ai-agent/product',
+      '2-team-sales': '/ai-agent/sales/index',
+      '2-team-support': '/ai-agent/customer-support/index',
+      '2-team-recruiting': '/ai-agent/human-resources/index',
+      '2-team-analytics': '/ai-agent/analytics/index',
+      '2-team-creative': '/ai-agent/marketing/index',
+      '2-team-legal': '/ai-agent/legal/index',
+      '2-team-finance': '/ai-agent/finance/index',
+      '2-team-engineering': '/ai-agent/engineering/index',
+      '2-team-hr': '/ai-agent/human-resources/index',
+      '2-team-marketing': '/ai-agent/marketing/index',
+      '2-team-ops': '/ai-agent/operations/index',
+      '2-team-security': '/ai-agent/security/index',
+      '2-team-product': '/ai-agent/product-management/index',
       // Builder Tools
       '2-builder-emp': '/ai-agents-employees-builder',
       '2-builder-dept': '/ai-agents-employees-builder',
@@ -929,95 +1507,95 @@ export default function HomeScreen() {
       // Other Features
       '2-ar': '/ai-receptionist/dashboard',
       '2-an': '/ai-negotiation/dashboard',
-      '2-pa': '/ai-agent/customer',
+      '2-pa': '/ai-agent/customer-support/index',
       // Legacy Department Routes
-      '2-el': '/ai-agent/executive',
-      '2-af': '/ai-agent/accounting',
-      '2-ce': '/ai-agent/customer',
-      '2-sr': '/ai-agent/sales',
-      '2-mg': '/ai-agent/marketing',
-      '2-pr': '/ai-agent/product',
-      '2-om': '/ai-agent/operations',
-      '2-sm': '/ai-agent/social-media',
-      '2-di': '/ai-agent/data',
-      '2-ap': '/ai-agent/analysis',
-      '2-hr': '/ai-agent/hr',
-      '2-it': '/ai-agent/it',
-      '2-lc': '/ai-agent/legal',
-      '2-ed': '/ai-agent/engineering',
-      // All Phone Agents
-      '2-cx-phone-receptionist': '/ai-agent/phone',
-      '2-cx-call-center': '/ai-agent/phone',
-      '2-cx-telephone-support': '/ai-agent/phone',
-      '2-sales-cold-caller': '/ai-agent/phone',
-      '2-sales-phone-negotiator': '/ai-agent/phone',
-      '2-sales-deal-closer': '/ai-agent/phone',
-      '2-sales-appointment-setter': '/ai-agent/phone',
-      '2-sales-follow-up': '/ai-agent/phone',
-      '2-sales-receptionist': '/ai-agent/phone',
-      '2-mkt-telemarketer': '/ai-agent/phone',
-      '2-mkt-event-caller': '/ai-agent/phone',
-      '2-mkt-survey-caller': '/ai-agent/phone',
-      '2-mkt-pr-caller': '/ai-agent/phone',
-      '2-mkt-lead-qualifier': '/ai-agent/phone',
-      '2-mkt-partnership-caller': '/ai-agent/phone',
-      '2-ops-receptionist': '/ai-agent/phone',
-      '2-ops-dispatch-caller': '/ai-agent/phone',
-      '2-ops-coordination-caller': '/ai-agent/phone',
-      '2-fin-collections-caller': '/ai-agent/phone',
-      '2-fin-vendor-payment-caller': '/ai-agent/phone',
-      '2-fin-investor-relations-caller': '/ai-agent/phone',
-      '2-tech-it-support-hotline': '/ai-agent/phone',
-      '2-tech-help-desk-caller': '/ai-agent/phone',
-      '2-tech-incident-response-caller': '/ai-agent/phone',
-      '2-hr-receptionist': '/ai-agent/phone',
-      '2-hr-recruiting-caller': '/ai-agent/phone',
-      '2-hr-interview-scheduler': '/ai-agent/phone',
-      '2-legal-receptionist': '/ai-agent/phone',
-      '2-legal-client-intake-caller': '/ai-agent/phone',
-      '2-legal-compliance-caller': '/ai-agent/phone',
-      '2-data-research-caller': '/ai-agent/phone',
-      '2-data-analytics-caller': '/ai-agent/phone',
-      '2-data-report-caller': '/ai-agent/phone',
-      '2-prod-user-research-caller': '/ai-agent/phone',
-      '2-prod-feedback-caller': '/ai-agent/phone',
-      '2-prod-beta-caller': '/ai-agent/phone',
-      '2-sec-incident-response-caller': '/ai-agent/phone',
-      '2-sec-threat-hunting-caller': '/ai-agent/phone',
-      '2-sec-alert-response-caller': '/ai-agent/phone',
-      '2-rnd-research-caller': '/ai-agent/phone',
-      '2-rnd-partner-caller': '/ai-agent/phone',
-      '2-rnd-collab-caller': '/ai-agent/phone',
-      '2-admin-receptionist': '/ai-agent/phone',
-      '2-admin-exec-assistant-caller': '/ai-agent/phone',
-      '2-admin-switchboard': '/ai-agent/phone',
-      '2-trading-client-relations-caller': '/ai-agent/phone',
-      '2-trading-trade-confirmation-caller': '/ai-agent/phone',
-      '2-trading-investor-relations-caller': '/ai-agent/phone',
-      '2-re-property-receptionist': '/ai-agent/phone',
-      '2-re-leasing-negotiator': '/ai-agent/phone',
-      '2-re-tenant-inquiry-caller': '/ai-agent/phone',
-      '2-ins-claims-hotline': '/ai-agent/phone',
-      '2-ins-underwriting-caller': '/ai-agent/phone',
-      '2-ins-policy-caller': '/ai-agent/phone',
-      '2-healthcare-patient-scheduler': '/ai-agent/phone',
-      '2-healthcare-medical-receptionist': '/ai-agent/phone',
-      '2-healthcare-telehealth-caller': '/ai-agent/phone',
-      '2-mfg-floor-ops-caller': '/ai-agent/phone',
-      '2-mfg-shift-supervisor-caller': '/ai-agent/phone',
-      '2-mfg-emergency-response-caller': '/ai-agent/phone',
-      '2-logistics-dispatch-receptionist': '/ai-agent/phone',
-      '2-logistics-driver-hotline': '/ai-agent/phone',
-      '2-logistics-fleet-caller': '/ai-agent/phone',
-      '2-gov-public-inquiry-line': '/ai-agent/phone',
-      '2-gov-permit-hotline': '/ai-agent/phone',
-      '2-gov-citizen-services-caller': '/ai-agent/phone',
-      '2-sc-supplier-coordination-caller': '/ai-agent/phone',
-      '2-sc-logistics-phone-agent': '/ai-agent/phone',
-      '2-sc-order-status-caller': '/ai-agent/phone',
-      '2-ai-mgmt-phone-support': '/ai-agent/phone',
-      '2-ai-mgmt-escalation-caller': '/ai-agent/phone',
-      '2-ai-mgmt-system-alert-caller': '/ai-agent/phone',
+      '2-el': '/ai-agent/executive/index',
+      '2-af': '/ai-agent/finance/index',
+      '2-ce': '/ai-agent/customer-support/index',
+      '2-sr': '/ai-agent/sales/index',
+      '2-mg': '/ai-agent/marketing/index',
+      '2-pr': '/ai-agent/product-management/index',
+      '2-om': '/ai-agent/operations/index',
+      '2-sm': '/ai-agent/social-media/index',
+      '2-di': '/ai-agent/data/index',
+      '2-ap': '/ai-agent/analysis/index',
+      '2-hr': '/ai-agent/human-resources/index',
+      '2-it': '/ai-agent/engineering/index',
+      '2-lc': '/ai-agent/legal/index',
+      '2-ed': '/ai-agent/engineering/index',
+      // All Phone Agents - Redirect to customer-support
+      '2-cx-phone-receptionist': '/ai-agent/customer-support/index',
+      '2-cx-call-center': '/ai-agent/customer-support/index',
+      '2-cx-telephone-support': '/ai-agent/customer-support/index',
+      '2-sales-cold-caller': '/ai-agent/sales/index',
+      '2-sales-phone-negotiator': '/ai-agent/sales/index',
+      '2-sales-deal-closer': '/ai-agent/sales/index',
+      '2-sales-appointment-setter': '/ai-agent/sales/index',
+      '2-sales-follow-up': '/ai-agent/sales/index',
+      '2-sales-receptionist': '/ai-agent/sales/index',
+      '2-mkt-telemarketer': '/ai-agent/marketing/index',
+      '2-mkt-event-caller': '/ai-agent/marketing/index',
+      '2-mkt-survey-caller': '/ai-agent/marketing/index',
+      '2-mkt-pr-caller': '/ai-agent/marketing/index',
+      '2-mkt-lead-qualifier': '/ai-agent/marketing/index',
+      '2-mkt-partnership-caller': '/ai-agent/marketing/index',
+      '2-ops-receptionist': '/ai-agent/operations/index',
+      '2-ops-dispatch-caller': '/ai-agent/operations/index',
+      '2-ops-coordination-caller': '/ai-agent/operations/index',
+      '2-fin-collections-caller': '/ai-agent/finance/index',
+      '2-fin-vendor-payment-caller': '/ai-agent/finance/index',
+      '2-fin-investor-relations-caller': '/ai-agent/finance/index',
+      '2-tech-it-support-hotline': '/ai-agent/engineering/index',
+      '2-tech-help-desk-caller': '/ai-agent/engineering/index',
+      '2-tech-incident-response-caller': '/ai-agent/engineering/index',
+      '2-hr-receptionist': '/ai-agent/human-resources/index',
+      '2-hr-recruiting-caller': '/ai-agent/human-resources/index',
+      '2-hr-interview-scheduler': '/ai-agent/human-resources/index',
+      '2-legal-receptionist': '/ai-agent/legal/index',
+      '2-legal-client-intake-caller': '/ai-agent/legal/index',
+      '2-legal-compliance-caller': '/ai-agent/legal/index',
+      '2-data-research-caller': '/ai-agent/data/index',
+      '2-data-analytics-caller': '/ai-agent/data/index',
+      '2-data-report-caller': '/ai-agent/data/index',
+      '2-prod-user-research-caller': '/ai-agent/product-management/index',
+      '2-prod-feedback-caller': '/ai-agent/product-management/index',
+      '2-prod-beta-caller': '/ai-agent/product-management/index',
+      '2-sec-incident-response-caller': '/ai-agent/security/index',
+      '2-sec-threat-hunting-caller': '/ai-agent/security/index',
+      '2-sec-alert-response-caller': '/ai-agent/security/index',
+      '2-rnd-research-caller': '/ai-agent/research-development/index',
+      '2-rnd-partner-caller': '/ai-agent/research-development/index',
+      '2-rnd-collab-caller': '/ai-agent/research-development/index',
+      '2-admin-receptionist': '/ai-agent/administrative/index',
+      '2-admin-exec-assistant-caller': '/ai-agent/administrative/index',
+      '2-admin-switchboard': '/ai-agent/administrative/index',
+      '2-trading-client-relations-caller': '/ai-agent/trading-investment/index',
+      '2-trading-trade-confirmation-caller': '/ai-agent/trading-investment/index',
+      '2-trading-investor-relations-caller': '/ai-agent/trading-investment/index',
+      '2-re-property-receptionist': '/ai-agent/real-estate/index',
+      '2-re-leasing-negotiator': '/ai-agent/real-estate/index',
+      '2-re-tenant-inquiry-caller': '/ai-agent/real-estate/index',
+      '2-ins-claims-hotline': '/ai-agent/insurance/index',
+      '2-ins-underwriting-caller': '/ai-agent/insurance/index',
+      '2-ins-policy-caller': '/ai-agent/insurance/index',
+      '2-healthcare-patient-scheduler': '/ai-agent/healthcare-medical/index',
+      '2-healthcare-medical-receptionist': '/ai-agent/healthcare-medical/index',
+      '2-healthcare-telehealth-caller': '/ai-agent/healthcare-medical/index',
+      '2-mfg-floor-ops-caller': '/ai-agent/manufacturing/index',
+      '2-mfg-shift-supervisor-caller': '/ai-agent/manufacturing/index',
+      '2-mfg-emergency-response-caller': '/ai-agent/manufacturing/index',
+      '2-logistics-dispatch-receptionist': '/ai-agent/logistics-warehousing/index',
+      '2-logistics-driver-hotline': '/ai-agent/logistics-warehousing/index',
+      '2-logistics-fleet-caller': '/ai-agent/logistics-warehousing/index',
+      '2-gov-public-inquiry-line': '/ai-agent/public-sector/index',
+      '2-gov-permit-hotline': '/ai-agent/public-sector/index',
+      '2-gov-citizen-services-caller': '/ai-agent/public-sector/index',
+      '2-sc-supplier-coordination-caller': '/ai-agent/supply-chain/index',
+      '2-sc-logistics-phone-agent': '/ai-agent/supply-chain/index',
+      '2-sc-order-status-caller': '/ai-agent/supply-chain/index',
+      '2-ai-mgmt-phone-support': '/ai-agent/ai-management-governance/index',
+      '2-ai-mgmt-escalation-caller': '/ai-agent/ai-management-governance/index',
+      '2-ai-mgmt-system-alert-caller': '/ai-agent/ai-management-governance/index',
       // AI Receptionist
       '3-1': '/ai-receptionist/dashboard',
       '3-2': '/ai-receptionist/phone-numbers',
@@ -1089,7 +1667,7 @@ export default function HomeScreen() {
       'sm-17': '/social-media/ai-content',
       'sm-18': '/social-media/multi-account',
       // Company Brain
-      '11-1': '/company-brain',
+      '11-1': '/company-brain/index',
       '11-2': '/company-brain/documents',
       '11-3': '/company-brain/search',
       '11-4': '/company-brain/onboarding',
@@ -1118,47 +1696,80 @@ export default function HomeScreen() {
 
     // Intelligent fallback routing for AI Agents & Employees based on ID patterns
     if (!route && subItem.id.startsWith('2-')) {
-      if (subItem.id.startsWith('2-cx-')) route = '/ai-agent/customer';
-      else if (subItem.id.startsWith('2-sales-')) route = '/ai-agent/sales';
-      else if (subItem.id.startsWith('2-mkt-')) route = '/ai-agent/marketing';
-      else if (subItem.id.startsWith('2-ops-') || subItem.id.startsWith('2-ai-ops-')) route = '/ai-agent/operations';
-      else if (subItem.id.startsWith('2-fin-')) route = '/ai-agent/accounting';
-      else if (subItem.id.startsWith('2-tech-')) route = '/ai-agent/engineering';
-      else if (subItem.id.startsWith('2-hr-') || subItem.id.startsWith('2-ai-recruiter') || subItem.id.startsWith('2-hr-ops-') || subItem.id.startsWith('2-learning-') || subItem.id.startsWith('2-comp-')) route = '/ai-agent/hr';
-      else if (subItem.id.startsWith('2-legal-')) route = '/ai-agent/legal';
-      else if (subItem.id.startsWith('2-data-') || subItem.id.startsWith('2-bi-') || subItem.id.startsWith('2-ml-') || subItem.id.startsWith('2-analytics-')) route = '/ai-agent/data';
-      else if (subItem.id.startsWith('2-prod-') || subItem.id.startsWith('2-ai-product')) route = '/ai-agent/product';
-      else if (subItem.id.startsWith('2-sec-') || subItem.id.startsWith('2-incident-') || subItem.id.startsWith('2-pen-') || subItem.id.startsWith('2-identity-')) route = '/ai-agent/it';
-      else if (subItem.id.startsWith('2-research-') || subItem.id.startsWith('2-innovation-') || subItem.id.startsWith('2-prototype-') || subItem.id.startsWith('2-patent-')) route = '/ai-agent';
-      else if (subItem.id.startsWith('2-office-') || subItem.id.startsWith('2-exec-asst') || subItem.id.startsWith('2-facilities-') || subItem.id.startsWith('2-travel-') || subItem.id.startsWith('2-doc-controller')) route = '/ai-agent/operations';
-      else if (subItem.id.startsWith('2-equity-') || subItem.id.startsWith('2-forex-') || subItem.id.startsWith('2-crypto-') || subItem.id.startsWith('2-derivatives-') || subItem.id.startsWith('2-portfolio-') || subItem.id.startsWith('2-risk-analyst') || subItem.id.startsWith('2-compliance-trading') || subItem.id.startsWith('2-quant-') || subItem.id.startsWith('2-esg-') || subItem.id.startsWith('2-macro-') || subItem.id.startsWith('2-algo-') || subItem.id.startsWith('2-settlement-')) route = '/ai-agent';
-      else if (subItem.id.startsWith('2-property-') || subItem.id.startsWith('2-lease-') || subItem.id.startsWith('2-tenant-') || subItem.id.startsWith('2-maintenance-') || subItem.id.startsWith('2-acquisition-') || subItem.id.startsWith('2-asset-') || subItem.id.startsWith('2-dev-coordinator') || subItem.id.startsWith('2-facilities-mgr')) route = '/ai-agent';
-      else if (subItem.id.startsWith('2-underwriter') || subItem.id.startsWith('2-claims-') || subItem.id.startsWith('2-fraud-') || subItem.id.startsWith('2-actuary-') || subItem.id.startsWith('2-risk-modeler') || subItem.id.startsWith('2-policy-admin') || subItem.id.startsWith('2-customer-risk') || subItem.id.startsWith('2-catastrophe-') || subItem.id.startsWith('2-reinsurance-')) route = '/ai-agent';
-      else if (subItem.id.startsWith('2-patient-') || subItem.id.startsWith('2-medical-') || subItem.id.startsWith('2-billing-') || subItem.id.startsWith('2-care-') || subItem.id.startsWith('2-health-') || subItem.id.startsWith('2-telehealth-') || subItem.id.startsWith('2-compliance-healthcare') || subItem.id.startsWith('2-quality-improvement')) route = '/ai-agent';
-      else if (subItem.id.startsWith('2-production-') || subItem.id.startsWith('2-quality-inspector') || subItem.id.startsWith('2-supply-chain-') || subItem.id.startsWith('2-maintenance-tech') || subItem.id.startsWith('2-inventory-') || subItem.id.startsWith('2-lean-') || subItem.id.startsWith('2-safety-') || subItem.id.startsWith('2-logistics-coordinator')) route = '/ai-agent/operations';
-      else if (subItem.id.startsWith('2-route-') || subItem.id.startsWith('2-fleet-') || subItem.id.startsWith('2-warehouse-') || subItem.id.startsWith('2-dispatcher') || subItem.id.startsWith('2-tracking-') || subItem.id.startsWith('2-last-mile-') || subItem.id.startsWith('2-freight-') || subItem.id.startsWith('2-customs-')) route = '/ai-agent/operations';
-      else if (subItem.id.startsWith('2-policy-') || subItem.id.startsWith('2-regulatory-') || subItem.id.startsWith('2-public-affairs') || subItem.id.startsWith('2-grants-') || subItem.id.startsWith('2-compliance-gov') || subItem.id.startsWith('2-transparency-')) route = '/ai-agent/legal';
-      else if (subItem.id.startsWith('2-procurement-') || subItem.id.startsWith('2-inventory-spec') || subItem.id.startsWith('2-demand-') || subItem.id.startsWith('2-supplier-') || subItem.id.startsWith('2-shipping-') || subItem.id.startsWith('2-fulfillment-')) route = '/ai-agent/operations';
-      else if (subItem.id.startsWith('2-cao-') || subItem.id.startsWith('2-aod-') || subItem.id.startsWith('2-rpa-') || subItem.id.startsWith('2-workflow-spec')) route = '/command-center';
-      else if (subItem.id.startsWith('2-coo-dept') || subItem.id.startsWith('2-vp-operations') || subItem.id.startsWith('2-vp-supply-chain') || subItem.id.startsWith('2-vp-quality') || subItem.id.startsWith('2-vp-facilities') || subItem.id.startsWith('2-vp-project') || subItem.id.startsWith('2-ops-mgr')) route = '/ai-agent/operations';
-      else if (subItem.id.startsWith('2-cfo-dept') || subItem.id.startsWith('2-vp-finance') || subItem.id.startsWith('2-vp-accounting') || subItem.id.startsWith('2-vp-treasury') || subItem.id.startsWith('2-vp-investor') || subItem.id.startsWith('2-controller') || subItem.id.startsWith('2-fin-mgr') || subItem.id.startsWith('2-acct-mgr')) route = '/ai-agent/accounting';
-      else if (subItem.id.startsWith('2-cto-dept') || subItem.id.startsWith('2-vp-engineering') || subItem.id.startsWith('2-vp-infra') || subItem.id.startsWith('2-vp-aiml') || subItem.id.startsWith('2-vp-security-tech') || subItem.id.startsWith('2-architect-') || subItem.id.startsWith('2-devops-') || subItem.id.startsWith('2-frontend-') || subItem.id.startsWith('2-backend-') || subItem.id.startsWith('2-sre-')) route = '/ai-agent/engineering';
-      else if (subItem.id.startsWith('2-chro-dept') || subItem.id.startsWith('2-vp-talent') || subItem.id.startsWith('2-vp-hr-') || subItem.id.startsWith('2-vp-learning') || subItem.id.startsWith('2-vp-culture') || subItem.id.startsWith('2-vp-compensation') || subItem.id.startsWith('2-recruiting-mgr')) route = '/ai-agent/hr';
-      else if (subItem.id.startsWith('2-clo-dept') || subItem.id.startsWith('2-vp-legal') || subItem.id.startsWith('2-vp-compliance') || subItem.id.startsWith('2-vp-contracts') || subItem.id.startsWith('2-vp-ip') || subItem.id.startsWith('2-vp-governance') || subItem.id.startsWith('2-compliance-mgr')) route = '/ai-agent/legal';
-      else if (subItem.id.startsWith('2-cdao-dept') || subItem.id.startsWith('2-vp-data-') || subItem.id.startsWith('2-vp-analytics') || subItem.id.startsWith('2-vp-bi') || subItem.id.startsWith('2-data-mgr') || subItem.id.startsWith('2-analytics-mgr')) route = '/ai-agent/data';
-      else if (subItem.id.startsWith('2-ciso-dept') || subItem.id.startsWith('2-vp-security-') || subItem.id.startsWith('2-vp-cyber') || subItem.id.startsWith('2-vp-gov-risk') || subItem.id.startsWith('2-vp-privacy') || subItem.id.startsWith('2-security-arch') || subItem.id.startsWith('2-soc-mgr')) route = '/ai-agent/it';
-      else if (subItem.id.startsWith('2-vp-product') || subItem.id.startsWith('2-product-mgr') || subItem.id.startsWith('2-product-owner')) route = '/ai-agent/product';
-      else if (subItem.id.startsWith('2-vp-research') || subItem.id.startsWith('2-vp-innovation') || subItem.id.startsWith('2-vp-rd-') || subItem.id.startsWith('2-research-') || subItem.id.startsWith('2-innovation-mgr')) route = '/ai-agent';
-      else if (subItem.id.startsWith('2-cao-admin') || subItem.id.startsWith('2-vp-admin') || subItem.id.startsWith('2-vp-facilities-admin') || subItem.id.startsWith('2-admin-mgr')) route = '/ai-agent/operations';
-      else if (subItem.id.startsWith('2-cio-dept') || subItem.id.startsWith('2-vp-trading') || subItem.id.startsWith('2-vp-investments') || subItem.id.startsWith('2-trading-desk') || subItem.id.startsWith('2-portfolio-mgr') || subItem.id.startsWith('2-risk-mgr')) route = '/ai-agent';
-      else if (subItem.id.startsWith('2-creo-dept') || subItem.id.startsWith('2-vp-property') || subItem.id.startsWith('2-vp-re-') || subItem.id.startsWith('2-property-mgr') || subItem.id.startsWith('2-leasing-mgr')) route = '/ai-agent';
-      else if (subItem.id.startsWith('2-cro-dept') || subItem.id.startsWith('2-vp-underwriting') || subItem.id.startsWith('2-vp-claims') || subItem.id.startsWith('2-vp-risk') || subItem.id.startsWith('2-underwriting-mgr') || subItem.id.startsWith('2-claims-mgr') || subItem.id.startsWith('2-policy-mgr')) route = '/ai-agent';
-      else if (subItem.id.startsWith('2-cmo-healthcare') || subItem.id.startsWith('2-vp-healthcare') || subItem.id.startsWith('2-vp-patient') || subItem.id.startsWith('2-patient-services') || subItem.id.startsWith('2-medical-billing') || subItem.id.startsWith('2-scheduling-mgr')) route = '/ai-agent';
-      else if (subItem.id.startsWith('2-cpo-dept') || subItem.id.startsWith('2-vp-manufacturing') || subItem.id.startsWith('2-vp-quality') || subItem.id.startsWith('2-production-mgr') || subItem.id.startsWith('2-quality-mgr') || subItem.id.startsWith('2-safety-mgr')) route = '/ai-agent/operations';
-      else if (subItem.id.startsWith('2-clo-logistics') || subItem.id.startsWith('2-vp-transportation') || subItem.id.startsWith('2-vp-logistics') || subItem.id.startsWith('2-fleet-mgr') || subItem.id.startsWith('2-warehouse-mgr') || subItem.id.startsWith('2-distribution-mgr')) route = '/ai-agent/operations';
-      else if (subItem.id.startsWith('2-cao-gov') || subItem.id.startsWith('2-vp-public') || subItem.id.startsWith('2-vp-regulatory') || subItem.id.startsWith('2-vp-public-engagement') || subItem.id.startsWith('2-policy-mgr') || subItem.id.startsWith('2-grants-mgr')) route = '/ai-agent/legal';
-      else if (subItem.id.startsWith('2-vp-supply-chain-ops') || subItem.id.startsWith('2-procurement-mgr') || subItem.id.startsWith('2-logistics-mgr') || subItem.id.startsWith('2-warehouse-lead')) route = '/ai-agent/operations';
-      else route = '/ai-agent';
+      if (subItem.id.startsWith('2-cx-')) route = '/ai-agent/customer-support/index';
+      else if (subItem.id.startsWith('2-sales-')) route = '/ai-agent/sales/index';
+      else if (subItem.id.startsWith('2-mkt-')) route = '/ai-agent/marketing/index';
+      else if (subItem.id.startsWith('2-ops-') || subItem.id.startsWith('2-ai-ops-')) route = '/ai-agent/operations/index';
+      else if (subItem.id.startsWith('2-fin-')) route = '/ai-agent/finance/index';
+      else if (subItem.id.startsWith('2-tech-')) route = '/ai-agent/engineering/index';
+      else if (subItem.id.startsWith('2-hr-') || subItem.id.startsWith('2-ai-recruiter') || subItem.id.startsWith('2-hr-ops-') || subItem.id.startsWith('2-learning-') || subItem.id.startsWith('2-comp-')) route = '/ai-agent/human-resources/index';
+      else if (subItem.id.startsWith('2-legal-')) route = '/ai-agent/legal/index';
+      else if (subItem.id.startsWith('2-data-') || subItem.id.startsWith('2-bi-') || subItem.id.startsWith('2-ml-') || subItem.id.startsWith('2-analytics-')) route = '/ai-agent/data/index';
+      else if (subItem.id.startsWith('2-prod-') || subItem.id.startsWith('2-ai-product')) route = '/ai-agent/product-management/index';
+      else if (subItem.id.startsWith('2-sec-') || subItem.id.startsWith('2-incident-') || subItem.id.startsWith('2-pen-') || subItem.id.startsWith('2-identity-')) route = '/ai-agent/security/index';
+      else if (subItem.id.startsWith('2-research-') || subItem.id.startsWith('2-innovation-') || subItem.id.startsWith('2-prototype-') || subItem.id.startsWith('2-patent-')) route = '/ai-agent/research-development/index';
+      else if (subItem.id.startsWith('2-office-') || subItem.id.startsWith('2-exec-asst') || subItem.id.startsWith('2-facilities-') || subItem.id.startsWith('2-travel-') || subItem.id.startsWith('2-doc-controller')) route = '/ai-agent/operations/index';
+      else if (subItem.id.startsWith('2-equity-') || subItem.id.startsWith('2-forex-') || subItem.id.startsWith('2-crypto-') || subItem.id.startsWith('2-derivatives-') || subItem.id.startsWith('2-portfolio-') || subItem.id.startsWith('2-risk-analyst') || subItem.id.startsWith('2-compliance-trading') || subItem.id.startsWith('2-quant-') || subItem.id.startsWith('2-esg-') || subItem.id.startsWith('2-macro-') || subItem.id.startsWith('2-algo-') || subItem.id.startsWith('2-settlement-')) route = '/ai-agent/trading-investment/index';
+      else if (subItem.id.startsWith('2-property-') || subItem.id.startsWith('2-lease-') || subItem.id.startsWith('2-tenant-') || subItem.id.startsWith('2-maintenance-') || subItem.id.startsWith('2-acquisition-') || subItem.id.startsWith('2-asset-') || subItem.id.startsWith('2-dev-coordinator') || subItem.id.startsWith('2-facilities-mgr')) route = '/ai-agent/real-estate/index';
+      else if (subItem.id.startsWith('2-underwriter') || subItem.id.startsWith('2-claims-') || subItem.id.startsWith('2-fraud-') || subItem.id.startsWith('2-actuary-') || subItem.id.startsWith('2-risk-modeler') || subItem.id.startsWith('2-policy-admin') || subItem.id.startsWith('2-customer-risk') || subItem.id.startsWith('2-catastrophe-') || subItem.id.startsWith('2-reinsurance-')) route = '/ai-agent/insurance/index';
+      else if (subItem.id.startsWith('2-patient-') || subItem.id.startsWith('2-medical-') || subItem.id.startsWith('2-billing-') || subItem.id.startsWith('2-care-') || subItem.id.startsWith('2-health-') || subItem.id.startsWith('2-telehealth-') || subItem.id.startsWith('2-compliance-healthcare') || subItem.id.startsWith('2-quality-improvement')) route = '/ai-agent/healthcare-medical/index';
+      else if (subItem.id.startsWith('2-production-') || subItem.id.startsWith('2-quality-inspector') || subItem.id.startsWith('2-supply-chain-') || subItem.id.startsWith('2-maintenance-tech') || subItem.id.startsWith('2-inventory-') || subItem.id.startsWith('2-lean-') || subItem.id.startsWith('2-safety-') || subItem.id.startsWith('2-logistics-coordinator')) route = '/ai-agent/manufacturing/index';
+      else if (subItem.id.startsWith('2-route-') || subItem.id.startsWith('2-fleet-') || subItem.id.startsWith('2-warehouse-') || subItem.id.startsWith('2-dispatcher') || subItem.id.startsWith('2-tracking-') || subItem.id.startsWith('2-last-mile-') || subItem.id.startsWith('2-freight-') || subItem.id.startsWith('2-customs-')) route = '/ai-agent/logistics-warehousing/index';
+      else if (subItem.id.startsWith('2-policy-') || subItem.id.startsWith('2-regulatory-') || subItem.id.startsWith('2-public-affairs') || subItem.id.startsWith('2-grants-') || subItem.id.startsWith('2-compliance-gov') || subItem.id.startsWith('2-transparency-')) route = '/ai-agent/public-sector/index';
+      else if (subItem.id.startsWith('2-procurement-') || subItem.id.startsWith('2-inventory-spec') || subItem.id.startsWith('2-demand-') || subItem.id.startsWith('2-supplier-') || subItem.id.startsWith('2-shipping-') || subItem.id.startsWith('2-fulfillment-')) route = '/ai-agent/supply-chain/index';
+      else if (subItem.id.startsWith('2-cao-') || subItem.id.startsWith('2-aod-') || subItem.id.startsWith('2-rpa-') || subItem.id.startsWith('2-workflow-spec')) route = '/command-center/index';
+      else if (subItem.id.startsWith('2-coo-dept') || subItem.id.startsWith('2-vp-operations') || subItem.id.startsWith('2-vp-supply-chain') || subItem.id.startsWith('2-vp-quality') || subItem.id.startsWith('2-vp-facilities') || subItem.id.startsWith('2-vp-project') || subItem.id.startsWith('2-ops-mgr')) route = '/ai-agent/operations/index';
+      else if (subItem.id.startsWith('2-cfo-dept') || subItem.id.startsWith('2-vp-finance') || subItem.id.startsWith('2-vp-accounting') || subItem.id.startsWith('2-vp-treasury') || subItem.id.startsWith('2-vp-investor') || subItem.id.startsWith('2-controller') || subItem.id.startsWith('2-fin-mgr') || subItem.id.startsWith('2-acct-mgr')) route = '/ai-agent/accounting/index';
+      else if (subItem.id.startsWith('2-cto-dept') || subItem.id.startsWith('2-vp-engineering') || subItem.id.startsWith('2-vp-infra') || subItem.id.startsWith('2-vp-aiml') || subItem.id.startsWith('2-vp-security-tech') || subItem.id.startsWith('2-architect-') || subItem.id.startsWith('2-devops-') || subItem.id.startsWith('2-frontend-') || subItem.id.startsWith('2-backend-') || subItem.id.startsWith('2-sre-')) route = '/ai-agent/engineering/index';
+      else if (subItem.id.startsWith('2-chro-dept') || subItem.id.startsWith('2-vp-talent') || subItem.id.startsWith('2-vp-hr-') || subItem.id.startsWith('2-vp-learning') || subItem.id.startsWith('2-vp-culture') || subItem.id.startsWith('2-vp-compensation') || subItem.id.startsWith('2-recruiting-mgr')) route = '/ai-agent/human-resources/index';
+      else if (subItem.id.startsWith('2-clo-dept') || subItem.id.startsWith('2-vp-legal') || subItem.id.startsWith('2-vp-compliance') || subItem.id.startsWith('2-vp-contracts') || subItem.id.startsWith('2-vp-ip') || subItem.id.startsWith('2-vp-governance') || subItem.id.startsWith('2-compliance-mgr')) route = '/ai-agent/legal/index';
+      else if (subItem.id.startsWith('2-cdao-dept') || subItem.id.startsWith('2-vp-data-') || subItem.id.startsWith('2-vp-analytics') || subItem.id.startsWith('2-vp-bi') || subItem.id.startsWith('2-data-mgr') || subItem.id.startsWith('2-analytics-mgr')) route = '/ai-agent/data/index';
+      else if (subItem.id.startsWith('2-ciso-dept') || subItem.id.startsWith('2-vp-security-') || subItem.id.startsWith('2-vp-cyber') || subItem.id.startsWith('2-vp-gov-risk') || subItem.id.startsWith('2-vp-privacy') || subItem.id.startsWith('2-security-arch') || subItem.id.startsWith('2-soc-mgr')) route = '/ai-agent/security/index';
+      else if (subItem.id.startsWith('2-vp-product') || subItem.id.startsWith('2-product-mgr') || subItem.id.startsWith('2-product-owner')) route = '/ai-agent/product-management/index';
+      else if (subItem.id.startsWith('2-vp-research') || subItem.id.startsWith('2-vp-innovation') || subItem.id.startsWith('2-vp-rd-') || subItem.id.startsWith('2-research-') || subItem.id.startsWith('2-innovation-mgr')) route = '/ai-agent/research-development/index';
+      else if (subItem.id.startsWith('2-cao-admin') || subItem.id.startsWith('2-vp-admin') || subItem.id.startsWith('2-vp-facilities-admin') || subItem.id.startsWith('2-admin-mgr')) route = '/ai-agent/administrative/index';
+      else if (subItem.id.startsWith('2-cio-dept') || subItem.id.startsWith('2-vp-trading') || subItem.id.startsWith('2-vp-investments') || subItem.id.startsWith('2-trading-desk') || subItem.id.startsWith('2-portfolio-mgr') || subItem.id.startsWith('2-risk-mgr')) route = '/ai-agent/trading-investment/index';
+      else if (subItem.id.startsWith('2-creo-dept') || subItem.id.startsWith('2-vp-property') || subItem.id.startsWith('2-vp-re-') || subItem.id.startsWith('2-property-mgr') || subItem.id.startsWith('2-leasing-mgr')) route = '/ai-agent/real-estate/index';
+      else if (subItem.id.startsWith('2-cro-dept') || subItem.id.startsWith('2-vp-underwriting') || subItem.id.startsWith('2-vp-claims') || subItem.id.startsWith('2-vp-risk') || subItem.id.startsWith('2-underwriting-mgr') || subItem.id.startsWith('2-claims-mgr') || subItem.id.startsWith('2-policy-mgr')) route = '/ai-agent/insurance/index';
+      else if (subItem.id.startsWith('2-cmo-healthcare') || subItem.id.startsWith('2-vp-healthcare') || subItem.id.startsWith('2-vp-patient') || subItem.id.startsWith('2-patient-services') || subItem.id.startsWith('2-medical-billing') || subItem.id.startsWith('2-scheduling-mgr')) route = '/ai-agent/healthcare-medical/index';
+      else if (subItem.id.startsWith('2-cpo-dept') || subItem.id.startsWith('2-vp-manufacturing') || subItem.id.startsWith('2-vp-quality') || subItem.id.startsWith('2-production-mgr') || subItem.id.startsWith('2-quality-mgr') || subItem.id.startsWith('2-safety-mgr')) route = '/ai-agent/manufacturing/index';
+      else if (subItem.id.startsWith('2-clo-logistics') || subItem.id.startsWith('2-vp-transportation') || subItem.id.startsWith('2-vp-logistics') || subItem.id.startsWith('2-fleet-mgr') || subItem.id.startsWith('2-warehouse-mgr') || subItem.id.startsWith('2-distribution-mgr')) route = '/ai-agent/logistics-warehousing/index';
+      else if (subItem.id.startsWith('2-cao-gov') || subItem.id.startsWith('2-vp-public') || subItem.id.startsWith('2-vp-regulatory') || subItem.id.startsWith('2-vp-public-engagement') || subItem.id.startsWith('2-policy-mgr') || subItem.id.startsWith('2-grants-mgr')) route = '/ai-agent/public-sector/index';
+      else if (subItem.id.startsWith('2-vp-supply-chain-ops') || subItem.id.startsWith('2-procurement-mgr') || subItem.id.startsWith('2-logistics-mgr') || subItem.id.startsWith('2-warehouse-lead')) route = '/ai-agent/supply-chain/index';
+      else if (subItem.id.includes('banking') || subItem.id.includes('finance') || subItem.id.includes('investment')) route = '/ai-agent/banking-finance/index';
+      else if (subItem.id.includes('ecommerce') || subItem.id.includes('retail') || subItem.id.includes('store')) route = '/ai-agent/ecommerce/index';
+      else if (subItem.id.includes('professional') || subItem.id.includes('consulting') || subItem.id.includes('advisory')) route = '/ai-agent/professional-services/index';
+      else if (subItem.id.includes('media') || subItem.id.includes('entertainment') || subItem.id.includes('content')) route = '/ai-agent/media-entertainment/index';
+      else if (subItem.id.includes('gaming') || subItem.id.includes('esports') || subItem.id.includes('game')) route = '/ai-agent/gaming-esports/index';
+      else if (subItem.id.includes('education') || subItem.id.includes('training') || subItem.id.includes('learning')) route = '/ai-agent/education/index';
+      else if (subItem.id.includes('travel') || subItem.id.startsWith('2-tourism') || subItem.id.includes('hospitality')) route = '/ai-agent/travel-tourism/index';
+      else if (subItem.id.includes('energy') || subItem.id.includes('utilities') || subItem.id.includes('power')) route = '/ai-agent/energy-utilities/index';
+      else if (subItem.id.includes('executive') || subItem.id.includes('strategy') || subItem.id.includes('leadership')) route = '/ai-agent/executive/index';
+      else if (subItem.id.includes('event') || subItem.id.includes('conference') || subItem.id.includes('meeting')) route = '/ai-agent/event-management/index';
+      else if (subItem.id.includes('agriculture') || subItem.id.includes('farming') || subItem.id.includes('food')) route = '/ai-agent/agriculture/index';
+      else if (subItem.id.includes('fashion') || subItem.id.includes('luxury') || subItem.id.includes('designer')) route = '/ai-agent/fashion-luxury/index';
+      else if (subItem.id.includes('restaurant') || subItem.id.includes('food') || subItem.id.includes('dining')) route = '/ai-agent/restaurants/index';
+      else if (subItem.id.includes('logistics') || subItem.id.includes('warehouse') || subItem.id.includes('fleet')) route = '/ai-agent/logistics-warehousing/index';
+      else if (subItem.id.includes('manufacturing') || subItem.id.includes('production') || subItem.id.includes('factory')) route = '/ai-agent/manufacturing/index';
+      else if (subItem.id.includes('real-estate') || subItem.id.includes('property') || subItem.id.includes('leasing')) route = '/ai-agent/real-estate/index';
+      else if (subItem.id.includes('insurance') || subItem.id.includes('underwriting') || subItem.id.includes('claims')) route = '/ai-agent/insurance/index';
+      else if (subItem.id.includes('healthcare') || subItem.id.includes('medical') || subItem.id.includes('patient')) route = '/ai-agent/healthcare-medical/index';
+      else if (subItem.id.includes('trading') || subItem.id.includes('investment') || subItem.id.includes('equity')) route = '/ai-agent/trading-investment/index';
+      else if (subItem.id.includes('government') || subItem.id.includes('public') || subItem.id.includes('regulatory')) route = '/ai-agent/public-sector/index';
+      else if (subItem.id.includes('supply-chain') || subItem.id.includes('procurement') || subItem.id.includes('inventory')) route = '/ai-agent/supply-chain/index';
+      else if (subItem.id.includes('ai-management') || subItem.id.includes('ai-governance') || subItem.id.includes('ai-oversight')) route = '/ai-agent/ai-management-governance/index';
+      else if (subItem.id.includes('cross-department') || subItem.id.includes('interdepartmental') || subItem.id.includes('shared-services')) route = '/ai-agent/cross-department/index';
+      else if (subItem.id.includes('administrative') || subItem.id.includes('admin') || subItem.id.includes('office')) route = '/ai-agent/administrative/index';
+      else if (subItem.id.includes('energy') || subItem.id.includes('utilities') || subItem.id.includes('power')) route = '/ai-agent/energy-utilities/index';
+      else if (subItem.id.includes('fashion') || subItem.id.includes('luxury') || subItem.id.includes('designer')) route = '/ai-agent/fashion-luxury/index';
+      else if (subItem.id.includes('gaming') || subItem.id.includes('esports') || subItem.id.includes('game')) route = '/ai-agent/gaming-esports/index';
+      else if (subItem.id.includes('media') || subItem.id.includes('entertainment') || subItem.id.includes('content')) route = '/ai-agent/media-entertainment/index';
+      else if (subItem.id.includes('event') || subItem.id.includes('conference') || subItem.id.includes('meeting')) route = '/ai-agent/event-management/index';
+      else if (subItem.id.includes('agriculture') || subItem.id.includes('farming') || subItem.id.includes('food')) route = '/ai-agent/agriculture/index';
+      else if (subItem.id.includes('ecommerce') || subItem.id.includes('retail') || subItem.id.includes('store')) route = '/ai-agent/ecommerce/index';
+      else if (subItem.id.includes('banking') || subItem.id.includes('finance') || subItem.id.includes('investment')) route = '/ai-agent/banking-finance/index';
+      else if (subItem.id.includes('travel') || subItem.id.startsWith('2-tourism') || subItem.id.includes('hospitality')) route = '/ai-agent/travel-tourism/index';
+      else route = '/ai-agent/index';
     }
 
     if (route) {
@@ -1260,6 +1871,7 @@ export default function HomeScreen() {
           <TouchableOpacity style={styles.headerButton}>
             <Search size={20} color={theme.colors.text} />
           </TouchableOpacity>
+          <DesignAgentButton pagePath="/home" pageName="Home Dashboard" size="small" />
           <TouchableOpacity style={styles.headerButton}>
             <View style={styles.notificationContainer}>
               <Bell size={20} color={theme.colors.text} />
@@ -1272,6 +1884,8 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </View>
       </View>
+
+      <DesignAgentPanel currentPagePath="/home" currentPageName="Home Dashboard" />
 
       <ScrollView 
         style={styles.content} 
@@ -2139,4 +2753,3 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
 });
-

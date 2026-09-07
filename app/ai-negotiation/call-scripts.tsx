@@ -27,7 +27,7 @@ import {
   X,
   Check,
   Rocket,
-  ChartBarBig,
+  BarChart3,
   CalendarRange,
   RefreshCw,
 } from 'lucide-react-native';
@@ -121,7 +121,7 @@ export default function NegotiationCallScriptsScreen() {
   }, [scripts, searchQuery, stageFilter, channelFilter]);
 
   const pipelineStats = [
-    { id: 'coverage', label: 'Pipeline coverage', value: '4.1x', delta: '+0.4 QoQ', icon: ChartBarBig },
+    { id: 'coverage', label: 'Pipeline coverage', value: '4.1x', delta: '+0.4 QoQ', icon: BarChart3 },
     { id: 'time', label: 'Cycle time', value: '26d', delta: '-3 days', icon: CalendarRange },
     { id: 'win', label: 'Win rate', value: '38%', delta: '+6 pts', icon: Target },
     { id: 'expansion', label: 'Expansion ready', value: '14 deals', delta: '>$3.2M', icon: Briefcase },

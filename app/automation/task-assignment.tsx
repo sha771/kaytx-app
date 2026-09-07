@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Users, UserPlus, SquareCheck, Calendar, Clock, ChartBarBig, Settings } from 'lucide-react-native';
+import { Users, UserPlus, SquareCheck, Calendar, Clock, BarChart3, Settings } from 'lucide-react-native';
 
 interface Task {
   id: string;
@@ -154,7 +154,7 @@ export default function TaskAssignment() {
           <Text style={styles.statCardLabel}>Team Members</Text>
         </View>
         <View style={styles.statCard}>
-          <ChartBarBig size={24} color="#f39c12" />
+          <BarChart3 size={24} color="#f39c12" />
           <Text style={styles.statCardValue}>92%</Text>
           <Text style={styles.statCardLabel}>Completion Rate</Text>
         </View>
@@ -214,7 +214,7 @@ export default function TaskAssignment() {
           style={[styles.tab, activeTab === 'analytics' && styles.activeTab]}
           onPress={() => setActiveTab('analytics')}
         >
-          <ChartBarBig size={20} color={activeTab === 'analytics' ? '#4ecdc4' : '#666'} />
+          <BarChart3 size={20} color={activeTab === 'analytics' ? '#4ecdc4' : '#666'} />
           <Text style={[styles.tabText, activeTab === 'analytics' && styles.activeTabText]}>Analytics</Text>
         </TouchableOpacity>
       </View>

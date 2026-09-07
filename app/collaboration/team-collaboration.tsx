@@ -22,7 +22,7 @@ import {
   CircleCheck,
   CircleAlert,
   Target,
-  ChartBarBig,
+  BarChart3,
   ArrowLeft,
   Pencil,
   Trash2,

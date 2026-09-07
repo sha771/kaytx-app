@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { 
-  Users, Activity, Star, TrendingUp, ArrowRight, ChartBarBig, MessageSquare, 
+  Users, Activity, Star, TrendingUp, ArrowRight, BarChart3, MessageSquare, 
   Calendar, Shield, Search, Plus, Funnel, Phone, Mail, MoreVertical,
   UserCheck, Target, DollarSign, PieChart, BarChart3, UserPlus, HeartHandshake
 } from 'lucide-react-native';
@@ -310,7 +310,7 @@ export default function SocialCRMIndex() {
             { label: 'Add Contact', icon: UserPlus, route: '/ai-agent/social-crm/add-contact' },
             { label: 'New Deal', icon: Target, route: '/ai-agent/social-crm/add-deal' },
             { label: 'Campaign', icon: BarChart3, route: '/ai-agent/social-crm/add-campaign' },
-            { label: 'Reports', icon: ChartBarBig, route: '/ai-agent/social-crm/reports' },
+            { label: 'Reports', icon: BarChart3, route: '/ai-agent/social-crm/reports' },
           ].map((act, i) => (
             <TouchableOpacity 
               key={act.label} 

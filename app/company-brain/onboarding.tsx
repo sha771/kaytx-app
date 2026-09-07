@@ -3,11 +3,12 @@
  * @license MIT - See LICENSE file for full terms
  */
 
-import React, { useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, TextInput, Modal, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, TextInput, Modal, ActivityIndicator, RefreshControl } from 'react-native';
 import { useRouter } from 'expo-router';
 import { BookOpen, GraduationCap, CheckCircle, Clock, AlertCircle, MessageSquare, Search, User, Target, ChevronRight, Play, Pause, Award, TrendingUp } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import apiClient from '@/lib/api-client';
 
 export default function CompanyBrainOnboarding() {
   const router = useRouter();
@@ -17,85 +18,65 @@ export default function CompanyBrainOnboarding() {
   const [showAskModal, setShowAskModal] = useState(false);
   const [askQuestion, setAskQuestion] = useState('');
   const [isAsking, setIsAsking] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const onboardingProgress = {
+  const [onboardingProgress, setOnboardingProgress] = useState<any>({
     role: 'Product Manager',
     department: 'Product',
-    progress: 65,
-    modulesCompleted: 8,
-    totalModules: 12,
-    daysOnboarded: 14,
-    estimatedCompletion: 21,
+    progress: 0,
+    modulesCompleted: 0,
+    totalModules: 0,
+    daysOnboarded: 0,
+    estimatedCompletion: 0,
+  });
+  const [learningPath, setLearningPath] = useState<any[]>([]);
+  const [commonQuestions, setCommonQuestions] = useState<any[]>([]);
+  const [knowledgeGaps, setKnowledgeGaps] = useState<any[]>([]);
+  const [mentor, setMentor] = useState<any>(null);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      const [onboardingRes, insightsRes] = await Promise.all([
+        apiClient.getOnboardingProgress({ organizationId: 'default' }),
+        apiClient.getAnalyticsInsights({ organizationId: 'default' }),
+      ]);
+
+      if (onboardingRes?.success && onboardingRes?.data) {
+        const data = onboardingRes.data;
+        if (data.progress) setOnboardingProgress(data.progress);
+        if (data.learningPath) setLearningPath(data.learningPath);
+        if (data.mentor) setMentor(data.mentor);
+      }
+
+      if (insightsRes?.success && insightsRes?.data) {
+        const data = insightsRes.data;
+        if (data.knowledgeGaps) setKnowledgeGaps(data.knowledgeGaps);
+        if (data.commonQuestions) setCommonQuestions(data.commonQuestions);
+      }
+    } catch (err) {
+      console.error('Failed to load onboarding data:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const learningPath = [
-    {
-      id: 1,
-      title: 'Company Overview',
-      status: 'completed',
-      duration: '2 hours',
-      modules: 3,
-    },
-    {
-      id: 2,
-      title: 'Product Strategy',
-      status: 'completed',
-      duration: '4 hours',
-      modules: 5,
-    },
-    {
-      id: 3,
-      title: 'Team Structure',
-      status: 'in_progress',
-      duration: '3 hours',
-      modules: 4,
-    },
-    {
-      id: 4,
-      title: 'Tools & Systems',
-      status: 'pending',
-      duration: '5 hours',
-      modules: 6,
-    },
-    {
-      id: 5,
-      title: 'Processes & Workflows',
-      status: 'pending',
-      duration: '4 hours',
-      modules: 5,
-    },
-  ];
-
-  const commonQuestions = [
-    { id: 1, question: 'How do I request time off?', category: 'HR', asked: 45 },
-    { id: 2, question: 'What is the expense reimbursement process?', category: 'Finance', asked: 38 },
-    { id: 3, question: 'How do I access the company VPN?', category: 'IT', asked: 32 },
-    { id: 4, question: 'What are the working hours?', category: 'HR', asked: 28 },
-  ];
-
-  const knowledgeGaps = [
-    { id: 1, area: 'Product Roadmap Planning', priority: 'high', reason: 'Critical for role' },
-    { id: 2, area: 'Stakeholder Management', priority: 'medium', reason: 'Important for collaboration' },
-    { id: 3, area: 'Competitive Analysis', priority: 'medium', reason: 'Helps with strategy' },
-  ];
-
-  const mentor = {
-    name: 'Sarah M.',
-    role: 'Senior Product Manager',
-    avatar: null,
-    availability: 'Available',
-    meetings: 4,
-    nextMeeting: 'Tomorrow, 2:00 PM',
-  };
-
-  const handleAskQuestion = () => {
+  const handleAskQuestion = async () => {
     if (!askQuestion.trim()) return;
     setIsAsking(true);
-    setTimeout(() => {
-      setIsAsking(false);
+    try {
+      await apiClient.searchKnowledge({ organizationId: 'default', query: askQuestion });
       setShowAskModal(false);
       setAskQuestion('');
-    }, 2000);
+    } catch (err) {
+      console.error('Failed to search knowledge:', err);
+    } finally {
+      setIsAsking(false);
+    }
   };
 
   const getStatusIcon = (status: string) => {
@@ -192,7 +173,11 @@ export default function CompanyBrainOnboarding() {
         </TouchableOpacity>
       </View>
 
-      <ScrollView style={styles.scrollView} contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 20 }]}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 20 }]}
+        refreshControl={<RefreshControl refreshing={loading} onRefresh={loadData} tintColor="#6366f1" />}
+      >
         {activeTab === 'learning-path' && (
           <View style={styles.tabContent}>
             <Text style={styles.sectionTitle}>Your Learning Path</Text>
@@ -266,7 +251,7 @@ export default function CompanyBrainOnboarding() {
           </View>
         )}
 
-        {activeTab === 'mentor' && (
+        {activeTab === 'mentor' && mentor && (
           <View style={styles.tabContent}>
             <Text style={styles.sectionTitle}>Your Mentor</Text>
             <View style={styles.mentorCard}>

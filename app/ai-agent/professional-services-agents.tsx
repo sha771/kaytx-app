@@ -24,7 +24,7 @@ import {
   TrendingUp,
   DollarSign,
   Users,
-  ChartBarBig,
+  BarChart3,
   ListFilter,
   ChevronRight,
   Award,
@@ -59,7 +59,7 @@ const EXECUTIVE_KPIS = [
   { label: 'Active Projects', value: '12,450', trend: '+12%', icon: Briefcase, color: '#3B82F6' },
   { label: 'Consultants', value: '48,000', trend: '+8%', icon: Users, color: '#8B5CF6' },
   { label: 'Client Satisfaction', value: '94%', trend: '+2%', icon: Award, color: '#10B981' },
-  { label: 'Utilization', value: '86%', trend: '+5%', icon: ChartBarBig, color: '#06B6D4' },
+  { label: 'Utilization', value: '86%', trend: '+5%', icon: BarChart3, color: '#06B6D4' },
   { label: 'AI Productivity', value: '+$180M', trend: '+22%', icon: Zap, color: '#F59E0B' },
 ];
 

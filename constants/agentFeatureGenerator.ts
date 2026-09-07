@@ -13,7 +13,7 @@
 import type { AIEmployee } from './aiEmployeesEnhanced';
 import { SKILL_LIBRARY } from './agentBuilder';
 import {
-  Settings, Zap, MessagesSquare, Target, Megaphone, Crown, Shield, ChartBarBig,
+  Settings, Zap, MessagesSquare, Target, Megaphone, Crown, Shield, BarChart3,
   Database, Brain, Cpu, FileText, Users, Briefcase, TrendingUp, Globe,
   Building2, Truck, Stethoscope, Factory, Landmark, Scale, Gavel, Search,
   Lightbulb, BarChart3, Workflow, Lock, CheckCircle, AlertCircle, Clock,
@@ -679,7 +679,7 @@ export function generateDepartmentAgents(department: string, agentsConfig: {
  */
 export function getIconByName(iconName: string): LucideIcon {
   const iconMap: Record<string, LucideIcon> = {
-    Settings, Zap, MessagesSquare, Target, Megaphone, Crown, Shield, ChartBarBig,
+    Settings, Zap, MessagesSquare, Target, Megaphone, Crown, Shield, BarChart3,
     Database, Brain, Cpu, FileText, Users, Briefcase, TrendingUp, Globe,
     Building2, Truck, Stethoscope, Factory, Landmark, Scale, Gavel, Search,
     Lightbulb, BarChart3, Workflow, Lock, CheckCircle, AlertCircle, Clock,

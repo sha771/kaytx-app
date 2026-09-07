@@ -690,7 +690,7 @@ export const AGENT_TEMPLATES: BuilderTemplate[] = [
     description: 'Analyzes data and generates insights',
     mode: 'agent',
     category: 'data_intelligence',
-    icon: 'ChartBarBig',
+    icon: 'BarChart3',
     presetData: {
       agentType: 'learning',
       skills: ['data_1', 'data_2', 'data_4', 'data_5'],

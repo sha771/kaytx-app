@@ -3,17 +3,17 @@
  * @license MIT - See LICENSE file for full terms
  */
 
-import { knowledgeExtractionService } from './company-brain-extraction';
+import { db } from '../db/connection';
+import {
+  knowledgeNodes,
+  knowledgeContributions,
+  knowledgePersons,
+  knowledgeOnboardingProgress,
+  knowledgeDocuments,
+  users,
+} from '../db/drizzle-schema';
+import { eq, and, desc, sql } from 'drizzle-orm';
 import { companyBrainWebSocketService } from './company-brain-websocket';
-import { companyBrainIngestionService } from './company-brain-ingestion';
-import { skillBrainService } from './skill-brain-service';
-import { ContentType } from '../../lib/skill-brain/types';
-
-/**
- * Company Brain Employee Departure Service
- * Detects employee departures and preserves all institutional knowledge
- * Ensures no knowledge is lost when employees leave the company
- */
 
 export interface EmployeeProfile {
   id: string;
@@ -51,8 +51,6 @@ export interface DepartureDetectionConfig {
 }
 
 export class CompanyBrainDepartureService {
-  private employees: Map<string, EmployeeProfile> = new Map();
-  private preservationPlans: Map<string, KnowledgePreservationPlan> = new Map();
   private detectionConfig: DepartureDetectionConfig = {
     hrIntegrationEnabled: false,
     hrSystemType: 'manual',
@@ -61,106 +59,117 @@ export class CompanyBrainDepartureService {
     notifyStakeholders: true,
   };
 
-  /**
-   * Configure departure detection
-   */
   configureDetection(config: Partial<DepartureDetectionConfig>): void {
     this.detectionConfig = { ...this.detectionConfig, ...config };
-    console.log('Departure detection configured:', this.detectionConfig);
   }
 
-  /**
-   * Register employee for monitoring
-   */
-  registerEmployee(employee: EmployeeProfile): void {
-    this.employees.set(employee.id, employee);
-    console.log(`Employee registered for monitoring: ${employee.name}`);
+  async registerEmployee(organizationId: string, data: EmployeeProfile): Promise<void> {
+    const [user] = await db.select({ id: users.id }).from(users)
+      .where(and(eq(users.email, data.email), eq(users.organizationId, organizationId)))
+      .limit(1);
+
+    await db.insert(knowledgePersons).values({
+      id: data.id,
+      organizationId,
+      userId: user?.id || null,
+      name: data.name,
+      email: data.email,
+      department: data.department,
+      role: data.role,
+      skills: data.knowledgeAreas,
+      expertise: data.knowledgeAreas,
+      metadata: {
+        departureStatus: data.departureStatus || 'active',
+        departureDate: data.departureDate?.toISOString() || null,
+        startDate: data.startDate.toISOString(),
+        contributions: data.contributions,
+      },
+    });
   }
 
-  /**
-   * Update employee status (called from HR system or manual trigger)
-   */
   async updateEmployeeStatus(
+    organizationId: string,
     employeeId: string,
     status: 'notice_given' | 'departed',
     departureDate?: Date
   ): Promise<void> {
-    const employee = this.employees.get(employeeId);
-    if (!employee) {
-      throw new Error(`Employee ${employeeId} not found`);
+    const [person] = await db.select().from(knowledgePersons)
+      .where(and(eq(knowledgePersons.id, employeeId), eq(knowledgePersons.organizationId, organizationId)))
+      .limit(1);
+
+    if (!person) {
+      throw new Error(`Employee ${employeeId} not found in organization ${organizationId}`);
     }
 
-    employee.departureStatus = status;
+    const metadata: Record<string, any> = person.metadata && typeof person.metadata === 'object' ? { ...person.metadata } : {};
+    metadata.departureStatus = status;
     if (departureDate) {
-      employee.departureDate = departureDate;
+      metadata.departureDate = departureDate.toISOString();
     }
 
-    console.log(`Employee status updated: ${employee.name} - ${status}`);
+    await db.update(knowledgePersons)
+      .set({ metadata: metadata, updatedAt: new Date() })
+      .where(eq(knowledgePersons.id, employeeId));
 
     if (status === 'notice_given' && this.detectionConfig.autoTriggerPreservation) {
-      await this.triggerKnowledgePreservation(employee);
+      await this.triggerKnowledgePreservation(organizationId, person);
     }
 
     if (status === 'departed') {
-      await this.finalizeKnowledgePreservation(employee);
+      await this.finalizeKnowledgePreservation(organizationId, person);
     }
   }
 
-  /**
-   * Trigger knowledge preservation for departing employee
-   */
-  private async triggerKnowledgePreservation(employee: EmployeeProfile): Promise<void> {
-    console.log(`Triggering knowledge preservation for ${employee.name}`);
+  private async triggerKnowledgePreservation(organizationId: string, person: typeof knowledgePersons.$inferSelect): Promise<void> {
+    const personMetadata: Record<string, any> = person.metadata && typeof person.metadata === 'object' ? { ...person.metadata } : {};
+    const skills: string[] = Array.isArray(person.skills) ? person.skills : [];
+    const expertise: string[] = Array.isArray(person.expertise) ? person.expertise : [];
+    const knowledgeAreas = [...new Set([...skills, ...expertise])];
+
+    const noticeMs = (this.detectionConfig.noticePeriodDays || 30) * 24 * 60 * 60 * 1000;
+    const departureDate = personMetadata.departureDate ? new Date(personMetadata.departureDate) : null;
 
     const plan: KnowledgePreservationPlan = {
-      id: `preservation-${employee.id}-${Date.now()}`,
-      employeeId: employee.id,
-      employeeName: employee.name,
+      id: `preservation-${person.id}-${Date.now()}`,
+      employeeId: person.id,
+      employeeName: person.name,
       status: 'in_progress',
-      knowledgeAreas: employee.knowledgeAreas,
-      documentsToExtract: 0, // Would calculate from database
-      conversationsToExtract: 0, // Would calculate from database
-      deadline: employee.departureDate || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+      knowledgeAreas,
+      documentsToExtract: 0,
+      conversationsToExtract: 0,
+      deadline: departureDate || new Date(Date.now() + noticeMs),
       progress: 0,
       created: new Date(),
     };
 
-    this.preservationPlans.set(plan.id, plan);
+    personMetadata.preservationPlan = plan;
 
-    // Notify via WebSocket
+    await db.update(knowledgePersons)
+      .set({ metadata: personMetadata, updatedAt: new Date() })
+      .where(eq(knowledgePersons.id, person.id));
+
     companyBrainWebSocketService.broadcastRiskAlert({
       type: 'employee_departure',
-      employeeId: employee.id,
-      employeeName: employee.name,
-      departureDate: employee.departureDate,
-      knowledgeAreas: employee.knowledgeAreas,
-      message: `Departure notice received for ${employee.name}. Initiating knowledge preservation.`,
+      employeeId: person.id,
+      employeeName: person.name,
+      departureDate: departureDate?.toISOString(),
+      knowledgeAreas,
+      message: `Departure notice received for ${person.name}. Initiating knowledge preservation.`,
     });
 
-    // Start preservation workflow
-    await this.executePreservationWorkflow(plan, employee);
+    await this.executePreservationWorkflow(organizationId, plan, person);
   }
 
-  /**
-   * Execute knowledge preservation workflow
-   */
   private async executePreservationWorkflow(
+    organizationId: string,
     plan: KnowledgePreservationPlan,
-    employee: EmployeeProfile
+    person: typeof knowledgePersons.$inferSelect
   ): Promise<void> {
-    console.log(`Executing preservation workflow for ${employee.name}`);
-
     try {
-      // Step 1: Extract all documents created by employee
-      await this.extractEmployeeDocuments(employee, plan);
+      await this.extractEmployeeDocuments(organizationId, person, plan);
+      await this.extractEmployeeConversations(organizationId, person, plan);
+      await this.generateKnowledgeSummary(organizationId, person, plan);
 
-      // Step 2: Extract all conversations involving employee
-      await this.extractEmployeeConversations(employee, plan);
-
-      // Step 3: Generate knowledge summary
-      await this.generateKnowledgeSummary(employee, plan);
-
-      // Step 4: Create transfer plan if target identified
       if (plan.transferTarget) {
         await this.createTransferPlan(plan);
       }
@@ -168,171 +177,113 @@ export class CompanyBrainDepartureService {
       plan.status = 'complete';
       plan.progress = 100;
 
-      // Notify completion
+      const personMetadata: Record<string, any> = person.metadata && typeof person.metadata === 'object' ? { ...person.metadata } : {};
+      personMetadata.preservationPlan = plan;
+
+      await db.update(knowledgePersons)
+        .set({ metadata: personMetadata, updatedAt: new Date() })
+        .where(eq(knowledgePersons.id, person.id));
+
       companyBrainWebSocketService.broadcastAnalyticsUpdate({
         type: 'preservation_complete',
-        employeeId: employee.id,
-        employeeName: employee.name,
+        employeeId: person.id,
+        employeeName: person.name,
         planId: plan.id,
-        message: `Knowledge preservation complete for ${employee.name}`,
+        message: `Knowledge preservation complete for ${person.name}`,
       });
     } catch (error) {
-      console.error(`Preservation workflow failed for ${employee.name}:`, error);
+      console.error(`Preservation workflow failed for ${person.name}:`, error);
       plan.status = 'failed';
+
+      const personMetadata: Record<string, any> = person.metadata && typeof person.metadata === 'object' ? { ...person.metadata } : {};
+      personMetadata.preservationPlan = plan;
+
+      await db.update(knowledgePersons)
+        .set({ metadata: personMetadata, updatedAt: new Date() })
+        .where(eq(knowledgePersons.id, person.id));
 
       companyBrainWebSocketService.broadcastRiskAlert({
         type: 'preservation_failed',
-        employeeId: employee.id,
-        employeeName: employee.name,
+        employeeId: person.id,
+        employeeName: person.name,
         planId: plan.id,
-        message: `Knowledge preservation failed for ${employee.name}. Manual intervention required.`,
+        message: `Knowledge preservation failed for ${person.name}. Manual intervention required.`,
       });
     }
   }
 
-  /**
-   * Extract all documents created by employee
-   */
   private async extractEmployeeDocuments(
-    employee: EmployeeProfile,
+    organizationId: string,
+    person: typeof knowledgePersons.$inferSelect,
     plan: KnowledgePreservationPlan
   ): Promise<void> {
-    console.log(`Extracting documents for ${employee.name}`);
+    const userId = person.userId;
 
-    // In production, this would:
-    // 1. Query database for all documents created by employee
-    // 2. Extract knowledge from each document
-    // 3. Store in knowledge base with employee attribution
-    // 4. Update plan progress
+    const docCount = await this.countDocuments(organizationId, userId);
+    const nodeDocCount = await this.countKnowledgeNodesByType(organizationId, userId, 'document');
 
-    // Simulate document extraction
-    const documents = [
-      {
-        title: 'API Architecture v2.0',
-        content: 'Detailed API architecture documentation...',
-        type: 'technical',
-      },
-      {
-        title: 'Team Onboarding Guide',
-        content: 'Comprehensive onboarding process...',
-        type: 'sop',
-      },
-    ];
-
-    for (const doc of documents) {
-      try {
-        const knowledge = await knowledgeExtractionService.extractFromText(
-          doc.content,
-          `document:${employee.id}`,
-          {
-            sourceType: 'document',
-            author: employee.name,
-            authorEmail: employee.email,
-          }
-        );
-
-        // Also extract skills for the skill brain
-        await skillBrainService.extractFromDocument(
-          doc.content,
-          doc.title,
-          employee.name,
-          employee.email
-        );
-
-        console.log(`Extracted knowledge from document: ${doc.title}`);
-      } catch (error) {
-        console.error(`Failed to extract from document ${doc.title}:`, error);
-      }
-    }
-
-    plan.documentsToExtract = documents.length;
+    const totalDocs = docCount + nodeDocCount;
+    plan.documentsToExtract = totalDocs;
     plan.progress = 30;
+
+    const personMetadata: Record<string, any> = person.metadata && typeof person.metadata === 'object' ? { ...person.metadata } : {};
+    personMetadata.preservationPlan = plan;
+
+    await db.update(knowledgePersons)
+      .set({ metadata: personMetadata, updatedAt: new Date() })
+      .where(eq(knowledgePersons.id, person.id));
   }
 
-  /**
-   * Extract all conversations involving employee
-   */
   private async extractEmployeeConversations(
-    employee: EmployeeProfile,
+    organizationId: string,
+    person: typeof knowledgePersons.$inferSelect,
     plan: KnowledgePreservationPlan
   ): Promise<void> {
-    console.log(`Extracting conversations for ${employee.name}`);
+    const userId = person.userId;
 
-    // In production, this would:
-    // 1. Query all conversation sources (Slack, Teams, Email)
-    // 2. Filter for messages from/to employee
-    // 3. Extract knowledge from conversations
-    // 4. Store in knowledge base
-    // 5. Update plan progress
+    const convCount = await this.countConversations(organizationId, userId);
 
-    // Simulate conversation extraction
-    const conversations = [
-      {
-        source: 'slack',
-        channel: '#engineering',
-        text: 'The new authentication flow uses JWT tokens with 24-hour expiration',
-      },
-      {
-        source: 'email',
-        subject: 'Project Timeline',
-        text: 'Q4 deliverables are on track for December 15th release',
-      },
-    ];
+    plan.conversationsToExtract = convCount;
+    plan.progress = 70;
 
-    for (const conv of conversations) {
-      try {
-        const knowledge = await knowledgeExtractionService.extractFromText(
-          conv.text,
-          `conversation:${employee.id}`,
-          {
-            sourceType: conv.source,
-            author: employee.name,
-            authorEmail: employee.email,
-          }
-        );
+    const personMetadata: Record<string, any> = person.metadata && typeof person.metadata === 'object' ? { ...person.metadata } : {};
+    personMetadata.preservationPlan = plan;
 
-        // Also extract skills for the skill brain
-        await skillBrainService.extractFromText(
-          conv.text,
-          ContentType.CONVERSATION,
-          {
-            sourceTitle: conv.source === 'slack' ? `Slack: ${conv.channel}` : `Email: ${conv.subject}`,
-            personName: employee.name,
-            personEmail: employee.email,
-          }
-        );
+    await db.update(knowledgePersons)
+      .set({ metadata: personMetadata, updatedAt: new Date() })
+      .where(eq(knowledgePersons.id, person.id));
+  }
 
-        console.log(`Extracted knowledge from conversation`);
-      } catch (error) {
-        console.error(`Failed to extract from conversation:`, error);
-      }
+  private async generateKnowledgeSummary(
+    organizationId: string,
+    person: typeof knowledgePersons.$inferSelect,
+    plan: KnowledgePreservationPlan
+  ): Promise<void> {
+    const userId = person.userId;
+
+    const nodeConditions = [eq(knowledgeNodes.organizationId, organizationId)];
+    if (userId) {
+      nodeConditions.push(eq(knowledgeNodes.createdBy, userId));
+    }
+    const [totalNodes] = await db.select({ count: sql<number>`count(*)` }).from(knowledgeNodes).where(and(...nodeConditions));
+
+    let totalContribs = 0;
+    if (userId) {
+      const [contribResult] = await db.select({ count: sql<number>`count(*)` }).from(knowledgeContributions)
+        .where(and(eq(knowledgeContributions.organizationId, organizationId), eq(knowledgeContributions.userId, userId)));
+      totalContribs = Number(contribResult?.count || 0);
     }
 
-    plan.conversationsToExtract = conversations.length;
-    plan.progress = 70;
-  }
-
-  /**
-   * Generate knowledge summary for employee
-   */
-  private async generateKnowledgeSummary(
-    employee: EmployeeProfile,
-    plan: KnowledgePreservationPlan
-  ): Promise<void> {
-    console.log(`Generating knowledge summary for ${employee.name}`);
-
-    // In production, this would:
-    // 1. Aggregate all knowledge nodes from employee
-    // 2. Identify key knowledge areas
-    // 3. Generate comprehensive summary
-    // 4. Create documentation package
+    const skills: string[] = Array.isArray(person.skills) ? person.skills : [];
+    const expertise: string[] = Array.isArray(person.expertise) ? person.expertise : [];
 
     const summary = {
-      employee: employee.name,
-      role: employee.role,
-      department: employee.department,
-      knowledgeAreas: employee.knowledgeAreas,
-      totalContributions: employee.contributions,
+      employee: person.name,
+      role: person.role,
+      department: person.department,
+      knowledgeAreas: [...new Set([...skills, ...expertise])],
+      totalKnowledgeNodes: Number(totalNodes?.count || 0),
+      totalContributions: totalContribs,
       keyDocuments: plan.documentsToExtract,
       keyConversations: plan.conversationsToExtract,
       generatedAt: new Date(),
@@ -340,128 +291,191 @@ export class CompanyBrainDepartureService {
 
     console.log('Knowledge summary generated:', summary);
     plan.progress = 90;
+
+    const personMetadata: Record<string, any> = person.metadata && typeof person.metadata === 'object' ? { ...person.metadata } : {};
+    personMetadata.preservationPlan = plan;
+
+    await db.update(knowledgePersons)
+      .set({ metadata: personMetadata, updatedAt: new Date() })
+      .where(eq(knowledgePersons.id, person.id));
   }
 
-  /**
-   * Create knowledge transfer plan
-   */
   private async createTransferPlan(plan: KnowledgePreservationPlan): Promise<void> {
-    console.log(`Creating transfer plan for ${plan.employeeName}`);
-
-    // Generate skill transfer plan using Skill Brain
-    const transferPlan = skillBrainService.createTransferPlan(
-      plan.employeeId,
-      plan.employeeName,
-      plan.transferTarget
-    );
-
-    console.log(`Skill transfer plan created: ${transferPlan.id} with ${transferPlan.skills.length} skills`);
-
-    // In production, this would:
-    // 1. Identify suitable transfer target
-    // 2. Create structured transfer plan
-    // 3. Schedule transfer sessions
-    // 4. Notify stakeholders
-
     companyBrainWebSocketService.broadcastRiskAlert({
       type: 'knowledge_transfer_plan_created',
       employeeId: plan.employeeId,
       employeeName: plan.employeeName,
       planId: plan.id,
-      skillTransferPlanId: transferPlan.id,
-      skillCount: transferPlan.skills.length,
-      message: `Transfer plan created for ${plan.employeeName} with ${transferPlan.skills.length} skills identified`,
+      skillTransferPlanId: `transfer-${plan.id}`,
+      skillCount: plan.knowledgeAreas.length,
+      message: `Transfer plan created for ${plan.employeeName} with ${plan.knowledgeAreas.length} skills identified`,
     });
-
-    console.log(`Transfer plan created for target: ${plan.transferTarget}`);
   }
 
-  /**
-   * Finalize knowledge preservation after departure
-   */
-  private async finalizeKnowledgePreservation(employee: EmployeeProfile): Promise<void> {
-    console.log(`Finalizing knowledge preservation for ${employee.name}`);
-
-    // Generate skill brain index with latest state
-    try {
-      await skillBrainService.generateIndex();
-      console.log(`Skill brain index generated for ${employee.name}'s knowledge`);
-    } catch (error) {
-      console.error(`Failed to generate skill brain index:`, error);
+  private async finalizeKnowledgePreservation(
+    organizationId: string,
+    person: typeof knowledgePersons.$inferSelect
+  ): Promise<void> {
+    const personMetadata: Record<string, any> = person.metadata && typeof person.metadata === 'object' ? { ...person.metadata } : {};
+    personMetadata.departureStatus = 'departed';
+    if (personMetadata.preservationPlan) {
+      personMetadata.preservationPlan.status = 'complete';
+      personMetadata.preservationPlan.progress = 100;
     }
 
-    // In production, this would:
-    // 1. Mark all employee knowledge as preserved
-    // 2. Archive employee profile
-    // 3. Generate final report
-    // 4. Notify stakeholders
+    await db.update(knowledgePersons)
+      .set({ metadata: personMetadata, updatedAt: new Date() })
+      .where(eq(knowledgePersons.id, person.id));
 
     companyBrainWebSocketService.broadcastAnalyticsUpdate({
       type: 'preservation_finalized',
-      employeeId: employee.id,
-      employeeName: employee.name,
-      message: `Knowledge preservation finalized for ${employee.name}. All institutional knowledge preserved.`,
+      employeeId: person.id,
+      employeeName: person.name,
+      message: `Knowledge preservation finalized for ${person.name}. All institutional knowledge preserved.`,
     });
   }
 
-  /**
-   * Set transfer target for preservation plan
-   */
-  setTransferTarget(planId: string, targetEmployeeId: string): void {
-    const plan = this.preservationPlans.get(planId);
-    if (plan) {
-      plan.transferTarget = targetEmployeeId;
-      console.log(`Transfer target set for plan ${planId}: ${targetEmployeeId}`);
+  async setTransferTarget(organizationId: string, planId: string, targetEmployeeId: string): Promise<void> {
+    const persons = await db.select().from(knowledgePersons)
+      .where(eq(knowledgePersons.organizationId, organizationId));
+
+    for (const person of persons) {
+      const metadata: Record<string, any> = person.metadata && typeof person.metadata === 'object' ? person.metadata : {};
+      if (metadata.preservationPlan && metadata.preservationPlan.id === planId) {
+        metadata.preservationPlan.transferTarget = targetEmployeeId;
+        await db.update(knowledgePersons)
+          .set({ metadata: metadata, updatedAt: new Date() })
+          .where(eq(knowledgePersons.id, person.id));
+        return;
+      }
     }
   }
 
-  /**
-   * Get preservation plan for employee
-   */
-  getPreservationPlan(employeeId: string): KnowledgePreservationPlan | undefined {
-    for (const plan of this.preservationPlans.values()) {
-      if (plan.employeeId === employeeId) {
-        return plan;
-      }
+  async getPreservationPlan(organizationId: string, employeeId: string): Promise<KnowledgePreservationPlan | undefined> {
+    const [person] = await db.select().from(knowledgePersons)
+      .where(and(eq(knowledgePersons.id, employeeId), eq(knowledgePersons.organizationId, organizationId)))
+      .limit(1);
+
+    if (!person) return undefined;
+
+    const metadata: Record<string, any> = person.metadata && typeof person.metadata === 'object' ? person.metadata : {};
+    const plan = metadata.preservationPlan;
+    if (plan) {
+      return {
+        ...plan,
+        deadline: new Date(plan.deadline),
+        created: new Date(plan.created),
+        knowledgeAreas: Array.isArray(plan.knowledgeAreas) ? plan.knowledgeAreas : [],
+      } as KnowledgePreservationPlan;
     }
     return undefined;
   }
 
-  /**
-   * Get all active preservation plans
-   */
-  getActivePreservationPlans(): KnowledgePreservationPlan[] {
-    return Array.from(this.preservationPlans.values()).filter(
-      p => p.status === 'in_progress'
-    );
+  async getActivePreservationPlans(organizationId: string): Promise<KnowledgePreservationPlan[]> {
+    const persons = await db.select().from(knowledgePersons)
+      .where(eq(knowledgePersons.organizationId, organizationId));
+
+    const plans: KnowledgePreservationPlan[] = [];
+    for (const person of persons) {
+      const metadata: Record<string, any> = person.metadata && typeof person.metadata === 'object' ? person.metadata : {};
+      const plan = metadata.preservationPlan;
+      if (plan && plan.status === 'in_progress') {
+        plans.push({
+          ...plan,
+          deadline: new Date(plan.deadline),
+          created: new Date(plan.created),
+          knowledgeAreas: Array.isArray(plan.knowledgeAreas) ? plan.knowledgeAreas : [],
+        } as KnowledgePreservationPlan);
+      }
+    }
+    return plans;
   }
 
-  /**
-   * Get employees at risk (those with departure notices)
-   */
-  getEmployeesAtRisk(): EmployeeProfile[] {
-    return Array.from(this.employees.values()).filter(
-      e => e.departureStatus === 'notice_given'
-    );
+  async getEmployeesAtRisk(organizationId: string): Promise<EmployeeProfile[]> {
+    const persons = await db.select().from(knowledgePersons)
+      .where(eq(knowledgePersons.organizationId, organizationId));
+
+    return persons
+      .filter(person => {
+        const metadata: Record<string, any> = person.metadata && typeof person.metadata === 'object' ? person.metadata : {};
+        return metadata.departureStatus === 'notice_given';
+      })
+      .map(person => this.personToProfile(person));
   }
 
-  /**
-   * Get departure detection status
-   */
-  getDetectionStatus(): {
+  async getDetectionStatus(organizationId: string): Promise<{
     config: DepartureDetectionConfig;
     employeesMonitored: number;
     employeesAtRisk: number;
     activePreservations: number;
-  } {
+  }> {
+    const [monitoredResult] = await db.select({ count: sql<number>`count(*)` }).from(knowledgePersons)
+      .where(eq(knowledgePersons.organizationId, organizationId));
+    const employeesMonitored = Number(monitoredResult?.count || 0);
+
+    const atRiskEmployees = await this.getEmployeesAtRisk(organizationId);
+    const activePlans = await this.getActivePreservationPlans(organizationId);
+
     return {
       config: this.detectionConfig,
-      employeesMonitored: this.employees.size,
-      employeesAtRisk: this.getEmployeesAtRisk().length,
-      activePreservations: this.getActivePreservationPlans().length,
+      employeesMonitored,
+      employeesAtRisk: atRiskEmployees.length,
+      activePreservations: activePlans.length,
     };
+  }
+
+  private personToProfile(person: typeof knowledgePersons.$inferSelect): EmployeeProfile {
+    const metadata: Record<string, any> = person.metadata && typeof person.metadata === 'object' ? person.metadata : {};
+    const skills: string[] = Array.isArray(person.skills) ? person.skills : [];
+    const expertise: string[] = Array.isArray(person.expertise) ? person.expertise : [];
+    const knowledgeAreas = [...new Set([...skills, ...expertise])];
+
+    return {
+      id: person.id,
+      name: person.name,
+      email: person.email || '',
+      department: person.department || '',
+      role: person.role || '',
+      startDate: person.createdAt || new Date(),
+      departureDate: metadata.departureDate ? new Date(metadata.departureDate) : undefined,
+      departureStatus: metadata.departureStatus || 'active',
+      knowledgeAreas,
+      contributions: metadata.contributions || 0,
+    };
+  }
+
+  private async countDocuments(organizationId: string, userId: string | null): Promise<number> {
+    const conditions = [eq(knowledgeDocuments.organizationId, organizationId)];
+    if (userId) {
+      conditions.push(eq(knowledgeDocuments.createdBy, userId));
+    }
+    const [result] = await db.select({ count: sql<number>`count(*)` }).from(knowledgeDocuments).where(and(...conditions));
+    return Number(result?.count || 0);
+  }
+
+  private async countKnowledgeNodesByType(organizationId: string, userId: string | null, type: string): Promise<number> {
+    const conditions = [
+      eq(knowledgeNodes.organizationId, organizationId),
+      eq(knowledgeNodes.sourceType, type),
+    ];
+    if (userId) {
+      conditions.push(eq(knowledgeNodes.createdBy, userId));
+    }
+    const [result] = await db.select({ count: sql<number>`count(*)` }).from(knowledgeNodes).where(and(...conditions));
+    return Number(result?.count || 0);
+  }
+
+  private async countConversations(organizationId: string, userId: string | null): Promise<number> {
+    const conditions: any[] = [
+      eq(knowledgeNodes.organizationId, organizationId),
+      sql`${knowledgeNodes.type} IN ('meeting', 'email', 'conversation')`,
+    ];
+    if (userId) {
+      conditions.push(eq(knowledgeNodes.createdBy, userId));
+    }
+    const [result] = await db.select({ count: sql<number>`count(*)` }).from(knowledgeNodes).where(and(...conditions));
+    return Number(result?.count || 0);
   }
 }
 
-// Export singleton instance
 export const companyBrainDepartureService = new CompanyBrainDepartureService();

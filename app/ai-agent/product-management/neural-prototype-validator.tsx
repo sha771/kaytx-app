@@ -1,6 +1,6 @@
 import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
-import { Box } from 'lucide-react-native';
+import { Box, Package } from 'lucide-react-native';
 
 export default function AgentPage() {
   const agent = {

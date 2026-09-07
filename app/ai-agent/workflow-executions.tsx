@@ -27,7 +27,7 @@ import {
   FileText,
   Calculator,
   Globe,
-  ChartBarBig,
+  BarChart3,
   Layers,
   Download,
   User,
@@ -237,7 +237,7 @@ export default function WorkflowExecutionScreen() {
                 </Text>
               </View>
               <View style={styles.metaItem}>
-                <ChartBarBig size={12} color={colors.icon} />
+                <BarChart3 size={12} color={colors.icon} />
                 <Text style={[styles.metaText, { color: colors.icon }]}>
                   {workflow.runCount.toLocaleString()} runs
                 </Text>

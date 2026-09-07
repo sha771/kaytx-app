@@ -65,7 +65,7 @@ import {
   AlertCircle,
   ArrowUpRight,
   ArrowDownRight,
-  ChartBarBig,
+  BarChart3,
   User,
   Truck,
   Warehouse,

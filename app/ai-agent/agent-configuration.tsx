@@ -30,7 +30,7 @@ import {
   Shield,
   Clock,
   Zap,
-  ChartBarBig,
+  BarChart3,
   FileText,
   Lock,
 } from 'lucide-react-native';
@@ -580,7 +580,7 @@ function ModelConfiguration({
         {/* Cost Badge */}
         {selectedModel && (
           <View style={[styles.costBadge, { backgroundColor: colors.primary + '15' }]}>
-            <ChartBarBig size={14} color={colors.primary} />
+            <BarChart3 size={14} color={colors.primary} />
             <Text style={[styles.costText, { color: colors.primary }]}>
               Cost: {selectedModel.cost}
             </Text>

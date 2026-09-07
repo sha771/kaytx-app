@@ -72,7 +72,7 @@ import {
   Settings,
   User,
   Code,
-  ChartBarBig,
+  BarChart3,
   Megaphone,
   DollarSign,
   Headphones,

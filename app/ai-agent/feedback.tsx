@@ -23,7 +23,7 @@ import {
   Clock,
   User,
   TrendingUp,
-  ChartBarBig,
+  BarChart3,
   Flag,
   Lightbulb,
   ChevronRight,
@@ -306,7 +306,7 @@ export default function AgentFeedbackScreen() {
           </View>
         </View>
         <TouchableOpacity>
-          <ChartBarBig size={24} color={colors.text} />
+          <BarChart3 size={24} color={colors.text} />
         </TouchableOpacity>
       </View>
 

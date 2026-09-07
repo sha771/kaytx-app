@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Cpu, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, TrendingUp, Zap, Briefcase, Settings, Bot, Workflow } from 'lucide-react-native';
+import { Cpu, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, BarChart3, MessageSquare, Calendar, Shield, TrendingUp, Zap, Briefcase, Settings, Bot, Workflow } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { useRouter } from 'expo-router';
 
@@ -52,7 +52,7 @@ export default function AiMgmtDepartment() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#7B1FA212' }]}><act.icon size={24} color="#7B1FA2" /><Text style={[styles.actionText, { color: '#7B1FA2' }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:BarChart3},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#7B1FA212' }]}><act.icon size={24} color="#7B1FA2" /><Text style={[styles.actionText, { color: '#7B1FA2' }]}>{act.label}</Text></TouchableOpacity>))}
         </View>
       </View>
       

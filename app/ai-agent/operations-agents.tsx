@@ -28,7 +28,7 @@ import {
   Package,
   Truck,
   FileCheck,
-  ChartBarBig,
+  BarChart3,
   ChartLine,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -301,7 +301,7 @@ export default function OperationsAgentsScreen() {
       <View style={styles.chartHeader}>
         <Text style={[styles.chartTitle, { color: colors.text }]}>{title}</Text>
         <TouchableOpacity>
-          <ChartBarBig size={18} color={colors.primary} />
+          <BarChart3 size={18} color={colors.primary} />
         </TouchableOpacity>
       </View>
       <BarChart
@@ -329,7 +329,7 @@ export default function OperationsAgentsScreen() {
       <View style={styles.chartHeader}>
         <Text style={[styles.chartTitle, { color: colors.text }]}>{title}</Text>
         <TouchableOpacity>
-          <ChartBarBig size={18} color={colors.primary} />
+          <BarChart3 size={18} color={colors.primary} />
         </TouchableOpacity>
       </View>
       <PieChart

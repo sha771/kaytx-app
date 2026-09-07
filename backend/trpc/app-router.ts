@@ -57,6 +57,7 @@ import { enhancedCounselingRouter } from "./routes/counseling/router";
 import { aiOSRouter } from "./routes/ai-os/router";
 import { agentsBrainRouter } from "./routes/agents-brain/index";
 import { skillMDRouter } from "./routes/skill-md/index";
+import { designAgentRouter } from "./routes/design-agent/route";
 
 export const appRouter = createTRPCRouter({
   auth: createTRPCRouter({
@@ -163,6 +164,7 @@ export const appRouter = createTRPCRouter({
   aiOS: aiOSRouter,
   agentsBrain: agentsBrainRouter,
   skillMD: skillMDRouter,
+  designAgent: designAgentRouter,
 });
 
 export type AppRouter = typeof appRouter;

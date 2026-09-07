@@ -69,6 +69,7 @@ import {
   Gauge,
   Radar,
   ScatterChart,
+  Rocket,
 } from 'lucide-react-native';
 
 // Types

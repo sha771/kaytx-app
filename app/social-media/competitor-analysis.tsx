@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Eye, TrendingUp, TrendingDown, ChartBarBig, Plus } from 'lucide-react-native';
+import { Eye, TrendingUp, TrendingDown, BarChart3, Plus } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 
 interface Competitor {
@@ -91,7 +91,7 @@ export default function CompetitorAnalysis() {
                 </View>
                 <View style={styles.stat}>
                   <View style={[styles.statIcon, { backgroundColor: '#007AFF15' }]}>
-                    <ChartBarBig size={14} color="#007AFF" />
+                    <BarChart3 size={14} color="#007AFF" />
                   </View>
                   <Text style={[styles.statValue, { color: theme.colors.text }]}>{comp.engagement}</Text>
                   <Text style={[styles.statLabel, { color: theme.colors.secondaryText }]}>Engagement</Text>

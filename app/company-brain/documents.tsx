@@ -1,71 +1,38 @@
-/**
- * @copyright Copyright (c) 2026 Kaytx & Antigravity Ecosystem ("kaytx")
- * @license MIT - See LICENSE file for full terms
- */
-
-import React, { useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Alert, ActivityIndicator, RefreshControl } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Upload, FileText, File, Trash2, Eye, MoreVertical, CheckCircle, Clock, AlertCircle } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import apiClient from '@/lib/api-client';
 
 export default function CompanyBrainDocuments() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const [isUploading, setIsUploading] = useState(false);
+  const [documents, setDocuments] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
-  const mockDocuments = [
-    {
-      id: 1,
-      name: 'Q4 Sales Strategy.pdf',
-      type: 'pdf',
-      size: '2.4 MB',
-      uploadedAt: '2 hours ago',
-      status: 'processed',
-      knowledgeNodes: 12,
-      author: 'Sarah M.',
-    },
-    {
-      id: 2,
-      name: 'API Documentation.docx',
-      type: 'docx',
-      size: '1.8 MB',
-      uploadedAt: '1 day ago',
-      status: 'processing',
-      knowledgeNodes: 0,
-      author: 'John D.',
-    },
-    {
-      id: 3,
-      name: 'Employee Handbook.pdf',
-      type: 'pdf',
-      size: '5.2 MB',
-      uploadedAt: '3 days ago',
-      status: 'processed',
-      knowledgeNodes: 45,
-      author: 'HR Team',
-    },
-    {
-      id: 4,
-      name: 'Product Roadmap.pptx',
-      type: 'pptx',
-      size: '8.1 MB',
-      uploadedAt: '1 week ago',
-      status: 'processed',
-      knowledgeNodes: 23,
-      author: 'Product Team',
-    },
-    {
-      id: 5,
-      name: 'Client Contracts.zip',
-      type: 'zip',
-      size: '15.3 MB',
-      uploadedAt: '2 weeks ago',
-      status: 'error',
-      knowledgeNodes: 0,
-      author: 'Legal Team',
-    },
-  ];
+  const loadDocuments = useCallback(async () => {
+    try {
+      const response = await apiClient.getDocuments({ organizationId: 'default' });
+      if (response?.success && response?.data) {
+        setDocuments(response.data);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  }, []);
+
+  useEffect(() => { loadDocuments(); }, [loadDocuments]);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    loadDocuments();
+  }, [loadDocuments]);
 
   const handleUpload = () => {
     Alert.alert(
@@ -73,12 +40,22 @@ export default function CompanyBrainDocuments() {
       'Select a file to upload to Company Brain',
       [
         { text: 'Cancel', style: 'cancel' },
-        { text: 'Choose File', onPress: () => {
+        { text: 'Choose File', onPress: async () => {
           setIsUploading(true);
-          setTimeout(() => {
-            setIsUploading(false);
+          try {
+            await apiClient.uploadDocument({
+              organizationId: 'default',
+              fileName: 'Document',
+              fileType: 'pdf',
+            });
             Alert.alert('Success', 'Document uploaded successfully');
-          }, 2000);
+            loadDocuments();
+          } catch (err) {
+            console.error(err);
+            Alert.alert('Error', 'Failed to upload document');
+          } finally {
+            setIsUploading(false);
+          }
         }}
       ]
     );
@@ -114,10 +91,19 @@ export default function CompanyBrainDocuments() {
     return FileText;
   };
 
+  if (loading) {
+    return (
+      <View style={[styles.container, { paddingTop: insets.top }, styles.centered]}>
+        <ActivityIndicator size="large" color="#6366f1" />
+      </View>
+    );
+  }
+
   return (
-    <ScrollView 
+    <ScrollView
       style={[styles.container, { paddingTop: insets.top }]}
       contentContainerStyle={[styles.contentContainer, { paddingBottom: insets.bottom + 20 }]}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#6366f1" />}
     >
       {/* Header */}
       <View style={styles.header}>
@@ -126,7 +112,7 @@ export default function CompanyBrainDocuments() {
       </View>
 
       {/* Upload Section */}
-      <TouchableOpacity 
+      <TouchableOpacity
         style={styles.uploadSection}
         onPress={handleUpload}
         disabled={isUploading}
@@ -152,20 +138,20 @@ export default function CompanyBrainDocuments() {
       {/* Stats */}
       <View style={styles.statsContainer}>
         <View style={styles.statItem}>
-          <Text style={styles.statValue}>{mockDocuments.length}</Text>
+          <Text style={styles.statValue}>{documents.length}</Text>
           <Text style={styles.statLabel}>Total Documents</Text>
         </View>
         <View style={styles.statDivider} />
         <View style={styles.statItem}>
           <Text style={styles.statValue}>
-            {mockDocuments.reduce((sum, doc) => sum + doc.knowledgeNodes, 0)}
+            {documents.reduce((sum: number, doc: any) => sum + (doc.knowledgeNodes || doc.nodes || 0), 0)}
           </Text>
           <Text style={styles.statLabel}>Knowledge Nodes</Text>
         </View>
         <View style={styles.statDivider} />
         <View style={styles.statItem}>
           <Text style={styles.statValue}>
-            {mockDocuments.filter(doc => doc.status === 'processed').length}
+            {documents.filter((doc: any) => doc.status === 'processed').length}
           </Text>
           <Text style={styles.statLabel}>Processed</Text>
         </View>
@@ -175,11 +161,11 @@ export default function CompanyBrainDocuments() {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>All Documents</Text>
         <View style={styles.documentsList}>
-          {mockDocuments.map((doc) => {
-            const Icon = getFileIcon(doc.type);
+          {documents.map((doc: any) => {
+            const Icon = getFileIcon(doc.type || doc.fileType);
             const statusColor = getStatusColor(doc.status);
             return (
-              <TouchableOpacity 
+              <TouchableOpacity
                 key={doc.id}
                 style={styles.documentItem}
                 onPress={() => router.push(`/company-brain/document/${doc.id}` as any)}
@@ -189,23 +175,23 @@ export default function CompanyBrainDocuments() {
                   <Icon size={24} color="#6366f1" />
                 </View>
                 <View style={styles.documentInfo}>
-                  <Text style={styles.documentName}>{doc.name}</Text>
+                  <Text style={styles.documentName}>{doc.name || doc.fileName}</Text>
                   <View style={styles.documentMeta}>
-                    <Text style={styles.documentSize}>{doc.size}</Text>
+                    <Text style={styles.documentSize}>{doc.size || '-'}</Text>
                     <Text style={styles.documentSeparator}>•</Text>
-                    <Text style={styles.documentAuthor}>{doc.author}</Text>
+                    <Text style={styles.documentAuthor}>{doc.author || doc.uploadedBy || '-'}</Text>
                     <Text style={styles.documentSeparator}>•</Text>
-                    <Text style={styles.documentTime}>{doc.uploadedAt}</Text>
+                    <Text style={styles.documentTime}>{doc.uploadedAt || '-'}</Text>
                   </View>
                   <View style={styles.documentStatus}>
                     {getStatusIcon(doc.status)}
                     <Text style={[styles.statusText, { color: statusColor }]}>
-                      {doc.status.charAt(0).toUpperCase() + doc.status.slice(1)}
+                      {doc.status ? doc.status.charAt(0).toUpperCase() + doc.status.slice(1) : 'Unknown'}
                     </Text>
-                    {doc.knowledgeNodes > 0 && (
+                    {(doc.knowledgeNodes || doc.nodes) > 0 && (
                       <>
                         <Text style={styles.documentSeparator}>•</Text>
-                        <Text style={styles.knowledgeNodes}>{doc.knowledgeNodes} nodes</Text>
+                        <Text style={styles.knowledgeNodes}>{doc.knowledgeNodes || doc.nodes} nodes</Text>
                       </>
                     )}
                   </View>
@@ -238,6 +224,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#0f172a',
+  },
+  centered: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   contentContainer: {
     padding: 20,

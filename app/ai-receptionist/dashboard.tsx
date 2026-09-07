@@ -22,7 +22,7 @@ import {
   Star,
   Calendar,
   Activity,
-  ChartBarBig,
+  BarChart3,
   CircleCheck,
   CircleAlert,
   DollarSign,
@@ -195,7 +195,7 @@ export default function AIReceptionistDashboard() {
     { id: '1', title: 'View Calls', icon: Phone, route: '/ai-receptionist/call-logs', color: '#007AFF' },
     { id: '2', title: 'Appointments', icon: Calendar, route: '/ai-receptionist/appointments', color: '#34C759' },
     { id: '3', title: 'Contacts', icon: Users, route: '/ai-receptionist/contacts', color: '#FF9500' },
-    { id: '4', title: 'Analytics', icon: ChartBarBig, route: '/ai-receptionist/analytics', color: '#AF52DE' },
+    { id: '4', title: 'Analytics', icon: BarChart3, route: '/ai-receptionist/analytics', color: '#AF52DE' },
   ];
 
   const aiInsights = [

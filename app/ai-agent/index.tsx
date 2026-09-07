@@ -59,7 +59,7 @@ import {
   Scale,
   ChevronRight,
   Plus,
-  ChartBarBig,
+  BarChart3,
   ChartPie,
   Activity,
   Globe,
@@ -507,7 +507,7 @@ const DEPARTMENTS = [
   { id: 'consulting_advisory', name: 'Advisory and Consultancy', icon: Briefcase, color: '#1E40AF', agentCount: 360, description: 'Management consulting, strategy consulting, IT consulting, HR consulting, financial advisory, transformation consulting', isNew: true },
   { id: 'logistics_warehousing', name: 'Logistics & Warehousing', icon: Truck, color: '#F97316', agentCount: 249, description: 'Dedicated logistics operations, warehouse management, freight forwarding, customs brokerage, last-mile delivery, inventory optimization', isNew: true },
   { id: 'architecture_design', name: 'Architecture & Design', icon: PenTool, color: '#8B5CF6', agentCount: 103, description: 'Web Design, Architectural design, interior design, urban design, landscape architecture, project management, BIM', isNew: true },
-  { id: 'analytics_insights', name: 'Analytics & Insights', icon: ChartBarBig, color: '#0EA5E9', agentCount: 121, description: 'Data analytics, business intelligence, predictive analytics, performance metrics, reporting automation, insights generation', isNew: true },
+  { id: 'analytics_insights', name: 'Analytics & Insights', icon: BarChart3, color: '#0EA5E9', agentCount: 121, description: 'Data analytics, business intelligence, predictive analytics, performance metrics, reporting automation, insights generation', isNew: true },
 ];
 
 // Tier 4: AI Agent Workforce Types
@@ -549,7 +549,7 @@ const AGENT_CATEGORIES = [
   { id: 'sales', name: 'Sales Agents', count: 28, icon: Target, color: '#F59E0B' },
   { id: 'marketing', name: 'Marketing Agents', count: 22, icon: Megaphone, color: '#E91E63' },
   { id: 'technical', name: 'Technical Agents', count: 35, icon: Cpu, color: '#1565C0' },
-  { id: 'analytical', name: 'Analytical Agents', count: 31, icon: ChartBarBig, color: '#6366F1' },
+  { id: 'analytical', name: 'Analytical Agents', count: 31, icon: BarChart3, color: '#6366F1' },
   { id: 'operations', name: 'Operations Agents', count: 24, icon: Settings, color: '#607D8B' },
   { id: 'compliance', name: 'Compliance Agents', count: 14, icon: Shield, color: '#F44336' },
 ];

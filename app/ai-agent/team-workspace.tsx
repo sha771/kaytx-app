@@ -33,7 +33,7 @@ import {
   Zap,
   Target,
   TrendingUp,
-  ChartBarBig,
+  BarChart3,
 } from 'lucide-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeInUp } from 'react-native-reanimated';

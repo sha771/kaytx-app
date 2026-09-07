@@ -8,6 +8,7 @@ import { View, Text, ScrollView, StyleSheet, TouchableOpacity, TextInput, Activi
 import { useRouter } from 'expo-router';
 import { Send, Plus, MoreVertical, Archive, Trash2, Download, Search, MessageSquare, Clock, Tag, Brain, FileText } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import apiClient from '../../lib/api-client';
 
 interface ChatMessage {
   id: string;
@@ -40,24 +41,33 @@ interface ChatConversation {
   };
 }
 
+const API_BASE = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3000';
+const chatApi = async (endpoint: string, options?: any) => {
+  const res = await fetch(`${API_BASE}/api/v1/company-brain${endpoint}`, {
+    headers: { 'Content-Type': 'application/json' },
+    ...options,
+  });
+  return res.json();
+};
+
 export default function CompanyBrainChat() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const scrollViewRef = useRef<ScrollView>(null);
-  
+
   const [conversations, setConversations] = useState<ChatConversation[]>([]);
   const [selectedConversation, setSelectedConversation] = useState<ChatConversation | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
   const [showConversations, setShowConversations] = useState(true);
   const [showMenu, setShowMenu] = useState(false);
 
-  // Mock user ID - in production, get from auth
-  const userId = 'user-123';
+  const userId = 'user1';
 
   useEffect(() => {
-    loadConversations();
+    loadConversations().finally(() => setInitialLoading(false));
   }, []);
 
   useEffect(() => {
@@ -68,33 +78,19 @@ export default function CompanyBrainChat() {
 
   const loadConversations = async () => {
     try {
-      // In production, call API: /api/company-brain/chat/conversations?userId=...
-      // For now, use mock data
-      const mockConversations: ChatConversation[] = [
-        {
-          id: 'conv-1',
-          userId,
-          title: 'Client Onboarding Process',
-          createdAt: new Date(Date.now() - 86400000),
-          updatedAt: new Date(Date.now() - 3600000),
-          messageCount: 12,
-          status: 'active',
-          tags: ['onboarding', 'process'],
-          context: { department: 'Customer Success' },
-        },
-        {
-          id: 'conv-2',
-          userId,
-          title: 'API Authentication Setup',
-          createdAt: new Date(Date.now() - 172800000),
-          updatedAt: new Date(Date.now() - 7200000),
-          messageCount: 8,
-          status: 'active',
-          tags: ['technical', 'api'],
-          context: { department: 'Engineering' },
-        },
-      ];
-      setConversations(mockConversations);
+      const data = await chatApi('/chat/conversations?userId=user1&organizationId=default');
+      const items: ChatConversation[] = (Array.isArray(data) ? data : data.conversations || data.data || []).map((item: any) => ({
+        id: item.id,
+        userId: item.userId || userId,
+        title: item.title,
+        createdAt: new Date(item.createdAt || item.created_at),
+        updatedAt: new Date(item.updatedAt || item.updated_at),
+        messageCount: item.messageCount || item.message_count || 0,
+        status: item.status || 'active',
+        tags: item.tags,
+        context: item.context,
+      }));
+      setConversations(items);
     } catch (error) {
       console.error('Error loading conversations:', error);
     }
@@ -102,31 +98,17 @@ export default function CompanyBrainChat() {
 
   const loadMessages = async (conversationId: string) => {
     try {
-      // In production, call API: /api/company-brain/chat/conversations/:id/messages
-      // For now, use mock data
-      const mockMessages: ChatMessage[] = [
-        {
-          id: 'msg-1',
-          conversationId,
-          role: 'user',
-          content: 'How do we handle client onboarding?',
-          timestamp: new Date(Date.now() - 3600000),
-          userId,
-        },
-        {
-          id: 'msg-2',
-          conversationId,
-          role: 'assistant',
-          content: 'Based on our knowledge base, the client onboarding process involves these steps:\n\n1. **Initial Contact** - Sales team creates opportunity in CRM\n2. **Account Setup** - Customer Success creates account and sends welcome email\n3. **Kickoff Meeting** - Schedule within 3 business days to discuss goals\n4. **Implementation** - Technical team sets up integrations and configurations\n5. **Training** - Provide 2 training sessions for key users\n6. **Go-Live** - Official launch with support team on standby\n7. **30-Day Check-in** - Review progress and address any issues\n\nThe entire process typically takes 2-3 weeks from contract signing to full implementation.',
-          timestamp: new Date(Date.now() - 3500000),
-          userId: 'system',
-          metadata: {
-            sources: ['kb-001', 'kb-002'],
-            confidence: 0.92,
-          },
-        },
-      ];
-      setMessages(mockMessages);
+      const data = await chatApi('/chat/conversations/' + conversationId + '/messages');
+      const items: ChatMessage[] = (Array.isArray(data) ? data : data.messages || data.data || []).map((item: any) => ({
+        id: item.id,
+        conversationId: item.conversationId || item.conversation_id || conversationId,
+        role: item.role,
+        content: item.content,
+        timestamp: new Date(item.timestamp || item.createdAt || item.created_at),
+        userId: item.userId || item.user_id || 'system',
+        metadata: item.metadata,
+      }));
+      setMessages(items);
     } catch (error) {
       console.error('Error loading messages:', error);
     }
@@ -134,17 +116,28 @@ export default function CompanyBrainChat() {
 
   const createNewConversation = async () => {
     try {
-      // In production, call API: POST /api/company-brain/chat/conversations
+      const data = await chatApi('/chat/conversations', {
+        method: 'POST',
+        body: JSON.stringify({
+          organizationId: 'default',
+          userId,
+          title: 'New Conversation',
+          assistantType: 'knowledge',
+        }),
+      });
+      const conv = data.conversation || data.data || data;
       const newConversation: ChatConversation = {
-        id: `conv-${Date.now()}`,
-        userId,
-        title: 'New Conversation',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        messageCount: 0,
-        status: 'active',
+        id: conv.id,
+        userId: conv.userId || userId,
+        title: conv.title || 'New Conversation',
+        createdAt: new Date(conv.createdAt || conv.created_at),
+        updatedAt: new Date(conv.updatedAt || conv.updated_at),
+        messageCount: conv.messageCount || conv.message_count || 0,
+        status: conv.status || 'active',
+        tags: conv.tags,
+        context: conv.context,
       };
-      
+
       setConversations([newConversation, ...conversations]);
       setSelectedConversation(newConversation);
       setMessages([]);
@@ -158,7 +151,7 @@ export default function CompanyBrainChat() {
     if (!inputText.trim() || !selectedConversation || isLoading) return;
 
     const userMessage: ChatMessage = {
-      id: `msg-${Date.now()}`,
+      id: 'temp-' + Date.now(),
       conversationId: selectedConversation.id,
       role: 'user',
       content: inputText,
@@ -166,48 +159,49 @@ export default function CompanyBrainChat() {
       userId,
     };
 
-    setMessages([...messages, userMessage]);
+    setMessages(prev => [...prev, userMessage]);
     setInputText('');
     setIsLoading(true);
 
     try {
-      // In production, call API: POST /api/company-brain/chat/messages
-      // Simulate AI response
-      setTimeout(() => {
-        const assistantMessage: ChatMessage = {
-          id: `msg-${Date.now() + 1}`,
+      const data = await chatApi('/chat/messages', {
+        method: 'POST',
+        body: JSON.stringify({
+          organizationId: 'default',
           conversationId: selectedConversation.id,
-          role: 'assistant',
-          content: `I understand you're asking about "${inputText}". Based on our company knowledge, here's what I found:\n\nThis is a simulated response. In production, this would connect to the AI service and search the knowledge base to provide accurate, context-aware answers with source attribution.`,
-          timestamp: new Date(),
-          userId: 'system',
-          metadata: {
-            sources: ['kb-003'],
-            confidence: 0.85,
-            relatedQuestions: ['What is the process for X?', 'How do I handle Y?'],
-          },
-        };
+          userId,
+          content: userMessage.content,
+        }),
+      });
 
+      const assistantMsg = data.assistantMessage || data.assistant || data.reply || data.data;
+      if (assistantMsg) {
+        const assistantMessage: ChatMessage = {
+          id: assistantMsg.id || 'msg-' + Date.now(),
+          conversationId: assistantMsg.conversationId || assistantMsg.conversation_id || selectedConversation.id,
+          role: 'assistant',
+          content: assistantMsg.content,
+          timestamp: new Date(assistantMsg.timestamp || assistantMsg.createdAt || assistantMsg.created_at),
+          userId: 'system',
+          metadata: assistantMsg.metadata,
+        };
         setMessages(prev => [...prev, assistantMessage]);
-        
-        // Update conversation
-        const updatedConversations = conversations.map(conv =>
-          conv.id === selectedConversation.id
-            ? { ...conv, updatedAt: new Date(), messageCount: conv.messageCount + 2 }
-            : conv
-        );
-        setConversations(updatedConversations);
-        setSelectedConversation({ ...selectedConversation, updatedAt: new Date(), messageCount: selectedConversation.messageCount + 2 });
-        
-        setIsLoading(false);
-        
-        // Scroll to bottom
-        setTimeout(() => {
-          scrollViewRef.current?.scrollToEnd({ animated: true });
-        }, 100);
-      }, 1500);
+      }
+
+      const updatedConversations = conversations.map(conv =>
+        conv.id === selectedConversation.id
+          ? { ...conv, updatedAt: new Date(), messageCount: conv.messageCount + 1 }
+          : conv
+      );
+      setConversations(updatedConversations);
+      setSelectedConversation(prev => prev ? { ...prev, updatedAt: new Date(), messageCount: prev.messageCount + 1 } : prev);
+
+      setTimeout(() => {
+        scrollViewRef.current?.scrollToEnd({ animated: true });
+      }, 100);
     } catch (error) {
       console.error('Error sending message:', error);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -217,33 +211,40 @@ export default function CompanyBrainChat() {
     setShowConversations(false);
   };
 
-  const archiveConversation = () => {
+  const archiveConversation = async () => {
     if (!selectedConversation) return;
-    // In production, call API: PUT /api/company-brain/chat/conversations/:id/archive
-    const updatedConversations = conversations.map(conv =>
-      conv.id === selectedConversation.id
-        ? { ...conv, status: 'archived' as const }
-        : conv
-    );
-    setConversations(updatedConversations);
-    setSelectedConversation(null);
-    setShowMenu(false);
-    setShowConversations(true);
+    try {
+      await chatApi('/chat/conversations/' + selectedConversation.id + '/archive', { method: 'PUT' });
+      const updatedConversations = conversations.map(conv =>
+        conv.id === selectedConversation.id
+          ? { ...conv, status: 'archived' as const }
+          : conv
+      );
+      setConversations(updatedConversations);
+      setSelectedConversation(null);
+      setShowMenu(false);
+      setShowConversations(true);
+    } catch (error) {
+      console.error('Error archiving conversation:', error);
+    }
   };
 
-  const deleteConversation = () => {
+  const deleteConversation = async () => {
     if (!selectedConversation) return;
-    // In production, call API: DELETE /api/company-brain/chat/conversations/:id
-    const updatedConversations = conversations.filter(conv => conv.id !== selectedConversation.id);
-    setConversations(updatedConversations);
-    setSelectedConversation(null);
-    setShowMenu(false);
-    setShowConversations(true);
+    try {
+      await chatApi('/chat/conversations/' + selectedConversation.id, { method: 'DELETE' });
+      const updatedConversations = conversations.filter(conv => conv.id !== selectedConversation.id);
+      setConversations(updatedConversations);
+      setSelectedConversation(null);
+      setShowMenu(false);
+      setShowConversations(true);
+    } catch (error) {
+      console.error('Error deleting conversation:', error);
+    }
   };
 
   const exportConversation = () => {
     if (!selectedConversation) return;
-    // In production, call API: GET /api/company-brain/chat/conversations/:id/export
     console.log('Exporting conversation:', selectedConversation.id);
     setShowMenu(false);
   };
@@ -378,9 +379,16 @@ export default function CompanyBrainChat() {
             <Plus size={20} color="#ffffff" />
             <Text style={styles.newConversationText}>New Conversation</Text>
           </TouchableOpacity>
-          <ScrollView style={styles.conversationsList}>
-            {conversations.map(renderConversationItem)}
-          </ScrollView>
+          {initialLoading ? (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="small" color="#6366f1" />
+              <Text style={styles.loadingText}>Loading conversations...</Text>
+            </View>
+          ) : (
+            <ScrollView style={styles.conversationsList}>
+              {conversations.map(renderConversationItem)}
+            </ScrollView>
+          )}
         </View>
       )}
 

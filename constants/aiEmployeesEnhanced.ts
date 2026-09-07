@@ -16,7 +16,7 @@ const Binoculars: any = stub, TargetIcon: any = stub, Wallet: any = stub, Credit
 const BookOpen: any = stub, Workflow: any = stub, FileChartColumn: any = stub, Lock: any = stub, UsersRound: any = stub, Crown: any = stub;
 const AlertTriangle: any = stub, Package: any = stub, FolderCog: any = stub, ClipboardCheck: any = stub, ShieldCheck: any = stub, FileBadge: any = stub;
 const ScanEye: any = stub, FingerprintPattern: any = stub, Microscope: any = stub, Compass: any = stub, ScrollText: any = stub, Scale: any = stub;
-const Landmark: any = stub, ShoppingCartIcon: any = stub, TruckIcon: any = stub, MapPin: any = stub, ChartBarBig: any = stub, SearchCheck: any = stub;
+const Landmark: any = stub, ShoppingCartIcon: any = stub, TruckIcon: any = stub, MapPin: any = stub, BarChart3: any = stub, SearchCheck: any = stub;
 const Telescope: any = stub, BadgeCheck: any = stub, Sparkles: any = stub, TrendingDown: any = stub, Ear: any = stub;
 
 // ============================================
@@ -1061,6 +1061,8 @@ export interface AIEmployee {
   name: string;
   title: string;
   description: string;
+  email?: string;
+  phone?: string;
   icon: LucideIcon;
   color: string;
   humanCost?: string;
@@ -2898,7 +2900,7 @@ export const productDevelopmentSubAgents: AIEmployee[] = [
     name: 'AI Product Analytics Agent',
     title: 'Product Metrics & Performance Analysis',
     description: 'Monitors product metrics, analyzes user behavior, tracks KPIs, and generates insights to drive data-informed product decisions.',
-    icon: ChartBarBig,
+    icon: BarChart3,
     color: '#C4B0E4',
     humanCost: '$85k-$130k/year',
     aiCost: '$5.5k-$10k/year',

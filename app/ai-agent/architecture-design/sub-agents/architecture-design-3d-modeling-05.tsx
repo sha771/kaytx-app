@@ -1,6 +1,6 @@
 import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
-import { Box } from 'lucide-react-native';
+import { Boxes } from 'lucide-react-native';
 
 export default function ArchitectureDesign3dModeling05Page() {
   const agent = {
@@ -9,7 +9,7 @@ export default function ArchitectureDesign3dModeling05Page() {
     title: '3D Modeling Manager Agent',
     description: 'AI 3D Modeling Manager with 3D modeling, parametric design, complex geometry, and digital fabrication capabilities for advanced architectural modeling.',
     capabilities: ["3D Modeling","Parametric Design","Complex Geometry","Digital Fabrication","BIM Modeling","Family Creation","Surface Modeling","Solid Modeling"," computational Design","Model Optimization"],
-    icon: Box,
+    icon: Boxes,
     color: '#10B981',
     type: 'enterprise-agent' as const,
     level: 'manager' as const,

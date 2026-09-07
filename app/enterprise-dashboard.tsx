@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack, router } from 'expo-router';
-import { Building2, Users, ChartBarBig, Settings, Shield, Zap, FileText, Lock, Server, GitBranch, Network, Globe, ArrowLeft } from 'lucide-react-native';
+import { Building2, Users, BarChart3, Settings, Shield, Zap, FileText, Lock, Server, GitBranch, Network, Globe, ArrowLeft } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { trpc } from '@/lib/trpc';
 
@@ -154,14 +154,14 @@ export default function EnterpriseDashboardScreen() {
   const getMetricIcon = (iconType: string) => {
     switch (iconType) {
       case 'users': return <Users size={24} color="#007AFF" />;
-      case 'analytics': return <ChartBarBig size={24} color="#34C759" />;
+      case 'analytics': return <BarChart3 size={24} color="#34C759" />;
       case 'security': return <Shield size={24} color="#FF9500" />;
       case 'api': return <Zap size={24} color="#FF3B30" />;
       case 'lock': return <Lock size={24} color="#AF52DE" />;
       case 'server': return <Server size={24} color="#5AC8FA" />;
       case 'cicd': return <GitBranch size={24} color="#FF2D55" />;
       case 'network': return <Network size={24} color="#32ADE6" />;
-      default: return <ChartBarBig size={24} color="#8E8E93" />;
+      default: return <BarChart3 size={24} color="#8E8E93" />;
     }
   };
 
@@ -363,7 +363,7 @@ export default function EnterpriseDashboardScreen() {
 
             <View style={styles.activityItem}>
               <View style={[styles.activityIcon, { backgroundColor: theme.colors.background }]}>
-                <ChartBarBig size={16} color="#FF9500" />
+                <BarChart3 size={16} color="#FF9500" />
               </View>
               <View style={styles.activityContent}>
                 <Text style={[styles.activityTitle, { color: theme.colors.text }]}>Monthly report generated</Text>

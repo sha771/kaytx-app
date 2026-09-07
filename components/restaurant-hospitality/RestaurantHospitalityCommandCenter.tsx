@@ -10,6 +10,7 @@ import {
   Users,
   DollarSign,
   Shield,
+  ShieldCheck,
   TrendingUp,
   Activity,
   Brain,
@@ -29,7 +30,7 @@ import {
   Settings,
   LayoutDashboard,
   User,
-  ChartBarBig,
+  BarChart3,
   MapPin,
   Building2,
   AlertTriangle,
@@ -754,7 +755,7 @@ const AI_RESTAURANT_AGENTS = [
     name: 'AI Neural Analytics Dashboard',
     role: 'Analytics',
     color: THEME.aiPurple,
-    icon: ChartBarBig,
+    icon: BarChart3,
     responsibilities: [
       'Data analytics',
       'Visualization',
@@ -1214,7 +1215,7 @@ const AI_RESTAURANT_AGENTS = [
     name: 'AI Restaurant Data Analyst',
     role: 'Data Analytics',
     color: THEME.freshGreen,
-    icon: ChartBarBig,
+    icon: BarChart3,
     responsibilities: [
       'Data analysis',
       'Reporting',
@@ -1462,7 +1463,7 @@ const NAVIGATION_ITEMS = [
   { id: 'customers', label: 'Customer Experience', icon: Heart },
   { id: 'marketing', label: 'Marketing', icon: TrendingUp },
   { id: 'finance', label: 'Finance', icon: DollarSign },
-  { id: 'analytics', label: 'Analytics', icon: ChartBarBig },
+  { id: 'analytics', label: 'Analytics', icon: BarChart3 },
   { id: 'settings', label: 'Settings', icon: Settings },
 ];
 

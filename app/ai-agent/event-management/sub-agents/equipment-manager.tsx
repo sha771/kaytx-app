@@ -1,6 +1,6 @@
 import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
-import { Box } from 'lucide-react-native';
+import { Boxes } from 'lucide-react-native';
 
 export default function EquipmentManagerPage() {
   const agent = {
@@ -9,7 +9,7 @@ export default function EquipmentManagerPage() {
     title: 'AI Equipment Manager',
     description: 'The AI Equipment Manager manages event equipment, coordinates rentals, and ensures all technical and physical equipment is available and functional.',
     capabilities: ["Task Automation","Data Processing","Equipment Management","Inventory Tracking","Rental Coordination","Maintenance Scheduling","Technical Support","Quality Control","Cost Management","Vendor Relations"],
-    icon: Box,
+    icon: Boxes,
     color: '#795548',
     type: 'employee' as const,
     humanCost: '$60k/year',

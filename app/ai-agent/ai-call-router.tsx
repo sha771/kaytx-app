@@ -1,6 +1,6 @@
 import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
-import { Phone } from 'lucide-react-native';
+import { PhoneCall } from 'lucide-react-native';
 
 export default function AiCallRouterPage() {
   const agent = {
@@ -9,7 +9,7 @@ export default function AiCallRouterPage() {
     title: 'AI Agent',
     description: 'Automated Ai Call Router agent with advanced AI capabilities for task automation, data processing, and workflow coordination.',
     capabilities: ["Task Automation","Data Processing","Workflow Coordination","Performance Reporting","Quality Assurance","Compliance Monitoring"],
-    icon: Phone,
+    icon: PhoneCall,
     color: '#6366F1',
     type: 'agent' as const,
     humanCost: '$60k/year',
@@ -29,7 +29,6 @@ export default function AiCallRouterPage() {
       responseTime: '<1.5s',
       accuracyRate: '95%',
     },
-
   };
   return <AgentPageWrapper agent={agent} />;
 }

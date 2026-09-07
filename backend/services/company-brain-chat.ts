@@ -4,14 +4,16 @@
  */
 
 import OpenAI from 'openai';
-import { companyBrainWebSocketService } from './company-brain-websocket';
+import { v4 as uuidv4 } from 'uuid';
+import { db } from '../db/connection';
+import {
+  companyBrainAIConversations,
+  companyBrainAIMessages,
+  knowledgeNodes,
+  knowledgeSearchQueries,
+} from '../db/drizzle-schema';
+import { eq, and, desc, asc, sql, count, like, inArray, or } from 'drizzle-orm';
 import { enhancedSearchService } from './company-brain-search';
-
-/**
- * Company Brain Chat Service
- * AI-powered chat interface for querying company knowledge
- * Provides conversational access to institutional knowledge with context awareness
- */
 
 export interface ChatMessage {
   id: string;
@@ -68,9 +70,6 @@ export interface ChatContext {
 
 export class CompanyBrainChatService {
   private openai: OpenAI;
-  private conversations: Map<string, ChatConversation> = new Map();
-  private messages: Map<string, ChatMessage[]> = new Map();
-  private userContexts: Map<string, ChatContext> = new Map();
 
   constructor() {
     this.openai = new OpenAI({
@@ -78,126 +77,217 @@ export class CompanyBrainChatService {
     });
   }
 
-  /**
-   * Create a new chat conversation
-   */
-  createConversation(userId: string, title?: string, context?: ChatContext['context']): ChatConversation {
-    const conversation: ChatConversation = {
-      id: crypto.randomUUID(),
+  async createConversation(
+    organizationId: string,
+    userId: string,
+    data?: { title?: string; context?: ChatConversation['context']; assistantType?: string }
+  ): Promise<ChatConversation> {
+    const id = uuidv4();
+    const now = new Date();
+
+    await db.insert(companyBrainAIConversations).values({
+      id,
+      organizationId,
       userId,
-      title: title || 'New Conversation',
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      assistantType: data?.assistantType || 'knowledge',
+      title: data?.title || 'New Conversation',
+      context: data?.context || {},
       messageCount: 0,
-      status: 'active',
-      context,
-    };
-
-    this.conversations.set(conversation.id, conversation);
-    this.messages.set(conversation.id, []);
-
-    // Initialize user context
-    this.userContexts.set(userId, {
-      conversationId: conversation.id,
-      userId,
-      ...context,
+      lastMessageAt: now,
+      isArchived: false,
+      metadata: {},
+      createdAt: now,
+      updatedAt: now,
     });
 
-    return conversation;
+    return {
+      id,
+      userId,
+      title: data?.title || 'New Conversation',
+      createdAt: now,
+      updatedAt: now,
+      messageCount: 0,
+      status: 'active',
+      tags: [],
+      context: data?.context,
+    };
   }
 
-  /**
-   * Get a conversation by ID
-   */
-  getConversation(conversationId: string): ChatConversation | undefined {
-    return this.conversations.get(conversationId);
+  async getConversation(
+    organizationId: string,
+    conversationId: string
+  ): Promise<ChatConversation | null> {
+    const rows = await db.select()
+      .from(companyBrainAIConversations)
+      .where(
+        and(
+          eq(companyBrainAIConversations.id, conversationId),
+          eq(companyBrainAIConversations.organizationId, organizationId)
+        )
+      )
+      .limit(1);
+
+    if (rows.length === 0) return null;
+
+    return this.mapConversation(rows[0]);
   }
 
-  /**
-   * Get all conversations for a user
-   */
-  getUserConversations(userId: string): ChatConversation[] {
-    const userConversations = Array.from(this.conversations.values())
-      .filter(conv => conv.userId === userId && conv.status !== 'deleted')
-      .sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime());
+  async getUserConversations(
+    organizationId: string,
+    userId: string
+  ): Promise<ChatConversation[]> {
+    const rows = await db.select()
+      .from(companyBrainAIConversations)
+      .where(
+        and(
+          eq(companyBrainAIConversations.organizationId, organizationId),
+          eq(companyBrainAIConversations.userId, userId),
+          eq(companyBrainAIConversations.isArchived, false)
+        )
+      )
+      .orderBy(desc(companyBrainAIConversations.lastMessageAt));
 
-    return userConversations;
+    return rows.map(r => this.mapConversation(r));
   }
 
-  /**
-   * Archive a conversation
-   */
-  archiveConversation(conversationId: string): void {
-    const conversation = this.conversations.get(conversationId);
-    if (conversation) {
-      conversation.status = 'archived';
-      conversation.updatedAt = new Date();
-    }
+  async archiveConversation(
+    organizationId: string,
+    conversationId: string
+  ): Promise<void> {
+    await db.update(companyBrainAIConversations)
+      .set({
+        isArchived: true,
+        updatedAt: new Date(),
+      })
+      .where(
+        and(
+          eq(companyBrainAIConversations.id, conversationId),
+          eq(companyBrainAIConversations.organizationId, organizationId)
+        )
+      );
   }
 
-  /**
-   * Delete a conversation
-   */
-  deleteConversation(conversationId: string): void {
-    const conversation = this.conversations.get(conversationId);
-    if (conversation) {
-      conversation.status = 'deleted';
-      this.messages.delete(conversationId);
-    }
+  async deleteConversation(
+    organizationId: string,
+    conversationId: string
+  ): Promise<void> {
+    await db.delete(companyBrainAIMessages)
+      .where(
+        and(
+          eq(companyBrainAIMessages.conversationId, conversationId),
+          eq(companyBrainAIMessages.organizationId, organizationId)
+        )
+      );
+
+    await db.delete(companyBrainAIConversations)
+      .where(
+        and(
+          eq(companyBrainAIConversations.id, conversationId),
+          eq(companyBrainAIConversations.organizationId, organizationId)
+        )
+      );
   }
 
-  /**
-   * Send a message and get AI response
-   */
   async sendMessage(
+    organizationId: string,
     conversationId: string,
     userId: string,
     content: string,
-    context?: ChatContext['context']
+    context?: ChatContext
   ): Promise<ChatResponse> {
-    const conversation = this.conversations.get(conversationId);
-    if (!conversation) {
+    const conversations = await db.select()
+      .from(companyBrainAIConversations)
+      .where(
+        and(
+          eq(companyBrainAIConversations.id, conversationId),
+          eq(companyBrainAIConversations.organizationId, organizationId)
+        )
+      )
+      .limit(1);
+
+    if (conversations.length === 0) {
       throw new Error('Conversation not found');
     }
 
-    // Add user message
-    const userMessage: ChatMessage = {
-      id: crypto.randomUUID(),
+    const conversation = conversations[0];
+    const now = new Date();
+
+    // Insert user message
+    const userMessageId = uuidv4();
+    await db.insert(companyBrainAIMessages).values({
+      id: userMessageId,
+      organizationId,
       conversationId,
       role: 'user',
       content,
-      timestamp: new Date(),
-      userId,
+      sources: [],
+      metadata: { userId },
+      createdAt: now,
+    });
+
+    // Update conversation metadata/timestamps
+    const updateData: any = {
+      lastMessageAt: now,
+      messageCount: sql`${companyBrainAIConversations.messageCount} + 1`,
+      updatedAt: now,
     };
 
-    this.addMessage(conversationId, userMessage);
-
-    // Update conversation
-    conversation.updatedAt = new Date();
-    conversation.messageCount++;
-
-    // Update context if provided
     if (context) {
-      conversation.context = { ...conversation.context, ...context };
+      const existingContext = (conversation.context as Record<string, any>) || {};
+      updateData.context = {
+        ...existingContext,
+        department: context.department || existingContext.department,
+        project: context.project || existingContext.project,
+      };
     }
 
-    // Get conversation history for context
-    const conversationHistory = this.messages.get(conversationId) || [];
-    const recentMessages = conversationHistory.slice(-10); // Last 10 messages for context
+    await db.update(companyBrainAIConversations)
+      .set(updateData)
+      .where(eq(companyBrainAIConversations.id, conversationId));
 
-    // Search knowledge base for relevant information
+    // Get recent messages for context
+    const recentMessages = await db.select()
+      .from(companyBrainAIMessages)
+      .where(
+        and(
+          eq(companyBrainAIMessages.conversationId, conversationId),
+          eq(companyBrainAIMessages.organizationId, organizationId)
+        )
+      )
+      .orderBy(desc(companyBrainAIMessages.createdAt))
+      .limit(10);
+
+    const history = recentMessages.reverse();
+
+    // Search knowledge base
     const searchResults = await enhancedSearchService.search({
       query: content,
+      organizationId,
       limit: 5,
       searchMode: 'hybrid',
       filters: context?.department ? { department: [context.department] } : undefined,
     });
 
-    // Build AI context
+    // Log search query
+    await db.insert(knowledgeSearchQueries).values({
+      id: uuidv4(),
+      organizationId,
+      userId,
+      query: content,
+      queryType: 'hybrid',
+      resultCount: searchResults.results.length,
+      successful: true,
+      searchTime: searchResults.queryTime,
+      filters: context?.department ? { department: [context.department] } : {},
+      metadata: { conversationId },
+      createdAt: new Date(),
+    });
+
+    // Build AI prompt
     const systemPrompt = this.buildSystemPrompt(conversation, searchResults.results);
     const messages = [
       { role: 'system' as const, content: systemPrompt },
-      ...recentMessages.map(msg => ({
+      ...history.map(msg => ({
         role: msg.role as 'user' | 'assistant',
         content: msg.content,
       })),
@@ -213,9 +303,34 @@ export class CompanyBrainChatService {
 
     const assistantContent = aiResponse.choices[0].message.content || 'I apologize, but I could not generate a response.';
 
-    // Add assistant message
+    // Generate related questions and suggested actions
+    const relatedQuestions = await this.generateRelatedQuestions(content, assistantContent);
+    const suggestedActions = this.generateSuggestedActions(content, searchResults.results);
+
+    // Insert AI message
+    const assistantMessageId = uuidv4();
+    await db.insert(companyBrainAIMessages).values({
+      id: assistantMessageId,
+      organizationId,
+      conversationId,
+      role: 'assistant',
+      content: assistantContent,
+      sources: searchResults.results.map(r => ({
+        id: r.id,
+        title: r.title,
+        content: r.content.substring(0, 200),
+        score: r.score,
+        type: r.type,
+      })),
+      confidence: searchResults.results[0]?.score?.toString() || '0',
+      tokensUsed: aiResponse.usage?.total_tokens || 0,
+      modelUsed: 'gpt-4-turbo-preview',
+      metadata: { relatedQuestions, suggestedActions },
+      createdAt: new Date(),
+    });
+
     const assistantMessage: ChatMessage = {
-      id: crypto.randomUUID(),
+      id: assistantMessageId,
       conversationId,
       role: 'assistant',
       content: assistantContent,
@@ -225,23 +340,9 @@ export class CompanyBrainChatService {
         sources: searchResults.results.map(r => r.id),
         knowledgeNodes: searchResults.results.map(r => r.id),
         confidence: searchResults.results[0]?.score || 0,
+        relatedQuestions,
       },
     };
-
-    this.addMessage(conversationId, assistantMessage);
-
-    // Generate related questions
-    const relatedQuestions = await this.generateRelatedQuestions(content, assistantContent);
-
-    // Generate suggested actions
-    const suggestedActions = this.generateSuggestedActions(content, searchResults.results);
-
-    // Notify via WebSocket
-    companyBrainWebSocketService.broadcastChatMessage({
-      conversationId,
-      message: assistantMessage,
-      userId,
-    });
 
     return {
       message: assistantMessage,
@@ -257,31 +358,274 @@ export class CompanyBrainChatService {
     };
   }
 
-  /**
-   * Add a message to a conversation
-   */
-  private addMessage(conversationId: string, message: ChatMessage): void {
-    const messages = this.messages.get(conversationId) || [];
-    messages.push(message);
-    this.messages.set(conversationId, messages);
+  async getMessages(
+    organizationId: string,
+    conversationId: string
+  ): Promise<ChatMessage[]> {
+    const rows = await db.select()
+      .from(companyBrainAIMessages)
+      .where(
+        and(
+          eq(companyBrainAIMessages.conversationId, conversationId),
+          eq(companyBrainAIMessages.organizationId, organizationId)
+        )
+      )
+      .orderBy(asc(companyBrainAIMessages.createdAt));
+
+    return rows.map(r => this.mapMessage(r));
   }
 
-  /**
-   * Get messages for a conversation
-   */
-  getMessages(conversationId: string, limit?: number): ChatMessage[] {
-    const messages = this.messages.get(conversationId) || [];
-    if (limit) {
-      return messages.slice(-limit);
+  async getUserChatStats(
+    organizationId: string,
+    userId: string
+  ): Promise<{
+    totalConversations: number;
+    activeConversations: number;
+    totalMessages: number;
+    avgMessagesPerConversation: number;
+  }> {
+    const [convStats] = await db.select({
+      totalConversations: count(),
+      activeConversations: sql<number>`COUNT(*) FILTER (WHERE ${companyBrainAIConversations.isArchived} = false)`,
+    })
+    .from(companyBrainAIConversations)
+    .where(
+      and(
+        eq(companyBrainAIConversations.organizationId, organizationId),
+        eq(companyBrainAIConversations.userId, userId)
+      )
+    );
+
+    const userConvs = await db.select({ id: companyBrainAIConversations.id })
+      .from(companyBrainAIConversations)
+      .where(
+        and(
+          eq(companyBrainAIConversations.organizationId, organizationId),
+          eq(companyBrainAIConversations.userId, userId)
+        )
+      );
+
+    const convIds = userConvs.map(c => c.id);
+
+    let totalMessages = 0;
+    if (convIds.length > 0) {
+      const [msgStats] = await db.select({
+        total: count(),
+      })
+      .from(companyBrainAIMessages)
+      .where(
+        and(
+          eq(companyBrainAIMessages.organizationId, organizationId),
+          inArray(companyBrainAIMessages.conversationId, convIds)
+        )
+      );
+      totalMessages = Number(msgStats?.total || 0);
     }
-    return messages;
+
+    const totalConv = Number(convStats?.totalConversations || 0);
+    const activeConv = Number(convStats?.activeConversations || 0);
+
+    return {
+      totalConversations: totalConv,
+      activeConversations: activeConv,
+      totalMessages,
+      avgMessagesPerConversation: totalConv > 0 ? totalMessages / totalConv : 0,
+    };
   }
 
-  /**
-   * Build system prompt with context and knowledge sources
-   */
+  async updateConversationTitle(
+    organizationId: string,
+    conversationId: string,
+    title: string
+  ): Promise<void> {
+    await db.update(companyBrainAIConversations)
+      .set({
+        title,
+        updatedAt: new Date(),
+      })
+      .where(
+        and(
+          eq(companyBrainAIConversations.id, conversationId),
+          eq(companyBrainAIConversations.organizationId, organizationId)
+        )
+      );
+  }
+
+  async addConversationTags(
+    organizationId: string,
+    conversationId: string,
+    tags: string[]
+  ): Promise<void> {
+    const rows = await db.select({
+      metadata: companyBrainAIConversations.metadata,
+    })
+    .from(companyBrainAIConversations)
+    .where(
+      and(
+        eq(companyBrainAIConversations.id, conversationId),
+        eq(companyBrainAIConversations.organizationId, organizationId)
+      )
+    )
+    .limit(1);
+
+    if (rows.length === 0) return;
+
+    const existingMetadata = (rows[0].metadata as Record<string, any>) || {};
+    const existingTags: string[] = existingMetadata.tags || [];
+    const mergedTags = [...new Set([...existingTags, ...tags])];
+
+    await db.update(companyBrainAIConversations)
+      .set({
+        metadata: { ...existingMetadata, tags: mergedTags },
+        updatedAt: new Date(),
+      })
+      .where(eq(companyBrainAIConversations.id, conversationId));
+  }
+
+  async searchConversations(
+    organizationId: string,
+    userId: string,
+    query: string
+  ): Promise<ChatConversation[]> {
+    const searchPattern = `%${query}%`;
+
+    const titleMatches = await db.select()
+      .from(companyBrainAIConversations)
+      .where(
+        and(
+          eq(companyBrainAIConversations.organizationId, organizationId),
+          eq(companyBrainAIConversations.userId, userId),
+          eq(companyBrainAIConversations.isArchived, false),
+          like(companyBrainAIConversations.title, searchPattern)
+        )
+      )
+      .orderBy(desc(companyBrainAIConversations.lastMessageAt));
+
+    const msgMatchRows = await db.selectDistinct({
+      conversationId: companyBrainAIMessages.conversationId,
+    })
+    .from(companyBrainAIMessages)
+    .innerJoin(
+      companyBrainAIConversations,
+      eq(companyBrainAIMessages.conversationId, companyBrainAIConversations.id)
+    )
+    .where(
+      and(
+        eq(companyBrainAIMessages.organizationId, organizationId),
+        eq(companyBrainAIConversations.userId, userId),
+        eq(companyBrainAIConversations.isArchived, false),
+        like(companyBrainAIMessages.content, searchPattern)
+      )
+    );
+
+    const titleIds = new Set(titleMatches.map(c => c.id));
+    const msgConvIds = msgMatchRows
+      .map(r => r.conversationId)
+      .filter((id): id is string => id !== null && !titleIds.has(id));
+
+    let extraConversations: any[] = [];
+    if (msgConvIds.length > 0) {
+      extraConversations = await db.select()
+        .from(companyBrainAIConversations)
+        .where(inArray(companyBrainAIConversations.id, msgConvIds))
+        .orderBy(desc(companyBrainAIConversations.lastMessageAt));
+    }
+
+    return [...titleMatches, ...extraConversations].map(r => this.mapConversation(r));
+  }
+
+  async exportConversation(
+    organizationId: string,
+    conversationId: string
+  ): Promise<{
+    conversation: ChatConversation;
+    messages: ChatMessage[];
+    exportedAt: Date;
+  }> {
+    const conversation = await this.getConversation(organizationId, conversationId);
+    if (!conversation) {
+      throw new Error('Conversation not found');
+    }
+
+    const messages = await this.getMessages(organizationId, conversationId);
+
+    return {
+      conversation,
+      messages,
+      exportedAt: new Date(),
+    };
+  }
+
+  async clearUserData(
+    organizationId: string,
+    userId: string
+  ): Promise<void> {
+    const conversations = await db.select({ id: companyBrainAIConversations.id })
+      .from(companyBrainAIConversations)
+      .where(
+        and(
+          eq(companyBrainAIConversations.organizationId, organizationId),
+          eq(companyBrainAIConversations.userId, userId)
+        )
+      );
+
+    const convIds = conversations.map(c => c.id);
+
+    if (convIds.length > 0) {
+      await db.delete(companyBrainAIMessages)
+        .where(
+          and(
+            eq(companyBrainAIMessages.organizationId, organizationId),
+            inArray(companyBrainAIMessages.conversationId, convIds)
+          )
+        );
+
+      await db.delete(companyBrainAIConversations)
+        .where(
+          and(
+            eq(companyBrainAIConversations.organizationId, organizationId),
+            inArray(companyBrainAIConversations.id, convIds)
+          )
+        );
+    }
+  }
+
+  private mapConversation(row: any): ChatConversation {
+    const metadata = (row.metadata as Record<string, any>) || {};
+    return {
+      id: row.id,
+      userId: row.userId,
+      title: row.title || 'New Conversation',
+      createdAt: row.createdAt,
+      updatedAt: row.updatedAt,
+      messageCount: row.messageCount,
+      status: row.isArchived ? 'archived' : 'active',
+      tags: metadata.tags || [],
+      context: row.context || undefined,
+    };
+  }
+
+  private mapMessage(row: any): ChatMessage {
+    const sources: any[] = (row.sources as any[]) || [];
+    const metadata = (row.metadata as Record<string, any>) || {};
+    return {
+      id: row.id,
+      conversationId: row.conversationId,
+      role: row.role,
+      content: row.content,
+      timestamp: row.createdAt,
+      userId: row.role === 'assistant' ? 'system' : metadata.userId || '',
+      metadata: {
+        sources: sources.map(s => s.id || s),
+        knowledgeNodes: sources.map(s => s.id || s),
+        confidence: row.confidence ? Number(row.confidence) : undefined,
+        relatedQuestions: metadata.relatedQuestions || [],
+      },
+    };
+  }
+
   private buildSystemPrompt(
-    conversation: ChatConversation,
+    conversation: any,
     searchResults: any[]
   ): string {
     let prompt = `You are Company Brain, an AI assistant that helps users find and understand company knowledge.
@@ -295,22 +639,21 @@ Your role is to:
 
 `;
 
-    // Add context
-    if (conversation.context) {
+    const convContext = conversation.context as Record<string, any> | undefined;
+    if (convContext) {
       prompt += `Context:\n`;
-      if (conversation.context.department) {
-        prompt += `- Department: ${conversation.context.department}\n`;
+      if (convContext.department) {
+        prompt += `- Department: ${convContext.department}\n`;
       }
-      if (conversation.context.project) {
-        prompt += `- Project: ${conversation.context.project}\n`;
+      if (convContext.project) {
+        prompt += `- Project: ${convContext.project}\n`;
       }
-      if (conversation.context.topic) {
-        prompt += `- Topic: ${conversation.context.topic}\n`;
+      if (convContext.topic) {
+        prompt += `- Topic: ${convContext.topic}\n`;
       }
       prompt += `\n`;
     }
 
-    // Add knowledge sources
     if (searchResults.length > 0) {
       prompt += `Relevant knowledge from the company database:\n\n`;
       searchResults.forEach((result, index) => {
@@ -336,9 +679,6 @@ When answering:
     return prompt;
   }
 
-  /**
-   * Generate related questions based on the conversation
-   */
   private async generateRelatedQuestions(query: string, response: string): Promise<string[]> {
     try {
       const completion = await this.openai.chat.completions.create({
@@ -365,13 +705,8 @@ When answering:
     }
   }
 
-  /**
-   * Generate suggested actions based on the query and search results
-   */
   private generateSuggestedActions(query: string, searchResults: any[]): string[] {
     const actions: string[] = [];
-
-    // Analyze query intent
     const lowerQuery = query.toLowerCase();
 
     if (lowerQuery.includes('process') || lowerQuery.includes('how to')) {
@@ -401,113 +736,6 @@ When answering:
 
     return actions.slice(0, 4);
   }
-
-  /**
-   * Get chat statistics for a user
-   */
-  getUserChatStats(userId: string): {
-    totalConversations: number;
-    activeConversations: number;
-    totalMessages: number;
-    avgMessagesPerConversation: number;
-  } {
-    const userConversations = this.getUserConversations(userId);
-    const activeConversations = userConversations.filter(c => c.status === 'active').length;
-    let totalMessages = 0;
-
-    userConversations.forEach(conv => {
-      const messages = this.messages.get(conv.id) || [];
-      totalMessages += messages.length;
-    });
-
-    return {
-      totalConversations: userConversations.length,
-      activeConversations,
-      totalMessages,
-      avgMessagesPerConversation: userConversations.length > 0 
-        ? totalMessages / userConversations.length 
-        : 0,
-    };
-  }
-
-  /**
-   * Update conversation title
-   */
-  updateConversationTitle(conversationId: string, title: string): void {
-    const conversation = this.conversations.get(conversationId);
-    if (conversation) {
-      conversation.title = title;
-      conversation.updatedAt = new Date();
-    }
-  }
-
-  /**
-   * Add tags to conversation
-   */
-  addConversationTags(conversationId: string, tags: string[]): void {
-    const conversation = this.conversations.get(conversationId);
-    if (conversation) {
-      const existingTags = conversation.tags || [];
-      conversation.tags = [...new Set([...existingTags, ...tags])];
-      conversation.updatedAt = new Date();
-    }
-  }
-
-  /**
-   * Search conversations
-   */
-  searchConversations(userId: string, query: string): ChatConversation[] {
-    const userConversations = this.getUserConversations(userId);
-    const lowerQuery = query.toLowerCase();
-
-    return userConversations.filter(conv => {
-      // Search in title
-      if (conv.title.toLowerCase().includes(lowerQuery)) {
-        return true;
-      }
-
-      // Search in messages
-      const messages = this.messages.get(conv.id) || [];
-      return messages.some(msg => 
-        msg.content.toLowerCase().includes(lowerQuery)
-      );
-    });
-  }
-
-  /**
-   * Export conversation
-   */
-  exportConversation(conversationId: string): {
-    conversation: ChatConversation;
-    messages: ChatMessage[];
-    exportedAt: Date;
-  } {
-    const conversation = this.conversations.get(conversationId);
-    const messages = this.messages.get(conversationId) || [];
-
-    if (!conversation) {
-      throw new Error('Conversation not found');
-    }
-
-    return {
-      conversation,
-      messages,
-      exportedAt: new Date(),
-    };
-  }
-
-  /**
-   * Clear all data for a user (for testing/cleanup)
-   */
-  clearUserData(userId: string): void {
-    const userConversations = this.getUserConversations(userId);
-    userConversations.forEach(conv => {
-      this.messages.delete(conv.id);
-      this.conversations.delete(conv.id);
-    });
-    this.userContexts.delete(userId);
-  }
 }
 
-// Export singleton instance
 export const companyBrainChatService = new CompanyBrainChatService();

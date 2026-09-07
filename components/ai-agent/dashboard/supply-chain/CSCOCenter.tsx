@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Box, CheckCircle, TrendingUp, DollarSign, Activity } from 'lucide-react-native';
+import { Package, CheckCircle, TrendingUp, DollarSign, Activity } from 'lucide-react-native';
 
 interface CSCOMetrics {
   globalOrdersInFlow: string;
@@ -21,7 +21,7 @@ export default function CSCOCenter({ metrics }: CSCOCenterProps) {
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.card }]}>
       <View style={styles.header}>
-        <Box size={20} color="#3B82F6" />
+        <Package size={20} color="#3B82F6" />
         <Text style={[styles.title, { color: theme.colors.text }]}>
           Chief Supply Chain Officer Command Center
         </Text>
@@ -66,7 +66,7 @@ export default function CSCOCenter({ metrics }: CSCOCenterProps) {
 
         <View style={[styles.mainMetricCard, { backgroundColor: 'rgba(6, 182, 212, 0.1)', borderColor: '#06B6D4' }]}>
           <View style={styles.metricIcon}>
-            <Box size={24} color="#06B6D4" />
+            <Package size={24} color="#06B6D4" />
           </View>
           <Text style={[styles.metricLabel, { color: theme.colors.textSecondary }]}>
             Inventory Health

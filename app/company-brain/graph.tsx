@@ -3,12 +3,13 @@
  * @license MIT - See LICENSE file for full terms
  */
 
-import React, { useState, useRef } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Modal, TextInput } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Modal, TextInput, ActivityIndicator, RefreshControl } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Network, X, Filter, ZoomIn, ZoomOut, Download, Share2, Search, Layers, ArrowRight, User, FileText, Briefcase, Building2 } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Svg, Circle, Line, Text as SvgText, G } from 'react-native-svg';
+import apiClient from '../../lib/api-client';
 
 export default function CompanyBrainGraph() {
   const router = useRouter();
@@ -17,32 +18,44 @@ export default function CompanyBrainGraph() {
   const [showFilters, setShowFilters] = useState(false);
   const [zoom, setZoom] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
+  const [graphData, setGraphData] = useState<{ nodes: any[]; edges: any[] }>({ nodes: [], edges: [] });
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
-  // Mock knowledge graph data
-  const graphData = {
-    nodes: [
-      { id: 1, type: 'person', name: 'Sarah M.', role: 'Product Manager', x: 200, y: 150, color: '#6366f1' },
-      { id: 2, type: 'person', name: 'John D.', role: 'Tech Lead', x: 400, y: 150, color: '#8b5cf6' },
-      { id: 3, type: 'project', name: 'Q4 Launch', status: 'active', x: 300, y: 300, color: '#10b981' },
-      { id: 4, type: 'document', name: 'Product Roadmap', format: 'pptx', x: 150, y: 350, color: '#f59e0b' },
-      { id: 5, type: 'document', name: 'API Docs', format: 'pdf', x: 450, y: 350, color: '#f59e0b' },
-      { id: 6, type: 'client', name: 'Acme Corp', industry: 'Tech', x: 300, y: 450, color: '#ef4444' },
-      { id: 7, type: 'decision', name: 'Go-to-Market Strategy', date: '2024-01-15', x: 200, y: 500, color: '#ec4899' },
-      { id: 8, type: 'process', name: 'Client Onboarding', steps: 5, x: 400, y: 500, color: '#06b6d4' },
-    ],
-    edges: [
-      { source: 1, target: 3, type: 'manages', strength: 0.9 },
-      { source: 2, target: 3, type: 'leads', strength: 0.85 },
-      { source: 1, target: 4, type: 'authored', strength: 0.7 },
-      { source: 2, target: 5, type: 'authored', strength: 0.8 },
-      { source: 3, target: 6, type: 'serves', strength: 0.6 },
-      { source: 3, target: 7, type: 'informed', strength: 0.75 },
-      { source: 3, target: 8, type: 'follows', strength: 0.65 },
-      { source: 4, target: 3, type: 'documents', strength: 0.8 },
-      { source: 5, target: 3, type: 'documents', strength: 0.85 },
-      { source: 7, target: 6, type: 'impacts', strength: 0.5 },
-      { source: 8, target: 6, type: 'supports', strength: 0.7 },
-    ],
+  useEffect(() => {
+    loadGraphData();
+  }, []);
+
+  const loadGraphData = async () => {
+    try {
+      setLoading(true);
+      const [vizResponse, statsResponse] = await Promise.all([
+        apiClient.getGraphVisualization({ organizationId: 'default' }),
+        apiClient.getGraphStatistics({ organizationId: 'default' }),
+      ]);
+
+      if (vizResponse?.success && vizResponse?.data) {
+        const data = vizResponse.data;
+        setGraphData({
+          nodes: data.nodes || [],
+          edges: data.edges || [],
+        });
+      }
+
+      if (statsResponse?.success && statsResponse?.data) {
+        console.log('Graph statistics:', statsResponse.data);
+      }
+    } catch (err) {
+      console.error('Failed to load graph data:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await loadGraphData();
+    setRefreshing(false);
   };
 
   const getNodeIcon = (type: string) => {
@@ -71,14 +84,40 @@ export default function CompanyBrainGraph() {
   };
 
   const handleExport = () => {
-    // Export functionality would be implemented here
     console.log('Export graph');
   };
 
   const handleShare = () => {
-    // Share functionality would be implemented here
     console.log('Share graph');
   };
+
+  if (loading && graphData.nodes.length === 0) {
+    return (
+      <View style={[styles.container, { paddingTop: insets.top }]}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+            <X size={24} color="#ffffff" />
+          </TouchableOpacity>
+          <Text style={styles.title}>Knowledge Graph</Text>
+          <View style={styles.headerActions}>
+            <TouchableOpacity style={styles.headerButton} onPress={handleZoomOut}>
+              <ZoomOut size={20} color="#ffffff" />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.headerButton} onPress={handleZoomIn}>
+              <ZoomIn size={20} color="#ffffff" />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.headerButton} onPress={() => setShowFilters(true)}>
+              <Filter size={20} color="#ffffff" />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#6366f1" />
+          <Text style={styles.loadingText}>Loading knowledge graph...</Text>
+        </View>
+      </View>
+    );
+  }
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
@@ -114,13 +153,17 @@ export default function CompanyBrainGraph() {
       </View>
 
       {/* Graph Visualization */}
-      <ScrollView style={styles.graphContainer} contentContainerStyle={styles.graphContent}>
+      <ScrollView
+        style={styles.graphContainer}
+        contentContainerStyle={styles.graphContent}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#6366f1" />}
+      >
         <View style={[styles.graphWrapper, { transform: [{ scale: zoom }] }]}>
           <Svg width={600} height={600} viewBox="0 0 600 600">
             {/* Edges */}
             {graphData.edges.map((edge, index) => {
-              const sourceNode = graphData.nodes.find(n => n.id === edge.source);
-              const targetNode = graphData.nodes.find(n => n.id === edge.target);
+              const sourceNode = graphData.nodes.find((n: any) => n.id === edge.source);
+              const targetNode = graphData.nodes.find((n: any) => n.id === edge.target);
               if (!sourceNode || !targetNode) return null;
               
               return (
@@ -131,14 +174,14 @@ export default function CompanyBrainGraph() {
                   x2={targetNode.x}
                   y2={targetNode.y}
                   stroke="#334155"
-                  strokeWidth={edge.strength * 3}
+                  strokeWidth={(edge.strength || 0.5) * 3}
                   opacity={0.6}
                 />
               );
             })}
 
             {/* Nodes */}
-            {graphData.nodes.map((node) => {
+            {graphData.nodes.map((node: any) => {
               const Icon = getNodeIcon(node.type);
               return (
                 <G key={`node-${node.id}`} onPress={() => handleNodePress(node)}>
@@ -146,16 +189,16 @@ export default function CompanyBrainGraph() {
                     cx={node.x}
                     cy={node.y}
                     r={30}
-                    fill={node.color}
+                    fill={node.color || '#6366f1'}
                     opacity={0.2}
                   />
                   <Circle
                     cx={node.x}
                     cy={node.y}
                     r={20}
-                    fill={node.color}
+                    fill={node.color || '#6366f1'}
                     strokeWidth={2}
-                    stroke={node.color}
+                    stroke={node.color || '#6366f1'}
                   />
                   <SvgText
                     x={node.x}
@@ -164,7 +207,7 @@ export default function CompanyBrainGraph() {
                     fill="#ffffff"
                     textAnchor="middle"
                   >
-                    {node.name}
+                    {node.name || node.label}
                   </SvgText>
                   <SvgText
                     x={node.x}
@@ -256,12 +299,12 @@ export default function CompanyBrainGraph() {
               </TouchableOpacity>
             </View>
             <ScrollView style={styles.modalContent}>
-              <View style={[styles.nodeDetailHeader, { borderLeftColor: selectedNode.color }]}>
-                <View style={[styles.nodeDetailIcon, { backgroundColor: `${selectedNode.color}20` }]}>
-                  {React.createElement(getNodeIcon(selectedNode.type), { size: 32, color: selectedNode.color })}
+              <View style={[styles.nodeDetailHeader, { borderLeftColor: selectedNode.color || '#6366f1' }]}>
+                <View style={[styles.nodeDetailIcon, { backgroundColor: `${selectedNode.color || '#6366f1'}20` }]}>
+                  {React.createElement(getNodeIcon(selectedNode.type), { size: 32, color: selectedNode.color || '#6366f1' })}
                 </View>
                 <View style={styles.nodeDetailInfo}>
-                  <Text style={styles.nodeDetailName}>{selectedNode.name}</Text>
+                  <Text style={styles.nodeDetailName}>{selectedNode.name || selectedNode.label}</Text>
                   <Text style={styles.nodeDetailType}>{selectedNode.type}</Text>
                 </View>
               </View>
@@ -269,7 +312,7 @@ export default function CompanyBrainGraph() {
               <View style={styles.nodeDetailSection}>
                 <Text style={styles.nodeDetailSectionTitle}>Properties</Text>
                 {Object.entries(selectedNode).map(([key, value]) => {
-                  if (['id', 'type', 'name', 'x', 'y', 'color'].includes(key)) return null;
+                  if (['id', 'type', 'name', 'label', 'x', 'y', 'color'].includes(key)) return null;
                   return (
                     <View key={key} style={styles.nodeDetailRow}>
                       <Text style={styles.nodeDetailLabel}>{key}</Text>
@@ -282,16 +325,16 @@ export default function CompanyBrainGraph() {
               <View style={styles.nodeDetailSection}>
                 <Text style={styles.nodeDetailSectionTitle}>Connections</Text>
                 {graphData.edges
-                  .filter(edge => edge.source === selectedNode.id || edge.target === selectedNode.id)
-                  .map((edge, index) => {
+                  .filter((edge: any) => edge.source === selectedNode.id || edge.target === selectedNode.id)
+                  .map((edge: any, index: number) => {
                     const connectedNodeId = edge.source === selectedNode.id ? edge.target : edge.source;
-                    const connectedNode = graphData.nodes.find(n => n.id === connectedNodeId);
+                    const connectedNode = graphData.nodes.find((n: any) => n.id === connectedNodeId);
                     if (!connectedNode) return null;
                     
                     return (
                       <TouchableOpacity key={index} style={styles.connectionItem}>
-                        <View style={[styles.connectionDot, { backgroundColor: connectedNode.color }]} />
-                        <Text style={styles.connectionName}>{connectedNode.name}</Text>
+                        <View style={[styles.connectionDot, { backgroundColor: connectedNode.color || '#6366f1' }]} />
+                        <Text style={styles.connectionName}>{connectedNode.name || connectedNode.label}</Text>
                         <Text style={styles.connectionType}>{edge.type}</Text>
                       </TouchableOpacity>
                     );
@@ -424,6 +467,17 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     margin: 20,
     overflow: 'hidden',
+  },
+  loadingContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#0f172a',
+  },
+  loadingText: {
+    fontSize: 16,
+    color: '#94a3b8',
+    marginTop: 16,
   },
   legend: {
     backgroundColor: '#1e293b',

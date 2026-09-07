@@ -1,6 +1,6 @@
 import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
-import { Box } from 'lucide-react-native';
+import { Boxes } from 'lucide-react-native';
 
 export default function StockManagerPage() {
   const agent = {
@@ -9,7 +9,7 @@ export default function StockManagerPage() {
     title: 'AI Stock Manager',
     description: 'The AI Stock Manager manages stock levels, coordinates transfers between locations, ensures product availability, and optimizes stock distribution.',
     capabilities: ["Task Automation","Data Processing","Workflow Management","Stock Management","Transfer Coordination","Availability Management","Stock Optimization","Location Balancing","Demand Fulfillment","Reporting"],
-    icon: Box,
+    icon: Boxes,
     color: '#4E342E',
     type: 'employee' as const,
     humanCost: '$60k/year',

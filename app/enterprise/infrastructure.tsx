@@ -24,7 +24,7 @@ import {
   Cloud,
   Globe,
   Zap,
-  ChartBarBig,
+  BarChart3,
   Settings,
   RefreshCw,
   Shield,
@@ -518,7 +518,7 @@ export default function CloudInfrastructureScreen() {
             <Text style={[styles.actionButtonText, { color: theme.colors.text }]}>Configure</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton}>
-            <ChartBarBig size={16} color={theme.colors.text} />
+            <BarChart3 size={16} color={theme.colors.text} />
             <Text style={[styles.actionButtonText, { color: theme.colors.text }]}>Metrics</Text>
           </TouchableOpacity>
         </View>

@@ -29,7 +29,7 @@ import {
   Phone,
   CircleCheck,
   X,
-  ChartBarBig,
+  BarChart3,
   TrendingUp,
   Activity,
 } from 'lucide-react-native';
@@ -532,7 +532,7 @@ export default function SchedulingScreen() {
             style={styles.headerButton}
             onPress={() => setShowAnalytics(true)}
           >
-            <ChartBarBig size={20} color={theme.colors.text} />
+            <BarChart3 size={20} color={theme.colors.text} />
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.addButton, { backgroundColor: theme.colors.primary }]}

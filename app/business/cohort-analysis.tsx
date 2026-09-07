@@ -14,7 +14,7 @@ import {
   TrendingDown,
   Calendar,
   Target,
-  ChartBarBig,
+  BarChart3,
   ChartPie,
   Activity,
   ListFilter,
@@ -318,7 +318,7 @@ export default function CohortAnalysisScreen() {
             Retention Curve Comparison
           </Text>
           <View style={styles.chartPlaceholder}>
-            <ChartBarBig size={48} color={theme.colors.secondaryText} />
+            <BarChart3 size={48} color={theme.colors.secondaryText} />
             <Text style={[styles.chartPlaceholderText, { color: theme.colors.secondaryText }]}>
               Interactive retention curves would appear here
             </Text>

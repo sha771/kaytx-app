@@ -11,7 +11,7 @@ import {
   Platform,
 } from 'react-native';
 import { Stack } from 'expo-router';
-import { Mail, Users, TrendingUp, Settings, Send, Eye, ChartBarBig, FileText, Zap, Clock } from 'lucide-react-native';
+import { Mail, Users, TrendingUp, Settings, Send, Eye, BarChart3, FileText, Zap, Clock } from 'lucide-react-native';
 
 type CampaignStatus = 'draft' | 'scheduled' | 'sending' | 'completed' | 'paused';
 
@@ -210,7 +210,7 @@ Best regards,
               </TouchableOpacity>
             ) : null}
             <TouchableOpacity style={styles.secondaryButton}>
-              <ChartBarBig size={16} color="#007AFF" />
+              <BarChart3 size={16} color="#007AFF" />
               <Text style={styles.secondaryButtonText}>View Details</Text>
             </TouchableOpacity>
           </View>
@@ -578,7 +578,7 @@ Best regards,
           style={[styles.tab, activeTab === 'analytics' && styles.activeTab]}
           onPress={() => setActiveTab('analytics')}
         >
-          <ChartBarBig size={20} color={activeTab === 'analytics' ? '#007AFF' : '#8E8E93'} />
+          <BarChart3 size={20} color={activeTab === 'analytics' ? '#007AFF' : '#8E8E93'} />
           <Text style={[styles.tabText, activeTab === 'analytics' && styles.activeTabText]}>
             Analytics
           </Text>

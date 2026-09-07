@@ -11,7 +11,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
-import { Phone, Clock, Users, ChartBarBig, Play, Pause, SkipForward, CircleAlert, Lock } from 'lucide-react-native';
+import { Phone, Clock, Users, BarChart3, Play, Pause, SkipForward, CircleAlert, Lock } from 'lucide-react-native';
 import { trpc } from '@/lib/trpc';
 import { useTheme } from '@/providers/ThemeProvider';
 
@@ -105,7 +105,7 @@ export default function CallQueueScreen() {
             </View>
 
             <View style={[styles.statCard, { backgroundColor: '#F59E0B' }]}>
-              <ChartBarBig size={24} color="#fff" />
+              <BarChart3 size={24} color="#fff" />
               <Text style={styles.statValue}>{formatTime(stats.longestWait)}</Text>
               <Text style={styles.statLabel}>Longest Wait</Text>
             </View>

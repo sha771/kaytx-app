@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, ActivityIndicator, Pressable } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, ActivityIndicator, Pressable, TextInput } from 'react-native';
 import { Stack, router } from 'expo-router';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useAIAssistant } from '@/providers/AIAssistantProvider';
@@ -17,7 +17,7 @@ import {
     Settings,
     EllipsisVertical,
     ChartBar,
-    ChartBarBig,
+    BarChart3,
     Target,
     DollarSign,
     CircleCheck,
@@ -48,7 +48,7 @@ interface EnhancedAgentShellProps {
         id: string;
         label: string;
         icon: any;
-        component: React.ReactNode;
+        component: React.ReactNode | (() => React.ReactNode);
     }[];
     customActions?: React.ReactNode;
     isActive?: boolean;
@@ -148,21 +148,24 @@ export const EnhancedAgentShell: React.FC<EnhancedAgentShellProps> = ({ agent, c
         return () => clearInterval(interval);
     }, [refetchActivity, refetchStats]);
 
-    const tabs = [
-        { id: 'chat', label: 'Chat', icon: MessageSquare },
-        { id: 'overview', label: 'Overview', icon: Eye },
-        { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-        { id: 'analytics', label: 'Analytics', icon: ChartBar },
-        { id: 'performance', label: 'Performance', icon: TrendingUp },
-        { id: 'capabilities', label: 'Capabilities', icon: Target },
-        { id: 'brain', label: 'Brain', icon: Database },
-        { id: 'activity', label: 'Live Activity', icon: Activity },
-        { id: 'history', label: 'History', icon: Clock },
-        { id: 'summary', label: 'Summary & Notes', icon: FileText },
-        ...customTabs,
-        { id: 'counseling', label: 'Counseling', icon: Brain },
-        { id: 'settings', label: 'Settings', icon: Settings }
-    ];
+    const hasCustomTabs = customTabs && customTabs.length > 0;
+
+    const tabs = hasCustomTabs
+        ? customTabs.map(tab => ({ id: tab.id, label: tab.label, icon: tab.icon }))
+        : [
+            { id: 'chat', label: 'Chat', icon: MessageSquare },
+            { id: 'overview', label: 'Overview', icon: Eye },
+            { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+            { id: 'analytics', label: 'Analytics', icon: ChartBar },
+            { id: 'performance', label: 'Performance', icon: TrendingUp },
+            { id: 'capabilities', label: 'Capabilities', icon: Target },
+            { id: 'brain', label: 'Brain', icon: Database },
+            { id: 'activity', label: 'Live Activity', icon: Activity },
+            { id: 'history', label: 'History', icon: Clock },
+            { id: 'summary', label: 'Summary & Notes', icon: FileText },
+            { id: 'counseling', label: 'Counseling', icon: Brain },
+            { id: 'settings', label: 'Settings', icon: Settings }
+          ];
 
     const renderOverview = () => (
         <View style={styles.tabContent}>
@@ -452,7 +455,7 @@ export const EnhancedAgentShell: React.FC<EnhancedAgentShellProps> = ({ agent, c
                     {/* Performance Metrics */}
                     <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
                         <View style={styles.sectionHeader}>
-                            <ChartBarBig size={24} color={agent.color} />
+                            <BarChart3 size={24} color={agent.color} />
                             <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Performance Metrics</Text>
                         </View>
                         <View style={styles.metricsGrid}>
@@ -680,137 +683,143 @@ export const EnhancedAgentShell: React.FC<EnhancedAgentShellProps> = ({ agent, c
             </View>
 
             <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-                {activeTab === 'overview' && renderOverview()}
-                {activeTab === 'analytics' && renderAnalytics()}
-                {activeTab === 'performance' && renderPerformance()}
-                {activeTab === 'counseling' && renderCounseling()}
-                {activeTab === 'capabilities' && (
-                    <View style={styles.tabContent}>
-                        <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
-                            <View style={styles.sectionHeader}>
-                                <Brain size={24} color={agent.color} />
-                                <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Core Capabilities</Text>
+                {hasCustomTabs ? (
+                    (() => {
+                        const tab = customTabs.find(t => t.id === activeTab);
+                        if (!tab) return null;
+                        return typeof tab.component === 'function' ? tab.component() : tab.component;
+                    })()
+                ) : (
+                    <>
+                        {activeTab === 'overview' && renderOverview()}
+                        {activeTab === 'analytics' && renderAnalytics()}
+                        {activeTab === 'performance' && renderPerformance()}
+                        {activeTab === 'counseling' && renderCounseling()}
+                        {activeTab === 'capabilities' && (
+                            <View style={styles.tabContent}>
+                                <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+                                    <View style={styles.sectionHeader}>
+                                        <Brain size={24} color={agent.color} />
+                                        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Core Capabilities</Text>
+                                    </View>
+                                    <View style={styles.capabilityList}>
+                                        {agent.capabilities.map((cap, i) => (
+                                            <View key={i} style={styles.capabilityItem}>
+                                                <View style={[styles.capIcon, { backgroundColor: agent.color + '15' }]}>
+                                                    <CircleCheck size={14} color={agent.color} />
+                                                </View>
+                                                <Text style={[styles.capText, { color: theme.colors.text }]}>{cap}</Text>
+                                            </View>
+                                        ))}
+                                    </View>
+                                </View>
                             </View>
-                            <View style={styles.capabilityList}>
-                                {agent.capabilities.map((cap, i) => (
-                                    <View key={i} style={styles.capabilityItem}>
-                                        <View style={[styles.capIcon, { backgroundColor: agent.color + '15' }]}>
-                                            <CircleCheck size={14} color={agent.color} />
+                        )}
+                        {activeTab === 'activity' && (
+                            <View style={styles.tabContent}>
+                                <View style={[styles.terminal, { backgroundColor: '#000' }]}>
+                                    <View style={styles.terminalHeader}>
+                                        <View style={[styles.dot, { backgroundColor: '#FF5F56' }]} />
+                                        <View style={[styles.dot, { backgroundColor: '#FFBD2E' }]} />
+                                        <View style={[styles.dot, { backgroundColor: '#27C93F' }]} />
+                                        <Text style={styles.terminalTitle}>live-activity-stream</Text>
+                                    </View>
+                                    <View style={styles.terminalBody}>
+                                        {logs.map(log => (
+                                            <View key={log.id} style={styles.logRow}>
+                                                <Text style={styles.logTime}>[{log.timestamp.toLocaleTimeString()}]</Text>
+                                                <Text style={[styles.logText, { color: log.type === 'success' ? '#00FF41' : log.type === 'warn' ? '#FFBD2E' : '#eee' }]}>
+                                                    {log.text}
+                                                </Text>
+                                            </View>
+                                        ))}
+                                    </View>
+                                </View>
+                            </View>
+                        )}
+                        {activeTab === 'history' && (
+                            <View style={styles.tabContent}>
+                                <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+                                    <View style={styles.sectionHeader}>
+                                        <Clock size={24} color={agent.color} />
+                                        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Execution History</Text>
+                                    </View>
+                                    {(agent.simulationConfig?.historyItems || []).map((item, i) => (
+                                        <View key={i} style={styles.historyRow}>
+                                            <View style={styles.historyLeft}>
+                                                <View style={[styles.historyDot, { backgroundColor: item.status === 'Success' ? '#34C759' : '#FFBD2E' }]} />
+                                                <View>
+                                                    <Text style={[styles.historyTask, { color: theme.colors.text }]}>{item.task}</Text>
+                                                    <Text style={[styles.historyResult, { color: theme.colors.secondaryText }]}>{item.result}</Text>
+                                                </View>
+                                            </View>
+                                            <View style={[styles.statusBadge, { backgroundColor: item.status === 'Success' ? '#34C75920' : '#FF950020' }]}>
+                                                <Text style={[styles.statusBadgeText, { color: item.status === 'Success' ? '#34C759' : '#FF9500' }]}>{item.status}</Text>
+                                            </View>
                                         </View>
-                                        <Text style={[styles.capText, { color: theme.colors.text }]}>{cap}</Text>
+                                    ))}
+                                </View>
+                            </View>
+                        )}
+                        {activeTab === 'chat' && <AgentChat agent={agent} />}
+                        {activeTab === 'dashboard' && <AgentDashboard agent={agent} />}
+                        {activeTab === 'summary' && <AgentSummaryNotes agent={agent} />}
+                        {activeTab === 'brain' && (
+                            <View style={styles.tabContent}>
+                                <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+                                    <View style={styles.sectionHeader}>
+                                        <Database size={24} color={agent.color} />
+                                        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Agent Brain</Text>
                                     </View>
-                                ))}
-                            </View>
-                        </View>
-                    </View>
-                )}
-                {activeTab === 'activity' && (
-                    <View style={styles.tabContent}>
-                        <View style={[styles.terminal, { backgroundColor: '#000' }]}>
-                            <View style={styles.terminalHeader}>
-                                <View style={[styles.dot, { backgroundColor: '#FF5F56' }]} />
-                                <View style={[styles.dot, { backgroundColor: '#FFBD2E' }]} />
-                                <View style={[styles.dot, { backgroundColor: '#27C93F' }]} />
-                                <Text style={styles.terminalTitle}>live-activity-stream</Text>
-                            </View>
-                            <View style={styles.terminalBody}>
-                                {logs.map(log => (
-                                    <View key={log.id} style={styles.logRow}>
-                                        <Text style={styles.logTime}>[{log.timestamp.toLocaleTimeString()}]</Text>
-                                        <Text style={[styles.logText, { color: log.type === 'success' ? '#00FF41' : log.type === 'warn' ? '#FFBD2E' : '#eee' }]}>
-                                            {log.text}
-                                        </Text>
+                                    <Text style={[styles.description, { color: theme.colors.secondaryText }]}>
+                                        Structured knowledge base for efficient token usage. AI agents scan raw data once and create a structured brain, then read only the structured version to save tokens.
+                                    </Text>
+                                    <View style={styles.divider} />
+                                    <View style={styles.quickStatsGrid}>
+                                        <View style={[styles.quickStatCard, { backgroundColor: theme.colors.background }]}>
+                                            <Text style={[styles.quickStatValue, { color: theme.colors.text }]}>0</Text>
+                                            <Text style={[styles.quickStatLabel, { color: theme.colors.secondaryText }]}>Wiki Pages</Text>
+                                        </View>
+                                        <View style={[styles.quickStatCard, { backgroundColor: theme.colors.background }]}>
+                                            <Text style={[styles.quickStatValue, { color: theme.colors.text }]}>0</Text>
+                                            <Text style={[styles.quickStatLabel, { color: theme.colors.secondaryText }]}>Sources</Text>
+                                        </View>
+                                        <View style={[styles.quickStatCard, { backgroundColor: theme.colors.background }]}>
+                                            <Text style={[styles.quickStatValue, { color: '#34C759' }]}>0k</Text>
+                                            <Text style={[styles.quickStatLabel, { color: theme.colors.secondaryText }]}>Tokens Saved</Text>
+                                        </View>
                                     </View>
-                                ))}
+                                    <View style={styles.divider} />
+                                    <Text style={[styles.subsectionTitle, { color: theme.colors.text }]}>Query Agent Brain</Text>
+                                    <View style={[styles.searchBar, { backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}>
+                                        <TextInput
+                                            style={[styles.searchInput, { color: theme.colors.text, flex: 1 }]}
+                                            placeholder="Search knowledge base..."
+                                            placeholderTextColor={theme.colors.secondaryText}
+                                        />
+                                        <TouchableOpacity style={[styles.searchButton, { backgroundColor: agent.color }]}>
+                                            <Text style={styles.searchButtonText}>Search</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
                             </View>
-                        </View>
-                    </View>
-                )}
-                {activeTab === 'history' && (
-                    <View style={styles.tabContent}>
-                        <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
-                            <View style={styles.sectionHeader}>
-                                <Clock size={24} color={agent.color} />
-                                <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Execution History</Text>
-                            </View>
-                            {(agent.simulationConfig?.historyItems || []).map((item, i) => (
-                                <View key={i} style={styles.historyRow}>
-                                    <View style={styles.historyLeft}>
-                                        <View style={[styles.historyDot, { backgroundColor: item.status === 'Success' ? '#34C759' : '#FFBD2E' }]} />
+                        )}
+                        {activeTab === 'settings' && <AgentSettings agent={agent} />}
+                        {activeTab === 'config' && (
+                            <View style={styles.tabContent}>
+                                <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
+                                    <View style={styles.settingRow}>
                                         <View>
-                                            <Text style={[styles.historyTask, { color: theme.colors.text }]}>{item.task}</Text>
-                                            <Text style={[styles.historyResult, { color: theme.colors.secondaryText }]}>{item.result}</Text>
+                                            <Text style={[styles.settingTitle, { color: theme.colors.text }]}>Autonomous Execution</Text>
+                                            <Text style={[styles.settingDesc, { color: theme.colors.secondaryText }]}>Apply directives without human approval</Text>
                                         </View>
-                                    </View>
-                                    <View style={[styles.statusBadge, { backgroundColor: item.status === 'Success' ? '#34C75920' : '#FF950020' }]}>
-                                        <Text style={[styles.statusBadgeText, { color: item.status === 'Success' ? '#34C759' : '#FF9500' }]}>{item.status}</Text>
+                                        <Switch value={isActive} onValueChange={setIsActive} />
                                     </View>
                                 </View>
-                            ))}
-                        </View>
-                    </View>
+                            </View>
+                        )}
+                    </>
                 )}
-                {activeTab === 'chat' && <AgentChat agent={agent} />}
-                {activeTab === 'dashboard' && <AgentDashboard agent={agent} />}
-                {activeTab === 'summary' && <AgentSummaryNotes agent={agent} />}
-                {activeTab === 'brain' && (
-                    <View style={styles.tabContent}>
-                        <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
-                            <View style={styles.sectionHeader}>
-                                <Database size={24} color={agent.color} />
-                                <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Agent Brain</Text>
-                            </View>
-                            <Text style={[styles.description, { color: theme.colors.secondaryText }]}>
-                                Structured knowledge base for efficient token usage. AI agents scan raw data once and create a structured brain, then read only the structured version to save tokens.
-                            </Text>
-                            <View style={styles.divider} />
-                            <View style={styles.quickStatsGrid}>
-                                <View style={[styles.quickStatCard, { backgroundColor: theme.colors.background }]}>
-                                    <Text style={[styles.quickStatValue, { color: theme.colors.text }]}>0</Text>
-                                    <Text style={[styles.quickStatLabel, { color: theme.colors.secondaryText }]}>Wiki Pages</Text>
-                                </View>
-                                <View style={[styles.quickStatCard, { backgroundColor: theme.colors.background }]}>
-                                    <Text style={[styles.quickStatValue, { color: theme.colors.text }]}>0</Text>
-                                    <Text style={[styles.quickStatLabel, { color: theme.colors.secondaryText }]}>Sources</Text>
-                                </View>
-                                <View style={[styles.quickStatCard, { backgroundColor: theme.colors.background }]}>
-                                    <Text style={[styles.quickStatValue, { color: '#34C759' }]}>0k</Text>
-                                    <Text style={[styles.quickStatLabel, { color: theme.colors.secondaryText }]}>Tokens Saved</Text>
-                                </View>
-                            </View>
-                            <View style={styles.divider} />
-                            <Text style={[styles.subsectionTitle, { color: theme.colors.text }]}>Query Agent Brain</Text>
-                            <View style={[styles.searchBar, { backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}>
-                                <TextInput
-                                    style={[styles.searchInput, { color: theme.colors.text, flex: 1 }]}
-                                    placeholder="Search knowledge base..."
-                                    placeholderTextColor={theme.colors.secondaryText}
-                                />
-                                <TouchableOpacity style={[styles.searchButton, { backgroundColor: agent.color }]}>
-                                    <Text style={styles.searchButtonText}>Search</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
-                )}
-                {activeTab === 'settings' && <AgentSettings agent={agent} />}
-                {activeTab === 'config' && (
-                    <View style={styles.tabContent}>
-                        <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
-                            <View style={styles.settingRow}>
-                                <View>
-                                    <Text style={[styles.settingTitle, { color: theme.colors.text }]}>Autonomous Execution</Text>
-                                    <Text style={[styles.settingDesc, { color: theme.colors.secondaryText }]}>Apply directives without human approval</Text>
-                                </View>
-                                <Switch value={isActive} onValueChange={setIsActive} />
-                            </View>
-                        </View>
-                    </View>
-                )}
-
-                {/* Custom Tabs */}
-                {customTabs.find(t => t.id === activeTab)?.component}
-
                 <View style={{ height: 100 }} />
             </ScrollView>
         </View>
@@ -913,6 +922,9 @@ const styles = StyleSheet.create({
     settingRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
     settingTitle: { fontSize: 16, fontWeight: '700', marginBottom: 2 },
     settingDesc: { fontSize: 12 },
+    searchInput: { flex: 1, paddingHorizontal: 12, paddingVertical: 8, borderRadius: 8, fontSize: 14 },
+    searchButton: { paddingHorizontal: 16, paddingVertical: 8, borderRadius: 8, alignItems: 'center', justifyContent: 'center' },
+    searchButtonText: { color: '#fff', fontSize: 14, fontWeight: '700' },
     historyRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 15, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.05)' },
     historyLeft: { flexDirection: 'row', alignItems: 'center', gap: 15, flex: 1 },
     historyDot: { width: 8, height: 8, borderRadius: 4 },

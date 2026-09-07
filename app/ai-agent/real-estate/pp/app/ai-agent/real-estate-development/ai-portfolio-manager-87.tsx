@@ -1,6 +1,6 @@
 import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
-import { ChartBarBig } from 'lucide-react-native';
+import { BarChart3 } from 'lucide-react-native';
 
 export default function AgentPage() {
   const agent = {
@@ -9,7 +9,7 @@ export default function AgentPage() {
     title: 'Portfolio Manager',
     description: 'AI Portfolio Manager - Portfolio Manager level AI agent in the real estate-development department. Part of the Kaytx AI Workforce hierarchy providing specialized real estate-development capabilities.',
     capabilities: ["Task Automation","Data Processing","Workflow Management"],
-    icon: ChartBarBig,
+    icon: BarChart3,
     color: 'hsl(339, 70%, 50%)',
     type: 'agent' as const,
     humanCost: '$70k/year',

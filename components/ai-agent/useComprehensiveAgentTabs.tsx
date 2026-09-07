@@ -6,7 +6,7 @@ import { AgentDashboard } from './AgentDashboard';
 import { AgentSummaryNotes } from './AgentSummaryNotes';
 import { AIEmployee } from '@/constants/aiEmployees';
 import { 
-  MessageSquare, Brain, LayoutDashboard, BarChart3, ChartBarBig, Target, 
+  MessageSquare, Brain, LayoutDashboard, BarChart3, BarChart3, Target, 
   Clock, FileText, Activity, Settings, CircleCheckBig, TriangleAlert, 
   Cpu, Database
 } from 'lucide-react-native';
@@ -101,7 +101,7 @@ export const useComprehensiveAgentTabs = (agent: Partial<AIEmployee>, customTabs
     <ScrollView style={styles.tabContent} showsVerticalScrollIndicator={false}>
       <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.cardHeader}>
-          <ChartBarBig size={20} color={agent.color || '#007AFF'} />
+          <BarChart3 size={20} color={agent.color || '#007AFF'} />
           <Text style={[styles.cardTitle, { color: theme.colors.text }]}>Performance Metrics</Text>
         </View>
         <View style={styles.kpiRow}>
@@ -249,7 +249,7 @@ export const useComprehensiveAgentTabs = (agent: Partial<AIEmployee>, customTabs
     { id: 'overview', label: 'Overview', icon: Brain, component: renderOverviewTab },
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, component: renderDashboardTab },
     { id: 'analytics', label: 'Analytics', icon: BarChart3, component: renderAnalyticsTab },
-    { id: 'performance', label: 'Performance', icon: ChartBarBig, component: renderPerformanceTab },
+    { id: 'performance', label: 'Performance', icon: BarChart3, component: renderPerformanceTab },
     { id: 'capabilities', label: 'Capabilities', icon: Target, component: renderCapabilitiesTab },
     { id: 'history', label: 'History', icon: Clock, component: renderHistoryTab },
     { id: 'summary', label: 'Summary & Notes', icon: FileText, component: renderSummaryNotesTab },

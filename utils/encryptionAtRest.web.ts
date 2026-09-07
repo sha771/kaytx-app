@@ -18,12 +18,12 @@ export class EncryptionAtRestService {
     try {
       // Use localStorage for web instead of SecureStore
       let key = localStorage.getItem('encryption_master_key');
-      
+
       if (!key) {
         key = await this.generateMasterKey();
         localStorage.setItem('encryption_master_key', key);
       }
-      
+
       this.masterKey = key;
       console.log('[Encryption] Master key initialized for web');
     } catch (error) {
@@ -41,17 +41,42 @@ export class EncryptionAtRestService {
       .join('');
   }
 
+  private async getCryptoKey(): Promise<CryptoKey> {
+    const keyBytes = this.hexToBytes(this.masterKey!);
+    return await crypto.subtle.importKey(
+      'raw',
+      keyBytes,
+      { name: 'AES-GCM' },
+      false,
+      ['encrypt', 'decrypt']
+    );
+  }
+
   async encrypt(data: string): Promise<string> {
     if (!this.masterKey) {
       await this.initialize();
     }
-    
+
     try {
-      // Simple XOR encryption for web (not for production, use proper encryption)
-      const keyBytes = this.hexToBytes(this.masterKey!);
+      const cryptoKey = await this.getCryptoKey();
+      const iv = crypto.getRandomValues(new Uint8Array(12));
       const dataBytes = new TextEncoder().encode(data);
-      const encrypted = dataBytes.map((b, i) => b ^ keyBytes[i % keyBytes.length]);
-      return btoa(String.fromCharCode(...encrypted));
+
+      const encryptedBuffer = await crypto.subtle.encrypt(
+        {
+          name: 'AES-GCM',
+          iv: iv
+        },
+        cryptoKey,
+        dataBytes
+      );
+
+      const encryptedBytes = new Uint8Array(encryptedBuffer);
+      const combined = new Uint8Array(iv.length + encryptedBytes.length);
+      combined.set(iv);
+      combined.set(encryptedBytes, iv.length);
+
+      return btoa(String.fromCharCode(...combined));
     } catch (error) {
       console.error('[Encryption] Encryption failed:', error);
       throw new Error('Encryption failed');
@@ -62,12 +87,24 @@ export class EncryptionAtRestService {
     if (!this.masterKey) {
       await this.initialize();
     }
-    
+
     try {
-      const keyBytes = this.hexToBytes(this.masterKey!);
-      const dataBytes = Uint8Array.from(atob(encryptedData), c => c.charCodeAt(0));
-      const decrypted = dataBytes.map((b, i) => b ^ keyBytes[i % keyBytes.length]);
-      return new TextDecoder().decode(decrypted);
+      const cryptoKey = await this.getCryptoKey();
+      const combined = Uint8Array.from(atob(encryptedData), c => c.charCodeAt(0));
+
+      const iv = combined.slice(0, 12);
+      const encryptedBytes = combined.slice(12);
+
+      const decryptedBuffer = await crypto.subtle.decrypt(
+        {
+          name: 'AES-GCM',
+          iv: iv
+        },
+        cryptoKey,
+        encryptedBytes
+      );
+
+      return new TextDecoder().decode(decryptedBuffer);
     } catch (error) {
       console.error('[Encryption] Decryption failed:', error);
       throw new Error('Decryption failed');

@@ -9,11 +9,17 @@ import { createLogger } from '../lib/production-logger';
 
 const logger = createLogger(__filename.split('/').pop()?.replace('.ts', '') || 'Service');
 
+const isProduction = (process.env.NODE_ENV || 'development') === 'production';
 if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('[PaymentMethodService] STRIPE_SECRET_KEY is required for production. Payment processing cannot be enabled.');
+  if (isProduction) {
+    throw new Error('[PaymentMethodService] STRIPE_SECRET_KEY is required in production');
+  }
+  logger.warn('[PaymentMethodService] STRIPE_SECRET_KEY not set. Payment features disabled in development.');
 }
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2024-06-20' });
+const stripe = process.env.STRIPE_SECRET_KEY
+  ? new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2024-06-20' })
+  : null;
 
 export interface PaymentMethodInfo {
   id: string;

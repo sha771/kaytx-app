@@ -13,7 +13,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   ArrowLeft,
   TrendingUp,
-  ChartBarBig,
+  BarChart3,
   Users,
   Target,
   Eye,
@@ -239,7 +239,7 @@ export default function MarketingAnalyticsInsightsScreen() {
       case 'paid': return Target;
       case 'organic': return TrendingUp;
       case 'direct': return Activity;
-      default: return ChartBarBig;
+      default: return BarChart3;
     }
   };
 

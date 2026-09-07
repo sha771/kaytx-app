@@ -1,6 +1,6 @@
 import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
-import { Box } from 'lucide-react-native';
+import { Boxes } from 'lucide-react-native';
 
 export default function ArchitectureBimArchitect04Page() {
   const agent = {
@@ -9,7 +9,7 @@ export default function ArchitectureBimArchitect04Page() {
     title: 'BIM Architect Agent',
     description: 'AI BIM Architect with BIM modeling, parametric design, family creation, and BIM standards capabilities for architectural BIM excellence.',
     capabilities: ["BIM Modeling","Parametric Design","Family Creation","BIM Standards","Model Architecture","Level of Development","Information Management","BIM ExecutionPlan Development","Template Management","Model Optimization"],
-    icon: Box,
+    icon: Boxes,
     color: '#EF4444',
     type: 'enterprise-agent' as const,
     level: 'manager' as const,

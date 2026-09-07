@@ -3,11 +3,12 @@
  * @license MIT - See LICENSE file for full terms
  */
 
-import React, { useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, TextInput, ActivityIndicator, Modal } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, TextInput, ActivityIndicator, Modal, RefreshControl } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Search, X, Filter, FileText, MessageSquare, Users, Calendar, ChevronRight, Sparkles } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import apiClient from '../../lib/api-client';
 
 export default function CompanyBrainSearch() {
   const router = useRouter();
@@ -16,69 +17,59 @@ export default function CompanyBrainSearch() {
   const [searchQuery, setSearchQuery] = useState((params.q as string) || '');
   const [isSearching, setIsSearching] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
+  const [results, setResults] = useState<any[]>([]);
+  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
-  const mockResults = [
-    {
-      id: 1,
-      title: 'Client Onboarding Process',
-      type: 'process',
-      source: 'document',
-      confidence: 0.95,
-      summary: 'Step-by-step guide for onboarding new clients including documentation requirements, account setup, and initial meetings.',
-      author: 'Sarah M.',
-      updatedAt: '2 days ago',
-      tags: ['onboarding', 'clients', 'process'],
-    },
-    {
-      id: 2,
-      title: 'API Authentication Documentation',
-      type: 'technical',
-      source: 'document',
-      confidence: 0.92,
-      summary: 'Complete guide to API authentication including OAuth 2.0 implementation, API key management, and security best practices.',
-      author: 'John D.',
-      updatedAt: '1 week ago',
-      tags: ['api', 'authentication', 'security'],
-    },
-    {
-      id: 3,
-      title: 'Expense Reimbursement Policy',
-      type: 'process',
-      source: 'document',
-      confidence: 0.88,
-      summary: 'Company policy for expense reimbursement including eligible expenses, submission process, and approval workflow.',
-      author: 'HR Team',
-      updatedAt: '3 days ago',
-      tags: ['expenses', 'finance', 'policy'],
-    },
-    {
-      id: 4,
-      title: 'Remote Work Guidelines',
-      type: 'policy',
-      source: 'document',
-      confidence: 0.85,
-      summary: 'Guidelines for remote work including communication protocols, equipment requirements, and performance expectations.',
-      author: 'Operations',
-      updatedAt: '1 month ago',
-      tags: ['remote', 'work', 'policy'],
-    },
-  ];
+  useEffect(() => {
+    loadSuggestions();
+  }, []);
 
-  const suggestedQuestions = [
-    'How do I handle client refunds?',
-    'What is our vacation policy?',
-    'How do I request time off?',
-    'What are the sales targets for Q4?',
-  ];
-
-  const handleSearch = () => {
-    if (searchQuery.trim()) {
-      setIsSearching(true);
-      // Simulate search delay
-      setTimeout(() => {
-        setIsSearching(false);
-      }, 1000);
+  const loadSuggestions = async () => {
+    try {
+      setLoading(true);
+      const response = await apiClient.getSearchSuggestions({ organizationId: 'default' });
+      if (response?.success && response?.data) {
+        const data = response.data;
+        setSuggestions(Array.isArray(data) ? data : []);
+      }
+    } catch (err) {
+      console.error('Failed to load suggestions:', err);
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleSearch = async (query?: string) => {
+    const q = query || searchQuery;
+    if (q.trim()) {
+      setIsSearching(true);
+      try {
+        const response = await apiClient.searchKnowledge({
+          organizationId: 'default',
+          query: q,
+        });
+        if (response?.success && response?.data) {
+          const data = response.data;
+          setResults(Array.isArray(data) ? data : data.results || []);
+        }
+      } catch (err) {
+        console.error('Search failed:', err);
+      } finally {
+        setIsSearching(false);
+      }
+    }
+  };
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    if (searchQuery.trim()) {
+      await handleSearch();
+    } else {
+      await loadSuggestions();
+    }
+    setRefreshing(false);
   };
 
   const getResultIcon = (type: string) => {
@@ -108,6 +99,26 @@ export default function CompanyBrainSearch() {
     }
   };
 
+  if (loading && !searchQuery) {
+    return (
+      <View style={[styles.container, { paddingTop: insets.top }]}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+            <X size={24} color="#ffffff" />
+          </TouchableOpacity>
+          <Text style={styles.title}>Search Knowledge</Text>
+          <TouchableOpacity onPress={() => setShowFilters(true)} style={styles.filterButton}>
+            <Filter size={24} color="#ffffff" />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#6366f1" />
+          <Text style={styles.loadingText}>Loading suggestions...</Text>
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       {/* Header */}
@@ -130,7 +141,7 @@ export default function CompanyBrainSearch() {
           placeholderTextColor="#64748b"
           value={searchQuery}
           onChangeText={setSearchQuery}
-          onSubmitEditing={handleSearch}
+          onSubmitEditing={() => handleSearch()}
           returnKeyType="search"
           autoFocus
         />
@@ -144,25 +155,34 @@ export default function CompanyBrainSearch() {
       <ScrollView 
         style={styles.scrollView}
         contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 20 }]}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#6366f1" />}
       >
         {!searchQuery ? (
           /* Suggested Questions */
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Suggested Questions</Text>
             <View style={styles.suggestionsList}>
-              {suggestedQuestions.map((question, index) => (
-                <TouchableOpacity
-                  key={index}
-                  style={styles.suggestionItem}
-                  onPress={() => {
-                    setSearchQuery(question);
-                    handleSearch();
-                  }}
-                >
+              {suggestions.length === 0 ? (
+                <View style={styles.suggestionItem}>
                   <Sparkles size={16} color="#6366f1" />
-                  <Text style={styles.suggestionText}>{question}</Text>
-                </TouchableOpacity>
-              ))}
+                  <Text style={styles.suggestionText}>How do I handle client refunds?</Text>
+                </View>
+              ) : (
+                suggestions.map((question, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={styles.suggestionItem}
+                    onPress={() => {
+                      const q = typeof question === 'string' ? question : question.question || question;
+                      setSearchQuery(q);
+                      handleSearch(q);
+                    }}
+                  >
+                    <Sparkles size={16} color="#6366f1" />
+                    <Text style={styles.suggestionText}>{typeof question === 'string' ? question : question.question || question}</Text>
+                  </TouchableOpacity>
+                ))
+              )}
             </View>
           </View>
         ) : isSearching ? (
@@ -176,17 +196,18 @@ export default function CompanyBrainSearch() {
           <View style={styles.section}>
             <View style={styles.resultsHeader}>
               <Text style={styles.sectionTitle}>Results</Text>
-              <Text style={styles.resultsCount}>{mockResults.length} found</Text>
+              <Text style={styles.resultsCount}>{results.length} found</Text>
             </View>
             <View style={styles.resultsList}>
-              {mockResults.map((result) => {
+              {results.map((result, index) => {
                 const Icon = getResultIcon(result.type);
                 const color = getResultColor(result.type);
+                const id = result.id || result._id || index;
                 return (
                   <TouchableOpacity
-                    key={result.id}
+                    key={id}
                     style={styles.resultItem}
-                    onPress={() => router.push(`/company-brain/node/${result.id}` as any)}
+                    onPress={() => router.push(`/company-brain/node/${id}` as any)}
                   >
                     <View style={styles.resultHeader}>
                       <View style={[styles.resultIcon, { backgroundColor: `${color}20` }]}>
@@ -194,25 +215,25 @@ export default function CompanyBrainSearch() {
                       </View>
                       <View style={styles.resultMeta}>
                         <Text style={styles.resultType}>{result.type}</Text>
-                        <Text style={styles.resultSource}>{result.source}</Text>
+                        <Text style={styles.resultSource}>{result.source || result.type}</Text>
                       </View>
                       <View style={styles.confidenceBadge}>
-                        <Text style={styles.confidenceText}>{Math.round(result.confidence * 100)}%</Text>
+                        <Text style={styles.confidenceText}>{Math.round((result.confidence || 0) * 100)}%</Text>
                       </View>
                     </View>
                     <Text style={styles.resultTitle}>{result.title}</Text>
-                    <Text style={styles.resultSummary}>{result.summary}</Text>
+                    <Text style={styles.resultSummary}>{result.summary || result.excerpt || ''}</Text>
                     <View style={styles.resultFooter}>
                       <View style={styles.tagsContainer}>
-                        {result.tags.slice(0, 3).map((tag, index) => (
-                          <View key={index} style={styles.tag}>
+                        {(result.tags || []).slice(0, 3).map((tag, i) => (
+                          <View key={i} style={styles.tag}>
                             <Text style={styles.tagText}>{tag}</Text>
                           </View>
                         ))}
                       </View>
                       <View style={styles.resultMetaInfo}>
-                        <Text style={styles.resultAuthor}>{result.author}</Text>
-                        <Text style={styles.resultTime}>{result.updatedAt}</Text>
+                        <Text style={styles.resultAuthor}>{result.author || 'Unknown'}</Text>
+                        <Text style={styles.resultTime}>{result.updatedAt || result.lastUpdated || ''}</Text>
                       </View>
                     </View>
                     <ChevronRight size={20} color="#64748b" style={styles.chevron} />

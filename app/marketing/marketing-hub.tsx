@@ -16,7 +16,7 @@ import {
   Target,
   Users,
   TrendingUp,
-  ChartBarBig,
+  BarChart3,
   Plus,
   Search,
   ArrowLeft,
@@ -233,7 +233,7 @@ const quickActions = [
   { id: '5', title: 'Cold Email', icon: Mail, color: '#5AC8FA', route: '/marketing/cold-email' },
   { id: '6', title: 'Cold Calling', icon: Share2, color: '#FF2D92', route: '/marketing/cold-calling' },
   { id: '7', title: 'SEO', icon: Globe, color: '#32D74B', route: '/marketing/seo-optimization' },
-  { id: '8', title: 'Analytics', icon: ChartBarBig, color: '#FFD60A', route: '/analytics/analytics-performance' },
+  { id: '8', title: 'Analytics', icon: BarChart3, color: '#FFD60A', route: '/analytics/analytics-performance' },
   { id: '9', title: 'A/B Testing', icon: ChartPie, color: '#007AFF', route: '/analytics/ab-testing' },
   { id: '10', title: 'Content', icon: Pencil, color: '#34C759', route: '/marketing/content-creation' },
   { id: '11', title: 'Lead Gen', icon: Users, color: '#FF9500', route: '/automation/lead-generation' },
@@ -659,7 +659,7 @@ export default function MarketingHubScreen() {
       <View style={styles.section}>
         <TouchableOpacity style={[styles.analyticsCard, { backgroundColor: theme.colors.cardBackground }]}>
           <View style={styles.analyticsHeader}>
-            <ChartBarBig size={24} color="#007AFF" />
+            <BarChart3 size={24} color="#007AFF" />
             <Text style={[styles.analyticsTitle, { color: theme.colors.text }]}>Channel Performance</Text>
           </View>
           <Text style={[styles.analyticsSubtitle, { color: theme.colors.secondaryText }]}>

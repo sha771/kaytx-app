@@ -105,7 +105,6 @@ import {
   Store,
   Warehouse,
   Package,
-  Box,
   ShoppingCart,
   CreditCard,
   Receipt,

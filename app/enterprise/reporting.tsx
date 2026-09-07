@@ -17,7 +17,7 @@ import {
   ListFilter,
   Calendar,
   FileText,
-  ChartBarBig,
+  BarChart3,
   ChartPie,
   TrendingUp,
   Users,
@@ -66,7 +66,7 @@ const reports: Report[] = [
     status: 'ready',
     lastGenerated: '2 hours ago',
     size: '2.4 MB',
-    icon: ChartBarBig,
+    icon: BarChart3,
     color: '#007AFF',
   },
   {

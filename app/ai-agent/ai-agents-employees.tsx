@@ -4,7 +4,7 @@ import { useTheme } from '@/providers/ThemeProvider';
 import { useRouter } from 'expo-router';
 import { 
   Users, Crown, Network, Brain, Zap, Shield, Activity, 
-  ChartBarBig, Target, Settings, Layers, TrendingUp, 
+  BarChart3, Target, Settings, Layers, TrendingUp, 
   Globe, Briefcase, Sparkles, ArrowRight, BarChart3, DollarSign, 
   MessageSquare 
 } from 'lucide-react-native';
@@ -286,7 +286,7 @@ export default function AiAgentsEmployeesPage() {
             onPress={() => router.push('/ai-agent/performance')}
             style={[styles.actionButton, { backgroundColor: '#F59E0B15' }]}
           >
-            <ChartBarBig size={28} color="#F59E0B" />
+            <BarChart3 size={28} color="#F59E0B" />
             <Text style={[styles.actionText, { color: '#F59E0B' }]}>Performance</Text>
           </TouchableOpacity>
           <TouchableOpacity

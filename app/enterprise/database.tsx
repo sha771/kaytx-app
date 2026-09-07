@@ -18,7 +18,7 @@ import {
   Server,
   Zap,
   RefreshCw,
-  ChartBarBig,
+  BarChart3,
   Settings,
   Copy,
   CirclePause,
@@ -632,7 +632,7 @@ export default function DatabaseManagementScreen() {
             <Text style={[styles.actionButtonText, { color: theme.colors.text }]}>Config</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton} testID={`db-metrics-${item.id}`}>
-            <ChartBarBig size={16} color={theme.colors.text} />
+            <BarChart3 size={16} color={theme.colors.text} />
             <Text style={[styles.actionButtonText, { color: theme.colors.text }]}>Metrics</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton} testID={`db-clone-${item.id}`}>
@@ -1037,7 +1037,7 @@ export default function DatabaseManagementScreen() {
         {selectedTab === 'performance' && (
           <View style={styles.section}>
             <View style={styles.performanceHeader}>
-              <ChartBarBig size={24} color={theme.colors.primary} />
+              <BarChart3 size={24} color={theme.colors.primary} />
               <Text style={[styles.performanceHeaderText, { color: theme.colors.text }]}>Query Performance</Text>
             </View>
             <Text style={[styles.performanceDescription, { color: theme.colors.secondaryText }]}>

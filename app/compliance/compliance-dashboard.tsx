@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { 
   ArrowLeft, Shield, FileText, Download, TriangleAlert, CircleCheck, 
-  TrendingUp, Clock, Users, Activity, ChevronRight, ChartBarBig
+  TrendingUp, Clock, Users, Activity, ChevronRight, BarChart3
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { trpc } from '@/lib/trpc';
@@ -81,7 +81,7 @@ export default function ComplianceDashboardScreen() {
       {/* Compliance Score Overview */}
       <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.cardHeader}>
-          <ChartBarBig size={24} color={theme.colors.primary} />
+          <BarChart3 size={24} color={theme.colors.primary} />
           <Text style={[styles.cardHeaderTitle, { color: theme.colors.text }]}>
             Compliance Score
           </Text>

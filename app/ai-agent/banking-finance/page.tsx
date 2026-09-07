@@ -59,7 +59,7 @@ import {
   AlertCircle,
   ArrowUpRight,
   ArrowDownRight,
-  ChartBarBig,
+  BarChart3,
   User,
   CreditCard,
   Database,

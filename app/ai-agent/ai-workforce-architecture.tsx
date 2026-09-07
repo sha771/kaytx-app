@@ -30,7 +30,7 @@ const layers = [
   { id: 11, name: 'Review & Display', type: 'Feedback', flow: 'Review & show', use: 'Results to users', color: '#607D8B' },
 ];
 
-export const AIWorkforceArchitecture: React.FC = () => {
+export default function AIWorkforceArchitecture() {
   const { theme } = useTheme();
 
   const styles = useMemo(() => StyleSheet.create({
@@ -149,4 +149,4 @@ export const AIWorkforceArchitecture: React.FC = () => {
       </ScrollView>
     </View>
   );
-};
+}

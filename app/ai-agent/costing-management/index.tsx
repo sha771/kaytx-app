@@ -1,4 +1,5 @@
 import React from 'react';
+import { Briefcase, Calculator, Wallet, DollarSign, Users, TrendingUp, PiggyBank, LineChart, CreditCard, BarChart3, Layout, PieChart, Banknote, Shield, Scale } from 'lucide-react-native';
 import DepartmentDashboardView from '@/components/ai-agent/dashboard/DepartmentDashboardView';
 
 const DEPARTMENT_AGENTS = [

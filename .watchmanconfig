@@ -1,0 +1,14 @@
+{
+  "ignore_dirs": [
+    "node_modules",
+    ".git",
+    ".expo",
+    "dist",
+    "build",
+    ".metro",
+    "metro-cache",
+    "coverage"
+  ],
+  "max_queued_events": 8192,
+  "max_user_watches": 524288
+}

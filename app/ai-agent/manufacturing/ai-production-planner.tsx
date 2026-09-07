@@ -1,6 +1,6 @@
 import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
-import { Box } from 'lucide-react-native';
+import { Boxes } from 'lucide-react-native';
 
 export default function AgentPage() {
   const agent = {
@@ -9,7 +9,7 @@ export default function AgentPage() {
     title: 'ai-production-planner',
     description: 'The ai-production-planner AI provides specialized services and automation within its department.',
     capabilities: ["Task Automation","Data Processing","Workflow Management"],
-    icon: Box,
+    icon: Boxes,
     color: '#FF5722',
     type: 'agent' as const,
     humanCost: '$92k/year',

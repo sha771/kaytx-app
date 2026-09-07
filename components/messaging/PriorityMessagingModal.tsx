@@ -36,7 +36,7 @@ import {
   VolumeX,
   Timer,
   Target,
-  ChartBarBig,
+  BarChart3,
   Layers,
   CircleCheck,
   Plus,
@@ -407,7 +407,7 @@ export default function PriorityMessagingModal({ visible, onClose }: Props) {
                   inbox: MessageCircle,
                   vip: Crown,
                   rules: Layers,
-                  analytics: ChartBarBig,
+                  analytics: BarChart3,
                   settings: Settings,
                 };
                 const TabIcon = tabIcons[tab];

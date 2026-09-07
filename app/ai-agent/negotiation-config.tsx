@@ -26,7 +26,7 @@ import {
   Zap,
   Shield,
   MessageSquare,
-  ChartBarBig,
+  BarChart3,
   CircleAlert,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
@@ -652,7 +652,7 @@ export default function NegotiationConfigScreen() {
           ]}
           onPress={() => setActiveTab('analytics')}
         >
-          <ChartBarBig
+          <BarChart3
             size={20}
             color={activeTab === 'analytics' ? theme.colors.primary : theme.colors.secondaryText}
           />

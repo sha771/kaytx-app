@@ -180,7 +180,8 @@ import {
   PoundSterling,
   Yen,
   Bitcoin,
-  Heart
+  Heart,
+  UserCog
 } from 'lucide-react-native';
 
 // Import Professional Services Components

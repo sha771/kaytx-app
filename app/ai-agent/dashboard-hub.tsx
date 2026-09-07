@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Building, TrendingUp, Users, DollarSign, Shield, Cpu, Heart, Zap, Truck, Factory, Globe, Briefcase, GraduationCap, Shirt, Gamepad2, Film, Utensils, Leaf, Scale, Gavel, Lock, Database, BarChart3, Activity, Target, Clock, CheckCircle, AlertCircle, ShoppingCart, FileText, PieChart, LineChart, MessageSquare, Calendar, MapPin, Lightbulb, Box, Landmark, Sparkles, Mic, Wheat, Video, Plane, Trophy } from 'lucide-react-native';
+import { Building, TrendingUp, Users, DollarSign, Shield, Cpu, Heart, Zap, Truck, Factory, Globe, Briefcase, GraduationCap, Shirt, Gamepad2, Film, Utensils, Leaf, Scale, Gavel, Lock, Database, BarChart3, Activity, Target, Clock, CheckCircle, AlertCircle, ShoppingCart, FileText, PieChart, LineChart, MessageSquare, Calendar, MapPin, Lightbulb, Package, Landmark, Sparkles, Mic, Wheat, Video, Plane, Trophy, Box, Wrench } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 
 interface DepartmentCardProps {

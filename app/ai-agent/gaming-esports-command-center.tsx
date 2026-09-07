@@ -76,7 +76,7 @@ import {
   LayoutDashboard,
   User,
   Gamepad,
-  ChartBarBig,
+  BarChart3,
 } from 'lucide-react-native';
 import { BlurView } from 'expo-blur';
 import Svg, { Path, Circle, Defs, LinearGradient, Stop, Line, Rect } from 'react-native-svg';

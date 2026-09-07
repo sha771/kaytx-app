@@ -1,6 +1,6 @@
 import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
-import { ChartBarBig } from 'lucide-react-native';
+import { BarChart3 } from 'lucide-react-native';
 
 export default function AIEsportsAnalystPage() {
   const agent = {
@@ -9,7 +9,7 @@ export default function AIEsportsAnalystPage() {
     title: 'AI Esports Analyst',
     description: 'The AI Esports Analyst provides deep competitive intelligence, match analysis, player performance metrics, and strategic insights for teams and organizations.',
     capabilities: ["Match Analysis","Player Performance Tracking","Competitive Intelligence","Strategy Development","Data Visualization","Predictive Analytics","Scouting Reports","Meta Analysis"],
-    icon: ChartBarBig,
+    icon: BarChart3,
     color: '#2196F3',
     type: 'employee' as const,
     humanCost: '$95k/year',

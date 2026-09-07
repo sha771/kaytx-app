@@ -52,13 +52,14 @@ type AppContext = RouteContext;
 const createKnowledgeNodeSchema = z.object({
   title: z.string().min(1).max(500),
   content: z.string().min(1),
-  type: z.enum(['process', 'decision', 'client', 'project', 'technical', 'tribal', 'sop', 'workflow', 'playbook']),
-  sourceType: z.enum(['document', 'slack', 'email', 'meeting', 'manual', 'ai_agent']),
+  type: z.enum(['process', 'decision', 'client', 'project', 'technical', 'tribal', 'sop', 'workflow', 'playbook', 'document', 'person', 'product', 'policy']),
+  sourceType: z.string().optional(),
   sourceId: z.string().optional(),
   tags: z.array(z.string()).optional(),
   authorId: z.string(),
   departmentId: z.string().optional(),
   projectIds: z.array(z.string()).optional(),
+  organizationId: z.string().optional(),
 });
 
 const updateKnowledgeNodeSchema = z.object({
@@ -94,17 +95,12 @@ companyBrainRouter.get('/knowledge-nodes', async (c: AppContext) => {
     const limit = parseInt(c.req.query('limit') || '20');
     const offset = parseInt(c.req.query('offset') || '0');
     const type = c.req.query('type');
-    const departmentId = c.req.query('departmentId');
+    const organizationId = c.req.query('organizationId');
 
-    // Use knowledgeGraphService instead of direct DB
-    let nodes = knowledgeGraphService.getAllNodes();
+    let nodes = await knowledgeGraphService.getAllNodes(organizationId);
     
     if (type) {
       nodes = nodes.filter(n => n.type === type);
-    }
-    
-    if (departmentId) {
-      nodes = nodes.filter(n => n.properties.departmentId === departmentId);
     }
 
     const paginatedNodes = nodes.slice(offset, offset + limit);
@@ -125,8 +121,7 @@ companyBrainRouter.get('/knowledge-nodes/:id', async (c: AppContext) => {
   try {
     const id = c.req.param('id');
     
-    // Use knowledgeGraphService instead of direct DB
-    const node = knowledgeGraphService.getNode(id);
+    const node = await knowledgeGraphService.getNode(id);
     
     if (!node) {
       return c.json({ success: false, error: 'Knowledge node not found' }, 404);
@@ -146,18 +141,18 @@ companyBrainRouter.post('/knowledge-nodes', async (c: AppContext) => {
     const validatedData = createKnowledgeNodeSchema.parse(body);
 
     // Use knowledgeGraphService instead of direct DB
-    const newNode = knowledgeGraphService.addNode({
-      id: crypto.randomUUID(),
+    const newNode = await knowledgeGraphService.addNode({
+      organizationId: validatedData.organizationId || c.req.query('organizationId') || 'default',
       type: validatedData.type,
       label: validatedData.title,
+      content: validatedData.content,
+      sourceType: validatedData.sourceType,
+      sourceId: validatedData.sourceId,
+      tags: validatedData.tags || [],
+      createdBy: validatedData.authorId,
+      departmentId: validatedData.departmentId,
+      projectIds: validatedData.projectIds || [],
       properties: {
-        content: validatedData.content,
-        tags: validatedData.tags || [],
-        authorId: validatedData.authorId,
-        departmentId: validatedData.departmentId,
-        projectIds: validatedData.projectIds || [],
-        sourceType: validatedData.sourceType,
-        sourceId: validatedData.sourceId,
         status: 'draft',
         confidenceScore: 0.85,
       },
@@ -177,9 +172,8 @@ companyBrainRouter.put('/knowledge-nodes/:id', async (c: AppContext) => {
     const body = await c.req.json();
     const validatedData = updateKnowledgeNodeSchema.parse(body);
 
-    const updatedNode = knowledgeGraphService.updateNode(id, {
+    const updatedNode = await knowledgeGraphService.updateNode(id, {
       ...validatedData,
-      updatedAt: new Date(),
     });
 
     if (!updatedNode) {
@@ -198,25 +192,7 @@ companyBrainRouter.delete('/knowledge-nodes/:id', async (c: AppContext) => {
   try {
     const id = c.req.param('id');
     
-    const deleted = knowledgeGraphService.deleteNode(id);
-    
-    if (!deleted) {
-      return c.json({ success: false, error: 'Knowledge node not found' }, 404);
-    }
-    
-    return c.json({ success: true, message: 'Knowledge node deleted' });
-  } catch (error) {
-    console.error('Error deleting knowledge node:', error);
-    return c.json({ success: false, error: 'Failed to delete knowledge node' }, 500);
-  }
-});
-
-// DELETE /api/company-brain/knowledge-nodes/:id - Delete a knowledge node
-companyBrainRouter.delete('/knowledge-nodes/:id', async (c: AppContext) => {
-  try {
-    const id = c.req.param('id');
-    
-    const deleted = knowledgeGraphService.deleteNode(id);
+    const deleted = await knowledgeGraphService.deleteNode(id);
     
     if (!deleted) {
       return c.json({ success: false, error: 'Knowledge node not found' }, 404);
@@ -245,6 +221,7 @@ companyBrainRouter.post('/search', async (c: AppContext) => {
       offset: validatedData.offset,
       searchMode: validatedData.searchMode || 'hybrid',
       rerank: validatedData.rerank || false,
+      organizationId: c.req.query('organizationId') || 'default',
     };
     
     const searchResult = await enhancedSearchService.search(searchQuery);
@@ -271,16 +248,16 @@ companyBrainRouter.get('/graph', async (c: AppContext) => {
     const type = c.req.query('type');
 
     // Get nodes from knowledgeGraphService
-    let nodes = knowledgeGraphService.getAllNodes();
+    let nodes = await knowledgeGraphService.getAllNodes();
     
     if (type) {
-      nodes = nodes.filter(node => node.type === type);
+      nodes = nodes.filter((node: any) => node.type === type);
     }
     
     const limitedNodes = nodes.slice(0, limit);
     
     // Get edges
-    let edges = knowledgeGraphService.getAllEdges();
+    let edges = await knowledgeGraphService.getAllEdges();
     const limitedEdges = edges.slice(0, limit * 2);
 
     return c.json({ 
@@ -296,45 +273,13 @@ companyBrainRouter.get('/graph', async (c: AppContext) => {
   }
 });
 
-// GET /api/company-brain/graph - Get knowledge graph data (nodes and relationships)
-companyBrainRouter.get('/graph', async (c: AppContext) => {
-  try {
-    const limit = parseInt(c.req.query('limit') || '100');
-
-    // Use knowledgeGraphService for nodes and edges
-    const nodes = knowledgeGraphService.getAllNodes().slice(0, limit);
-    const edges = knowledgeGraphService.getAllEdges().slice(0, limit * 2);
-
-    const graphData = {
-      nodes: nodes.map(node => ({
-        id: node.id,
-        title: node.label,
-        type: node.type,
-        confidenceScore: node.properties.confidenceScore || 0.85,
-      })),
-      edges: edges.map(edge => ({
-        id: edge.id,
-        source: edge.source,
-        target: edge.target,
-        type: edge.type,
-        strength: edge.weight,
-      })),
-    };
-
-    return c.json({ success: true, data: graphData });
-  } catch (error) {
-    console.error('Error fetching graph data:', error);
-    return c.json({ success: false, error: 'Failed to fetch graph data' }, 500);
-  }
-});
-
 // Analytics Endpoints
 
 // GET /api/company-brain/analytics/health - Get knowledge health metrics
 companyBrainRouter.get('/analytics/health', async (c: AppContext) => {
   try {
     // Use knowledgeGraphService for metrics
-    const allNodes = knowledgeGraphService.getAllNodes();
+    const allNodes = await knowledgeGraphService.getAllNodes();
     const verifiedNodes = allNodes.filter(n => n.properties.status === 'verified');
     const outdatedNodes = allNodes.filter(n => n.properties.status === 'outdated');
 
@@ -361,37 +306,9 @@ companyBrainRouter.get('/analytics/usage', async (c: AppContext) => {
   try {
     const timeRange = c.req.query('range') || '30d';
 
-    // Use enhancedSearchService for query analytics
-    const searchQueriesData = enhancedSearchService.getPopularQueries(100);
-
-    // Use the search stats for more accurate data
-    const stats = enhancedSearchService.getSearchStats();
-    const totalQueries = stats.totalQueries;
-    const uniqueQueries = stats.uniqueQueries;
-    const avgQueriesPerUser = uniqueQueries > 0 ? totalQueries / Math.max(1, uniqueQueries) : 0;
-
-    return c.json({ 
-      success: true, 
-      data: {
-        totalQueries,
-        uniqueUsers: uniqueQueries,
-        avgQueriesPerUser: Math.round(avgQueriesPerUser * 100) / 100,
-        timeRange,
-      }
-    });
-  } catch (error) {
-    console.error('Error fetching usage analytics:', error);
-    return c.json({ success: false, error: 'Failed to fetch usage analytics' }, 500);
-  }
-});
-
-// GET /api/company-brain/analytics/usage - Get usage analytics
-companyBrainRouter.get('/analytics/usage', async (c: AppContext) => {
-  try {
-    const timeRange = c.req.query('range') || '30d';
-
     // Use knowledgeGraphService for mock data
-    const totalNodes = knowledgeGraphService.getAllNodes().length;
+    const allNodes = await knowledgeGraphService.getAllNodes();
+    const totalNodes = allNodes.length;
 
     const uniqueUsers = Math.max(1, Math.floor(totalNodes * 0.3));
     const totalSearches = totalNodes * 2;
@@ -415,7 +332,7 @@ companyBrainRouter.get('/analytics/usage', async (c: AppContext) => {
 companyBrainRouter.get('/analytics/risks', async (c: AppContext) => {
   try {
     // Use knowledgeGraphService for mock data
-    const allNodes = knowledgeGraphService.getAllNodes();
+    const allNodes = await knowledgeGraphService.getAllNodes();
     const atRiskDepartures = Math.floor(allNodes.length * 0.05);
     const singlePointOfFailure = 3;
 
@@ -441,7 +358,7 @@ companyBrainRouter.get('/team/experts', async (c: AppContext) => {
     const departmentId = c.req.query('departmentId');
 
     // Use knowledgeGraphService for mock experts
-    const allNodes = knowledgeGraphService.getAllNodes();
+    const allNodes = await knowledgeGraphService.getAllNodes();
     const experts = allNodes
       .filter(n => n.properties.authorId)
       .slice(0, 20)
@@ -2970,6 +2887,580 @@ companyBrainRouter.get('/chat/stats', async (c: AppContext) => {
   } catch (error) {
     console.error('Error fetching chat statistics:', error);
     return c.json({ success: false, error: 'Failed to fetch chat statistics' }, 500);
+  }
+});
+
+// ==================== MEMORY SYSTEM ENDPOINTS ====================
+
+import { companyBrainMemoryService } from '../../services/company-brain-memory';
+import { companyBrainReasoningService } from '../../services/company-brain-reasoning';
+import { companyBrainContextService } from '../../services/company-brain-context';
+import { companyBrainIntelligenceService } from '../../services/company-brain-intelligence';
+import { companyBrainUnderstandingService } from '../../services/company-brain-understanding';
+import { companyBrainDashboardService } from '../../services/company-brain-dashboard';
+
+// POST /api/company-brain/memory/store - Store a memory
+companyBrainRouter.post('/memory/store', async (c: AppContext) => {
+  try {
+    const body = await c.req.json();
+    const memory = await companyBrainMemoryService.store(body);
+    return c.json({ success: true, data: memory });
+  } catch (error) {
+    console.error('Error storing memory:', error);
+    return c.json({ success: false, error: 'Failed to store memory' }, 500);
+  }
+});
+
+// POST /api/company-brain/memory/recall - Recall memories
+companyBrainRouter.post('/memory/recall', async (c: AppContext) => {
+  try {
+    const body = await c.req.json();
+    const memories = await companyBrainMemoryService.recall(body);
+    return c.json({ success: true, data: memories });
+  } catch (error) {
+    console.error('Error recalling memories:', error);
+    return c.json({ success: false, error: 'Failed to recall memories' }, 500);
+  }
+});
+
+// POST /api/company-brain/memory/consolidate - Consolidate memories
+companyBrainRouter.post('/memory/consolidate', async (c: AppContext) => {
+  try {
+    const { organizationId, userId } = await c.req.json();
+    const count = await companyBrainMemoryService.consolidate(organizationId, userId);
+    return c.json({ success: true, data: { memoriesConsolidated: count } });
+  } catch (error) {
+    console.error('Error consolidating memories:', error);
+    return c.json({ success: false, error: 'Failed to consolidate memories' }, 500);
+  }
+});
+
+// POST /api/company-brain/memory/forget - Forget expired memories
+companyBrainRouter.post('/memory/forget', async (c: AppContext) => {
+  try {
+    const { organizationId, userId, type } = await c.req.json();
+    const count = await companyBrainMemoryService.forget(organizationId, userId, type);
+    return c.json({ success: true, data: { memoriesForgotten: count } });
+  } catch (error) {
+    console.error('Error forgetting memories:', error);
+    return c.json({ success: false, error: 'Failed to forget memories' }, 500);
+  }
+});
+
+// GET /api/company-brain/memory/stats - Get memory statistics
+companyBrainRouter.get('/memory/stats', async (c: AppContext) => {
+  try {
+    const organizationId = c.req.query('organizationId');
+    const userId = c.req.query('userId');
+    if (!organizationId || !userId) {
+      return c.json({ success: false, error: 'organizationId and userId are required' }, 400);
+    }
+    const stats = await companyBrainMemoryService.getStats(organizationId, userId);
+    return c.json({ success: true, data: stats });
+  } catch (error) {
+    console.error('Error fetching memory stats:', error);
+    return c.json({ success: false, error: 'Failed to fetch memory stats' }, 500);
+  }
+});
+
+// ==================== AI REASONING ENDPOINTS ====================
+
+// POST /api/company-brain/reasoning/compare - Compare documents
+companyBrainRouter.post('/reasoning/compare', async (c: AppContext) => {
+  try {
+    const body = await c.req.json();
+    const result = await companyBrainReasoningService.compare(body);
+    return c.json({ success: true, data: result });
+  } catch (error) {
+    console.error('Error comparing documents:', error);
+    return c.json({ success: false, error: 'Failed to compare documents' }, 500);
+  }
+});
+
+// POST /api/company-brain/reasoning/summarize - Summarize content
+companyBrainRouter.post('/reasoning/summarize', async (c: AppContext) => {
+  try {
+    const body = await c.req.json();
+    const result = await companyBrainReasoningService.summarize(body);
+    return c.json({ success: true, data: { summary: result } });
+  } catch (error) {
+    console.error('Error summarizing:', error);
+    return c.json({ success: false, error: 'Failed to summarize' }, 500);
+  }
+});
+
+// POST /api/company-brain/reasoning/contradictions - Detect contradictions
+companyBrainRouter.post('/reasoning/contradictions', async (c: AppContext) => {
+  try {
+    const body = await c.req.json();
+    const result = await companyBrainReasoningService.detectContradictions(body);
+    return c.json({ success: true, data: result });
+  } catch (error) {
+    console.error('Error detecting contradictions:', error);
+    return c.json({ success: false, error: 'Failed to detect contradictions' }, 500);
+  }
+});
+
+// POST /api/company-brain/reasoning/recommend - Generate recommendations
+companyBrainRouter.post('/reasoning/recommend', async (c: AppContext) => {
+  try {
+    const body = await c.req.json();
+    const result = await companyBrainReasoningService.recommend(body);
+    return c.json({ success: true, data: result });
+  } catch (error) {
+    console.error('Error generating recommendations:', error);
+    return c.json({ success: false, error: 'Failed to generate recommendations' }, 500);
+  }
+});
+
+// POST /api/company-brain/reasoning/report - Generate report
+companyBrainRouter.post('/reasoning/report', async (c: AppContext) => {
+  try {
+    const body = await c.req.json();
+    const result = await companyBrainReasoningService.generateReport(body);
+    return c.json({ success: true, data: { report: result } });
+  } catch (error) {
+    console.error('Error generating report:', error);
+    return c.json({ success: false, error: 'Failed to generate report' }, 500);
+  }
+});
+
+// POST /api/company-brain/reasoning/ask - Ask a question with RAG
+companyBrainRouter.post('/reasoning/ask', async (c: AppContext) => {
+  try {
+    const { question, context } = await c.req.json();
+    const result = await companyBrainReasoningService.answerQuestion(question, context || []);
+    return c.json({ success: true, data: result });
+  } catch (error) {
+    console.error('Error answering question:', error);
+    return c.json({ success: false, error: 'Failed to answer question' }, 500);
+  }
+});
+
+// GET /api/company-brain/reasoning/history - Get reasoning history
+companyBrainRouter.get('/reasoning/history', async (c: AppContext) => {
+  try {
+    const organizationId = c.req.query('organizationId');
+    if (!organizationId) {
+      return c.json({ success: false, error: 'organizationId is required' }, 400);
+    }
+    const history = await companyBrainReasoningService.getReasoningHistory(organizationId);
+    return c.json({ success: true, data: history });
+  } catch (error) {
+    console.error('Error fetching reasoning history:', error);
+    return c.json({ success: false, error: 'Failed to fetch reasoning history' }, 500);
+  }
+});
+
+// ==================== CONTEXT ENGINE ENDPOINTS ====================
+
+// GET /api/company-brain/context - Get user context
+companyBrainRouter.get('/context', async (c: AppContext) => {
+  try {
+    const userId = c.req.query('userId');
+    const organizationId = c.req.query('organizationId');
+    if (!userId || !organizationId) {
+      return c.json({ success: false, error: 'userId and organizationId are required' }, 400);
+    }
+    const context = await companyBrainContextService.getContext(userId, organizationId);
+    return c.json({ success: true, data: context });
+  } catch (error) {
+    console.error('Error getting context:', error);
+    return c.json({ success: false, error: 'Failed to get context' }, 500);
+  }
+});
+
+// POST /api/company-brain/context/enrich - Enrich a query with context
+companyBrainRouter.post('/context/enrich', async (c: AppContext) => {
+  try {
+    const { query, context } = await c.req.json();
+    const enriched = await companyBrainContextService.enrichQuery(query, context);
+    return c.json({ success: true, data: enriched });
+  } catch (error) {
+    console.error('Error enriching query:', error);
+    return c.json({ success: false, error: 'Failed to enrich query' }, 500);
+  }
+});
+
+// POST /api/company-brain/context/session - Create session
+companyBrainRouter.post('/context/session', async (c: AppContext) => {
+  try {
+    const body = await c.req.json();
+    const sessionId = await companyBrainContextService.createSession(body);
+    return c.json({ success: true, data: { sessionId } });
+  } catch (error) {
+    console.error('Error creating session:', error);
+    return c.json({ success: false, error: 'Failed to create session' }, 500);
+  }
+});
+
+// PUT /api/company-brain/context/session/:id - Update session
+companyBrainRouter.put('/context/session/:id', async (c: AppContext) => {
+  try {
+    const sessionId = c.req.param('id');
+    const { context } = await c.req.json();
+    await companyBrainContextService.updateSession(sessionId, context);
+    return c.json({ success: true, message: 'Session updated' });
+  } catch (error) {
+    console.error('Error updating session:', error);
+    return c.json({ success: false, error: 'Failed to update session' }, 500);
+  }
+});
+
+// GET /api/company-brain/context/session/:id - Get session
+companyBrainRouter.get('/context/session/:id', async (c: AppContext) => {
+  try {
+    const sessionId = c.req.param('id');
+    const session = await companyBrainContextService.getSession(sessionId);
+    if (!session) return c.json({ success: false, error: 'Session not found' }, 404);
+    return c.json({ success: true, data: session });
+  } catch (error) {
+    console.error('Error getting session:', error);
+    return c.json({ success: false, error: 'Failed to get session' }, 500);
+  }
+});
+
+// GET /api/company-brain/context/sessions - Get active sessions
+companyBrainRouter.get('/context/sessions', async (c: AppContext) => {
+  try {
+    const organizationId = c.req.query('organizationId');
+    const userId = c.req.query('userId');
+    if (!organizationId || !userId) {
+      return c.json({ success: false, error: 'organizationId and userId are required' }, 400);
+    }
+    const sessions = await companyBrainContextService.getActiveSessions(organizationId, userId);
+    return c.json({ success: true, data: sessions });
+  } catch (error) {
+    console.error('Error fetching sessions:', error);
+    return c.json({ success: false, error: 'Failed to fetch sessions' }, 500);
+  }
+});
+
+// ==================== INTELLIGENCE ENDPOINTS ====================
+
+// GET /api/company-brain/intelligence/faqs - Discover FAQs
+companyBrainRouter.get('/intelligence/faqs', async (c: AppContext) => {
+  try {
+    const organizationId = c.req.query('organizationId');
+    if (!organizationId) {
+      return c.json({ success: false, error: 'organizationId is required' }, 400);
+    }
+    const faqs = await companyBrainIntelligenceService.discoverFAQs(organizationId);
+    return c.json({ success: true, data: faqs });
+  } catch (error) {
+    console.error('Error discovering FAQs:', error);
+    return c.json({ success: false, error: 'Failed to discover FAQs' }, 500);
+  }
+});
+
+// GET /api/company-brain/intelligence/experts - Discover experts
+companyBrainRouter.get('/intelligence/experts', async (c: AppContext) => {
+  try {
+    const organizationId = c.req.query('organizationId');
+    if (!organizationId) {
+      return c.json({ success: false, error: 'organizationId is required' }, 400);
+    }
+    const experts = await companyBrainIntelligenceService.discoverExperts(organizationId);
+    return c.json({ success: true, data: experts });
+  } catch (error) {
+    console.error('Error discovering experts:', error);
+    return c.json({ success: false, error: 'Failed to discover experts' }, 500);
+  }
+});
+
+// GET /api/company-brain/intelligence/risks - Discover risks
+companyBrainRouter.get('/intelligence/risks', async (c: AppContext) => {
+  try {
+    const organizationId = c.req.query('organizationId');
+    if (!organizationId) {
+      return c.json({ success: false, error: 'organizationId is required' }, 400);
+    }
+    const risks = await companyBrainIntelligenceService.discoverRisks(organizationId);
+    return c.json({ success: true, data: risks });
+  } catch (error) {
+    console.error('Error discovering risks:', error);
+    return c.json({ success: false, error: 'Failed to discover risks' }, 500);
+  }
+});
+
+// GET /api/company-brain/intelligence/trends - Discover trends
+companyBrainRouter.get('/intelligence/trends', async (c: AppContext) => {
+  try {
+    const organizationId = c.req.query('organizationId');
+    if (!organizationId) {
+      return c.json({ success: false, error: 'organizationId is required' }, 400);
+    }
+    const trends = await companyBrainIntelligenceService.discoverTrends(organizationId);
+    return c.json({ success: true, data: trends });
+  } catch (error) {
+    console.error('Error discovering trends:', error);
+    return c.json({ success: false, error: 'Failed to discover trends' }, 500);
+  }
+});
+
+// POST /api/company-brain/intelligence/insight - Generate insight
+companyBrainRouter.post('/intelligence/insight', async (c: AppContext) => {
+  try {
+    const { organizationId, type } = await c.req.json();
+    const insight = await companyBrainIntelligenceService.generateInsight(organizationId, type);
+    return c.json({ success: true, data: insight });
+  } catch (error) {
+    console.error('Error generating insight:', error);
+    return c.json({ success: false, error: 'Failed to generate insight' }, 500);
+  }
+});
+
+// GET /api/company-brain/intelligence/insights - Get stored insights
+companyBrainRouter.get('/intelligence/insights', async (c: AppContext) => {
+  try {
+    const organizationId = c.req.query('organizationId');
+    if (!organizationId) {
+      return c.json({ success: false, error: 'organizationId is required' }, 400);
+    }
+    const insights = await companyBrainIntelligenceService.getInsights(organizationId, {
+      type: c.req.query('type') as any,
+      severity: c.req.query('severity') as any,
+      actionable: c.req.query('actionable') === 'true' ? true : undefined,
+      limit: parseInt(c.req.query('limit') || '50'),
+    });
+    return c.json({ success: true, data: insights });
+  } catch (error) {
+    console.error('Error fetching insights:', error);
+    return c.json({ success: false, error: 'Failed to fetch insights' }, 500);
+  }
+});
+
+// ==================== COMPANY UNDERSTANDING ENDPOINTS ====================
+
+// GET /api/company-brain/company/profile - Get company profile
+companyBrainRouter.get('/company/profile', async (c: AppContext) => {
+  try {
+    const organizationId = c.req.query('organizationId');
+    if (!organizationId) {
+      return c.json({ success: false, error: 'organizationId is required' }, 400);
+    }
+    const profile = await companyBrainUnderstandingService.getProfile(organizationId);
+    return c.json({ success: true, data: profile });
+  } catch (error) {
+    console.error('Error fetching company profile:', error);
+    return c.json({ success: false, error: 'Failed to fetch company profile' }, 500);
+  }
+});
+
+// GET /api/company-brain/company/metrics - Get company metrics
+companyBrainRouter.get('/company/metrics', async (c: AppContext) => {
+  try {
+    const organizationId = c.req.query('organizationId');
+    if (!organizationId) {
+      return c.json({ success: false, error: 'organizationId is required' }, 400);
+    }
+    const metrics = await companyBrainUnderstandingService.getMetrics(organizationId);
+    return c.json({ success: true, data: metrics });
+  } catch (error) {
+    console.error('Error fetching company metrics:', error);
+    return c.json({ success: false, error: 'Failed to fetch company metrics' }, 500);
+  }
+});
+
+// GET /api/company-brain/company/departments - Get departments
+companyBrainRouter.get('/company/departments', async (c: AppContext) => {
+  try {
+    const organizationId = c.req.query('organizationId');
+    if (!organizationId) {
+      return c.json({ success: false, error: 'organizationId is required' }, 400);
+    }
+    const departments = await companyBrainUnderstandingService.getDepartments(organizationId);
+    return c.json({ success: true, data: departments });
+  } catch (error) {
+    console.error('Error fetching departments:', error);
+    return c.json({ success: false, error: 'Failed to fetch departments' }, 500);
+  }
+});
+
+// POST /api/company-brain/company/departments - Add department
+companyBrainRouter.post('/company/departments', async (c: AppContext) => {
+  try {
+    const body = await c.req.json();
+    const department = await companyBrainUnderstandingService.addDepartment(body.organizationId, body);
+    return c.json({ success: true, data: department });
+  } catch (error) {
+    console.error('Error adding department:', error);
+    return c.json({ success: false, error: 'Failed to add department' }, 500);
+  }
+});
+
+// GET /api/company-brain/company/products - Get products
+companyBrainRouter.get('/company/products', async (c: AppContext) => {
+  try {
+    const organizationId = c.req.query('organizationId');
+    if (!organizationId) {
+      return c.json({ success: false, error: 'organizationId is required' }, 400);
+    }
+    const products = await companyBrainUnderstandingService.getProducts(organizationId);
+    return c.json({ success: true, data: products });
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    return c.json({ success: false, error: 'Failed to fetch products' }, 500);
+  }
+});
+
+// POST /api/company-brain/company/products - Add product
+companyBrainRouter.post('/company/products', async (c: AppContext) => {
+  try {
+    const body = await c.req.json();
+    const product = await companyBrainUnderstandingService.addProduct(body.organizationId, body);
+    return c.json({ success: true, data: product });
+  } catch (error) {
+    console.error('Error adding product:', error);
+    return c.json({ success: false, error: 'Failed to add product' }, 500);
+  }
+});
+
+// GET /api/company-brain/company/goals - Get goals
+companyBrainRouter.get('/company/goals', async (c: AppContext) => {
+  try {
+    const organizationId = c.req.query('organizationId');
+    if (!organizationId) {
+      return c.json({ success: false, error: 'organizationId is required' }, 400);
+    }
+    const goals = await companyBrainUnderstandingService.getGoals(organizationId);
+    return c.json({ success: true, data: goals });
+  } catch (error) {
+    console.error('Error fetching goals:', error);
+    return c.json({ success: false, error: 'Failed to fetch goals' }, 500);
+  }
+});
+
+// POST /api/company-brain/company/goals - Add goal
+companyBrainRouter.post('/company/goals', async (c: AppContext) => {
+  try {
+    const body = await c.req.json();
+    const goal = await companyBrainUnderstandingService.addGoal(body.organizationId, body);
+    return c.json({ success: true, data: goal });
+  } catch (error) {
+    console.error('Error adding goal:', error);
+    return c.json({ success: false, error: 'Failed to add goal' }, 500);
+  }
+});
+
+// PUT /api/company-brain/company/goals/:id/progress - Update goal progress
+companyBrainRouter.put('/company/goals/:id/progress', async (c: AppContext) => {
+  try {
+    const goalId = c.req.param('id');
+    const { progress } = await c.req.json();
+    const success = await companyBrainUnderstandingService.updateGoalProgress(goalId, progress);
+    return c.json({ success, data: { goalId, progress } });
+  } catch (error) {
+    console.error('Error updating goal progress:', error);
+    return c.json({ success: false, error: 'Failed to update goal progress' }, 500);
+  }
+});
+
+// ==================== DASHBOARD ENDPOINTS ====================
+
+// GET /api/company-brain/dashboard - Get full dashboard
+companyBrainRouter.get('/dashboard', async (c: AppContext) => {
+  try {
+    const organizationId = c.req.query('organizationId');
+    if (!organizationId) {
+      return c.json({ success: false, error: 'organizationId is required' }, 400);
+    }
+    const dashboard = await companyBrainDashboardService.getDashboard(organizationId);
+    return c.json({ success: true, data: dashboard });
+  } catch (error) {
+    console.error('Error fetching dashboard:', error);
+    return c.json({ success: false, error: 'Failed to fetch dashboard' }, 500);
+  }
+});
+
+// GET /api/company-brain/dashboard/health - Get health summary
+companyBrainRouter.get('/dashboard/health', async (c: AppContext) => {
+  try {
+    const organizationId = c.req.query('organizationId');
+    if (!organizationId) {
+      return c.json({ success: false, error: 'organizationId is required' }, 400);
+    }
+    const health = await companyBrainDashboardService.getHealthSummary(organizationId);
+    return c.json({ success: true, data: health });
+  } catch (error) {
+    console.error('Error fetching health summary:', error);
+    return c.json({ success: false, error: 'Failed to fetch health summary' }, 500);
+  }
+});
+
+// GET /api/company-brain/dashboard/report/:format - Export dashboard report
+companyBrainRouter.get('/dashboard/report/:format', async (c: AppContext) => {
+  try {
+    const organizationId = c.req.query('organizationId');
+    const format = c.req.param('format') as 'json' | 'csv';
+    if (!organizationId) {
+      return c.json({ success: false, error: 'organizationId is required' }, 400);
+    }
+    const report = await companyBrainDashboardService.exportReport(organizationId, format);
+    return c.json({ success: true, data: { report } });
+  } catch (error) {
+    console.error('Error exporting report:', error);
+    return c.json({ success: false, error: 'Failed to export report' }, 500);
+  }
+});
+
+// ==================== KNOWLEDGE GRAPH AUTO-LINK ENDPOINTS ====================
+
+// POST /api/company-brain/graph/auto-link - Auto-link nodes
+companyBrainRouter.post('/graph/auto-link', async (c: AppContext) => {
+  try {
+    const { organizationId } = await c.req.json();
+    const linksCreated = await knowledgeGraphService.autoLinkNodes(organizationId);
+    return c.json({ success: true, data: { linksCreated } });
+  } catch (error) {
+    console.error('Error auto-linking nodes:', error);
+    return c.json({ success: false, error: 'Failed to auto-link nodes' }, 500);
+  }
+});
+
+// GET /api/company-brain/graph/search - Search graph nodes
+companyBrainRouter.get('/graph/search', async (c: AppContext) => {
+  try {
+    const organizationId = c.req.query('organizationId');
+    const query = c.req.query('query') || '';
+    const type = c.req.query('type');
+    if (!organizationId) {
+      return c.json({ success: false, error: 'organizationId is required' }, 400);
+    }
+    const nodes = await knowledgeGraphService.searchNodes(organizationId, query as string, type as string | undefined);
+    return c.json({ success: true, data: nodes });
+  } catch (error) {
+    console.error('Error searching graph:', error);
+    return c.json({ success: false, error: 'Failed to search graph' }, 500);
+  }
+});
+
+// ==================== INGESTION DOCUMENT ENDPOINTS ====================
+
+// POST /api/company-brain/ingestion/document - Ingest a document
+companyBrainRouter.post('/ingestion/document', async (c: AppContext) => {
+  try {
+    const body = await c.req.json();
+    const count = await companyBrainIngestionService.ingestDocument(body.organizationId, body);
+    return c.json({ success: true, data: { itemsCreated: count } });
+  } catch (error) {
+    console.error('Error ingesting document:', error);
+    return c.json({ success: false, error: 'Failed to ingest document' }, 500);
+  }
+});
+
+// GET /api/company-brain/ingestion/syncs - Get sync history
+companyBrainRouter.get('/ingestion/syncs', async (c: AppContext) => {
+  try {
+    const organizationId = c.req.query('organizationId');
+    if (!organizationId) {
+      return c.json({ success: false, error: 'organizationId is required' }, 400);
+    }
+    const syncs = await companyBrainIngestionService.getSyncHistory(organizationId);
+    return c.json({ success: true, data: syncs });
+  } catch (error) {
+    console.error('Error fetching sync history:', error);
+    return c.json({ success: false, error: 'Failed to fetch sync history' }, 500);
   }
 });
 

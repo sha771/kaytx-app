@@ -9,7 +9,7 @@
 import type { AIEmployee } from './aiEmployeesEnhanced';
 import { enhanceAllAIAgents } from './utils/agent-capability-enhancer';
 const stub = () => null;
-let Settings: any = stub, Zap: any = stub, MessagesSquare: any = stub, Target: any = stub, Megaphone: any = stub, Crown: any = stub, Shield: any = stub, ChartBarBig: any = stub, Briefcase: any = stub, Video: any = stub;
+let Settings: any = stub, Zap: any = stub, MessagesSquare: any = stub, Target: any = stub, Megaphone: any = stub, Crown: any = stub, Shield: any = stub, BarChart3: any = stub, Briefcase: any = stub, Video: any = stub;
 import {
   allPrivacyAgents,
   privacyDataClassifier,
@@ -217,16 +217,16 @@ export const agentCategories = [
   { id: 'finance-accounting', label: 'Finance & Accounting AI', icon: Crown, color: '#FFD700' },
   { id: 'technology-engineering', label: 'Technology & Engineering AI', icon: Zap, color: '#AF52DE' },
   { id: 'human-resources', label: 'Human Resources AI', icon: Shield, color: '#FF5252' },
-  { id: 'legal-compliance', label: 'Legal & Compliance AI', icon: ChartBarBig, color: '#6366F1' },
+  { id: 'legal-compliance', label: 'Legal & Compliance AI', icon: BarChart3, color: '#6366F1' },
   { id: 'data-intelligence', label: 'Data & Intelligence AI', icon: Zap, color: '#AF52DE' },
   { id: 'product-management', label: 'Product Management AI', icon: Crown, color: '#FFD700' },
   { id: 'security-risk', label: 'Security & Risk AI', icon: Shield, color: '#FF5252' },
-  { id: 'research-development', label: 'Research & Development AI', icon: ChartBarBig, color: '#6366F1' },
+  { id: 'research-development', label: 'Research & Development AI', icon: BarChart3, color: '#6366F1' },
   { id: 'administrative', label: 'Administrative AI', icon: Settings, color: '#5856D6' },
   { id: 'trading-investments', label: 'Trading & Investments AI', icon: Target, color: '#34C759' },
   { id: 'real-estate-property', label: 'Real Estate & Property AI', icon: Crown, color: '#FFD700' },
   { id: 'insurance-risk', label: 'Insurance & Risk AI', icon: Shield, color: '#FF5252' },
-  { id: 'healthcare-medical', label: 'Healthcare & Medical AI', icon: ChartBarBig, color: '#6366F1' },
+  { id: 'healthcare-medical', label: 'Healthcare & Medical AI', icon: BarChart3, color: '#6366F1' },
   { id: 'manufacturing-production', label: 'Manufacturing & Production AI', icon: Zap, color: '#AF52DE' },
   { id: 'transportation-logistics', label: 'Transportation & Logistics AI', icon: Settings, color: '#5856D6' },
   { id: 'government-public-sector', label: 'Government & Public Sector AI', icon: Crown, color: '#FFD700' },
@@ -321,7 +321,7 @@ export const navigationHierarchy = {
   'legal-compliance': {
     id: 'legal-compliance',
     label: 'Legal & Compliance AI',
-    icon: ChartBarBig,
+    icon: BarChart3,
     color: '#6366F1',
     path: '/ai-agent/legal',
     mainAgents: legalComplianceMainAgents,
@@ -365,7 +365,7 @@ export const navigationHierarchy = {
   'research-development': {
     id: 'research-development',
     label: 'Research & Development AI',
-    icon: ChartBarBig,
+    icon: BarChart3,
     color: '#6366F1',
     path: '/ai-agent/research',
     mainAgents: researchDevelopmentMainAgents,
@@ -420,7 +420,7 @@ export const navigationHierarchy = {
   'healthcare-medical': {
     id: 'healthcare-medical',
     label: 'Healthcare & Medical AI',
-    icon: ChartBarBig,
+    icon: BarChart3,
     color: '#6366F1',
     path: '/ai-agent/healthcare',
     mainAgents: healthcareMedicalMainAgents,

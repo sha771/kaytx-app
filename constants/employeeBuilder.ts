@@ -502,7 +502,7 @@ export const EMPLOYEE_TEMPLATES: BuilderTemplate[] = [
     description: 'Experienced data or business analyst',
     mode: 'employee',
     category: 'data_intelligence',
-    icon: 'ChartBarBig',
+    icon: 'BarChart3',
     presetData: {
       level: 'senior',
       employmentType: 'full_time',

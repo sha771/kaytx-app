@@ -26,7 +26,7 @@ import {
   LayoutDashboard,
   Maximize2,
   Minimize2,
-  ChartBarBig,
+  BarChart3,
   TrendingUp,
   Activity,
   X,

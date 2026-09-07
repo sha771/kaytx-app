@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Cpu, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, ChartBarBig, MessageSquare, Calendar, Shield, Code, GitBranch, Server, Database, Cloud, Terminal, Layers, Smartphone, Layout, Code2, CheckCircle, Network, Zap, Box, Gauge, Brain } from 'lucide-react-native';
+import { Cpu, Activity, Star, Users, CircleCheckBig, Clock, Target, ArrowRight, BarChart3, MessageSquare, Calendar, Shield, Code, GitBranch, Server, Database, Cloud, Terminal, Layers, Smartphone, Layout, Code2, CheckCircle, Network, Zap, Package, Gauge, Brain } from 'lucide-react-native';
 import AgentFeatures from '@/components/ai-agent/AgentFeatures';
 import { useRouter } from 'expo-router';
 
@@ -81,7 +81,7 @@ const DEPARTMENT_AGENTS = [
   { id: 'technical-lead-1', name: 'Technical Lead', description: 'Technical Lead AI Agent', icon: Zap, color: '#FFC107' },
   { id: 'technical-lead-2', name: 'Technical Lead', description: 'Technical Lead AI Agent', icon: Zap, color: '#FFC107' },
   { id: 'technical-lead-3', name: 'Technical Lead', description: 'Technical Lead AI Agent', icon: Zap, color: '#FFC107' },
-  { id: 'platform-architect', name: 'Platform Architect', description: 'Platform Architect AI Agent', icon: Box, color: '#5C6BC0' },
+  { id: 'platform-architect', name: 'Platform Architect', description: 'Platform Architect AI Agent', icon: Package, color: '#5C6BC0' },
   { id: 'api-architect', name: 'API Architect', description: 'API Architect AI Agent', icon: GitBranch, color: '#26A69A' },
   { id: 'performance-architect', name: 'Performance Architect', description: 'Performance Architect AI Agent', icon: Gauge, color: '#E65100' },
   { id: 'security-engineer-2', name: 'Security Engineer', description: 'Security Engineer AI Agent', icon: Shield, color: '#D32F2F' },
@@ -132,7 +132,7 @@ export default function EngineeringDepartment() {
       <View style={[styles.section, { backgroundColor: theme.colors.card || '#F2F2F7' }]}>
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Quick Actions</Text>
         <View style={styles.actionsGrid}>
-          {[{label:'View Reports',icon:ChartBarBig},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#1565C012' }]}><act.icon size={24} color="#1565C0" /><Text style={[styles.actionText, { color: '#1565C0' }]}>{act.label}</Text></TouchableOpacity>))}
+          {[{label:'View Reports',icon:BarChart3},{label:'Team Chat',icon:MessageSquare},{label:'Schedule',icon:Calendar},{label:'Settings',icon:Shield}].map((act,i)=>(<TouchableOpacity key={i} style={[styles.actionButton, { backgroundColor: '#1565C012' }]}><act.icon size={24} color="#1565C0" /><Text style={[styles.actionText, { color: '#1565C0' }]}>{act.label}</Text></TouchableOpacity>))}
         </View>
       </View>
     

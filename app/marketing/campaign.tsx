@@ -24,7 +24,7 @@ import {
   Trash2,
   ArrowLeft,
   Plus,
-  ChartBarBig,
+  BarChart3,
   Activity,
   Mail,
   MessageSquare,
@@ -308,7 +308,7 @@ export default function CampaignScreen() {
             {item.startDate} - {item.endDate}
           </Text>
           <TouchableOpacity style={[styles.viewDetailsButton, { backgroundColor: theme.colors.primary }]}>
-            <ChartBarBig size={14} color="white" />
+            <BarChart3 size={14} color="white" />
             <Text style={styles.viewDetailsText}>View Details</Text>
           </TouchableOpacity>
         </View>

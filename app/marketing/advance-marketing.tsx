@@ -17,7 +17,7 @@ import {
   Target,
   TrendingUp,
   Users,
-  ChartBarBig,
+  BarChart3,
   Settings,
   Plus,
   Search,
@@ -226,7 +226,7 @@ export default function AdvanceMarketingScreen() {
       <View style={[styles.chartCard, { backgroundColor: theme.colors.cardBackground }]}>
         <Text style={[styles.cardTitle, { color: theme.colors.text }]}>Performance Trends</Text>
         <View style={styles.chartPlaceholder}>
-          <ChartBarBig size={48} color={theme.colors.secondaryText} />
+          <BarChart3 size={48} color={theme.colors.secondaryText} />
           <Text style={[styles.chartText, { color: theme.colors.secondaryText }]}>Chart visualization would go here</Text>
         </View>
       </View>

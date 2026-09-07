@@ -21,7 +21,7 @@ import {
   Zap,
   Calendar,
   MessageCircle,
-  ChartBarBig,
+  BarChart3,
   Database,
 } from 'lucide-react-native';
 import { mockIntegrations } from '@/utils/mockNegotiationData';
@@ -52,7 +52,7 @@ export default function IntegrationsScreen() {
       crm: Database,
       calendar: Calendar,
       communication: MessageCircle,
-      analytics: ChartBarBig,
+      analytics: BarChart3,
       productivity: Zap,
     } as Record<string, React.ComponentType<any>>;
     return icons[category] || Zap;

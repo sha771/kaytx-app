@@ -72,7 +72,6 @@ import {
   Plane,
   Train,
   Factory,
-  Box,
   ArrowRight,
   BarChart2,
   PieChart as PieChartIcon,
@@ -93,8 +92,6 @@ import {
   Compass,
   Navigation2,
   Route as RouteIcon,
-  Package2,
-  Boxes,
   ShoppingCart2,
   ShoppingCart as ShoppingCartIcon,
   Truck as TruckIcon,
@@ -2185,3 +2182,4 @@ const styles = StyleSheet.create({
 });
 
 export default SupplyChainCommandCenter;
+

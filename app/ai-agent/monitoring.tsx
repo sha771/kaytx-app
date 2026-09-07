@@ -20,7 +20,7 @@ import {
   Target,
   Clock,
   Zap,
-  ChartBarBig,
+  BarChart3,
   Settings,
   Plus,
   Trash2,

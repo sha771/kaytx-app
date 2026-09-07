@@ -1,6 +1,6 @@
 import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
-import { Box } from 'lucide-react-native';
+import { Boxes } from 'lucide-react-native';
 
 export default function EducationProductManagerPage() {
   const agent = {
@@ -9,7 +9,7 @@ export default function EducationProductManagerPage() {
     title: 'Education Agent',
     description: 'Automated Education Product Manager agent specializing in educational product development with advanced AI capabilities for product strategy, user research, and feature prioritization.',
     capabilities: ["Product Strategy","User Research","Feature Prioritization","Roadmap Planning","Market Analysis","Performance Tracking"],
-    icon: Box,
+    icon: Boxes,
     color: '#F59E0B',
     type: 'agent' as const,
     humanCost: '$55k/year',

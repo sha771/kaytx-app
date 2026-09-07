@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, ActivityIndicator, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Mail, Send, Users, ChartBarBig, Calendar, Plus, Search, ListFilter, Target, TrendingUp, CircleAlert, RefreshCw, Pause } from 'lucide-react-native';
+import { Mail, Send, Users, BarChart3, Calendar, Plus, Search, ListFilter, Target, TrendingUp, CircleAlert, RefreshCw, Pause } from 'lucide-react-native';
 import { useCampaigns, useMarketingAnalytics } from '../../hooks/useMarketing';
 
 interface EmailCampaign {
@@ -241,7 +241,7 @@ export default function EmailMarketingScreen() {
                 </View>
                 <View style={styles.campaignActions}>
                   <TouchableOpacity style={styles.actionButton}>
-                    <ChartBarBig size={16} color="#6B7280" />
+                    <BarChart3 size={16} color="#6B7280" />
                     <Text style={styles.actionText}>Analytics</Text>
                   </TouchableOpacity>
                   {campaign.status === 'draft' && (

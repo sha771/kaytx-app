@@ -9,10 +9,10 @@ import {
 } from './aiAgentHierarchy';
 import {
   Settings, Zap, GitBranch, Shield, Truck, Award,
-  ChartBarBig, TrendingUp, ChartLine, Brain, Activity, TriangleAlert,
+  BarChart3, TrendingUp, ChartLine, Brain, Activity, TriangleAlert,
   Eye, Gauge, Cpu, Sparkles, Crown, MessagesSquare,
   Target, Megaphone, ChartPie, Globe,
-  SquareCheck, Box, Lightbulb,
+  SquareCheck, Boxes, Lightbulb,
   Target as GoalIcon
 } from 'lucide-react-native';
 
@@ -298,7 +298,7 @@ export const operationsManagementSubAgents: AIAgent[] = [
     name: 'AI Resource Planner',
     title: 'Resource Allocation Specialist',
     description: 'Optimizes resource allocation across projects and teams for maximum efficiency.',
-    icon: Box,
+    icon: Boxes,
     color: '#5AC8FA',
     type: 'subagent',
     category: 'operations_management',
@@ -569,7 +569,7 @@ export const dataIntelligenceSubAgents: AIAgent[] = [
     name: 'AI Data Analyst',
     title: 'Business Intelligence Analyst',
     description: 'Analyzes business data, creates reports, and provides actionable insights for decision-making.',
-    icon: ChartBarBig,
+    icon: BarChart3,
     color: '#007AFF',
     type: 'subagent',
     category: 'data_intelligence',

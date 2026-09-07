@@ -12,7 +12,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import {
   ArrowLeft,
-  ChartBarBig,
+  BarChart3,
   TrendingUp,
   TrendingDown,
   Users,

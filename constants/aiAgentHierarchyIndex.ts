@@ -17,7 +17,7 @@ import type { LucideIcon } from 'lucide-react-native';
 import {
   Crown, Star, Settings, Zap, Sparkles, Users, Target, Megaphone, Headphones,
   Shield, Scale, TrendingUp, Building2, DollarSign, Brain, Cpu, Database,
-  Heart, Activity, Truck, Factory, Landmark, Briefcase, ChartBarBig, Bot,
+  Heart, Activity, Truck, Factory, Landmark, Briefcase, BarChart3, Bot,
   ShieldCheck, FileText, ClipboardList, Calculator, Search, Eye, Phone,
   Mail, Calendar, Award, Globe, Lock, AlertTriangle, Network, Workflow,
 } from 'lucide-react-native';

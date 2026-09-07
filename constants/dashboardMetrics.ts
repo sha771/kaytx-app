@@ -55,7 +55,6 @@ import {
   Thermometer,
   Wind,
   TreePine,
-  Factory2,
   Warehouse,
   Map,
   Satellite,
@@ -72,6 +71,7 @@ import {
   ThermometerSun,
   Waves,
   Mountain,
+  Package,
 } from 'lucide-react-native';
 import { DepartmentDashboardConfig } from '@/components/ai-agent/dashboard/types';
 
@@ -2542,7 +2542,7 @@ export const manufacturingDashboardConfig: DepartmentDashboardConfig = {
       value: '12.5x',
       change: '+1.8%',
       trend: 'up',
-      icon: Box,
+      icon: Package,
       color: '#3B82F6',
       subtitle: 'Annual rate'
     },
@@ -2782,7 +2782,7 @@ export const supplychainDashboardConfig: DepartmentDashboardConfig = {
       value: '$23.4M',
       change: '+5.4%',
       trend: 'up',
-      icon: Box,
+      icon: Package,
       color: '#8B5CF6',
       subtitle: 'Total stock'
     },
@@ -4613,11 +4613,6 @@ export const ecommerceDashboardConfig: DepartmentDashboardConfig = {
     ],
     modelLatency: 85,
     apiHealth: 'operational',
-    paymentGatewayConnectivity: [
-      { gateway: 'Stripe', status: 'connected', latency: 45 },
-      { gateway: 'PayPal', status: 'connected', latency: 52 },
-      { gateway: 'Square', status: 'connected', latency: 48 }
-    ],
     dataFeedQuality: 99.8
   }
 };
@@ -5955,7 +5950,7 @@ export const agricultureDashboardConfig: DepartmentDashboardConfig = {
       value: '247',
       change: '+12',
       trend: 'up',
-      icon: Factory2,
+      icon: Factory,
       color: '#22C55E',
       subtitle: 'Active operations'
     },

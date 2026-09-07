@@ -13,7 +13,7 @@
 import type { AIAgent } from './aiAgentHierarchy';
 import { enhanceAIAgent } from './utils/agent-capability-enhancer';
 const stub = () => null;
-const Users: any = stub, Target: any = stub, Megaphone: any = stub, Settings: any = stub, Zap: any = stub, Shield: any = stub, ChartBarBig: any = stub;
+const Users: any = stub, Target: any = stub, Megaphone: any = stub, Settings: any = stub, Zap: any = stub, Shield: any = stub, BarChart3: any = stub;
 const Briefcase: any = stub, TrendingUp: any = stub, Globe: any = stub, Building2: any = stub, Truck: any = stub, ShoppingCart: any = stub, Scale: any = stub;
 const Heart: any = stub, Activity: any = stub, Microscope: any = stub, Factory: any = stub, Landmark: any = stub, FileText: any = stub, Database: any = stub;
 const Search: any = stub, Workflow: any = stub, Cpu: any = stub, Lock: any = stub, BadgeCheck: any = stub, Sparkles: any = stub, Award: any = stub;
@@ -382,7 +382,7 @@ const DEPARTMENT_CONFIGS: Record<string, DepartmentConfig> = {
     id: 'legal-compliance',
     name: 'Legal & Compliance',
     color: '#6366F1',
-    icon: ChartBarBig,
+    icon: BarChart3,
     mainAgentCount: 20,
     subAgentCount: 40,
     mainAgentRoles: [
@@ -1580,6 +1580,146 @@ Object.assign(DEPARTMENT_CONFIGS, {
 });
 
 // ============================================
+// EMAIL & PHONE GENERATION HELPERS
+// ============================================
+
+/** Roles that require a phone number */
+const PHONE_REQUIRED_KEYWORDS = [
+  'receptionist', 'reception', 'call router', 'call center', 'call handler',
+  'customer support', 'support agent', 'support specialist', 'customer service',
+  'negotiator', 'negotiation', 'sales development', 'sdr', 'account executive',
+  'sales rep', 'telemarketing', 'cold calling', 'outreach',
+  'dispatcher', 'dispatch', 'fleet coordinator',
+  'concierge', 'front desk', 'visitor', 'host',
+  'medical receptionist', 'patient coordinator', 'patient services',
+  'help desk', 'service desk', 'it support', 'technical support',
+  'hr helpline', 'employee hotline', 'recruiter', 'hr hotline',
+  'whistleblower', 'legal intake', 'compliance hotline',
+  'collections', 'debt recovery', 'billing support',
+  'emergency', 'crisis manager', 'incident responder',
+  'vendor liaison', 'vendor coordinator',
+  'property manager', 'tenant relations', 'leasing agent',
+  'insurance agent', 'claims adjuster', 'insurance broker',
+  'travel consultant', 'reservation agent', 'ticket agent',
+  'branch manager', 'loan officer', 'relationship manager',
+  'live chat', 'voice', 'ivr', 'phone',
+  'appointment scheduler', 'booking',
+  'ticket classifier', 'escalation handler', 'complaint',
+  'dispute resolver', 'payment processor',
+  'executive assistant', 'personal shopper', 'stylist',
+  'restaurant manager', 'hostess', 'reservationist',
+  'delivery manager', 'takeout', 'catering',
+  'concierge', 'bellman', 'front desk agent',
+  'guest relations', 'customer experience',
+  'client advisor', 'vip clienteling', 'boutique manager',
+];
+
+/** Roles that clearly do NOT need a phone */
+const PHONE_NOT_REQUIRED_KEYWORDS = [
+  'engineer', 'developer', 'architect', 'scientist', 'analyst',
+  'researcher', 'designer', 'strategist', 'planner',
+  'director', 'vp', 'chief', 'manager', 'lead',
+  'specialist', 'coordinator', 'administrator',
+  'data', 'ml', 'ai', 'machine learning',
+  'compliance', 'audit', 'risk', 'governance',
+  'content', 'copywriter', 'editor', 'writer',
+  'seo', 'sem', 'ppc', 'email marketing',
+  'social media', 'brand', 'campaign',
+  'finance', 'accounting', 'bookkeeper', 'payroll',
+  'treasury', 'tax', 'budget', 'investment',
+  'hr', 'human resources', 'talent', 'learning',
+  'legal', 'compliance', 'policy', 'regulatory',
+  'quality', 'qa', 'testing', 'product',
+  'ux', 'ui', 'research', 'innovation',
+  'procurement', 'sourcing', 'supply chain',
+  'inventory', 'warehouse', 'logistics',
+  'security', 'cyber', 'fraud', 'identity',
+  'strategy', 'executive', 'board', 'corporate',
+];
+
+function needsPhone(role: string): boolean {
+  const lowerRole = role.toLowerCase();
+  
+  // Check if role explicitly matches phone-required keywords
+  for (const keyword of PHONE_REQUIRED_KEYWORDS) {
+    if (lowerRole.includes(keyword)) return true;
+  }
+  
+  // Check if role matches phone-not-required keywords
+  for (const keyword of PHONE_NOT_REQUIRED_KEYWORDS) {
+    if (lowerRole.includes(keyword)) return false;
+  }
+  
+  // Default: if role contains customer-facing keywords
+  if (lowerRole.includes('support') || lowerRole.includes('service') || 
+      lowerRole.includes('client') || lowerRole.includes('account management') ||
+      lowerRole.includes('sales') || lowerRole.includes('relation') ||
+      lowerRole.includes('contact') || lowerRole.includes('help')) {
+    return true;
+  }
+  
+  return false;
+}
+
+function generateEmail(role: string, departmentId: string, agentId: string): string {
+  const roleSlug = role.toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/ai-?/g, '');
+  const deptSlug = departmentId.replace(/[^a-z0-9-]/g, '');
+  return `${roleSlug}.${deptSlug}@kaytx.ai`;
+}
+
+function generatePhone(role: string, departmentId: string, index: number): string | undefined {
+  if (!needsPhone(role)) return undefined;
+  
+  const deptMap: Record<string, string> = {
+    'customer-experience': '800-CX',
+    'sales-revenue': '800-SALES',
+    'marketing-growth': '800-MKTG',
+    'operations-management': '800-OPS',
+    'finance-accounting': '800-FIN',
+    'technology-engineering': '800-TECH',
+    'human-resources': '800-HR',
+    'legal-compliance': '800-LEGAL',
+    'healthcare-medical': '800-MED',
+    'transportation-logistics': '800-SHIP',
+    'administrative': '800-ADMIN',
+    'real-estate-property': '800-REALTY',
+    'insurance-risk': '800-INSUR',
+    'security-risk': '800-SECURE',
+    'banking-finance': '800-BANK',
+    'ecommerce': '800-SHOP',
+    'travel-tourism': '800-TRIP',
+    'retail-stores': '800-RETAIL',
+    'restaurants': '800-EATS',
+    'fashion-luxury': '800-FASHION',
+    'education': '800-LEARN',
+    'executive-strategy': '800-EXEC',
+    'event-management': '800-EVENT',
+    'energy-utilities': '800-ENERGY',
+    'agriculture': '800-FARM',
+    'media-entertainment': '800-MEDIA',
+    'gaming-esports': '800-GAME',
+    'professional-services': '800-PRO',
+    'ai-management-governance': '800-AI',
+    'supply-chain-logistics': '800-SUPPLY',
+    'government-public-sector': '800-GOV',
+    'manufacturing-production': '800-MFG',
+    'data-intelligence': '800-DATA',
+    'product-management': '800-PROD',
+    'research-development': '800-RD',
+    'trading-investments': '800-TRADE',
+    'privacy-security': '800-PRIV',
+  };
+  
+  const prefix = deptMap[departmentId] || '800-AGENT';
+  const num = String(index + 1).padStart(3, '0');
+  return `+1-${prefix}-${num}`;
+}
+
+// ============================================
 // AGENT GENERATOR FUNCTIONS
 // ============================================
 
@@ -1603,6 +1743,8 @@ function generateMainAgent(
     id: agentId,
     name: `AI ${role}`,
     title: role,
+    email: generateEmail(role, departmentId, agentId),
+    phone: generatePhone(role, departmentId, index),
     description: `AI-powered ${role} with advanced automation, analytics, and decision-making capabilities for ${config.name} operations.`,
     icon: config.icon,
     color: config.color,
@@ -1719,6 +1861,8 @@ function generateSubAgent(
     id: agentId,
     name: `AI ${role}`,
     title: role,
+    email: generateEmail(role, departmentId, agentId),
+    phone: generatePhone(role, departmentId, index),
     description: `Specialized AI ${role} focused on ${role.toLowerCase()} tasks within ${config.name} operations with advanced automation capabilities.`,
     icon: config.icon,
     color: config.color,

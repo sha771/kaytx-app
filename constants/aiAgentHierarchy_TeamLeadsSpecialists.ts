@@ -58,12 +58,12 @@ import {
   Heart,
   Gift,
   
-  // Operations Icons
-  Settings,
-  Box,
-  Truck,
-  MapPin,
-  Clock,
+// Operations Icons
+   Settings,
+   Boxes,
+   Truck,
+   MapPin,
+   Clock,
   
   // HR Icons
   UsersRound,
@@ -73,7 +73,7 @@ import {
   
   // Data Icons
   Database,
-  ChartBarBig,
+  BarChart3,
   Brain,
   FileChartColumn,
   
@@ -1337,9 +1337,9 @@ export const teamLeads: AIEmployeeProfile[] = [
     title: 'Team Lead - Warehouse Operations',
     level: 'team_lead',
     department: 'operations',
-    description: 'Leads warehouse operations, inventory management, and fulfillment processes.',
-    icon: Box,
-    color: '#37474F',
+description: 'Leads warehouse operations, inventory management, and fulfillment processes.',
+     icon: Boxes,
+     color: '#37474F',
     orgChart: {
       id: 'warehouse-lead',
       uid: 'ktx-21-warehouse-lead',
@@ -3115,9 +3115,9 @@ export const specialists: AIEmployeeProfile[] = [
     title: 'Specialist - Inventory Management',
     level: 'specialist',
     department: 'operations',
-    description: 'Manages inventory levels, tracks stock, and optimizes inventory operations.',
-    icon: Box,
-    color: '#37474F',
+description: 'Manages inventory levels, tracks stock, and optimizes inventory operations.',
+     icon: Boxes,
+     color: '#37474F',
     orgChart: {
       id: 'inventory-specialist',
       uid: 'ktx-21-inventory-specialist',

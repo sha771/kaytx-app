@@ -28,7 +28,7 @@ import {
 } from 'lucide-react-native';
 import { router } from 'expo-router';
 import { useTheme } from '@/providers/ThemeProvider';
-import { useApi } from './hooks/useApi';
+import { useApi } from '@/hooks/useApi';
 import apiClient from '@/lib/api-client';
 
 type SettingItem = {

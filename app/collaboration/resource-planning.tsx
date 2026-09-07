@@ -15,7 +15,7 @@ import {
     Clock,
     SquareCheck,
     CircleAlert,
-    ChartBarBig,
+    BarChart3,
     ChevronRight,
     UserPlus
 } from 'lucide-react-native';
@@ -75,7 +75,7 @@ export default function ResourcePlanningScreen() {
                 ))}
 
                 <TouchableOpacity style={[styles.allocationButton, { backgroundColor: theme.colors.primary }]}>
-                    <ChartBarBig size={20} color="white" />
+                    <BarChart3 size={20} color="white" />
                     <Text style={styles.allocationButtonText}>Optimize Task Allocation (AI)</Text>
                 </TouchableOpacity>
 

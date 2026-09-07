@@ -39,7 +39,7 @@ const layerData = {
 };
 const iconMap: Record<string, any> = { Gauge: Icons.Gauge, BarChart3: Icons.BarChart3, CheckCircle: Icons.CheckCircle, AlertTriangle: Icons.AlertTriangle, FileText: Icons.FileText, Search: Icons.Search, Users: Icons.Users, TrendingUp: Icons.TrendingUp, Layers: Icons.Layers };
 
-const LayerReview = () => {
+export default function LayerReview() {
   const insets = useSafeAreaInsets();
   const { colors } = useTheme();
   const [activeTab, setActiveTab] = useState<'overview' | 'components' | 'environment' | 'options'>('overview');

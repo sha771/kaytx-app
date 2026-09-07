@@ -25,7 +25,11 @@ export function getRedis() {
   }
 
   if (!redisUrl) {
-    throw new Error('REDIS_URL is required. Set USE_MOCK_REDIS=true for development without Redis.');
+    if (isProduction) {
+      throw new Error('REDIS_URL is required. Set USE_MOCK_REDIS=true for development without Redis.');
+    }
+    logger.warn('[Redis] No REDIS_URL set. Redis features disabled. Set USE_MOCK_REDIS=true to suppress this warning.');
+    return null;
   }
 
   if (!redisInstance) {

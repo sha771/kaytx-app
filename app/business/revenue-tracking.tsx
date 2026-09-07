@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { DollarSign, TrendingUp, Calendar, ChartBarBig, Target, ArrowUp, ArrowDown } from 'lucide-react-native';
+import { DollarSign, TrendingUp, Calendar, BarChart3, Target, ArrowUp, ArrowDown } from 'lucide-react-native';
 
 interface RevenueData {
   id: string;
@@ -80,7 +80,7 @@ export default function RevenueTracking() {
           </View>
         </View>
         <View style={styles.metricCard}>
-          <ChartBarBig size={24} color="#e74c3c" />
+          <BarChart3 size={24} color="#e74c3c" />
           <Text style={styles.metricValue}>{formatCurrency(39000)}</Text>
           <Text style={styles.metricLabel}>Monthly Avg</Text>
           <View style={styles.metricChange}>
@@ -248,7 +248,7 @@ export default function RevenueTracking() {
           </View>
           <View style={styles.factorItem}>
             <View style={styles.factorIcon}>
-              <ChartBarBig size={16} color="#f39c12" />
+              <BarChart3 size={16} color="#f39c12" />
             </View>
             <View style={styles.factorInfo}>
               <Text style={styles.factorName}>Market Conditions</Text>
@@ -276,7 +276,7 @@ export default function RevenueTracking() {
           style={[styles.tab, activeTab === 'overview' && styles.activeTab]}
           onPress={() => setActiveTab('overview')}
         >
-          <ChartBarBig size={20} color={activeTab === 'overview' ? '#4ecdc4' : '#666'} />
+          <BarChart3 size={20} color={activeTab === 'overview' ? '#4ecdc4' : '#666'} />
           <Text style={[styles.tabText, activeTab === 'overview' && styles.activeTabText]}>Overview</Text>
         </TouchableOpacity>
         <TouchableOpacity 

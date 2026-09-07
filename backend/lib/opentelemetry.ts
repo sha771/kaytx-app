@@ -3,12 +3,6 @@
  * Distributed tracing with Jaeger backend
  */
 
-import { NodeSDK } from '@opentelemetry/sdk-node';
-import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
-import { resourceFromAttributes } from '@opentelemetry/resources';
-import { JaegerExporter } from '@opentelemetry/exporter-jaeger';
-import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-grpc';
-import { SimpleSpanProcessor, BatchSpanProcessor } from '@opentelemetry/sdk-trace-base';
 import * as opentelemetry from '@opentelemetry/api';
 import { logger } from './production-logger';
 
@@ -28,56 +22,68 @@ const config = {
 /**
  * Initialize OpenTelemetry SDK
  */
-export function initializeOpenTelemetry(): NodeSDK {
+export function initializeOpenTelemetry() {
   if (!config.enableTracing) {
     logger.info('[OpenTelemetry] Tracing disabled');
-    return new NodeSDK();
+    return null;
   }
 
-  // Create resource with service information
-  const resource = resourceFromAttributes({
-    'service.name': config.serviceName,
-    'service.version': processEnv.env?.DEPLOYMENT_VERSION || '1.0.0',
-    'deployment.environment': config.environment,
-    'host.name': os.hostname(),
-  });
+  try {
+    const { NodeSDK } = require('@opentelemetry/sdk-node');
+    const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumentations-node');
+    const { resourceFromAttributes } = require('@opentelemetry/resources');
+    const { JaegerExporter } = require('@opentelemetry/exporter-jaeger');
+    const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-grpc');
+    const { SimpleSpanProcessor, BatchSpanProcessor } = require('@opentelemetry/sdk-trace-base');
 
-  // Jaeger exporter (primary)
-  const jaegerExporter = new JaegerExporter({
-    endpoint: config.jaegerEndpoint,
-  });
+    // Create resource with service information
+    const resource = resourceFromAttributes({
+      'service.name': config.serviceName,
+      'service.version': processEnv.env?.DEPLOYMENT_VERSION || '1.0.0',
+      'deployment.environment': config.environment,
+      'host.name': os.hostname(),
+    });
 
-  // OTLP exporter (for collectors like Tempo, etc.)
-  const otlpExporter = new OTLPTraceExporter({
-    url: config.otlpEndpoint,
-  });
+    // Jaeger exporter (primary)
+    const jaegerExporter = new JaegerExporter({
+      endpoint: config.jaegerEndpoint,
+    });
 
-  // Initialize SDK
-  const sdk = new NodeSDK({
-    resource,
-    instrumentations: [getNodeAutoInstrumentations()],
-    traceExporter: jaegerExporter,
-    spanProcessors: [
-      new BatchSpanProcessor(jaegerExporter, {
-        maxExportBatchSize: 512,
-        scheduledDelayMillis: 5000,
-        exportTimeoutMillis: 30000,
-      }),
-      new SimpleSpanProcessor(otlpExporter as any),
-    ],
-  });
+    // OTLP exporter (for collectors like Tempo, etc.)
+    const otlpExporter = new OTLPTraceExporter({
+      url: config.otlpEndpoint,
+    });
 
-  // Initialize the SDK
-  sdk.start();
+    // Initialize SDK
+    const sdk = new NodeSDK({
+      resource,
+      instrumentations: [getNodeAutoInstrumentations()],
+      traceExporter: jaegerExporter,
+      spanProcessors: [
+        new BatchSpanProcessor(jaegerExporter, {
+          maxExportBatchSize: 512,
+          scheduledDelayMillis: 5000,
+          exportTimeoutMillis: 30000,
+        }),
+        new SimpleSpanProcessor(otlpExporter),
+      ],
+    });
 
-  logger.info('[OpenTelemetry] Initialized with config', {
-    serviceName: config.serviceName,
-    environment: config.environment,
-    jaegerEndpoint: config.jaegerEndpoint,
-    samplingProbability: config.samplingProbability,
-  });
+    // Initialize the SDK
+    sdk.start();
 
-  return sdk;
+    logger.info('[OpenTelemetry] Initialized with config', {
+      serviceName: config.serviceName,
+      environment: config.environment,
+      jaegerEndpoint: config.jaegerEndpoint,
+      samplingProbability: config.samplingProbability,
+    });
+
+    return sdk;
+  } catch (err) {
+    logger.warn('[OpenTelemetry] Failed to initialize (packages not installed):', err instanceof Error ? err.message : err);
+    return null;
+  }
 }
 
 /**

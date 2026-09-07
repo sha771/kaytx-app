@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
-import { Phone, Users, Clock, ChartBarBig, Settings, Plus, Search, ListFilter, PhoneCall } from 'lucide-react-native';
+import { Phone, Users, Clock, BarChart3, Settings, Plus, Search, ListFilter, PhoneCall } from 'lucide-react-native';
 
 interface CallCenter {
   id: string;
@@ -121,7 +121,7 @@ export default function CallCenterScreen() {
           </View>
           
           <View style={styles.statCard}>
-            <ChartBarBig size={24} color="#8B5CF6" />
+            <BarChart3 size={24} color="#8B5CF6" />
             <Text style={styles.statNumber}>72</Text>
             <Text style={styles.statLabel}>Calls Today</Text>
           </View>
@@ -172,7 +172,7 @@ export default function CallCenterScreen() {
                 </TouchableOpacity>
                 
                 <TouchableOpacity style={styles.actionButton}>
-                  <ChartBarBig size={16} color="#10B981" />
+                  <BarChart3 size={16} color="#10B981" />
                   <Text style={styles.actionText}>Stats</Text>
                 </TouchableOpacity>
                 
@@ -200,7 +200,7 @@ export default function CallCenterScreen() {
             </TouchableOpacity>
             
             <TouchableOpacity style={styles.actionCard}>
-              <ChartBarBig size={24} color="#F59E0B" />
+              <BarChart3 size={24} color="#F59E0B" />
               <Text style={styles.actionCardText}>View Reports</Text>
             </TouchableOpacity>
             

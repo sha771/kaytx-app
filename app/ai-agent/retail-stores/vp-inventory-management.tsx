@@ -1,6 +1,6 @@
 import React from 'react';
 import { AgentPageWrapper } from '@/components/ai-agent/AgentPageWrapper';
-import { Boxes } from 'lucide-react-native';
+import { Package } from 'lucide-react-native';
 
 export default function VPInventoryManagementPage() {
   const agent = {
@@ -9,7 +9,7 @@ export default function VPInventoryManagementPage() {
     title: 'AI VP Inventory Management',
     description: 'The AI VP Inventory Management oversees all inventory operations, manages stock levels, replenishment, and demand planning to optimize inventory turnover and minimize stockouts.',
     capabilities: ["Task Automation","Data Processing","Workflow Management","Inventory Strategy","Stock Management","Replenishment","Demand Planning","Inventory Optimization","Cost Control","Analytics"],
-    icon: Boxes,
+    icon: Package,
     color: '#6D4C41',
     type: 'employee' as const,
     humanCost: '$170k/year',

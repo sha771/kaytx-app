@@ -31,7 +31,7 @@ import {
   Store, 
   Factory, 
   Warehouse, 
-  ChartBarBig, 
+  BarChart3, 
   Radio, 
   Mail, 
   LayoutDashboard, 
@@ -358,7 +358,7 @@ const NAVIGATION_ITEMS = [
   { id: 'marketing', label: 'Marketing', icon: TrendingUp },
   { id: 'supply', label: 'Supply Chain', icon: Truck },
   { id: 'sustainability', label: 'Sustainability', icon: Leaf },
-  { id: 'analytics', label: 'Analytics', icon: ChartBarBig },
+  { id: 'analytics', label: 'Analytics', icon: BarChart3 },
   { id: 'settings', label: 'Settings', icon: Settings },
 ];
 

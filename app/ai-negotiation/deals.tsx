@@ -23,7 +23,7 @@ import {
   Pencil,
   CircleCheck,
   Target,
-  ChartBarBig,
+  BarChart3,
   Award,
 } from 'lucide-react-native';
 import { mockDeals } from '@/utils/mockNegotiationData';

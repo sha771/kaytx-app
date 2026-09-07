@@ -15,7 +15,7 @@ import { agentRegistry } from '@/constants/aiAgentRegistry';
 import { trpc } from '@/lib/trpc';
 import { useRealtimeSubscription } from '@/lib/trpc-client';
 import {
-  MessageSquare, Brain, LayoutDashboard, BarChart3, ChartBarBig, Target,
+  MessageSquare, Brain, LayoutDashboard, BarChart3, BarChart3, Target,
   Clock, FileText, Activity, Settings, Bot, CircleCheckBig, TriangleAlert,
   TrendingUp, Gauge, Network, Cpu, Database, Shield, Zap, Award, Sparkles,
   RefreshCw, TreeStructure, ArrowRight, Users, Building2, Search, Loop
@@ -613,7 +613,7 @@ export const AgentPageWrapper: React.FC<AgentPageWrapperProps> = ({
     <View style={styles.tabContent}>
       <View style={[styles.card, { backgroundColor: theme.colors.cardBackground }]}>
         <View style={styles.cardHeader}>
-          <ChartBarBig size={20} color={agent.color || '#007AFF'} />
+          <BarChart3 size={20} color={agent.color || '#007AFF'} />
           <Text style={[styles.cardTitle, { color: theme.colors.text }]}>Performance Metrics</Text>
         </View>
         <View style={styles.kpiRow}>
@@ -1426,7 +1426,7 @@ export const AgentPageWrapper: React.FC<AgentPageWrapperProps> = ({
     { id: 'overview', label: 'Overview', icon: Brain, component: renderOverviewTab },
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, component: renderDashboardTab },
     { id: 'analytics', label: 'Analytics', icon: BarChart3, component: renderAnalyticsTab },
-    { id: 'performance', label: 'Performance', icon: ChartBarBig, component: renderPerformanceTab },
+    { id: 'performance', label: 'Performance', icon: BarChart3, component: renderPerformanceTab },
     { id: 'capabilities', label: 'Capabilities', icon: Target, component: renderCapabilitiesTab },
     { id: 'hierarchy', label: 'Hierarchy', icon: TreeStructure, component: renderHierarchyTab },
     { id: 'history', label: 'History', icon: Clock, component: renderHistoryTab },

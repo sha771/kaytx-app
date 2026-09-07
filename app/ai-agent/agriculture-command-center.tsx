@@ -78,7 +78,7 @@ import {
   ChevronRight,
   LayoutDashboard,
   User,
-  ChartBarBig,
+  BarChart3,
   Factory,
   Package,
   Navigation,

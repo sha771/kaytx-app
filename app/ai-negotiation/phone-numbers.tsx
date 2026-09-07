@@ -20,7 +20,7 @@ import {
   PhoneCall,
   PhoneIncoming,
   TrendingUp,
-  ChartBarBig,
+  BarChart3,
   Users,
   Settings as SettingsIcon,
   ShieldCheck,
@@ -444,7 +444,7 @@ export default function PhoneNumbersScreen() {
                   <Text style={[styles.statItemLabel, { color: theme.colors.secondaryText }]}>Calls</Text>
                 </View>
                 <View style={styles.statItem}>
-                  <ChartBarBig size={16} color="#34C759" />
+                  <BarChart3 size={16} color="#34C759" />
                   <Text style={[styles.statItemValue, { color: theme.colors.text }]}>{number.successRate}%</Text>
                   <Text style={[styles.statItemLabel, { color: theme.colors.secondaryText }]}>Success</Text>
                 </View>

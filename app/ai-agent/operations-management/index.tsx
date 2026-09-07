@@ -1,5 +1,6 @@
 import React from 'react';
 import DepartmentDashboardView from '@/components/ai-agent/dashboard/DepartmentDashboardView';
+import { Briefcase, Zap, Users, Package, Shield, Wrench, TrendingUp, Clock, GitBranch, BarChart3, Bell, Activity, Gauge, Layout, AlertTriangle, CheckCircle, Calendar, LineChart } from 'lucide-react-native';
 
 const DEPARTMENT_AGENTS = [
   { id: 'neural-operations-hub', name: 'AI Neural Operations Hub', description: 'Central operations coordination and management system', icon: Briefcase, color: '#00695C' },

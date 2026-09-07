@@ -3,11 +3,12 @@
  * @license MIT - See LICENSE file for full terms
  */
 
-import React, { useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Modal, TextInput, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Modal, TextInput, Alert, ActivityIndicator } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { X, Share2, Edit3, CheckCircle, Clock, FileText, User, Calendar, Tag, Link2, History, AlertTriangle, ThumbsUp, MessageSquare } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import apiClient from '../../../lib/api-client';
 
 export default function KnowledgeNodeView() {
   const router = useRouter();
@@ -17,68 +18,22 @@ export default function KnowledgeNodeView() {
   const [showShareModal, setShowShareModal] = useState(false);
   const [editContent, setEditContent] = useState('');
   const [showVersionHistory, setShowVersionHistory] = useState(false);
+  const [node, setNode] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Mock knowledge node data
-  const knowledgeNode = {
-    id: params.id || '1',
-    title: 'Client Onboarding Process',
-    type: 'process',
-    content: `## Client Onboarding Process
+  useEffect(() => {
+    if (params.id) {
+      loadNode(params.id as string);
+    }
+  }, [params.id]);
 
-### Overview
-This document outlines the complete client onboarding process for new customers. The process ensures a smooth transition from sales to active customer status.
-
-### Step 1: Initial Setup (Day 1)
-- Create client account in CRM
-- Assign customer success manager
-- Send welcome email with login credentials
-- Schedule kickoff call
-
-### Step 2: Kickoff Call (Day 2-3)
-- Introduce team members
-- Discuss goals and expectations
-- Review timeline and milestones
-- Establish communication channels
-
-### Step 3: Configuration (Week 1)
-- Configure user permissions
-- Set up integrations
-- Import existing data
-- Configure notifications
-
-### Step 4: Training (Week 2)
-- Conduct training sessions
-- Provide documentation
-- Record training videos
-- Schedule follow-up sessions
-
-### Step 5: Go-Live (Week 3)
-- Final configuration review
-- User acceptance testing
-- Go-live deployment
-- Post-launch support`,
-    sourceType: 'document',
-    sourceUrl: 'https://drive.google.com/file/abc123',
-    status: 'verified',
-    confidenceScore: 0.95,
-    tags: ['onboarding', 'clients', 'process', 'customer-success'],
-    author: { name: 'Sarah M.', avatar: null },
-    verifiedBy: { name: 'John D.', avatar: null },
-    verifiedAt: '2 days ago',
-    createdAt: '1 week ago',
-    updatedAt: '2 days ago',
-    viewCount: 234,
-    searchCount: 89,
-    relatedNodes: [
-      { id: 2, title: 'Customer Success Best Practices', type: 'document' },
-      { id: 3, title: 'CRM Configuration Guide', type: 'technical' },
-      { id: 4, title: 'Client Communication Templates', type: 'document' },
-    ],
-    versions: [
-      { id: 1, version: '1.0', author: 'Sarah M.', date: '1 week ago', changes: 'Initial version' },
-      { id: 2, version: '1.1', author: 'John D.', date: '5 days ago', changes: 'Added training section' },
-      { id: 3, version: '1.2', author: 'Sarah M.', date: '2 days ago', changes: 'Updated timeline' },
-    ],
+  const loadNode = async (id: string) => {
+    try {
+      setLoading(true);
+      const response = await apiClient.getKnowledgeNode(id);
+      if (response?.success && response?.data) setNode(response.data);
+    } catch (err) { console.error('Failed to load node:', err); }
+    finally { setLoading(false); }
   };
 
   const handleVerify = () => {
@@ -89,7 +44,7 @@ This document outlines the complete client onboarding process for new customers.
   };
 
   const handleImprove = () => {
-    setEditContent(knowledgeNode.content);
+    setEditContent(node?.content || '');
     setShowEditModal(true);
   };
 
@@ -101,6 +56,15 @@ This document outlines the complete client onboarding process for new customers.
   const handleShare = () => {
     setShowShareModal(true);
   };
+
+  if (loading) {
+    return (
+      <View style={[styles.container, styles.loadingContainer, { paddingTop: insets.top }]}>
+        <ActivityIndicator size="large" color="#6366f1" />
+        <Text style={styles.loadingText}>Loading knowledge node...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
@@ -124,21 +88,21 @@ This document outlines the complete client onboarding process for new customers.
         {/* Title and Type */}
         <View style={styles.titleSection}>
           <View style={styles.typeBadge}>
-            <Text style={styles.typeText}>{knowledgeNode.type}</Text>
+            <Text style={styles.typeText}>{node?.type}</Text>
           </View>
-          <Text style={styles.nodeTitle}>{knowledgeNode.title}</Text>
+          <Text style={styles.nodeTitle}>{node?.label || node?.title || 'Knowledge Node'}</Text>
           <View style={styles.metaRow}>
             <View style={styles.metaItem}>
               <User size={14} color="#94a3b8" />
-              <Text style={styles.metaText}>{knowledgeNode.author.name}</Text>
+              <Text style={styles.metaText}>{node?.author?.name}</Text>
             </View>
             <View style={styles.metaItem}>
               <Calendar size={14} color="#94a3b8" />
-              <Text style={styles.metaText}>{knowledgeNode.updatedAt}</Text>
+              <Text style={styles.metaText}>{node?.updatedAt}</Text>
             </View>
             <View style={styles.metaItem}>
               <FileText size={14} color="#94a3b8" />
-              <Text style={styles.metaText}>{knowledgeNode.viewCount} views</Text>
+              <Text style={styles.metaText}>{node?.viewCount} views</Text>
             </View>
           </View>
         </View>
@@ -149,7 +113,7 @@ This document outlines the complete client onboarding process for new customers.
           <View style={styles.verificationInfo}>
             <Text style={styles.verificationStatus}>Verified</Text>
             <Text style={styles.verificationDetail}>
-              Verified by {knowledgeNode.verifiedBy.name} • {knowledgeNode.verifiedAt}
+              Verified by {node?.verifiedBy?.name} • {node?.verifiedAt}
             </Text>
           </View>
           <TouchableOpacity style={styles.verifyButton} onPress={handleVerify}>
@@ -161,28 +125,30 @@ This document outlines the complete client onboarding process for new customers.
         <View style={styles.contentSection}>
           <Text style={styles.sectionTitle}>Content</Text>
           <View style={styles.contentCard}>
-            <Text style={styles.contentText}>{knowledgeNode.content}</Text>
+            <Text style={styles.contentText}>{node?.content}</Text>
           </View>
         </View>
 
         {/* Source Information */}
-        <View style={styles.sourceSection}>
-          <Text style={styles.sectionTitle}>Source</Text>
-          <TouchableOpacity style={styles.sourceCard}>
-            <FileText size={20} color="#6366f1" />
-            <View style={styles.sourceInfo}>
-              <Text style={styles.sourceType}>{knowledgeNode.sourceType}</Text>
-              <Text style={styles.sourceUrl}>{knowledgeNode.sourceUrl}</Text>
-            </View>
-            <Link2 size={20} color="#64748b" />
-          </TouchableOpacity>
-        </View>
+        {node?.sourceType && (
+          <View style={styles.sourceSection}>
+            <Text style={styles.sectionTitle}>Source</Text>
+            <TouchableOpacity style={styles.sourceCard}>
+              <FileText size={20} color="#6366f1" />
+              <View style={styles.sourceInfo}>
+                <Text style={styles.sourceType}>{node?.sourceType}</Text>
+                <Text style={styles.sourceUrl}>{node?.sourceUrl}</Text>
+              </View>
+              <Link2 size={20} color="#64748b" />
+            </TouchableOpacity>
+          </View>
+        )}
 
         {/* Tags */}
         <View style={styles.tagsSection}>
           <Text style={styles.sectionTitle}>Tags</Text>
           <View style={styles.tagsContainer}>
-            {knowledgeNode.tags.map((tag, index) => (
+            {(node?.tags || []).map((tag: string, index: number) => (
               <View key={index} style={styles.tag}>
                 <Tag size={12} color="#6366f1" />
                 <Text style={styles.tagText}>{tag}</Text>
@@ -195,15 +161,15 @@ This document outlines the complete client onboarding process for new customers.
         <View style={styles.relatedSection}>
           <Text style={styles.sectionTitle}>Related Knowledge</Text>
           <View style={styles.relatedList}>
-            {knowledgeNode.relatedNodes.map((node) => (
+            {(node?.relatedNodes || []).map((related: any) => (
               <TouchableOpacity
-                key={node.id}
+                key={related.id}
                 style={styles.relatedItem}
-                onPress={() => router.push(`/company-brain/node/${node.id}` as any)}
+                onPress={() => router.push(`/company-brain/node/${related.id}` as any)}
               >
                 <FileText size={20} color="#6366f1" />
-                <Text style={styles.relatedTitle}>{node.title}</Text>
-                <Text style={styles.relatedType}>{node.type}</Text>
+                <Text style={styles.relatedTitle}>{related.title}</Text>
+                <Text style={styles.relatedType}>{related.type}</Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -218,7 +184,7 @@ This document outlines the complete client onboarding process for new customers.
             </TouchableOpacity>
           </View>
           <View style={styles.versionList}>
-            {knowledgeNode.versions.slice(0, 3).map((version) => (
+            {(node?.versions || []).slice(0, 3).map((version: any) => (
               <View key={version.id} style={styles.versionItem}>
                 <View style={styles.versionBadge}>
                   <Text style={styles.versionNumber}>v{version.version}</Text>
@@ -358,7 +324,7 @@ This document outlines the complete client onboarding process for new customers.
             </TouchableOpacity>
           </View>
           <ScrollView style={styles.modalContent}>
-            {knowledgeNode.versions.map((version) => (
+            {(node?.versions || []).map((version: any) => (
               <View key={version.id} style={styles.fullVersionItem}>
                 <View style={styles.fullVersionHeader}>
                   <View style={styles.versionBadge}>
@@ -386,6 +352,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#0f172a',
+  },
+  loadingContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 12,
+    fontSize: 16,
+    color: '#94a3b8',
   },
   header: {
     flexDirection: 'row',

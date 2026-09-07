@@ -16,7 +16,7 @@ import {
   Target,
   Users,
   Zap,
-  ChartBarBig,
+  BarChart3,
   ChartPie,
   Calendar,
   ListFilter,

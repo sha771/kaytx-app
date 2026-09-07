@@ -60,7 +60,7 @@ import {
   ChevronRight,
   LayoutDashboard,
   User,
-  ChartBarBig,
+  BarChart3,
   Factory,
   Navigation,
   Scan,

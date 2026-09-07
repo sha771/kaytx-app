@@ -22,7 +22,7 @@ import {
   TriangleAlert,
   Clock,
   Wifi,
-  ChartBarBig,
+  BarChart3,
   Settings,
   RefreshCw,
   Eye,
@@ -466,7 +466,7 @@ export default function CDNScreen() {
         <View style={styles.edgeActions}>
           <TouchableOpacity style={[styles.edgeActionButton, { backgroundColor: theme.colors.background }]}
             testID={`cdn-edge-analytics-${item.id}`}>
-            <ChartBarBig size={16} color={theme.colors.text} />
+            <BarChart3 size={16} color={theme.colors.text} />
             <Text style={[styles.edgeActionText, { color: theme.colors.text }]}>Analytics</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.edgeActionButton, { backgroundColor: theme.colors.background }]}

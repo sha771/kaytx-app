@@ -56,6 +56,10 @@ import {
     Sprout,
     Gem,
     Utensils,
+    Monitor,
+    Layers,
+    BookOpen,
+    Award,
 } from 'lucide-react-native';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useAIAssistant } from '@/providers/AIAssistantProvider';
@@ -70,46 +74,46 @@ import {
   type SubAgent 
 } from '@/constants/completeAIWorkforce_1108';
 
-// All 36 Departments - 2,160 Total Agents (60 agents per department) - Updated from 1,108 agents
+// All 36 Departments - 2,160 Total Agents (60 agents per department)
 const departmentCategories = [
   // Original 22 Core Departments
-  { id: 'customer-experience', label: 'Customer Experience', color: '#00BCD4', count: 60 },
-  { id: 'sales-revenue', label: 'Sales & Revenue', color: '#FFA000', count: 60 },
-  { id: 'marketing-growth', label: 'Marketing & Growth', color: '#E91E63', count: 60 },
-  { id: 'operations-management', label: 'Operations & Management', color: '#607D8B', count: 60 },
-  { id: 'finance-accounting', label: 'Finance & Accounting', color: '#2E7D32', count: 60 },
-  { id: 'technology-engineering', label: 'Technology & Engineering', color: '#1565C0', count: 60 },
-  { id: 'human-resources', label: 'Human Resources', color: '#9C27B0', count: 60 },
-  { id: 'legal-compliance', label: 'Legal & Compliance', color: '#3F51B5', count: 60 },
-  { id: 'data-intelligence', label: 'Data & Intelligence', color: '#AF52DE', count: 60 },
-  { id: 'product-management', label: 'Product Management', color: '#FF5722', count: 60 },
-  { id: 'security-risk', label: 'Security & Risk', color: '#F44336', count: 60 },
-  { id: 'research-development', label: 'Research & Development', color: '#009688', count: 60 },
-  { id: 'administrative', label: 'Administrative', color: '#795548', count: 60 },
-  { id: 'trading-investments', label: 'Trading & Investments', color: '#10B981', count: 60 },
-  { id: 'real-estate-property', label: 'Real Estate & Property', color: '#8D6E63', count: 60 },
-  { id: 'insurance-risk', label: 'Insurance & Risk', color: '#FF7043', count: 60 },
-  { id: 'healthcare-medical', label: 'Healthcare & Medical', color: '#EC407A', count: 60 },
-  { id: 'manufacturing-production', label: 'Manufacturing & Production', color: '#5C6BC0', count: 60 },
-  { id: 'transportation-logistics', label: 'Transportation & Logistics', color: '#26A69A', count: 60 },
-  { id: 'government-public-sector', label: 'Government & Public Sector', color: '#78909C', count: 60 },
-  { id: 'supply-chain-logistics', label: 'Supply Chain & Logistics', color: '#42A5F5', count: 60 },
-  { id: 'ai-management-governance', label: 'AI Management & Governance', color: '#7C4DFF', count: 60 },
-  // New 13 Industry-Specific Departments
-  { id: 'banking-finance', label: 'Banking & Finance', color: '#059669', count: 60 },
-  { id: 'ecommerce', label: 'E-Commerce', color: '#7C3AED', count: 60 },
-  { id: 'professional-services', label: 'Professional Services', color: '#0891B2', count: 60 },
-  { id: 'media-entertainment', label: 'Media & Entertainment', color: '#EC4899', count: 60 },
-  { id: 'gaming-esports', label: 'Gaming & Esports', color: '#8B5CF6', count: 60 },
-  { id: 'education', label: 'Education', color: '#F59E0B', count: 60 },
-  { id: 'retail-stores', label: 'Retail & Stores', color: '#EF4444', count: 60 },
-  { id: 'travel-tourism', label: 'Travel & Tourism', color: '#0EA5E9', count: 60 },
-  { id: 'energy-utilities', label: 'Energy & Utilities', color: '#84CC16', count: 60 },
-  { id: 'executive-strategy', label: 'Executive & Strategy', color: '#64748B', count: 60 },
-  { id: 'event-management', label: 'Event Management', color: '#F97316', count: 60 },
-  { id: 'agriculture', label: 'Agriculture', color: '#22C55E', count: 60 },
-  { id: 'fashion-luxury', label: 'Fashion & Luxury', color: '#DB2777', count: 60 },
-  { id: 'restaurants', label: 'Restaurants', color: '#DC2626', count: 60 },
+  { id: 'customer-experience', label: 'Customer Experience', color: '#00BCD4', count: 56 },
+  { id: 'sales-revenue', label: 'Sales & Revenue', color: '#FFA000', count: 56 },
+  { id: 'marketing-growth', label: 'Marketing & Growth', color: '#E91E63', count: 70 },
+  { id: 'operations-management', label: 'Operations & Management', color: '#607D8B', count: 52 },
+  { id: 'finance-accounting', label: 'Finance & Accounting', color: '#2E7D32', count: 52 },
+  { id: 'technology-engineering', label: 'Technology & Engineering', color: '#1565C0', count: 64 },
+  { id: 'human-resources', label: 'Human Resources', color: '#9C27B0', count: 44 },
+  { id: 'legal-compliance', label: 'Legal & Compliance', color: '#3F51B5', count: 40 },
+  { id: 'data-intelligence', label: 'Data & Intelligence', color: '#00ACC1', count: 52 },
+  { id: 'product-management', label: 'Product Management', color: '#FF5722', count: 40 },
+  { id: 'security-risk', label: 'Security & Risk', color: '#F44336', count: 48 },
+  { id: 'research-development', label: 'Research & Development', color: '#009688', count: 36 },
+  { id: 'administrative', label: 'Administrative', color: '#795548', count: 36 },
+  { id: 'trading-investments', label: 'Trading & Investments', color: '#10B981', count: 72 },
+  { id: 'real-estate-property', label: 'Real Estate & Property', color: '#8D6E63', count: 56 },
+  { id: 'insurance-risk', label: 'Insurance & Risk', color: '#FF7043', count: 64 },
+  { id: 'healthcare-medical', label: 'Healthcare & Medical', color: '#EC407A', count: 56 },
+  { id: 'manufacturing-production', label: 'Manufacturing & Production', color: '#5C6BC0', count: 56 },
+  { id: 'transportation-logistics', label: 'Transportation & Logistics', color: '#26A69A', count: 56 },
+  { id: 'government-public-sector', label: 'Government & Public Sector', color: '#78909C', count: 48 },
+  { id: 'supply-chain-logistics', label: 'Supply Chain & Logistics', color: '#42A5F5', count: 40 },
+  { id: 'ai-management-governance', label: 'AI Management & Governance', color: '#6366F1', count: 24 },
+  // New 14 Industry-Specific Departments
+  { id: 'banking-finance', label: 'Banking & Finance', color: '#059669', count: 48 },
+  { id: 'ecommerce', label: 'E-Commerce', color: '#7C3AED', count: 56 },
+  { id: 'professional-services', label: 'Professional Services', color: '#0891B2', count: 40 },
+  { id: 'media-entertainment', label: 'Media & Entertainment', color: '#EC4899', count: 48 },
+  { id: 'gaming-esports', label: 'Gaming & Esports', color: '#8B5CF6', count: 40 },
+  { id: 'education', label: 'Education', color: '#F59E0B', count: 48 },
+  { id: 'retail-stores', label: 'Retail & Stores', color: '#EF4444', count: 48 },
+  { id: 'travel-tourism', label: 'Travel & Tourism', color: '#0EA5E9', count: 48 },
+  { id: 'energy-utilities', label: 'Energy & Utilities', color: '#84CC16', count: 40 },
+  { id: 'executive-strategy', label: 'Executive & Strategy', color: '#64748B', count: 40 },
+  { id: 'event-management', label: 'Event Management', color: '#F97316', count: 40 },
+  { id: 'agriculture', label: 'Agriculture', color: '#22C55E', count: 40 },
+  { id: 'fashion-luxury', label: 'Fashion & Luxury', color: '#DB2777', count: 48 },
+  { id: 'restaurants', label: 'Restaurants', color: '#DC2626', count: 48 },
 ];
 
 interface AIWorkforceSidebarProps {
@@ -153,8 +157,8 @@ export const AIWorkforceSidebar: React.FC<AIWorkforceSidebarProps> = ({ isVisibl
         return matchesSearch && matchesCategory;
     });
 
-    // Get total agent count from all departments (1108)
-    const totalAgentCount = 1108;
+    // Get total agent count from all departments (2160)
+    const totalAgentCount = 2160;
 
     const handleEmployeePress = (employee: AIEmployee) => {
         onClose();
@@ -263,13 +267,34 @@ export const AIWorkforceSidebar: React.FC<AIWorkforceSidebarProps> = ({ isVisibl
                                  }}
                              >
                                  <View style={styles.departmentHeaderLeft}>
-                                     <Activity size={16} color="#007AFF" />
+                                     <ActivityIcon size={16} color="#007AFF" />
                                      <Text style={[styles.departmentTitle, { color: theme.colors.text }]}>
                                          Command Center
                                      </Text>
                                  </View>
                                  <Text style={[styles.departmentCount, { color: '#007AFF' }]}>
                                      Central Ops
+                                 </Text>
+                             </TouchableOpacity>
+                         </View>
+
+                         {/* Hierarchy & Education Section */}
+                         <View style={[styles.departmentSection, { backgroundColor: theme.colors.cardBackground }]}>
+                             <TouchableOpacity
+                                 style={styles.departmentHeader}
+                                 onPress={() => {
+                                     onClose();
+                                     router.push('/agent-hierarchy-mindmap' as any);
+                                 }}
+                             >
+                                 <View style={styles.departmentHeaderLeft}>
+                                     <Layers size={16} color="#8B5CF6" />
+                                     <Text style={[styles.departmentTitle, { color: theme.colors.text }]}>
+                                         Hierarchy & Education
+                                     </Text>
+                                 </View>
+                                 <Text style={[styles.departmentCount, { color: '#8B5CF6' }]}>
+                                     Structure
                                  </Text>
                              </TouchableOpacity>
                          </View>
@@ -448,7 +473,7 @@ export const AIWorkforceSidebar: React.FC<AIWorkforceSidebarProps> = ({ isVisibl
                             </View>
                         </View>
 
-                        {/* All 22 Departments - 1108 Agents */}
+                        {/* All 36 Departments - 2160 Agents */}
                         <View style={[styles.departmentSection, { backgroundColor: theme.colors.cardBackground }]}>
                             <TouchableOpacity 
                                 style={styles.departmentHeader}
@@ -457,7 +482,7 @@ export const AIWorkforceSidebar: React.FC<AIWorkforceSidebarProps> = ({ isVisibl
                                 <View style={styles.departmentHeaderLeft}>
                                     <Brain size={16} color={theme.colors.primary} />
                                     <Text style={[styles.departmentTitle, { color: theme.colors.text }]}>
-                                        22 Departments
+                                        36 Departments
                                     </Text>
                                 </View>
                                 <Text style={[styles.departmentCount, { color: theme.colors.primary }]}>
@@ -469,6 +494,47 @@ export const AIWorkforceSidebar: React.FC<AIWorkforceSidebarProps> = ({ isVisibl
                                 <View style={styles.departmentGrid}>
                                     {departmentCategories.map((dept) => {
                                         const isSelected = selectedCategory === dept.id;
+                                        // Map department IDs to actual routes
+                                        const routeMap: { [key: string]: string } = {
+                                            'customer-experience': '/ai-agent/customer-support',
+                                            'sales-revenue': '/ai-agent/sales-revenue',
+                                            'marketing-growth': '/ai-agent/marketing',
+                                            'operations-management': '/ai-agent/operations',
+                                            'finance-accounting': '/ai-agent/finance',
+                                            'technology-engineering': '/ai-agent/technology-engineering',
+                                            'human-resources': '/ai-agent/human-resources',
+                                            'legal-compliance': '/ai-agent/legal',
+                                            'data-intelligence': '/ai-agent/data',
+                                            'product-management': '/ai-agent/product-management',
+                                            'security-risk': '/ai-agent/security',
+                                            'research-development': '/ai-agent/research-development',
+                                            'administrative': '/ai-agent/administrative',
+                                            'trading-investments': '/ai-agent/trading-investment',
+                                            'real-estate-property': '/ai-agent/real-estate',
+                                            'insurance-risk': '/ai-agent/insurance',
+                                            'healthcare-medical': '/ai-agent/healthcare-medical',
+                                            'manufacturing-production': '/ai-agent/manufacturing',
+                                            'transportation-logistics': '/ai-agent/transportation',
+                                            'government-public-sector': '/ai-agent/public-sector',
+                                            'supply-chain-logistics': '/ai-agent/supply-chain',
+                                            'ai-management-governance': '/ai-agent/ai-management-governance',
+                                            'banking-finance': '/ai-agent/banking-finance',
+                                            'ecommerce': '/ai-agent/e-commerce',
+                                            'professional-services': '/ai-agent/consulting-advisory',
+                                            'media-entertainment': '/ai-agent/media-entertainment',
+                                            'gaming-esports': '/ai-agent/gaming-esports',
+                                            'education': '/ai-agent/education',
+                                            'retail-stores': '/ai-agent/retail-stores',
+                                            'travel-tourism': '/ai-agent/travel-tourism',
+                                            'energy-utilities': '/ai-agent/energy-utilities',
+                                            'executive-strategy': '/ai-agent/executive',
+                                            'event-management': '/ai-agent/event-management',
+                                            'agriculture': '/ai-agent/agriculture',
+                                            'fashion-luxury': '/ai-agent/fashion-luxury',
+                                            'restaurants': '/ai-agent/restaurant-hospitality',
+                                        };
+                                        const deptRoute = routeMap[dept.id] || '/ai-agent/[department]';
+                                        
                                         return (
                                             <TouchableOpacity
                                                 key={dept.id}
@@ -476,7 +542,10 @@ export const AIWorkforceSidebar: React.FC<AIWorkforceSidebarProps> = ({ isVisibl
                                                     styles.departmentChip,
                                                     { backgroundColor: isSelected ? dept.color + '20' : 'transparent' },
                                                 ]}
-                                                onPress={() => setSelectedCategory(isSelected ? 'all' : dept.id)}
+                                                onPress={() => {
+                                                    onClose();
+                                                    router.push(deptRoute as any);
+                                                }}
                                             >
                                                 <View style={[styles.departmentDot, { backgroundColor: dept.color }]} />
                                                 <Text 

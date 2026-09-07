@@ -15,7 +15,7 @@ import {
   Target,
   Users,
   TrendingUp,
-  ChartBarBig,
+  BarChart3,
   Calendar,
   ListFilter,
   Download,
